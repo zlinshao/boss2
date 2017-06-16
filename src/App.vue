@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <Loading></Loading>
+    <section id="container">
+      <Header></Header>
+      <section id="main-content">
+        <section class="wrapper">
+          <router-view class="router-view"></router-view>
+        </section>
+      </section>
+    </section>
   </div>
 </template>
 
