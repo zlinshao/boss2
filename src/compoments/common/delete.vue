@@ -15,7 +15,7 @@
                         </div>
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                            <button class="btn btn-danger" type="button">确定</button>
+                            <button class="btn btn-danger" type="button" @click="confirm">确定</button>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,13 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        methods: {
+            confirm (){
+                
+            }
+        }
+    }
 </script>
 
 
