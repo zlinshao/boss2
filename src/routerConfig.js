@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Head from './compoments/header'
 import Power from './compoments/power/power.vue'
 import Region from './compoments/region/region.vue'
 import User from './compoments/user/user.vue'
 
-Vue.use(Head)
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [

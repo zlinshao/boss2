@@ -4,7 +4,7 @@
       <Header></Header>
       <section id="main-content">
         <section class="wrapper">
-          <router-view class="router-view"></router-view>
+          <router-view></router-view>
         </section>
       </section>
     </section>
@@ -22,8 +22,6 @@
     }
 </script>
 
-<style>
-  #app {
+<style scoped>
 
-  }
 </style>
