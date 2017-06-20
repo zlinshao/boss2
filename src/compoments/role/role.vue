@@ -108,12 +108,12 @@
 
 //            权限列表
             list_role (){
-                this.$http.get('http://test.api.boss.lejias.cn/manager/Role/rolesList/page/1').then(res => {
+                this.$http.get('manager/Role/rolesList/page/1').then(res => {
                     this.role_info = res.data.data;
                     console.log(res.data)
                 });
 
-                this.$http.get('http://test.api.boss.lejias.cn/manager/Auth/authList/page/' + this.page).then(res => {
+                this.$http.get('manager/Auth/authList/page/1').then(res => {
                     console.log(res.data);
                 });
             },
@@ -139,7 +139,7 @@
 
 //             确认新增
             add_power () {
-                this.$http.post('http://test.api.boss.lejias.cn/manager/Auth/saveAuth',
+                this.$http.post('manager/Auth/saveAuth',
                     {
                         name: this.username,
                         title: this.title
@@ -159,7 +159,7 @@
                 });
             },
 
-//            多选
+//            多选生成数组/删除数组对应值
             rules (rul, eve){
                 if (eve.target.checked === true) {
                     this.arr_rules.push(rul);
