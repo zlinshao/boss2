@@ -6,7 +6,7 @@
                 <div data-original-title="" data-placement="right" class="fa fa-bars tooltips"></div>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo">Flat<span>lab</span></a>
+            <a href="index.html" class="logo">BO<span>OS</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -468,3 +468,8 @@
         <!-- Right Slidebar end -->
     </div>
 </template>
+<script>
+    export default {
+
+    }
+</script>
