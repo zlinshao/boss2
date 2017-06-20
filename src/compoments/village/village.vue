@@ -1,53 +1,56 @@
 <template>
     <div>
-        <form class="form-inline" role="form">
-            <div class="dropdown form-group">
-                <select name="type" id="search_type" class="form-control">
-                    <option value="">房屋类型</option>
-                    <option value="1">住宅</option>
-                    <option value="2">公寓</option>
-                    <option value="3">商住两用</option>
-                </select>
-            </div>
+        <div class="headFrom col-lg-12 clearFix">
+            <form class="form-inline" role="form">
+                <div class="dropdown form-group">
+                    <select name="type" id="search_type" class="form-control">
+                        <option value="">房屋类型</option>
+                        <option value="1">住宅</option>
+                        <option value="2">公寓</option>
+                        <option value="3">商住两用</option>
+                    </select>
+                </div>
 
-            <div class="dropdown form-group">
-                <select name="traffic" id="search_traffic" class="form-control">
-                    <option value="">交通情况</option>
-                    <option value="1">啊啊啊</option>
-                    <option value="2">阿萨斯</option>
-                </select>
-            </div>
+                <div class="dropdown form-group">
+                    <select name="traffic" id="search_traffic" class="form-control">
+                        <option value="">交通情况</option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">阿萨斯</option>
+                    </select>
+                </div>
 
-            <div class="dropdown form-group">
-                <select name="life" id="search_life" class="form-control">
-                    <option value="">生活配套</option>
-                    <option value="1">啊啊啊</option>
-                    <option value="2">阿萨斯</option>
-                </select>
-            </div>
+                <div class="dropdown form-group">
+                    <select name="life" id="search_life" class="form-control">
+                        <option value="">生活配套</option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">阿萨斯</option>
+                    </select>
+                </div>
 
-            <div class="input-group bootstrap-timepicker">
-                <label class="sr-only" for="search_info">搜索</label>
-                <input type="text" class="form-control" id="search_info" placeholder="">
-                <span class="input-group-btn">
+                <div class="input-group bootstrap-timepicker">
+                    <label class="sr-only" for="search_info">搜索</label>
+                    <input type="text" class="form-control" id="search_info" placeholder="">
+                    <span class="input-group-btn">
                     <button class="btn btn-success" id="search" type="button"><i class="fa fa-search"></i></button>
                 </span>
-            </div>
-
-
-
-            <div class="form-group pull-right">
-                <div class="form-group show-way">
-                    <label>视图：</label>
-                    <button class="btn" :class="{'btn-primary' : isActived==0}" @click="changeShowWay(0)">列表</button>
-                    <button class="btn" :class="{'btn-primary' : isActived==1}" @click="changeShowWay(1)">地图</button>
                 </div>
-                <a class="btn btn-success">
-                    <i class="fa  fa-plus-square"></i>&nbsp;添加小区
-                </a>
-            </div>
 
-        </form>
+
+
+                <div class="form-group pull-right">
+                    <div class="form-group show-way">
+                        <label>视图：</label>
+                        <button class="btn" type="button" :class="{'btn-success' : isActived==0}" @click="changeShowWay(0)">列表</button>
+                        <button class="btn" type="button" :class="{'btn-success' : isActived==1}" @click="changeShowWay(1)">地图</button>
+                    </div>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal">
+                        <i class="fa  fa-plus-square"></i>&nbsp;添加小区
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
 
         <!--列表显示-->
         <div class="col-lg-12" v-if="showAsList">
@@ -108,7 +111,7 @@
         <!--地图-->
         <div class="col-lg-12 map" v-else="showAsList">
             <!--显示主要信息的表格-->
-            <div>
+            <!--<div>
                 <div class="col-lg-12">
                     <section class="panel table table-responsive">
                         <table class="table table-striped table-advance table-hover">
@@ -126,14 +129,14 @@
                                 <td>南京市建邺区嵩山路101号</td>
                                 <td>住宅</td>
                                 <td>
-                                    <!--<router-link :to="{path:'group' , query:{regionId:item.id}}">-->
+                                    &lt;!&ndash;<router-link :to="{path:'group' , query:{regionId:item.id}}">&ndash;&gt;
                                     <router-link to="/villageDetail">
                                         <button class="btn btn-primary btn-sm">查看小组</button>
                                     </router-link>
                                 </td>
                             </tr>
-                            <!--<router-link tgrouparea" v-for="item in regions" class="text-center">-->
-                            <!--<tr v-for="item in regions" class="text-center">
+                            &lt;!&ndash;<router-link tgrouparea" v-for="item in regions" class="text-center">&ndash;&gt;
+                            &lt;!&ndash;<tr v-for="item in regions" class="text-center">
                                 <td>{{item.id}}</td>
                                 <td>{{item.area_name}}</td>
                                 <td>{{item.am}}</td>
@@ -146,22 +149,25 @@
                                         <button class="btn btn-primary btn-sm">查看小组</button>
                                     </router-link>
                                 </td>
-                            </tr>-->
+                            </tr>&ndash;&gt;
 
-                            <!--</router-link>-->
+                            &lt;!&ndash;</router-link>&ndash;&gt;
                             </tbody>
                         </table>
                     </section>
 
 
                 </div>
-            </div>
+            </div>-->
             <!--地图-->
-            <div id="map" tabindex="0"></div>
+            <MapVue class="iframe"></MapVue>
         </div>
 
+        <!-- Modal -->
+        <Modal :oper="oper"></Modal>
 
     </div>
+
 </template>
 <style scoped>
     .show-way{
@@ -180,23 +186,54 @@
         border-bottom-left-radius: 0;
         margin-left: -3px;
     }
-    .map{
-        font-size: 0;
-    }
     .map>div{
+        font-size: 0;
+        vertical-align: top;
+        width: 100%;
+        height: 800px;
+    }
+    /*.map>div{
         display: inline-block;
         font-size: 14px;
+        vertical-align: top;
+        width: 50%;
+        height: 800px;
+    }*/
+    /*.headFrom{
+        position: relative;
+    }
+    .headFrom .pull-right{
+        float: none;
+        position: absolute;
+        right: 0;
+    }*/
+    .clearFix{
+        content: '';
+        display: inline-block;
+        clear: both;
     }
 </style>
 <script>
+    import MapVue from './map.vue'
+    import Modal from './modal.vue'
     export default{
         data(){
             return {
                 isActived : 0,
-                showAsList : true // 列表显示
+                showAsList : true, // 列表显示
+                oper : {
+                    operName : '新建小区',
+                    villageId : -1
+                }
             }
         },
-        components: {},
+        components: {
+            MapVue,
+            Modal
+        },
+        created : function () {
+//            this.getMap();
+        },
         methods : {
             changeShowWay(num){
                 this.isActived=num;
@@ -208,6 +245,7 @@
                     this.showAsList = false;
                 }
             }
+
         }
     }
 </script>

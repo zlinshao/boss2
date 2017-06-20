@@ -139,7 +139,7 @@
                 if (num == 0){// 所有区域
                     this.showPage = true;
                     this.isActive = num;
-                    this.$http.get('http://test.v2.api.boss.lejias.cn/manager/Area/areaList')
+                    this.$http.get('manager/Area/areaList')
                         .then(
                             res => this.regions=res.data.data
                         );

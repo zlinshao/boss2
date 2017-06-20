@@ -195,7 +195,7 @@
         methods : {
             getRegions(){// 获取南京所有区域
 //                this.$http.get('http://test.v2.api.boss.lejias.cn/manager/Area/areaList')
-                this.$http.get('http://test.v2.api.boss.lejias.cn/manager/User/searchArea')
+                this.$http.get('manager/User/searchArea')
                     .then(
                         res => this.regions=res.data.data
                     );
@@ -204,14 +204,14 @@
                 this.showAdd = !this.showAdd;
             },
             getAreas(){// 获取当前区域的小组信息
-                this.$http.get('http://test.v2.api.boss.lejias.cn/manager/Groups/groupList/id/'+this.recRegionId)
+                this.$http.get('manager/Groups/groupList/id/'+this.recRegionId)
                     .then(
                         res => this.areas=res.data.data
                     );
             },
             addNewGroup(){// 添加新的小组信息
                 var that = this;
-                this.$http.post('http://test.v2.api.boss.lejias.cn/manager/Groups/saveGroup' , {
+                this.$http.post('manager/Groups/saveGroup' , {
                     "groups": this.areaName, //小组名称
                     "address": this.areaAddr,//办公地点
                     "region_id": this.areaId//所属区域id   select框选择区域名称
@@ -233,7 +233,7 @@
 //                alert(id);
                 var that = this;
                 this.modifyAreaId = id;
-                this.$http.get('http://test.v2.api.boss.lejias.cn/manager/Groups/readGroup/id/'+id)
+                this.$http.get('manager/Groups/readGroup/id/'+id)
                     .then(
                         res => {
                             if (res.data.code == 20030){
@@ -248,7 +248,7 @@
             },
             modifySubmit(){// 提交修改
                 var that = this;
-                this.$http.post('http://test.v2.api.boss.lejias.cn/manager/Groups/updateGroup' , {
+                this.$http.post('manager/Groups/updateGroup' , {
                     "id": this.modifyAreaId,//所属小组id   select框选择区域名称
                     "groups": this.modifyAreaName, //小组名称
                     "address": this.modifyAreaAddr,//办公地点
