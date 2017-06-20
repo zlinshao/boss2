@@ -316,6 +316,7 @@
                             <li><router-link to='/user'>用户管理</router-link></li>
                             <!--<li><router-link to='/aere'>片区管理</router-link></li>-->
                             <li><router-link to='/region'>区域管理</router-link></li>
+                            <li><router-link to='/role'>角色管理</router-link></li>
                         </ul>
                     </li>
                     <li>
@@ -475,3 +476,12 @@
         <!-- Right Slidebar end -->
     </div>
 </template>
+
+<script>
+    export default {}
+</script>
+
+
+<style scoped>
+
+</style>

@@ -1,29 +1,34 @@
 <template>
   <div id="app">
     <section id="container">
-      <Header></Header>
+      <!--header-->
+      <HeaderVue></HeaderVue>
+      <!--router-->
       <section id="main-content">
         <section class="wrapper">
-          <router-view class="router-view"></router-view>
+          <router-view></router-view>
         </section>
       </section>
+      <!--loading-->
+      <loading v-show="loading"></loading>
     </section>
   </div>
 </template>
 
 <script>
+    import HeaderVue from './compoments/header/header.vue'
+    import {mapGetters,mapActions} from 'vuex'
+
     export default {
-        name: 'app',
-//  data () {
-//    return {
-//      msg: 'Welcome to Your Vue.js App'
-//    }
-//  }
+        computed:mapGetters([
+            'loading'
+        ]),
+        components:{
+            HeaderVue
+        }
     }
 </script>
 
-<style>
-  #app {
+<style scoped>
 
-  }
 </style>
