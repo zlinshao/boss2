@@ -9,6 +9,7 @@
                 </li>
                 <li v-show="pg != page && pg != 0 " @click="page++ && go_to(page++)"><a href="#">下一页</a></li>
                 <li v-show="pg != page" @click="go_to(pg)"><a href="#">尾页</a></li>
+                <li><a>共&nbsp;(&nbsp;{{pg}}&nbsp;)&nbsp;页</a></li>
             </ul>
         </nav>
     </div>
