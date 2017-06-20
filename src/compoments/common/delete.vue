@@ -26,9 +26,6 @@
     export default {
         props: ['msg'],
         methods: {
-            deleteMsg (){
-                console.log(this.msg.nowIndex);
-            },
             //              确认删除
             deleteMsg (del) {
                 if (del === -3) {
