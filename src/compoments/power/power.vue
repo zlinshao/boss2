@@ -73,10 +73,8 @@
             </div>
         </div>
 
-
         <!--分页-->
         <Page :pg="paging" @pag="list_power"></Page>
-
 
         <div role="dialog" class="modal fade bs-example-modal-sm" id="prompt">
             <div class="modal-dialog ">
@@ -110,7 +108,7 @@
                 username: '',           //Name
                 title: '',              //Title
                 prompt: '',             //提示信息
-                paging: 6,              //总页数
+                paging: 10,              //总页数
             }
         },
         created (){
@@ -120,14 +118,14 @@
 
 //            权限列表
             list_power (v){
-                this.$http.get('http://test.api.boss.lejias.cn/manager/Auth/authList/page/' + v).then(res => {
+                this.$http.get('manager/Auth/authList/page/' + v).then(res => {
                     this.myData = res.data.data;
                 });
             },
 
 //             确认新增
             add_power () {
-                this.$http.post('http://test.api.boss.lejias.cn/manager/Auth/saveAuth',
+                this.$http.post('manager/Auth/saveAuth',
                     {
                         name: this.username,
                         title: this.title

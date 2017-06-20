@@ -10,6 +10,7 @@ import Loading from './compoments/loading'
 Vue.use(Loading);
 Vue.use(Vuex);
 Vue.use(VueRouter);
+axios.defaults.baseURL = 'http://test.v2.api.boss.lejias.cn/';
 Vue.prototype.$http = axios;
 
 const router = new VueRouter({
@@ -32,6 +33,7 @@ axios.interceptors.response.use((response) => { //配置请求回来的信息
 }, function (error) {
     return Promise.reject(error);
 });
+
 
 new Vue({
     el: '#app',
