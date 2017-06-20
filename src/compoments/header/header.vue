@@ -315,6 +315,7 @@
                             <li><router-link to='/power'>权限管理</router-link></li>
                             <li><router-link to='/user'>用户管理</router-link></li>
                             <li><router-link to='/region'>区域管理</router-link></li>
+                            <li><router-link to='/role'>角色管理</router-link></li>
                         </ul>
                     </li>
                 </ul>
