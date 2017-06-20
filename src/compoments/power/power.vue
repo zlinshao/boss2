@@ -563,13 +563,12 @@
                 <!--pagination end-->
 
             </div>
-
         </div>
     </div>
 </template>
 <script>
     export default {
-        name: 'hello',
+        name: 'power',
         data () {
             return {
                 msg: 'Welcome to Your Vue.js App'

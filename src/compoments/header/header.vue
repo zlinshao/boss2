@@ -6,7 +6,7 @@
                 <div data-original-title="" data-placement="right" class="fa fa-bars tooltips"></div>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo">Flat<span>lab</span></a>
+            <a href="index.html" class="logo">B<span>OSS</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -314,8 +314,15 @@
                         <ul class="sub">
                             <li><router-link to='/power'>权限管理</router-link></li>
                             <li><router-link to='/user'>用户管理</router-link></li>
+                            <!--<li><router-link to='/aere'>片区管理</router-link></li>-->
                             <li><router-link to='/region'>区域管理</router-link></li>
                         </ul>
+                    </li>
+                    <li>
+                        <router-link to="/village">
+                            <i class="fa fa-dashboard"></i>
+                            <span>小区管理</span>
+                        </router-link>
                     </li>
                 </ul>
                 <!-- sidebar menu end-->
