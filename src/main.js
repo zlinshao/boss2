@@ -7,9 +7,14 @@ import store from './store/index.js'
 import routes from './routerConfig.js'
 import Loading from './compoments/loading'
 
+// require('https://webapi.amap.com/js/marker.js')
+// require('https://webapi.amap.com/maps?v=1.3&key=b5357e10019b0a6fd5a71488846b270a')
+// require('https://webapi.amap.com/demos/js/liteToolbar.js')
+
 Vue.use(Loading);
 Vue.use(Vuex);
 Vue.use(VueRouter);
+axios.defaults.baseURL = 'http://test.api.boss.lejias.cn/';
 Vue.prototype.$http = axios;
 
 const router = new VueRouter({
