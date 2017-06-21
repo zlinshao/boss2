@@ -2,11 +2,12 @@
     <div>
         <!--新增权限管理-->
         <div class="form-group text-right">
-            <a class="btn btn-success" data-toggle="modal" href="#new_add"> <!--@click="add_btn"-->
+            <button class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
                 <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色
-            </a>
+            </button>
         </div>
-        <!--新增模态框-->
+
+        <!--新增/修改 模态框-->
         <div class="modal fade full-width-modal-right" id="new_add" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
@@ -17,66 +18,75 @@
                             <h4 class="modal-title">Modal Tittle</h4>
                         </div>
                         <div class="modal-body">
-                            <!--<form role="form">-->
-                                <!--<div class="form-group">-->
-                                    <!--<label for="title">title:</label>-->
-                                    <!--<input type="text" id="title" class="form-control" placeholder="title"-->
-                                           <!--v-model="title">-->
-                                <!--</div>-->
-                                <!--<div class="form-group">-->
-                                    <!--<button v-if="status1" data-dismiss="modal" class="btn btn-primary"-->
-                                            <!--@click="add_power ()">添加-->
-                                    <!--</button>-->
-                                    <!--<button v-if="status2" data-dismiss="modal" @click="revise_power"-->
-                                            <!--class="btn btn-primary">修改-->
-                                    <!--</button>-->
-                                    <!--<input type="reset" value="重置" class="btn btn-danger">-->
-                                <!--</div>-->
-                            <!--</form>-->
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="title1">title:</label>
+
+                                    <!--title-->
+                                    <input type="text" id="title1" class="form-control" placeholder="title"
+                                           v-model="title">
+                                </div>
+                                <div v-for="role in myData" class="check">
+                                    <input @click="rules(role.id, $event)" type='checkbox' class="pull-left"
+                                           v-model='checkboxModel'
+                                           :value='role.id'>{{role.title}}
+                                    <!--多选框-->
+                                    <!--<input type="checkbox"  :checked="state"> -->
+                                </div>
+                            </form>
                         </div>
+
                         <div class="modal-footer">
+                            <div class="form-group pull-left">
+                                <button v-if="status1" data-dismiss="modal" class="btn btn-primary" @click="add_power">
+                                    添加
+                                </button>
+
+                                <button v-if="status2" data-dismiss="modal" class="btn btn-primary"
+                                        @click="revise_power">修改
+                                </button>
+
+                                <input v-if="status1" type="reset" value="重置" class="btn btn-danger">
+                            </div>
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
-        <!--<div class="row">-->
-            <!--<div class="col-lg-12">-->
-                <!--<section class="panel">-->
-                    <!--<table class="table table-striped table-advance table-hover">-->
-                        <!--<thead>-->
-                        <!--<tr>-->
-                            <!--<th>ID</th>-->
-                            <!--<th>title</th>-->
-                            <!--<th>Status</th>-->
-                        <!--</tr>-->
-                        <!--</thead>-->
-                        <!--<tbody>-->
-                        <!--<tr v-for="(item, index) in role_info">-->
-                            <!--<td>-->
-                                <!--<input type="checkbox" @click="rules(item.id, $event)" class="pull-left">&nbsp;&nbsp;-->
-                                <!--{{item.id}}-->
-                            <!--</td>-->
-                            <!--<td>{{item.title}}</td>-->
-                            <!--<td>-->
-                                <!--<a class="btn btn-primary btn-sm" data-toggle="modal" href="#new_add"-->
-                                   <!--@click="revise_btn(item.title)">编辑</a>-->
-                            <!--</td>-->
-                        <!--</tr>-->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>title</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in role_info">
+                            <td>{{item.id}}</td>
+                            <td>{{item.title}}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" href="#new_add"
+                                        @click="revise_btn(item.id, item.title)">编辑
+                                </button>
+                            </td>
+                        </tr>
 
-                        <!--<tr v-show="role_info.length == 0">-->
-                            <!--<td colspan="4" class="text-center text-muted">-->
-                                <!--<h4>暂无数据....</h4>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--</tbody>-->
-                    <!--</table>-->
-                <!--</section>-->
-            <!--</div>-->
-        <!--</div>-->
+                        <tr v-show="role_info.length == 0">
+                            <td colspan="4" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -85,20 +95,35 @@
     export default {
         data (){
             return {
-                role_info: Array,       //列表数据
-                username: '',           //Name
-                title: '',              //Title
+                myData: Array,          //权限列表
+                role_info: Array,       //角色列表
+                data_id: [],            //权限ID
+                role_id: [],            //角色rules
+                checkboxModel: [],      //重叠选中
+                title: "",              //Title
+                revise_id: '',          //修改ID
                 status1: true,          //增加
                 status2: false,         //修改
-                arr_rules: [],
+                arr_rules: []           //选中id
             }
         },
         created (){
             this.list_role();
         },
+        watch: {//深度 watcher
+            'checkboxModel': {
+                handler: function (val, oldVal) {
+                    if (this.checkboxModel.length === this.myData.length) {
+                        this.checked = true;
+                    } else {
+                        this.checked = false;
+                    }
+                },
+                deep: true
+            }
+        },
         methods: {
-
-//            数组查询
+////            数组查询
             indexOf (val) {
                 for (let i = 0; i < this.length; i++) {
                     if (this[i] === val) return i;
@@ -106,32 +131,67 @@
                 return -1;
             },
 
-//            权限列表
             list_role (){
                 this.$http.get('manager/Role/rolesList/page/1').then(res => {
                     this.role_info = res.data.data;
-                    console.log(res.data)
                 });
 
                 this.$http.get('manager/Auth/authList/page/1').then(res => {
-                    console.log(res.data);
+                    this.myData = res.data.data;
                 });
             },
 
 //            修改按钮
-            revise_btn (t){
-                this.title = t;
+            revise_btn (rol, title){
+                this.revise_id = rol;
+                this.role_id = [];
+                this.data_id = [];
+                this.checkboxModel = [];
+                this.title = title;
+                this.$http.get('manager/Role/readRole/id/' + rol).then(res => {
+                    for (let i = 0; i < res.data.data.rules.length; i++) {
+                        this.role_id.push((parseInt(res.data.data.rules[i])));
+                    }
+                    //                权限ID
+                    for (let i = 0; i < this.myData.length; i++) {
+                        this.data_id.push(this.myData[i].id);
+                    }
+//                角色ID/权限ID 公共值
+                    for (let s in this.data_id) {
+                        for (let x in this.role_id) {
+                            if (this.data_id[s] === this.role_id[x]) {
+                                this.checkboxModel.push(this.data_id[s]);
+                            }
+                        }
+                    }
+                });
                 this.status1 = false;
                 this.status2 = true;
             },
 
 //             确认修改
             revise_power (){
-                console.log(this.title);
+                this.$http.post('manager/Role/updateRole', {
+                        id: String(this.revise_id),
+                        title: String(this.title),
+                        rules: String(this.checkboxModel)
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                ).then(res => {
+
+                });
             },
 
 //             新增按钮
             add_btn (){
+                this.arr_rules = [];
+                this.role_id = [];
+                this.data_id = [];
+                this.checkboxModel = [];
                 this.title = '';
                 this.status1 = true;
                 this.status2 = false;
@@ -139,23 +199,20 @@
 
 //             确认新增
             add_power () {
-                this.$http.post('manager/Auth/saveAuth',
+                console.log(typeof this.title);
+                console.log(typeof this.arr_rules.join(","));
+                this.$http.post('manager/Role/saveRole',
                     {
-                        name: this.username,
-                        title: this.title
+                        title: this.title,
+                        rules: this.arr_rules.join(",")
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
                     }
-//                        headers: {
-//                            'Content-Type': 'application/x-www-form-urlencoded',
-//                        }
                 ).then(res => {
-//                    console.log(res.data.data);
-//                    this.role_info.push({
-//                        id: res.data.data.id,
-//                        name: res.data.data.name,
-//                        title: res.data.data.title,
-//                    });
-//                    this.username = '';
-//                    this.title = '';
+//
                 });
             },
 
@@ -176,5 +233,12 @@
 </script>
 
 <style scoped>
+    input[type=checkbox] {
+        margin-right: 8px;
+    }
 
+    .check {
+        padding: 5px 0;
+        font-size: 14px;
+    }
 </style>
