@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="headFrom col-lg-12 clearFix">
-            <form class="form-inline" role="form">
+            <form class="form-inline clearFix" role="form">
                 <div class="dropdown form-group">
                     <select name="type" id="search_type" class="form-control">
                         <option value="">房屋类型</option>
@@ -37,8 +37,8 @@
 
 
 
-                <div class="form-group pull-right">
-                    <div class="form-group show-way">
+                <div class="form-group pull-right clearFix">
+                    <div class="form-group show-way pull-left">
                         <label>视图：</label>
                         <button class="btn" type="button" :class="{'btn-success' : isActived==0}" @click="changeShowWay(0)">列表</button>
                         <button class="btn" type="button" :class="{'btn-success' : isActived==1}" @click="changeShowWay(1)">地图</button>
@@ -159,6 +159,7 @@
 
                 </div>
             </div>-->
+
             <!--地图-->
             <MapVue class="iframe"></MapVue>
         </div>
@@ -172,9 +173,9 @@
 <style scoped>
     .show-way{
         /*border-left: 1px solid #ccc;*/
-        /*border-right: 1px solid #ccc;*/
-        padding: 0 20px;
-        margin: 0 20px;
+        /*border-right: 1px solid #ccc+;*/
+        /*padding: 0 20px;*/
+        margin: 0 10px 0 0;
         vertical-align: top;
     }
     .show-way button:nth-of-type(1){
@@ -207,11 +208,7 @@
         position: absolute;
         right: 0;
     }*/
-    .clearFix{
-        content: '';
-        display: inline-block;
-        clear: both;
-    }
+
 </style>
 <script>
     import MapVue from './map.vue'

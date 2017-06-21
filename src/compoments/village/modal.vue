@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -15,39 +15,39 @@
                                     <div class="form-group">
                                         <label for="villageName" class="col-sm-2 control-label">小区名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="villageName">
+                                            <input type="text" class="form-control" id="villageName" v-model="villageName">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="villageAddress" class="col-sm-2 control-label">地址</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="villageAddress">
+                                            <input type="text" class="form-control" id="villageAddress" v-model="villageAddress">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="villageYear" class="col-sm-2 control-label">年限</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="villageYear">
+                                            <input type="number" class="form-control" id="villageYear" min="0" v-model="villageYear">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="villageNum" class="col-sm-2 control-label">栋数</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="villageNum">
+                                            <input type="number" class="form-control" id="villageNum" min="0" v-model="villageNum">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">房屋类型</label>
                                         <div class="col-sm-10">
-                                            <label class="control-label"><input type="radio" class="radioInput" name="villageType">住宅</label>
-                                            <label class="control-label"><input type="radio" class="radioInput" name="villageType">公寓</label>
-                                            <label class="control-label"><input type="radio" class="radioInput" name="villageType">商住两用</label>
+                                            <label class="control-label"><input type="radio" v-model="villageType" class="radioInput" name="villageType">住宅</label>
+                                            <label class="control-label"><input type="radio" v-model="villageType" class="radioInput" name="villageType">公寓</label>
+                                            <label class="control-label"><input type="radio" v-model="villageType" class="radioInput" name="villageType">商住两用</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="propertyFee" class="col-sm-2 control-label">物业费</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="propertyFee">
+                                            <input type="number" class="form-control" id="propertyFee" min="0" v-model="propertyFee">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -65,13 +65,13 @@
                                     <div class="form-group">
                                         <label for="traffic" class="col-sm-2 control-label">交通情况</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="traffic">
+                                            <input type="password" class="form-control" id="traffic" v-model="traffic">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="life" class="col-sm-2 control-label">生活配套</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="life">
+                                            <input type="password" class="form-control" id="life" v-model="life">
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                        <button type="button" class="btn btn-primary">保存</button>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,20 @@
         props : ['oper'],
         data(){
             return {
-                msg: 'hello vue'
+                // 表单数据
+
+                // 基本
+                villageName : '',       // 小区名称
+                villageAddress : '',    // 小区地址
+                villageYear : '',       // 小区年限
+                villageNum : '',        // 栋数
+                villageType : '',       // 房屋类型
+                propertyFee : '',       // 物业费
+                villagePic : [],        // 小区照片
+
+                // 周边
+                traffic : [],           // 交通情况
+                life : []               // 生活配套
             }
         },
         created : function () {

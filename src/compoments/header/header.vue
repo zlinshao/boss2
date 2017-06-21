@@ -325,6 +325,50 @@
                             <span>小区管理</span>
                         </router-link>
                     </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>业绩管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>喜报录入</span>
+                                </a>
+                                <ul class="sub">
+                                    <li><router-link to="/gNCollect">收房</router-link></li>
+                                    <li><router-link to="/gNRenting">租房</router-link></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>公司业绩</span>
+                                </a>
+                                <ul class="sub">
+                                    <li><router-link to="/cACollect">收房</router-link></li>
+                                    <li><router-link to="/cARenting">租房</router-link></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>周期表</span>
+                                </a>
+                                <ul class="sub">
+                                    <li><router-link to="/periodicForPeople">个人</router-link></li>
+                                    <li><router-link to="/periodicForGroup">小组</router-link></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>工资业绩</span>
+                                </a>
+                                <ul class="sub">
+                                    <li><router-link to="/wACollect">收房</router-link></li>
+                                    <li><router-link to="/wARenting">租房</router-link></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
