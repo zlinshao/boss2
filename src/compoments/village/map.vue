@@ -1,6 +1,6 @@
 <template>
     <div>
-        <iframe src="../../../map.html" frameborder="0"></iframe>
+        <iframe src="../../../allMap.html" frameborder="0"></iframe>
     </div>
 </template>
 <style scoped>

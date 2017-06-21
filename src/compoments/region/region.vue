@@ -16,8 +16,8 @@
                     </div>-->
                     <div class="form-group">
                         <label>选择城市：</label>
-                        <button class="btn btn-success" data-cityId="0" @click="getRegions(0)" :class="{active : isActive == 0}">所有城市</button>
-                        <button class="btn btn-success" data-cityId="1" @click="getRegions(1)" :class="{active : isActive == 1}">南京</button>
+                        <button class="btn btn-success" type="button" data-cityId="0" @click="getRegions(0)" :class="{active : isActive == 0}">所有城市</button>
+                        <button class="btn btn-success" type="button" data-cityId="1" @click="getRegions(1)" :class="{active : isActive == 1}">南京</button>
                         <button class="btn btn-success" data-cityId="2" @click="getRegions(2)" :class="{active : isActive == 2}">苏州</button>
                     </div>
 
@@ -70,23 +70,21 @@
                         </tr>
                         </thead>
                         <tbody id="rentingId">
-                            <!--<router-link tgrouparea" v-for="item in regions" class="text-center">-->
-                                <tr v-for="item in regions" class="text-center">
-                                    <td>{{item.id}}</td>
-                                    <td>{{item.area_name}}</td>
-                                    <td>{{item.am}}</td>
-                                    <td>{{item.collect}}</td>
-                                    <td>{{item.house}}</td>
-                                    <td>{{item.nums}}</td>
-                                    <td>{{item.rent}}</td>
-                                    <td>
-                                        <router-link :to="{path:'group' , query:{regionId:item.id}}">
-                                            <button class="btn btn-primary btn-sm">查看小组</button>
-                                        </router-link>
-                                    </td>
-                                </tr>
+                            <tr v-for="item in regions" class="text-center">
+                                <td>{{item.id}}</td>
+                                <td>{{item.area_name}}</td>
+                                <td>{{item.am}}</td>
+                                <td>{{item.collect}}</td>
+                                <td>{{item.house}}</td>
+                                <td>{{item.nums}}</td>
+                                <td>{{item.rent}}</td>
+                                <td>
+                                    <router-link :to="{path:'group' , query:{regionId:item.id}}">
+                                        <button class="btn btn-primary btn-sm">查看小组</button>
+                                    </router-link>
+                                </td>
+                            </tr>
 
-                            <!--</router-link>-->
                         </tbody>
                     </table>
                 </section>
