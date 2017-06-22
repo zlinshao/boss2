@@ -13,7 +13,8 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="办公地址" v-model="areaAddr" @keyup.enter="addNewGroup">
+                    <input type="text" class="form-control" placeholder="办公地址" v-model="areaAddr"
+                           @keyup.enter="addNewGroup">
                 </div>
 
                 <div class="form-group">
@@ -33,20 +34,20 @@
         data(){
             return {
                 msg: 'hello vue',
-                regions :'',
-                areaId:this.$route.query.regionId,
-                areaName : '',
-                areaAddr : ''
+                regions: '',
+                areaId: this.$route.query.regionId,
+                areaName: '',
+                areaAddr: ''
             }
         },
         created: function () {
             this.getRegions();
         },
-        methods:{
+        methods: {
             getRegions(){
                 this.$http.get('http://test.api.boss.lejias.cn/manager/Area/areaList')
                     .then(
-                        res => this.regions=res.data.data
+                        res => this.regions = res.data.data
                     );
             },
             chooseArea(){
@@ -54,7 +55,7 @@
             },
             addNewGroup(){
                 alert(1);
-                this.$http.post('http://test.api.boss.lejias.cn/manager/Groups/saveGroup' , {
+                this.$http.post('http://test.api.boss.lejias.cn/manager/Groups/saveGroup', {
                     "groups": this.areaName, //小组名称
                     "address": this.areaAddr,//办公地点
                     "region_id": this.areaId//所属区域id   select框选择区域名称
