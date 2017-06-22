@@ -1,20 +1,23 @@
 <template>
     <div>
-        <UserAdd></UserAdd>
-        <ReviseUse></ReviseUse>
-        <Organize></Organize>
+        <!--<UserAdd></UserAdd>-->
+        <!--<ReviseUse></ReviseUse>-->
+        <!--<OrganizA></OrganizA>-->
+        <organization></organization>
     </div>
 </template>
 <script>
-    import UserAdd from './userAdd.vue'
-    import {mapGetters,mapActions} from 'vuex'
-    import Organize from './organize.vue'
-    import ReviseUse from './reviseUse.vue'
+//    import UserAdd from './userAdd.vue'
+//    import {mapGetters,mapActions} from 'vuex'
+//    import Organize from './organize.vue'
+//    import ReviseUse from './reviseUse.vue'
+    import organization from './organization.vue'
     export default {
         components:{
-            UserAdd,
-            Organize,
-            ReviseUse
+//            UserAdd,
+//            Organize,
+//            ReviseUse
+            organization
         },
         data(){
             return {
