@@ -1,11 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-md pull-right" data-toggle="modal" data-target="#myModalUse">
-            新增用户
-        </button>
-
-        <div class="modal fade" tabindex="-1" role="dialog" id="myModalUse" aria-labelledby="gridSystemModalLabel">
+        <div class="modal fade" tabindex="-1" role="dialog" id="myModalAdd" aria-labelledby="gridSystemModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -116,7 +112,6 @@
         mounted(){
             this.getArea(); //请求区域列表
             this.getRole(); //请求角色列表
-//            this.getVocation();// 请求职位列表
             this.searchBranch();
         },
         methods:{
@@ -159,16 +154,18 @@
                     },
                     {headers:{'Content-Type': 'application/json'}}
                 ).then((res)=>{
-                    console.log(res);
-                    this.areaId='';
-                    this.roleId='';
-                    this.groupId='';
-                    this.vocationId='';
-                    this.realName='';
-                    this.phone='';
-                    this.branchId='';
+                    if(res.data.code==90030){
+                        this.areaId='';
+                        this.roleId='';
+                        this.groupId='';
+                        this.vocationId='';
+                        this.realName='';
+                        this.phone='';
+                        this.branchId='';
+                        $("#myModalAdd").modal('hide');
+                    }
                 })
-            }
+            },
         }
     }
 </script>

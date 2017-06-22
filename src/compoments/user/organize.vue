@@ -49,7 +49,7 @@
                                                 @keydown.down="changeDown()" @keydown.up.prevent="changeUp()"
                                                 @keydown.13='keydownAdd' v-model="keywords"  placeholder="搜索企业联系人">
                                     </div>
-                                    <div class="searchList">
+                                    <div class="searchList box">
                                         <ul>
                                             <li :class="{'hov':active1==index}" v-for="(item, index) in searchName"
                                                  @mouseover="changeClass(index)" @click="mouseAdd(item.name)">
@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 box" style="padding: 0">
+                            <div class="col-md-5 box boxSelf" style="padding: 0">
                                 <div class="boxHead">南京乐嘉商业管理有限公司</div>
                                 <div>
                                     <a @click="getBranch">南京乐嘉商业管理有限公司</a>
@@ -228,7 +228,7 @@
         margin: 10px;
         border-radius: 5px
     }
-    .box{
+    .boxSelf{
         border: 1px solid #aaa;
         overflow: auto;
         height: 350px;
@@ -264,17 +264,19 @@
         border-radius: 3px;
         border-bottom: none
     }
-
-   body {}{
-        scrollbar-arrow-color: #f4ae21; /**//*三角箭头的颜色*/
-        scrollbar-face-color: #333; /**//*立体滚动条的颜色*/
-        scrollbar-3dlight-color: #666; /**//*立体滚动条亮边的颜 色*/
-        scrollbar-highlight-color: #666; /**//*滚动条空白部分的 颜色*/
-        scrollbar-shadow-color: #999; /**//*立体滚动条阴影的颜 色*/
-        scrollbar-darkshadow-color: #666; /**//*立体滚动条强阴 影的颜色*/
-        scrollbar-track-color: #666; /**//*立体滚动条背景颜色*/
-        scrollbar-base-color:#f8f8f8; /**//*滚动条的基本颜色*/
-
+    .box::-webkit-scrollbar {
+        width:8px;
+        height:300px;
     }
-
+    .box::-webkit-scrollbar-button    {
+        background-color:#f0f0f8;
+    }
+    .box::-webkit-scrollbar-track     {
+        background:#f0f0f8;
+    }
+    .box::-webkit-scrollbar-thumb{
+        background:#80d3d9
+    ;
+        border-radius:10px;
+    }
 </style>

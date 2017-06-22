@@ -1946,8 +1946,7 @@ ul.ft-link li a i {
     -webkit-border-radius: 4px;
 }
 .user-head .user-name {
-    display: inline-block;
-    margin:0 0 0 10px;
+    text-align:center;
 }
 
 .user-head .user-name h5 {
