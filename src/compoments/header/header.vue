@@ -269,10 +269,10 @@
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 1}" @click='pitch_on(1)'>
-                                <router-link to='/'>客户</router-link>
+                                <router-link to='/custom'>客户</router-link>
                             </li>
                             <li :class="{'active': isActive == 2}" @click='pitch_on(2)'>
-                                <router-link to='/'>客户池</router-link>
+                                <router-link to='/customerPool'>客户池</router-link>
                             </li>
                         </ul>
                     </li>
@@ -283,15 +283,15 @@
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 3}" @click='pitch_on(3)'>
-                                <router-link to='/'>已收房源</router-link>
+                                <router-link to='/okCollect'>已收房源</router-link>
                             </li>
                             <li :class="{'active': isActive == 4}" @click='pitch_on(4)'>
-                                <router-link to='/'>未收房源</router-link>
+                                <router-link to='/noCollect'>未收房源</router-link>
                             </li>
                         </ul>
                     </li>
                     <li class="sub-menu" :class="{'active': isActive == 5}" @click='pitch_on(5)'>
-                        <router-link to='/'>
+                        <router-link to='/yi'>
                             <i class="fa fa-th"></i>
                             <span>合同管理</span>
                         </router-link>

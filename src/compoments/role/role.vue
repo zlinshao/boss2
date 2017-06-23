@@ -29,9 +29,10 @@
                                            v-model="title">
                                 </div>
                                 <div v-for="role in myData" class="check">
+                                    <label>
                                     <input @click="rules(role.id, $event)" type='checkbox' class="pull-left"
                                            v-model='checkboxModel'
-                                           :value='role.id'>{{role.title}}
+                                           :value='role.id'>{{role.title}}</label>
                                     <!--多选框-->
                                     <!--<input type="checkbox"  :checked="state"> -->
                                 </div>
@@ -47,8 +48,6 @@
                                 <button v-if="status2" class="btn btn-primary"
                                         @click="revise_power">修改
                                 </button>
-
-                                <input v-if="status1" type="reset" value="重置" class="btn btn-danger">
                             </div>
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
                         </div>
@@ -89,7 +88,6 @@
                 </section>
             </div>
         </div>
-
     </div>
 </template>
 

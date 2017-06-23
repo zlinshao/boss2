@@ -1,0 +1,73 @@
+{
+  "code": "90020",
+  "msg": "部门与用户查询成功",
+  "data": {
+    "department": [
+      {
+        "id": 14,
+        "name": "江宁一部",
+        "status": "正常",
+        "parent_id": 9,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      },
+      {
+        "id": 24,
+        "name": "江宁一组",
+        "status": "正常",
+        "parent_id": 14,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      },
+      {
+        "id": 25,
+        "name": "江宁二组",
+        "status": "正常",
+        "parent_id": 14,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      },
+      {
+        "id": 26,
+        "name": "江宁三组",
+        "status": "正常",
+        "parent_id": 14,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      },
+      {
+        "id": 27,
+        "name": "江宁四组",
+        "status": "正常",
+        "parent_id": 14,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      },
+      {
+        "id": 28,
+        "name": "江宁五组",
+        "status": "正常",
+        "parent_id": 14,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      },
+      {
+        "id": 29,
+        "name": "江宁六组",
+        "status": "正常",
+        "parent_id": 14,
+        "create_time": "2017-06-23 12:21:36",
+        "update_time": "2017-06-23 12:21:36",
+        "delete_time": null
+      }
+    ],
+    "user": [],
+    "pages": 0
+  }
+}

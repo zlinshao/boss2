@@ -30,7 +30,7 @@
 
 <style scoped>
     #success {
-        width: 45%;
+        width: 570px;
         position: fixed;
         top: 4px;
         right: 15px;
@@ -38,7 +38,7 @@
     }
 
     #err {
-        width: 45%;
+        width: 570px;
         position: fixed;
         top: 4px;
         right: 15px;
@@ -48,6 +48,7 @@
     @media screen and (max-width: 767px) {
         #success, #err {
             width: 91%;
+            right: 22px;
         }
     }
 </style>
