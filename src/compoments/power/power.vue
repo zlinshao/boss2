@@ -96,7 +96,7 @@
         created (){
             this.list_power(this.page);
         },
-        methods: {
+            methods: {
 
 //            权限列表
             list_power (v){
