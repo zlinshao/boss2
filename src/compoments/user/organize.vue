@@ -1,11 +1,5 @@
 <template>
     <div>
-        <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" @click="empty">
-                新建任务
-            </button>
-        </div>
-
         <!--右侧栏-->
         <div class="modal fade full-width-modal-right" id="myModal2" tabindex="-1" role="dialog"
              aria-labelledby="myModal2" aria-hidden="true">
