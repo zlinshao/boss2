@@ -16,5 +16,5 @@ export default[
         path: '/region',
         name: 'Region',
         component: Region
-    }
+    },
 ]
