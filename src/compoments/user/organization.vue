@@ -13,57 +13,11 @@
                     <div class="inbox-body">
                         <div>
                             <a @click="getBranch('')">组织架构</a>
-                            <a v-if='isFirst' @click="getSecond(reFirstId,reFirstName)" >&nbsp;&gt;&nbsp;{{reFirstName}}</a>
-                            <a v-if='isSecond' @click="getThird(reSecondId,reSecondName)">&nbsp;&gt;&nbsp;{{reSecondName}}</a>
-                            <a v-if='isThird' @click="getFour(reThirdId,reThirdName)">&nbsp;&gt;&nbsp;{{reThirdName}}</a>
+                            <a v-if='isFirst' @click="getSecond(reFirstId,reFirstName)"> &gt;&nbsp;{{reFirstName}}</a>
+                            <a v-if='isSecond' @click="getThird(reSecondId,reSecondName)">&gt;&nbsp;{{reSecondName}}</a>
+                            <a v-if='isThird' @click="getFour(reThirdId,reThirdName)">&gt;&nbsp;{{reThirdName}}</a>
                             <a v-if='isFour' @click="getFive(reFourId,reFourName)">&nbsp;&gt;&nbsp;{{reFourName}}</a>
                         </div>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                            &times;
-                                        </button>
-                                        <h4 class="modal-title">Compose</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="form-horizontal" role="form">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 control-label">To</label>
-                                                <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="inputEmail1"
-                                                           placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-lg-2 control-label">Cc / Bcc</label>
-                                                <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="cc" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-lg-2 control-label">Subject</label>
-                                                <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="inputPassword1"
-                                                           placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-lg-2 control-label">Message</label>
-                                                <div class="col-lg-10">
-                                                    <textarea name="" id="" class="form-control" cols="30"
-                                                              rows="10"></textarea>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
                     </div>
                     <div class="nav-collapse">
                         <ul class="inbox-nav inbox-divider">
@@ -72,8 +26,8 @@
                                 @mouseover="changeClass(index)" v-if="type==1">
                                 <a href="#">
                                     <i @click.stop="getSecond(item.id,item.name)"
-                                       class=" fa fa-chevron-right"></i>
-                                    {{item.name}}
+                                       class=" fa fa-chevron-right">{{item.name}}</i>
+
                                     <i data-toggle="modal" href="#myModal"
                                        class="fa fa-gear pull-right"
                                        style="margin-top: 12px"></i>
@@ -84,8 +38,8 @@
                                 @mouseover="changeClass(index)" v-if="type==2">
                                 <a href="#">
                                     <i @click.stop="getThird(item.id,item.name)"
-                                       class="fa fa-chevron-right"></i>
-                                    {{item.name}}
+                                       class="fa fa-chevron-right">{{item.name}}</i>
+
                                     <i data-toggle="modal" href="#myModal"
                                        class="fa fa-gear pull-right"
                                        style="margin-top: 12px"></i>
@@ -96,8 +50,7 @@
                                 @mouseover="changeClass(index)" v-if="type==3">
                                 <a href="#">
                                     <i @click.stop="getFour(item.id,item.name)"
-                                       class="fa fa-chevron-right"></i>
-                                    {{item.name}}
+                                       class="fa fa-chevron-right">{{item.name}}</i>
                                     <i data-toggle="modal" href="#myModal"
                                        class="fa fa-gear pull-right"
                                        style="margin-top: 12px"></i>
@@ -108,8 +61,8 @@
                                 @mouseover="changeClass(index)" v-if="type==4">
                                 <a href="#">
                                     <i @click.stop="getFive(item.id,item.name)"
-                                       class="fa fa-chevron-right"></i>
-                                    {{item.name}}
+                                       class="fa fa-chevron-right">{{item.name}}</i>
+
                                     <i data-toggle="modal" href="#myModal"
                                        class="fa fa-gear pull-right"
                                        style="margin-top: 12px"></i>
@@ -120,8 +73,8 @@
                                 @mouseover="changeClass(index)" v-if="type==4">
                                 <a href="#">
                                     <i @click.stop="getFive(item.id,item.name)"
-                                       class="fa fa-chevron-right"></i>
-                                    {{item.name}}
+                                       class="fa fa-chevron-right">{{item.name}}</i>
+
                                     <i data-toggle="modal" href="#myModal"
                                        class="fa fa-gear pull-right"
                                        style="margin-top: 12px"></i>
@@ -132,42 +85,18 @@
                 </aside>
                 <!--选中与搜索-->
                 <aside class="lg-side">
-                    <div class="inbox-head" style="padding-bottom: 0px">
-                        <!--<div class="row">-->
-                            <!--<div class="col-lg-6 col-md-12">-->
-                                <!--<h3 style="color: #0f0f0f">部门</h3>-->
-                                <!--<h3>&nbsp;{{department}}</h3>-->
-                            <!--</div>-->
-                            <!--<div class="col-lg-3 col-md-12">-->
-                                <!--<div class="pull-right" style="margin: 5px">-->
-                                    <!--<button class="btn btn-primary">提醒</button>-->
-                                <!--</div>-->
-                                <!--<div class="pull-right" style="margin: 5px">-->
-                                    <!--<button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">添加员工</button>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-lg-3 col-md-12">-->
-                                <!--<form class="pull-right position" action="#">-->
-                                    <!--<div class="input-append">-->
-                                        <!--<input placeholder="搜索企业联系人" class="sr-input"-->
-                                               <!--style="margin-bottom: 0px"     @keyup="search" v-model="keywords">-->
-                                        <!--<button type="button" class="btn sr-btn"><i class="fa fa-search"></i></button>-->
-                                    <!--</div>-->
-                                <!--</form>-->
-                            <!--</div>-->
-
-                        <!--</div>-->
+                    <div class="leftHead" style="padding-bottom: 0px">
                         <div class="row">
                             <div class="col-lg-5 col-md-12">
                                 <h4 style="color: #0f0f0f">部门
-                                    &nbsp;<span style="color:#fff">{{department}}</span>
+                                    <span style="color:#fff;font-size:16px;" v-if="isDepartment"> {{department}}</span>
                                 </h4>
                             </div>
-                            <div class="col-lg-3 col-md-12">
+                            <div class="col-lg-3 col-md-12 clickBt">
                                 <button class="btn btn-primary">提醒</button>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">添加员工</button>
+                                <button class="btn btn-primary" @click="addUser">添加员工</button>
                             </div>
-                            <div class="col-lg-4 col-md-12">
+                            <div class="col-lg-4 col-md-12 pull-right">
                                 <form  action="#">
                                         <input placeholder="搜索企业联系人" class="sr-input"
                                                style="margin-bottom: 0px"     @keyup="search" v-model="keywords">
@@ -217,7 +146,7 @@
                                                         更多
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-left">
-                                                        <li @click="edit(item.staff_id)"><a>编辑</a></li>
+                                                        <li><a>编辑</a></li>
                                                         <li role="separator" class="divider"></li>
                                                         <li><a>启用账号</a></li>
                                                         <li role="separator" class="divider"></li>
@@ -225,7 +154,7 @@
                                                     </ul>
                                                 </td>
                                             </tr>
-                                            <tr v-show="branchList.length==0">
+                                            <tr v-show="userList.length==0">
                                                 <td colspan="10" class="text-center text-muted">
                                                     <h4>暂无数据....</h4>
                                                 </td>
@@ -259,7 +188,7 @@
 <script>
     const addr = 'http://test.v2.api.boss.lejias.cn/manager/user/';
     import UserAdd from './userAdd.vue';
-    import Organize from  './organization.vue'
+    import Organize from  './organize.vue'
     export default{
         components: {
             UserAdd,
@@ -281,6 +210,7 @@
                 isSecond: false,
                 isFirst:false,
                 isFour:false,
+                isDepartment:false,
                 reFirstId:'',
                 reSecondId:'',
                 reThirdId:'',
@@ -306,6 +236,7 @@
                     this.isSecond  = false;
                     this.isThird = false;
                     this.isFour=false;
+                    this.isDepartment=false;
                 })
             },
             getSecond(id,name){
@@ -320,6 +251,7 @@
                     this.reFirstName=name;
                     this.reFirstId=id;
                     this.department=name;
+                    this.isDepartment=true;
                 })
             },
             getThird(id,name){
@@ -334,6 +266,7 @@
                     this.reSecondName=name;
                     this.reSecondId=id;
                     this.department=name;
+                    this.isDepartment=true;
                 })
             },
             getFour(id,name){
@@ -349,6 +282,7 @@
                     this.reThirdName=name;
                     this.reThirdId=id;
                     this.department=name;
+                    this.isDepartment=true;
                 })
             },
             getFive(id,name){
@@ -364,6 +298,7 @@
                     this.reFourName=name;
                     this.reFourId=id;
                     this.department=name;
+                    this.isDepartment=true;
                 })
             },
             //鼠标hover事件
@@ -384,7 +319,7 @@
                     })
                 }
             },
-            edit(id){
+            addUser(){
                 $('#myModalAdd').modal('show');
             },
         }
@@ -397,4 +332,34 @@
     a{
         cursor: pointer;
     }
+    .leftHead{
+        padding: 20px;
+        background: #41cac0;
+        color: #fff;
+        border-radius: 0 4px 0 0;
+        -webkit-border-radius: 0 4px 0 0;
+        min-height: 80px;
+    }
+    .leftHead  .sr-input {
+        height: 40px;
+        border: none;
+        box-shadow: none;
+        padding: 0 5px;
+        float: left;
+        border-radius: 4px 0 0 4px;
+        color: #8a8a8a;
+    }
+    .leftHead  .sr-btn {
+        height: 40px;
+        border: none;
+        background: #00a6b2;
+        color: #fff;
+        padding: 0 20px;
+        border-radius: 0 4px 4px 0;
+        -webkit-border-radius: 0 4px 4px 0;
+    }
+    @media screen and (max-width:1024px) {
+        .clickBt {float:right }
+    }
+
 </style>

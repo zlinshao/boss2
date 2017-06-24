@@ -57,6 +57,37 @@
                                         </div>
                                     </div>
                                     <hr>
+                                    <h3 style="margin-top: -15px">工作信息</h3>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >所在部门</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control">
+                                                <option value="">全部小组</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control">
+                                                <option value="">全部小组</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control">
+                                                <option value="">全部小组</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" ></label>
+                                        <div class="col-md-4">
+                                            <select class="form-control">
+                                                <option value="">全部小组</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >职务</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control">
+                                                <option value="">全部小组</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >职务</label>
                                         <div class="col-lg-4">
@@ -132,86 +163,6 @@
                                 </form>
                             </div>
                         </section>
-                        <!--<div class="row">-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-lg-2 col-sm-2  control-label">真实姓名</label>-->
-                                <!--<div class="col-lg-5">-->
-                                    <!--<div class="iconic-input right">-->
-                                        <!--<i class="fa fa-book"></i>-->
-                                        <!--<input type="text" v-model="realName" class="form-control" placeholder="真实姓名">-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="col-lg-5">-->
-                                    <!--<label class="demo_label">-->
-                                        <!--性别：-->
-                                    <!--</label>-->
-                                    <!--<label for="boy" class="boy_label" style="display: inline-block">男</label>-->
-                                    <!--<input type="radio" id="boy" name="sex" value="1">-->
-                                    <!--<label for="girl" class="girl_label" style="display: inline-block">女</label>-->
-                                    <!--<input type="radio" id="girl" name="sex" value="2">-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-lg-2 col-sm-2  control-label">手机号码</label>-->
-                                <!--<div class="col-lg-9">-->
-                                    <!--<div class="iconic-input right">-->
-                                        <!--<i class="fa fa-book"></i>-->
-                                        <!--<input type="text" v-model="phone" class="form-control" placeholder="手机号码">-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-lg-2 col-sm-2  control-label">员工部门</label>-->
-                                <!--<div class="col-lg-9">-->
-                                    <!--<div class="iconic-input right">-->
-                                        <!--<select class="form-control" v-model="branchId" @change="getVocation">-->
-                                            <!--<option value="">全部</option>-->
-                                            <!--<option :value="item.id" v-for="item in branchList">{{item.name}}</option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<label class="col-lg-2 col-sm-2  control-label">所在区域</label>-->
-                                <!--<div class="col-lg-3">-->
-                                    <!--<div class="form-group">-->
-                                    <!--<select class="form-control" v-model="areaId" @change="getGroup">-->
-                                        <!--<option value="">全部</option>-->
-                                        <!--<option :value="item.id" v-for="item in areaList">{{item.area_name}}</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<label class="col-lg-3 col-sm-2  control-label">区域小组</label>-->
-                                <!--<div class="col-lg-3">-->
-                                    <!--<div class="form-group">-->
-                                    <!--<select  class="form-control"  v-model="groupId">-->
-                                        <!--<option value="">全部</option>-->
-                                        <!--<option :value="item.id" v-for="item in groupList">{{item.groups}}</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<label class="col-lg-2 col-sm-2  control-label">角色</label>-->
-                                <!--<div class="col-lg-3">-->
-                                    <!--<div class="form-group">-->
-                                    <!--<select  class="form-control" v-model="roleId">-->
-                                        <!--<option value="">全部</option>-->
-                                        <!--<option :value="item.id" v-for="item in roleList">{{item.role}}</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<label class="col-lg-3 col-sm-2  control-label">职位</label>-->
-                                <!--<div class="col-lg-3">-->
-                                    <!--<div class="form-group">-->
-                                    <!--<select class="form-control" v-model="vocationId">-->
-                                        <!--<option value="">全部</option>-->
-                                        <!--<option :value="item.id" v-for="item in vocationList">{{item.vocation}}</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
