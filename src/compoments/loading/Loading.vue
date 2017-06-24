@@ -24,7 +24,6 @@
 	}
 	.zns-loading-inner{
 		display:flex;
-	    display: flex;
 	    height: 100px;
 	    align-items: center;
 	    justify-content: center;

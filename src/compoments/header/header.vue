@@ -6,7 +6,7 @@
                 <div data-original-title="" data-placement="right" class="fa fa-bars tooltips"></div>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo">Flat<span>lab</span></a>
+            <a class="logo">B<span>OSS</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -29,7 +29,8 @@
                                         <div class="percent">40%</div>
                                     </div>
                                     <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                             aria-valuenow="40"
                                              aria-valuemin="0" aria-valuemax="100" style="width: 40%">
                                             <span class="sr-only">40% Complete (success)</span>
                                         </div>
@@ -43,7 +44,8 @@
                                         <div class="percent">60%</div>
                                     </div>
                                     <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+                                        <div class="progress-bar progress-bar-warning" role="progressbar"
+                                             aria-valuenow="60"
                                              aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             <span class="sr-only">60% Complete (warning)</span>
                                         </div>
@@ -57,7 +59,8 @@
                                         <div class="percent">87%</div>
                                     </div>
                                     <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20"
+                                        <div class="progress-bar progress-bar-info" role="progressbar"
+                                             aria-valuenow="20"
                                              aria-valuemin="0" aria-valuemax="100" style="width: 87%">
                                             <span class="sr-only">87% Complete</span>
                                         </div>
@@ -71,7 +74,8 @@
                                         <div class="percent">33%</div>
                                     </div>
                                     <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
+                                        <div class="progress-bar progress-bar-danger" role="progressbar"
+                                             aria-valuenow="80"
                                              aria-valuemin="0" aria-valuemax="100" style="width: 33%">
                                             <span class="sr-only">33% Complete (danger)</span>
                                         </div>
@@ -85,7 +89,8 @@
                                         <div class="percent">45%</div>
                                     </div>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0"
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="45"
+                                             aria-valuemin="0"
                                              aria-valuemax="100" style="width: 45%">
                                             <span class="sr-only">45% Complete</span>
                                         </div>
@@ -112,7 +117,8 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./../../assets/img/avatar-mini.jpg"></span>
+                                    <span class="photo"><img alt="avatar"
+                                                             src="./../../assets/img/avatar-mini.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Jonathan Smith</span>
                                     <span class="time">Just now</span>
@@ -124,7 +130,8 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./../../assets/img/avatar-mini2.jpg"></span>
+                                    <span class="photo"><img alt="avatar"
+                                                             src="./../../assets/img/avatar-mini2.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Jhon Doe</span>
                                     <span class="time">10 mins</span>
@@ -136,7 +143,8 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./../../assets/img/avatar-mini3.jpg"></span>
+                                    <span class="photo"><img alt="avatar"
+                                                             src="./../../assets/img/avatar-mini3.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Jason Stathum</span>
                                     <span class="time">3 hrs</span>
@@ -148,7 +156,8 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./../../assets/img/avatar-mini4.jpg"></span>
+                                    <span class="photo"><img alt="avatar"
+                                                             src="./../../assets/img/avatar-mini4.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Jondi Rose</span>
                                     <span class="time">Just now</span>
@@ -253,69 +262,82 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-                    <li>
-                        <a href="login.html">
-                            <i class="fa fa-user"></i>
-                            <span>登陆注册</span>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>客户管理</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="index.html">
-                            <i class="fa fa-dashboard"></i>
-                            <span>首页</span>
-                        </a>
+                        <ul class="sub">
+                            <li :class="{'active': isActive == 1}" @click='pitch_on(1)'>
+                                <router-link to='/custom'>客户</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 2}" @click='pitch_on(2)'>
+                                <router-link to='/customerPool'>客户池</router-link>
+                            </li>
+                        </ul>
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
-                            <span>房源信息</span>
+                            <span>房屋管理</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="collect.html">收房</a></li>
-                            <li><a href="renting.html">租房</a></li>
+                            <li :class="{'active': isActive == 3}" @click='pitch_on(3)'>
+                                <router-link to='/okCollect'>已收房源</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 4}" @click='pitch_on(4)'>
+                                <router-link to='/noCollect'>未收房源</router-link>
+                            </li>
                         </ul>
                     </li>
-
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-cogs"></i>
-                            <span>房屋状态</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="norenting_in.html">未租空内</a></li>
-                            <li><a href="norenting_out.html">未租空外</a></li>
-                            <li><a href="renting_almost.html">租期将近</a></li>
-                            <li><a href="renting_overdue.html">租期过期</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-tasks"></i>
-                            <span>业绩计算</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="periodic_table.html">周期表</a></li>
-                            <li><a href="finish_completed.html">应完成业绩</a></li>
-                            <li><a href="manage_completed.html">业绩管理</a></li>
-                            <li><a href="manage_salary.html">工资管理</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="personal.html">
+                    <li class="sub-menu" :class="{'active': isActive == 5}" @click='pitch_on(5)'>
+                        <router-link to='/yi'>
                             <i class="fa fa-th"></i>
-                            <span>个人中心</span>
+                            <span>合同管理</span>
+                        </router-link>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>财务管理</span>
                         </a>
+                        <ul class="sub">
+                            <li :class="{'active': isActive == 6}" @click='pitch_on(6)'>
+                                <router-link to='/'>业绩管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 7}" @click='pitch_on(7)'>
+                                <router-link to='/'>账本</router-link>
+                            </li>
+                        </ul>
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-tasks"></i>
-                            <span>权限控制</span>
+                            <span>人资管理</span>
                         </a>
                         <ul class="sub">
-                            <li><router-link to='/power'>权限管理</router-link></li>
-                            <li><router-link to='/user'>用户管理</router-link></li>
-                            <li><router-link to='/region'>区域管理</router-link></li>
+                            <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
+                                <router-link to='/user'>用户管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
+                                <router-link to='/role'>角色管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 10}" @click='pitch_on(10)'>
+                                <router-link to='/power'>权限管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 11}" @click='pitch_on(11)'>
+                                <router-link to='/region'>部门管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 12}" @click='pitch_on(12)'>
+                                <router-link to='/region'>区域管理</router-link>
+                            </li>
                         </ul>
+                    </li>
+                    <li :class="{'active': isActive == 13}" @click='pitch_on(13)'>
+                        <router-link to="/village">
+                            <i class="fa fa-dashboard"></i>
+                            <span>小区管理</span>
+                        </router-link>
                     </li>
                 </ul>
                 <!-- sidebar menu end-->
@@ -401,7 +423,8 @@
                             <div class="percent">40%</div>
                         </div>
                         <div class="progress progress-striped">
-                            <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+                            <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40"
+                                 role="progressbar" class="progress-bar progress-bar-success">
                                 <span class="sr-only">40% Complete (success)</span>
                             </div>
                         </div>
@@ -414,7 +437,8 @@
                             <div class="percent">60%</div>
                         </div>
                         <div class="progress progress-striped">
-                            <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning">
+                            <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60"
+                                 role="progressbar" class="progress-bar progress-bar-warning">
                                 <span class="sr-only">60% Complete (warning)</span>
                             </div>
                         </div>
@@ -427,7 +451,8 @@
                             <div class="percent">87%</div>
                         </div>
                         <div class="progress progress-striped">
-                            <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
+                            <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20"
+                                 role="progressbar" class="progress-bar progress-bar-info">
                                 <span class="sr-only">87% Complete</span>
                             </div>
                         </div>
@@ -440,7 +465,8 @@
                             <div class="percent">33%</div>
                         </div>
                         <div class="progress progress-striped">
-                            <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar progress-bar-danger">
+                            <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80"
+                                 role="progressbar" class="progress-bar progress-bar-danger">
                                 <span class="sr-only">33% Complete (danger)</span>
                             </div>
                         </div>
@@ -453,7 +479,8 @@
                             <div class="percent">45%</div>
                         </div>
                         <div class="progress progress-striped active">
-                            <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar">
+                            <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45"
+                                 role="progressbar" class="progress-bar">
                                 <span class="sr-only">45% Complete</span>
                             </div>
                         </div>
@@ -470,7 +497,18 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        data(){
+            return {
+                isActive: 0,
+            }
+        },
+        methods: {
+            pitch_on (n){
+                this.isActive = n;
+            },
+        }
+    }
 </script>
 
 
