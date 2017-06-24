@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="pg>1">
         <nav aria-label="Page navigation" class="pull-right">
             <ul class="pagination">
                 <li v-show="page != 1" @click="go_to(1)"><a>首页</a></li>

@@ -315,8 +315,7 @@
         background:#f0f0f8;
     }
     .box::-webkit-scrollbar-thumb{
-        background:#80d3d9
-    ;
+        background:#80d3d9;
         border-radius:10px;
     }
 </style>

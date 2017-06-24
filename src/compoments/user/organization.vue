@@ -125,6 +125,7 @@
                                                 <th>用户组</th>
                                                 <th>人员状态</th>
                                                 <th>手机号</th>
+                                                <th>入职时间</th>
                                                 <th>操作</th>
                                             </tr>
                                             </thead>
@@ -134,10 +135,11 @@
                                                 <td v-for="value in item.department">{{value}}</td>
                                                 <td v-for="value in item.position_id">{{value}}</td>
                                                 <td v-if="item.position_id.length==0">无</td>
-                                                <td v-for="value in item.role">{{value}}</td>
+                                                <td v-for="item1 in item.role">{{item1.title}}</td>
                                                 <td v-if="item.role.length==0">无</td>
                                                 <td>{{item.status}}</td>
                                                 <td>{{item.mobile}}</td>
+                                                <td>{{item.enroll_time}}</td>
                                                 <td class="dropdown">
                                                     <a href="#"
                                                        class="dropdown-toggle btn btn-default text-white"
@@ -145,12 +147,18 @@
                                                        aria-expanded="false">
                                                         更多
                                                     </a>
-                                                    <ul class="dropdown-menu dropdown-menu-left">
-                                                        <li><a>编辑</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a>启用账号</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a>停用账号</a></li>
+                                                    <ul class="dropdown-menu dropdown-menu-left" style="padding: 0;margin:0">
+                                                        <li >
+                                                            <button type="button" class="btn btn-default btn-lg btn-block">编辑</button>
+                                                        </li>
+                                                        <li role="separator" class="divider" style="margin: 0"></li>
+                                                        <li @click="accountStatus(item.id)">
+                                                            <button type="button" class="btn btn-default btn-lg btn-block" disabled>启用账号</button>
+                                                        </li>
+                                                        <li role="separator" class="divider" style="margin: 0"></li>
+                                                        <li>
+                                                            <button type="button" class="btn btn-default btn-lg btn-block">禁用账号</button>
+                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -162,18 +170,6 @@
                                             </tbody>
                                         </table>
                                     </section>
-                                    <div class="row pull-right" style="padding-right: 15px;">
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination">
-                                                <li>
-                                                    <input type="button" class="btn btn-white Previous" value="上一页">
-                                                </li>
-                                                <li>
-                                                    <input type="button" class="btn btn-white Next" value="下一页">
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -183,16 +179,27 @@
         </section>
         <UserAdd></UserAdd>
         <Organize></Organize>
+        <Status></Status>
+        <Page :pg="page" @pag="getBranch" v-if="type==1"></Page>
+        <Page :pg="page" @pag="getSecond(id,name,a)" v-if="type==2"></Page>
+        <Page :pg="page" @pag="getThird(id,name,a)" v-if="type==3"></Page>
+        <Page :pg="page" @pag="getFour(id,name,a)" v-if="type==4"></Page>
+        <Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>
+        <Page :pg="page" @pag="search" v-if="type==6"></Page>
     </div>
 </template>
 <script>
     const addr = 'http://test.v2.api.boss.lejias.cn/manager/user/';
     import UserAdd from './userAdd.vue';
-    import Organize from  './organize.vue'
+    import Organize from  './organize.vue';
+    import Page from '../common/page.vue';
+    import Status from './accountStatus.vue'
     export default{
         components: {
             UserAdd,
-            Organize
+            Organize,
+            Page,
+            Status
         },
         data(){
             return {
@@ -204,7 +211,10 @@
                 FiveList:[],
                 type: '',      //列表类型 1为部门 2为二级 3为三级
                 keywords: '',   //搜索关键字
+                page:'',
                 active1:'',
+                id:'',
+                name:'',
                 //多级菜单
                 isThird: false,
                 isSecond: false,
@@ -227,10 +237,11 @@
 //            this.initialize();
         },
         methods: {
-            getBranch(){
-                this.$http.get(addr + 'departmentIndex').then((res) => {
+            getBranch(a){
+                this.$http.get(addr + 'departmentIndex/page/'+a).then((res) => {
                     this.branchList = res.data.data.department;
                     this.userList=res.data.data.user;
+                    this.page=res.data.data.pages;
                     this.type = 1;
                     this.isFirst = false;
                     this.isSecond  = false;
@@ -239,11 +250,14 @@
                     this.isDepartment=false;
                 })
             },
-            getSecond(id,name){
-                this.$http.get(addr + 'departmentIndex/id/'+id).then((res) => {
+            getSecond(id,name,a){
+                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
+                    this.page=res.data.data.pages;
                     this.type = 2;
+                    this.id=id;
+                    this.name=name;
                     this.isFirst = true;
                     this.isSecond  = false;
                     this.isThird = false;
@@ -254,11 +268,14 @@
                     this.isDepartment=true;
                 })
             },
-            getThird(id,name){
-                this.$http.get(addr + 'departmentIndex/id/'+id).then((res) => {
+            getThird(id,name,a){
+                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.ThirdList = res.data.data.department;
                     this.userList=res.data.data.user;
+                    this.page=res.data.data.pages;
                     this.type = 3;
+                    this.id=id;
+                    this.name=name;
                     this.isFirst = true;
                     this.isSecond  = true;
                     this.isThird = false;
@@ -269,12 +286,15 @@
                     this.isDepartment=true;
                 })
             },
-            getFour(id,name){
-                this.$http.get(addr + 'departmentIndex/id/'+id).then((res) => {
+            getFour(id,name,a){
+                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.FourList = res.data.data.department;
                     this.userList=res.data.data.user;
+                    this.page=res.data.data.pages;
                     console.log(res.data.data.department)
                     this.type = 4;
+                    this.id=id;
+                    this.name=name;
                     this.isFirst = true;
                     this.isSecond  = true;
                     this.isThird = true;
@@ -285,12 +305,15 @@
                     this.isDepartment=true;
                 })
             },
-            getFive(id,name){
-                this.$http.get(addr + 'departmentIndex/id/'+id).then((res) => {
+            getFive(id,name,a){
+                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.FiveList = res.data.data.department;
                     this.userList=res.data.data.user;
+                    this.page=res.data.data.pages;
                     console.log(res.data.data.department)
                     this.type = 5;
+                    this.id=id;
+                    this.name=name;
                     this.isFirst = true;
                     this.isSecond  = true;
                     this.isThird = true;
@@ -306,22 +329,47 @@
                 this.active1 = index;
             },
             //查询成员
-            search(){
+            search(a){
                 if (this.keywords != '') {
-                    this.$http.get(addr + 'searchUser/keywords/' + decodeURI(this.keywords)).then((res) => {
+                    this.$http.get(addr + 'searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+a).then((res) => {
+                        this.type = 6;
                         if (res.data.code == 90020) {
-                            console.log(res.data.code)
                             this.userList=res.data.data.list;
+                            this.page=res.data.data.pages;
+
                         } else {
                             this.branchList = [];
                             this.userList=[];
+                            this.page=0;
+                        }
+                    })
+                }else{
+                    this.$http.get(addr + 'searchUser/page/' +a ).then((res) => {
+                        this.type = 6;
+                        if (res.data.code == 90020) {
+                            this.userList=res.data.data.list;
+                            this.page=res.data.data.pages;
+
+                        } else {
+                            this.branchList = [];
+                            this.userList=[];
+                            this.page=0;
                         }
                     })
                 }
+
+
             },
+//            edit(id){
+//                alert(id);
+//                $('#myModalAdd').modal('show');
+//            },
             addUser(){
                 $('#myModalAdd').modal('show');
             },
+            accountStatus(id){
+                $('#myModalStatus').modal('show');
+            }
         }
     }
 </script>
@@ -361,5 +409,24 @@
     @media screen and (max-width:1024px) {
         .clickBt {float:right }
     }
-
+    .btn-default {
+        background-color: #fff;
+        border-color: #fff;
+        color: #aaa;
+    }
+    .btn-default:hover{
+        background-color: #b0b5b9;
+        border-color: #b0b5b9;
+        color: #fff;
+    }
+    dropdown-menu li:hover{
+        background-color: #b0b5b9;
+    }
+    .btn-lg {
+        border-radius:0;
+    }
+    button[disabled='disabled']:hover{
+        background: #ddd;
+        color: #ffffff;
+    }
 </style>
