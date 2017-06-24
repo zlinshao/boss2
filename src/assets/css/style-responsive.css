@@ -693,6 +693,15 @@ input, select, .bootstrap-timepicker, [href='renting_1.html'], .btn.btn-white.dr
     filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
     transform: translate(-50%, -50%);
 }
-li.active i,li.active span{
+
+li.active i, li.active span {
     color: #FF6C60;
+}
+
+label {
+    font-weight: normal;
+}
+
+a {
+    cursor: pointer;
 }

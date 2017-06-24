@@ -1,24 +1,26 @@
-import Power from "./compoments/power/power.vue";
+import Power from "./compoments/power/power.vue";                       //权限管理
 import Region from "./compoments/region/region.vue";
-import User from "./compoments/user/user.vue";
-import Role from "./compoments/role/role.vue";
+import User from "./compoments/user/user.vue";                          //用户管理
+import Role from "./compoments/role/role.vue";                          //角色
 import Group from "./compoments/region/group.vue";
 import Village from "./compoments/village/village.vue";
 import VillageDetail from "./compoments/village/villageDetail.vue";
-import Custom from "./compoments/custom/custom.vue";
-import CustomerPool from "./compoments/custom/customerPool.vue";
-import OkCollect from "./compoments/collect/okCollect.vue";
-import NoCollect from "./compoments/collect/noCollect.vue";
+import Custom from "./compoments/custom/custom.vue";                    //客户
+import Details from "./compoments/custom/details.vue";                  //客户详情
+import CustomerPool from "./compoments/custom/customerPool.vue";        //客户池
+import OkCollect from "./compoments/collect/okCollect.vue";             //已收房源
+import NoCollect from "./compoments/collect/noCollect.vue";             //未收房源
+
 import yi from "./compoments/role/1.vue";
 
 export default[
     {
-        path: '/power',
+        path: '/power',             //权限管理
         name: 'Power',
         component: Power
     },
     {
-        path: '/user',
+        path: '/user',              //角色管理
         name: 'User',
         component: User
     },
@@ -28,7 +30,7 @@ export default[
         component: Region
     },
     {
-        path: '/role',
+        path: '/role',              //角色
         name: 'Role',
         component: Role
     },
@@ -48,26 +50,30 @@ export default[
         component: VillageDetail
     },
     {
-        path: '/custom',
+        path: '/custom',            //客户
         name: 'custom',
         component: Custom
     },
     {
-        path: '/customerPool',
+        path: '/customerPool',      //客户池
         name: 'customerPool',
         component: CustomerPool
     },
     {
-        path: '/OkCollect',
+        path: '/OkCollect',         //已收房源
         name: 'OkCollect',
         component: OkCollect
     },
     {
-        path: '/noCollect',
+        path: '/noCollect',         //未收房源
         name: 'noCollect',
         component: NoCollect
     },
-
+    {
+        path: '/details',         //客户详情
+        name: 'details',
+        component: Details
+    },
     {
         path: '/yi',
         name: 'yi',
