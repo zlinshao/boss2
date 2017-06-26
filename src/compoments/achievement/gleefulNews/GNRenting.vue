@@ -46,7 +46,7 @@
                     </span>
                 </div>
                 <div class="form-group pull-right">
-                    <a class="btn btn-success">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addGleefulNews">
                         <i class="fa fa-plus-square"></i>&nbsp;新增租房喜报
                     </a>
                 </div>
@@ -93,9 +93,27 @@
                         <td>35000</td>
                         <td>35000</td>
                         <td>
-                            <!--<router-link :to="{path:'group' , query:{regionId:item.id}}">-->
-                            <button class="btn btn-primary btn-sm">炸单</button>
-                            <!--</router-link>-->
+                            <button class="btn btn-primary btn-sm" disabled>已退单</button>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>2017-05-18</td>
+                        <td>新租</td>
+                        <td>秦淮一组</td>
+                        <td>彩云姐</td>
+                        <td>
+                            亚东观云 <br>
+                            3-403
+                        </td>
+                        <td>半年付</td>
+                        <td>35000</td>
+                        <td>部分定金</td>
+                        <td>35000</td>
+                        <td>35000</td>
+                        <td>35000</td>
+                        <td>35000</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" @click="operGleefulNews(1)" data-toggle="modal" data-target="#myModal">待审核</button>
                         </td>
                     </tr>
 
@@ -103,17 +121,96 @@
                 </table>
             </section>
 
-            <div class="row pull-right" style="padding-right: 15px;">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <input type="button" href="#" class="previous btn btn-white" value="上一页">
-                        </li>
-                        <li>
-                            <input type="button" href="#" class="next btn btn-white" value="下一页">
-                        </li>
-                    </ul>
-                </nav>
+        </div>
+
+
+        <!--modal-->
+        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+                    </div>
+                    <div class="modal-body clearFix">
+                        <div class="col-lg-6 renting">
+                            <div class="modalList">
+                                <span>房屋地址:</span>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="modalList">
+                                <span>租房签约人:</span>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="modalList">
+                                <span>租房情况:</span>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="modalList">
+                                <span>租房片区:</span>
+                                <select name="" class="form-control">
+                                    <option value="0">马群</option>
+                                    <option value="1">迈皋桥</option>
+                                </select>
+                            </div>
+                            <div class="modalList">
+                                <span>付款方式:</span>
+                                <select name="" class="form-control">
+                                    <option value="0">季付</option>
+                                    <option value="1">月付</option>
+                                </select>
+                            </div>
+                            <div class="modalList">
+                                <span>租房价格:</span>
+                                <input type="number" class="form-control">
+                            </div>
+                            <div class="modalList">
+                                <span>已收类型:</span>
+                                <select name="" class="form-control">
+                                    <option value="0">季付</option>
+                                    <option value="1">月付</option>
+                                </select>
+                            </div>
+                            <div class="modalList">
+                                <span>已收金额:</span>
+                                <input type="number" class="form-control">
+                            </div>
+                            <div class="modalList">
+                                <span>是否中介:</span>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 collect">
+                            <div class="modalList">
+                                <span>收房签约人:</span>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="modalList">
+                                <span>房屋类型:</span>
+                                <select name="" class="form-control">
+                                    <option value="0">住宅</option>
+                                    <option value="1">商用</option>
+                                </select>
+                            </div>
+                            <div class="modalList">
+                                <span>房屋价格:</span>
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div v-if="add">
+                            <button type="button" class="btn btn-primary">完成</button>
+                        </div>
+                        <div v-else="add">
+                            <button type="button" class="btn btn-primary">修改</button>
+                            <button type="button" class="btn btn-danger">取消合作</button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -125,9 +222,21 @@
     export default{
         data(){
             return {
-                msg: 'hello vue'
+                title : '',
+                add : true      // 是否新增
+
             }
         },
-        components: {}
+        components: {},
+        methods : {
+            addGleefulNews(){
+                this.title = '新增租房喜报';
+                this.add = true;
+            },
+            operGleefulNews(num){
+                this.title = '编辑租房喜报';
+                this.add = false;
+            }
+        }
     }
 </script>

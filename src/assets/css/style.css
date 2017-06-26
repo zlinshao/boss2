@@ -3535,7 +3535,7 @@ table.sliders tr td {
 }
 .clearFix:after{
     content: '';
-    display: inline-block;
+    display: block;
     clear: both;
 }
 
