@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade" id="myModalStart">
+        <div class="modal fade" id="myModalStartDpm">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #0be6de">
@@ -21,13 +21,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" @click="confirmStart">确定</button>
+                        <button type="button" class="btn btn-primary" @click="confirmStartDpm">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <!--停用部门-->
-        <div class="modal fade" id="myModalSuspend">
+        <div class="modal fade" id="myModalSuspendDpm">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #0be6de">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" @click="confirmService">确定</button>
+                        <button type="button" class="btn btn-primary" @click="confirmServiceDpm">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -55,13 +55,13 @@
     </div>
 </template>
 <script>
-    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
+
     export default {
         props:['account'],
         data(){
-          return {
-              myAccount:this.account
-          }
+            return {
+                myAccount:this.account
+            }
         },
         watch:{
             account(val) {
@@ -69,14 +69,17 @@
             },
         },
         methods:{
-            confirmStart(){
-                this.$http.get(addr + 'dismiss/id/'+this.myAccount).then((res) => {
-                    $('#myModalStart').modal('hide');
+            confirmStartDpm(){
+                this.$http.get('/manager/department/disableDpm/id/'+this.myAccount).then((res) => {
+                    $('#myModalStartDpm').modal('hide');
+                    alert(res.data.msg);
                 })
             },
-            confirmService(){
-                this.$http.get(addr + 'dismiss/id/'+this.myAccount).then((res) => {
-                    $('#myModalSuspend').modal('hide');
+            confirmServiceDpm(){
+                alert(1)
+                this.$http.get('/manager/department/disableDpm/id/'+this.myAccount).then((res) => {
+                    $('#myModalSuspendDpm').modal('hide');
+                    alert(res.data.msg);
                 })
             }
         }
