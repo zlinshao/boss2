@@ -1,9 +1,7 @@
 <template>
     <div>
-        <!--<div>区域id：{{recRegionId}}</div>-->
-
         <!--添加-->
-        <div class="form-group">
+        <div class="form-group col-lg-12">
             <button class="btn btn-success" @click="showAddToggle()">
                 <i class="fa  fa-plus-square"></i>&nbsp;新增小组
             </button>
@@ -147,27 +145,8 @@
 
     </div>
 </template>
-<style scoped>
-    .form-inline .form-control{
-        vertical-align: baseline;
-    }
-    label{
-        font-weight: 700;
-    }
-    .form-control{
-        margin-left: 5%;
-        width: 100%;
-        border-color: transparent;
-        border-bottom-color: #ccc;
-    }
-    .input-group .form-control:focus{
-        z-index: auto;
-    }
-</style>
+
 <script>
-    import newAdd from '../common/new_add.vue'
-    import Edit from '../common/edit.vue'
-    import Dele from '../common/delete.vue'
     export default{
         data(){
             return {
@@ -266,3 +245,20 @@
         }
     }
 </script>
+
+<style scoped>
+    .form-inline .form-control{
+        vertical-align: baseline;
+    }
+    label{
+        font-weight: 700;
+    }
+    .form-control{
+        width: 100%;
+        border-color: transparent;
+        border-bottom-color: #ccc;
+    }
+    .input-group .form-control:focus{
+        z-index: auto;
+    }
+</style>

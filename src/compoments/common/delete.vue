@@ -14,7 +14,7 @@
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
-                        <button data-dismiss="modal" class="btn btn-danger btn-md" @click="deleteMsg(msg.nowIndex)">确认</button>
+                        <button data-dismiss="modal" class="btn btn-danger btn-md" @click="deleteMsg">确认</button>
                     </div>
                 </div>
             </div>
@@ -26,14 +26,13 @@
     export default {
         props: ['msg'],
         methods: {
-            //              确认删除
-            deleteMsg (del) {
-                if (del === -3) {
+//              确认删除
+            deleteMsg () {
+                if (this.msg.nowIndex === -3) {
                     this.msg.myData = [];
                 } else {
-                    this.msg.myData.splice(del, 1);
+                    this.msg.myData.splice(this.msg.nowIndex, 1);
                 }
-                this.$emit('new_info', this.msg.myData);
             }
         }
     }

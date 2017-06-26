@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div v-show="pg > 1">
         <nav aria-label="Page navigation" class="pull-right">
             <ul class="pagination">
-                <li v-show="page != 1" @click="go_to(1)"><a href="#">首页</a></li>
-                <li v-show="page != 1" @click="page-- && go_to(page--)"><a href="#">上一页</a></li>
+                <li v-show="page != 1" @click="go_to(1)"><a>首页</a></li>
+                <li v-show="page != 1" @click="page-- && go_to(page--)"><a>上一页</a></li>
                 <li v-for="index in pages" @click="go_to(index)" :class="{'active':page == index}" :key="index">
-                    <a href="#">{{index}}</a>
+                    <a>{{index}}</a>
                 </li>
-                <li v-show="pg != page && pg != 0 " @click="page++ && go_to(page++)"><a href="#">下一页</a></li>
-                <li v-show="pg != page" @click="go_to(pg)"><a href="#">尾页</a></li>
+                <li v-show="pg != page && pg != 0 " @click="page++ && go_to(page++)"><a>下一页</a></li>
+                <li v-show="pg != page" @click="go_to(pg)"><a>尾页</a></li>
                 <li><a>共&nbsp;(&nbsp;{{pg}}&nbsp;)&nbsp;页</a></li>
             </ul>
         </nav>
@@ -64,6 +64,7 @@
 
     a {
         text-decoration: none;
+        cursor: pointer;
     }
 
     .pagination {

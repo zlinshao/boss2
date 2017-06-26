@@ -1,11 +1,51 @@
 <template>
     <div>
-        <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" @click="empty">
-                新建任务
-            </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">Compose</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">To</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail1"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Cc / Bcc</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="cc" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Subject</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputPassword1"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Message</label>
+                                <div class="col-lg-10">
+                                                    <textarea name="" id="" class="form-control" cols="30"
+                                                              rows="10"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
         </div>
-
+        <!-- /.modal -->
         <!--右侧栏-->
         <div class="modal fade full-width-modal-right" id="myModal2" tabindex="-1" role="dialog"
              aria-labelledby="myModal2" aria-hidden="true">
@@ -17,7 +57,7 @@
                             <h4 class="modal-title text-center">任务详情</h4>
                         </div>
                         <div class="modal-body">
-                            <div data-toggle="modal" data-target="#myModal" class="alert alert-block alert-success fade in" @click="getBranch">
+                            <div data-toggle="modal" data-target="#myModal4" class="alert alert-block alert-success fade in" @click="getBranch">
                             <span >click</span>
                             <span v-for="item in showMember" style="padding: 5px">{{item}}</span>
                             </div>
@@ -27,7 +67,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="myModal">
+        <div class="modal fade" id="myModal4">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -49,7 +89,7 @@
                                                 @keydown.down="changeDown()" @keydown.up.prevent="changeUp()"
                                                 @keydown.13='keydownAdd' v-model="keywords"  placeholder="搜索企业联系人">
                                     </div>
-                                    <div class="searchList">
+                                    <div class="searchList box">
                                         <ul>
                                             <li :class="{'hov':active1==index}" v-for="(item, index) in searchName"
                                                  @mouseover="changeClass(index)" @click="mouseAdd(item.name)">
@@ -59,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 box" style="padding: 0">
+                            <div class="col-md-5 box boxSelf" style="padding: 0">
                                 <div class="boxHead">南京乐嘉商业管理有限公司</div>
                                 <div>
                                     <a @click="getBranch">南京乐嘉商业管理有限公司</a>
@@ -228,7 +268,7 @@
         margin: 10px;
         border-radius: 5px
     }
-    .box{
+    .boxSelf{
         border: 1px solid #aaa;
         overflow: auto;
         height: 350px;
@@ -264,17 +304,18 @@
         border-radius: 3px;
         border-bottom: none
     }
-
-   body {}{
-        scrollbar-arrow-color: #f4ae21; /**//*三角箭头的颜色*/
-        scrollbar-face-color: #333; /**//*立体滚动条的颜色*/
-        scrollbar-3dlight-color: #666; /**//*立体滚动条亮边的颜 色*/
-        scrollbar-highlight-color: #666; /**//*滚动条空白部分的 颜色*/
-        scrollbar-shadow-color: #999; /**//*立体滚动条阴影的颜 色*/
-        scrollbar-darkshadow-color: #666; /**//*立体滚动条强阴 影的颜色*/
-        scrollbar-track-color: #666; /**//*立体滚动条背景颜色*/
-        scrollbar-base-color:#f8f8f8; /**//*滚动条的基本颜色*/
-
+    .box::-webkit-scrollbar {
+        width:8px;
+        height:300px;
     }
-
+    .box::-webkit-scrollbar-button    {
+        background-color:#f0f0f8;
+    }
+    .box::-webkit-scrollbar-track     {
+        background:#f0f0f8;
+    }
+    .box::-webkit-scrollbar-thumb{
+        background:#80d3d9;
+        border-radius:10px;
+    }
 </style>

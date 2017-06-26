@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Status :state="info"></Status>
         <!--新增权限管理-->
         <div class="form-group text-right">
             <button class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
@@ -15,21 +16,23 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Modal Tittle</h4>
+                            <h4 v-if="status1" class="modal-title">角色新增</h4>
+                            <h4 v-if="status2" class="modal-title">角色修改</h4>
                         </div>
                         <div class="modal-body">
                             <form role="form">
                                 <div class="form-group">
-                                    <label for="title1">title:</label>
+                                    <label for="title1">描述</label>
 
                                     <!--title-->
-                                    <input type="text" id="title1" class="form-control" placeholder="title"
+                                    <input type="text" id="title1" class="form-control" placeholder="描述"
                                            v-model="title">
                                 </div>
                                 <div v-for="role in myData" class="check">
+                                    <label>
                                     <input @click="rules(role.id, $event)" type='checkbox' class="pull-left"
                                            v-model='checkboxModel'
-                                           :value='role.id'>{{role.title}}
+                                           :value='role.id'>{{role.title}}</label>
                                     <!--多选框-->
                                     <!--<input type="checkbox"  :checked="state"> -->
                                 </div>
@@ -38,15 +41,13 @@
 
                         <div class="modal-footer">
                             <div class="form-group pull-left">
-                                <button v-if="status1" data-dismiss="modal" class="btn btn-primary" @click="add_power">
+                                <button v-if="status1" class="btn btn-primary" @click="add_power">
                                     添加
                                 </button>
 
-                                <button v-if="status2" data-dismiss="modal" class="btn btn-primary"
+                                <button v-if="status2" class="btn btn-primary"
                                         @click="revise_power">修改
                                 </button>
-
-                                <input v-if="status1" type="reset" value="重置" class="btn btn-danger">
                             </div>
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
                         </div>
@@ -62,8 +63,8 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>title</th>
-                            <th>Status</th>
+                            <th>描述</th>
+                            <th>修改</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,8 +72,8 @@
                             <td>{{item.id}}</td>
                             <td>{{item.title}}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" href="#new_add"
-                                        @click="revise_btn(item.id, item.title)">编辑
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" href="#new_add"
+                                        @click="revise_btn(item.id, item.title)">修改
                                 </button>
                             </td>
                         </tr>
@@ -87,24 +88,32 @@
                 </section>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
+    import Status from '../common/status.vue'
     export default {
+        components: {
+            Status
+        },
         data (){
             return {
                 myData: Array,          //权限列表
                 role_info: Array,       //角色列表
                 data_id: [],            //权限ID
                 role_id: [],            //角色rules
-                checkboxModel: [],      //重叠选中
+                checkboxModel: [],      //选中ID
                 title: "",              //Title
                 revise_id: '',          //修改ID
                 status1: true,          //增加
                 status2: false,         //修改
-                arr_rules: []           //选中id
+                info: {
+                    state_success: false,   //成功状态
+                    state_error: false,     //错误状态
+                    error: '',              //成功信息
+                    success: '',            //错误信息
+                },
             }
         },
         created (){
@@ -132,7 +141,7 @@
             },
 
             list_role (){
-                this.$http.get('manager/Role/rolesList/page/1').then(res => {
+                this.$http.get('manager/Role/rolesList').then(res => {
                     this.role_info = res.data.data;
                 });
 
@@ -182,13 +191,31 @@
                         }
                     }
                 ).then(res => {
-
+                    if(res.data.code === '40030'){
+//                        成功关闭模态框
+                        $('#new_add').modal('hide');
+//                        成功信息
+                        this.info.success = res.data.msg;
+//                        显示成功信息
+                        this.info.state_error = false;
+                        this.info.state_success = true;
+//                        一秒自动关闭成功信息
+                        setTimeout(() => {
+                            this.info.state_success = false
+                        }, 1000);
+                    }else{
+//                        关闭成功弹窗
+                        this.info.state_success = false;
+//                        错误信息
+                        this.info.error = res.data.msg;
+//                        显示错误弹窗
+                        this.info.state_error = true;
+                    }
                 });
             },
 
 //             新增按钮
             add_btn (){
-                this.arr_rules = [];
                 this.role_id = [];
                 this.data_id = [];
                 this.checkboxModel = [];
@@ -199,12 +226,10 @@
 
 //             确认新增
             add_power () {
-                console.log(typeof this.title);
-                console.log(typeof this.arr_rules.join(","));
                 this.$http.post('manager/Role/saveRole',
                     {
                         title: this.title,
-                        rules: this.arr_rules.join(",")
+                        rules: this.checkboxModel.join(",")
                     },
                     {
                         headers: {
@@ -212,19 +237,42 @@
                         }
                     }
                 ).then(res => {
-//
+                    if(res.data.code === '40020'){
+//                        成功关闭模态框
+                        $('#new_add').modal('hide');
+//                        成功信息
+                        this.info.success = res.data.msg;
+//                        显示成功信息
+                        this.info.state_error = false;
+                        this.info.state_success = true;
+//                        一秒自动关闭成功信息
+                        setTimeout(() => {
+                            this.info.state_success = false
+                        }, 1000);
+                        this.role_info.push({
+                            id: res.data.data.id,
+                            title: res.data.data.title
+                        });
+                    }else{
+//                        关闭成功弹窗
+                        this.info.state_success = false;
+//                        错误信息
+                        this.info.error = res.data.msg;
+//                        显示错误弹窗
+                        this.info.state_error = true;
+                    }
                 });
             },
 
 //            多选生成数组/删除数组对应值
             rules (rul, eve){
                 if (eve.target.checked === true) {
-                    this.arr_rules.push(rul);
+                    this.checkboxModel.push(rul);
                 }
                 if (eve.target.checked === false) {
-                    let index = this.arr_rules.indexOf(rul);
+                    let index = this.checkboxModel.indexOf(rul);
                     if (index > -1) {
-                        this.arr_rules.splice(index, 1);
+                        this.checkboxModel.splice(index, 1);
                     }
                 }
             }
@@ -235,9 +283,16 @@
 <style scoped>
     input[type=checkbox] {
         margin-right: 8px;
+        margin-top: 2px;
+        width: 17px;
+        height: 17px;
     }
-
+    .modal-content{
+        overflow: auto;
+    }
     .check {
+        width: 50%;
+        display: inline-block;
         padding: 5px 0;
         font-size: 14px;
     }

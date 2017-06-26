@@ -1,9 +1,10 @@
 <template>
     <div>
+        <Status :state="info"></Status>
         <!--新增权限管理-->
         <div class="form-group text-right">
-            <a class="btn btn-success" data-toggle="modal" href="#new_add">
-                <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增权限管理
+            <a class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
+                <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增权限
             </a>
         </div>
         <!--新增模态框-->
@@ -14,28 +15,27 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Modal Tittle</h4>
+                            <h4 class="modal-title">新增权限</h4>
                         </div>
                         <div class="modal-body">
                             <form role="form">
                                 <div class="form-group">
-                                    <label for="username">Name:</label>
-                                    <input type="text" id="username" class="form-control" placeholder="Name"
+                                    <label for="username">规则名</label>
+                                    <input type="text" id="username" class="form-control" placeholder="规则名"
                                            v-model="username">
                                 </div>
                                 <div class="form-group">
-                                    <label for="title">title:</label>
-                                    <input type="text" id="title" class="form-control" placeholder="title"
+                                    <label for="title">描述</label>
+                                    <input type="text" id="title" class="form-control" placeholder="描述"
                                            v-model="title">
-                                </div>
-                                <div class="form-group">
-                                    <button data-dismiss="modal" class="btn btn-primary" @click="add_power ()">添加
-                                    </button>
-                                    <input type="reset" value="重置" class="btn btn-danger">
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
+                            <div class="form-group pull-left">
+                                <button type="button" class="btn btn-primary" @click="add_power ()">添加</button>
+                                <input type="reset" value="重置" class="btn btn-danger">
+                            </div>
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
                         </div>
                     </div>
@@ -43,6 +43,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
@@ -50,10 +51,8 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>
-                                <router-link to="/page">title</router-link>
-                            </th>
+                            <th>规则名</th>
+                            <th>描述</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -72,59 +71,46 @@
                 </section>
             </div>
         </div>
-
-        <!--分页-->
-        <Page :pg="paging" @pag="list_power"></Page>
-
-        <!--提示框-->
-        <div role="dialog" class="modal fade bs-example-modal-sm" id="prompt">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                        <h4 class="modal-title">提示信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <h4 class="modal-title">{{ prompt }}</h4>
-                    </div>
-                    <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 <script>
-    import Page from '../common/page.vue'
+    import Status from '../common/status.vue'
     export default {
         components: {
-            Page
+            Status
         },
         data (){
             return {
                 myData: Array,          //列表数据
                 username: '',           //Name
                 title: '',              //Title
-                prompt: '',             //提示信息
-                paging: 10,             //总页数
-                page: 1
+                page: 1,
+                info: {
+                    state_success: false,   //成功状态
+                    state_error: false,     //错误状态
+                    error: '',              //成功信息
+                    success: '',            //错误信息
+                },
             }
         },
         created (){
             this.list_power(this.page);
         },
-        methods: {
+            methods: {
 
 //            权限列表
             list_power (v){
-                this.$http.get('manager/Auth/authList/page/' + v).then( res => {
+
+                this.$http.get('manager/Auth/authList/page/' + v).then(res => {
                     this.myData = res.data.data;
                 });
             },
 
+//            新增按钮
+            add_btn (){
+                this.username = '';
+                this.title = ''
+            },
 //             确认新增
             add_power () {
                 this.$http.post('manager/Auth/saveAuth',
@@ -137,6 +123,18 @@
 //                        }}
                 ).then(res => {
                     if (res.data.code === '30020') {
+//                        成功关闭模态框
+                        $('#new_add').modal('hide');
+//                        成功信息
+                        this.info.success = res.data.msg;
+//                        显示成功信息
+                        this.info.state_error = false;
+                        this.info.state_success = true;
+//                        一秒自动关闭成功信息
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        }, 1000);
+//                        信息填充
                         this.myData.push({
                             id: res.data.data.id,
                             name: res.data.data.name,
@@ -144,13 +142,10 @@
                         });
                     }
                     else {
-                        this.prompt = res.data.msg;
-                        $('#prompt').modal({
-                            keyboard: false
-                        });
+                        this.info.state_success = false;
+                        this.info.error = res.data.msg;
+                        this.info.state_error = true;
                     }
-                    this.username = '';
-                    this.title = '';
                 });
             }
         }
