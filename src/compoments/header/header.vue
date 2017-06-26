@@ -236,8 +236,8 @@
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" src="../../assets/img/avatar1_small.jpg">
-                            <span class="username">Jhon Doue</span>
+                            <img alt="" :src="Card" style="width: 29px;height: 29px;">
+                            <span class="username">{{Name}}</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -498,6 +498,7 @@
 
 <script>
     export default {
+        props:['Name','Card'],
         data(){
             return {
                 isActive: 0,
