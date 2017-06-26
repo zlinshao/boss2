@@ -8,7 +8,8 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" style="text-align: center">新增用户</h4>
+                        <h4 class="modal-title" style="text-align: center" v-if="myResult.length==0">新增用户</h4>
+                        <h4 class="modal-title" style="text-align: center" v-if="myResult.length!=0">修改用户</h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
@@ -59,8 +60,26 @@
                                     <hr>
 
                                     <h3 style="margin-top: -15px">工作信息</h3>
+                                    <!--<div v-if="myResult.length!=0">-->
+                                        <!--<div class="row">-->
+                                            <!--<label class="col-sm-2 control-label col-lg-2" >部门</label>-->
+                                            <!--<div class="col-lg-8">-->
+                                                <!--<input type="text" class="form-control"  v-for="(value,key) in department" :value="value">-->
+                                            <!--</div>-->
+                                            <!--<input type="button" class="btn btn-primary" value="修改部门" @click="selectDep">-->
+                                        <!--</div>-->
+                                        <!--<div class="row">-->
+                                            <!--<label class="col-sm-2 control-label col-lg-2" >职位</label>-->
+                                            <!--<div class="col-lg-8">-->
+                                                <!--<input type="text" class="form-control"  v-for="(value,key) in position_id" :value="value">-->
+                                            <!--</div>-->
+                                            <!--<input type="button" class="btn btn-primary" value="修改职位"-->
+                                                   <!--data-toggle="modal" data-target=".bs-example-modal-sm">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >所在部门</label>
+                                        <label class="col-sm-2 control-label col-lg-2" >选择部门</label>
                                         <div class="col-md-4" >
                                             <select class="form-control" v-model="firstId" @change="getSecondDepart()">
                                                 <option :value="item.id" v-for="item in firstDepart" >{{item.name}}</option>
@@ -94,13 +113,8 @@
                                                 <option :value="item.id" v-for="item in positionList">{{item.vocation}}</option>
                                             </select>
                                         </div>
-                                        <label class="col-sm-2 control-label col-lg-2" >等级</label>
-                                        <div class="col-lg-4">
-                                            <select  class="form-control" v-model="level">
-                                                <option :value="key" v-for="(value,key) in levelList">{{value}}</option>
-                                            </select>
-                                        </div>
                                     </div>
+
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">用户组</label>
                                         <div class="col-lg-10">
@@ -115,6 +129,12 @@
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
                                             <input type="date" class="form-control" v-model="enroll">
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >等级</label>
+                                        <div class="col-lg-4">
+                                            <select  class="form-control" v-model="level">
+                                                <option :value="key" v-for="(value,key) in levelList">{{value}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -135,7 +155,7 @@
                                                 <input type="checkbox" class="pull-left" value="1" v-model="id_copy"> 身份证复印近
                                             </label>
                                             <label class="checkbox-inline check">
-                                                <input type="checkbox" class="pull-left" value="1" v-model="photo"> 照片
+                                                <input type="checkbox" class="pull-left" value="1" v-model="photo"> 照片{{photo}}
                                             </label>
                                         </div>
                                     </div>
@@ -145,7 +165,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" @click="increaseUse">新增</button>
+                        <button type="button" class="btn btn-primary" @click="increaseUse" v-if="myResult.length==0">新增</button>
+                        <button type="button" class="btn btn-warning" v-if="myResult.length!=0">修改</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -156,6 +177,7 @@
 <script>
     const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     export default {
+        props:['editDate'],
         data(){
             return {
                 //字典列表
@@ -168,13 +190,13 @@
                 levelList:[],
                 //id
                 firstId:'',
-                secondId:'',
+                secondId:'市场部',
                 thirdId:'',
                 fourId:'',
                 //其余新增用户字段
                 real_name:'',       //真实姓名
                 gender:'',          //性别
-                birthday:'',        //生日
+                birthday:'2016-07-26',        //生日
                 mobile:'',          //手机号
                 emergency_call:'',  //紧急联系方式
                 id_num:'',          //身份证
@@ -189,13 +211,35 @@
                 enroll:'',          //入职时间
                 id_copy:'',         //身份证复印件
                 photo:'',           //有无照片
-                department:'',
+                myResult: this.editDate,
             }
         },
         mounted(){
             this.getFirstDepart(); //请求公司列表
             this.searchRoles();    //请求角色列表
-            this.getLevel();          //强求等级字典
+            this.getLevel();       //请求等级字典
+        },
+        watch:{
+            editDate(val) {
+                this.myResult = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
+                console.log(this.myResult)
+                this.real_name=this.myResult.real_name;
+                this.gender=this.myResult.gender;
+                this.birthday=this.myResult.birthday;
+                this.mobile=this.myResult.mobile;
+                this.emergency_call=this.myResult.emergency_call;
+                this.id_num=this.myResult.id_num;
+                this.bank_num=this.myResult.bank_num;
+                this.department=this.myResult.department;
+                this.position_id=this.myResult.position_id;
+                this.role=this.myResult.role;
+                this.accident_insurance=this.myResult.accident_insurance;
+                this.five_insurance=this.myResult.five_insurance;
+                this.level=this.myResult.level;
+                this.id_copy=this.myResult.id_copy;
+                this.photo=this.myResult.photo;
+                this.enroll=this.myResult.enroll_time;
+            },
         },
         methods:{
             getFirstDepart(){
@@ -276,6 +320,9 @@
                     }
                 }
             },
+            selectDep(){
+                this.myResult==[];
+            },
             increaseUse(){
                 this.$http.post(addr+'saveUser',
                     {
@@ -295,13 +342,13 @@
                         "five_insurance":this.five_insurance,//五险 1有2无
                         "id_copy":this.id_copy,// 身份证复印件 1有2无
                         "photo":this.photo,
-                        "enroll":this.enroll
+                        "enroll":this.enroll,
                     },
                     {headers:{'Content-Type': 'application/json'}}
                 ).then((res)=>{
                     if(res.data.code==90030){
                         this.real_name='';       //真实姓名
-                        this.gender='';          //性别
+                        this.gender='1';          //性别
                         this.birthday='';        //生日
                         this.mobile='';          //手机号
                         this.emergency_call='';  //紧急联系方式

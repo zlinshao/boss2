@@ -23,54 +23,101 @@
                         <ul class="inbox-nav inbox-divider">
                             <!--部门-->
                             <li v-for="(item,index) in branchList" :class="{'active':active1==index}"
-                                @mouseover="changeClass(index)" v-if="type==1">
+                                @mouseover="changeClass(index)" v-if="type==1" >
                                 <a href="#">
-                                    <i @click.stop="getSecond(item.id,item.name)"
-                                       class=" fa fa-chevron-right">{{item.name}}</i>
-
-                                    <i data-toggle="modal" href="#myModal"
-                                       class="fa fa-gear pull-right"
-                                       style="margin-top: 12px"></i>
+                                    <button @click.stop="getSecond(item.id,item.name)"
+                                       class="fa fa-chevron-right btn btn-default btn-lg department"
+                                       :disabled="item.status=='停用'">{{item.name}}</button>
+                                    <div class="pull-right dropdown ">
+                                        <i class="fa fa-gear pull-rightdropdown-toggle"
+                                           style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <ul class="dropdown-menu dropdown-menu-left">
+                                            <li @click="editDepartment(item.id)">
+                                                <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </a>
                             </li>
                             <!--二级部门-->
                             <li v-for="(item,index) in secondList" :class="{'active':active1==index}"
                                 @mouseover="changeClass(index)" v-if="type==2">
                                 <a href="#">
-                                    <i @click.stop="getThird(item.id,item.name)"
-                                       class="fa fa-chevron-right">{{item.name}}</i>
+                                    <button @click.stop="getThird(item.id,item.name)"
+                                       class="fa fa-chevron-right btn btn-default btn-lg department"
+                                            :disabled="item.status=='停用'">{{item.name}}</button>
 
-                                    <i data-toggle="modal" href="#myModal"
-                                       class="fa fa-gear pull-right"
-                                       style="margin-top: 12px"></i>
+                                    <div class="pull-right dropdown ">
+                                        <i class="fa fa-gear pull-rightdropdown-toggle"
+                                           style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <ul class="dropdown-menu dropdown-menu-left">
+                                            <li @click="editDepartment(item.id)">
+                                                <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="startDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                            </li>
+                                            <li @click="stopDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                        </ul>
+                                    </div>
                                 </a>
                             </li>
                             <!--三级部门-->
                             <li v-for="(item,index) in ThirdList" :class="{'active':active1==index}"
                                 @mouseover="changeClass(index)" v-if="type==3">
                                 <a href="#">
-                                    <i @click.stop="getFour(item.id,item.name)"
-                                       class="fa fa-chevron-right">{{item.name}}</i>
-                                    <i data-toggle="modal" href="#myModal"
-                                       class="fa fa-gear pull-right"
-                                       style="margin-top: 12px"></i>
+                                    <button @click.stop="getFour(item.id,item.name)"
+                                       class="fa fa-chevron-right btn btn-default btn-lg department"
+                                       :disabled="item.status=='停用'">{{item.name}}</button>
+
+                                    <div class="pull-right dropdown ">
+                                        <i class="fa fa-gear pull-rightdropdown-toggle"
+                                           style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <ul class="dropdown-menu dropdown-menu-left">
+                                            <li @click="editDepartment(item.id)">
+                                                <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="startDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                            </li>
+                                            <li @click="stopDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                        </ul>
+                                    </div>
                                 </a>
                             </li>
                             <!--四级部门-->
                             <li v-for="(item,index) in FourList" :class="{'active':active1==index}"
                                 @mouseover="changeClass(index)" v-if="type==4">
                                 <a href="#">
-                                    <i @click.stop="getFive(item.id,item.name)"
-                                       class="fa fa-chevron-right">{{item.name}}</i>
+                                    <button @click.stop="getFive(item.id,item.name)"
+                                       class="fa fa-chevron-right btn btn-default btn-lg department"
+                                       :disabled="item.status=='停用'">{{item.name}}</button>
 
-                                    <i data-toggle="modal" href="#myModal"
-                                       class="fa fa-gear pull-right"
-                                       style="margin-top: 12px"></i>
+                                    <div class="pull-right dropdown ">
+                                        <i class="fa fa-gear pull-rightdropdown-toggle"
+                                           style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <ul class="dropdown-menu dropdown-menu-left">
+                                            <li @click="editDepartment(item.id)">
+                                                <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="startDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                            </li>
+                                            <li @click="stopDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                        </ul>
+                                    </div>
                                 </a>
                             </li>
                             <!--五级部门-->
                             <li v-for="(item,index) in FiveList" :class="{'active':active1==index}"
-                                @mouseover="changeClass(index)" v-if="type==4">
+                                @mouseover="changeClass(index)" v-if="type==5">
                                 <a href="#">
                                     <i @click.stop="getFive(item.id,item.name)"
                                        class="fa fa-chevron-right">{{item.name}}</i>
@@ -106,7 +153,7 @@
                         </div>
 
                     </div>
-                    <div class="inbox-body">
+                    <div class="inbox-body box">
                         <div class="heading-inbox row">
                             <div class="col-md-8">
 
@@ -137,7 +184,8 @@
                                                 <td v-if="item.position_id.length==0">无</td>
                                                 <td v-for="item1 in item.role">{{item1.title}}</td>
                                                 <td v-if="item.role.length==0">无</td>
-                                                <td>{{item.status}}</td>
+                                                <td v-if="item.status==1">在职</td>
+                                                <td v-if="item.status==3">离职</td>
                                                 <td>{{item.mobile}}</td>
                                                 <td>{{item.enroll_time}}</td>
                                                 <td class="dropdown">
@@ -147,17 +195,20 @@
                                                        aria-expanded="false">
                                                         更多
                                                     </a>
-                                                    <ul class="dropdown-menu dropdown-menu-left" style="padding: 0;margin:0">
-                                                        <li >
-                                                            <button type="button" class="btn btn-default btn-lg btn-block">编辑</button>
+                                                    <ul class="dropdown-menu dropdown-menu-right" style="padding: 0;margin:0">
+                                                        <li @click="edit(item.id)">
+                                                            <button type="button"
+                                                                    class="btn btn-default btn-lg btn-block">编辑</button>
                                                         </li>
                                                         <li role="separator" class="divider" style="margin: 0"></li>
-                                                        <li @click="accountStatus(item.id)">
-                                                            <button type="button" class="btn btn-default btn-lg btn-block" disabled>启用账号</button>
+                                                        <li @click="startAccount(item.id)">
+                                                            <button type="button" class="btn btn-default btn-lg btn-block"
+                                                                    :disabled="item.status==1">启用账号</button>
                                                         </li>
                                                         <li role="separator" class="divider" style="margin: 0"></li>
-                                                        <li>
-                                                            <button type="button" class="btn btn-default btn-lg btn-block">禁用账号</button>
+                                                        <li @click="suspendAccount(item.id)">
+                                                            <button type="button" class="btn btn-default btn-lg btn-block"
+                                                                    :disabled="item.status==3">禁用账号</button>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -177,29 +228,34 @@
                 </aside>
             </div>
         </section>
-        <UserAdd></UserAdd>
+        <UserAdd :editDate="editData"></UserAdd>
         <Organize></Organize>
-        <Status></Status>
+        <editDpm :editDpm="editDpm"></editDpm>
+        <Status :account="account"></Status>
+        <depStatus :account="depAccount"></depStatus>
         <Page :pg="page" @pag="getBranch" v-if="type==1"></Page>
-        <Page :pg="page" @pag="getSecond(id,name,a)" v-if="type==2"></Page>
-        <Page :pg="page" @pag="getThird(id,name,a)" v-if="type==3"></Page>
-        <Page :pg="page" @pag="getFour(id,name,a)" v-if="type==4"></Page>
+        <Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>
+        <Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>
+        <Page :pg="page" @pag="getFour(id,name)" v-if="type==4"></Page>
         <Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>
         <Page :pg="page" @pag="search" v-if="type==6"></Page>
     </div>
 </template>
 <script>
-    const addr = 'http://test.v2.api.boss.lejias.cn/manager/user/';
     import UserAdd from './userAdd.vue';
     import Organize from  './organize.vue';
     import Page from '../common/page.vue';
-    import Status from './accountStatus.vue'
+    import Status from './accountStatus.vue';
+    import depStatus from  './departmentStatus.vue'
+    import editDpm from  './editDpm.vue'
     export default{
         components: {
             UserAdd,
             Organize,
             Page,
-            Status
+            Status,
+            depStatus,
+            editDpm
         },
         data(){
             return {
@@ -230,15 +286,18 @@
                 reThirdName:'',
                 reFourName:'',
                 department:'全公司',//部门展示
+                editData:[],
+                account:'',
+                depAccount:'',
+                editDpm:[]
             }
         },
         mounted(){
             this.getBranch();
-//            this.initialize();
         },
         methods: {
             getBranch(a){
-                this.$http.get(addr + 'departmentIndex/page/'+a).then((res) => {
+                this.$http.get('manager/user/departmentIndex/page/'+a).then((res) => {
                     this.branchList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.page=res.data.data.pages;
@@ -251,7 +310,7 @@
                 })
             },
             getSecond(id,name,a){
-                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.page=res.data.data.pages;
@@ -269,7 +328,7 @@
                 })
             },
             getThird(id,name,a){
-                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.ThirdList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.page=res.data.data.pages;
@@ -287,12 +346,15 @@
                 })
             },
             getFour(id,name,a){
-                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.FourList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.page=res.data.data.pages;
-                    console.log(res.data.data.department)
-                    this.type = 4;
+                    if(res.data.data.department.length==0){
+                        this.type = 3;
+                    }else {
+                        this.type = 4;
+                    }
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -306,12 +368,11 @@
                 })
             },
             getFive(id,name,a){
-                this.$http.get(addr + 'departmentIndex/id/'+id+'/page/'+a).then((res) => {
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.FiveList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.page=res.data.data.pages;
-                    console.log(res.data.data.department)
-                    this.type = 5;
+                    this.type = 4;
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -331,7 +392,7 @@
             //查询成员
             search(a){
                 if (this.keywords != '') {
-                    this.$http.get(addr + 'searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+a).then((res) => {
+                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+a).then((res) => {
                         this.type = 6;
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
@@ -344,7 +405,7 @@
                         }
                     })
                 }else{
-                    this.$http.get(addr + 'searchUser/page/' +a ).then((res) => {
+                    this.$http.get('manager/user/searchUser/page/' +a ).then((res) => {
                         this.type = 6;
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
@@ -360,16 +421,47 @@
 
 
             },
-//            edit(id){
-//                alert(id);
-//                $('#myModalAdd').modal('show');
-//            },
+            //编辑账号
+            edit(id){
+                $('#myModalAdd').modal('show');
+                this.$http.get('manager/user/readUser/id/'+id).then((res) => {
+                    this.editData=res.data.data;
+                })
+            },
+            //增加账号
             addUser(){
                 $('#myModalAdd').modal('show');
+                this.editData=[];
             },
-            accountStatus(id){
-                $('#myModalStatus').modal('show');
-            }
+            //启用账号
+            startAccount(id){
+                $('#myModalStart').modal('show');
+                this.account=id
+            },
+            //停止账号
+            suspendAccount(id){
+                $('#myModalSuspend').modal('show');
+                this.account=id;
+            },
+            //新建下级部门
+
+            //启用部门
+            startDepartment(id){
+                $('#myModalStartDpm').modal('show');
+                this.depAccount=id;
+            },
+            //停用部门
+            stopDepartment(id){
+                $('#myModalStartDpm').modal('show');
+                this.depAccount=id;
+            },
+            //编辑部门
+            editDepartment(id){
+                $('#myModalEditDpm').modal('show');
+                this.$http.get('manager/department/readDpm/id/'+id).then((res) => {
+                    this.editDpm=res.data.data;
+                })
+            },
         }
     }
 </script>
@@ -412,7 +504,7 @@
     .btn-default {
         background-color: #fff;
         border-color: #fff;
-        color: #aaa;
+        color: #666;
     }
     .btn-default:hover{
         background-color: #b0b5b9;
@@ -425,8 +517,12 @@
     .btn-lg {
         border-radius:0;
     }
-    button[disabled='disabled']:hover{
-        background: #ddd;
-        color: #ffffff;
+    .department{
+        background: #e5e8ef;
+        border:none;
+    }
+    .department:focus{
+        color: #6a6a6a;
+        background: #e5e8ef;
     }
 </style>
