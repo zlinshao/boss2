@@ -368,8 +368,8 @@
                                     <span>周期表</span>
                                 </a>
                                 <ul class="sub">
-                                    <li><router-link to="/periodicForPeople">个人</router-link></li>
                                     <li><router-link to="/periodicForGroup">小组</router-link></li>
+                                    <li><router-link to="/periodicForPeople">个人</router-link></li>
                                 </ul>
                             </li>
                             <li class="sub-menu">

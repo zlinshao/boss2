@@ -42,20 +42,7 @@
             </form>
         </div>
 
-        <div class="col-lg-12 ">
-            <div class="tip col-lg-3">
-                <span>当前收多少套：</span>
-                <strong>12000</strong>
-            </div>
-            <div class="tip col-lg-3">
-                <span>当前租多少套：</span>
-                <strong>12000</strong>
-            </div>
-            <div class="tip col-lg-3">
-                <span>当前总业绩：</span>
-                <strong>12000</strong>
-            </div>
-        </div>
+        <Tips></Tips>
 
 
         <!--表格-->
@@ -77,7 +64,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr class="text-center" data-toggle="modal" data-target="#myModal" @click="operGleefulNews(1)">
+                    <tr class="text-center" data-toggle="modal" data-target="#myModal">
                         <td>2017-05-18</td>
                         <td>秦淮一组</td>
                         <td>彩云姐</td>
@@ -112,41 +99,30 @@
                 </table>
             </section>
 
-            <div class="row pull-right" style="padding-right: 15px;">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <input type="button" href="#" class="previous btn btn-white" value="上一页">
-                        </li>
-                        <li>
-                            <input type="button" href="#" class="next btn btn-white" value="下一页">
-                        </li>
-                    </ul>
-                </nav>
-            </div>
         </div>
 
+
+        <!--modal-->
+        <Modal :id="id"></Modal>
     </div>
 </template>
 <style scoped>
-    .tip{
-        line-height: 50px;
-        margin: 0 0 20px 5%;
-        border-radius: 8px;
-        background-color: #FCB322;
-        font-size: 16px;
-        text-align: center;
-        color: #fff;
+    .table tbody tr{
+        cursor: pointer;
     }
-
 </style>
 <script>
+    import Tips from '../tips.vue'
+    import Modal from './CAModal.vue'
     export default{
         data(){
             return {
-                msg: 'hello vue'
+                id : 1          // 查看的id
             }
         },
-        components: {}
+        components: {
+            Tips,
+            Modal
+        }
     }
 </script>

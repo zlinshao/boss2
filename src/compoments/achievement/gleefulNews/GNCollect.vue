@@ -70,7 +70,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                        <tr class="text-center" data-toggle="modal" data-target="#myModal" @click="operGleefulNews(1)">
+                        <tr class="text-center">
                             <td>2017-05-18</td>
                             <td>秦淮一组</td>
                             <td>彩云姐</td>
@@ -88,7 +88,7 @@
                             <td>35000</td>
                             <td>
                                 <!--<router-link :to="{path:'group' , query:{regionId:item.id}}">-->
-                                    <button class="btn btn-primary btn-sm" disabled>炸单</button>
+                                    <button class="btn btn-primary btn-sm">已退单</button>
                                 <!--</router-link>-->
                             </td>
                         </tr>
@@ -110,7 +110,7 @@
                             <td>35000</td>
                             <td>
                                 <!--<router-link :to="{path:'group' , query:{regionId:item.id}}">-->
-                                <button class="btn btn-primary btn-sm">已签</button>
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" @click="operGleefulNews(1)">已签</button>
                                 <!--</router-link>-->
                             </td>
                         </tr>
