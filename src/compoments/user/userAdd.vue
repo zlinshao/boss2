@@ -37,7 +37,9 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >生日</label>
                                         <div class="col-md-4">
-                                            <input type="date" class="form-control" v-model="birthday">
+                                            <input @click="remindData" type="text"
+                                                   class="form-control form_datetime1" v-model="birthday"
+                                                    value="" placeholder="生日">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -109,7 +111,9 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
-                                            <input type="date" class="form-control" v-model="enroll">
+                                            <input @click="enrollDate" type="text"
+                                                   class="form-control form_datetime2" v-model="enroll"
+                                                   value="" placeholder="入职时间">
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >等级</label>
                                         <div class="col-lg-4">
@@ -211,6 +215,11 @@
             this.searchRoles();    //请求角色列表
             this.getLevel();       //请求等级字典
         },
+        updated (){
+//            时间选择
+            this.remindData();
+            this.enrollDate();
+        },
         methods:{
             getFirstDepart(){
                 this.$http.get(addr+'departmentWb').then((res)=>{
@@ -273,7 +282,30 @@
                     this.levelList=res.data.data;
                 })
             },
-
+            enrollDate(){
+                $('.form_datetime2').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    this.enroll = ev.target.value;
+                }.bind(this));
+            },
+            remindData (){
+                $('.form_datetime1').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    this.birthday = ev.target.value;
+                }.bind(this));
+            },
             //            增删数组
             indexOf (val) {
                 for (let i = 0; i < this.length; i++) {

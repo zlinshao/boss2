@@ -27,6 +27,7 @@ import NoCollect from "./compoments/collect/noCollect.vue";                 //�
 import Collect_More from "./compoments/collect/noCollect_more.vue";         //未收房源更多
 
 import yi from "./compoments/role/1.vue";
+import  Back from './compoments/user/back.vue'
 
 export default[
     {
@@ -157,5 +158,10 @@ export default[
         path: '/chart',
         name: 'Chart',
         component: Chart
+    },
+    {
+        path: '/back',
+        name: 'Back',
+        component: Back
     }
 ]

@@ -37,9 +37,9 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >生日</label>
                                         <div class="col-md-4">
-                                            <input @click="remindData" type="text"  v-model="birthday"
-                                                   class="form-control form_datetime" id="addtime"
-                                                   name="addtime" value="" placeholder="请选择时间">
+                                            <input @click="remindData" type="text"
+                                                   class="form-control form_datetime1" v-model="birthday"
+                                                    value="" placeholder="生日">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -141,7 +141,9 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
-                                            <input type="date" class="form-control" v-model="enroll">
+                                            <input @click="enrollDate" type="text"
+                                                   class="form-control form_datetime2" v-model="enroll"
+                                                   value="" placeholder="入职时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -252,6 +254,7 @@
         updated (){
 //            时间选择
             this.remindData();
+            this.enrollDate();
         },
         watch:{
             editDate(val) {
@@ -284,7 +287,7 @@
                 for (let s in this.checkboxModel) {
                     for (let x in this.oldRoleBox) {
                         if (this.checkboxModel[s] === this.oldRoleBox[x].role) {
-                            this.checkboxModelId.push(this.oldRoleBox[s].id);
+                            this.checkboxModelId.push(this.oldRoleBox[x].id);
                         }
                     }
                 }
@@ -392,7 +395,6 @@
                     this.levelList=res.data.data;
                 })
             },
-
             //增删数组
             roles(){
                 this.checkboxModelId=[]
@@ -404,16 +406,31 @@
                     }
                 }
             },
-            //时间选择
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+
+            enrollDate(){
+                $('.form_datetime2').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
-                    format: 'yyyy-mm-dd hh:00',
+                    format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
-                });
+                }).on('changeDate', function (ev) {
+                    this.enroll = ev.target.value;
+                }.bind(this));
+            },
+
+            remindData (){
+                $('.form_datetime1').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    this.birthday = ev.target.value;
+                }.bind(this));
             },
             selectDep(){
                 this.reviseDpm==false ? this.reviseDpm=true:this.reviseDpm=false;
@@ -443,6 +460,9 @@
                     {headers:{'Content-Type': 'application/json'}}
                 ).then((res)=>{
                     if(res.data.code==90030){
+                        //子组件传递数据到父组件
+                        this.$emit('reviseAccount',this.accountId);
+
                         this.real_name='';       //真实姓名
                         this.gender='1';          //性别
                         this.birthday='';        //生日
@@ -475,6 +495,7 @@
                         this.second='';
                         this.third='';
                         this.four='';
+
                         $("#myModalRevise").modal("hide");//关闭模态框
                         this.info.success = res.data.msg;
                         this.info.state_error = false;

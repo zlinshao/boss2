@@ -42,7 +42,11 @@
                 depart:{
                     department:'',
                     id:'',
-                },info:{
+                    flag:'',
+                    reId:'',
+                    reName:'',
+                },
+                info:{
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -61,6 +65,9 @@
                 this.myAccount = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
                 this.depart.department=this.myAccount.name;
                 this.depart.id=this.myAccount.id;
+                this.depart.flag=this.myAccount.flag;
+                this.depart.reId=this.myAccount.reId;
+                this.depart.reName=this.myAccount.reName;
             },
         },
         methods:{

@@ -58,11 +58,17 @@
 <script>
     import Status from '../common/status.vue';
     export default {
-        props:['account'],
+        props:['Account'],
         components: { Status },
         data(){
             return {
-                myAccount:this.account,
+//                departStatus:{
+//                    id:'',
+//                    flag:'',
+//                    reId:'',
+//                    reName:'',
+//                },
+                myAccount:this.Account,
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -76,13 +82,17 @@
             }
         },
         watch:{
-            account(val) {
+            Account(val) {
                 this.myAccount = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
+//                this.departStatus.id=this.myAccount.id;
+//                this.departStatus.flag=this.myAccount.flag;
+//                this.departStatus.reId=this.myAccount.reId;
+//                this.departStatus.reName=this.myAccount.reName;
             },
         },
         methods:{
             confirmStartDpm(){
-                this.$http.get('/manager/department/disableDpm/id/'+this.myAccount).then((res) => {
+                this.$http.get('/manager/department/disableDpm/id/'+this.myAccount.id).then((res) => {
                     if(res.data.code==10010){
                         $('#myModalStartDpm').modal('hide');
                         this.$emit('DdpStatus',this.myAccount);
@@ -104,7 +114,8 @@
                 })
             },
             confirmServiceDpm(){
-                this.$http.get('/manager/department/disableDpm/id/'+this.myAccount).then((res) => {
+                console.log(this.Account)
+                this.$http.get('/manager/department/disableDpm/id/'+this.departStatus.id).then((res) => {
                     if(res.data.code==10010){
                         $('#myModalSuspendDpm').modal('hide');
                         this.$emit('DdpStatus',this.myAccount);

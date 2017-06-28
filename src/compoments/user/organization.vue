@@ -251,8 +251,8 @@
         <AddDpm :addDpm="addDpm"></AddDpm>
         <editDpm :editDpm="editDpm" @editDdp="changeDpm"></editDpm>
         <Status :account="account" @Account="AccountStatus"></Status>
-        <UserRevise :editDate="editData"></UserRevise>
-        <depStatus :account="depAccount" @DdpStatus='dpmStatus'></depStatus>
+        <UserRevise :editDate="editData" @reviseAccount="reviseExamine"></UserRevise>
+        <depStatus :Account="depAccount" @DdpStatus='dpmStatus'></depStatus>
         <Page :pg="page" @pag="getBranch" v-if="type==1"></Page>
         <!--<Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>-->
         <!--<Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>-->
@@ -279,7 +279,7 @@
             depStatus,
             editDpm,
             UserRevise,
-            AddDpm
+            AddDpm,
         },
         data(){
             return {
@@ -312,8 +312,8 @@
                 reFourName:'',
                 department:'全公司',//部门展示
                 editData:[],
-                account:'',
-                depAccount:'',
+                account:{},
+                depAccount:{},
                 editDpm:[],
                 firstName:'',
                 addDpm:'', //新建下级部门
@@ -322,6 +322,7 @@
         mounted(){
             this.getBranch();
         },
+
         methods: {
             getBranch(a){
                 this.$http.get('manager/user/departmentIndex/page/'+a).then((res) => {
@@ -422,15 +423,51 @@
                     this.isDepartment=true;
                 })
             },
+            refreshPage(){
+                this.$router.replace('/back')
+            },
             //编辑部门页面更新
             changeDpm(val){
-                this.getBranch();
+                let id=val.id;
+                let name=val.name;
+                let flag=val.flag;
+                let reId=val.reId;
+                let reName=val.reName;
+                if(flag==1){
+                    this.getBranch();
+                }else if(flag==2){
+                    this.getSecond(reId,reName);
+                }else if(flag==3){
+                    this.getThird(reId,reName);
+                }else if(flag==4){
+                    this.getFour(reId,reName);
+                }else if(flag==5){
+                    this.getFive(reId,reName);
+                }
             },
             AccountStatus(val){
                 this.getBranch();
             },
-            dpmStatus(val){
+            //修改后查看
+            reviseExamine(val){
                 this.getBranch();
+            },
+            dpmStatus(val){
+                let id=val.id;
+                let flag=val.flag;
+                let reId=val.reId;
+                let reName=val.reName;
+                if(flag==1){
+                    this.getBranch();
+                }else if(flag==2){
+                    this.getSecond(reId,reName);
+                }else if(flag==3){
+                    this.getThird(reId,reName);
+                }else if(flag==4){
+                    this.getFour(reId,reName);
+                }else if(flag==5){
+                    this.getFive(reId,reName);
+                }
             },
             //鼠标hover事件
             changeClass(index, name){
@@ -439,9 +476,13 @@
             //查询成员
             search(a){
                 if (this.keywords != '') {
-                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+a).then((res) => {
+                    this.isThird=false;
+                    this.isSecond=false;
+                    this.isFirst=false;
+                    this.isFour=false;
+                    this.isDepartment=false;
+                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+decodeURI(a)).then((res) => {
                         this.type = 6;
-                        this.getBranch();
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.page=res.data.data.pages;
@@ -453,9 +494,8 @@
                         }
                     })
                 }else{
-                    this.$http.get('manager/user/searchUser/page/' +a ).then((res) => {
+                    this.$http.get('manager/user/searchUser/page/' +decodeURI(a) ).then((res) => {
                         this.type = 6;
-                        this.getBranch();
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.page=res.data.data.pages;
@@ -484,30 +524,87 @@
             //启用账号
             startAccount(id){
                 $('#myModalStart').modal('show');
-                this.account=id
+                this.account.id=id
             },
             //停止账号
             suspendAccount(id){
                 $('#myModalSuspend').modal('show');
-                this.account=id;
+                this.account.id=id
+//                this.account.flag=this.type;
+//                if(this.type===2){
+//                    this.account.reId=this.reFirstId;
+//                    this.account.reName=this.reFirstName;
+//                }else if(this.type===3){
+//                    this.account.reId=this.reSecondId;
+//                    this.account.reName=this.reSecondName;
+//                }else if(this.type===4){
+//                    this.account.reId=this.reThirdId;
+//                    this.account.reName=this.reThirdName;
+//                }else if(this.type===5){
+//                    this.account.reId=this.reFourId;
+//                    this.account.reName=this.reFourName;
+//                }
             },
             //新建下级部门
 
             //启用部门
             startDepartment(id){
                 $('#myModalStartDpm').modal('show');
-                this.depAccount=id;
+                this.depAccount.id=id;
+                this.depAccount.flag=this.type;
+                if(this.type===2){
+                    this.depAccount.reId=this.reFirstId;
+                    this.depAccount.reName=this.reFirstName;
+                }else if(this.type===3){
+                    this.depAccount.reId=this.reSecondId;
+                    this.depAccount.reName=this.reSecondName;
+                }else if(this.type===4){
+                    this.depAccount.reId=this.reThirdId;
+                    this.depAccount.reName=this.reThirdName;
+                }else if(this.type===5){
+                    this.depAccount.reId=this.reFourId;
+                    this.depAccount.reName=this.reFourName;
+                }
             },
             //停用部门
             stopDepartment(id){
                 $('#myModalStartDpm').modal('show');
-                this.depAccount=id;
+                this.depAccount.id=id;
+                this.depAccount.flag=this.type;
+                if(this.type===2){
+                    this.depAccount.reId=this.reFirstId;
+                    this.depAccount.reName=this.reFirstName;
+                }else if(this.type===3){
+                    this.depAccount.reId=this.reSecondId;
+                    this.depAccount.reName=this.reSecondName;
+                }else if(this.type===4){
+                    this.depAccount.reId=this.reThirdId;
+                    this.depAccount.reName=this.reThirdName;
+                }else if(this.type===5){
+                    this.depAccount.reId=this.reFourId;
+                    this.depAccount.reName=this.reFourName;
+                }
+
             },
             //编辑部门
             editDepartment(id){
                 $('#myModalEditDpm').modal('show');
                 this.$http.get('manager/department/readDpm/id/'+id).then((res) => {
                     this.editDpm=res.data.data;
+                    this.editDpm.flag=this.type;
+                    if(this.type==2){
+                        this.editDpm.reId=this.reFirstId;
+                        this.editDpm.reName=this.reFirstName;
+                    }else if(this.type==3){
+                        this.editDpm.reId=this.reSecondId;
+                        this.editDpm.reName=this.reSecondName;
+                    }else if(this.type==4){
+                        this.editDpm.reId=this.reThirdId;
+                        this.editDpm.reName=this.reThirdName;
+                    }else if(this.type==5){
+                        this.editDpm.reId=this.reFourId;
+                        this.editDpm.reName=this.reFourName;
+                    }
                 })
             },
             //新建下级部门

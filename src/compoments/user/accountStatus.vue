@@ -83,7 +83,7 @@
         },
         methods:{
             confirmStart(){
-                this.$http.get(addr + 'dismiss/id/'+this.myAccount).then((res) => {
+                this.$http.get(addr + 'dismiss/id/'+this.myAccount.id).then((res) => {
                     if(res.data.code==90030){
                         $('#myModalStart').modal('hide');
                         this.$emit('Account',this.myAccount);
@@ -106,10 +106,11 @@
                 })
             },
             confirmService(){
-                this.$http.get(addr + 'dismiss/id/'+this.myAccount).then((res) => {
+                this.$http.get(addr + 'dismiss/id/'+this.myAccount.id).then((res) => {
 
                     if(res.data.code==90030){
                         $('#myModalSuspend').modal('hide');
+                        this.$emit('Account',this.myAccount);
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
                         //显示成功弹窗 ***
