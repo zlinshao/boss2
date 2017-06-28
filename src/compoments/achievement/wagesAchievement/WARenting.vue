@@ -1,5 +1,12 @@
 <template>
     <div>
+
+        <ol class="breadcrumb">
+            <li>业绩管理</li>
+            <li>工资业绩</li>
+            <li class="active">租房</li>
+        </ol>
+
         <div class="col-lg-12">
             <form class="form-inline clearFix" role="form">
 
@@ -76,31 +83,27 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr class="text-center" data-toggle="modal" data-target="#myModal" @click="showDetail(1)">
-                        <td>LJS321456</td>
-                        <td>啊啊啊</td>
-                        <td>2017/12/12</td>
-                        <td>2017/12/12</td>
-                        <td>北苑二村18-205</td>
-                        <td>马群一组</td>
-                        <td>一年付</td>
-                        <td>680</td>
-                        <td>20</td>
-                        <td>20</td>
-                        <td>8160</td>
-                        <td>4080</td>
-                        <td>3672</td>
-                    </tr>
-
+                        <router-link tag="tr" class="text-center" :to="{path:'calc' , query:{id:1}}">
+                            <td>LJS321456</td>
+                            <td>啊啊啊</td>
+                            <td>2017/12/12</td>
+                            <td>2017/12/12</td>
+                            <td>北苑二村18-205</td>
+                            <td>马群一组</td>
+                            <td>一年付</td>
+                            <td>680</td>
+                            <td>20</td>
+                            <td>20</td>
+                            <td>8160</td>
+                            <td>4080</td>
+                            <td>3672</td>
+                        </router-link>
 
                     </tbody>
                 </table>
             </section>
         </div>
 
-
-        <!--模态框-->
-        <Modal :id="id"></Modal>
     </div>
 </template>
 <style scoped>
@@ -109,7 +112,7 @@
     }
 </style>
 <script>
-    import Tips from '../tips.vue'
+    import Tips from '../companyAchievement/tips.vue'
     import Modal from './WAModal.vue'
     export default{
         data(){

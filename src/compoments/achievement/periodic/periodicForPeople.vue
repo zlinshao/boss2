@@ -1,5 +1,12 @@
 <template>
     <div>
+
+        <ol class="breadcrumb">
+            <li>业绩管理</li>
+            <li>周期表</li>
+            <li class="active">个人</li>
+        </ol>
+
         <div class="col-lg-12">
             <form class="form-inline clearFix" role="form">
 

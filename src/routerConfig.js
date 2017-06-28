@@ -13,6 +13,10 @@ import PeriodicForGroup from './compoments/achievement/periodic/periodicForGroup
 import PeriodicForPeople from './compoments/achievement/periodic/periodicForPeople.vue'
 import WACollect from './compoments/achievement/wagesAchievement/WACollect.vue'
 import WARenting from './compoments/achievement/wagesAchievement/WARenting.vue'
+import Compare from './compoments/achievement/companyAchievement/compare.vue'   // 公司业绩收租房对比
+import Calc from './compoments/achievement/wagesAchievement/calc.vue'       // 计算详情
+import Chart from './compoments/achievement/chart/chart.vue'
+
 
 import Custom from "./compoments/custom/custom.vue";                        //客户
 import Details from "./compoments/custom/custom_more.vue";                  //客户详情
@@ -138,5 +142,20 @@ export default[
         path: '/yi',
         name: 'yi',
         component: yi
+    },
+    {
+        path: '/compare',
+        name: 'Compare',
+        component: Compare
+    },
+    {
+        path: '/calc',
+        name: 'Calc',
+        component: Calc
+    },
+    {
+        path: '/chart',
+        name: 'Chart',
+        component: Chart
     }
 ]

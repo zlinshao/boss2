@@ -1,5 +1,11 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>业绩管理</li>
+            <li>喜报录入</li>
+            <li class="active">收房</li>
+        </ol>
+
         <div class="col-lg-12 clearFix">
             <form class="form-inline clearFix" role="form">
 
@@ -135,7 +141,7 @@
 
 
         <!--modal-->
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -145,41 +151,41 @@
                     <div class="modal-body">
                         <div class="modalList">
                             <span>收房片区:</span>
-                            <select name="" class="form-control" v-model="region">
+                            <select name="" class="form-control" v-model="news.region">
                                 <option value="0">马群</option>
                                 <option value="1">迈皋桥</option>
                             </select>
                         </div>
                         <div class="modalList">
                             <span>收房签约人:</span>
-                            <input type="text" class="form-control" v-model="people">
+                            <input type="text" class="form-control" v-model="news.people">
                         </div>
                         <div class="modalList">
                             <span>房屋地址:</span>
-                            <input type="text" class="form-control" v-model="address">
+                            <input type="text" class="form-control" v-model="news.address">
                         </div>
                         <div class="modalList">
                             <span>空置期:</span>
-                            <input type="number" class="form-control" v-model="vacancyTime">
+                            <input type="number" class="form-control" v-model="news.vacancyTime">
                         </div>
                         <div class="modalList">
                             <span>房屋类型:</span>
-                            <select name="" class="form-control" v-model="type">
+                            <select name="" class="form-control" v-model="news.type">
                                 <option value="0">住宅</option>
                                 <option value="1">商用</option>
                             </select>
                         </div>
                         <div class="modalList">
                             <span>年限:</span>
-                            <input type="number" class="form-control" v-model="years">
+                            <input type="number" class="form-control" v-model="news.years">
                         </div>
                         <div class="modalList">
                             <span>收房价格:</span>
-                            <input type="number" class="form-control" v-model="price">
+                            <input type="number" class="form-control" v-model="news.price">
                         </div>
                         <div class="modalList">
                             <span>付款方式:</span>
-                            <select name="" class="form-control" v-model="payWay">
+                            <select name="" class="form-control" v-model="news.payWay">
                                 <option value="0">季付</option>
                                 <option value="1">年付</option>
                             </select>
@@ -187,12 +193,12 @@
                         </div>
                         <div class="modalList">
                             <span>是否中介:</span>
-                            <input type="text" class="form-control" v-model="isAgency">
+                            <input type="text" class="form-control" v-model="news.isAgency">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div v-if="add">
-                            <button type="button" class="btn btn-primary">完成</button>
+                            <button type="button" class="btn btn-primary" @click="addGNCollect">完成</button>
                         </div>
                         <div v-else="add">
                             <button type="button" class="btn btn-primary">修改</button>
@@ -236,15 +242,18 @@
         data(){
             return {
                 title : '新增收房喜报',         // 新增/修改
-                region : '',        // 收房片区
-                people : '',        // 收房签约人
-                address : '',       // 房屋地址
-                vacancyTime : '',   // 空置期
-                type : '',          // 房屋类型
-                years : '',         // 年限
-                price : '',         // 收房价格
-                payWay : '',        // 付款方式
-                isAgency : '',       // 是否中介
+                news : {
+                    region : '',        // 收房片区
+                    people : '',        // 收房签约人
+                    address : '',       // 房屋地址
+                    vacancyTime : '',   // 空置期
+                    type : '',          // 房屋类型
+                    years : '',         // 年限
+                    price : '',         // 收房价格
+                    payWay : '',        // 付款方式
+                    isAgency : ''       // 是否中介
+                },
+
                 add : true          // 是否新增
             }
         },
@@ -259,28 +268,44 @@
                 this.add = false;
                 var that = this;
 
+                var res = {
+                    region : 0,             // 收房片区
+                    people : '阿加',          // 收房签约人
+                    address : '啊时间卡',       // 房屋地址
+                    vacancyTime : 20,       // 空置期
+                    type : 1,               // 房屋类型
+                    years : 30,             // 年限
+                    price : 3500,           // 收房价格
+                    payWay : 1,             // 付款方式
+                    isAgency : 1            // 是否中介
+                };
+
                 // 获取信息后修改
-                that.region = 0;        // 收房片区
-                that.people = '阿加';        // 收房签约人
-                that.address = '啊时间卡';       // 房屋地址
-                that.vacancyTime = 20;   // 空置期
-                that.type = 1;          // 房屋类型
-                that.years = 30;         // 年限
-                that.price = 3500;         // 收房价格
-                that.payWay = 1;        // 付款方式
-                that.isAgency = 1;       // 是否中介
+                that.news.region = res.region;
+                that.news.people = res.people;
+                that.news.address = res.address;
+                that.news.vacancyTime = res.vacancyTime;
+                that.news.type = res.type;
+                that.news.years = res.years;
+                that.news.price = res.price;
+                that.news.payWay = res.payWay;
+                that.news.isAgency = res.isAgency;
 
 
-//                修改或删除成功后
-                /*that.region = '';
-                that.people = '';
-                that.address = '';
-                that.vacancyTime = '';
-                that.type = '';
-                that.years = '';
-                that.price = '';
-                that.payWay = '';
-                that.isAgency = '';*/
+            },
+            addGNCollect (){
+
+            },
+            clear(){    // 清空input
+                this.news.region = '';
+                this.news.people = '';
+                this.news.address = '';
+                this.news.vacancyTime = '';
+                this.news.type = '';
+                this.news.years = '';
+                this.news.price = '';
+                this.news.payWay = '';
+                this.news.isAgency = '';
             }
         }
     }

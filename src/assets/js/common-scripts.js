@@ -110,6 +110,17 @@ $(function() {
         })
     }
 
+
+    $('.sidebar-menu li').click(function () {
+        if (!IsPC()){
+            // console.log(this);
+            // console.log($(this).children('ul').length)
+            if ($(this).children('ul').length==0){
+                $('.sidebar-menu').slideUp();
+            }
+        }
+    })
+
 });
 
 
@@ -129,6 +140,9 @@ function responsiveView() {
     } else {
         $('#container').removeClass('sidebar-close');
     }
+
+    // 点击之后收起菜单
+
 }
 
 function IsPC(){
