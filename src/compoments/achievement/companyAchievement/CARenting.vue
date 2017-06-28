@@ -1,5 +1,12 @@
 <template>
     <div>
+
+        <ol class="breadcrumb">
+            <li>业绩管理</li>
+            <li>公司业绩</li>
+            <li class="active">租房</li>
+        </ol>
+
         <div class="col-lg-12">
             <form class="form-inline clearFix" role="form">
 
@@ -42,8 +49,6 @@
             </form>
         </div>
 
-        <Tips></Tips>
-
 
         <!--表格-->
         <div class="col-lg-12">
@@ -68,26 +73,25 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr class="text-center" data-toggle="modal" data-target="#myModal">
-                        <td>2017-05-18</td>
-                        <td>秦淮一组</td>
-                        <td>彩云姐</td>
-                        <td>
-                            亚东观云 <br>
-                            3-403
-                        </td>
-                        <td>3</td>
-                        <td>1200</td>
-                        <td>2</td>
-                        <td>季付</td>
-                        <td>30</td>
-                        <td>是</td>
-                        <td>2</td>
-                        <td>季付</td>
-                        <td>30</td>
-                        <td>是</td>
-                    </tr>
-
+                        <router-link tag="tr" class="text-center" :to="{path:'compare' , query:{id:1}}">
+                            <td>2017-05-18</td>
+                            <td>秦淮一组</td>
+                            <td>彩云姐</td>
+                            <td>
+                                亚东观云 <br>
+                                3-403
+                            </td>
+                            <td>3</td>
+                            <td>1200</td>
+                            <td>2</td>
+                            <td>季付</td>
+                            <td>30</td>
+                            <td>是</td>
+                            <td>2</td>
+                            <td>季付</td>
+                            <td>30</td>
+                            <td>是</td>
+                        </router-link>
 
                     </tbody>
                 </table>
@@ -107,7 +111,6 @@
 
 </style>
 <script>
-    import Tips from '../tips.vue'
     import Modal from './CAModal.vue'
     export default{
         data(){
@@ -116,7 +119,6 @@
             }
         },
         components: {
-            Tips,
             Modal
         }
     }

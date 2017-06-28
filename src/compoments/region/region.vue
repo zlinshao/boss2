@@ -18,7 +18,7 @@
                         <label>选择城市：</label>
                         <button class="btn btn-success" type="button" data-cityId="0" @click="getRegions(0)" :class="{active : isActive == 0}">所有城市</button>
                         <button class="btn btn-success" type="button" data-cityId="1" @click="getRegions(1)" :class="{active : isActive == 1}">南京</button>
-                        <button class="btn btn-success" data-cityId="2" @click="getRegions(2)" :class="{active : isActive == 2}">苏州</button>
+                        <button class="btn btn-success" type="button" data-cityId="2" @click="getRegions(2)" :class="{active : isActive == 2}">苏州</button>
                     </div>
 
                     <div class="input-group bootstrap-timepicker pull-right">
@@ -144,10 +144,10 @@
                 }else {
                     this.showPage = false;
                     if (num == 1){// 南京
-                        alert('南京');
+//                        alert('南京');
                         this.isActive = num;
                     } else if (num == 2){// 苏州
-                        alert('苏州');
+//                        alert('苏州');
                         this.isActive = num;
                     }
                 }

@@ -1,16 +1,17 @@
 <template>
     <div>
+        <!--日志/提醒/放入客户池-->
         <div class="modal fade " id="remindDaily" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <!--新增-->
+                    <!--新增日志-->
                     <div v-if="daily_state" class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">增加日志</h4>
                     </div>
 
-                    <!--修改-->
+                    <!--增加提醒-->
                     <div v-if="inter_state" class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">增加提醒</h4>
@@ -22,36 +23,12 @@
                         <h4 class="modal-title">放入客户池</h4>
                     </div>
 
-                    <!--客户派发-->
-                    <div v-if="distribute_state" class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">客户派发</h4>
-                    </div>
-
                     <!--放入客户池-->
                     <div v-if="pool" class="modal-body">
                         <h4>确定放入客户池吗？</h4>
                     </div>
 
-                    <!--客户派发-->
-                    <div v-if="distribute_state" class="modal-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" disabled :value="cus_distribute">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">派发对象</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" placeholder="请输入姓名">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!--新增/编辑-->
+                    <!--新增日志-->
                     <div v-if="daily_state" class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
@@ -62,7 +39,7 @@
                         </form>
                     </div>
 
-                    <!--新增中介-->
+                    <!--新增提醒-->
                     <div v-if="inter_state" class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
@@ -88,14 +65,13 @@
                                 </div>
                             </div>
                             <div class="form-group" v-if="senior_a">
-                                <label class="col-lg-2 col-sm-2 control-label"></label>
+                                <label class="col-lg-2 col-sm-2 control-label">提醒时间</label>
                                 <div class="col-lg-10">
                                     <div class="form-group street">
-                                        <div class="col-sm-5">
-                                            <input type="text" class="form-control" placeholder="日期">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" placeholder="时间">
+                                        <div class="col-sm-6">
+                                            <input @click="remindData" type="text"
+                                                   class="form-control form_datetime" id="addtime"
+                                                   name="addtime" value="" placeholder="请选择时间">
                                         </div>
                                     </div>
                                 </div>
@@ -122,13 +98,30 @@
                 inter_state: false,         //提醒内容
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
-                distribute_state: false     //客户派发
             }
         },
+        updated (){
+//            时间选择
+            this.remindData();
+        },
         methods: {
+
+//            时间选择
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd hh:00',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                });
+            },
+
+//            高级选项
             senior (){
                 this.senior_a = !this.senior_a;
-            }
+            },
         },
         watch: {
             cus_name (val){
@@ -139,14 +132,12 @@
                     this.daily_state = true;      //增加日志
                     this.inter_state = false;     //提醒内容
                     this.pool = false;            //放入客户池
-                    this.distribute_state = false;//分配客户
 
                 }
                 if (val === 'inter') {
                     this.daily_state = false;       //增加日志
                     this.inter_state = true;        //提醒内容
                     this.pool = false;              //放入客户池
-                    this.distribute_state = false;  //分配客户
                 }
                 if (val === 'pool') {
                     this.daily_state = false;       //增加日志
@@ -158,7 +149,6 @@
                     this.daily_state = false;       //增加日志
                     this.inter_state = false;       //提醒内容
                     this.pool = false;              //放入客户池
-                    this.distribute_state = true;   //分配客户
                 }
             }
 //                myResult(val){
@@ -169,7 +159,6 @@
 
     }
 </script>
-
 
 <style scoped>
 

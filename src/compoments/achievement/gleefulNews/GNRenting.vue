@@ -1,5 +1,11 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>业绩管理</li>
+            <li>喜报录入</li>
+            <li class="active">租房</li>
+        </ol>
+
         <div class="col-lg-12">
             <form class="form-inline clearFix" role="form">
 
@@ -125,7 +131,7 @@
 
 
         <!--modal-->
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -183,18 +189,18 @@
                         <div class="col-lg-6 collect">
                             <div class="modalList">
                                 <span>收房签约人:</span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" disabled>
                             </div>
                             <div class="modalList">
                                 <span>房屋类型:</span>
-                                <select name="" class="form-control">
+                                <select name="" class="form-control" disabled>
                                     <option value="0">住宅</option>
                                     <option value="1">商用</option>
                                 </select>
                             </div>
                             <div class="modalList">
                                 <span>房屋价格:</span>
-                                <input type="number" class="form-control">
+                                <input type="number" class="form-control" disabled>
                             </div>
                         </div>
 

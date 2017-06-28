@@ -1,5 +1,8 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>小区管理</li>
+        </ol>
         <div class="headFrom col-lg-12 clearFix">
             <form class="form-inline clearFix" role="form">
                 <div class="dropdown form-group">

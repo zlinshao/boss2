@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li><router-link to="/village">小区管理</router-link></li>
+            <li class="active">小区详情</li>
+        </ol>
         <div class="col-lg-12">
             <h3>小区信息</h3>
             <div class="col-lg-12 clearFix">
@@ -44,7 +48,7 @@
                             </li>
                             <li>
                                 <span>照片</span>
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic('http://qwertyerge.oss-cn-hangzhou.aliyuncs.com/C3DD199EE995773D8AB80A17288C6907.jpg?x-oss-process=image/resize,m_fixed,w_600,h_700')">
                                 <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                 <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                             </li>
@@ -79,6 +83,7 @@
 
         <!--模态框-->
         <Modal :oper="oper"></Modal>
+        <PicModal :src="picSrc"></PicModal>
     </div>
 </template>
 <style scoped>
@@ -146,6 +151,7 @@
 </style>
 <script>
     import Modal from './modal.vue'
+    import PicModal from '../common/largePic.vue'
 
     export default{
         data(){
@@ -153,11 +159,19 @@
                 oper : {
                     operName : '编辑小区信息',
                     villageId : 10
-                }
+                },
+                picSrc : ''
             }
         },
         components: {
-            Modal
+            Modal,
+            PicModal
+        },
+        methods : {
+            showLargePic(src){
+                this.picSrc = src;
+                $('#myModal2').modal('show');
+            }
         }
 
     }

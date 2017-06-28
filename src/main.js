@@ -10,7 +10,7 @@ import Loading from './compoments/loading'
 Vue.use(Loading);
 Vue.use(Vuex);
 Vue.use(VueRouter);
- axios.defaults.baseURL = 'http://test.v2.api.boss.lejias.cn/';
+axios.defaults.baseURL = 'http://test.v2.api.boss.lejias.cn/';
 Vue.prototype.$http = axios;
 
 const router = new VueRouter({
