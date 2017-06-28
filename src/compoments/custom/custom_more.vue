@@ -1,8 +1,7 @@
 <template>
     <div>
-
         <!--头部-->
-        <section class="panel">
+        <section class ="panel">
             <div class="panel-body">
                 <header>
                     <h4>
@@ -274,13 +273,42 @@
                             </div>
 
                             <!--房屋信息-->
-                            <div id="about" class="tab-pane">About</div>
+                            <div id="about" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <section class="panel table-responsive">
+                                            <table class="table table-striped table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">房屋地址</th>
+                                                    <th class="text-center">房型</th>
+                                                    <th class="text-center">状态</th>
+                                                    <th class="text-center">负责人</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="text-center"> <router-link :to="{path:'/okCollect',query: {nameId: 'cccc'}}">积善公寓2-302</router-link></td>
+                                                    <td class="text-center">三房一室一厅</td>
+                                                    <td class="text-center">已成交</td>
+                                                    <td class="text-center">负责人</td>
+                                                </tr>
+                                                <tr v-show="">
+                                                    <td colspan="12" class="text-center text-muted">
+                                                        <h4>暂无数据....</h4>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-
     </div>
 </template>
 

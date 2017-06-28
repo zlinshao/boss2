@@ -25,16 +25,13 @@
                                     <label for="title1">描述</label>
 
                                     <!--title-->
-                                    <input type="text" id="title1" class="form-control" placeholder="描述"
-                                           v-model="title">
+                                    <input type="text" id="title1" class="form-control" placeholder="描述" v-model="title">
                                 </div>
                                 <div v-for="role in myData" class="check">
-                                    <label>
+                                    <label><!--多选框-->
                                     <input @click="rules(role.id, $event)" type='checkbox' class="pull-left"
                                            v-model='checkboxModel'
                                            :value='role.id'>{{role.title}}</label>
-                                    <!--多选框-->
-                                    <!--<input type="checkbox"  :checked="state"> -->
                                 </div>
                             </form>
                         </div>
