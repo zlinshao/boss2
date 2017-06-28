@@ -6,7 +6,7 @@
                 <aside class="sm-side">
                     <div class="user-head">
                         <div class="user-name" style="font-size: 16px;line-height: 60px;">
-                            南京乐嘉商业管理有限公司
+                            南京乐伽商业管理有限公司
                         </div>
                     </div>
 
@@ -36,6 +36,9 @@
                                             <li @click="editDepartment(item.id)">
                                                 <a class="btn btn-default">编辑部门</a>
                                             </li>
+                                            <li @click="addDeparment(item.id)">
+                                                <a class="btn btn-default">新建下级部门</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </a>
@@ -55,6 +58,9 @@
                                         <ul class="dropdown-menu dropdown-menu-left">
                                             <li @click="editDepartment(item.id)">
                                                 <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="addDeparment(item.id)">
+                                                <a class="btn btn-default">新建下级部门</a>
                                             </li>
                                             <li @click="startDepartment(item.id)">
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
@@ -81,6 +87,9 @@
                                             <li @click="editDepartment(item.id)">
                                                 <a class="btn btn-default">编辑部门</a>
                                             </li>
+                                            <li @click="addDeparment(item.id)">
+                                                <a class="btn btn-default">新建下级部门</a>
+                                            </li>
                                             <li @click="startDepartment(item.id)">
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
                                             </li>
@@ -105,6 +114,9 @@
                                         <ul class="dropdown-menu dropdown-menu-left">
                                             <li @click="editDepartment(item.id)">
                                                 <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="addDeparment(item.id)">
+                                                <a class="btn btn-default">新建下级部门</a>
                                             </li>
                                             <li @click="startDepartment(item.id)">
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
@@ -134,13 +146,13 @@
                 <aside class="lg-side">
                     <div class="leftHead" style="padding-bottom: 0px">
                         <div class="row">
-                            <div class="col-lg-5 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <h4 style="color: #0f0f0f">部门
                                     <span style="color:#fff;font-size:16px;" v-if="isDepartment"> {{department}}</span>
                                 </h4>
                             </div>
-                            <div class="col-lg-3 col-md-12 clickBt">
-                                <button class="btn btn-primary">提醒</button>
+                            <div class="col-lg-2 col-md-12 clickBt">
+                                <!--<button class="btn btn-primary">提醒</button>-->
                                 <button class="btn btn-primary" @click="addUser">添加员工</button>
                             </div>
                             <div class="col-lg-4 col-md-12 pull-right">
@@ -179,13 +191,19 @@
                                             <tbody id="collectId">
                                             <tr v-for="item in userList">
                                                 <td >{{item.real_name}}</td>
-                                                <td v-for="value in item.department">{{value}}</td>
-                                                <td v-for="value in item.position_id">{{value}}</td>
-                                                <td v-if="item.position_id.length==0">无</td>
-                                                <td v-for="item1 in item.role">{{item1.title}}</td>
-                                                <td v-if="item.role.length==0">无</td>
-                                                <td v-if="item.status==1">在职</td>
-                                                <td v-if="item.status==3">离职</td>
+
+
+                                                <td><span v-for="item1 in item.department">{{item1.name}}</span></td>
+
+                                                <td><span v-for="item1 in item.position_id">{{item1.vocation}}</span></td>
+
+                                                <td ><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>
+                                                <td v-if="item.status==1">
+                                                    <span class="label label-success ">在职</span>
+                                                </td>
+                                                <td v-if="item.status==3">
+                                                    <span class="label label-warning ">离职</span>
+                                                </td>
                                                 <td>{{item.mobile}}</td>
                                                 <td>{{item.enroll_time}}</td>
                                                 <td class="dropdown">
@@ -228,16 +246,18 @@
                 </aside>
             </div>
         </section>
-        <UserAdd :editDate="editData"></UserAdd>
+        <UserAdd></UserAdd>
         <Organize></Organize>
-        <editDpm :editDpm="editDpm"></editDpm>
-        <Status :account="account"></Status>
-        <depStatus :account="depAccount"></depStatus>
+        <AddDpm :addDpm="addDpm"></AddDpm>
+        <editDpm :editDpm="editDpm" @editDdp="changeDpm"></editDpm>
+        <Status :account="account" @Account="AccountStatus"></Status>
+        <UserRevise :editDate="editData"></UserRevise>
+        <depStatus :account="depAccount" @DdpStatus='dpmStatus'></depStatus>
         <Page :pg="page" @pag="getBranch" v-if="type==1"></Page>
-        <Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>
-        <Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>
-        <Page :pg="page" @pag="getFour(id,name)" v-if="type==4"></Page>
-        <Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>
+        <!--<Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>-->
+        <!--<Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>-->
+        <!--<Page :pg="page" @pag="getFour(id,name)" v-if="type==4"></Page>-->
+        <!--<Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>-->
         <Page :pg="page" @pag="search" v-if="type==6"></Page>
     </div>
 </template>
@@ -247,7 +267,9 @@
     import Page from '../common/page.vue';
     import Status from './accountStatus.vue';
     import depStatus from  './departmentStatus.vue'
-    import editDpm from  './editDpm.vue'
+    import editDpm from  './editDpm.vue';
+    import UserRevise from './userRevise.vue';
+    import AddDpm from  './addDubordinateDpm.vue'
     export default{
         components: {
             UserAdd,
@@ -255,7 +277,9 @@
             Page,
             Status,
             depStatus,
-            editDpm
+            editDpm,
+            UserRevise,
+            AddDpm
         },
         data(){
             return {
@@ -267,8 +291,9 @@
                 FiveList:[],
                 type: '',      //列表类型 1为部门 2为二级 3为三级
                 keywords: '',   //搜索关键字
-                page:'',
+//                page: {id:'',name:'',a:''},
                 active1:'',
+                page:'',
                 id:'',
                 name:'',
                 //多级菜单
@@ -289,7 +314,9 @@
                 editData:[],
                 account:'',
                 depAccount:'',
-                editDpm:[]
+                editDpm:[],
+                firstName:'',
+                addDpm:'', //新建下级部门
             }
         },
         mounted(){
@@ -314,9 +341,15 @@
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.page=res.data.data.pages;
-                    this.type = 2;
+                    if(res.data.data.department.length==0){
+                        this.type = 1;
+                    }else {
+                        this.type = 2;
+                    }
+//                    this.page = Object.assign({},this.page,{id:id});
                     this.id=id;
                     this.name=name;
+                    console.log(this.page)
                     this.isFirst = true;
                     this.isSecond  = false;
                     this.isThird = false;
@@ -331,8 +364,12 @@
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.ThirdList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.page=res.data.data.pages;
-                    this.type = 3;
+                    this.a=res.data.data.pages;
+                    if(res.data.data.department.length==0){
+                        this.type = 2;
+                    }else {
+                        this.type = 3;
+                    }
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -349,7 +386,7 @@
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
                     this.FourList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.page=res.data.data.pages;
+                    this.a=res.data.data.pages;
                     if(res.data.data.department.length==0){
                         this.type = 3;
                     }else {
@@ -385,6 +422,16 @@
                     this.isDepartment=true;
                 })
             },
+            //编辑部门页面更新
+            changeDpm(val){
+                this.getBranch();
+            },
+            AccountStatus(val){
+                this.getBranch();
+            },
+            dpmStatus(val){
+                this.getBranch();
+            },
             //鼠标hover事件
             changeClass(index, name){
                 this.active1 = index;
@@ -394,6 +441,7 @@
                 if (this.keywords != '') {
                     this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+a).then((res) => {
                         this.type = 6;
+                        this.getBranch();
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.page=res.data.data.pages;
@@ -407,6 +455,7 @@
                 }else{
                     this.$http.get('manager/user/searchUser/page/' +a ).then((res) => {
                         this.type = 6;
+                        this.getBranch();
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.page=res.data.data.pages;
@@ -423,7 +472,7 @@
             },
             //编辑账号
             edit(id){
-                $('#myModalAdd').modal('show');
+                $('#myModalRevise').modal('show');
                 this.$http.get('manager/user/readUser/id/'+id).then((res) => {
                     this.editData=res.data.data;
                 })
@@ -431,7 +480,6 @@
             //增加账号
             addUser(){
                 $('#myModalAdd').modal('show');
-                this.editData=[];
             },
             //启用账号
             startAccount(id){
@@ -462,6 +510,11 @@
                     this.editDpm=res.data.data;
                 })
             },
+            //新建下级部门
+            addDeparment(id){
+                $('#myModalAddDpm').modal('show');
+                this.addDpm=id;
+            }
         }
     }
 </script>
@@ -522,7 +575,17 @@
         border:none;
     }
     .department:focus{
-        color: #6a6a6a;
+        color:#f30a3e;
         background: #e5e8ef;
+        font-size: 14px;
+    }
+    .btn-lg{
+        font-size: 12px;
+    }
+    .panel-body {
+         padding: 0;
+    }
+    .table-responsive {
+         overflow: visible;
     }
 </style>
