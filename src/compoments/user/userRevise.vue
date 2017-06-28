@@ -255,6 +255,7 @@
         },
         watch:{
             editDate(val) {
+                this.getFirstDepart();
                 this.myResult = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
                 this.accountId=this.myResult.id;
                 this.real_name=this.myResult.real_name;
@@ -463,12 +464,17 @@
                         this.checkboxModel = [],
                         this.newBox = [],
                         this.position_id=[];     //职位
-                        this.position=[],     //职位
+                        this.position=[];    //职位
+                        this.firstDepart=[];
                         this.secondDepart=[];
                         this.thirdDepart=[];
                         this.fourDepart=[];
                         this.positionList=[];
                         this.reviseDpm=false;
+                        this.first='';
+                        this.second='';
+                        this.third='';
+                        this.four='';
                         $("#myModalRevise").modal("hide");//关闭模态框
                         this.info.success = res.data.msg;
                         this.info.state_error = false;

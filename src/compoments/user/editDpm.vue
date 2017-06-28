@@ -67,7 +67,6 @@
             responsible(){
                 this.$http.post('/manager/department/updateDpm/',{'id':this.depart.id,'name':this.depart.department}).then((res) => {
                     if(res.data.code==10030){
-                        this.depart=[];
                         $('#myModalEditDpm').modal('hide');
                         this.$emit('editDdp',this.depart);
                         this.info.success = res.data.msg;
