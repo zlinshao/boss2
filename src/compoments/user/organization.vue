@@ -512,6 +512,7 @@
             },
             //编辑账号
             edit(id){
+                $('#myModalRevise').modal({backdrop: 'static',});
                 $('#myModalRevise').modal('show');
                 this.$http.get('manager/user/readUser/id/'+id).then((res) => {
                     this.editData=res.data.data;

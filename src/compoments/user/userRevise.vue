@@ -5,8 +5,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="clearModal">
+                            <span aria-hidden="true" >&times;</span>
                         </button>
                         <h4 class="modal-title" style="text-align: center">编辑用户</h4>
                     </div>
@@ -173,7 +173,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" aria-label="Close" @click="clearModal">关闭</button>
                         <button type="button" class="btn btn-warning" @click="reviseUse">修改</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -259,6 +259,7 @@
         watch:{
             editDate(val) {
                 this.getFirstDepart();
+                this.checkboxModel=[];
                 this.myResult = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
                 this.accountId=this.myResult.id;
                 this.real_name=this.myResult.real_name;
@@ -277,13 +278,14 @@
                     this.newBox.push(this.role[i].title);
                 };
                 //匹配复选框与请求数据相同项
-                for (let s in this.newBox) {
-                    for (let x in this.oldBox) {
-                        if (this.newBox[s] === this.oldBox[x]) {
-                            this.checkboxModel.push(this.newBox[s]);
-                        }
-                    }
-                };
+//                for (let s in this.newBox) {
+//                    for (let x in this.oldBox) {
+//                        if (this.newBox[s] === this.oldBox[x]) {
+//                            this.checkboxModel.push(this.newBox[s]);
+//                        }
+//                    }
+//                };
+                this.checkboxModel=this.newBox;
                 for (let s in this.checkboxModel) {
                     for (let x in this.oldRoleBox) {
                         if (this.checkboxModel[s] === this.oldRoleBox[x].role) {
@@ -383,6 +385,13 @@
 
                 })
 
+            },
+            clearModal(){
+                this.checkboxModel = [],
+                this.newBox = [],
+                this.position_id=[];     //职位
+                console.log(this.checkboxModel)
+                $("#myModalRevise").modal("hide");//关闭模态框
             },
             //选择职位
             selectPostion(){
