@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!--客户-->
+        <!--客户池-->
         <section class="panel">
             <div class="panel-body">
 
@@ -62,48 +62,16 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pull-right">
-                        <a data-toggle="modal" href="#customModel" class="btn btn-success"><i
-                                class="fa fa-plus-square"></i>&nbsp;增加客户
-                        </a>
-                    </div>
-                </div>
-
-                <!--被选中一个-->
-                <div v-if="pitch.length === 1" class="col-lg-12 remind">
-                    <ul>
-                        <li>
-                            <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
-                        </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('daily')">增加沟通日志</a></h5>
-                        </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('inter')">提醒</a></h5>
-                        </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')">放入客户池</a></h5>
-                        </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
-                        </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#customModel">编辑</a></h5>
-                        </li>
-                        <li>
-                            <h5><a>取消置顶</a></h5>
-                        </li>
-                    </ul>
                 </div>
 
                 <!--选中两个以上-->
-                <div v-if="pitch.length > 1" class="col-lg-12 remind">
+                <div v-if="pitch.length > 0" class="col-lg-12 remind">
                     <ul>
                         <li>
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')">放入客户池</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')">领取</a></h5>
                         </li>
                         <li>
                             <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
@@ -112,7 +80,8 @@
                 </div>
             </div>
         </section>
-        <!--客户列表-->
+
+        <!--客户池列表-->
         <div class="row">
             <div class="col-md-12">
                 <section class="panel table-responsive">
@@ -128,9 +97,8 @@
                             <th class="text-center">跟进进度</th>
                             <th class="text-center">来源</th>
                             <th class="text-center">客户状态</th>
-                            <th class="text-center">客户身份</th>
-                            <th class="text-center">个人/中介</th>
-                            <th class="text-center">负责人</th>
+                            <th class="text-center">客户行业</th>
+                            <th class="text-center">房屋所属</th>
                             <th class="text-center">置顶</th>
                             <th class="text-center">更多</th>
                         </tr>
@@ -163,7 +131,6 @@
                             <td class="text-center">{{cus.state}}</td>
                             <td class="text-center">{{cus.client}}</td>
                             <td class="text-center">{{cus.status}}</td>
-                            <td class="text-center">{{cus.charge}}</td>
                             <td class="text-center"><a @click="stick(index)"><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
                                 <router-link to="/details">更多</router-link>
@@ -180,12 +147,6 @@
             </div>
         </div>
 
-        <!--增加日志/增加提醒/放入客户池-->
-        <remindDaily :state="bool" :cus_name="cus_name"></remindDaily>
-
-        <!--客户 新增/修改-->
-        <New_add></New_add>
-
         <!--分配-->
         <Distribution :msg="cus_name"></Distribution>
 
@@ -198,7 +159,7 @@
     import Page from '.././common/page.vue'
     import New_add from '../common/new_add.vue'
     import remindDaily from './remindDaily.vue'
-    import Distribution from '../common/distribution.vue'          //分配
+    import Distribution from '../common/distribution.vue'       //分配
     export default {
         components: {Page, Distribution, New_add, remindDaily},
         data (){
@@ -207,7 +168,7 @@
                 paging: '',                 //总页数
                 pitch: [],                  //选中id
                 bool: '',
-                cus_name: []                //派发信息
+                cus_name: []
             }
         },
         created (){
@@ -248,15 +209,6 @@
             add_state (val){
                 this.bool = val;
             },
-
-//            置顶
-            stick (val){
-//                this.custom_list[0] = (this.custom_list[val]);
-//                if (val > -1) {
-//                    this.custom_list.splice(val, 1);
-//                }
-//                this.$set(this.custom_list, val, this.custom_list[val]);
-            }
         }
     }
 </script>

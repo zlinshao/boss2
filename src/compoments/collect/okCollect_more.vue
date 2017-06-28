@@ -1,0 +1,385 @@
+<template>
+    <div>
+        <!--头部-->
+        <section class="panel">
+            <div class="panel-body">
+                <header>
+                    <h4>
+                        客户信息
+                        <a data-toggle="modal" class="pull-right" href="#collectAdd">编辑</a>
+                        <a data-toggle="modal" class="pull-right" href="#distribution">分配</a>
+                    </h4>
+                </header>
+                <div class="panel-body table-responsive client_info">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div><span class="text-primary">房屋地址：</span><span>积善公寓2-302</span></div>
+                            <div><span class="text-primary">房型：</span><span>三室一厅一卫</span></div>
+                            <div><span class="text-primary">面积：</span><span>120㎡</span></div>
+                            <div><span class="text-primary">装修：</span><span>精装</span></div>
+                            <div><span class="text-primary">负责人：</span><span>黑骑，蓝染</span></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
+                            <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
+                            <div><span class="text-primary">参考租金：</span><span>3200元</span></div>
+                            <div><span class="text-primary">房屋状态：</span><span>待出租</span></div>
+                        </div>
+                    </div>
+                    <div v-if="open_on" class="col-md-12">
+                        <div class="col-md-4">
+                            <div><span class="text-primary">配套设备：</span><span>空调,家具</span></div>
+                            <div><span class="text-primary">房屋类型：</span><span>住宅</span></div>
+                            <div><span class="text-primary">房屋特色：</span><span>地铁沿线</span></div>
+                            <div><span class="text-primary">所属小区：</span><span>积善公寓</span></div>
+                            <div><span class="text-primary">楼层：</span><span>5/11</span></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div><span class="text-primary">建筑楼层：</span><span>多层</span></div>
+                            <div><span class="text-primary">水费卡号：</span><span>37298173928</span></div>
+                            <div><span class="text-primary">电费卡号：</span><span>43243273284</span></div>
+                            <div><span class="text-primary">燃气卡号：</span><span>32032032032</span></div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <a class="text-primary" v-if="!open_on" @click="open_close">展示&nbsp;&nbsp;<i
+                                class="fa fa-sort-amount-asc"></i></a>
+                        <a class="text-primary" v-if="open_on" @click="open_close">收起&nbsp;&nbsp;<i
+                                class="fa fa-sort-amount-desc"></i></a></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!--内容区-->
+        <div class="row">
+            <!--合同信息-->
+            <div class="col-md-3">
+                <section class="panel roll">
+                    <header class="panel-heading tab-bg-dark-navy-blue ">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#home" aria-expanded="true">收房合同</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#about" aria-expanded="false">租房合同</a>
+                            </li>
+
+                        </ul>
+                    </header>
+                    <div class="panel-body">
+                        <div class="tab-content">
+
+                            <!--收房合同-->
+                            <div id="home" class="tab-pane active">
+                                <div class="panel-body table-responsive">
+                                    <table class="table contract_info">
+                                        <tbody>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark"></i></a></td>
+                                            <td>2017-07-20</td>
+                                            <td>14:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
+                                            <td>合同编号</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>房屋地址</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>负责人</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>合同时间</td>
+                                            <td class="paddingTop">
+                                                <a data-v-2f43a2b3="" href="#">
+                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
+                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                             :style="{ width: progress + '%'}">
+                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="panel-body table-responsive">
+                                    <table class="table contract_info">
+                                        <tbody>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark"></i></a></td>
+                                            <td>2017-07-20</td>
+                                            <td>14:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
+                                            <td>合同编号</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>房屋地址</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>负责人</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>合同时间</td>
+                                            <td class="paddingTop">
+                                                <a data-v-2f43a2b3="" href="#">
+                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
+                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                             :style="{ width: progress + '%'}">
+                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!--租房信息-->
+                            <div id="about" class="tab-pane">
+                                <div class="panel-body table-responsive">
+                                    <table class="table contract_info">
+                                        <tbody>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark"></i></a></td>
+                                            <td>2016-06-20</td>
+                                            <td>14:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
+                                            <td>合同编号</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>房屋地址</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>负责人</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>合同时间</td>
+                                            <td class="paddingTop">
+                                                <a data-v-2f43a2b3="" href="#">
+                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
+                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                             :style="{ width: progress + '%'}">
+                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="panel-body table-responsive">
+                                    <table class="table contract_info">
+                                        <tbody>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark"></i></a></td>
+                                            <td>2017-07-20</td>
+                                            <td>14:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
+                                            <td>合同编号</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>房屋地址</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>负责人</td>
+                                            <td>合同编号</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>合同时间</td>
+                                            <td class="paddingTop">
+                                                <a data-v-2f43a2b3="" href="#">
+                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
+                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                             :style="{ width: progress + '%'}">
+                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </section>
+            </div>
+            <!--沟通日志/房屋信息-->
+            <div class="col-md-9">
+                <section class="panel roll">
+                    <div class="panel-body">
+                        <header>
+                            <h4>房屋信息</h4>
+                        </header>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <section class="panel table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-primary width100">房屋照片</td>
+                                            <td>房屋照片 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias amet aut beatae consequuntur culpa deleniti dicta ducimus incidunt libero, minima modi molestiae mollitia numquam provident quibusdam rerum, sequi soluta totam!</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-primary width100">产权证照片</td>
+                                            <td>房屋照片</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-primary width100">水卡照片</td>
+                                            <td>房屋照片</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-primary width100">电卡照片</td>
+                                            <td>房屋照片</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-primary width100">燃气卡照片</td>
+                                            <td>房屋照片</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!--分配-->
+        <Distribution></Distribution>
+
+        <!--房屋 新增/编辑-->
+        <CollectAdd :msg="noColl"></CollectAdd>
+    </div>
+</template>
+
+<script>
+    import CollectAdd from './collect_add.vue'
+    import Distribution from '../common/distribution.vue'          //分配
+    export default {
+        components: {
+            CollectAdd,Distribution
+        },
+        data (){
+            return {
+                progress: 30,                       //进度
+                open_on: false,                     //展示/收起
+                noColl: {
+                    newState: false,                //新增房屋
+                    sss: false
+                }
+            }
+        },
+        methods: {
+//            展示/收起
+            open_close (){
+                this.open_on = !this.open_on
+            },
+        },
+
+    }
+</script>
+
+
+<style scoped>
+
+    .width100{
+        min-width: 100px;
+        text-align: right;
+    }
+    h4 {
+        border-bottom: 1px solid #aaaaaa;
+        padding: 0 30px 8px;
+    }
+    h4 > a{
+        margin-left: 10px;
+    }
+    .contract_info td {
+        border-top: 0;
+    }
+
+    .panel-body:not(:last-child) {
+        border-bottom: 1px solid #aaaaaa;
+    }
+
+    .contract_info {
+        text-align: center;
+    }
+
+    label {
+        margin-top: 8px;
+    }
+
+    .cheek > div {
+        margin-bottom: 10px;
+    }
+
+    .client_info > div > div > div {
+        margin-bottom: 20px;
+    }
+
+    .client_info > div > div > > div span.text-primary {
+        display: inline-block;
+        padding-right: 20px;
+        text-align: right;
+        min-width: 100px;
+    }
+
+    .roll {
+        height: 500px;
+        overflow: auto;
+    }
+
+    .progress.progress-striped.active {
+        margin-bottom: 0;
+        height: 10px;
+    }
+
+    .paddingTop {
+        padding-top: 13px;
+    }
+</style>
