@@ -4,7 +4,7 @@
         <div class="modal fade" id="myModalStartDpm">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header" style="background: #0be6de">
+                    <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -14,7 +14,7 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <form class="form-horizontal tasi-form">
-                                    <h3>确定启用此部门（账号）吗？</h3>
+                                    <h5>确定启用此部门（账号）吗？</h5>
                                 </form>
                             </div>
                         </section>
@@ -30,7 +30,7 @@
         <div class="modal fade" id="myModalSuspendDpm">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header" style="background: #0be6de">
+                    <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -40,7 +40,7 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <form class="form-horizontal tasi-form">
-                                    <h3>确定停用此部门（账号）吗？</h3>
+                                    <h5>确定停用此部门（账号）吗？</h5>
                                 </form>
                             </div>
                         </section>
@@ -52,15 +52,27 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <Status :state='info'></Status>
     </div>
 </template>
 <script>
-
+    import Status from '../common/status.vue';
     export default {
         props:['account'],
+        components: { Status },
         data(){
             return {
-                myAccount:this.account
+                myAccount:this.account,
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
             }
         },
         watch:{
@@ -71,15 +83,48 @@
         methods:{
             confirmStartDpm(){
                 this.$http.get('/manager/department/disableDpm/id/'+this.myAccount).then((res) => {
-                    $('#myModalStartDpm').modal('hide');
-                    alert(res.data.msg);
+                    if(res.data.code==10010){
+                        $('#myModalStartDpm').modal('hide');
+                        this.$emit('DdpStatus',this.myAccount);
+                        this.info.success = res.data.msg;
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        },2000);
+                    }else{
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
                 })
             },
             confirmServiceDpm(){
-                alert(1)
                 this.$http.get('/manager/department/disableDpm/id/'+this.myAccount).then((res) => {
-                    $('#myModalSuspendDpm').modal('hide');
-                    alert(res.data.msg);
+                    if(res.data.code==10010){
+                        $('#myModalSuspendDpm').modal('hide');
+                        this.$emit('DdpStatus',this.myAccount);
+                        this.info.success = res.data.msg;
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        },2000);
+                    }else{
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+
+
                 })
             }
         }
@@ -87,5 +132,7 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    .panel {
+        margin-bottom: 0;
+    }
 </style>
