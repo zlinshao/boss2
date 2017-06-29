@@ -98,6 +98,7 @@
                 inter_state: false,         //提醒内容
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
+                dataTime: ''
             }
         },
         updated (){
@@ -115,7 +116,9 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
-                });
+                }).on('changeDate', function (ev) {
+                    this.dataTime = ev.target.value;
+                }.bind(this));
             },
 
 //            高级选项
@@ -124,6 +127,7 @@
             },
         },
         watch: {
+
             cus_name (val){
                 this.cus_distribute = this.cus_name.join(',');
             },

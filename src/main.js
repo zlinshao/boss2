@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Boss from './boss.config.js'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 import Vuex from 'vuex'
@@ -9,8 +10,9 @@ import Loading from './compoments/loading'
 
 Vue.use(Loading);
 Vue.use(Vuex);
+Vue.use(Boss);
 Vue.use(VueRouter);
-axios.defaults.baseURL = 'http://test.v2.api.boss.lejias.cn/';
+axios.defaults.baseURL = globalConfig.server;
 Vue.prototype.$http = axios;
 
 const router = new VueRouter({
