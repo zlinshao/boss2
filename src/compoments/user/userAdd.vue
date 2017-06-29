@@ -33,7 +33,7 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >手机号码</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" v-model="mobile" placeholder="手机号码">
+                                            <input type="text" class="form-control" v-model="mobile" placeholder="手机号码" maxlength="11">
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >生日</label>
                                         <div class="col-md-4">
@@ -44,11 +44,13 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >紧急电话</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <input type="text" class="form-control" v-model="emergency_call" placeholder="紧急联系电话">
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >身份证号</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <input type="text" class="form-control" v-model="id_num" placeholder="身份证号码">
                                         </div>
                                     </div>
@@ -184,7 +186,7 @@
                 levelList:[],
                 //id
                 firstId:'',
-                secondId:'市场部',
+                secondId:'',
                 thirdId:'',
                 fourId:'',
                 //其余新增用户字段
@@ -359,7 +361,7 @@
                 ).then((res)=>{
                     if(res.data.code==90030){
                         this.real_name='';       //真实姓名
-                        this.gender='1';          //性别
+                        this.gender='';          //性别
                         this.birthday='';        //生日
                         this.mobile='';          //手机号
                         this.emergency_call='';  //紧急联系方式
@@ -376,6 +378,21 @@
                         this.id_copy='';        //身份证复印件
                         this.photo='';           //有无照片
                         this.department='';
+                        this.firstDepart=[];
+                        this.secondDepart=[];
+                        this.thirdDepart=[];
+                        this.fourDepart=[];
+                        this.roleList=[];
+                        this.positionList=[];
+                        this.levelList=[];
+                        this.firstId='';
+                        this.secondId='';
+                        this.thirdId='';
+                        this.fourId='';
+
+                        this.getFirstDepart(); //请求公司列表
+                        this.searchRoles();    //请求角色列表
+                        this.getLevel();       //请求等级字典
                         $("#myModalAdd").modal('hide');//关闭模态框
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
