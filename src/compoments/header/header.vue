@@ -570,7 +570,7 @@
             },
             logout (){
                 this.$http.get('/staff/logout').then(() => {
-                    window.location.href = globalConfig.host + "login.html"
+                    window.location.href = "login.html"
                 });
             }
         }
