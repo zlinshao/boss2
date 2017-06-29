@@ -13,6 +13,7 @@ Vue.use(Vuex);
 Vue.use(Boss);
 Vue.use(VueRouter);
 axios.defaults.baseURL = globalConfig.server;
+axios.defaults.withCredentials = true;
 Vue.prototype.$http = axios;
 
 const router = new VueRouter({
@@ -43,3 +44,5 @@ new Vue({
     store,
     render: h => h(App)
 });
+
+
