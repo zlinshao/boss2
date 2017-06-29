@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade" id="myModalAdd">
+        <div class="modal fade full-width-modal-right" id="myModalAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -108,18 +108,19 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <hr>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2">入职时间</label>
-                                        <div class="col-md-4">
-                                            <input @click="enrollDate" type="text"
-                                                   class="form-control form_datetime2" v-model="enroll"
-                                                   value="" placeholder="入职时间">
-                                        </div>
                                         <label class="col-sm-2 control-label col-lg-2" >等级</label>
                                         <div class="col-lg-4">
                                             <select  class="form-control" v-model="level">
                                                 <option :value="key" v-for="(value,key) in levelList">{{value}}</option>
                                             </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2">入职时间</label>
+                                        <div class="col-md-4">
+                                            <input @click="enrollDate" type="text"
+                                                   class="form-control form_datetime2" v-model="enroll"
+                                                   value="" placeholder="入职时间">
                                         </div>
                                     </div>
                                     <div class="row">

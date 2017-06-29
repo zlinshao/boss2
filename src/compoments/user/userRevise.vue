@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade" id="myModalRevise">
+        <div class="modal fade full-width-modal-right" id="myModalRevise">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

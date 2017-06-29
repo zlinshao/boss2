@@ -6,14 +6,14 @@
                 <aside class="sm-side">
                     <div class="user-head">
                         <div class="user-name" style="font-size: 16px;line-height: 60px;">
-                            南京乐伽商业管理有限公司
+                            组织架构
                         </div>
                     </div>
 
                     <div class="inbox-body">
                         <div>
                             <a @click="getBranch('')">组织架构</a>
-                            <a v-if='isFirst' @click="getSecond(reFirstId,reFirstName)"> &gt;&nbsp;{{reFirstName}}</a>
+                            <a v-if='isFirst' @click="getSecond(reFirstId,reFirstName)"> &nbsp;{{reFirstName}}</a>
                             <a v-if='isSecond' @click="getThird(reSecondId,reSecondName)">&gt;&nbsp;{{reSecondName}}</a>
                             <a v-if='isThird' @click="getFour(reThirdId,reThirdName)">&gt;&nbsp;{{reThirdName}}</a>
                             <a v-if='isFour' @click="getFive(reFourId,reFourName)">&nbsp;&gt;&nbsp;{{reFourName}}</a>
@@ -23,7 +23,7 @@
                         <ul class="inbox-nav inbox-divider">
                             <!--部门-->
                             <li v-for="(item,index) in branchList" :class="{'active':active1==index}"
-                                @mouseover="changeClass(index)" v-if="type==1" >
+                                @mouseover="changeClass(index)" v-if="type==1">
                                 <a href="#">
                                     <button @click.stop="getSecond(item.id,item.name)"
                                        class="fa fa-chevron-right btn btn-default btn-lg department"
@@ -78,7 +78,6 @@
                                     <button @click.stop="getFour(item.id,item.name)"
                                        class="fa fa-chevron-right btn btn-default btn-lg department"
                                        :disabled="item.status=='停用'">{{item.name}}</button>
-
                                     <div class="pull-right dropdown ">
                                         <i class="fa fa-gear pull-rightdropdown-toggle"
                                            style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
@@ -158,7 +157,7 @@
                             <div class="col-lg-4 col-md-12 pull-right">
                                 <form  action="#">
                                         <input placeholder="搜索企业联系人" class="sr-input"
-                                               style="margin-bottom: 0px"     @keyup="search" v-model="keywords">
+                                               style="margin-bottom: 0px"     @keyup="search()" v-model="keywords" >
                                         <button type="button" class="btn sr-btn"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
@@ -239,6 +238,24 @@
                                             </tbody>
                                         </table>
                                     </section>
+                                    <div class="row pull-right" style="padding-right: 15px;">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination">
+                                                <li>
+                                                    <button type="button" class="btn btn-white" disabled style="border: none">第{{page}}页</button>
+                                                </li>
+                                                <li>
+                                                    <input type="button" class="btn btn-default Previous" value="上一页" @click="previousPage">
+                                                </li>
+                                                <li>
+                                                    <input type="button" class="btn btn-default Next" value="下一页" @click="nextPage">
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-white" disabled style="border: none">共{{pages}}页</button>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -253,18 +270,18 @@
         <Status :account="account" @Account="AccountStatus"></Status>
         <UserRevise :editDate="editData" @reviseAccount="reviseExamine"></UserRevise>
         <depStatus :Account="depAccount" @DdpStatus='dpmStatus'></depStatus>
-        <Page :pg="page" @pag="getBranch" v-if="type==1"></Page>
-        <!--<Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>-->
-        <!--<Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>-->
-        <!--<Page :pg="page" @pag="getFour(id,name)" v-if="type==4"></Page>-->
-        <!--<Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>-->
-        <Page :pg="page" @pag="search" v-if="type==6"></Page>
+        <!--<Page :pg="page" @pag="getBranch" v-if="type==1"></Page>-->
+        <!--&lt;!&ndash;<Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>&ndash;&gt;-->
+        <!--&lt;!&ndash;<Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>&ndash;&gt;-->
+        <!--&lt;!&ndash;<Page :pg="page" @pag="getFour(id,name)" v-if="type==4"></Page>&ndash;&gt;-->
+        <!--&lt;!&ndash;<Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>&ndash;&gt;-->
+        <!--<Page :pg="page" @pag="search" v-if="type==6"></Page>-->
     </div>
 </template>
 <script>
     import UserAdd from './userAdd.vue';
     import Organize from  './organize.vue';
-    import Page from '../common/page.vue';
+//    import Page from '../common/page.vue';
     import Status from './accountStatus.vue';
     import depStatus from  './departmentStatus.vue'
     import editDpm from  './editDpm.vue';
@@ -274,7 +291,6 @@
         components: {
             UserAdd,
             Organize,
-            Page,
             Status,
             depStatus,
             editDpm,
@@ -291,9 +307,9 @@
                 FiveList:[],
                 type: '',      //列表类型 1为部门 2为二级 3为三级
                 keywords: '',   //搜索关键字
-//                page: {id:'',name:'',a:''},
                 active1:'',
-                page:'',
+                page:'1',
+                pages:'',
                 id:'',
                 name:'',
                 //多级菜单
@@ -324,11 +340,11 @@
         },
 
         methods: {
-            getBranch(a){
-                this.$http.get('manager/user/departmentIndex/page/'+a).then((res) => {
+            getBranch(){
+                this.$http.get('manager/user/departmentIndex/page/'+this.page).then((res) => {
                     this.branchList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.page=res.data.data.pages;
+                    this.pages=res.data.data.pages;
                     this.type = 1;
                     this.isFirst = false;
                     this.isSecond  = false;
@@ -337,11 +353,14 @@
                     this.isDepartment=false;
                 })
             },
-            getSecond(id,name,a){
-                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
+            getSecond(id,name){
+                if(this.type!=2){
+                    this.page=1;
+                }
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.page=res.data.data.pages;
+                    this.pages=res.data.data.pages;
                     if(res.data.data.department.length==0){
                         this.type = 1;
                     }else {
@@ -361,11 +380,14 @@
                     this.isDepartment=true;
                 })
             },
-            getThird(id,name,a){
-                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
+            getThird(id,name){
+                if(this.type!=3){
+                    this.page=1;
+                }
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.ThirdList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.a=res.data.data.pages;
+                    this.pages=res.data.data.pages;
                     if(res.data.data.department.length==0){
                         this.type = 2;
                     }else {
@@ -383,11 +405,14 @@
                     this.isDepartment=true;
                 })
             },
-            getFour(id,name,a){
-                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
+            getFour(id,name){
+                if(this.type!=4){
+                    this.page=1;
+                }
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.FourList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.a=res.data.data.pages;
+                    this.pages=res.data.data.pages;
                     if(res.data.data.department.length==0){
                         this.type = 3;
                     }else {
@@ -405,11 +430,14 @@
                     this.isDepartment=true;
                 })
             },
-            getFive(id,name,a){
-                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+a).then((res) => {
+            getFive(id,name){
+                if(this.type!=5){
+                    this.page=1;
+                }
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.FiveList = res.data.data.department;
                     this.userList=res.data.data.user;
-                    this.page=res.data.data.pages;
+                    this.pages=res.data.data.pages;
                     this.type = 4;
                     this.id=id;
                     this.name=name;
@@ -446,11 +474,48 @@
                 }
             },
             AccountStatus(val){
-                this.getBranch();
+                let id=val.id;
+                let flag=val.flag;
+                let reId=val.reId;
+                this.page=val.rePage;
+                console.log(this.page)
+                this.keywords=val.keyword;
+                let reName=val.reName;
+                if(flag==1){
+                    this.getBranch();
+                }else if(flag==2){
+                    this.getSecond(reId,reName);
+                }else if(flag==3){
+                    this.getThird(reId,reName);
+                }else if(flag==4){
+                    this.getFour(reId,reName);
+                }else if(flag==5){
+                    this.getFive(reId,reName);
+                }else if(flag==6){
+                    this.search()
+                }
             },
             //修改后查看
             reviseExamine(val){
-                this.getBranch();
+                let flag=val.flag;
+                let reId=val.reId;
+                this.page=val.rePage;
+                this.keywords=val.keyword;
+                let reName=val.reName;
+                console.log(this.page)
+                if(flag==1){
+                    this.getBranch();
+                }else if(flag==2){
+                    this.getSecond(reId,reName);
+                }else if(flag==3){
+                    this.getThird(reId,reName);
+                }else if(flag==4){
+                    this.getFour(reId,reName);
+                }else if(flag==5){
+                    this.getFive(reId,reName);
+                }else if(flag==6){
+                    this.search();
+                }
             },
             dpmStatus(val){
                 let id=val.id;
@@ -475,76 +540,137 @@
             },
             //查询成员
             search(a){
+                if(this.type!=6){
+                    this.page=1;
+                }
                 if (this.keywords != '') {
                     this.isThird=false;
                     this.isSecond=false;
                     this.isFirst=false;
                     this.isFour=false;
                     this.isDepartment=false;
-                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+decodeURI(a)).then((res) => {
+                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+this.page).then((res) => {
                         this.type = 6;
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
-                            this.page=res.data.data.pages;
+                            this.pages=res.data.data.pages;
 
                         } else {
                             this.branchList = [];
                             this.userList=[];
-                            this.page=0;
+                            this.pages=0;
                         }
                     })
                 }else{
-                    this.$http.get('manager/user/searchUser/page/' +decodeURI(a) ).then((res) => {
+                    this.$http.get('manager/user/searchUser/page/' +this.page ).then((res) => {
                         this.type = 6;
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
-                            this.page=res.data.data.pages;
+                            this.pages=res.data.data.pages;
 
                         } else {
                             this.branchList = [];
                             this.userList=[];
-                            this.page=0;
+                            this.pages=0;
                         }
                     })
                 }
-
-
             },
+            //组织enter默认事件
+            stopEvent(e){
+                if(e.key=='Enter'){
+                    e.preventDefault();
+                }
+            },
+
             //编辑账号
             edit(id){
                 $('#myModalRevise').modal({backdrop: 'static',});
                 $('#myModalRevise').modal('show');
                 this.$http.get('manager/user/readUser/id/'+id).then((res) => {
                     this.editData=res.data.data;
+                    this.editData.flag=this.type;
+                    if(this.type===2){
+                        this.editData.rePage=this.page;
+                        this.editData.reId=this.reFirstId;
+                        this.editData.reName=this.reFirstName;
+                    }else if(this.type===3){
+                        this.editData.rePage=this.page;
+                        this.editData.reId=this.reSecondId;
+                        this.editData.reName=this.reSecondName;
+                    }else if(this.type===4){
+                        this.editData.rePage=this.page;
+                        this.editData.reId=this.reThirdId;
+                        this.editData.reName=this.reThirdName;
+                    }else if(this.type===5){
+                        this.editData.rePage=this.page;
+                        this.editData.reId=this.reFourId;
+                        this.editData.reName=this.reFourName;
+                    }else if(this.type===6){
+                        this.editData.rePage=this.page;
+                        this.editData.keyword=this.keywords;
+                    }
                 })
             },
             //增加账号
             addUser(){
+                $('#myModalAdd').modal({backdrop: 'static',});
                 $('#myModalAdd').modal('show');
             },
             //启用账号
             startAccount(id){
                 $('#myModalStart').modal('show');
-                this.account.id=id
+                this.account.id=id;
+                this.account.flag=this.type;
+                this.account.rePage=this.page;
+                if(this.type===2){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFirstId;
+                    this.account.reName=this.reFirstName;
+                }else if(this.type===3){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reSecondId;
+                    this.account.reName=this.reSecondName;
+                }else if(this.type===4){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reThirdId;
+                    this.account.reName=this.reThirdName;
+                }else if(this.type===5){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFourId;
+                    this.account.reName=this.reFourName;
+                }else if(this.type===6){
+                    this.account.rePage=this.page;
+                    this.account.keyword=this.keywords;
+                }
+                console.log( this.account)
             },
             //停止账号
             suspendAccount(id){
                 $('#myModalSuspend').modal('show');
-                this.account.id=id
-//                this.account.flag=this.type;
-//                if(this.type===2){
-//                    this.account.reId=this.reFirstId;
-//                    this.account.reName=this.reFirstName;
-//                }else if(this.type===3){
-//                    this.account.reId=this.reSecondId;
-//                    this.account.reName=this.reSecondName;
-//                }else if(this.type===4){
-//                    this.account.reId=this.reThirdId;
-//                    this.account.reName=this.reThirdName;
-//                }else if(this.type===5){
-//                    this.account.reId=this.reFourId;
-//                    this.account.reName=this.reFourName;
-//                }
+                this.account.id=id;
+                this.account.flag=this.type;
+                this.account.rePage=this.page;
+                if(this.type===2){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFirstId;
+                    this.account.reName=this.reFirstName;
+                }else if(this.type===3){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reSecondId;
+                    this.account.reName=this.reSecondName;
+                }else if(this.type===4){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reThirdId;
+                    this.account.reName=this.reThirdName;
+                }else if(this.type===5){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFourId;
+                    this.account.reName=this.reFourName;
+                }else if(this.type===6){
+                    this.account.rePage=this.page;
+                    this.account.keyword=this.keywords;
+                }
             },
             //新建下级部门
 
@@ -612,6 +738,59 @@
             addDeparment(id){
                 $('#myModalAddDpm').modal('show');
                 this.addDpm=id;
+            },
+            //下一页
+            nextPage(){
+                if(this.page<this.pages){
+                    $('.Next').attr({"disabled":false});
+                    this.page++;
+                    $('.Previous').attr({"disabled":false});
+                    let reId=this.id;
+                    let reName =this.name;
+                    if(this.type===1){
+                        this.getBranch();
+                    }else if(this.type==2){
+                        this.getSecond(reId,reName);
+                    }else if(this.type==3){
+                        this.getThird(reId,reName);
+                    }else if(this.type==4){
+                        this.getFour(reId,reName);
+                    }else if(this.type==5){
+                        this.getFive(reId,reName);
+                    }else if(this.type==6){
+                        this.search();
+                    }
+                }else{
+                    $('.Next').attr({"disabled":true});
+                }
+
+
+            },
+            //上一页
+            previousPage(){
+                if(this.page>1){
+                    $('.Previous').attr({"disabled":false});
+                    this.page--;
+                    $('.Next').attr({"disabled":false});
+                    let reId=this.id;
+                    let reName =this.name;
+                    if(this.type===1){
+                        this.getBranch();
+                    }else if(this.type==2){
+                        this.getSecond(reId,reName);
+                    }else if(this.type==3){
+                        this.getThird(reId,reName);
+                    }else if(this.type==4){
+                        this.getFour(reId,reName);
+                    }else if(this.type==5){
+                        this.getFive(reId,reName);
+                    }else if(this.type==6){
+                        this.search();
+                    }
+                }else{
+                    $('.Previous').attr({"disabled":true});
+                }
+
             }
         }
     }

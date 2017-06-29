@@ -83,6 +83,7 @@
         },
         methods:{
             confirmStart(){
+                console.log(this.myAccount)
                 this.$http.get(addr + 'dismiss/id/'+this.myAccount.id).then((res) => {
                     if(res.data.code==90030){
                         $('#myModalStart').modal('hide');
@@ -106,8 +107,8 @@
                 })
             },
             confirmService(){
+                console.log(this.myAccount)
                 this.$http.get(addr + 'dismiss/id/'+this.myAccount.id).then((res) => {
-
                     if(res.data.code==90030){
                         $('#myModalSuspend').modal('hide');
                         this.$emit('Account',this.myAccount);
