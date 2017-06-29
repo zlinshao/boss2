@@ -56,7 +56,6 @@
     </div>
 </template>
 <script>
-    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     import Status from '../common/status.vue';
     export default {
         props:['account'],
@@ -83,7 +82,7 @@
         },
         methods:{
             confirmStart(){
-                this.$http.get(addr + 'dismiss/id/'+this.myAccount.id).then((res) => {
+                this.$http.get('manager/user/dismiss/id/'+this.myAccount.id).then((res) => {
                     if(res.data.code==90030){
                         $('#myModalStart').modal('hide');
                         this.$emit('Account',this.myAccount);
@@ -107,7 +106,7 @@
             },
             confirmService(){
                 console.log(this.myAccount)
-                this.$http.get(addr + 'dismiss/id/'+this.myAccount.id).then((res) => {
+                this.$http.get('manager/user/dismiss/id/'+this.myAccount.id).then((res) => {
                     if(res.data.code==90030){
                         $('#myModalSuspend').modal('hide');
                         this.$emit('Account',this.myAccount);

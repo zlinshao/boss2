@@ -62,7 +62,7 @@
         },
         methods:{
             responsible(){
-                this.$http.post('/manager/department/saveDpm/',{'parent_id':this.id,'name':this.department}).then((res) => {
+                this.$http.post('manager/department/saveDpm/',{'parent_id':this.id,'name':this.department}).then((res) => {
                     if(res.data.code==10030){
                         this.department='';
                         $('#myModalAddDpm').modal('hide');

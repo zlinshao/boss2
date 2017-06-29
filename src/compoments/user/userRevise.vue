@@ -191,7 +191,7 @@
 </template>
 
 <script>
-    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
+//    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     import Status from '../common/status.vue';
     export default {
         props:['editDate'],
@@ -322,7 +322,7 @@
         },
         methods:{
             getFirstDepart(){
-                this.$http.get(addr+'departmentWb').then((res)=>{
+                this.$http.get('manager/user/departmentWb').then((res)=>{
                     this.firstDepart=res.data.data;
                 })
             },
@@ -345,7 +345,7 @@
             },
             getThirdDepart(){
                 if(this.second.id!==''&&this.second.id!=undefined){
-                    this.$http.get(addr+'departmentWb/id/'+this.second.id).then((res)=>{
+                    this.$http.get('manager/user/departmentWb/id/'+this.second.id).then((res)=>{
                         this.thirdDepart=res.data.data;
                         this.department=[];
                         this.department.push(this.second);
@@ -363,7 +363,7 @@
             },
             getFourDepart(){
                 if(this.third.id.id!==''&& this.third.id!=undefined){
-                    this.$http.get(addr+'departmentWb/id/'+this.third.id).then((res)=>{
+                    this.$http.get('manager/user/departmentWb/id/'+this.third.id).then((res)=>{
                         this.fourDepart=res.data.data;
                         this.department=[];
                         this.department.push(this.third);
@@ -383,7 +383,7 @@
             },
             //查询角色
             searchRoles(){
-                this.$http.get(addr+'searchRoles').then((res)=>{
+                this.$http.get('manager/user/searchRoles').then((res)=>{
                     this.roleList=res.data.data;
                     for(let i=0;i<this.roleList.length;i++){
                         this.oldBox.push(this.roleList[i].role);
