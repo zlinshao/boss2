@@ -569,8 +569,10 @@
                 this.isActive = n;
             },
             logout (){
-                this.$http.get('/staff/logout').then(() => {
-                    window.location.href = globalConfig.host + "login.html"
+                this.$http.post('staff/logout').then((res) => {
+                    if(res.data.code === '80000'){
+                        window.location.href = "login.html";
+                    }
                 });
             }
         }
