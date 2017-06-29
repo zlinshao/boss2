@@ -718,3 +718,6 @@ a {
     border: 1px solid #E2E2E4;
     border-radius: 6px;
 }
+.dropzone .dz-preview{
+    margin: 10px;
+}
