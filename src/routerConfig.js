@@ -1,7 +1,6 @@
 import Power from "./compoments/power/power.vue";                       //权限管理
 import User from "./compoments/user/user.vue";                          //用户管理
 import Role from "./compoments/role/role.vue";                          //角色
-import Group from "./compoments/region/group.vue";
 import Village from "./compoments/village/village.vue";
 import VillageDetail from "./compoments/village/villageDetail.vue";
 import CACollect from './compoments/achievement/companyAchievement/CACollect.vue'
@@ -39,11 +38,6 @@ export default[
         path: '/role',              //角色
         name: 'Role',
         component: Role
-    },
-    {
-        path: '/group',
-        name: 'Group',
-        component: Group
     },
     {
         path: '/village',
