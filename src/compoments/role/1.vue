@@ -34,19 +34,10 @@
             },
             aaaa (val){
                 this.ppp = val;
-
-
             },
             cccc (val){
                 this.ooo = val;
             },
-
-            rules (rul, eve){
-                if (eve.target.checked === true) {
-                    this.checkboxModel.push(rul);
-                }
-
-            }
         }
     }
 
