@@ -142,7 +142,7 @@
 </template>
 
 <script>
-    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
+//    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     export default {
 
         data(){

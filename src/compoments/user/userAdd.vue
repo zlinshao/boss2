@@ -169,7 +169,7 @@
 </template>
 
 <script>
-    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
+//    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     import Status from '../common/status.vue';
     export default {
         props:['editDate'],
@@ -231,13 +231,13 @@
         },
         methods:{
             getFirstDepart(){
-                this.$http.get(addr+'departmentWb').then((res)=>{
+                this.$http.get('manager/user/departmentWb').then((res)=>{
                     this.firstDepart=res.data.data;
                 })
             },
             getSecondDepart(){
                 if(this.firstId!==''){
-                    this.$http.get(addr+'departmentWb/id/'+this.firstId).then((res)=>{
+                    this.$http.get('manager/user/departmentWb/id/'+this.firstId).then((res)=>{
                         this.secondDepart=res.data.data;
                         this.department=this.firstId;
                         this.thirdDepart=[];
@@ -252,12 +252,12 @@
             },
             getThirdDepart(){
                 if(this.secondId!==''){
-                    this.$http.get(addr+'departmentWb/id/'+this.secondId).then((res)=>{
+                    this.$http.get('manager/user/departmentWb/id/'+this.secondId).then((res)=>{
                         this.thirdDepart=res.data.data;
                         this.department=this.secondId;
                         this.fourDepart=[];
                     });
-                    this.$http.get(addr+'positionWb/id/'+this.secondId).then((res)=>{
+                    this.$http.get('manager/user/positionWb/id/'+this.secondId).then((res)=>{
                         this.positionList=res.data.data;
                     });
                 }else{
@@ -268,7 +268,7 @@
             },
             getFourDepart(){
                 if(this.thirdId!==''){
-                    this.$http.get(addr+'departmentWb/id/'+this.thirdId).then((res)=>{
+                    this.$http.get('manager/user/departmentWb/id/'+this.thirdId).then((res)=>{
                         this.fourDepart=res.data.data;
                         this.department=this.thirdId;
                     })
@@ -282,12 +282,12 @@
                 }
             },
             searchRoles(){
-                this.$http.get(addr+'searchRoles').then((res)=>{
+                this.$http.get('manager/user/searchRoles').then((res)=>{
                     this.roleList=res.data.data;
                 })
             },
             getLevel(){
-                this.$http.get(addr+'level').then((res)=>{
+                this.$http.get('manager/user/level').then((res)=>{
                     this.levelList=res.data.data;
                 })
             },
@@ -337,7 +337,7 @@
                 this.myResult==[];
             },
             increaseUse(){
-                this.$http.post(addr+'saveUser',
+                this.$http.post('manager/user/saveUser',
                     {
                         "real_name":this.real_name,//真实姓名
                         "gender":this. gender,//1男2女
