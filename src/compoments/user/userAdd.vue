@@ -65,12 +65,14 @@
                                         <label class="col-sm-2 control-label col-lg-2" >选择部门</label>
                                         <div class="col-md-4" >
                                             <select class="form-control" v-model="firstId" @change="getSecondDepart()">
+                                                <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in firstDepart" >{{item.name}}</option>
                                             </select>
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" ></label>
                                         <div class="col-md-4" v-show="secondDepart.length>0">
                                             <select class="form-control" v-model="secondId" @change="getThirdDepart()">
+                                                <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in secondDepart">{{item.name}}</option>
                                             </select>
                                         </div>
@@ -79,12 +81,14 @@
                                         <label class="col-sm-2 control-label col-lg-2" ></label>
                                         <div class="col-md-4" v-show="thirdDepart.length>0">
                                             <select class="form-control" v-model="thirdId" @change="getFourDepart()">
+                                                <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in thirdDepart" >{{item.name}}</option>
                                             </select>
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" ></label>
                                         <div class="col-md-4" v-show="fourDepart.length>0">
                                             <select class="form-control" v-model="fourId" @change="departmentId()">
+                                                <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in fourDepart">{{item.name}}</option>
                                             </select>
                                         </div>
@@ -93,6 +97,7 @@
                                         <label class="col-sm-2 control-label col-lg-2" >职务</label>
                                         <div class="col-lg-4">
                                             <select  class="form-control" v-model="position_id">
+                                                <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in positionList">{{item.vocation}}</option>
                                             </select>
                                         </div>
@@ -113,6 +118,7 @@
                                         <label class="col-sm-2 control-label col-lg-2" >等级</label>
                                         <div class="col-lg-4">
                                             <select  class="form-control" v-model="level">
+                                                <option value="">请选择</option>
                                                 <option :value="key" v-for="(value,key) in levelList">{{value}}</option>
                                             </select>
                                         </div>

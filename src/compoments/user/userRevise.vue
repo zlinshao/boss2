@@ -88,12 +88,14 @@
                                             <label class="col-sm-2 control-label col-lg-2" >选择部门</label>
                                             <div class="col-md-4" >
                                                 <select class="form-control" v-model="first" @change="getSecondDepart()">
+                                                    <option value="" selected>请选择</option>
                                                     <option :value="item" v-for="item in firstDepart" >{{item.name}}</option>
                                                 </select>
                                             </div>
                                             <label class="col-sm-2 control-label col-lg-2" ></label>
                                             <div class="col-md-4" v-show="secondDepart.length>0">
                                                 <select class="form-control" v-model="second" @change="getThirdDepart()">
+                                                    <option value="">请选择</option>
                                                     <option :value="item" v-for="item in secondDepart">{{item.name}}</option>
                                                 </select>
                                             </div>
@@ -102,12 +104,14 @@
                                             <label class="col-sm-2 control-label col-lg-2" ></label>
                                             <div class="col-md-4" v-show="thirdDepart.length>0">
                                                 <select class="form-control" v-model="third" @change="getFourDepart()">
+                                                    <option value="">请选择</option>
                                                     <option :value="item" v-for="item in thirdDepart" >{{item.name}}</option>
                                                 </select>
                                             </div>
                                             <label class="col-sm-2 control-label col-lg-2" ></label>
                                             <div class="col-md-4" v-show="fourDepart.length>0">
                                                 <select class="form-control" v-model="four" @change="departmentId()">
+                                                    <option value="">请选择</option>
                                                     <option :value="item" v-for="item in fourDepart">{{item.name}}</option>
                                                 </select>
                                             </div>
@@ -116,6 +120,7 @@
                                             <label class="col-sm-2 control-label col-lg-2" >职务</label>
                                             <div class="col-lg-4">
                                                 <select  class="form-control" @change="selectPostion" v-model="position">
+                                                    <option value="">请选择</option>
                                                     <option :value="item" v-for="item in positionList">{{item.vocation}}</option>
                                                 </select>
                                             </div>
@@ -191,6 +196,7 @@
         components: { Status },
         data(){
             return {
+                myAccount:this.account,
                 //字典列表
                 firstDepart:[],
                 secondDepart:[],
@@ -258,6 +264,7 @@
         },
         watch:{
             editDate(val) {
+                this.myAccount = val;
                 this.getFirstDepart();
                 this.checkboxModel=[];
                 this.myResult = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
@@ -318,7 +325,7 @@
                 })
             },
             getSecondDepart(){
-                if(this.first.id!==''){
+                if(this.first.id!==''&&this.first.id!=undefined){
                     this.$http.get(addr+'departmentWb/id/'+this.first.id).then((res)=>{
                         this.secondDepart=res.data.data;
                         this.department=[];
@@ -335,7 +342,7 @@
 
             },
             getThirdDepart(){
-                if(this.second.id!==''){
+                if(this.second.id!==''&&this.second.id!=undefined){
                     this.$http.get(addr+'departmentWb/id/'+this.second.id).then((res)=>{
                         this.thirdDepart=res.data.data;
                         this.department=[];
@@ -353,7 +360,7 @@
 
             },
             getFourDepart(){
-                if(this.third.id.id!==''){
+                if(this.third.id.id!==''&& this.third.id!=undefined){
                     this.$http.get(addr+'departmentWb/id/'+this.third.id).then((res)=>{
                         this.fourDepart=res.data.data;
                         this.department=[];
@@ -366,7 +373,7 @@
                 }
             },
             departmentId(){
-                if(this.four.id!==''){
+                if(this.four.id!==''&& this.four.id!=undefined){
                     this.department=[];
                     this.department.push(this.four);
                     this.depId=this.department[0].id;
@@ -390,7 +397,16 @@
                 this.checkboxModel = [],
                 this.newBox = [],
                 this.position_id=[];     //职位
-                console.log(this.checkboxModel)
+                this.positionList=[];
+                this.reviseDpm=false;
+                this.firstDepart=[];
+                this.secondDepart=[];
+                this.thirdDepart=[];
+                this.fourDepart=[];
+                this.first=[];
+                this.second=[];
+                this.third=[];
+                this.four=[];
                 $("#myModalRevise").modal("hide");//关闭模态框
             },
             //选择职位
@@ -470,7 +486,7 @@
                 ).then((res)=>{
                     if(res.data.code==90030){
                         //子组件传递数据到父组件
-                        this.$emit('reviseAccount',this.accountId);
+                        this.$emit('reviseAccount',this.myAccount);
 
                         this.real_name='';       //真实姓名
                         this.gender='1';          //性别
@@ -500,10 +516,10 @@
                         this.fourDepart=[];
                         this.positionList=[];
                         this.reviseDpm=false;
-                        this.first='';
-                        this.second='';
-                        this.third='';
-                        this.four='';
+                        this.first=[];
+                        this.second=[];
+                        this.third=[];
+                        this.four=[];
 
                         $("#myModalRevise").modal("hide");//关闭模态框
                         this.info.success = res.data.msg;
