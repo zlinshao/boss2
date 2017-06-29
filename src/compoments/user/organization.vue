@@ -337,6 +337,7 @@
         },
         mounted(){
             this.getBranch();
+            this.preventEnter();
         },
         watch:{
             pages:function(val,oldVal){
@@ -390,6 +391,13 @@
                     this.department=name;
                     this.isDepartment=true;
                 })
+            },
+            preventEnter(){
+                $(document).keydown(function(event){
+                    switch(event.keyCode){
+                        case 13:return false;
+                    }
+                });
             },
             getThird(id,name){
                 if(this.type!=3){
@@ -566,13 +574,11 @@
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
-                            console.log(pages)
 
                         } else {
                             this.branchList = [];
                             this.userList=[];
                             this.pages=1;
-                            console.log(pages)
                         }
                     })
                 }else{
