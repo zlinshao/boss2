@@ -245,7 +245,7 @@
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <li><a @click="logout"><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a><i class="fa fa-key"></i> Log Out</a></li>
                         </ul>
                     </li>
 
@@ -324,12 +324,6 @@
                             </li>
                             <li :class="{'active': isActive == 10}" @click='pitch_on(10)'>
                                 <router-link to='/power'>权限管理</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 11}" @click='pitch_on(11)'>
-                                <router-link to='/region'>部门管理</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 12}" @click='pitch_on(12)'>
-                                <router-link to='/region'>区域管理</router-link>
                             </li>
                         </ul>
                     </li>
@@ -568,13 +562,13 @@
             pitch_on (n){
                 this.isActive = n;
             },
-            logout (){
-                this.$http.post('staff/logout').then((res) => {
-                    if(res.data.code === '80000'){
-                        window.location.href = "login.html";
-                    }
-                });
-            }
+//            logout (){
+//                this.$http.post('staff/logout').then((res) => {
+//                    if(res.data.code === '80000'){
+//                        window.location.href = "login.html";
+//                    }
+//                });
+//            }
         }
     }
 </script>

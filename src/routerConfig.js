@@ -1,5 +1,4 @@
 import Power from "./compoments/power/power.vue";                       //权限管理
-import Region from "./compoments/region/region.vue";
 import User from "./compoments/user/user.vue";                          //用户管理
 import Role from "./compoments/role/role.vue";                          //角色
 import Group from "./compoments/region/group.vue";
@@ -40,11 +39,7 @@ export default[
         name: 'User',
         component: User
     },
-    {
-        path: '/region',
-        name: 'Region',
-        component: Region
-    },
+
     {
         path: '/role',              //角色
         name: 'Role',
