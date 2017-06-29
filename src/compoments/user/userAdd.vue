@@ -54,12 +54,12 @@
                                             <input type="text" class="form-control" v-model="id_num" placeholder="身份证号码">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >身份证照</label>
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" disabled placeholder="开发中，敬请期待...">
-                                        </div>
-                                    </div>
+                                    <!--<div class="row">-->
+                                        <!--<label class="col-sm-2 control-label col-lg-2" >身份证照</label>-->
+                                        <!--<div class="col-lg-10">-->
+                                            <!--<input type="text" class="form-control" disabled placeholder="开发中，敬请期待...">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <hr>
 
                                     <h3 style="margin-top: -15px">工作信息</h3>

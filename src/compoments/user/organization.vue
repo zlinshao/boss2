@@ -338,7 +338,15 @@
         mounted(){
             this.getBranch();
         },
-
+        watch:{
+            pages:function(val,oldVal){
+                if(val>1){
+                    $('.Next').attr({"disabled":false});
+                }else {
+                    $('.Next').attr({"disabled":true});
+                };
+            }
+        },
         methods: {
             getBranch(){
                 if(this.type!=1){
@@ -558,11 +566,13 @@
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
+                            console.log(pages)
 
                         } else {
                             this.branchList = [];
                             this.userList=[];
-                            this.pages=0;
+                            this.pages=1;
+                            console.log(pages)
                         }
                     })
                 }else{
@@ -571,11 +581,12 @@
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
+                            console.log(pages)
 
                         } else {
                             this.branchList = [];
                             this.userList=[];
-                            this.pages=0;
+                            this.pages=1;
                         }
                     })
                 }

@@ -32,14 +32,8 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >手机号码</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <input type="text" class="form-control" v-model="mobile" placeholder="手机号码">
-                                        </div>
-                                        <label class="col-sm-2 control-label col-lg-2" >生日</label>
-                                        <div class="col-md-4">
-                                            <input @click="remindData" type="text"
-                                                   class="form-control form_datetime1" v-model="birthday"
-                                                    value="" placeholder="生日">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -47,17 +41,19 @@
                                         <div class="col-lg-4">
                                             <input type="text" class="form-control" v-model="emergency_call" placeholder="紧急联系电话">
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >身份证号</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <input type="text" class="form-control" v-model="id_num" placeholder="身份证号码">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >身份证照</label>
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" disabled placeholder="开发中，敬请期待...">
-                                        </div>
-                                    </div>
+                                    <!--<div class="row">-->
+                                        <!--<label class="col-sm-2 control-label col-lg-2" >身份证照</label>-->
+                                        <!--<div class="col-lg-10">-->
+                                            <!--<input type="text" class="form-control" disabled placeholder="开发中，敬请期待...">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <hr>
 
                                     <h3 style="margin-top: -15px">工作信息</h3>
