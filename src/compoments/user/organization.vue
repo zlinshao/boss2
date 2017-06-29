@@ -271,17 +271,11 @@
         <UserRevise :editDate="editData" @reviseAccount="reviseExamine"></UserRevise>
         <depStatus :Account="depAccount" @DdpStatus='dpmStatus'></depStatus>
         <!--<Page :pg="page" @pag="getBranch" v-if="type==1"></Page>-->
-        <!--&lt;!&ndash;<Page :pg="page" @pag="getSecond(id,name)" v-if="type==2"></Page>&ndash;&gt;-->
-        <!--&lt;!&ndash;<Page :pg="page" @pag="getThird(id,name)" v-if="type==3"></Page>&ndash;&gt;-->
-        <!--&lt;!&ndash;<Page :pg="page" @pag="getFour(id,name)" v-if="type==4"></Page>&ndash;&gt;-->
-        <!--&lt;!&ndash;<Page :pg="page" @pag="getFive(id,name,a)" v-if="type==5"></Page>&ndash;&gt;-->
-        <!--<Page :pg="page" @pag="search" v-if="type==6"></Page>-->
     </div>
 </template>
 <script>
     import UserAdd from './userAdd.vue';
     import Organize from  './organize.vue';
-//    import Page from '../common/page.vue';
     import Status from './accountStatus.vue';
     import depStatus from  './departmentStatus.vue'
     import editDpm from  './editDpm.vue';
@@ -337,7 +331,7 @@
         },
         mounted(){
             this.getBranch();
-            this.preventEnter();
+//            this.preventEnter();
         },
         watch:{
             pages:function(val,oldVal){
@@ -392,13 +386,13 @@
                     this.isDepartment=true;
                 })
             },
-            preventEnter(){
-                $(document).keydown(function(event){
-                    switch(event.keyCode){
-                        case 13:return false;
-                    }
-                });
-            },
+//            preventEnter(){
+//                $(document).keydown(function(event){
+//                    switch(event.keyCode){
+//                        case 13:return false;
+//                    }
+//                });
+//            },
             getThird(id,name){
                 if(this.type!=3){
                     this.page=1
@@ -587,7 +581,6 @@
                         if (res.data.code == 90020) {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
-                            console.log(pages)
 
                         } else {
                             this.branchList = [];
