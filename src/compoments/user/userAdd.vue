@@ -169,7 +169,6 @@
 </template>
 
 <script>
-//    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     import Status from '../common/status.vue';
     export default {
         props:['editDate'],
