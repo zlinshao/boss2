@@ -129,7 +129,7 @@
             }
         },
         methods: {
-////            数组查询
+//            数组查询
             indexOf (val) {
                 for (let i = 0; i < this.length; i++) {
                     if (this[i] === val) return i;

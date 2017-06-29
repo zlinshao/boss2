@@ -1,6 +1,11 @@
 <template>
     <div>
-        <div @click='change'>{{myResult ? '开' : '关'}}</div>
+        <div id="dropzone">
+            <form action="" class="dropzone form-horizontal">
+                <div @click="uploadPic(result)" :id="result"></div>
+                {{pics}}
+            </form>
+        </div>
     </div>
 </template>
 
@@ -9,21 +14,46 @@
         props: ["result"],
         data () {
             return {
-                myResult: this.result                   //①创建props属性result的副本--myResult
+                pics:[]
             };
         },
-        watch: {
-            result(val) {
-                this.myResult = val;                    //②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
-            },
-            myResult(val){
-                this.$emit("on-result-change", val);    //③组件内对myResult变更后向外部发送事件通知
-            }
-        },
         methods: {
-            change() {
-                this.myResult = !this.myResult;
-            }
+            uploadPic(v){
+                let _this = this;
+                let myDropzone = new Dropzone('#' + v, {
+                    url: globalConfig.pic_address,
+                    addRemoveLinks: true,
+                    dictRemoveLinks: "x",
+                    dictCancelUpload: "正在上传",
+                    maxFiles: 10,       //一次性上传的文件数量上限
+                    maxFilesize: 20,    //MB
+                    acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp",
+                    dictMaxFilesExceeded: "您最多只能上传10个文件！",
+                    dictFileTooBig: "文件过大上传文件最大支持.",
+                    withCredentials: "yes",
+                    init: function () {
+                        this.on("success", function (file) {
+                            let card = (JSON.parse(file.xhr.response).data);
+                            _this.pics.push(card);
+                            _this.$emit('fff',_this.pics);
+                            //上传成功时触发的事件
+                        });
+                        this.on("addedfile", function (file) {
+                            //上传文件时触发的事件
+                        });
+                        this.on("queuecomplete", function (file) {
+                            //上传完成后触发的方法
+                        });
+                        this.on("removedfile", function (file) {
+                            let card = (JSON.parse(file.xhr.response).data);
+                                _this.$emit('llll',card);
+                                console.log(card);
+                            //删除文件时触发的方法
+                        });
+                    }
+                });
+            },
+
         }
     }
 </script>

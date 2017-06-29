@@ -79,7 +79,7 @@
     let hanndleMessage = function (event) {
         let loginTmpCode = event.data; //拿到loginTmpCode后就可以在这里构造跳转链接进行跳转了
         let origin = event.origin;
-        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoa6pqll6sfxta66zjq&response_type=code&scope=snsapi_login&state=STATE&redirect_urihttp://test.v2.api.boss.lejias.cn/staff/fromqr&loginTmpCode=' + loginTmpCode;
+        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoa6pqll6sfxta66zjq&response_type=code&scope=snsapi_login&state=STATE&redirect_uri' + globalConfig.server + 'staff/fromqr&loginTmpCode=' + loginTmpCode;
         console.log(event);
     };
     if (typeof window.addEventListener != 'undefined') {
