@@ -341,6 +341,9 @@
 
         methods: {
             getBranch(){
+                if(this.type!=1){
+                    this.page=1
+                };
                 this.$http.get('manager/user/departmentIndex/page/'+this.page).then((res) => {
                     this.branchList = res.data.data.department;
                     this.userList=res.data.data.user;
@@ -355,8 +358,8 @@
             },
             getSecond(id,name){
                 if(this.type!=2){
-                    this.page=1;
-                }
+                    this.page=1
+                };
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
@@ -382,8 +385,8 @@
             },
             getThird(id,name){
                 if(this.type!=3){
-                    this.page=1;
-                }
+                    this.page=1
+                };
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.ThirdList = res.data.data.department;
                     this.userList=res.data.data.user;
@@ -407,8 +410,8 @@
             },
             getFour(id,name){
                 if(this.type!=4){
-                    this.page=1;
-                }
+                    this.page=1
+                };
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.FourList = res.data.data.department;
                     this.userList=res.data.data.user;
@@ -432,8 +435,8 @@
             },
             getFive(id,name){
                 if(this.type!=5){
-                    this.page=1;
-                }
+                    this.page=1
+                };
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.FiveList = res.data.data.department;
                     this.userList=res.data.data.user;
@@ -497,6 +500,7 @@
             },
             //修改后查看
             reviseExamine(val){
+                console.log()
                 let flag=val.flag;
                 let reId=val.reId;
                 this.page=val.rePage;
@@ -541,8 +545,8 @@
             //查询成员
             search(a){
                 if(this.type!=6){
-                    this.page=1;
-                }
+                    this.page=1
+                };
                 if (this.keywords != '') {
                     this.isThird=false;
                     this.isSecond=false;
@@ -589,6 +593,7 @@
                 $('#myModalRevise').modal('show');
                 this.$http.get('manager/user/readUser/id/'+id).then((res) => {
                     this.editData=res.data.data;
+                    this.editData.rePage=this.page;
                     this.editData.flag=this.type;
                     if(this.type===2){
                         this.editData.rePage=this.page;
@@ -742,7 +747,6 @@
             //下一页
             nextPage(){
                 if(this.page<this.pages){
-                    $('.Next').attr({"disabled":false});
                     this.page++;
                     $('.Previous').attr({"disabled":false});
                     let reId=this.id;
@@ -763,13 +767,10 @@
                 }else{
                     $('.Next').attr({"disabled":true});
                 }
-
-
             },
             //上一页
             previousPage(){
                 if(this.page>1){
-                    $('.Previous').attr({"disabled":false});
                     this.page--;
                     $('.Next').attr({"disabled":false});
                     let reId=this.id;
