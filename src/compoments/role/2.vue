@@ -19,6 +19,7 @@
         },
         methods: {
             uploadPic(v){
+                console.log(globalConfig.server);
                 let _this = this;
                 let myDropzone = new Dropzone('#' + v, {
                     url: globalConfig.pic_address,
