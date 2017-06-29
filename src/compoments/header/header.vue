@@ -245,7 +245,7 @@
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <li><a><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a @click="logout"><i class="fa fa-key"></i> Log Out</a></li>
                         </ul>
                     </li>
 
@@ -562,13 +562,13 @@
             pitch_on (n){
                 this.isActive = n;
             },
-//            logout (){
-//                this.$http.post('staff/logout').then((res) => {
-//                    if(res.data.code === '80000'){
-//                        window.location.href = "login.html";
-//                    }
-//                });
-//            }
+            logout (){
+                this.$http.post('staff/logout').then((res) => {
+                    if(res.data.code === '80000'){
+                        window.location.href = "login.html";
+                    }
+                });
+            }
         }
     }
 </script>
