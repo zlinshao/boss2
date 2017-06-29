@@ -711,3 +711,10 @@ a {
     border: 0;
     padding: 0;
 }
+
+.dropzone > div {
+    min-height: 34px;
+    width: 100%;
+    border: 1px solid #E2E2E4;
+    border-radius: 6px;
+}
