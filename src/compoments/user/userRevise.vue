@@ -191,7 +191,6 @@
 </template>
 
 <script>
-//    const addr='http://test.v2.api.boss.lejias.cn/manager/user/';
     import Status from '../common/status.vue';
     export default {
         props:['editDate'],
@@ -328,7 +327,7 @@
             },
             getSecondDepart(){
                 if(this.first.id!==''&&this.first.id!=undefined){
-                    this.$http.get(addr+'departmentWb/id/'+this.first.id).then((res)=>{
+                    this.$http.get('manager/user/departmentWb/id/'+this.first.id).then((res)=>{
                         this.secondDepart=res.data.data;
                         this.department=[];
                         this.department.push(this.first);
@@ -352,7 +351,7 @@
                         this.depId=this.department[0].id;
                         this.fourDepart=[];
                     });
-                    this.$http.get(addr+'positionWb/id/'+this.second.id).then((res)=>{
+                    this.$http.get('manager/user/positionWb/id/'+this.second.id).then((res)=>{
                         this.positionList=res.data.data;
                     });
                 }else{
@@ -418,7 +417,7 @@
                 this.positionId=this.position_id[0].id;
             },
             getLevel(){
-                this.$http.get(addr+'level').then((res)=>{
+                this.$http.get('manager/user/level').then((res)=>{
                     this.levelList=res.data.data;
                 })
             },
