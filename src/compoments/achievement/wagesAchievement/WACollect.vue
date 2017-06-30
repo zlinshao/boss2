@@ -50,16 +50,14 @@
 
                 <div class="input-group bootstrap-timepicker">
                     <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="合同编号/业务员/地址">
+                    <input type="text" class="form-control" id="search_info" placeholder="合同编号/业务员/地址" @keydown.enter.prevent="search">
                     <span class="input-group-btn">
-                        <button class="btn btn-success" id="search" type="button"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
             </form>
 
         </div>
-
-        <!--<Tips></Tips>-->
 
         <!--表格-->
         <div class="col-lg-12">
@@ -116,7 +114,6 @@
     }
 </style>
 <script>
-    import Tips from '../companyAchievement/tips.vue'
     import Modal from './WAModal.vue'
     export default{
         data(){
@@ -125,11 +122,12 @@
             }
         },
         components: {
-            Tips,
             Modal
         },
         methods : {
+            search(){
 
+            }
         }
     }
 </script>

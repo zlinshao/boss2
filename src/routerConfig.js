@@ -23,6 +23,9 @@ import OkCollect from "./compoments/collect/okCollect.vue";                 //�
 import CollectDetail from "./compoments/collect/okCollect_more.vue";        //已收房源更多
 import NoCollect from "./compoments/collect/noCollect.vue";                 //未收房源
 import Collect_More from "./compoments/collect/noCollect_more.vue";         //未收房源更多
+import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
+import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
+import ContractDetail from './compoments/contract/contractDetail.vue'           // 合同详情
 
 import yi from "./compoments/role/1.vue";
 import  Back from './compoments/user/back.vue'
@@ -38,7 +41,6 @@ export default[
         name: 'User',
         component: User
     },
-
     {
         path: '/role',              //角色
         name: 'Role',
@@ -152,5 +154,20 @@ export default[
         path: '/back',
         name: 'Back',
         component: Back
+    },
+    {
+        path: '/CollectContract',
+        name: 'CollectContract',
+        component: CollectContract
+    },
+    {
+        path: '/RentingContract',
+        name: 'RentingContract',
+        component: RentingContract
+    },
+    {
+        path: '/contractDetail',
+        name: 'ContractDetail',
+        component: ContractDetail
     }
 ]

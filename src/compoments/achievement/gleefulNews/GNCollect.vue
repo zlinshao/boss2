@@ -40,9 +40,9 @@
                 </div>
                 <div class="input-group bootstrap-timepicker">
                     <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格">
+                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="search">
                     <span class="input-group-btn">
-                        <button class="btn btn-success" id="search" type="button"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
                 <div class="form-group pull-right">
@@ -306,6 +306,9 @@
                 this.news.price = '';
                 this.news.payWay = '';
                 this.news.isAgency = '';
+            },
+            search(){
+
             }
         }
     }

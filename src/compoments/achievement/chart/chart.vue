@@ -31,18 +31,18 @@
                         </select>
                     </div>
                     <div class="dropdown form-group">
-                        <select name="" class="form-control">
+                        <select name="" class="form-control" v-model="year">
                             <option value="2017">2017年</option>
                         </select>
                     </div>
                     <div class="dropdown form-group">
-                        <select name="" class="form-control" v-model="currentMonth">
+                        <select name="" class="form-control" v-model="month">
                             <option v-for="item in months" :value="item">{{item}}月</option>
                         </select>
                     </div>
                     <div class="input-group bootstrap-timepicker">
                         <label class="sr-only" for="search_info">搜索</label>
-                        <input type="text" class="form-control" id="search_info" placeholder="组长/区长/业务员">
+                        <input type="text" class="form-control" id="search_info" placeholder="组长/区长/业务员" @keydown.enter.prevent="">
                         <span class="input-group-btn">
                             <button class="btn btn-success" id="search" type="button"><i class="fa fa-search"></i></button>
                         </span>
@@ -51,14 +51,17 @@
             </div>
         </div>
 
-
-        <div class="tips clearFix">
-            <div class="col-lg-2">当前收房套数：<span>23340000</span></div>
-            <div class="col-lg-2">当前租房套数：<span>23340000</span></div>
-            <div class="col-lg-2">当月当前业绩：<span>23340000</span></div>
-            <div class="col-lg-2">当月目标业绩：<span>23340000</span></div>
-            <div class="col-lg-2">当月未完成业绩：<span>23340000</span></div>
+        <div class="tipContainer">
+            <h3>{{year}}年{{month}}月</h3>
+            <div class="tips clearFix">
+                <div class="col-lg-2">收房套数：<span>230</span></div>
+                <div class="col-lg-2">租房套数：<span>2300</span></div>
+                <div class="col-lg-2">当前业绩：<span>200</span></div>
+                <div class="col-lg-2">目标业绩：<span>2330</span></div>
+                <div class="col-lg-2">未完成业绩：<span>23000</span></div>
+            </div>
         </div>
+
 
 
         <Chart></Chart>
@@ -66,12 +69,24 @@
     </div>
 </template>
 <style scoped>
-    .tips{
-        text-align: center;
+    .tipContainer{
         background-color: white;
         border-radius: 5px;
+        padding-top: 5px;
+    }
+    .tipContainer h3{
+        text-align: center;
+        font-weight: 500;
+        font-size: 30px;
+        margin-bottom: 20px;
+        color: #2A3542;
+        letter-spacing: 2px;
+    }
+    .tips{
+        text-align: center;
+
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         color: #333;
         margin: auto;
     }
@@ -92,25 +107,25 @@
         data(){
             return {
                 months : [1,2,3,4,5,6,7,8,9,10,11,12],
-                currentMonth : '',       // 当前月
-//                currentYear : ''        // 当前年
+                month : '',       // 当前月
+                year : ''        // 当前年
             }
         },
         components: {
             Chart
         },
         created : function () {
-//            this.getCurrentYear();
+            this.getCurrentYear();
             this.getCurrentMonth();
         },
         methods : {
-            /*getCurrentYear(){
+            getCurrentYear(){
                 // 获取当前年份
-                this.currentYear = new Date().getFullYear();
-            },*/
+                this.year = new Date().getFullYear();
+            },
             getCurrentMonth(){
                 // 获取当前月
-                this.currentMonth = new Date().getMonth()+1;
+                this.month = new Date().getMonth()+1;
 //                console.log(date.getMonth());
             }
         }

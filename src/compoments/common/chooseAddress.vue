@@ -21,7 +21,7 @@
                                         </div>
                                         <div class="input-group bootstrap-timepicker">
                                             <label class="sr-only">搜索</label>
-                                            <input type="text" class="form-control" placeholder="" @keyup="searchVillage" @keyup.enter="search" v-model="searchInfo">
+                                            <input type="text" class="form-control" placeholder="" @keyup="searchVillage" @keydown.enter.prevent="search" v-model="searchInfo">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-success" type="button" @click="search">立即搜索</button>
                                             </span>

@@ -7,6 +7,9 @@ import Vuex from 'vuex'
 import store from './store/index.js'
 import routes from './routerConfig.js'
 import Loading from './compoments/loading'
+// 引入echarts
+import echarts from 'echarts'
+
 
 Vue.use(Loading);
 Vue.use(Vuex);
@@ -15,6 +18,7 @@ Vue.use(VueRouter);
 axios.defaults.baseURL = globalConfig.server;
 axios.defaults.withCredentials = true;
 Vue.prototype.$http = axios;
+Vue.prototype.$echarts = echarts
 
 const router = new VueRouter({
     mode: 'history', //切换路径模式，变成history模式
@@ -44,5 +48,3 @@ new Vue({
     store,
     render: h => h(App)
 });
-
-

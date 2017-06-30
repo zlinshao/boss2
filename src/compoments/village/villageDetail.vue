@@ -48,9 +48,9 @@
                             </li>
                             <li>
                                 <span>照片</span>
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic('http://qwertyerge.oss-cn-hangzhou.aliyuncs.com/C3DD199EE995773D8AB80A17288C6907.jpg?x-oss-process=image/resize,m_fixed,w_600,h_700')">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
                             </li>
                         </ul>
                     </div>
@@ -83,7 +83,7 @@
 
         <!--模态框-->
         <Modal :oper="oper"></Modal>
-        <PicModal :src="picSrc"></PicModal>
+        <PicModal :src="src"></PicModal>
     </div>
 </template>
 <style scoped>
@@ -160,7 +160,12 @@
                     operName : '编辑小区信息',
                     villageId : 10
                 },
-                picSrc : ''
+                picSrc : '',
+                src : [
+                    'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                    'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                    'http://123.206.184.218:8080/cup/images/b18-1.jpg'
+                ]
             }
         },
         components: {
@@ -168,8 +173,8 @@
             PicModal
         },
         methods : {
-            showLargePic(src){
-                this.picSrc = src;
+            showLargePic(){
+//                this.picSrc = src;
                 $('#myModal2').modal('show');
             }
         }
