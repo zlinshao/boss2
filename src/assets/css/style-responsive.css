@@ -715,9 +715,7 @@ a {
 .dropzone > div {
     min-height: 34px;
     width: 100%;
+    margin-bottom: 18px;
     border: 1px solid #E2E2E4;
     border-radius: 6px;
-}
-.dropzone .dz-preview{
-    margin: 10px;
 }

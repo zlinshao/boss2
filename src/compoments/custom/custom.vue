@@ -199,6 +199,7 @@
     import New_add from '../common/new_add.vue'
     import remindDaily from './remindDaily.vue'
     import Distribution from '../common/distribution.vue'          //分配
+
     export default {
         components: {Page, Distribution, New_add, remindDaily},
         data (){

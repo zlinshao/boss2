@@ -1,42 +1,40 @@
 <template>
 
     <div>
-        <switchbtn @fff="aaaa" @llll="yyyy" :result="'pic'"></switchbtn>
-        <switchbtn @fff="cccc" :result="'card'"></switchbtn>
-        {{ppp}}
-        {{ooo}}
+        <switch-btn @photo="idNumber" @delete="idNumber_Delete" :result="'pic'"></switch-btn>
+        <switch-btn @photo="bankCard" @delete="bankCard_Delete" :result="'card'"></switch-btn>
     </div>
 </template>
 
 <script>
-    import switchbtn from './2.vue'
+    import switchBtn from './2.vue'
     export default {
-        components: {switchbtn},
+        components: {switchBtn},
         data() {
             return {
-                ppp: [],
-                ooo: []
+                idNumbers: [],
+                bankCards: []
             }
         },
 
         methods: {
-            indexOf (val) {
-                for (let i = 0; i < this.length; i++) {
-                    if (this[i] === val) return i;
-                }
-                return -1;
+            idNumber (val){
+                this.idNumbers = val;
             },
-            yyyy (val){
-                let index = this.ppp.indexOf(val);
+            idNumber_Delete (val){
+                let index = this.idNumbers.indexOf(val);
                 if (index > -1) {
-                    this.ppp.splice(index, 1);
+                    this.idNumbers.splice(index, 1);
                 }
             },
-            aaaa (val){
-                this.ppp = val;
+            bankCard (val){
+                this.bankCards = val;
             },
-            cccc (val){
-                this.ooo = val;
+            bankCard_Delete (val){
+                let index = this.bankCards.indexOf(val);
+                if (index > -1) {
+                    this.bankCards.splice(index, 1);
+                }
             },
         }
     }

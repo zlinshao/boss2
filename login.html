@@ -21,6 +21,7 @@
     <script src="src/assets/js/jquery-3.2.0.js"></script>
     <script src="src/assets/bootstrap/js/bootstrap.js"></script>
     <script src="http://g.alicdn.com/dingding/dinglogin/0.0.2/ddLogin.js"></script>
+    <script src="src/boss.config.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -44,7 +45,7 @@
                             <input type="text" class="form-control" placeholder="手机号" autofocus>
                         </div>
                         <div class="col-sm-5">
-                            <input type="button" class="form-control btn btn-default" value="获取验证码" @click="gain">
+                            <input type="button" class="identifying_code  form-control btn btn-default" value="获取验证码">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
@@ -60,7 +61,6 @@
             </div>
         </div>
         <!-- modal -->
-
     </form>
 
 </div>
@@ -68,24 +68,32 @@
 
 </body>
 <script>
-//    let obj = DDLogin({
-//        id: "login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
-//        goto: encodeURIComponent("https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoa6pqll6sfxta66zjq&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=http://test.v2.api.boss.lejias.cn/staff/fromqr"),
-//        style: "",
-//        href: "",
-//        width: "300px",
-//        height: "300px"
-//    });
-//    let hanndleMessage = function (event) {
-//        let loginTmpCode = event.data; //拿到loginTmpCode后就可以在这里构造跳转链接进行跳转了
-//        let origin = event.origin;
-//        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoa6pqll6sfxta66zjq&response_type=code&scope=snsapi_login&state=STATE&redirect_urihttp://test.v2.api.boss.lejias.cn/staff/fromqr&loginTmpCode=' + loginTmpCode;
-//        console.log(event);
-//    };
-//    if (typeof window.addEventListener != 'undefined') {
-//        window.addEventListener('message', hanndleMessage, false);
-//    } else if (typeof window.attachEvent != 'undefined') {
-//        window.attachEvent('onmessage', hanndleMessage);
-//    }
+    $('.identifying_code').click(function () {
+        console.log(globalConfig.server);
+    });
+    let obj = DDLogin({
+        id: "login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
+        goto: encodeURIComponent("https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=" + globalConfig.appId
+            + "&response_type=code&scope=snsapi_login&state=" + globalConfig.state
+            + "&redirect_uri=" + globalConfig.server + "staff/fromqr"),
+        style: "",
+        href: "",
+        width: "300px",
+        height: "300px"
+    });
+    let hanndleMessage = function (event) {
+        let loginTmpCode = event.data; //拿到loginTmpCode后就可以在这里构造跳转链接进行跳转了
+        let origin = event.origin;
+        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=' + globalConfig.appId
+            + '&response_type=code&scope=snsapi_login&state=' + globalConfig.state
+            + '&redirect_uri=' + globalConfig.server
+            + 'staff/fromqr&loginTmpCode=' + loginTmpCode;
+        console.log(event);
+    };
+    if (typeof window.addEventListener != 'undefined') {
+        window.addEventListener('message', hanndleMessage, false);
+    } else if (typeof window.attachEvent != 'undefined') {
+        window.attachEvent('onmessage', hanndleMessage);
+    }
 </script>
 </html>
