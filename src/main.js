@@ -14,6 +14,7 @@ Vue.use(Boss);
 Vue.use(VueRouter);
 axios.defaults.baseURL = globalConfig.server;
 axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Env'] = globalConfig.dev;
 Vue.prototype.$http = axios;
 
 const router = new VueRouter({

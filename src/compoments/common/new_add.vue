@@ -138,7 +138,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">身份照片</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="">
+                                        <switch-btn></switch-btn>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -193,7 +193,7 @@
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">中介名称</label>
-                                    <div class="col-lg-10">
+                                    <div class="col-lgb -10">
                                         <input type="text" class="form-control" placeholder="中介名称">
                                     </div>
                                 </div>
@@ -295,7 +295,10 @@
 </template>
 
 <script>
+
+    import switchBtn from '../role/2.vue'
     export default {
+        components: {switchBtn},
         data (){
             return {
                 progress: '90',                 //进度

@@ -2,7 +2,7 @@
     <div>
         <section class="panel">
             <div class="panel-body">
-                <div v-if="pitch.length === 0">
+                <div>
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
@@ -127,7 +127,7 @@
         <!--<New_add></New_add>-->
 
         <!--房屋 新增-->
-        <CollectAdd :msg="noColl"></CollectAdd>
+        <Collect-add :msg="noColl"></Collect-add>
 
         <!--分页-->
         <Page :pg="paging"></Page>
@@ -217,29 +217,12 @@
         margin-bottom: 0;
     }
 
-    .remind li {
-        float: left;
-    }
-
-    .remind li a {
-        padding: 0 10px;
-    }
-
-    .remind li + li a {
-        border-left: 1px solid #aaaaaa;
-    }
-
     .pro-sort {
         padding-right: 6px;
     }
 
     .pro-sort select.form-control {
         padding: 6px 8px;
-    }
-
-    .progress.progress-striped.active {
-        margin-bottom: 0;
-        height: 10px;
     }
 
 </style>
