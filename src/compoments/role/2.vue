@@ -1,9 +1,8 @@
 <template>
     <div>
-        <form action="" class="dropzone form-horizontal">
+        <div class="dropzone form-horizontal">
             <div @click="uploadPic(result)" :id="result"></div>
-        </form>
-        {{pics}}
+        </div>
     </div>
 </template>
 

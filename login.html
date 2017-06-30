@@ -45,7 +45,7 @@
                             <input type="text" class="form-control" placeholder="手机号" autofocus>
                         </div>
                         <div class="col-sm-5">
-                            <input type="button" class="jjjjjj form-control btn btn-default" value="获取验证码">
+                            <input type="button" class="identifying_code  form-control btn btn-default" value="获取验证码">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
@@ -61,7 +61,6 @@
             </div>
         </div>
         <!-- modal -->
-
     </form>
 
 </div>
@@ -69,12 +68,14 @@
 
 </body>
 <script>
-    $('.jjjjjj').click(function () {
+    $('.identifying_code').click(function () {
         console.log(globalConfig.server);
     });
     let obj = DDLogin({
         id: "login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
-        goto: encodeURIComponent("https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoa6pqll6sfxta66zjq&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=" + globalConfig.server + "staff/fromqr"),
+        goto: encodeURIComponent("https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=" + globalConfig.appId
+            + "&response_type=code&scope=snsapi_login&state=" + globalConfig.state
+            + "&redirect_uri=" + globalConfig.server + "staff/fromqr"),
         style: "",
         href: "",
         width: "300px",
@@ -83,7 +84,10 @@
     let hanndleMessage = function (event) {
         let loginTmpCode = event.data; //拿到loginTmpCode后就可以在这里构造跳转链接进行跳转了
         let origin = event.origin;
-        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoa6pqll6sfxta66zjq&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=' + globalConfig.server + 'staff/fromqr&loginTmpCode=' + loginTmpCode;
+        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=' + globalConfig.appId
+            + '&response_type=code&scope=snsapi_login&state=' + globalConfig.state
+            + '&redirect_uri=' + globalConfig.server
+            + 'staff/fromqr&loginTmpCode=' + loginTmpCode;
         console.log(event);
     };
     if (typeof window.addEventListener != 'undefined') {

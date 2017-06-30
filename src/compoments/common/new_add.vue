@@ -138,7 +138,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">身份照片</label>
                                     <div class="col-lg-10">
-                                        <switch-btn></switch-btn>
+                                        <switch-btn :result="'idNum'"></switch-btn>
                                     </div>
                                 </div>
                                 <div class="form-group">

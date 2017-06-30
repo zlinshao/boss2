@@ -167,12 +167,6 @@
                                             <input type="text" v-model="customer"
                                                    class="form-control" @focus="focu"
                                                    placeholder="客户姓名">
-                                            <!--<input id="myCar" list="cars" />-->
-                                            <!--<datalist id="cars">-->
-                                                <!--<option value="BMW">-->
-                                                <!--<option value="Ford">-->
-                                                <!--<option value="Volvo">-->
-                                            <!--</datalist>-->
                                         </div>
                                         <div class="col-xs-1">
                                             <button type="button" class="btn btn-primary"><i

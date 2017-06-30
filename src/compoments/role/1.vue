@@ -3,8 +3,6 @@
     <div>
         <switch-btn @photo="idNumber" @delete="idNumber_Delete" :result="'pic'"></switch-btn>
         <switch-btn @photo="bankCard" @delete="bankCard_Delete" :result="'card'"></switch-btn>
-        {{idNumbers}}<br>
-        {{bankCards}}
     </div>
 </template>
 
