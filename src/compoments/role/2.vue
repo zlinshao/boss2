@@ -1,11 +1,9 @@
 <template>
     <div>
-        <div id="dropzone">
-            <form action="" class="dropzone form-horizontal">
-                <div @click="uploadPic(result)" :id="result"></div>
-                {{pics}}
-            </form>
-        </div>
+        <form action="" class="dropzone form-horizontal">
+            <div @click="uploadPic(result)" :id="result"></div>
+        </form>
+        {{pics}}
     </div>
 </template>
 
@@ -14,14 +12,13 @@
         props: ["result"],
         data () {
             return {
-                pics:[]
+                pics: []
             };
         },
         methods: {
-            uploadPic(v){
-                console.log(globalConfig.server);
+            uploadPic (res){
                 let _this = this;
-                let myDropzone = new Dropzone('#' + v, {
+                let myDropzone = new Dropzone('#' + res, {
                     url: globalConfig.pic_address,
                     addRemoveLinks: true,
                     dictRemoveLinks: "x",
@@ -36,10 +33,11 @@
                         this.on("success", function (file) {
                             let card = (JSON.parse(file.xhr.response).data);
                             _this.pics.push(card);
-                            _this.$emit('fff',_this.pics);
+                            _this.$emit('photo', _this.pics);
                             //上传成功时触发的事件
                         });
                         this.on("addedfile", function (file) {
+                            console.log(file.previewTemplate.outerText);
                             //上传文件时触发的事件
                         });
                         this.on("queuecomplete", function (file) {
@@ -47,14 +45,12 @@
                         });
                         this.on("removedfile", function (file) {
                             let card = (JSON.parse(file.xhr.response).data);
-                                _this.$emit('llll',card);
-                                console.log(card);
+                            _this.$emit('delete', card);
                             //删除文件时触发的方法
                         });
                     }
                 });
             },
-
         }
     }
 </script>

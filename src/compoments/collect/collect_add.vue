@@ -8,13 +8,13 @@
                     <div class="modal-content">
 
                         <!--新增-->
-                        <div  v-if="msg.newState" class="modal-header">
+                        <div v-if="msg.newState" class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">新增房屋</h4>
                         </div>
 
                         <!--修改-->
-                        <div  v-if="!msg.newState" class="modal-header">
+                        <div v-if="!msg.newState" class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">修改房屋</h4>
                         </div>
@@ -69,8 +69,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">面积</label>
-                                    <div class="col-xs-10 col-sm-8">
+                                    <label class="col-xs-2 col-lg-2 col-sm-2 control-label" style="padding-top: 7px;">面积</label>
+                                    <div class="col-xs-8 col-sm-8">
                                         <input type="text" class="form-control" placeholder="请输入面积">
                                     </div>
                                     <span class="col-xs-2 col-sm-2" style="font-size: 20px;padding-left: 0;">㎡</span>
@@ -100,11 +100,11 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">楼层</label>
                                     <div class="col-lg-10">
-                                        <div class="col-xs-5">
+                                        <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="text" class="form-control" placeholder="">
                                         </div>
                                         <label class="col-xs-1" style="font-size: 20px">/</label>
-                                        <div class="col-xs-5">
+                                        <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
@@ -161,11 +161,26 @@
 
                                 <!--未收 新增/编辑 房屋-->
                                 <div v-if="msg.sss">
-                                    <div class="form-group">
-                                        <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="客户姓名">
+                                    <div class="form-group" style="position: relative;">
+                                        <label class="col-xs-12 col-lg-2 col-sm-2 control-label">客户姓名</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" v-model="customer"
+                                                   class="form-control" @focus="focu"
+                                                   placeholder="客户姓名">
                                         </div>
+                                        <div class="col-xs-1">
+                                            <button type="button" class="btn btn-primary"><i
+                                                    class="fa fa-plus-square"></i>&nbsp;新建
+                                            </button>
+                                        </div>
+                                        <ul v-if="stat && customer.length > 0" class="search_info col-xs-8">
+                                            <li v-for="b in a" @click="pitchOn(b.name)">
+                                                <span>{{b.name}}</span>|
+                                                <span>{{b.zunchen}}</span>|
+                                                <span>{{b.phone}}</span>|
+                                                <span>{{b.laiyuan}}</span>
+                                            </li>
+                                        </ul>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 col-sm-2 control-label">来源</label>
@@ -239,10 +254,33 @@
             return {
                 progress: '90',                 //进度
                 inter_state: false,             //中介
+                customer: [],
+                stat: true,
+                a: [
+                    {
+                        name: "鬼谷子",
+                        zunchen: "先生",
+                        phone: "18952525252",
+                        laiyuan: "客户推荐"
+                    },
+                    {
+                        name: "露娜",
+                        zunchen: "女士",
+                        phone: "18052001122",
+                        laiyuan: "中介"
+                    }
+                ]
             }
         },
-        methods: {}
-
+        methods: {
+            pitchOn (val){
+                this.customer = val;
+                this.stat = false;
+            },
+            focu (){
+                this.stat = true
+            }
+        }
     }
 </script>
 
@@ -260,10 +298,6 @@
         margin-bottom: 16px;
     }
 
-    .status {
-        padding-top: 7px;
-    }
-
     .status label {
         margin-right: 20px;
     }
@@ -274,5 +308,39 @@
 
     .street select {
         margin-bottom: 10px;
+    }
+
+    .search_info {
+        position: absolute;
+        padding: 0;
+        top: 34px;
+        left: 98px;
+        height: 230px;
+        overflow: auto;
+        background: #ffffff;
+        border: 1px solid #517397;
+        z-index: 1;
+        border-radius: 3px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .search_info {
+            width: 94%;
+            top: 59px;
+            left: 4px;
+        }
+    }
+
+    .search_info > li {
+        padding: 10px 16px;
+    }
+
+    .search_info span {
+        padding: 0 6px;
+    }
+
+    .search_info > li:hover {
+
+        background: #CCCCCC;
     }
 </style>
