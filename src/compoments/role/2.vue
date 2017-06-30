@@ -37,7 +37,7 @@
                             //上传成功时触发的事件
                         });
                         this.on("addedfile", function (file) {
-                            console.log(file.previewTemplate.outerText);
+//                            console.log(file.previewTemplate.outerText);
                             //上传文件时触发的事件
                         });
                         this.on("queuecomplete", function (file) {
