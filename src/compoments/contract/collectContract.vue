@@ -67,8 +67,8 @@
                         </label>
                     </div>
                     <div class="pull-right">
-                        <a data-toggle="modal" href="#customModel" class="btn btn-success"><i
-                                class="fa fa-plus-square"></i>&nbsp;新增合同
+                        <a @click="addContract" class="btn btn-success"><i
+                                 class="fa fa-plus-square"></i>&nbsp;新增合同
                         </a>
                     </div>
                 </form>
@@ -173,10 +173,62 @@
                 </table>
             </section>
         </div>
-
-
+        <!--//组件-->
+        <contractAdd></contractAdd>
     </div>
 </template>
+<script>
+    import contractAdd from  './contractAdd.vue'
+    export default{
+        components: { contractAdd },
+        data(){
+            return {
+                pitch : [],      // 选中id
+                contractStatus : {
+                    'cStatus' : true ,
+                    'yellow' : true,
+                    'gray' : false,
+                    'green' : false
+                },           // 合同状态样式
+                isLock : true,      // 是否锁定
+            }
+        },
+        updated (){
+//            时间选择
+            this.remindData();
+        },
+        methods : {
+            search(){
+
+            },
+            remindData (){   //日期选择
+                $('.form_datetime').datetimepicker({
+                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoClose: 1,
+                });
+            },
+            rules(id , ev){   //多选框选中
+                if (ev.target.checked){
+                    this.pitch.push(id);
+                }else {
+                    let index = this.pitch.indexOf(id);
+                    if (index > -1) {
+                        this.pitch.splice(index, 1);
+                    }
+                }
+            },
+            addContract(){  //新增合同订单
+
+//                $('#contractAdd').modal({backdrop: 'static',});
+                $('#contractAdd').modal('show')
+            },
+        }
+    }
+</script>
+
 <style scoped>
     .panel-body{
         padding: 8px;
@@ -244,58 +296,3 @@
         background-color: #83E96D;
     }
 </style>
-<script>
-    export default{
-        data(){
-            return {
-                pitch : [],      // 选中id
-                contractStatus : {
-                    'cStatus' : true ,
-                    'yellow' : true,
-                    'gray' : false,
-                    'green' : false
-                },           // 合同状态样式
-                isLock : true,      // 是否锁定
-//                chooseAll : false       // 是否全选
-
-            }
-        },
-        updated (){
-//            时间选择
-            this.remindData();
-        },
-        components: {},
-        methods : {
-            search(){
-
-            },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd hh:00',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                });
-            },
-            rules(id , ev){
-//                console.log(ev.target);
-                /*if ($('tbody input[type=checkbox]:checked').length == $('tbody tr').length){
-                    this.chooseAll = true;
-                } else {
-                    this.chooseAll = false;
-                }*/
-
-                if (ev.target.checked){
-                    this.pitch.push(id);
-                }else {
-                    let index = this.pitch.indexOf(id);
-                    if (index > -1) {
-                        this.pitch.splice(index, 1);
-                    }
-                }
-            }
-        }
-    }
-</script>

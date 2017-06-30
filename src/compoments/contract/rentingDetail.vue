@@ -14,7 +14,7 @@
                 </h4>
                 <span :class="contractStatus">待审核</span>
             </div>
-            <div class="pull-right dropdown">
+            <div class="pull-right">
                 <span @click="changeLock">
                     <i class="fa fa-lock" v-if="isLock"></i>
                     <i class="fa fa-unlock" v-else="isLock"></i>
@@ -27,8 +27,17 @@
                 <button class="btn btn-default more" @click="showUl" v-if="isCollect">
                     更多
                     <ul v-show="show">
-                        <li @click="editContract">编辑</li>
-                        <li @click="renewContract">续约</li>
+                        <li>编辑</li>
+                        <li>续约</li>
+                    </ul>
+                </button>
+                <button class="btn btn-default more" @click="showUl" v-else="isCollect">
+                    更多
+                    <ul v-show="show">
+                        <li>编辑</li>
+                        <li>续租</li>
+                        <li>转租</li>
+                        <li>调租</li>
                     </ul>
                 </button>
             </div>
@@ -40,7 +49,7 @@
             <!--应付款/打款/合同信息-->
             <div class="col-md-3">
                 <!--应付款-->
-                <section class="panel roll">
+                <section v-if="isCollect" class="panel roll">
                     <header class="panel-heading">
                         应付款
                     </header>
@@ -68,11 +77,40 @@
                         </table>
                     </div>
                 </section>
+                <!--应收款-->
+                <section v-else="isCollect" class="panel roll">
+                    <header class="panel-heading">
+                        应收款
+                    </header>
+                    <div class="panel-body table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <td>当月应收</td>
+                                <td>收款进度/td>
+                                <td>本次收款时间</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>2000</td>
+                                <td>
+                                    <div class="progress progress-striped active">
+                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar" style="width: 90%;">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>2017-07-05</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
                 <!--打款-->
-                <section class="panel roll pay">
+                <section v-if="isCollect" class="panel roll pay">
                     <header class="panel-heading">
                         打款
-                        <a class="pull-right" @click="transferDetail">更多</a>
+                        <a class="pull-right">更多</a>
                     </header>
                     <div class="panel-body table-responsive">
                         <div class="total">
@@ -104,11 +142,45 @@
                         </table>
                     </div>
                 </section>
+                <!--收款-->
+                <section v-else="isCollect" class="panel roll pay">
+                    <header class="panel-heading">
+                        收款
+                        <a class="pull-right">更多</a>
+                    </header>
+                    <div class="panel-body table-responsive">
+                        <div class="total">
+                            合计:123456
+                            未收款:123456
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr class="lightGray">
+                                <td>收款时间</td>
+                                <td>收款金额</td>
+                                <td>收款人</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>2017-06-23</td>
+                                <td>2000</td>
+                                <td>哈哈</td>
+                            </tr>
+                            <tr>
+                                <td>2017-06-23</td>
+                                <td>2000</td>
+                                <td>哈哈</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
                 <!--合同信息-->
                 <section class="panel roll contract">
                     <header class="panel-heading">
                         合同信息
-                        <a class="pull-right" @click="contractInfo">更多</a>
+                        <a class="pull-right">更多</a>
                     </header>
                     <div class="panel-body table-responsive">
                         <table class="table contract_info">
@@ -167,7 +239,7 @@
                             <div id="base" class="tab-pane active">
                                 <div class="baseInfo">
                                     <header>基本信息</header>
-                                    <div class="infoContainer clearFix">
+                                    <div class="infoContainer clearFix" v-if="isCollect">
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>合同编号<sup>*</sup></span>
@@ -224,6 +296,82 @@
                                             <div class="infoList">
                                                 <span>中介费用</span>
                                                 <span>0</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>资料补齐日期</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>备注</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>开单人</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>审核人</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoContainer clearFix" v-else="isCollect">
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>合同编号<sup>*</sup></span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>年限<sup>*</sup></span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>合同起始日期</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>合同结束日期</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>付款类型<sup>*</sup></span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>月单价<sup>*</sup></span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>应收<sup>*</sup></span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>已收</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>付款方式</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>未收</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>租房状态</span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>收条编号<sup>*</sup></span>
+                                                <span>LJS081740</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>中介费用</span>
+                                                <span>LJS081740</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>资料补齐日期</span>
@@ -446,25 +594,10 @@
                 </section>
             </div>
         </div>
-        <!--components-->
-        <Transfer></Transfer>
-        <Contract></Contract>
-        <ContractEit></ContractEit>
-        <ContractRenew></ContractRenew>
     </div>
 </template>
 <script>
-    import Transfer from './transferDetail.vue'
-    import Contract from  './contractInfo.vue'
-    import ContractEit from './contractEdit.vue'
-    import ContractRenew from './contractRenew.vue'
     export default{
-        components: {
-            Transfer,
-            Contract,
-            ContractEit,
-            ContractRenew
-        },
         data(){
             return {
                 isLock : true, // 是否锁定
@@ -479,25 +612,14 @@
                 isCollect : true,   // 租房或收房
             }
         },
+        components: {},
         methods : {
             showUl(){           // 点击更多
                 this.show = !this.show;
             },
             changeLock(){       // 点击锁定
                 this.isLock = !this.isLock;
-            },
-            transferDetail(){
-                $('#transferDetail').modal('show');
-            },
-            contractInfo(){
-                $('#contractInfo').modal('show');
-            },
-            editContract(){
-                $('#contractEdit').modal('show');
-            },
-            renewContract(){
-                $('#contractRenew').modal('show');
-            },
+            }
         }
     }
 </script>
