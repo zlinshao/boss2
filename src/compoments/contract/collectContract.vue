@@ -56,7 +56,6 @@
                             快到期合同
                         </label>
                     </div>
-
                     <div class="input-group showWay">
                         <span>排序方式：</span>
                         <label>
@@ -72,8 +71,6 @@
                         </a>
                     </div>
                 </form>
-
-
             </div>
 
             <!--选中-->
@@ -88,11 +85,7 @@
                     </li>
                 </ul>
             </div>
-
-
         </section>
-
-
         <!--表格-->
         <div class="col-lg-12">
             <section class="panel table table-responsive">
@@ -222,7 +215,7 @@
             },
             addContract(){  //新增合同订单
 
-//                $('#contractAdd').modal({backdrop: 'static',});
+                $('#contractAdd').modal({backdrop: 'static',});
                 $('#contractAdd').modal('show')
             },
         }

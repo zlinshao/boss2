@@ -18,13 +18,13 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >业主姓名</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="业主姓名" >
+                                            <input type="text" class="form-control" placeholder="业主姓名" @click="selectClient">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="房屋地址">
+                                            <input type="text" class="form-control" placeholder="房屋地址" @click="selectHouse">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -318,10 +318,15 @@
                 </div>
             </div>
         </div>
+        <SelectClient> </SelectClient>
     </div>
 </template>
 <script>
+    import SelectClient from './clientSelect.vue'
     export default{
+        components:{
+            SelectClient
+        },
         data(){
             return {
                 payMethod:false,
@@ -351,7 +356,13 @@
             },
             priceIncrease(){
                 this.priceIncrease=this.priceIncrease;
-            }
+            },
+            selectClient(){
+                $('#selectClient').modal('show');
+            },
+            selectHouse(){
+                $('#selectHouse').modal('show');
+            },
         }
     }
 </script>
