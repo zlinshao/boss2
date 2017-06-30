@@ -7,7 +7,7 @@ globalConfig = {
     host: "http//test.v2.boss.lejias.cn/",
     pic_address: "http://test.api.boss.lejias.cn/picture/upload",
     urlName: "",
-    dev: 'dev'
+    env: 'dev'
 };
 
 function indexOf(val) {
