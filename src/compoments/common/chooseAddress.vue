@@ -138,6 +138,7 @@
         },
         methods : {
             search(){
+                this.$http.defaults.withCredentials = false;
                 this.$http.get(addr+'&keywords='+this.searchInfo+'&city='+this.chooseCity)
                     .then(
                         res => this.villages = res.data.tips

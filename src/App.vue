@@ -33,16 +33,16 @@
             HeaderVue
         },
         created (){
-            this.$http.get('staff/info').then((res) => {
-                if (res.data.code === 80019) {
-                    window.location.href = 'login.html'
-                } else {
-                    globalConfig.urlName = res.data.name;
-                    this.urlName = res.data.name;
-                    this.urlCard = res.data.avatar;
-
-                }
-            });
+//            this.$http.get('staff/info').then((res) => {
+//                if (res.data.code === 80019) {
+//                    window.location.href = 'login.html'
+//                } else {
+//                    globalConfig.urlName = res.data.name;
+//                    this.urlName = res.data.name;
+//                    this.urlCard = res.data.avatar;
+//
+//                }
+//            });
         }
     }
 </script>

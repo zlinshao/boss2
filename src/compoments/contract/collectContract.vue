@@ -46,7 +46,7 @@
                         <label class="sr-only" for="search_info">搜索</label>
                         <input type="text" class="form-control" id="search_info" @keydown.enter.prevent="search">
                         <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                            <button class="btn btn-success" type="button" ><i class="fa fa-search"></i></button>
                         </span>
                     </div>
 

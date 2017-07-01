@@ -25,47 +25,40 @@
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">房屋地址</label>
-                                    <div class="col-lg-10">
-                                        <div class="form-group street">
-                                            <div class="col-sm-3">
-                                                <select class="form-control">
-                                                    <option value="1">1</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <select class="form-control">
-                                                    <option value="2">2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <select class="form-control">
-                                                    <option value="3">3</option>
-                                                </select>
-                                            </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option value="1">1</option>
+                                            </select>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="街道信息">
-                                    </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option value="2">2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">房型</label>
-                                    <div class="col-lg-10">
-                                        <div class="form-group street">
-                                            <div class="col-sm-3">
-                                                <select class="form-control">
-                                                    <option value="1">1</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <select class="form-control">
-                                                    <option value="2">2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <select class="form-control">
-                                                    <option value="3">3</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option value="1">室</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option value="2">厅</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option value="3">卫</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">

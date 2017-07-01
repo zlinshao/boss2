@@ -292,12 +292,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu" :class="{'active': isActive == 5}" @click='pitch_on(5)'>
-                        <router-link to='/yi'>
-                            <i class="fa fa-th"></i>
-                            <span>合同管理</span>
-                        </router-link>
-                    </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>

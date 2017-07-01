@@ -19,15 +19,14 @@ import Chart from './compoments/achievement/chart/chart.vue'
 import Custom from "./compoments/custom/custom.vue";                        //客户
 import Details from "./compoments/custom/custom_more.vue";                  //客户详情
 import CustomerPool from "./compoments/custom/custom_pool.vue";             //客户池
-import OkCollect from "./compoments/collect/okCollect.vue";                 //已收房源
-import CollectDetail from "./compoments/collect/okCollect_more.vue";        //已收房源更多
-import NoCollect from "./compoments/collect/noCollect.vue";                 //未收房源
-import Collect_More from "./compoments/collect/noCollect_more.vue";         //未收房源更多
+import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                 //已收房源
+import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";        //已收房源更多
+import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                 //未收房源
+import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";         //未收房源更多
 import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
 import ContractDetail from './compoments/contract/contractDetail.vue'           // 合同详情
 
-import yi from "./compoments/role/1.vue";
 import  Back from './compoments/user/back.vue'
 
 export default[
@@ -129,11 +128,6 @@ export default[
         path: '/collectMore',       //客户详情
         name: 'collectMore',
         component: Collect_More
-    },
-    {
-        path: '/yi',
-        name: 'yi',
-        component: yi
     },
     {
         path: '/compare',

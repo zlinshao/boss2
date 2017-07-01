@@ -4,7 +4,7 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        客户信息
+                        房屋信息
                         <a data-toggle="modal" class="pull-right" href="#collectAdd">编辑</a>
                     </h4>
                 </header>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import CollectAdd from './collect_add.vue'
+    import CollectAdd from './collectAdd.vue'
     export default {
         components: {CollectAdd},
         data (){

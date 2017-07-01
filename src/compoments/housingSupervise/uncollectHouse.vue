@@ -2,23 +2,7 @@
     <div>
         <section class="panel">
             <div class="panel-body">
-                <div v-if="pitch.length === 0">
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
-                                <option value="25">25</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
-                                <option value="25">25</option>
-                            </select>
-                        </label>
-                    </div>
+                <div>
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
@@ -76,15 +60,18 @@
                         </label>
                     </div>
                 </div>
-                <div v-if="pitch.length > 0" class="col-lg-12 remind">
-                    <ul>
-                        <li>
-                            <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
-                        </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
-                        </li>
-                    </ul>
+                <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="">
+                        <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">搜索</button>
+                            </span>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <a data-toggle="modal" href="#collectAdd" class="btn btn-success"><i
+                            class="fa fa-plus-square"></i>&nbsp;增加客户
+                    </a>
                 </div>
             </div>
         </section>
@@ -104,10 +91,7 @@
                             <th class="text-center">配套设施</th>
                             <th class="text-center">建筑楼层</th>
                             <th class="text-center">房屋特色</th>
-                            <th class="text-center">参考租金</th>
-                            <th class="text-center">剩余空置期</th>
-                            <th class="text-center">房屋状态</th>
-                            <th class="text-center">房屋所属</th>
+                            <th class="text-center">个人/中介</th>
                             <th class="text-center">负责人</th>
                             <th class="text-center">锁定</th>
                             <th class="text-center">置顶</th>
@@ -128,15 +112,12 @@
                             <td class="text-center">{{cus.install}}</td>
                             <td class="text-center">{{cus.floor}}</td>
                             <td class="text-center">{{cus.chara}}</td>
-                            <td class="text-center">{{cus.reprises}}</td>
-                            <td class="text-center">{{cus.vacant}}</td>
-                            <td class="text-center">{{cus.stay}}</td>
                             <td class="text-center">{{cus.attribute}}</td>
                             <td class="text-center">{{cus.charge}}</td>
                             <td class="text-center"><i class="fa fa-unlock-alt"></i><i class="fa fa-unlock"></i></td>
                             <td class="text-center"><a @click="stick(index)"><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
-                                <router-link to="/collectDetail">更多</router-link>
+                                <router-link to="/collectMore">更多</router-link>
                             </td>
                         </tr>
                         <tr v-show="">
@@ -150,8 +131,11 @@
             </div>
         </div>
 
-        <!--分配-->
-        <Distribution :msg="cus_name"></Distribution>
+        <!--新增/修改-->
+        <!--<New_add></New_add>-->
+
+        <!--房屋 新增-->
+        <Collect-add :msg="noColl"></Collect-add>
 
         <!--分页-->
         <Page :pg="paging"></Page>
@@ -159,18 +143,21 @@
 </template>
 
 <script>
-    import Page from '.././common/page.vue'
-    import remindDaily from '../custom/remindDaily.vue'
-    import Distribution from '../common/distribution.vue'          //分配
+    import CollectAdd from './collectAdd.vue'
+    import Page from '../common/page.vue'
+    //    import New_add from '../custom/new_add.vue'
     export default {
-        components: {Page, Distribution, remindDaily},
+        components: {Page, CollectAdd}, //, New_add
         data (){
             return {
                 custom_list: [],            //列表
                 paging: '',                 //总页数
                 pitch: [],                  //选中id
-                bool: '',
-                cus_name: []
+                cus_name: [],
+                noColl: {
+                   newState: true,              //新增房屋
+                   sss: true
+                }
             }
         },
         created (){
@@ -211,18 +198,12 @@
             add_state (val){
                 this.bool = val;
             },
+            stick(index){
+                alert(index)
+                index=0;
+            },
         }
     }
-    //    export default {
-    //        data (){
-    //            return {
-    //                collectId: 'aaaaaaaa'
-    //            }
-    //        },
-    //        mounted (){
-    //            this.collectId = this.$route.query.name
-    //        }
-    //    }
 </script>
 
 
@@ -238,29 +219,12 @@
         margin-bottom: 0;
     }
 
-    .remind li {
-        float: left;
-    }
-
-    .remind li a {
-        padding: 0 10px;
-    }
-
-    .remind li + li a {
-        border-left: 1px solid #aaaaaa;
-    }
-
     .pro-sort {
         padding-right: 6px;
     }
 
     .pro-sort select.form-control {
         padding: 6px 8px;
-    }
-
-    .progress.progress-striped.active {
-        margin-bottom: 0;
-        height: 10px;
     }
 
 </style>

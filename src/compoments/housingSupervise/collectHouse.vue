@@ -1,12 +1,13 @@
 <template>
     <div>
         <section class="panel">
-            <div class="panel-body">
-                <div>
+            <!--未选中-->
+            <div class="panel-body clearFix" v-if="pitch.length==0">
+                <form class="form-inline clearFix" role="form">
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">房屋类型</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
@@ -14,7 +15,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">房屋装修</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
@@ -22,7 +23,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">房型</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
@@ -30,7 +31,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">建筑楼层</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
@@ -38,7 +39,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">房屋特色</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
@@ -46,7 +47,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">房屋面积</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
@@ -54,17 +55,48 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control">
-                                <option value="10" selected="selected">发的啥了发生</option>
+                                <option value="10" selected="selected">房屋状态</option>
                                 <option value="25">25</option>
                             </select>
                         </label>
                     </div>
-                </div>
-                <div class="pull-right">
-                    <a data-toggle="modal" href="#collectAdd" class="btn btn-success"><i
-                            class="fa fa-plus-square"></i>&nbsp;增加客户
-                    </a>
-                </div>
+                    <div class="pro-sort">
+                        <label>
+                            <select class="form-control">
+                                <option value="10" selected="selected">客户类型</option>
+                                <option value="25">25</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="pro-sort">
+                        <label>
+                            <select class="form-control">
+                                <option value="10" selected="selected">参考价格</option>
+                                <option value="25">25</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!--选中-->
+            <div v-if="pitch.length > 0" class="col-lg-12 remind">
+                <ul>
+                    <li>
+                        <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
+                    </li>
+                    <li>
+                        <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
+                    </li>
+                </ul>
             </div>
         </section>
 
@@ -83,7 +115,10 @@
                             <th class="text-center">配套设施</th>
                             <th class="text-center">建筑楼层</th>
                             <th class="text-center">房屋特色</th>
-                            <th class="text-center">个人/中介</th>
+                            <th class="text-center">参考租金</th>
+                            <th class="text-center">剩余空置期</th>
+                            <th class="text-center">房屋状态</th>
+                            <th class="text-center">房屋所属</th>
                             <th class="text-center">负责人</th>
                             <th class="text-center">锁定</th>
                             <th class="text-center">置顶</th>
@@ -91,25 +126,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(cus, index) in custom_list">
+                        <tr v-for="item in custom_list">
                             <td class="text-center">
-                                <label for="cus_id"></label>
-                                <input id="cus_id" type="checkbox" class="pull-left"
-                                       @click="rules(cus.id, $event, cus.address)">
+                                <label for="item_id"></label>
+                                <input id="item_id" type="checkbox" class="pull-left"
+                                       @click="rules(item.id, $event, item.address)">
                             </td>
-                            <td class="text-center">{{cus.address}}</td>
-                            <td class="text-center">{{cus.room_type}}</td>
-                            <td class="text-center">{{cus.proportion}}</td>
-                            <td class="text-center">{{cus.decorate}}</td>
-                            <td class="text-center">{{cus.install}}</td>
-                            <td class="text-center">{{cus.floor}}</td>
-                            <td class="text-center">{{cus.chara}}</td>
-                            <td class="text-center">{{cus.attribute}}</td>
-                            <td class="text-center">{{cus.charge}}</td>
-                            <td class="text-center"><i class="fa fa-unlock-alt"></i><i class="fa fa-unlock"></i></td>
-                            <td class="text-center"><a @click="stick(index)"><i class="fa fa-paperclip"></i></a></td>
+                            <td class="text-center">{{item.address}}</td>
+                            <td class="text-center">{{item.room_type}}</td>
+                            <td class="text-center">{{item.proportion}}</td>
+                            <td class="text-center">{{item.decorate}}</td>
+                            <td class="text-center">{{item.install}}</td>
+                            <td class="text-center">{{item.floor}}</td>
+                            <td class="text-center">{{item.chara}}</td>
+                            <td class="text-center">{{item.reprises}}</td>
+                            <td class="text-center">{{item.vacant}}</td>
+                            <td class="text-center">{{item.stay}}</td>
+                            <td class="text-center">{{item.attribute}}</td>
+                            <td class="text-center">{{item.charge}}</td>
+                            <td class="text-center" @click="clock">
+                                <i class="fa fa-unlock-alt" v-if="isClock"></i>
+                                <i class="fa fa-unlock" v-else="isClock"></i>
+                            </td>
                             <td class="text-center">
-                                <router-link to="/collectMore">更多</router-link>
+                                <a><i class="fa fa-paperclip"></i></a>
+                            </td>
+                            <td class="text-center">
+                                <router-link to="/collectDetail" @click="houseDetail(item.id)">更多</router-link>
                             </td>
                         </tr>
                         <tr v-show="">
@@ -123,11 +166,8 @@
             </div>
         </div>
 
-        <!--新增/修改-->
-        <!--<New_add></New_add>-->
-
-        <!--房屋 新增-->
-        <Collect-add :msg="noColl"></Collect-add>
+        <!--分配-->
+        <Distribution :msg="cus_name"></Distribution>
 
         <!--分页-->
         <Page :pg="paging"></Page>
@@ -135,21 +175,19 @@
 </template>
 
 <script>
-    import CollectAdd from './collect_add.vue'
-    import Page from '../common/page.vue'
-    //    import New_add from '../custom/new_add.vue'
+    import Page from '.././common/page.vue'
+    import remindDaily from '../custom/remindDaily.vue'
+    import Distribution from '../common/distribution.vue'          //分配
     export default {
-        components: {Page, CollectAdd}, //, New_add
+        components: {Page, Distribution, remindDaily},
         data (){
             return {
                 custom_list: [],            //列表
                 paging: '',                 //总页数
                 pitch: [],                  //选中id
+                bool: '',
                 cus_name: [],
-                noColl: {
-                   newState: true,              //新增房屋
-                   sss: true
-                }
+                isClock:true,            //是否被锁
             }
         },
         created (){
@@ -158,12 +196,15 @@
         methods: {
 //            客户列表
             collectList (){
-                this.$http.get('json/collects.json').then((res) => {
+                this.$http.get( 'json/collects.json').then((res) => {
                     this.custom_list = res.data.data.custom;
                     this.paging = res.data.data.pages;
                 })
             },
-
+//            锁定状态
+            clock(){
+                this.isClock=!this.isClock;
+            },
 //            增删数组
             indexOf (val) {
                 for (let i = 0; i < this.length; i++) {
@@ -187,21 +228,11 @@
                     }
                 }
             },
-            add_state (val){
-                this.bool = val;
-            },
+            houseDetail(){
+
+            }
         }
     }
-    //    export default {
-    //        data (){
-    //            return {
-    //                collectId: 'aaaaaaaa'
-    //            }
-    //        },
-    //        mounted (){
-    //            this.collectId = this.$route.query.name
-    //        }
-    //    }
 </script>
 
 
@@ -213,9 +244,22 @@
         height: 17px;
     }
 
-    select {
+
+    .remind li {
+        float: left;
+    }
+
+    .remind li a {
+        padding: 0 10px;
+    }
+
+    .remind li + li a {
+        border-left: 1px solid #aaaaaa;
+    }
+    .nav-tabs>li {
         margin-bottom: 0;
     }
+
 
     .pro-sort {
         padding-right: 6px;
@@ -224,5 +268,4 @@
     .pro-sort select.form-control {
         padding: 6px 8px;
     }
-
 </style>

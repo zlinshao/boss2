@@ -5,6 +5,7 @@
             <div class="panel-body">
                 <header>
                     <h4>
+                        <router-link to="/OkCollect" tag="button" class="btn btn-white" style="border: none">首页</router-link>
                         客户信息
                         <a data-toggle="modal" class="pull-right" href="#collectAdd">编辑</a>
                         <a data-toggle="modal" class="pull-right" href="#distribution">分配</a>
@@ -55,7 +56,7 @@
         <div class="row">
             <!--合同信息-->
             <div class="col-md-3">
-                <section class="panel roll">
+                <section class="panel roll box">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -248,8 +249,8 @@
                 </section>
             </div>
             <!--沟通日志/房屋信息-->
-            <div class="col-md-9">
-                <section class="panel roll">
+            <div class="col-md-9 box">
+                <section class="panel roll box">
                     <div class="panel-body">
                         <header>
                             <h4>房屋信息</h4>
@@ -261,7 +262,7 @@
                                         <tbody>
                                         <tr>
                                             <td class="text-primary width100">房屋照片</td>
-                                            <td>房屋照片 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias amet aut beatae consequuntur culpa deleniti dicta ducimus incidunt libero, minima modi molestiae mollitia numquam provident quibusdam rerum, sequi soluta totam!</td>
+                                            <td>房屋照片</td>
                                         </tr>
                                         <tr>
                                             <td class="text-primary width100">产权证照片</td>
@@ -298,7 +299,7 @@
 </template>
 
 <script>
-    import CollectAdd from './collect_add.vue'
+    import CollectAdd from './collectAdd.vue'
     import Distribution from '../common/distribution.vue'          //分配
     export default {
         components: {
@@ -328,7 +329,7 @@
 <style scoped>
 
     .width100{
-        min-width: 100px;
+        width: 100px;
         text-align: right;
     }
     h4 {
@@ -378,8 +379,21 @@
         margin-bottom: 0;
         height: 10px;
     }
-
+    .box::-webkit-scrollbar {
+        width:8px;
+        height:300px;
+    }
+    .box::-webkit-scrollbar-button    {
+        background-color:#f0f0f8;
+    }
+    .box::-webkit-scrollbar-track     {
+        background:#f0f0f8;
+    }
+    .box::-webkit-scrollbar-thumb{
+        background:#80d3d9;
+        border-radius:4px;
+    }
     .paddingTop {
-        padding-top: 13px;
+        padding-top: 15px;
     }
 </style>
