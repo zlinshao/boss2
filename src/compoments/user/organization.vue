@@ -67,7 +67,11 @@
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
                                             </li>
                                             <li @click="stopDepartment(item.id)">
-                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                            </li>
+                                            <li @click="deleteDepartment(item.id)">
+                                                <a class="btn btn-default">删除部门</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </a>
@@ -94,7 +98,11 @@
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
                                             </li>
                                             <li @click="stopDepartment(item.id)">
-                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                            </li>
+                                            <li @click="deleteDepartment(item.id)">
+                                                <a class="btn btn-default">删除部门</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </a>
@@ -122,7 +130,11 @@
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
                                             </li>
                                             <li @click="stopDepartment(item.id)">
-                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                            </li>
+                                            <li @click="deleteDepartment(item.id)">
+                                                <a class="btn btn-default">删除部门</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </a>
@@ -147,14 +159,18 @@
                                                 <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
                                             </li>
                                             <li @click="stopDepartment(item.id)">
-                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                            </li>
+                                            <li @click="deleteDepartment(item.id)">
+                                                <a class="btn btn-default">删除部门</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </a>
                             </li>
                             <!--六级部门-->
-                            <li v-for="(item,index) in SixList" :class="{'active':active1==index}"
-                                @mouseover="changeClass(index)" v-if="type==6">
+                            <li v-for="(item,index) in FiveList" :class="{'active':active1==index}"
+                                @mouseover="changeClass(index)" v-if="type==7">
                                 <a href="#">
                                     <button class="fa fa-chevron-right btn btn-default btn-lg department"
                                             :disabled="item.status=='停用'">{{item.name}}</button>
@@ -253,6 +269,11 @@
                                                             <button type="button" class="btn btn-default btn-lg btn-block"
                                                                     :disabled="item.status==3">禁用账号</button>
                                                         </li>
+                                                        <li @click="deleteAccount(item.id)">
+                                                            <button type="button" class="btn btn-default btn-lg btn-block">
+                                                                删除账号
+                                                            </button>
+                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -290,7 +311,6 @@
             </div>
         </section>
         <UserAdd></UserAdd>
-        <Organize></Organize>
         <AddDpm :addDpm="addDpm"></AddDpm>
         <editDpm :editDpm="editDpm" @editDdp="changeDpm"></editDpm>
         <Status :account="account" @Account="AccountStatus"></Status>
@@ -301,7 +321,6 @@
 </template>
 <script>
     import UserAdd from './userAdd.vue';
-    import Organize from  './organize.vue';
     import Status from './accountStatus.vue';
     import depStatus from  './departmentStatus.vue'
     import editDpm from  './editDpm.vue';
@@ -310,7 +329,6 @@
     export default{
         components: {
             UserAdd,
-            Organize,
             Status,
             depStatus,
             editDpm,
@@ -508,11 +526,12 @@
                     this.SixList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
-                    if(res.data.data.department.length==0){
-                        this.type = 5;
-                    }else {
-                        this.type = 6;
-                    }
+//                    if(res.data.data.department.length==0){
+//                        this.type = 5;
+//                    }else {
+//                        this.type = 7;
+//                    }
+                    this.type=7;
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -546,14 +565,16 @@
                     this.getFour(reId,reName);
                 }else if(flag==5){
                     this.getFive(reId,reName);
+                }else if(flag==7){
+                    this.getSix(reId,reName);
                 }
             },
             AccountStatus(val){
+                console.log(val.flag)
                 let id=val.id;
                 let flag=val.flag;
                 let reId=val.reId;
                 this.page=val.rePage;
-                console.log(this.page)
                 this.keywords=val.keyword;
                 let reName=val.reName;
                 if(flag==1){
@@ -567,12 +588,13 @@
                 }else if(flag==5){
                     this.getFive(reId,reName);
                 }else if(flag==6){
-                    this.search()
+                    this.search();
+                }else if(flag==7){
+                    this.getSix(reId,reName);
                 }
             },
             //修改后查看
             reviseExamine(val){
-                console.log()
                 let flag=val.flag;
                 let reId=val.reId;
                 this.page=val.rePage;
@@ -591,6 +613,8 @@
                     this.getFive(reId,reName);
                 }else if(flag==6){
                     this.search();
+                }else if(flag==7){
+                    this.getSix(reId,reName);
                 }
             },
             dpmStatus(val){
@@ -608,6 +632,8 @@
                     this.getFour(reId,reName);
                 }else if(flag==5){
                     this.getFive(reId,reName);
+                }else if(flag==7){
+                    this.getSix(reId,reName);
                 }
             },
             //鼠标hover事件
@@ -686,6 +712,10 @@
                     }else if(this.type===6){
                         this.editData.rePage=this.page;
                         this.editData.keyword=this.keywords;
+                    }else if(this.type===7){
+                        this.account.rePage=this.page;
+                        this.account.reId=this.reFiveId;
+                        this.account.reName=this.reFiveName;
                     }
                 })
             },
@@ -719,8 +749,11 @@
                 }else if(this.type===6){
                     this.account.rePage=this.page;
                     this.account.keyword=this.keywords;
+                }else if(this.type===7){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFiveId;
+                    this.account.reName=this.reFiveName;
                 }
-                console.log( this.account)
             },
             //停止账号
             suspendAccount(id){
@@ -748,6 +781,42 @@
                     this.account.rePage=this.page;
                     this.account.keyword=this.keywords;
                 }
+                else if(this.type===7){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFiveId;
+                    this.account.reName=this.reFiveName;
+                }
+            },
+            deleteAccount(id){
+                $('#deleteAcount').modal('show');
+                this.account.id=id;
+                this.account.flag=this.type;
+                this.account.rePage=this.page;
+                if(this.type===2){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFirstId;
+                    this.account.reName=this.reFirstName;
+                }else if(this.type===3){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reSecondId;
+                    this.account.reName=this.reSecondName;
+                }else if(this.type===4){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reThirdId;
+                    this.account.reName=this.reThirdName;
+                }else if(this.type===5){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFourId;
+                    this.account.reName=this.reFourName;
+                }else if(this.type===6){
+                    this.account.rePage=this.page;
+                    this.account.keyword=this.keywords;
+                }
+                else if(this.type===7){
+                    this.account.rePage=this.page;
+                    this.account.reId=this.reFiveId;
+                    this.account.reName=this.reFiveName;
+                }
             },
             //新建下级部门
 
@@ -768,6 +837,9 @@
                 }else if(this.type===5){
                     this.depAccount.reId=this.reFourId;
                     this.depAccount.reName=this.reFourName;
+                } else if(this.type===7){
+                    this.depAccount.reId=this.reFiveId;
+                    this.depAccount.reName=this.reFiveName;
                 }
             },
             //停用部门
@@ -787,6 +859,9 @@
                 }else if(this.type===5){
                     this.depAccount.reId=this.reFourId;
                     this.depAccount.reName=this.reFourName;
+                } else if(this.type===7){
+                    this.depAccount.reId=this.reFiveId;
+                    this.depAccount.reName=this.reFiveName;
                 }
 
             },
@@ -808,8 +883,32 @@
                     }else if(this.type==5){
                         this.editDpm.reId=this.reFourId;
                         this.editDpm.reName=this.reFourName;
+                    } else if(this.type===7){
+                        this.depAccount.reId=this.reFiveId;
+                        this.depAccount.reName=this.reFiveName;
                     }
                 })
+            },
+            deleteDepartment(id){
+                $('#myModalDeleteDpm').modal('show');
+                this.depAccount.id=id;
+                this.depAccount.flag=this.type;
+                if(this.type===2){
+                    this.depAccount.reId=this.reFirstId;
+                    this.depAccount.reName=this.reFirstName;
+                }else if(this.type===3){
+                    this.depAccount.reId=this.reSecondId;
+                    this.depAccount.reName=this.reSecondName;
+                }else if(this.type===4){
+                    this.depAccount.reId=this.reThirdId;
+                    this.depAccount.reName=this.reThirdName;
+                }else if(this.type===5){
+                    this.depAccount.reId=this.reFourId;
+                    this.depAccount.reName=this.reFourName;
+                } else if(this.type===7){
+                    this.depAccount.reId=this.reFiveId;
+                    this.depAccount.reName=this.reFiveName;
+                }
             },
             //新建下级部门
             addDeparment(id){
@@ -835,6 +934,8 @@
                         this.getFive(reId,reName);
                     }else if(this.type==6){
                         this.search();
+                    } else if(this.type==7){
+                        this.getSix(reId,reName);
                     }
                 }else{
                     $('.Next').attr({"disabled":true});
@@ -859,6 +960,8 @@
                         this.getFive(reId,reName);
                     }else if(this.type==6){
                         this.search();
+                    } else if(this.type==7){
+                        this.getSix(reId,reName);
                     }
                 }else{
                     $('.Previous').attr({"disabled":true});
