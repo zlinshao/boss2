@@ -15,14 +15,13 @@ import Compare from './compoments/achievement/companyAchievement/compare.vue'   
 import Calc from './compoments/achievement/wagesAchievement/calc.vue'       // 计算详情
 import Chart from './compoments/achievement/chart/chart.vue'
 
-
 import Custom from "./compoments/custom/custom.vue";                        //客户
 import Details from "./compoments/custom/custom_more.vue";                  //客户详情
 import CustomerPool from "./compoments/custom/custom_pool.vue";             //客户池
-import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                 //已收房源
-import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";        //已收房源更多
-import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                 //未收房源
-import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";         //未收房源更多
+import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                     //已收房源
+import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";           //已收房源更多
+import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                   //未收房源
+import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";          //未收房源更多
 import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
 import ContractDetail from './compoments/contract/contractDetail.vue'           // 合同详情

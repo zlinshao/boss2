@@ -69,8 +69,8 @@
                         </label>
                     </div>
                     <div class="pull-right" style="margin-bottom: 3px; margin-left: 14px;">
-                        <a data-toggle="modal" href="#customModel" class="btn btn-success"><i
-                                class="fa fa-plus-square"></i>&nbsp;增加客户
+                        <a data-toggle="modal" href="#customModel" class="btn btn-success" @click="customers('new',{})">
+                            <i class="fa fa-plus-square"></i>&nbsp;增加客户
                         </a>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
@@ -103,7 +103,38 @@
                             <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#customModel">编辑</a></h5>
+                            <h5><a data-toggle="modal" href="#customModel"
+                                   @click="customers('rev',
+                                       {
+                            //                基本信息
+                                            cus_status: 'renter',                 //业主/租客
+                                            cus_name: '20',                       //客户姓名
+                                            cus_gender: 'girl',                   //性别
+                                            cus_progress: '20',                   //进度
+                                            cus_nationality: '20',                //国籍
+                                            cus_phone: '20',                      //手机号
+                                            cus_status_quo: '20',                 //客户状态
+                                            cus_intention: '20',                  //客户意向
+                                            cus_source: '20',                     //客户来源
+                                            hhhh: {
+                                                inter_state: true,                     //中介
+                                                cus_intermediate: '中介',              //个人/中介
+                                                cus_intermediate_name: '20',           //中介名
+                                                cus_intermediate_phone: '20'           //联系方式
+                                            },
+                                            villageAddress: '20',                   //小区地址
+                                            villageName: '20',                      //小区名称
+
+                                            cus_credentials_state: '20',            //证件类型
+                                            cus_idNumber: '20',                     //证件号
+
+                                            cus_marriage: '20',                     //婚姻状况
+                                            cus_qq: '20',                           //qq号
+                                            cus_email: '20',                        //邮箱
+                                            cus_nature: '20',                       //性格
+                                            cus_remarks: '20'                       //备注
+                                       }
+                                   )">编辑</a></h5>
                         </li>
                         <li>
                             <h5><a>取消置顶</a></h5>
@@ -198,7 +229,7 @@
         <remindDaily :state="bool" :cus_name="cus_name"></remindDaily>
 
         <!--客户 新增/修改-->
-        <New_add :msg="add_new"></New_add>
+        <new-add :msg="revise_state" :revise="revise_cus"></new-add>
 
         <!--分配-->
         <Distribution :msg="cus_name"></Distribution>
@@ -210,12 +241,12 @@
 
 <script>
     import Page from '.././common/page.vue'
-    import New_add from '../common/new_add.vue'
-    import remindDaily from './remindDaily.vue'
+    import newAdd from './new_add.vue'
+    import remindDaily from './remindDaily.vue'             //修改客户
     import Distribution from '../common/distribution.vue'          //分配
 
     export default {
-        components: {Page, Distribution, New_add, remindDaily},
+        components: {Page, Distribution, newAdd, remindDaily},
         data (){
             return {
                 custom_list: [],            //列表
@@ -223,10 +254,8 @@
                 pitch: [],                  //选中id
                 bool: '',
                 cus_name: [],               //派发信息
-                add_new: {
-                    revise_cus: [],             //修改客户
-                    add_cus: []                 //新增客户
-                },
+                revise_cus: [],             //修改客户
+                revise_state: ''            //新增/修改客户状态
             }
         },
         created (){
@@ -267,6 +296,10 @@
             },
             add_state (val){
                 this.bool = val;
+            },
+            customers (val, list){
+                this.revise_state = val;
+                this.revise_cus = list;
             },
 //            置顶
             stick (val){

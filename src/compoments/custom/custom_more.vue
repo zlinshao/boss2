@@ -239,7 +239,7 @@
 </template>
 
 <script>
-    import New_add from '../common/new_add.vue'
+    import New_add from './new_add.vue'
     export default {
         components: { New_add },
         data (){
