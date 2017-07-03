@@ -139,6 +139,7 @@
         methods : {
             search(){
                 this.$http.defaults.withCredentials = false;
+                this.$http.defaults.headers = "";
                 this.$http.get(addr+'&keywords='+this.searchInfo+'&city='+this.chooseCity)
                     .then(
                         res => this.villages = res.data.tips
@@ -155,12 +156,11 @@
                 this.villages = []
             },
             save(){
-                if (this.villageId.length == 0){
+                if (this.villageId.length === 0){
                     return;
                 }else {
                     for ( var i in this.villages){
-                        console.log(this.villages[i]);
-                        if (this.villages[i].id == this.villageId){
+                        if (this.villages[i].id === this.villageId){
                             this.village.villageAddress = this.villages[i].district+this.villages[i].address;
                             this.village.villageName = this.villages[i].name;
                             this.village.id = this.villages[i].id;
@@ -177,7 +177,6 @@
             chooseItem(ev){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
                 this.villageId = $(ev.currentTarget).find('input').val();
-                console.log(this.villageId);
             }
         }
     }

@@ -198,7 +198,7 @@
         <remindDaily :state="bool" :cus_name="cus_name"></remindDaily>
 
         <!--客户 新增/修改-->
-        <New_add></New_add>
+        <New_add :msg="add_new"></New_add>
 
         <!--分配-->
         <Distribution :msg="cus_name"></Distribution>
@@ -223,6 +223,10 @@
                 pitch: [],                  //选中id
                 bool: '',
                 cus_name: [],               //派发信息
+                add_new: {
+                    revise_cus: [],             //修改客户
+                    add_cus: []                 //新增客户
+                },
             }
         },
         created (){
