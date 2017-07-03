@@ -173,11 +173,28 @@
                                 @mouseover="changeClass(index)" v-if="type==7">
                                 <a href="#">
                                     <button class="fa fa-chevron-right btn btn-default btn-lg department"
+                                            @click.stop="getSix(item.id,item.name)"
                                             :disabled="item.status=='停用'">{{item.name}}</button>
 
-                                    <i class="fa fa-gear "
-                                           style="margin-top: 12px"></i>
-
+                                    <div class="pull-right dropdown ">
+                                        <i class="fa fa-gear pull-rightdropdown-toggle"
+                                           style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <ul class="dropdown-menu dropdown-menu-left">
+                                            <li @click="editDepartment(item.id)">
+                                                <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="startDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                            </li>
+                                            <li @click="stopDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                            </li>
+                                            <li @click="deleteDepartment(item.id)">
+                                                <a class="btn btn-default">删除部门</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </a>
                             </li>
                         </ul>
@@ -641,7 +658,7 @@
                 this.active1 = index;
             },
             //查询成员
-            search(a){
+            search(){
                 if(this.type!=6){
                     this.page=1
                 };
