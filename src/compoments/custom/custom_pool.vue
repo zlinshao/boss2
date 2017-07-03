@@ -165,7 +165,7 @@
 
 <script>
     import Page from '.././common/page.vue'
-    import New_add from '../common/new_add.vue'
+    import New_add from './new_add.vue'
     import remindDaily from './remindDaily.vue'
     import Distribution from '../common/distribution.vue'       //分配
     export default {

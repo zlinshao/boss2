@@ -10,7 +10,7 @@
                         <!--新增客户-->
                         <div v-if="btn_state" class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">新增客户</h4>
+                            <h4 class="modal-title" @click="abc()">新增客户</h4>
                         </div>
 
                         <!--修改客户-->
@@ -32,7 +32,7 @@
                                         </label>
                                         <label>
                                             <input type="radio" name="status" @click="cus_status_c($event)"
-                                                   class="pull-left" value="renter">租客
+                                                   class="pull-left" value="renter">租客{{revise}}
                                         </label>
                                     </div>
                                 </div>
@@ -138,9 +138,10 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">个人/中介</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="intermediary($event)">
-                                            <option value="1">个人</option>
-                                            <option>中介</option>
+                                        <select class="form-control" @click="intermediary($event)"
+                                                :value="cus_intermediate">
+                                            <option value="个人">个人</option>
+                                            <option value="中介">中介</option>
                                         </select>
                                     </div>
                                 </div>
@@ -225,7 +226,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">邮箱</label>
                                     <div class="col-lg-10">
-                                        <input type="text" v-model="cus_email" class="form-control" placeholder="">
+                                        <input type="email" v-model="cus_email" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -241,7 +242,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">备注</label>
                                     <div class="col-lg-10">
-                                        <textarea class="form-control" @click="cus_remarks_c($event)"
+                                        <textarea class="form-control" @blur="cus_remarks_c($event)"
                                                   :value="cus_remarks"></textarea>
                                     </div>
                                 </div>
@@ -263,14 +264,14 @@
 
 <script>
     import ChooseAddress from '../common/chooseAddress.vue'
-    import upLoad from './upload.vue'
+    import upLoad from '../common/upload.vue'
     export default {
         components: {upLoad, ChooseAddress},
-        props: ['msg'],
+        props: ['msg', 'revise'],
         data (){
             return {
-                inter_state: false,                 //中介
-                btn_state: true,                    //新增
+
+                btn_state: false,                   //新增/修改
 //                基本信息
                 cus_status: '',                     //业主/租客
                 cus_name: '',                       //客户姓名
@@ -281,6 +282,8 @@
                 cus_status_quo: '',                 //客户状态
                 cus_intention: '',                  //客户意向
                 cus_source: '',                     //客户来源
+
+                inter_state: false,                 //中介
                 cus_intermediate: '',               //个人/中介
                 cus_intermediate_name: '',          //中介名
                 cus_intermediate_phone: '',         //联系方式
@@ -299,13 +302,55 @@
 
             }
         },
+        watch: {
+            msg(val) {
+                if (val === 'new') {
+                    this.btn_state = true;       //新增
+                }
+                if (val === 'rev') {
+                    this.btn_state = false;      //修改
+                }
+            },
+            revise (val){
+                this.cus_status = val.cus_status;                                   //业主/租客
+                this.cus_name = val.cus_name;                                       //客户姓名
+                this.cus_gender = val.cus_gender;                                   //性别
+                this.cus_progress = val.cus_progress;                               //进度
+                this.cus_nationality = val.cus_nationality;                         //国籍
+                this.cus_phone = val.cus_phone;                                     //手机号
+                this.cus_status_quo = val.cus_status_quo;                           //客户状态
+                this.cus_intention = val.cus_intention;                             //客户意向
+                this.cus_source = val.cus_source;                                   //客户来源
+
+                this.inter_state = val.hhhh.inter_state;                                 //中介
+                this.cus_intermediate = val.hhhh.cus_intermediate;                       //是否中介
+                this.cus_intermediate_name = val.hhhh.cus_intermediate_name;             //中介名称
+                this.cus_intermediate_phone = val.hhhh.cus_intermediate_phone;           //中介联系方式
+
+                this.villageAddress = val.villageAddress;                           //小区地址
+                this.villageName = val.villageName;                                 //小区名称
+
+                this.cus_credentials_state = val.cus_credentials_state;             //证件类型
+                this.cus_idNumber = val.cus_idNumber;                               //证件号
+
+//                this.cus_idPhoto = val.cus_idPhoto;                               //证件照片
+
+                this.cus_marriage = val.cus_marriage;                               //婚姻状况
+                this.cus_qq = val.cus_qq;                                           //qq号
+                this.cus_email = val.cus_email;                                     //邮箱
+                this.cus_nature = val.cus_nature;                                   //性格
+                this.cus_remarks = val.cus_remarks                                  //备注
+            }
+        },
         methods: {
 //            中介/个人
-            intermediary (ev){
-                let val = ev.target.value;
-                if (val === '1') {
+            intermediary (e){
+                let val = e.target.value;
+                this.cus_intermediate = val;
+                if (val === '个人') {
                     this.inter_state = false;
-                } else {
+                }
+                if (val === '中介') {
                     this.inter_state = true;
                 }
             },
