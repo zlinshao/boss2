@@ -13,10 +13,11 @@
                     <div class="inbox-body">
                         <div>
                             <a @click="getBranch('')">组织架构</a>
-                            <a v-if='isFirst' @click="getSecond(reFirstId,reFirstName)"> &nbsp;{{reFirstName}}</a>
-                            <a v-if='isSecond' @click="getThird(reSecondId,reSecondName)">&gt;&nbsp;{{reSecondName}}</a>
-                            <a v-if='isThird' @click="getFour(reThirdId,reThirdName)">&gt;&nbsp;{{reThirdName}}</a>
-                            <a v-if='isFour' @click="getFive(reFourId,reFourName)">&nbsp;&gt;&nbsp;{{reFourName}}</a>
+                            <a v-if='isFirst' @click="getSecond(reFirstId,reFirstName)"> &gt; {{reFirstName}}</a>
+                            <a v-if='isSecond' @click="getThird(reSecondId,reSecondName)"> &gt;{{reSecondName}}</a>
+                            <a v-if='isThird' @click="getFour(reThirdId,reThirdName)"> &gt;&nbsp;{{reThirdName}}</a>
+                            <a v-if='isFour' @click="getFive(reFourId,reFourName)">&nbsp;&gt;{{reFourName}}</a>
+                            <!--<a v-if='isFive' @click="getSix(reFiveId,reFiveName)">&nbsp;&gt;&nbsp;{{reFiveName}}</a>-->
                         </div>
                     </div>
                     <div class="nav-collapse">
@@ -130,12 +131,37 @@
                             <li v-for="(item,index) in FiveList" :class="{'active':active1==index}"
                                 @mouseover="changeClass(index)" v-if="type==5">
                                 <a href="#">
-                                    <i @click.stop="getFive(item.id,item.name)"
-                                       class="fa fa-chevron-right">{{item.name}}</i>
+                                    <button @click.stop="getSix(item.id,item.name)"
+                                            class="fa fa-chevron-right btn btn-default btn-lg department"
+                                            :disabled="item.status=='停用'">{{item.name}}</button>
 
-                                    <i data-toggle="modal" href="#myModal"
-                                       class="fa fa-gear pull-right"
-                                       style="margin-top: 12px"></i>
+                                    <div class="pull-right dropdown ">
+                                        <i class="fa fa-gear pull-rightdropdown-toggle"
+                                           style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <ul class="dropdown-menu dropdown-menu-left">
+                                            <li @click="editDepartment(item.id)">
+                                                <a class="btn btn-default">编辑部门</a>
+                                            </li>
+                                            <li @click="startDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                            </li>
+                                            <li @click="stopDepartment(item.id)">
+                                                <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a></li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </li>
+                            <!--六级部门-->
+                            <li v-for="(item,index) in SixList" :class="{'active':active1==index}"
+                                @mouseover="changeClass(index)" v-if="type==6">
+                                <a href="#">
+                                    <button class="fa fa-chevron-right btn btn-default btn-lg department"
+                                            :disabled="item.status=='停用'">{{item.name}}</button>
+
+                                    <i class="fa fa-gear "
+                                           style="margin-top: 12px"></i>
+
                                 </a>
                             </li>
                         </ul>
@@ -299,6 +325,7 @@
                 ThirdList:[],
                 FourList:[],
                 FiveList:[],
+                SixList:[],
                 type: '',      //列表类型 1为部门 2为二级 3为三级
                 keywords: '',   //搜索关键字
                 active1:'',
@@ -312,14 +339,17 @@
                 isFirst:false,
                 isFour:false,
                 isDepartment:false,
+                isFive:false,
                 reFirstId:'',
                 reSecondId:'',
                 reThirdId:'',
                 reFourId:'',
+                reFIveId:'',
                 reFirstName:'',
                 reSecondName:'',
                 reThirdName:'',
                 reFourName:'',
+                reFiveName:'',
                 department:'全公司',//部门展示
                 editData:[],
                 account:{},
@@ -357,6 +387,7 @@
                     this.isThird = false;
                     this.isFour=false;
                     this.isDepartment=false;
+                    this.isFive=false;
                 })
             },
             getSecond(id,name){
@@ -384,6 +415,7 @@
                     this.reFirstId=id;
                     this.department=name;
                     this.isDepartment=true;
+                    this.isFive=false;
                 })
             },
 //            preventEnter(){
@@ -416,6 +448,7 @@
                     this.reSecondId=id;
                     this.department=name;
                     this.isDepartment=true;
+                    this.isFive=false;
                 })
             },
             getFour(id,name){
@@ -441,6 +474,7 @@
                     this.reThirdId=id;
                     this.department=name;
                     this.isDepartment=true;
+                    this.isFive=false;
                 })
             },
             getFive(id,name){
@@ -451,7 +485,11 @@
                     this.FiveList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
-                    this.type = 4;
+                    if(res.data.data.department.length==0){
+                        this.type = 4;
+                    }else {
+                        this.type = 5;
+                    }
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -462,6 +500,30 @@
                     this.reFourId=id;
                     this.department=name;
                     this.isDepartment=true;
+                    this.isFive=false;
+                })
+            },
+            getSix(id,name){
+                this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
+                    this.SixList = res.data.data.department;
+                    this.userList=res.data.data.user;
+                    this.pages=res.data.data.pages;
+                    if(res.data.data.department.length==0){
+                        this.type = 5;
+                    }else {
+                        this.type = 6;
+                    }
+                    this.id=id;
+                    this.name=name;
+                    this.isFirst = true;
+                    this.isSecond  = true;
+                    this.isThird = true;
+                    this.isFour=true;
+                    this.reFiveName=name;
+                    this.reFiveId=id;
+                    this.department=name;
+                    this.isDepartment=true;
+                    this.isFive=true;
                 })
             },
             refreshPage(){
