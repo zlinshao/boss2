@@ -155,25 +155,11 @@
                                 <!--未收 新增/编辑 房屋-->
                                 <div v-if="msg.sss">
                                     <div class="form-group" style="position: relative;">
-                                        <label class="col-xs-12 col-lg-2 col-sm-2 control-label">客户姓名</label>
-                                        <div class="col-xs-8">
-                                            <input type="text" v-model="customer"
-                                                   class="form-control" @focus="focu"
-                                                   placeholder="客户姓名">
+                                        <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" v-model="customer" @click="selectCustom"
+                                                   class="form-control" placeholder="客户姓名">
                                         </div>
-                                        <div class="col-xs-1">
-                                            <button type="button" class="btn btn-primary"><i
-                                                    class="fa fa-plus-square"></i>&nbsp;新建
-                                            </button>
-                                        </div>
-                                        <ul v-if="stat && customer.length > 0" class="search_info col-xs-8">
-                                            <li v-for="b in a" @click="pitchOn(b.name)">
-                                                <span>{{b.name}}</span>|
-                                                <span>{{b.zunchen}}</span>|
-                                                <span>{{b.phone}}</span>|
-                                                <span>{{b.laiyuan}}</span>
-                                            </li>
-                                        </ul>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 col-sm-2 control-label">来源</label>
@@ -237,11 +223,14 @@
                 </div>
             </div>
         </div>
+        <SelectCustom></SelectCustom>
     </div>
 </template>
 
 <script>
+    import SelectCustom from './selectCustomer.vue'
     export default {
+        components:{SelectCustom},
         props: ['msg'],
         data (){
             return {
@@ -249,20 +238,6 @@
                 inter_state: false,             //中介
                 customer: [],
                 stat: true,
-                a: [
-                    {
-                        name: "鬼谷子",
-                        zunchen: "先生",
-                        phone: "18952525252",
-                        laiyuan: "客户推荐"
-                    },
-                    {
-                        name: "露娜",
-                        zunchen: "女士",
-                        phone: "18052001122",
-                        laiyuan: "中介"
-                    }
-                ]
             }
         },
         methods: {
@@ -270,9 +245,9 @@
                 this.customer = val;
                 this.stat = false;
             },
-            focu (){
-                this.stat = true
-            }
+            selectCustom(){
+                $('#selectCustom').modal('show');
+            },
         }
     }
 </script>

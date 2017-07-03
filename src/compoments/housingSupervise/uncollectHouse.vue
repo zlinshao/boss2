@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="pull-right">
-                    <a data-toggle="modal" href="#collectAdd" class="btn btn-success"><i
+                    <a class="btn btn-success" @click="collectAdd"><i
                             class="fa fa-plus-square"></i>&nbsp;增加客户
                     </a>
                 </div>
@@ -115,7 +115,7 @@
                             <td class="text-center">{{cus.attribute}}</td>
                             <td class="text-center">{{cus.charge}}</td>
                             <td class="text-center"><i class="fa fa-unlock-alt"></i><i class="fa fa-unlock"></i></td>
-                            <td class="text-center"><a @click="stick(index)"><i class="fa fa-paperclip"></i></a></td>
+                            <td class="text-center"><a><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
                                 <router-link to="/collectMore">更多</router-link>
                             </td>
@@ -202,6 +202,10 @@
                 alert(index)
                 index=0;
             },
+            collectAdd(){
+                $('#collectAdd').modal({backdrop: 'static',});
+                $('#collectAdd').modal('show');
+            }
         }
     }
 </script>
