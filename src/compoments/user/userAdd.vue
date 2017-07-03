@@ -89,9 +89,18 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" ></label>
                                         <div class="col-md-4" v-show="fourDepart.length>0">
-                                            <select class="form-control" v-model="fourId" @change="departmentId()">
+                                            <select class="form-control" v-model="fourId" @change="getFiveDepart()">
                                                 <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in fourDepart">{{item.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" ></label>
+                                        <div class="col-md-4" v-show="fiveDepart.length>0">
+                                            <select class="form-control" v-model="fiveId" @change="departmentId()">
+                                                <option value="">请选择</option>
+                                                <option :value="item.id" v-for="item in fiveDepart" >{{item.name}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -180,6 +189,7 @@
                 secondDepart:[],
                 thirdDepart:[],
                 fourDepart:[],
+                fiveDepart:[],
                 roleList:[],
                 positionList:[],
                 levelList:[],
@@ -188,6 +198,7 @@
                 secondId:'',
                 thirdId:'',
                 fourId:'',
+                fiveId:'',
                 //其余新增用户字段
                 real_name:'',       //真实姓名
                 gender:'',          //性别
@@ -241,11 +252,13 @@
                         this.department=this.firstId;
                         this.thirdDepart=[];
                         this.fourDepart=[];
+                        this.fiveDepart=[];
                     })
                 }else{
                     this.secondDepart=[];
                     this.thirdDepart=[];
                     this.fourDepart=[];
+                    this.fiveDepart=[];
                 }
 
             },
@@ -255,6 +268,7 @@
                         this.thirdDepart=res.data.data;
                         this.department=this.secondId;
                         this.fourDepart=[];
+                        this.fiveDepart=[];
                     });
                     this.$http.get('manager/user/positionWb/id/'+this.secondId).then((res)=>{
                         this.positionList=res.data.data;
@@ -262,22 +276,36 @@
                 }else{
                     this.thirdDepart=[];
                     this.fourDepart=[];
+                    this.fiveDepart=[];
                 }
 
             },
             getFourDepart(){
+                alert(this.thirdId)
                 if(this.thirdId!==''){
                     this.$http.get('manager/user/departmentWb/id/'+this.thirdId).then((res)=>{
                         this.fourDepart=res.data.data;
                         this.department=this.thirdId;
+                        this.fiveDepart=[];
                     })
                 }else{
                     this.fourDepart=[];
+                    this.fiveDepart=[];
+                }
+            },
+            getFiveDepart(){
+                if(this.fourId!==''){
+                    this.$http.get('manager/user/departmentWb/id/'+this.fourId).then((res)=>{
+                        this.fiveDepart=res.data.data;
+                        this.department=this.fourId;
+                    })
+                }else{
+                    this.this.fiveDepart=[];
                 }
             },
             departmentId(){
-                if(this.fourId!==''){
-                    this.department=this.fourId;
+                if(this.fiveId!==''){
+                    this.department=this.fiveId;
                 }
             },
             searchRoles(){
@@ -381,6 +409,7 @@
                         this.secondDepart=[];
                         this.thirdDepart=[];
                         this.fourDepart=[];
+                        this.fiveDepart=[];
                         this.roleList=[];
                         this.positionList=[];
                         this.levelList=[];
@@ -388,6 +417,7 @@
                         this.secondId='';
                         this.thirdId='';
                         this.fourId='';
+                        this.fiveId='';
 
                         this.getFirstDepart(); //请求公司列表
                         this.searchRoles();    //请求角色列表

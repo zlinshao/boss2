@@ -157,7 +157,7 @@
                                     <div class="form-group" style="position: relative;">
                                         <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
                                         <div class="col-lg-10">
-                                            <input type="text" v-model="customer" @click="selectCustom"
+                                            <input type="text" v-model="member" @click="selectCustom"
                                                    class="form-control" placeholder="客户姓名">
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="客户姓名">
+                                            <input type="text" class="form-control" placeholder="客户姓名" >
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -223,21 +223,20 @@
                 </div>
             </div>
         </div>
-        <SelectCustom></SelectCustom>
+        <SelectCustom @Staff="selectMember"></SelectCustom>
     </div>
 </template>
 
 <script>
-    import SelectCustom from './selectCustomer.vue'
+    import SelectCustom from '../common/selectStaff.vue'
     export default {
         components:{SelectCustom},
         props: ['msg'],
         data (){
             return {
-                progress: '90',                 //进度
                 inter_state: false,             //中介
-                customer: [],
                 stat: true,
+                member:'',
             }
         },
         methods: {
@@ -248,6 +247,9 @@
             selectCustom(){
                 $('#selectCustom').modal('show');
             },
+            selectMember(val){
+                this.member=val[0]
+            }
         }
     }
 </script>

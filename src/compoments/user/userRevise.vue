@@ -112,9 +112,18 @@
                                             </div>
                                             <label class="col-sm-2 control-label col-lg-2" ></label>
                                             <div class="col-md-4" v-show="fourDepart.length>0">
-                                                <select class="form-control" v-model="four" @change="departmentId()">
+                                                <select class="form-control" v-model="four" @change="getFiveDepart()">
                                                     <option value="">请选择</option>
                                                     <option :value="item" v-for="item in fourDepart">{{item.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 control-label col-lg-2" ></label>
+                                            <div class="col-md-4" v-show="fiveDepart.length>0">
+                                                <select class="form-control" v-model="five" @change="departmentId()">
+                                                    <option value="">请选择</option>
+                                                    <option :value="item" v-for="item in fiveDepart">{{item.name}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -203,6 +212,7 @@
                 secondDepart:[],
                 thirdDepart:[],
                 fourDepart:[],
+                fiveDepart:[],
                 roleList:[],
                 positionList:[],
                 levelList:[],
@@ -211,6 +221,7 @@
                 second:[],
                 third:[],
                 four:[],
+                five:[],
                 //其余新增用户字段
                 accountId:'',
                 real_name:'',       //真实姓名
@@ -334,11 +345,13 @@
                         this.depId=this.department[0].id;
                         this.thirdDepart=[];
                         this.fourDepart=[];
+                        this.fiveDepart=[];
                     })
                 }else{
                     this.secondDepart=[];
                     this.thirdDepart=[];
                     this.fourDepart=[];
+                    this.fiveDepart=[];
                 }
 
             },
@@ -350,6 +363,7 @@
                         this.department.push(this.second);
                         this.depId=this.department[0].id;
                         this.fourDepart=[];
+                        this.fiveDepart=[];
                     });
                     this.$http.get('manager/user/positionWb/id/'+this.second.id).then((res)=>{
                         this.positionList=res.data.data;
@@ -357,26 +371,41 @@
                 }else{
                     this.thirdDepart=[];
                     this.fourDepart=[];
+                    this.fiveDepart=[];
                 }
 
             },
             getFourDepart(){
-                if(this.third.id.id!==''&& this.third.id!=undefined){
+                if(this.third.id!==''&& this.third.id!=undefined){
                     this.$http.get('manager/user/departmentWb/id/'+this.third.id).then((res)=>{
                         this.fourDepart=res.data.data;
                         this.department=[];
                         this.department.push(this.third);
                         this.depId=this.department[0].id;
-
+                        this.fiveDepart=[];
                     })
                 }else{
                     this.fourDepart=[];
+                    this.fiveDepart=[];
+                }
+            },
+            getFiveDepart(){
+                if(this.four.id!==''&& this.four.id!=undefined){
+                    this.$http.get('manager/user/departmentWb/id/'+this.four.id).then((res)=>{
+                        this.fiveDepart=res.data.data;
+                        this.department=[];
+                        this.department.push(this.four);
+                        this.depId=this.department[0].id;
+
+                    })
+                }else{
+                    this.fiveDepart=[];
                 }
             },
             departmentId(){
-                if(this.four.id!==''&& this.four.id!=undefined){
+                if(this.five.id!==''&& this.five.id!=undefined){
                     this.department=[];
-                    this.department.push(this.four);
+                    this.department.push(this.five);
                     this.depId=this.department[0].id;
                 }
             },
@@ -404,10 +433,11 @@
                 this.secondDepart=[];
                 this.thirdDepart=[];
                 this.fourDepart=[];
+                this.fiveDepart=[];
                 this.first=[];
                 this.second=[];
                 this.third=[];
-                this.four=[];
+                this.five=[];
                 $("#myModalRevise").modal("hide");//关闭模态框
             },
             //选择职位
@@ -515,12 +545,14 @@
                         this.secondDepart=[];
                         this.thirdDepart=[];
                         this.fourDepart=[];
+                        this.fiveDepart=[];
                         this.positionList=[];
                         this.reviseDpm=false;
                         this.first=[];
                         this.second=[];
                         this.third=[];
                         this.four=[];
+                        this.five=[];
 
                         $("#myModalRevise").modal("hide");//关闭模态框
                         this.info.success = res.data.msg;
