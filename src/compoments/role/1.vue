@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <switch-btn @photo="idNumber" @delete="idNumber_Delete" :result="'pic'"></switch-btn>
         <switch-btn @photo="bankCard" @delete="bankCard_Delete" :result="'card'"></switch-btn>
@@ -7,7 +6,7 @@
 </template>
 
 <script>
-    import switchBtn from './2.vue'
+    import switchBtn from '../common/upload.vue'
     export default {
         components: {switchBtn},
         data() {
@@ -42,7 +41,7 @@
 
     //    let hhh = document.getElementById('pic');
 
-    //    import switchbtn from './2.vue'
+    //    import switchbtn from './upload.vue'
     //    export default {
     //        components: {switchbtn},
     //        data() {

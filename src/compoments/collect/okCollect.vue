@@ -213,16 +213,6 @@
             },
         }
     }
-    //    export default {
-    //        data (){
-    //            return {
-    //                collectId: 'aaaaaaaa'
-    //            }
-    //        },
-    //        mounted (){
-    //            this.collectId = this.$route.query.name
-    //        }
-    //    }
 </script>
 
 
