@@ -77,24 +77,12 @@
                                 <!--进度-->
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">进度</label>
-                                    <div class="col-lg-10">
-                                        <div class="col-xs-8" style="padding-top: 10px;">
-                                            <div class="sliders">
-                                                <div id="slider-range-min"
-                                                     class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                                                     aria-disabled="false">
-                                                    <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"
-                                                         :style="{ width: progress + '%' }"></div>
-                                                    <a class="ui-slider-handle ui-state-default ui-corner-all" href="#"
-                                                       :style="{ left: progress + '%' }"></a></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-2">
-                                            <div class="slider-info" style="padding-top: 8px;width: 38px;">
-                                                <input readonly class="slider-info" id="rate_progress" value=""
-                                                       style="border:0;padding-top: 0;width: 24px;">%<br>
-                                            </div>
-                                        </div>
+                                    <div class="col-lg-10 sliders">
+                                        <select class="form-control" @click="progress($event)" :value="cus_progress">
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                            <option value="25">25</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <!--客户状态-->
@@ -234,7 +222,7 @@
                         </div>
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                            <button class="btn btn-success" @click="abc" type="button"> 确定</button>
+                            <button class="btn btn-success" type="button"> 确定</button>
                         </div>
                     </div>
                 </div>
@@ -247,17 +235,16 @@
 
     import upLoad from './upload.vue'
     export default {
-        components: { upLoad },
+        components: {upLoad},
         data (){
             return {
-                progress: 10,                       //进度
                 inter_state: false,                 //中介
                 btn_state: true,                    //新增
 //                基本信息
                 cus_status: '',                     //业主/租客
                 cus_name: '',                       //客户姓名
                 cus_gender: '',                     //性别
-                cus_progress: '90',                 //进度
+                cus_progress: '',                   //进度
                 cus_nationality: '',                //国籍
                 cus_phone: '',                      //手机号
                 cus_status_quo: '',                 //客户状态
@@ -295,8 +282,8 @@
             cus_status_c (val){
                 this.cus_status = val;
             },
-            abc (){
-                this.progress = $('#rate_progress').val()
+            progress (val){
+                this.cus_progress = val.target.value;
             }
         }
 

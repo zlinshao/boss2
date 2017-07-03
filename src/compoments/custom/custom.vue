@@ -171,7 +171,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                {{cus.progress}}%
+                                <!--{{cus.progress}}%-->
                             </td>
                             <td class="text-center">{{cus.source}}</td>
                             <td class="text-center">{{cus.state}}</td>
