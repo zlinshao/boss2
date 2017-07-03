@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <!--客户-->
         <section class="panel">
             <div class="panel-body">
@@ -62,12 +63,26 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pull-right">
+                    <div class="pro-sort" style="height: 39px;">
+                        <label style="margin-top: 8px;">
+                            <input type="checkbox" class="pull-left">三天内未成交
+                        </label>
+                    </div>
+                    <div class="pull-right" style="margin-bottom: 3px; margin-left: 14px;">
                         <a data-toggle="modal" href="#customModel" class="btn btn-success"><i
                                 class="fa fa-plus-square"></i>&nbsp;增加客户
                         </a>
                     </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="">
+                            <span class="input-group-btn">
+                            <button class="btn btn-success" type="button">搜索</button>
+                        </span>
+                        </div>
+                    </div>
                 </div>
+
 
                 <!--被选中一个-->
                 <div v-if="pitch.length === 1" class="col-lg-12 remind">
@@ -112,6 +127,7 @@
                 </div>
             </div>
         </section>
+
         <!--客户列表-->
         <div class="row">
             <div class="col-md-12">
@@ -123,7 +139,6 @@
                             <th class="text-center">客户名称</th>
                             <th class="text-center">尊称</th>
                             <th class="text-center">手机号</th>
-                            <th class="text-center">客户优先级</th>
                             <th class="text-center">客户意向</th>
                             <th class="text-center">跟进进度</th>
                             <th class="text-center">来源</th>
@@ -145,7 +160,6 @@
                             <td class="text-center">{{cus.name}}</td>
                             <td class="text-center">{{cus.sex}}</td>
                             <td class="text-center">{{cus.phone}}</td>
-                            <td class="text-center">{{cus.priority}}</td>
                             <td class="text-center">{{cus.intention}}</td>
                             <td class="text-center">
                                 <a data-v-2f43a2b3="" href="#">
@@ -208,12 +222,13 @@
                 paging: '',                 //总页数
                 pitch: [],                  //选中id
                 bool: '',
-                cus_name: []                //派发信息
+                cus_name: [],               //派发信息
             }
         },
         created (){
             this.collectList();
         },
+
         methods: {
 //            客户列表
             collectList (){
@@ -249,7 +264,6 @@
             add_state (val){
                 this.bool = val;
             },
-
 //            置顶
             stick (val){
 //                this.custom_list[0] = (this.custom_list[val]);
@@ -299,4 +313,17 @@
         margin-bottom: 0;
         height: 10px;
     }
+
+    #custom-handle {
+        width: 24px;
+        height: 24px;
+        top: 50%;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    #custom-handle:focus {
+        border: 0;
+    }
+
 </style>

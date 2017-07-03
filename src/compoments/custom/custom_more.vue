@@ -1,16 +1,25 @@
 <template>
     <div>
         <!--头部-->
-        <section class ="panel">
+        <section class="panel">
             <div class="panel-body">
                 <header>
                     <h4>
                         客户信息
-                        <a class="pull-right"><i class="glyphicon glyphicon-cog"></i></a>
-                        <a class="text-danger pull-right">
-                            <i class="fa fa-bell-o"></i>
-                        </a>
+                        <!--编辑-->
+                        <div class="btn-group pull-right">
+                            <a data-toggle="dropdown" aria-expanded="false">
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a data-toggle="modal" href="#customModel">编辑</a></li>
+                                <li><a>增加提醒</a></li>
+                                <!--<li class="divider"></li>-->
+                            </ul>
+                        </div>
 
+                        <!--增加提醒-->
+                        <a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -56,8 +65,10 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <a class="text-primary"  v-if="!open_on" @click="open_close">展示&nbsp;&nbsp;<i class="fa fa-sort-amount-asc"></i></a>
-                        <a class="text-primary"  v-if="open_on" @click="open_close">收起&nbsp;&nbsp;<i class="fa fa-sort-amount-desc"></i></a></div>
+                        <a class="text-primary" v-if="!open_on" @click="open_close">展示&nbsp;&nbsp;<i
+                                class="fa fa-sort-amount-asc"></i></a>
+                        <a class="text-primary" v-if="open_on" @click="open_close">收起&nbsp;&nbsp;<i
+                                class="fa fa-sort-amount-desc"></i></a></div>
                 </div>
 
             </div>
@@ -71,6 +82,7 @@
                     <header class="panel-heading">
                         合同信息
                     </header>
+                    <!--合同信息-->
                     <div class="panel-body table-responsive">
                         <table class="table contract_info">
                             <tbody>
@@ -112,88 +124,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="panel-body table-responsive">
-                        <table class="table contract_info">
-                            <tbody>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark"></i></a></td>
-                                <td>2017-07-20</td>
-                                <td>14:00</td>
-                            </tr>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                <td>合同编号</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>房屋地址</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>负责人</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>合同时间</td>
-                                <td class="paddingTop">
-                                    <a data-v-2f43a2b3="" href="#">
-                                        <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                            <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                 aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                 :style="{ width: progress + '%'}">
-                                                <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="panel-body table-responsive">
-                        <table class="table contract_info">
-                            <tbody>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark"></i></a></td>
-                                <td>2017-07-20</td>
-                                <td>14:00</td>
-                            </tr>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                <td>合同编号</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>房屋地址</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>负责人</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>合同时间</td>
-                                <td class="paddingTop">
-                                    <a data-v-2f43a2b3="" href="#">
-                                        <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                            <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                 aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                 :style="{ width: progress + '%'}">
-                                                <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
                 </section>
             </div>
             <!--沟通日志/房屋信息-->
@@ -216,27 +147,36 @@
                             <!--沟通日志-->
                             <div id="home" class="tab-pane active">
                                 <div class="form-group">
-                                    <label class="text-right col-sm-2 col-sm-2 control-label">跟进方式</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
-                                        </select>
+                                    <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
+                                    <div class="col-sm-10" style="padding-left: 0;">
+                                        <div class="col-sm-4">
+                                            <select class="form-control">
+                                                <option value="1">1</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
+                                <!--<div class="form-group">-->
+                                <!--<label class="text-right col-sm-3 col-sm-3 control-label">沟通房源</label>-->
+                                <!--<div class="col-sm-3">-->
+                                <!--<select class="form-control">-->
+                                <!--<option value="1">1</option>-->
+                                <!--</select>-->
+                                <!--</div>-->
+                                <!--</div>-->
                                 <div class="form-group">
-                                    <label class="text-right col-sm-3 col-sm-3 control-label">沟通房源</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
-                                        </select>
+                                    <label class="col-sm-2 col-sm-2 control-label"
+                                           style="margin-top: 16px;">增加跟进记录</label>
+                                    <div class="col-sm-10" style="margin-bottom: 16px;">
+                                        <textarea class="form-control" v-model="follow_up"
+                                                  style="margin-bottom: 16px;"></textarea>
+                                        <div class="pull-right">
+                                            <button class="btn btn-primary" @click="follow_up_take('ok')">确定</button>
+                                            <button class="btn btn-default" @click="follow_up_take">取消</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="text-right col-sm-2 col-sm-2 control-label">增加跟进记录</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" id="focusedInput" type="text" placeholder="请输入跟进记录">
-                                    </div>
-                                </div>
+                                <!--跟进记录-->
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek">
@@ -248,28 +188,7 @@
                                         </div>
                                     </div>
                                 </section>
-                                <section class="panel">
-                                    <div class="panel-body">
-                                        <div class="panel-body table-responsive cheek">
-                                            <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
-                                            <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
-                                            <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
-                                            <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section class="panel">
-                                    <div class="panel-body">
-                                        <div class="panel-body table-responsive cheek">
-                                            <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
-                                            <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
-                                            <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
-                                            <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
+
                             </div>
 
                             <!--房屋信息-->
@@ -288,7 +207,11 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td class="text-center"> <router-link :to="{path:'/okCollect',query: {nameId: 'cccc'}}">积善公寓2-302</router-link></td>
+                                                    <td class="text-center">
+                                                        <router-link :to="{path:'/okCollect',query: {nameId: ''}}">
+                                                            积善公寓2-302
+                                                        </router-link>
+                                                    </td>
                                                     <td class="text-center">三房一室一厅</td>
                                                     <td class="text-center">已成交</td>
                                                     <td class="text-center">负责人</td>
@@ -309,22 +232,38 @@
                 </section>
             </div>
         </div>
+
+        <!--客户编辑-->
+        <New_add></New_add>
     </div>
 </template>
 
 <script>
+    import New_add from '../common/new_add.vue'
     export default {
+        components: { New_add },
         data (){
             return {
-                progress: 30,
-                open_on: false
+                progress: 30,               //进度
+                open_on: false,             //展示收起
+                follow_up: ''               //跟进记录
             }
         },
         methods: {
+//            展示收起
             open_close (){
-                this.open_on = !this.open_on
+                this.open_on = !this.open_on;
+            },
+//            跟进记录
+            follow_up_take (val){
+                if (val === 'ok' && this.follow_up.length > 0) {
+                    console.log("111");
+                } else {
+                    this.follow_up = '';
+                }
+
             }
-        },
+        }
 
     }
 </script>

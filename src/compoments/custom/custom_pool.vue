@@ -62,6 +62,14 @@
                             </select>
                         </label>
                     </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="">
+                            <span class="input-group-btn">
+                            <button class="btn btn-success" type="button">搜索</button>
+                        </span>
+                        </div>
+                    </div>
                 </div>
 
                 <!--选中两个以上-->
