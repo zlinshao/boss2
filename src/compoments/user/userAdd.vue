@@ -281,7 +281,6 @@
 
             },
             getFourDepart(){
-                alert(this.thirdId)
                 if(this.thirdId!==''){
                     this.$http.get('manager/user/departmentWb/id/'+this.thirdId).then((res)=>{
                         this.fourDepart=res.data.data;
