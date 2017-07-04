@@ -27,12 +27,12 @@
                                     <div class="col-lg-10 status">
                                         <label>
                                             <input type="radio" name="status" value="owner"
-                                                   @click="cus_status_c($event)"
+                                                   @click="cus_status_c($event)"  :checked="cus_status === 'owner'"
                                                    class="pull-left">业主
                                         </label>
                                         <label>
                                             <input type="radio" name="status" @click="cus_status_c($event)"
-                                                   class="pull-left" value="renter">租客{{revise}}
+                                                   class="pull-left" value="renter" :checked="cus_status === 'renter'">租客{{revise}}
                                         </label>
                                     </div>
                                 </div>
@@ -59,11 +59,11 @@
                                     <div class="col-lg-10 status">
                                         <label>
                                             <input type="radio" @click="cus_gender_c($event)" name="gender" value="boy"
-                                                   class="pull-left">先生
+                                                   class="pull-left" :checked="cus_gender === 'boy'">先生
                                         </label>
                                         <label>
                                             <input type="radio" @click="cus_gender_c($event)" name="gender" value="girl"
-                                                   class="pull-left">女士
+                                                   class="pull-left" :checked="cus_gender === 'girl'">女士
                                         </label>
                                     </div>
                                 </div>
@@ -270,12 +270,16 @@
         props: ['msg', 'revise'],
         data (){
             return {
+                cus_sta: '',                        //业主/租客 true/false
+                cus_status: '',                     //业主/租客
 
                 btn_state: false,                   //新增/修改
 //                基本信息
-                cus_status: '',                     //业主/租客
                 cus_name: '',                       //客户姓名
+
+                cus_gen: '',                        //性别 true/false
                 cus_gender: '',                     //性别
+
                 cus_progress: '',                   //进度
                 cus_nationality: '',                //国籍
                 cus_phone: '',                      //手机号
@@ -322,10 +326,10 @@
                 this.cus_intention = val.cus_intention;                             //客户意向
                 this.cus_source = val.cus_source;                                   //客户来源
 
-                this.inter_state = val.hhhh.inter_state;                                 //中介
-                this.cus_intermediate = val.hhhh.cus_intermediate;                       //是否中介
-                this.cus_intermediate_name = val.hhhh.cus_intermediate_name;             //中介名称
-                this.cus_intermediate_phone = val.hhhh.cus_intermediate_phone;           //中介联系方式
+                this.inter_state = val.medium.inter_state;                                 //中介
+                this.cus_intermediate = val.medium.cus_intermediate;                       //是否中介
+                this.cus_intermediate_name = val.medium.cus_intermediate_name;             //中介名称
+                this.cus_intermediate_phone = val.medium.cus_intermediate_phone;           //中介联系方式
 
                 this.villageAddress = val.villageAddress;                           //小区地址
                 this.villageName = val.villageName;                                 //小区名称

@@ -69,7 +69,7 @@
                         </label>
                     </div>
                     <div class="pull-right" style="margin-bottom: 3px; margin-left: 14px;">
-                        <a data-toggle="modal" href="#customModel" class="btn btn-success" @click="customers('new',{})">
+                        <a data-toggle="modal" href="#customModel" class="btn btn-success" @click="customers_new('new')">
                             <i class="fa fa-plus-square"></i>&nbsp;增加客户
                         </a>
                     </div>
@@ -104,19 +104,19 @@
                         </li>
                         <li>
                             <h5><a data-toggle="modal" href="#customModel"
-                                   @click="customers('rev',
+                                   @click="customers_rev('rev',
                                        {
                             //                基本信息
                                             cus_status: 'renter',                 //业主/租客
                                             cus_name: '20',                       //客户姓名
-                                            cus_gender: 'girl',                   //性别
+                                            cus_gender: 'boy',                    //性别
                                             cus_progress: '20',                   //进度
                                             cus_nationality: '20',                //国籍
                                             cus_phone: '20',                      //手机号
                                             cus_status_quo: '20',                 //客户状态
                                             cus_intention: '20',                  //客户意向
                                             cus_source: '20',                     //客户来源
-                                            hhhh: {
+                                            medium: {
                                                 inter_state: true,                     //中介
                                                 cus_intermediate: '中介',              //个人/中介
                                                 cus_intermediate_name: '20',           //中介名
@@ -297,7 +297,10 @@
             add_state (val){
                 this.bool = val;
             },
-            customers (val, list){
+            customers_new (val){
+                this.revise_state = val;
+            },
+            customers_rev (val, list){
                 this.revise_state = val;
                 this.revise_cus = list;
             },
