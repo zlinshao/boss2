@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>小区管理</li>
         </ol>
-        <div class="headFrom col-lg-12 clearFix">
+        <div class="panel col-lg-12 clearFix">
             <form class="form-inline clearFix" role="form">
                 <div class="dropdown form-group">
                     <select name="type" id="search_type" class="form-control">

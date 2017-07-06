@@ -1,0 +1,64 @@
+{
+  "code": "90020",
+  "msg": "",
+  "data": {
+    "accountList": [
+      {
+        "id" :1,
+        "accountName" : "家居安静",
+        "bank" : "中国银行",
+        "account" : 121546545,
+        "startMoney" : 1232,
+        "nowMoney" : 41534,
+        "remark" : "法撒旦范德萨"
+      },
+      {
+        "id" :2,
+        "accountName" : "家居安静",
+        "bank" : "中国银行",
+        "account" : 121546545,
+        "startMoney" : 1232,
+        "nowMoney" : 41534,
+        "remark" : "法撒旦范德萨"
+      },
+      {
+        "id" :3,
+        "accountName" : "家居安静",
+        "bank" : "中国银行",
+        "account" : 121546545,
+        "startMoney" : 1232,
+        "nowMoney" : 41534,
+        "remark" : "法撒旦范德萨"
+      },
+      {
+        "id" :4,
+        "accountName" : "家居安静",
+        "bank" : "中国银行",
+        "account" : 121546545,
+        "startMoney" : 1232,
+        "nowMoney" : 41534,
+        "remark" : "法撒旦范德萨"
+      },
+      {
+        "id" :5,
+        "accountName" : "家居安静",
+        "bank" : "中国银行",
+        "account" : 121546545,
+        "startMoney" : 1232,
+        "nowMoney" : 41534,
+        "remark" : "法撒旦范德萨"
+      },
+      {
+        "id" :6,
+        "accountName" : "家居安静",
+        "bank" : "中国银行",
+        "account" : 121546545,
+        "startMoney" : 1232,
+        "nowMoney" : 41534,
+        "remark" : "法撒旦范德萨"
+      }
+    ],
+    "user": [],
+    "pages": 5
+  }
+}

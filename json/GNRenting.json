@@ -1,0 +1,122 @@
+{
+  "code": "90020",
+  "msg": "收房喜报查询成功",
+  "data": {
+    "gleeFulRenting": [
+      {
+        "id" : 1,
+        "date" : "2017-05-18",
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "半年付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "status" : {
+          "id" : 1,
+          "name" : "已退单"
+        }
+      },
+      {
+        "id" : 2,
+        "date" : "2017-05-18",
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "半年付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "status" : {
+          "id" : 1,
+          "name" : "已退单"
+        }
+      },
+      {
+        "id" : 3,
+        "date" : "2017-05-18",
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "半年付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "status" : {
+          "id" : 1,
+          "name" : "已退单"
+        }
+      },
+      {
+        "id" : 4,
+        "date" : "2017-05-18",
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "半年付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "status" : {
+          "id" : 1,
+          "name" : "已退单"
+        }
+      }
+    ],
+    "user": [],
+    "pages": 3
+  }
+}

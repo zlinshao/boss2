@@ -119,19 +119,7 @@
     /*.baseInfo , .perimeterInfo{
         padding: 5px 0;
     }*/
-    .col-sm-10 .control-label:nth-child(even){
-        margin:0 30px;
-    }
-    .col-sm-10 .control-label{
-        vertical-align: top;
-    }
-    .radioInput{
-        vertical-align: top;
-        margin-bottom: 25px;
-    }
-    .modal-footer{
-        /*border-top: none;*/
-    }
+
     div.input-group{
         padding: 0 15px;
     }

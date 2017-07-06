@@ -1,0 +1,101 @@
+{
+  "code": "90020",
+  "msg": "收房喜报查询成功",
+  "data": {
+    "person" : [
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "headman" : "哈哈哈",
+        "people" : "呼呼呼",
+        "realAchieve" : 6000,
+        "moreAchieve" : 5200,
+        "collect" : 20,
+        "renting" : 5,
+        "ranking" : 1,
+        "achievePackage" : {
+          "id" : 1,
+          "name" : "花花花"
+        }
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "headman" : "哈哈哈",
+        "people" : "呼呼呼",
+        "realAchieve" : 6000,
+        "moreAchieve" : 5200,
+        "collect" : 20,
+        "renting" : 5,
+        "ranking" : 1,
+        "achievePackage" : {
+          "id" : 1,
+          "name" : "花花花"
+        }
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "headman" : "哈哈哈",
+        "people" : "呼呼呼",
+        "realAchieve" : 6000,
+        "moreAchieve" : 5200,
+        "collect" : 20,
+        "renting" : 5,
+        "ranking" : 1,
+        "achievePackage" : {
+          "id" : 1,
+          "name" : "花花花"
+        }
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "headman" : "哈哈哈",
+        "people" : "呼呼呼",
+        "realAchieve" : 6000,
+        "moreAchieve" : 5200,
+        "collect" : 20,
+        "renting" : 5,
+        "ranking" : 1,
+        "achievePackage" : {
+          "id" : 1,
+          "name" : "花花花"
+        }
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "headman" : "哈哈哈",
+        "people" : "呼呼呼",
+        "realAchieve" : 6000,
+        "moreAchieve" : 5200,
+        "collect" : 20,
+        "renting" : 5,
+        "ranking" : 1,
+        "achievePackage" : {
+          "id" : 1,
+          "name" : "花花花"
+        }
+      }
+
+    ],
+    "user": [],
+    "pages": 5
+  }
+}
