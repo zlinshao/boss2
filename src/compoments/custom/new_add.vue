@@ -10,7 +10,7 @@
                         <!--新增客户-->
                         <div v-if="btn_state" class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title" @click="abc()">新增客户</h4>
+                            <h4 class="modal-title">新增客户</h4>
                         </div>
 
                         <!--修改客户-->
@@ -24,15 +24,14 @@
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">身份</label>
-                                    <div class="col-lg-10 status">
+                                    <div class="col-lg-10 status1">
                                         <label>
-                                            <input type="radio" name="status" value="owner"
-                                                   @click="cus_status_c($event)"
-                                                   class="pull-left">业主
+                                            <input type="radio" name="status" value="1"
+                                                   class="pull-left" v-model="cus_status">业主
                                         </label>
                                         <label>
-                                            <input type="radio" name="status" @click="cus_status_c($event)"
-                                                   class="pull-left" value="renter">租客{{revise}}
+                                            <input type="radio" name="status" value="2"
+                                                   class="pull-left" v-model="cus_status">租客
                                         </label>
                                     </div>
                                 </div>
@@ -56,14 +55,14 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">尊称&nbsp;<span
                                             class="text-danger">*</span></label>
-                                    <div class="col-lg-10 status">
+                                    <div class="col-lg-10 status1">
                                         <label>
-                                            <input type="radio" @click="cus_gender_c($event)" name="gender" value="boy"
-                                                   class="pull-left">先生
+                                            <input type="radio" name="gender" value="1"
+                                                   class="pull-left" v-model="cus_gender">先生
                                         </label>
                                         <label>
-                                            <input type="radio" @click="cus_gender_c($event)" name="gender" value="girl"
-                                                   class="pull-left">女士
+                                            <input type="radio" name="gender" value="2"
+                                                   class="pull-left" v-model="cus_gender">女士
                                         </label>
                                     </div>
                                 </div>
@@ -74,9 +73,8 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_nationality_c($event)"
                                                 :value="cus_nationality">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.nationality" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -85,7 +83,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">手机号</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="cus_phone"
-                                               placeholder="请输入手机号">
+                                               placeholder="请输入手机号" maxlength="11">
                                     </div>
                                 </div>
                                 <!--进度-->
@@ -93,9 +91,16 @@
                                     <label class="col-lg-2 col-sm-2 control-label">进度</label>
                                     <div class="col-lg-10 sliders">
                                         <select class="form-control" @click="progress_c($event)" :value="cus_progress">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option value="10">10%</option>
+                                            <option value="20">20%</option>
+                                            <option value="30">30%</option>
+                                            <option value="40">40%</option>
+                                            <option value="50">50%</option>
+                                            <option value="60">60%</option>
+                                            <option value="70">70%</option>
+                                            <option value="80">80%</option>
+                                            <option value="90">90%</option>
+                                            <option value="100">100%</option>
                                         </select>
                                     </div>
                                 </div>
@@ -105,9 +110,8 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_status_quo_c($event)"
                                                 :value="cus_status_quo">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.customer_status" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -117,9 +121,8 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_intention_c($event)"
                                                 :value="cus_intention">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.customer_will" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -128,9 +131,8 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户来源</label>
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_source_c($event)" :value="cus_source">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.customer_source" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -140,13 +142,13 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="intermediary($event)"
                                                 :value="cus_intermediate">
-                                            <option value="个人">个人</option>
-                                            <option value="中介">中介</option>
+                                            <option v-for="(val,index) in select_c.person_medium" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--中介-->
-                                <div v-if="inter_state">
+                                <div v-if="cus_intermediate === '2'">
                                     <div class="form-group">
                                         <label class="col-lg-2 col-sm-2 control-label">中介名称</label>
                                         <div class="col-lg-10">
@@ -168,14 +170,15 @@
                                     <label class="col-sm-2 control-label">小区名称</label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control"
-                                               v-model="villageName" readonly data-toggle="modal"
+                                               v-model="village.villageName" readonly data-toggle="modal"
                                                data-target="#myModal1">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="villageAddress" readonly>
+                                        <input type="text" class="form-control" v-model="village.villageAddress"
+                                               readonly>
                                     </div>
                                 </div>
 
@@ -187,9 +190,8 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_credentials_state_c($event)"
                                                 :value="cus_credentials_state">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.credentials" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -201,9 +203,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">证件照片</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">证件照片{{cus_idPhoto}}</label>
                                     <div class="col-lg-10">
-                                        <up-load :result="'idNum'"></up-load>
+                                        <up-load @photo="idNumber" @delete="idNumber_delete"
+                                                 :result="'id_number'" :pic_id="cus_idPhotos"></up-load>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -211,9 +214,8 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_marriage_c($event)"
                                                 :value="cus_marriage">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.marriage_status" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -233,9 +235,8 @@
                                     <label class="col-lg-2 col-sm-2 control-label">性格</label>
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_nature_c($event)" :value="cus_nature">
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-                                            <option value="25">25</option>
+                                            <option v-for="(val,index) in select_c.character" :value="index">{{val}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -249,8 +250,9 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                            <button class="btn btn-success" type="button"> 确定</button>
+                            <button data-dismiss="modal" class="btn btn-default" @click="hjhjhj" type="button">取消
+                            </button>
+                            <button class="btn btn-success" type="button" @click="cus_confirm"> 确定</button>
                         </div>
                     </div>
                 </div>
@@ -267,100 +269,181 @@
     import upLoad from '../common/upload.vue'
     export default {
         components: {upLoad, ChooseAddress},
-        props: ['msg', 'revise'],
+        props: ['msg', 'revise', 'selects'],
         data (){
             return {
-
+                cus_idPhotos: {},                   //修改图片ID
+                select_c: {},                       //字典
+                cus_id: '',                         //修改ID
+                cus_status: '',                     //业主/租客
                 btn_state: false,                   //新增/修改
 //                基本信息
-                cus_status: '',                     //业主/租客
                 cus_name: '',                       //客户姓名
                 cus_gender: '',                     //性别
-                cus_progress: '',                   //进度
-                cus_nationality: '',                //国籍
+                cus_progress: '1',                  //进度
+                cus_nationality: '1',               //国籍
                 cus_phone: '',                      //手机号
-                cus_status_quo: '',                 //客户状态
-                cus_intention: '',                  //客户意向
-                cus_source: '',                     //客户来源
+                cus_status_quo: '1',                //客户状态
+                cus_intention: '1',                 //客户意向
+                cus_source: '1',                    //客户来源
 
-                inter_state: false,                 //中介
-                cus_intermediate: '',               //个人/中介
+                cus_intermediate: '1',              //个人/中介
                 cus_intermediate_name: '',          //中介名
                 cus_intermediate_phone: '',         //联系方式
-
-                villageAddress: '',                 //小区地址
-                villageName: '',                    //小区名称
-
-                cus_credentials_state: '',          //证件类型
+                village: {
+                    villageId: '',                      //高德ID
+                    villageAddress: '',                 //小区地址
+                    villageName: '',                    //小区名称
+                },
+                cus_credentials_state: '1',         //证件类型
                 cus_idNumber: '',                   //证件号
                 cus_idPhoto: [],                    //证件照片
-                cus_marriage: '',                   //婚姻状况
+                cus_marriage: '1',                  //婚姻状况
                 cus_qq: '',                         //qq号
                 cus_email: '',                      //邮箱
-                cus_nature: '',                     //性格
+                cus_nature: '1',                    //性格
                 cus_remarks: '',                    //备注
-
             }
         },
         watch: {
+            selects (val){
+                this.select_c = val;
+            },
             msg(val) {
                 if (val === 'new') {
-                    this.btn_state = true;       //新增
+                    this.btn_state = true;                    //新增
+//                    业主租客
+                    this.cus_idPhotos = {};                   //修改图片ID
+                    this.cus_id = '';                         //修改ID
+                    this.cus_status = '';                     //业主/租客
+//                基本信息
+                    this.cus_name = '';                       //客户姓名
+                    this.cus_gender = '';                     //性别
+                    this.cus_progress = '1';                  //进度
+                    this.cus_nationality = '1';               //国籍
+                    this.cus_phone = '';                      //手机号
+                    this.cus_status_quo = '1';                //客户状态
+                    this.cus_intention = '1';                 //客户意向
+                    this.cus_source = '1';                    //客户来源
+//                    中介
+                    this.cus_intermediate = '1';              //个人/中介
+                    this.cus_intermediate_name = '';          //中介名
+                    this.cus_intermediate_phone = '';         //联系方式
+//                    地址
+                    this.village.villageId = '';                      //高德ID
+                    this.village.villageAddress = '';                 //小区地址
+                    this.village.villageName = '';                    //小区名称
+//                    附加信息
+                    this.cus_credentials_state = '1';         //证件类型
+                    this.cus_idNumber = '';                   //证件号
+                    this.cus_idPhoto = [];                    //证件照片
+                    this.cus_marriage = '1';                  //婚姻状况
+                    this.cus_qq = '';                         //qq号
+                    this.cus_email = '';                      //邮箱
+                    this.cus_nature = '1';                    //性格
+                    this.cus_remarks = '';                    //备注
+
                 }
                 if (val === 'rev') {
-                    this.btn_state = false;      //修改
+                    this.btn_state = false;                    //修改
                 }
             },
             revise (val){
-                this.cus_status = val.cus_status;                                   //业主/租客
-                this.cus_name = val.cus_name;                                       //客户姓名
-                this.cus_gender = val.cus_gender;                                   //性别
-                this.cus_progress = val.cus_progress;                               //进度
-                this.cus_nationality = val.cus_nationality;                         //国籍
-                this.cus_phone = val.cus_phone;                                     //手机号
-                this.cus_status_quo = val.cus_status_quo;                           //客户状态
-                this.cus_intention = val.cus_intention;                             //客户意向
-                this.cus_source = val.cus_source;                                   //客户来源
+                this.cus_id = val.id;                                           //修改ID
+                this.cus_status = val.identity;                         //业主/租客
+                this.cus_name = val.name;                                       //客户姓名
+                this.cus_gender = val.gender;                           //性别
+                this.cus_progress = val.follow;                                 //进度
+                this.cus_nationality = val.nationality;                         //国籍
+                this.cus_phone = val.mobile;                                    //手机号
+                this.cus_status_quo = val.customer_status;                      //客户状态
+                this.cus_intention = val.customer_will;                         //客户意向
+                this.cus_source = val.customer_source;                          //客户来源
 
-                this.inter_state = val.hhhh.inter_state;                                 //中介
-                this.cus_intermediate = val.hhhh.cus_intermediate;                       //是否中介
-                this.cus_intermediate_name = val.hhhh.cus_intermediate_name;             //中介名称
-                this.cus_intermediate_phone = val.hhhh.cus_intermediate_phone;           //中介联系方式
+                this.cus_intermediate = val.person_medium;                      //是否中介
+                this.cus_intermediate_name = val.medium_name;                   //中介名称
+                this.cus_intermediate_phone = val.medium_mobile;                //中介联系方式
 
-                this.villageAddress = val.villageAddress;                           //小区地址
-                this.villageName = val.villageName;                                 //小区名称
+                this.villageAddress = val.villageAddress;                       //小区地址
+                this.villageName = val.villageName;                             //小区名称
 
-                this.cus_credentials_state = val.cus_credentials_state;             //证件类型
-                this.cus_idNumber = val.cus_idNumber;                               //证件号
+                this.cus_credentials_state = val.id_type;                       //证件类型
+                this.cus_idNumber = val.album.id_num;                           //证件号
 
-//                this.cus_idPhoto = val.cus_idPhoto;                               //证件照片
-
-                this.cus_marriage = val.cus_marriage;                               //婚姻状况
-                this.cus_qq = val.cus_qq;                                           //qq号
-                this.cus_email = val.cus_email;                                     //邮箱
-                this.cus_nature = val.cus_nature;                                   //性格
-                this.cus_remarks = val.cus_remarks                                  //备注
+                this.cus_idPhotos = val.album.id_pic;                           //修改图片ID
+                for (let i in this.cus_idPhotos) {
+                    this.cus_idPhoto.push(i);
+                }
+                this.cus_marriage = val.marriage_status;                        //婚姻状况
+                this.cus_qq = val.qq;                                           //qq号
+                this.cus_email = val.e_mail;                                    //邮箱
+                this.cus_nature = val.character;                                //性格
+                this.cus_remarks = val.remarks                                  //备注
             }
         },
         methods: {
+            hjhjhj (){
+                this.msg = 'new';
+            },
+            idNumber (val){
+                this.cus_idPhoto = val;
+            },
+            idNumber_delete (val){
+                let index = this.cus_idPhoto.indexOf(val);
+                if (index > -1) {
+                    this.cus_idPhoto.splice(index, 1);
+                }
+            },
+//            确定新增
+            cus_confirm (){
+//                this.$http.get('http://test.v2.api.boss.lejias.cn/api/picture/poll').then((res) => {
+//                    console.log(res.data);
+//                    if (res.data === 70050) {
+                this.$http.post('http://test.v2.api.boss.lejias.cn/core/customer/saveCustomer', {
+                    identity: this.cus_status,                  //业主/租客
+                    name: this.cus_name,                        //客户姓名
+                    gender: this.cus_gender,                    //性别
+                    follow: this.cus_progress,                  //进度
+                    nationality: this.cus_nationality,          //国籍
+                    mobile: this.cus_phone,                     //手机号
+                    customer_status: this.cus_status_quo,       //客户状态
+                    customer_will: this.cus_intention,          //客户意向
+                    customer_source: this.cus_source,           //客户来源
+
+                    person_medium: this.cus_intermediate,       //个人/中介
+                    medium_name: this.cus_intermediate_name,    //中介电话
+                    medium_mobile: this.cus_intermediate_phone, //中介电话
+
+                    amap_id: this.village,                    //高德ID
+                    id_type: this.cus_credentials_state,        //证件类型
+                    id_num: this.cus_idNumber,                  //证件号
+                    id_pic: this.cus_idPhoto,                   //证件照片
+                    marriage_status: this.cus_marriage,         //婚姻状况
+                    qq: this.cus_qq,                            //QQ
+                    e_mail: this.cus_email,                     //email
+                    character: this.cus_nature,                 //性格
+                    remarks: this.cus_remarks,                  //备注
+                    staff_id: globalConfig.urlName,             //负责人
+                }, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then((res) => {
+                    console.log(res.data);
+                    if (res.data === '70020') {
+                        $('#customModel').modal('hide');        //成功关闭模态框
+                    } else {
+                    }
+                });
+//                    }
+//                });
+            },
 //            中介/个人
             intermediary (e){
                 let val = e.target.value;
                 this.cus_intermediate = val;
-                if (val === '个人') {
+                if (val === '1') {
                     this.inter_state = false;
                 }
-                if (val === '中介') {
+                if (val === '2') {
                     this.inter_state = true;
                 }
-            },
-//            租客/业主
-            cus_status_c (val){
-                this.cus_status = val.target.value;
-            },
-//            尊称
-            cus_gender_c (val){
-                this.cus_gender = val.target.value;
             },
 //            国籍
             cus_nationality_c (val){
@@ -384,8 +467,9 @@
             },
             getData(val){
 //            小区/地址
-                this.villageName = val.villageName;
-                this.villageAddress = val.villageAddress;
+                this.village.villageId = val.id;
+                this.village.villageName = val.villageName;
+                this.village.villageAddress = val.villageAddress;
             },
 //            证件类型
             cus_credentials_state_c (val){
@@ -416,11 +500,11 @@
         height: 17px;
     }
 
-    .status {
+    .status1 {
         padding-top: 7px;
     }
 
-    .status label {
+    .status1 label {
         margin-right: 20px;
     }
 

@@ -16,36 +16,60 @@
             .login-wrap {
                 min-height: 200px;
             }
+
+            body #QRCode, body .QR_Code {
+                display: block;
+            }
+
+            body #computer_PC, body .computer {
+                display: none;
+            }
+        }
+
+        .none_ {
+            display: none;
         }
     </style>
     <script src="src/assets/js/jquery-3.2.0.js"></script>
     <script src="src/assets/bootstrap/js/bootstrap.js"></script>
     <script src="http://g.alicdn.com/dingding/dinglogin/0.0.2/ddLogin.js"></script>
     <script src="src/boss.config.js"></script>
+    <script>
+        window.onload = function () {
+            if ( navigator.userAgent.indexOf('Edge') != -1 || ( navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1 )) {
+                document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/download">下载</a></h4>');
+            }
+        }
+    </script>
     <title>Document</title>
 </head>
 <body>
 <div class="container">
     <form class="form-signin" action="index.html">
-        <h2 class="form-signin-heading">sign in now</h2>
-        <div class="login-wrap">
+        <h2 class="form-signin-heading"
+            style="background-color: #ffffff;text-align: right;border-bottom: 1px solid #cccccc;padding-bottom: 14px;">
+            <div>
+                <div class="none_" id="QRCode">
+                    <span style=" float: left;margin-top: 16px;margin-left: 24px;color: #000;">手机登录</span>
+                    <img src="erweima.png">
+                </div>
+                <div id="computer_PC">
+                    <span style=" float: left;margin-top: 16px;margin-left: 24px;color: #000;">扫码登陆</span>
+                    <img src="diannao.png">
+                </div>
+            </div>
+        </h2>
+        <div class="login-wrap" style="height: 380px;">
             <div id="login">
-                <!--<header>-->
-                <!--<span v-if="state">扫码登陆</span>-->
-                <!--<img v-if="state" src="./diannao.png" alt="pc">-->
-
-                <!--<span >短信登陆</span>-->
-                <!--<img src="./erweima.png" alt="iphone">-->
-                <!--</header>-->
-
                 <!--短信登陆-->
-                <div class="login-wrap" v-if="!state">
+                <div class="login-wrap col-xs-12 none_ QR_Code"
+                     style="margin-top: 30px;padding-left: 0;padding-right: 0;">
                     <div class="form-group">
                         <div class="col-sm-7">
                             <input type="text" class="form-control" placeholder="手机号" autofocus>
                         </div>
                         <div class="col-sm-5">
-                            <input type="button" class="identifying_code  form-control btn btn-default" value="获取验证码">
+                            <input type="button" class="identifying_code form-control btn btn-default" value="获取验证码">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
@@ -55,7 +79,7 @@
                 </div>
 
                 <!--扫码登陆-->
-                <div class="login-wrap">
+                <div class="login-wrap col-xs-12 computer">
                     <div id="login_container"></div>
                 </div>
             </div>
@@ -68,6 +92,23 @@
 
 </body>
 <script>
+//    登陆
+    $('#computer_PC').click(function () {
+        $(this).css('display', 'none');
+        $('.computer').css('display', 'none');
+        $('#QRCode').css('display', 'block');
+        $('.QR_Code').css('display', 'block');
+
+    });
+    $('#QRCode').click(function () {
+        $(this).css('display', 'none');
+        $('.QR_Code').css('display', 'none');
+        $('#computer_PC').css('display', 'block');
+        $('.computer').css('display', 'block');
+
+    });
+
+//    二维码
     $('.identifying_code').click(function () {
         console.log(globalConfig.server);
     });
