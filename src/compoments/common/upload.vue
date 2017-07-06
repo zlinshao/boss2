@@ -1,21 +1,42 @@
 <template>
     <div>
         <div class="dropzone form-horizontal">
-            <div @click="uploadPic(result)" :id="result"></div>
+            <div @click="uploadPic(result)" :id="result">
+
+                <div v-for="(p, index) in pic_id"
+                     class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                    <div class="dz-image">
+                        <img data-dz-thumbnail="" alt="" :src="p.big">
+                    </div>
+                    <a class="dz-remove" @click="rules(index)">删除图片</a>
+                </div>
+
+            </div>
         </div>
+        {{pic_id}}{{pics}}
     </div>
 </template>
 
 <script>
     export default {
-        props: ["result"],
+        props: ['result', 'pic_id'],
         data () {
             return {
-                pics: []
+                pics: [],
             };
         },
         methods: {
+            rules (rul){
+                let index = this.pics.indexOf(rul);
+                if (index > -1) {
+                    this.pics.splice(index, 1);
+                }
+                this.$emit('delete', rul);
+                this.$delete(this.pic_id, rul);
+            },
+
             uploadPic (res){
+
                 let _this = this;
                 let myDropzone = new Dropzone('#' + res, {
                     url: globalConfig.pic_address,

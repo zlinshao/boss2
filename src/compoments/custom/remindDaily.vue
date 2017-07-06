@@ -139,15 +139,14 @@
 
                 }
                 if (val === 'inter') {
-                    this.daily_state = false;       //增加日志
                     this.inter_state = true;        //提醒内容
+                    this.daily_state = false;       //增加日志
                     this.pool = false;              //放入客户池
                 }
                 if (val === 'pool') {
+                    this.pool = true;               //放入客户池
                     this.daily_state = false;       //增加日志
                     this.inter_state = false;       //提醒内容
-                    this.pool = true;               //放入客户池
-                    this.distribute_state = false;  //分配客户
                 }
                 if (val === 'distribute') {
                     this.daily_state = false;       //增加日志
