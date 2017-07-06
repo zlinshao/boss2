@@ -245,7 +245,6 @@
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <!--<li><a @click="logout"><i class="fa fa-key"></i> Log Out</a></li>-->
                             <li><a><i class="fa fa-key"></i> Log Out</a></li>
                             <!--@click="logout"-->
                         </ul>
@@ -367,20 +366,15 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
-                                <router-link to="/chart">
-                                    <span>公司业绩汇总</span>
-                                </router-link>
-                            </li>
                             <li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>周期表</span>
                                 </a>
                                 <ul class="sub">
-                                    <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
+                                    <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
                                         <router-link to="/periodicForGroup">小组</router-link>
                                     </li>
-                                    <li :class="{'active': isActive == 20}" @click='pitch_on(20)'>
+                                    <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
                                         <router-link to="/periodicForPeople">个人</router-link>
                                     </li>
                                 </ul>
@@ -390,10 +384,10 @@
                                     <span>工资业绩</span>
                                 </a>
                                 <ul class="sub">
-                                    <li :class="{'active': isActive == 21}" @click='pitch_on(21)'>
+                                    <li :class="{'active': isActive == 20}" @click='pitch_on(20)'>
                                         <router-link to="/wACollect">收房</router-link>
                                     </li>
-                                    <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
+                                    <li :class="{'active': isActive == 21}" @click='pitch_on(21)'>
                                         <router-link to="/wARenting">租房</router-link>
                                     </li>
                                 </ul>
@@ -407,34 +401,60 @@
                         </a>
                         <ul class="sub">
                             <li>
-                                <a href="">
+                                <router-link to="/account">
                                     <span>账号管理</span>
-                                </a>
+                                </router-link>
                             </li>
-                            <li>
-                                <a href="">
+                            <li class="sub-menu">
+                                <a href="javascript:;">
                                     <span>科目管理</span>
                                 </a>
+                                <ul class="sub">
+                                    <li>
+                                        <router-link to="/subject">科目</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/classify">归类</router-link>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a href="">
+                                <router-link to="/jurisdiction">
+                                    <span>权限管理</span>
+                                </router-link>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
                                     <span>收支流水</span>
                                 </a>
+                                <ul class="sub">
+                                    <li>
+                                        <router-link to="/collectFlow">应收</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/payFlow">应付</router-link>
+                                    </li>
+                                </ul>
                             </li>
+                            <!--<li>
+                                <router-link to="/incomeFlow">
+                                    <span>收支流水</span>
+                                </router-link>
+                            </li>-->
                             <li>
-                                <a href="">
+                                <router-link to="/pendingItem">
                                     <span>待处理项</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="">
+                                <router-link to="/generalOperation">
                                     <span>总账操作</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="">
+                                <router-link to="/generalRecord">
                                     <span>总账操作记录</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="/chart">
@@ -463,6 +483,17 @@
                                 <a href="">
                                     <span>打印合同</span>
                                 </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>日志管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to='/logRecord'>操作记录</router-link>
                             </li>
                         </ul>
                     </li>

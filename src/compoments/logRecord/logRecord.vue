@@ -1,20 +1,30 @@
 <template>
     <div>
-
         <ol class="breadcrumb">
-            <li>业绩管理</li>
-            <li>周期表</li>
-            <li class="active">小组</li>
+            <li>日志管理</li>
+            <li class="active">操作记录</li>
         </ol>
 
-        <div class="panel col-lg-12">
+        <div class="panel col-lg-12 clearFix">
             <form class="form-inline clearFix" role="form">
 
                 <div class="dropdown form-group">
-                    <select name="" class="form-control" v-model="params.city">
-                        <option value="0">所有城市</option>
+                    <!--<label>操作模块</label>-->
+                    <select name="" class="form-control" v-model="params.module">
+                        <option value="0">全部操作模块</option>
                         <option value="1">南京</option>
                         <option value="2">苏州</option>
+                    </select>
+                </div>
+
+                <div class="dropdown form-group">
+                    <!--<label>操作类型</label>-->
+                    <select name="" class="form-control" v-model="params.type">
+                        <option value="0">全部操作类型</option>
+                        <option value="1">新增</option>
+                        <option value="2">删除</option>
+                        <option value="3">修改</option>
+                        <option value="4">查询</option>
                     </select>
                 </div>
 
@@ -26,12 +36,14 @@
                         <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
                     </label>
                 </div>
-
-                <div class="input-group" style="margin-bottom: 18px;" @click="search">
-                    <button type="button" class="btn btn-success">搜索</button>
+                <div class="input-group bootstrap-timepicker">
+                    <label class="sr-only" for="search_info">搜索</label>
+                    <input type="text" class="form-control" id="search_info" placeholder="请输入操作人" v-model="params.searchInfo"  @keydown.enter.prevent="search">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
             </form>
-
         </div>
 
         <!--表格-->
@@ -40,31 +52,22 @@
                 <table class="table table-striped table-advance table-hover">
                     <thead>
                     <tr>
-                        <th class="text-center">片区名称</th>
-                        <th class="text-center">实际业绩</th>
-                        <th class="text-center">应完成业绩</th>
-                        <th class="text-center">差额</th>
-                        <th class="text-center">收房/套</th>
-                        <th class="text-center">租房/套</th>
-                        <th class="text-center">组长</th>
+                        <th class="text-center">操作人</th>
+                        <th class="text-center">所在部门</th>
+                        <th class="text-center">操作时间</th>
+                        <th class="text-center">操作平台</th>
+                        <th class="text-center">IP地址</th>
+                        <th class="text-center">操作浏览器</th>
+                        <th class="text-center">操作模块</th>
+                        <th class="text-center">操作类型</th>
+                        <th class="text-center">操作结果</th>
+                        <th class="text-center">操作描述</th>
                     </tr>
                     </thead>
-                    <tbody id="rentingId">
-                    <tr class="text-center" v-for="item in myData">
-                        <td>{{item.region.name}}</td>
-                        <td>{{item.realAchieve}}</td>
-                        <td>{{item.goalAchieve}}</td>
-                        <td>{{item.balance}}</td>
-                        <td>{{item.collect}}</td>
-                        <td>{{item.renting}}</td>
-                        <td>{{item.headman}}</td>
-                    </tr>
-
-
-                    </tbody>
                 </table>
             </section>
         </div>
+
         <!--分页-->
         <Page :pg="paging" @pag="getData"></Page>
     </div>
@@ -73,36 +76,26 @@
 
 </style>
 <script>
-    import Page from '../../common/page.vue'
+    import Page from '../common/page.vue'
+
     export default{
         data(){
             return {
+                paging: 5,                 //总页数
+                page : 1,                  // 当前页数
+
                 params : {
-                    city : 1,
+                    module : 0,
+                    type : 0,
                     startDataTime : '',
-                    finishDataTime : ''
+                    finishDataTime : '',
+                    searchInfo : ''
+
                 },
-                myData : [],
-                paging : ''
             }
         },
-        created (){
-            this.perGroupList();
-        },
-        updated (){
-//            时间选择
-            this.remindData();
-        },
         components: {Page},
-        methods : {
-            perGroupList (){
-                this.$http.get('json/periodicGroup.json').then((res) => {
-//                    this.collectList = res.data.data.gleeFulCollect;
-                    this.myData = res.data.data.group;
-                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                })
-            },
+        methods: {
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -122,12 +115,13 @@
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
+            search(){
+                console.log(this.params);
+            },
             getData(data){
                 // 页数
                 console.log(data);
-            },
-            search(){
-                console.log(this.params);
+                this.page = data;
             }
         }
     }

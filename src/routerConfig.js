@@ -13,7 +13,6 @@ import WACollect from './compoments/achievement/wagesAchievement/WACollect.vue'
 import WARenting from './compoments/achievement/wagesAchievement/WARenting.vue'
 import Compare from './compoments/achievement/companyAchievement/compare.vue'   // 公司业绩收租房对比
 import Calc from './compoments/achievement/wagesAchievement/calc.vue'       // 计算详情
-import Chart from './compoments/achievement/chart/chart.vue'
 
 
 import Custom from "./compoments/custom/custom.vue";                        //客户
@@ -26,6 +25,22 @@ import Collect_More from "./compoments/collect/noCollect_more.vue";         //�
 import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
 import ContractDetail from './compoments/contract/contractDetail.vue'           // 合同详情
+
+// 账本
+import Account from './compoments/finance/account.vue'                          // 账号管理
+import Subject from './compoments/finance/subject/subject.vue'                          // 科目管理
+import Classify from './compoments/finance/subject/classify.vue'                          // 科目管理
+import Jurisdiction from './compoments/finance/jurisdiction.vue'                          // 科目管理
+import CollectFlow from './compoments/finance/incomeFlow/collect.vue'           // 收支流水
+import PayFlow from './compoments/finance/incomeFlow/pay.vue'                    // 收支流水
+import PayingRent from './compoments/finance/incomeFlow/payingRent.vue'         // 收支流水
+import CollectRent from './compoments/finance/incomeFlow/collectRent.vue'         // 收支流水
+import PendingItem from './compoments/finance/pendingItem.vue'                  // 待处理项
+import GeneralOperation from './compoments/finance/generalOperation.vue'        // 总账操作
+import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
+import Chart from './compoments/finance/chart/chart.vue'
+import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
+
 
 import yi from "./compoments/role/1.vue";
 import  Back from './compoments/user/back.vue'
@@ -146,11 +161,6 @@ export default[
         component: Calc
     },
     {
-        path: '/chart',
-        name: 'Chart',
-        component: Chart
-    },
-    {
         path: '/back',
         name: 'Back',
         component: Back
@@ -169,5 +179,70 @@ export default[
         path: '/contractDetail',
         name: 'ContractDetail',
         component: ContractDetail
+    },
+    {
+        path: '/chart',
+        name: 'Chart',
+        component: Chart
+    },
+    {
+        path: '/account',
+        name: 'Account',
+        component: Account
+    },
+    {
+        path: '/subject',
+        name: 'Subject',
+        component: Subject
+    },
+    {
+        path: '/classify',
+        name: 'Classify',
+        component: Classify
+    },
+    {
+        path: '/jurisdiction',
+        name: 'Jurisdiction',
+        component: Jurisdiction
+    },
+    {
+        path: '/collectFlow',
+        name: 'CollectFlow',
+        component: CollectFlow
+    },
+    {
+        path: '/payFlow',
+        name: 'PayFlow',
+        component: PayFlow
+    },
+    {
+        path: '/payingRent',
+        name: 'PayingRent',
+        component: PayingRent
+    },
+    {
+        path: '/collectRent',
+        name: 'CollectRent',
+        component: CollectRent
+    },
+    {
+        path: '/pendingItem',
+        name: 'PendingItem',
+        component: PendingItem
+    },
+    {
+        path: '/generalOperation',
+        name: 'GeneralOperation',
+        component: GeneralOperation
+    },
+    {
+        path: '/generalRecord',
+        name: 'GeneralRecord',
+        component: GeneralRecord
+    },
+    {
+        path: '/logRecord',
+        name: 'LogRecord',
+        component: LogRecord
     }
 ]

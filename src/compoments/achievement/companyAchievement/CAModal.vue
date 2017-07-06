@@ -154,6 +154,9 @@
     .modal-footer{
         text-align: center;
     }
+    label{
+        line-height: 34px;
+    }
 </style>
 <script>
     export default{
@@ -166,6 +169,14 @@
         created : function () {
 //            alert(this.id);
         },
-        components: {}
+        components: {},
+        methods : {
+            clearForm(){
+                $('#myModal').find('input').val('');
+                $('#myModal').find('select').val('');
+
+                $('#myModal').modal('hide');
+            }
+        }
     }
 </script>

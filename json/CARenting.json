@@ -1,0 +1,235 @@
+{
+  "code": "90020",
+  "msg": "收房喜报查询成功",
+  "data": {
+    "companyAchieveCollect": [
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "situation" : {
+          "id" : 1,
+          "name" : "新租"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "alreadyType" : {
+          "id" : 1,
+          "name" : "部分定金"
+        },
+        "alreadyMoney" : 35000,
+        "isAgency" : 1,
+        "rentingReal" : 35000,
+        "collectReal" : 35000,
+        "allAchieve" : 36000
+      }
+
+    ],
+    "user": [],
+    "pages": 5
+  }
+}

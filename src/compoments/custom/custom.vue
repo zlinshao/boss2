@@ -218,6 +218,7 @@
 //            客户列表
             collectList (){
                 this.$http.get('json/tsconfig.json').then((res) => {
+                    console.log(typeof res.data);
                     this.custom_list = res.data.data.custom;
                     this.paging = res.data.data.pages;
                 })

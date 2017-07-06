@@ -7,41 +7,22 @@
             <li class="active">租房</li>
         </ol>
 
-        <div class="col-lg-12">
+        <div class="panel col-lg-12">
             <form class="form-inline clearFix" role="form">
 
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">全部</option>
-                        <option value="1">南京</option>
-                        <option value="2">苏州</option>
-                    </select>
-                </div>
+                <Cascade @change="getCascadeData"></Cascade>
 
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">玄武</option>
-                        <option value="">栖霞</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">组员</option>
-                        <option value="">组员</option>
-                        <option value="">组员</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="star_time">开始时间</label>
-                    <input type="date" class="form-control" id="star_time" placeholder="开始时间">
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="end_time">结束时间</label>
-                    <input type="date" class="form-control" id="end_time" placeholder="结束时间">
+                <div class="form-group datetime">
+                    <label>
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                    </label>
+                    <label>
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                    </label>
                 </div>
                 <div class="input-group bootstrap-timepicker">
                     <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" @keydown.enter.prevent="search">
+                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.searchInfo" @keydown.enter.prevent="search">
                     <span class="input-group-btn">
                         <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                     </span>
@@ -73,24 +54,21 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                        <router-link tag="tr" class="text-center" :to="{path:'compare' , query:{id:1}}">
-                            <td>2017-05-18</td>
-                            <td>秦淮一组</td>
-                            <td>彩云姐</td>
-                            <td>
-                                亚东观云 <br>
-                                3-403
-                            </td>
-                            <td>3</td>
-                            <td>1200</td>
-                            <td>2</td>
-                            <td>季付</td>
-                            <td>30</td>
-                            <td>是</td>
-                            <td>2</td>
-                            <td>季付</td>
-                            <td>30</td>
-                            <td>是</td>
+                        <router-link tag="tr" class="text-center" :key="item.id" :to="{path:'compare' , query:{address:item.address}}" v-for="item in myData">
+                            <td>{{item.date}}</td>
+                            <td>{{item.region.name}}</td>
+                            <td>{{item.situation.name}}</td>
+                            <td>{{item.people}}</td>
+                            <td>{{item.address}}</td>
+                            <td>{{item.type.name}}</td>
+                            <td>{{item.payWay.name}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.alreadyType.name}}</td>
+                            <td>{{item.alreadyMoney}}</td>
+                            <td>{{item.isAgency==1?"是":"否"}}</td>
+                            <td>{{item.rentingReal}}</td>
+                            <td>{{item.collectReal}}</td>
+                            <td>{{item.allAchieve}}</td>
                         </router-link>
 
                     </tbody>
@@ -102,6 +80,9 @@
 
         <!--modal-->
         <Modal></Modal>
+
+        <!--分页-->
+        <Page :pg="paging" @pag="getData"></Page>
     </div>
 </template>
 <style scoped>
@@ -112,18 +93,77 @@
 </style>
 <script>
     import Modal from './CAModal.vue'
+    import Page from '../../common/page.vue'
+    import Cascade from '../../common/cascade.vue'
+
     export default{
         data(){
             return {
-                msg: 'hello vue'
+                myData: [],      //列表数据
+                paging : '',
+                params : {
+                    city: '',
+                    group: "",
+                    people: "",
+                    region: "",
+                    startDataTime : '',
+                    finishDataTime : '',
+                    searchInfo : ''
+                }
             }
         },
+        created(){
+            this.caRentingList();
+        },
+        updated (){
+//            时间选择
+            this.remindData();
+        },
         components: {
-            Modal
+            Modal,
+            Page,
+            Cascade
         },
         methods : {
+            caRentingList (){
+                this.$http.get('json/CARenting.json').then((res) => {
+//                    this.collectList = res.data.data.gleeFulCollect;
+                    this.myData = res.data.data.companyAchieveCollect;
+//                    console.log(res.data);
+                    this.paging = res.data.data.pages;
+                })
+            },
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+//                    console.log($(ev.target).attr('placeholder'));
+//                    console.log(ev.target.placeholder);
+                    if (ev.target.placeholder === '开始时间'){
+                        this.params.startDataTime = ev.target.value;
+                    } else {
+                        this.params.finishDataTime = ev.target.value;
+                    }
+//                    console.log(this.startDataTime);
+                }.bind(this));
+            },
             search(){
-
+                console.log(this.params);
+            },
+            getData(data){
+                // 页数
+                console.log(data);
+            },
+            getCascadeData(data){
+//                console.log(data);
+                for(var attr in data){
+                    this.params[attr]=data[attr];
+                }
             }
         }
     }

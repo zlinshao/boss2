@@ -13,7 +13,7 @@
                                 <div class="headFrom col-lg-12 clearFix">
                                     <form class="form-inline clearFix" role="form" method="get">
                                         <div class="dropdown form-group">
-                                            <select name="" class="form-control" v-model="chooseCity">
+                                            <select name="" class="form-control" v-model="chooseCity" @change="search">
                                                 <option value="" selected>所有城市</option>
                                                 <option value="南京">南京</option>
                                                 <option value="苏州">苏州</option>
@@ -21,7 +21,7 @@
                                         </div>
                                         <div class="input-group bootstrap-timepicker">
                                             <label class="sr-only">搜索</label>
-                                            <input type="text" class="form-control" placeholder="" @keyup="searchVillage" @keydown.enter.prevent="search" v-model="searchInfo">
+                                            <input type="text" class="form-control" placeholder="" @keyup="searchVillage" @keydown.enter.prevent="" v-model="searchInfo">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-success" type="button" @click="search">立即搜索</button>
                                             </span>
@@ -138,10 +138,14 @@
         },
         methods : {
             search(){
+                this.$http.defaults.withCredentials = false;
+                this.$http.defaults.headers = {};
                 this.$http.get(addr+'&keywords='+this.searchInfo+'&city='+this.chooseCity)
                     .then(
                         res => this.villages = res.data.tips
                     );
+//                this.$http.defaults.withCredentials = true;
+//                this.$http.defaults.headers.common['Env'] = globalConfig.env;
             },
             searchVillage(){// 搜索小区
                 if (this.searchInfo.length >= 2){
@@ -154,12 +158,12 @@
                 this.villages = []
             },
             save(){
-                if (this.villageId.length == 0){
+                if (this.villageId.length === 0){
                     return;
                 }else {
                     for ( var i in this.villages){
-                        console.log(this.villages[i]);
-                        if (this.villages[i].id == this.villageId){
+//                        console.log(this.villages[i]);
+                        if (this.villages[i].id === this.villageId){
                             this.village.villageAddress = this.villages[i].district+this.villages[i].address;
                             this.village.villageName = this.villages[i].name;
                             this.village.id = this.villages[i].id;
@@ -176,7 +180,7 @@
             chooseItem(ev){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
                 this.villageId = $(ev.currentTarget).find('input').val();
-                console.log(this.villageId);
+//                console.log(this.villageId);
             }
         }
     }
