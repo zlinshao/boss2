@@ -137,7 +137,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">房屋照片</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="房屋照片">
+                                        <input type="text" class="form-control" placeholder="房屋照片" @click="selectStaff">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -223,14 +223,16 @@
                 </div>
             </div>
         </div>
-        <SelectCustom @Staff="selectMember"></SelectCustom>
+        <SelectStaff @Staff="selectMember"></SelectStaff>
+        <SelectCustom></SelectCustom>
     </div>
 </template>
 
 <script>
-    import SelectCustom from '../common/selectStaff.vue'
+    import SelectStaff from '../common/selectStaff.vue'
+    import SelectCustom from '../common/selectClient.vue'
     export default {
-        components:{SelectCustom},
+        components:{SelectCustom,SelectStaff},
         props: ['msg'],
         data (){
             return {
@@ -246,6 +248,9 @@
             },
             selectCustom(){
                 $('#selectCustom').modal('show');
+            },
+            selectStaff(){
+                $('#selectClient').modal('show');
             },
             selectMember(val){
                 this.member=val[0]

@@ -22,7 +22,8 @@
                                 </div>
                                 <div class="iconic-input right col-lg-4">
                                     <i class="fa fa-search"></i>
-                                    <input type="text" class="form-control" placeholder="搜索客户">
+                                    <input type="text" class="form-control" placeholder="搜索客户" v-model="keywords"
+                                           @keyup.enter="search">
                                 </div>
                                 <div class="col-lg-2">
                                     <a class="btn btn-success">搜索</a>
@@ -42,7 +43,7 @@
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <input type="radio" >
+                                        <input type="radio" name="radio">
                                     </td>
                                     <td>客户名称</td>
                                     <td>尊称</td>
@@ -52,75 +53,13 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="radio" >
+                                        <input type="radio" name="radio">
                                     </td>
                                     <td>客户名称</td>
                                     <td>尊称</td>
                                     <td>国籍</td>
                                     <td>手机号</td>
                                     <td>房屋地址</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">新增</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--选择房屋-->
-        <div class="modal fade " id="selectHouse">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">选择房屋</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal tasi-form">
-                            <div class="row">
-                                <div class="iconic-input right col-lg-4">
-                                    <i class="fa fa-search"></i>
-                                    <input type="text" class="form-control" placeholder="选择房屋">
-                                </div>
-                                <div class="col-lg-2">
-                                    <a class="btn btn-success">搜索</a>
-                                </div>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                <tr class="lightGray">
-                                    <td></td>
-                                    <td>房屋地址</td>
-                                    <td>房型</td>
-                                    <td>面积</td>
-                                    <td>装修</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="radio" >
-                                    </td>
-                                    <td>清新家园</td>
-                                    <td>三室一厅</td>
-                                    <td>120m<sup>2</sup></td>
-                                    <td>精装</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="radio" >
-                                    </td>
-                                    <td>房屋地址</td>
-                                    <td>房型</td>
-                                    <td>面积</td>
-                                    <td>装修</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -139,11 +78,13 @@
     export default{
         data(){
             return {
-
+                keywords:'',
             }
         },
         methods : {
+            search(){
 
+            }
         }
     }
 </script>

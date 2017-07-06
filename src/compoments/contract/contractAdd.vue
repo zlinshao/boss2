@@ -322,7 +322,7 @@
     </div>
 </template>
 <script>
-    import SelectClient from './clientSelect.vue'
+    import SelectClient from '../common/selectClient.vue'
     export default{
         components:{
             SelectClient

@@ -323,12 +323,12 @@
                             </li>
                         </ul>
                     </li>
-                    <li :class="{'active': isActive == 13}" @click='pitch_on(13)'>
-                        <router-link to="/village">
-                            <i class="fa fa-dashboard"></i>
-                            <span>小区管理</span>
-                        </router-link>
-                    </li>
+                    <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
+                        <!--<router-link to="/village">-->
+                            <!--<i class="fa fa-dashboard"></i>-->
+                            <!--<span>小区管理</span>-->
+                        <!--</router-link>-->
+                    <!--</li>-->
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
