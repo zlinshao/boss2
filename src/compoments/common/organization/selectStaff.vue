@@ -8,7 +8,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">选人 </h4>
+                        <h4 class="modal-title">选人</h4>
                     </div>
                     <div class="modal-body scoll">
                             <div class="row">
@@ -16,7 +16,7 @@
                                     <div class="box">
                                         <div id="tagsinput_tagsinput" class="tagsinput " style="border: none">
                                             <span class="tag" v-for="item in member" v-if="member!=''">
-                                                <span >{{item}}&nbsp;&nbsp;</span>
+                                                <span >{{item.name}}&nbsp;&nbsp;</span>
                                                 <a class="tagsinput-remove-link" @click="deleteName(item)"></a>
                                             </span>
                                             <input v-model="keywords" @keyup="search" @keydown.8="backSpace" style="width: 65px"
@@ -25,7 +25,7 @@
                                         <div class="searchList box-body scoll" id="d1" style="max-height: 348px">
                                             <ul>
                                                 <li v-for="(item,index) in searchList" :class="{'hov':active1==index}"
-                                                    @mouseover="changeClass(index,item.real_name)" @click="mouseAdd(item.real_name)">
+                                                    @mouseover="changeClass(index,item)" @click="mouseAdd(item)">
                                                     <div class="head"></div>
                                                     <div style="display: inline-block">
                                                         <p style="height:14px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
@@ -54,22 +54,30 @@
                                                     <li v-for="item in organizeList"   v-if="type==1">
                                                         <label class="checkbox-inline check">
                                                             <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   @click="checkedOne(item.name)"   :value="item">
+                                                                :disabled="noDepartment || isMarket.indexOf(item.id)>-1"
+                                                                   @click="checkedOne(item)"   :value="item">
                                                         </label>
                                                         <div class="info">
-                                                            <p @click="getSecond(item.id,item.name)">{{item.name}}</p>
+                                                            <button @click="getSecond(item.id,item.name)" class="btn btn-white"
+                                                                    :disabled="checkIndex.indexOf(item.id)>-1" style="border: none">
+                                                                {{item.name}}
+                                                            </button>
                                                         </div>
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==2">
                                                         <label class="checkbox-inline check">
                                                             <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   @click="checkedOne(item.name)"   :value="item">
+                                                                   :disabled="noDepartment"   @click="checkedOne(item)"   :value="item">
                                                         </label>
                                                         <div class="info">
-                                                            <p @click="getThird(item.id,item.name)">{{item.name}}</p>
+                                                            <button @click="getThird(item.id,item.name)" style="border: none"
+                                                                    :disabled="checkIndex.indexOf(item.id)>-1"  class="btn btn-white">
+                                                                {{item.name}}
+                                                            </button>
                                                         </div>
                                                     </li>
-                                                    <li v-for="item in organizeList" v-if="type==3" @click="select(item.id,item.real_name)">
+                                                    <li v-for="item in organizeList" v-if="type==3" @click="select(item.id,item.real_name)"
+                                                        :disabled='true'>
                                                         <div class="head"></div>
                                                         <div style="display: inline-block">
                                                             <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
@@ -78,13 +86,16 @@
                                                             </p>
                                                         </div>
                                                     </li>
-                                                    <li v-for="item in organizeList" v-if="type==4" >
+                                                    <li v(ior="item in organizeList" v-if="type==4" >
                                                         <label class="checkbox-inline check">
                                                             <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   @click="checkedOne(item.name)"   :value="item">
+                                                                   :disabled="noDepartment"  @click="checkedOne(item)" :value="item">
                                                         </label>
                                                         <div class="info">
-                                                            <p @click="getFour(item.id,item.name)">{{item.name}}</p>
+                                                            <button @click="getFour(item.id,item.name)" class="btn btn-white"
+                                                                    :disabled="checkIndex.indexOf(item.id)>-1" style="border: none">
+                                                                {{item.name}}
+                                                            </button>
                                                         </div>
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==5" @click="select(item.id,item.real_name)">
@@ -99,10 +110,13 @@
                                                     <li v-for="item in organizeList" v-if="type==6">
                                                         <label class="checkbox-inline check">
                                                             <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   @click="checkedOne(item.name)"   :value="item">
+                                                                   :disabled="noDepartment"  @click="checkedOne(item)"   :value="item">
                                                         </label>
                                                         <div class="info">
-                                                            <p  @click="getFive(item.id,item.name)">{{item.name}}</p>
+                                                            <button @click="getFive(item.id,item.name)" class="btn btn-white"
+                                                                    :disabled="checkIndex.indexOf(item.id)>-1" style="border: none" >
+                                                                {{item.name}}
+                                                            </button>
                                                         </div>
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==7" @click="select(item.id,item.real_name)">
@@ -137,11 +151,15 @@
                 </div>
             </div>
         </div>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Status from '../status.vue'
     export default {
+        props:['configure'],
+        components:{Status},
         data(){
             return{
                 searchList:[],
@@ -152,6 +170,7 @@
                 hovName:'',
                 hovId:'',
                 type:'',
+                checkIndex:[],
                 secondName:'',
                 thirdName:'',
                 fourName:'',
@@ -168,14 +187,26 @@
                 checkboxModel:[],
                 checkbox1:[],
                 organize:{
-                    department:{
-                        id:[],
-                        name:[]
-                    },
-                    staff:{
-                        id:[],
-                        name:[]
-                    }
+                    department:[
+
+                        ],
+                    staff:[
+
+                    ]
+                },
+                noDepartment:false,
+                noStaff:false,
+                isMarket:[],
+                myConfigure:{},
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
                 }
             }
         },
@@ -183,13 +214,52 @@
           this.getFirst();
         },
         watch: {//深度 watcher
+            configure(val){
+                this.myConfigure=val;
+                if(val.class==='selectType'){
+                    if(val.type==='all'){
+                        this.noDepartment=false;
+                        this.noStaff=false;
+                    }else if(val.type==='staff'){
+                        this.noDepartment=true;
+                        this.noStaff=false;
+                    }else if(val.type==='department'){
+                        this.noStaff=true;
+                        this.noDepartment=false;
+                    }
+                }else if(val.class==='department'){
+                    let arr=[2,4,9,10];
+                    for(let i=0;i<val.id.length;i++){
+                        this.isMarket=arr.filter((x)=>x!==val.id[i]);
+                        this.checkIndex=arr.filter((x)=>x!==val.id[i]);
+                    }
+                }else if(val.class==='amount'){
+                    this.noDepartment=true;
+                }
+            },
+            'member':{
+                handler: function (val, oldVal) {
+                    if(this.myConfigure.name==='amount'){
+                        if(this.member.length>this.myConfigure.length){
+                            this.member.splice(this.myConfigure.length,1);
+                            this.info.success = '选择超过限制';
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭成功信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            },2000);
+                        }
+                    }
 
+                },
+            }
         },
         methods:{
             /*******************************右侧组织架构***************************************/
             getFirst(){
-                this.$http.get('manager/user/departmentIndex/id/'+1).then((res) => {
-                    this.organizeList = res.data.data.department;
+                this.$http.get('index/profile/dpmtinfo/department_id/'+1+'/type/all').then((res) => {
+                    this.organizeList = res.data.department;
                     this.type=1;
                     this.isSecond=false;
                     this.isThird=false;
@@ -198,12 +268,12 @@
                 })
             },
             getSecond(id,name){
-                this.$http.get('manager/user/departmentIndex/id/'+id).then((res) => {
-                    if(res.data.data.department.length===0){
-                        this.organizeList = res.data.data.user;
+                this.$http.get('index/profile/dpmtinfo/department_id/'+id+'/type/all').then((res) => {
+                    if(res.data.department.length===0){
+                        this.organizeList = res.data.user;
                         this.type=3;
                     }else {
-                        this.organizeList = res.data.data.department;
+                        this.organizeList = res.data.department;
                         this.type=2;
                     }
                     this.secondName=name;
@@ -215,12 +285,12 @@
                 })
             },
             getThird(id,name){
-                this.$http.get('manager/user/departmentIndex/id/'+id).then((res) => {
-                    if(res.data.data.department.length===0){
-                        this.organizeList = res.data.data.user;
+                this.$http.get('index/profile/dpmtinfo/department_id/'+id+'/type/all').then((res) => {
+                    if(res.data.department.length===0){
+                        this.organizeList = res.data.user;
                         this.type=5;
                     }else {
-                        this.organizeList = res.data.data.department;
+                        this.organizeList = res.data.department;
                         this.type=4;
                     }
                     this.thirdName=name;
@@ -232,12 +302,12 @@
                 })
             },
             getFour(id,name){
-                this.$http.get('manager/user/departmentIndex/id/'+id).then((res) => {
-                    if(res.data.data.department.length===0){
-                        this.organizeList = res.data.data.user;
+                this.$http.get('index/profile/dpmtinfo/department_id/'+id+'/type/all').then((res) => {
+                    if(res.data.department.length===0){
+                        this.organizeList = res.data.user;
                         this.type=7;
                     }else {
-                        this.organizeList = res.data.data.department;
+                        this.organizeList = res.data.department;
                         this.type=6;
                     }
                     this.fourName=name;
@@ -249,8 +319,8 @@
                 })
             },
             getFive(id,name){
-                this.$http.get('manager/user/departmentIndex/id/'+id).then((res) => {
-                    this.organizeList = res.data.data.user;
+                this.$http.get('index/profile/dpmtinfo/department_id/'+id+'/type/all').then((res) => {
+                    this.organizeList = res.data.user;
                     this.type=8;
                     this.fiveName=name;
                     this.fiveId=id;
@@ -261,24 +331,50 @@
                 })
             },
             select(id,name){
-                if($.inArray(name, this.member)===-1){
-                    this.member.push(name);
-                }else if($.inArray(name, this.member)!==-1){
-                    this.member=this.member.filter((x)=>x!==name);
+                let staff={};
+                let isExist=false;
+                staff.flag=1;
+                staff.id=id;
+                staff.name=name;
+                for(let i=0;i<this.member.length;i++){
+                    if(id===this.member[i].id){
+                        isExist=true;
+                    }
                 }
+                if(!this.noStaff){
+                    if(!isExist){
+                        this.member.push(staff);
+                        this.organize.staff.push(staff);
+                    }else{
+                        for(let i=0;i<this.member.length;i++){
+                            if(id===this.member[i].id){
+                                this.member.splice(i,1)
+                                this.organize.staff.splice(i,1)
+                            }
+                        }
+                    }
+                }else {
+                    this.info.success = '您只能选择部门';
+                    //显示成功弹窗 ***
+                    this.info.state_success = true;
+                    //一秒自动关闭成功信息弹窗 ***
+                    setTimeout(() => {
+                        this.info.state_success = false;
+                    },2000);
+                }
+
             },
             /*******************************左侧选人框***************************************/
             //关键词搜索事件
             search(){
-                if (this.keywords != '') {
-                    this.$http.get('manager/user/searchUser/keywords/' +
+                if (this.keywords !=='') {
+                    this.$http.get('index/profile/searchStaff/keywords/' +
                         decodeURI(this.keywords)).then((res) => {
-                        if(res.data.data!==undefined){
-                            this.searchList = res.data.data.list;
+                        if(res.data!==undefined){
+                            this.searchList = res.data.data;
                         }else{
                             this.searchList=[];
                         }
-
                     })
                 } else {
                     this.searchList=[];
@@ -308,15 +404,20 @@
                 }
             },
             //hover事件
-            changeClass(index,name){
+            changeClass(index,item){
                 this.active1=index;
-                this.hovName=name;
+                this.hovName=item.real_name;
+                this.hovId=item.id;
             },
             //鼠标增加事件
-            mouseAdd(name){
-                if($.inArray(name, this.member)===-1){
-//                    this.organize
-                    this.member.push(name);
+            mouseAdd(item){
+                if($.inArray(item.real_name, this.member)===-1){
+                    let staff={}
+                    staff.flag=1;
+                    staff.id=this.hovId;
+                    staff.name=this.hovName;
+                    this.member.push(staff);
+                    this.organize.staff.push(staff);
                     this.keywords='';
                     this.search();
                     this.active1=-1;
@@ -325,7 +426,12 @@
             //键盘enter事件
             keydownAdd(){
                 if(this.hovName!==''&& $.inArray(this.hovName, this.member)===-1){
-                    this.member.push(this.hovName)
+                    let staff={}
+                    staff.flag=1;
+                    staff.id=this.hovId;
+                    staff.name=this.hovName;
+                    this.member.push(staff);
+                    this.organize.staff.push(staff);
                     this.keywords='';
                     this.search();
                     this.active1=-1;
@@ -334,52 +440,83 @@
             },
             //回车删除事件
             backSpace(){
-                if(this.keywords===''){
-                    this.member.pop();
+                if(this.keywords===''&& this.member.length>0){
+                    if(this.member[this.member.length-1].flag===1){
+                        this.member.pop();
+                        this.organize.staff.pop();
+                    }else {
+                        this.member.pop();
+                        this.organize.department.pop()
+                    }
+                    this.isChecked();
                 }
             },
             //删除成员
-            deleteName(name){
-                this.member=this.member.filter((x)=>x!==name);
+            deleteName(item){
+                this.member=this.member.filter((x)=>x!==item);
+                if(item.flag===1){
+                    this.organize.staff=this.organize.staff.filter((x)=>x!==item);
+                }else {
+                    this.organize.department=this.organize.department.filter((x)=>x!==item);
+                }
                 this.isChecked();
 
             },
-            //选择成员并发回父组件
-            selectUser(){
-                this.$emit('Staff',this.member);
-                $('#selectCustom').modal('hide');
-                this.member=[];
-            },
-//            checkedAll: function() {
-//                var _this = this;
-//                if (this.checked) {//实现全选
-//                    _this.checkboxModel = [];
-//                    _this.organizeList.forEach(function(item) {
-//                        _this.checkboxModel.push(item.name);
-//                    });
-//                }else{//实现反选
-//                    _this.checkboxModel = [];
-//                }
-//                this.member=this.checkboxModel;
-//            },
-            checkedOne:  function (name){
-                if($.inArray(name, this.member)===-1){
-                    this.member.push(name);
+            checkedOne:  function (item){
+                let _this=this;
+                let staff={};
+                let isExist=false;
+                staff.flag=2;
+                staff.id=item.id;
+                staff.name=item.name;
+                for(let i=0;i<this.member.length;i++){
+                    if(item.id===this.member[i].id){
+                        isExist=true;
+                    }
+                }
+                if(isExist===false){
+                    this.checkIndex.push(item.id);
+                    this.member.push(staff);
+                    this.organize.department.push(staff);
                 }else {
-                    this.member=this.member.filter((x)=>x!==name);
+                    this.checkIndex=this.checkIndex.filter((x)=>x!==item.id);
+                    for(let i=0;i<this.member.length;i++){
+                        if(item.id===this.member[i].id){
+                            this.member.splice(i,1)
+                            this.organize.department.splice(i,1)
+                        }
+                    }
                 }
             },
             isChecked(){
                 this.checkbox1=[];
+                this.checkIndex=[];
                 for(var i=0;i<this.member.length;i++){
                     for(var j=0;j<this.checkboxModel.length;j++){
-                        if(this.checkboxModel[j].name===this.member[i]){
+                        if(this.checkboxModel[j].name===this.member[i].name){
                             this.checkbox1.push(this.checkboxModel[j]);
+                            this.checkIndex.push(this.checkboxModel[j].id)
                         }
                     }
                 }
                 this.checkboxModel=this.checkbox1;
 
+            },
+            //选择成员并发回父组件
+            selectUser(){
+                this.$emit('Staff',this.organize);
+                $('#selectCustom').modal('hide');
+                this.organize={
+                    department:[
+
+                    ],
+                        staff:[
+
+                    ]
+                };
+                this.member=[];
+                this.checkboxModel=[];
+                this.checkIndex=[];
             },
         },
     }
@@ -424,6 +561,9 @@
     .organizeList ul li:hover{
         background: #f1f2f7;;
     }
+    .organizeList ul li:hover .btn-white{
+        background: #f1f2f7;;
+    }
     ul li{
         cursor: pointer;
         padding: 4px 20px;
@@ -462,7 +602,7 @@
         height: 38px;
         border-radius: 50%;
         border: 1px solid #eeeeee;
-        background: url(../../assets/img/chat-avatar.jpg) no-repeat -5px -5px;
+        background: url(../../../assets/img/chat-avatar.jpg) no-repeat -5px -5px;
     }
     p {
        margin: 2px;
@@ -486,5 +626,12 @@
         display: inline-block;
         line-height: 36px;
         width: 150px;
+    }
+    .btn-white{
+        width: 150px;
+        text-align: left;
+    }
+    .hide{
+        display: none;
     }
 </style>
