@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Status :state='info'></Status>
         <!--客户-->
         <section class="panel">
             <div class="panel-body">
@@ -61,9 +62,9 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus" placeholder="客户名/手机号">
                             <span class="input-group-btn">
-                            <button class="btn btn-success" type="button">搜索</button>
+                            <button class="btn btn-success" @click="sea_cus" type="button">搜索</button>
                         </span>
                         </div>
                     </div>
@@ -89,8 +90,7 @@
                             <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
                         </li>
                         <li>
-                            <h5><a href="#customModel"
-                                   @click="customers_rev('rev')">编辑</a></h5>
+                            <h5><a href="#customModel" @click="customers_rev('rev')">编辑</a></h5>
                         </li>
                         <li>
                             <h5><a>取消置顶</a></h5>
@@ -123,6 +123,7 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
+                            <th class="text-center"></th>
                             <th class="text-center">客户名称</th>
                             <th class="text-center">尊称</th>
                             <th class="text-center">手机号</th>
@@ -144,10 +145,11 @@
                                 <input id="cus_id" type="checkbox" class="pull-left"
                                        @click="rules(list.id, $event, list.name)">
                             </td>
+                            <td><a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a></td>
                             <td class="text-center">{{list.name}}</td>
-                            <td class="text-center">{{list.gender}}</td>
+                            <td class="text-center">{{select_list.gender[list.gender]}}</td>
                             <td class="text-center">{{list.mobile}}</td>
-                            <td class="text-center">{{list.customer_will}}</td>
+                            <td class="text-center">{{select_list.customer_will[list.customer_will]}}</td>
                             <td class="text-center">
                                 <a data-v-2f43a2b3="" href="#">
                                     <div data-v-2f43a2b3="" class="progress progress-striped active">
@@ -158,16 +160,18 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!--{{cus.progress}}%-->
+                                <!--<span>{{list.follow}}%</span>-->
                             </td>
-                            <td class="text-center">{{list.customer_source}}</td>
-                            <td class="text-center">{{list.customer_status}}</td>
-                            <td class="text-center">{{list.identity}}</td>
-                            <td class="text-center">{{list.person_medium}}</td>
+                            <td class="text-center">{{select_list.customer_source[list.customer_source]}}</td>
+                            <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
+                            <td class="text-center">{{select_list.identity[list.identity]}}</td>
+                            <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center"><a @click="stick(list.id)"><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
-                                <router-link to="/details">更多</router-link>
+                                <router-link :to="{path:'/details',query: {nameId: list.id}}">
+                                    更多
+                                </router-link>
                             </td>
                         </tr>
                         <tr v-show="custom_list.length === 0">
@@ -185,33 +189,38 @@
         <remindDaily :state="bool" :cus_name="cus_name"></remindDaily>
 
         <!--客户 新增/修改-->
-        <new-add @ffff="dddd" :msg="revise_state" :revise="revise_cus" :selects="select_list"></new-add>
+        <new-add @cus_list="succ" :msg="revise_state" :revise="revise_cus" :selects="select_list"></new-add>
 
         <!--分配-->
         <Distribution :msg="cus_name"></Distribution>
 
         <!--分页-->
-        <Page :pg="paging"></Page>
+        <Page @pag="sea_cus" :pg="paging"></Page>
     </div>
 </template>
 
 <script>
     import Page from '.././common/page.vue'
+    import Status from '../common/status.vue';
     import newAdd from './new_add.vue'
     import remindDaily from './remindDaily.vue'                     //修改客户
     import Distribution from '../common/distribution.vue'           //分配
 
     export default {
-        components: {Page, Distribution, newAdd, remindDaily},
+        components: {Page, Distribution, newAdd, remindDaily,Status},
         data (){
             return {
+                sea_info: '',               //客户名/手机号搜索
                 select_list: {},            //select字典
                 custom_list: [],            //列表
                 paging: '',                 //总页数
                 pitch: [],                  //选中id
                 bool: '',
                 cus_name: [],               //派发信息
+
+                temporary_save: {},         //临时储存客户
                 revise_cus: {},             //修改客户
+
                 revise_state: '',           //新增/修改客户状态
 //                搜索字典
                 sea_status: '',             //客户状态
@@ -219,28 +228,62 @@
                 sea_id: '',                 //客户身份
                 sea_source: '',             //客户来源
                 sea_type: '',               //个人/中介
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
             }
         },
         created (){
             this.collectList();
         },
         methods: {
-            dddd (val){
-                this.revise_cus = val;
+//            新增客户展示列表
+            succ (val){
+                this.custom_list.push(val);
             },
 //            客户列表
             collectList (){
-                this.$http.get('core/customer/readCustomer/id/4').then((res) => {
-                    console.log(res.data);
-                    this.custom_list = res.data;
-                    this.paging = 10;
-                });
 //                字典
-                this.$http.get('core/customer/customerWb').then((res) => {
+                this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
+//                列表
+                    this.$http.post('core/customer/customerList').then((res) => {
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    });
+                });
+
+
+            },
+//            搜索
+            sea_cus (val){
+                this.$http.post('core/customer/customerList/' + val, {
+                    customer_status: this.sea_status,
+                    customer_will: this.sea_intention,
+                    identity: this.sea_id,
+                    customer_source: this.sea_source,
+                    person_medium: this.sea_type,
+                    keywords: this.sea_info,
+                }).then((res) => {
+                    if(res.data.code === '70030'){
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    }else{
+                        this.custom_list = [];
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
                 });
             },
-
 //            增删数组
             rules (rul, eve, cus){
                 if (eve.target.checked === true) {
@@ -248,10 +291,14 @@
                     this.cus_name.push(cus);
 
                     this.$http.get('core/customer/readCustomer/id/' + rul).then((res) => {
-                        this.revise_cus = res.data.data;
+                        this.temporary_save = {};
+                        this.temporary_save = res.data.data;
+                        console.log(res.data.data);
+
                     });
                 }
                 if (eve.target.checked === false) {
+                    $('.rem_div').remove();
                     let index = this.pitch.indexOf(rul);
                     let cus_name = this.cus_name.indexOf(cus);
                     if (index > -1) {
@@ -277,11 +324,11 @@
             },
 //            修改客户
             customers_rev (val){
+                this.revise_cus = this.temporary_save;
                 this.revise_state = val;
                 $('#customModel').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
-
             },
 //            客户状态
             sea_status_s (val){
