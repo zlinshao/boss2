@@ -45,6 +45,9 @@
                     <li>
                         <a @click="oper">编辑</a>
                     </li>
+                    <li>
+                        <a data-toggle="modal" data-target="#delete">删除</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -87,6 +90,8 @@
                         <td>{{item.alreadyMoney}}</td>
                         <td>
                             <button class="btn btn-primary btn-sm">{{item.status.name}}</button>
+                            <!--<span :class="{'yellow':item.status===1,'green':item.status===2,'gray':item.status===3,}">{{dict.status[item.status]}}</span>-->
+
                         </td>
                     </tr>
 
@@ -245,7 +250,7 @@
                         </div>
                         <div v-else="add">
                             <button type="button" class="btn btn-primary">修改</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">删除</button>
+                            <!--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">删除</button>-->
                         </div>
 
                     </div>
@@ -294,6 +299,22 @@
     tbody tr input[type=checkbox]{
         width: 17px;
         height: 17px;
+    }
+    td span{
+        display: inline-block;
+        padding: 8px 12px;
+        color: white;
+        border-radius: 30px;
+        user-select: none;
+    }
+    .yellow{
+        background-color: #F9E175;
+    }
+    .gray{
+        background-color: #CCCCCC;
+    }
+    .green{
+        background-color: #83E96D;
     }
 </style>
 <script>
