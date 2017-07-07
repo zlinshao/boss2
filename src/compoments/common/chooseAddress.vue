@@ -144,7 +144,7 @@
                     .then(
                         res => this.villages = res.data.tips
                     );
-//                this.$http.defaults.withCredentials = true;
+                this.$http.defaults.withCredentials = true;
 //                this.$http.defaults.headers.common['Env'] = globalConfig.env;
             },
             searchVillage(){// 搜索小区
@@ -173,6 +173,7 @@
                         }
                     }
                     this.$emit('getChildData' , this.village);
+                    this.clearInfo();
                     $('#myModal1').modal('hide');
                 }
 

@@ -251,7 +251,7 @@
                         </div>
 
 
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label class="col-sm-3 control-label">收房价格:</label>
                             <div class="form-group col-sm-8">
                                 <label class="col-sm-3 control-label">第一年:</label>
@@ -311,8 +311,8 @@
                                     <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>
                                 </div>
                             </div>
-                        </div>
-
+                        </div>-->
+                        <FlexBox :flexData="flexData"></FlexBox>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">年限:</label>
                             <div class="col-sm-8">
@@ -408,16 +408,7 @@
     label{
         line-height: 34px;
     }
-    .col-sm-2 i{
-        line-height: 34px;
-        font-size: 20px;
-        color: #ddd;
-        /*text-align: left;*/
-        cursor: pointer;
-    }
-    .col-sm-2 i:hover{
-        color: #999;
-    }
+
     tbody tr{
         cursor: pointer;
     }
@@ -441,6 +432,7 @@
     import Page from '../../common/page.vue'
     import ChooseAddress from '../../common/chooseAddress.vue'
     import Status from '../../common/status.vue';
+    import FlexBox from '../../common/flexBox.vue'
 
     export default{
         data(){
@@ -475,6 +467,10 @@
                     success: '',
                     //失败信息 ***
                     error: ''
+                },
+                flexData : {
+                    name : '收房价格',
+                    maxLength : 5
                 }
             }
         },
@@ -485,7 +481,7 @@
         created () {
             this.payFlowList();
         },
-        components: {Page,ChooseAddress},
+        components: {Page,ChooseAddress,Status,FlexBox},
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);

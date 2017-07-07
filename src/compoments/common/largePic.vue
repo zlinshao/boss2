@@ -35,15 +35,16 @@
         position: absolute;
         font-size: 0;
         background-color: rgba(0,0,0,.4);
-        bottom: 50px;
+        bottom: 30px;
+        /*right: 0;*/
         left: 50%;
-        margin-left: -160px;
+        margin-left: -100px;
         border-radius: 30px;
     }
     .changePic div{
         display: inline-block;
         font-size: 32px;
-        width: 80px;
+        width: 50px;
         color: #ddd;
         text-align: center;
         line-height: 50px;

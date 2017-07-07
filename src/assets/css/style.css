@@ -6208,3 +6208,6 @@ header.blue-bg .search:focus {
 .panel{
     padding-top: 12px !important;
 }
+.choosed{
+    padding-bottom: 1px;
+}

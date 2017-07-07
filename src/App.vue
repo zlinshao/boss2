@@ -33,7 +33,7 @@
             HeaderVue
         },
         created (){
-            /*this.$http.get('staff/info').then((res) => {
+            this.$http.get('staff/info').then((res) => {
                 if (res.data.code === 80019) {
                     window.location.href = 'login.html'
                 } else {
@@ -42,7 +42,7 @@
                     this.urlCard = res.data.avatar;
 
                 }
-            });*/
+            });
         }
     }
 </script>
