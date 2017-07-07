@@ -8,25 +8,24 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">选择客户</h4>
+                        <h4 class="modal-title">选择客户{{keywords}}</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal tasi-form">
                             <div class="row">
                                 <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                                 <div class="col-lg-4">
-                                    <select  class="form-control">
-                                        <option value="1">个人</option>
-                                        <option value="2">中介</option>
+                                    <select  class="form-control" >
+                                        <option :value="key" v-model="clientName" v-for="(value,key) in person_medium">{{value}}</option>
                                     </select>
                                 </div>
                                 <div class="iconic-input right col-lg-4">
                                     <i class="fa fa-search"></i>
                                     <input type="text" class="form-control" placeholder="搜索客户" v-model="keywords"
-                                           @keyup.enter="search">
+                                         @keydown.enter.prevent="search"  >
                                 </div>
                                 <div class="col-lg-2">
-                                    <a class="btn btn-success">搜索</a>
+                                    <a class="btn btn-success" @click="search">搜索</a>
                                 </div>
                             </div>
                             <table class="table">
@@ -41,25 +40,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr v-for="item in customerList" >
                                     <td>
-                                        <input type="radio" name="radio">
+                                        <input type="radio" name="radio" @click="selectClient(item)">
                                     </td>
-                                    <td>客户名称</td>
-                                    <td>尊称</td>
-                                    <td>国籍</td>
-                                    <td>手机号</td>
-                                    <td>房屋地址</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="radio" name="radio">
-                                    </td>
-                                    <td>客户名称</td>
-                                    <td>尊称</td>
-                                    <td>国籍</td>
-                                    <td>手机号</td>
-                                    <td>房屋地址</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.gender}}</td>
+                                    <td>{{nationalityList[item.nationality]}}</td>
+                                    <td>{{item.mobile}}</td>
+                                    <td></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -67,7 +56,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">新增</button>
+                        <button type="button" class="btn btn-primary" @click="clientAdd">确定</button>
                     </div>
                 </div>
             </div>
@@ -79,11 +68,39 @@
         data(){
             return {
                 keywords:'',
+                clientName:'',
+                customerList:[],
+                nationalityList:[],
+                person_medium:[],
+                selectClients:[],
             }
+        },
+        mounted(){
+            this.custom();
         },
         methods : {
             search(){
-
+                if(this.keywords!==''){
+                    this.$http.post('core/customer/customerList',{'keywords':this.keywords}).then((res) => {
+                        this.customerList=res.data.data.list;
+                        this.keywords='';
+                    })
+                }
+            },
+            custom(){
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.nationalityList=res.data.nationality;
+                    this.person_medium=res.data.person_medium;
+                })
+            },
+            selectClient(item){
+                console.log(item)
+                this.selectClients=[];
+                this.selectClients=item;
+            },
+            clientAdd(){
+                this.$emit('clientAdd',this.selectClients);
+                $('#selectClient').modal('hide');
             }
         }
     }

@@ -276,6 +276,7 @@
         },
         watch:{
             editDate(val) {
+                console.log(val)
                 this.myAccount = val;
                 this.getFirstDepart();
                 this.checkboxModel=[];

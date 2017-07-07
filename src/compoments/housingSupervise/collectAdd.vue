@@ -137,7 +137,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">房屋照片</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="房屋照片" @click="selectStaff">
+                                        <input type="text" class="form-control" v-model="client"
+                                               placeholder="房屋照片" @click="selectStaff">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -157,7 +158,7 @@
                                     <div class="form-group" style="position: relative;">
                                         <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
                                         <div class="col-lg-10">
-                                            <input type="text" v-model="member" @click="selectCustom"
+                                            <input type="text" v-model="member"
                                                    class="form-control" placeholder="客户姓名">
                                         </div>
                                     </div>
@@ -223,13 +224,14 @@
                 </div>
             </div>
         </div>
-        <SelectStaff @Staff="selectMember"></SelectStaff>
-        <SelectCustom></SelectCustom>
+        <button CLASS="btn btn-white" @click="select">选择{{selectDate}}</button>
+        <SelectStaff :configures="configures" @Select="selectDateSend"></SelectStaff>
+        <SelectCustom @clientAdd="selectClient"></SelectCustom>
     </div>
 </template>
 
 <script>
-    import SelectStaff from '../common/selectStaff.vue'
+    import SelectStaff from '../common/organization/selectStaffExp.vue'
     import SelectCustom from '../common/selectClient.vue'
     export default {
         components:{SelectCustom,SelectStaff},
@@ -239,6 +241,9 @@
                 inter_state: false,             //中介
                 stat: true,
                 member:'',
+                configures:[],
+                selectDate:[],
+                client:''
             }
         },
         methods: {
@@ -246,15 +251,26 @@
                 this.customer = val;
                 this.stat = false;
             },
-            selectCustom(){
-                $('#selectCustom').modal('show');
-            },
             selectStaff(){
                 $('#selectClient').modal('show');
             },
             selectMember(val){
                 this.member=val[0]
-            }
+            },
+            select(){
+                $('#selectCustom').modal({backdrop: 'static',});
+                $('#selectCustom').modal('show');
+//                this.configures={type:'department',class:'selectType'};
+//                this.configure={id:[],class:'department'};
+//                this.configure={length:2,class:'amount'};
+            },
+            selectDateSend(val){
+                this.selectDate=[];
+                this.selectDate.push(val);
+            },
+            selectClient(val){
+                this.client=val.name;
+            },
         }
     }
 </script>
