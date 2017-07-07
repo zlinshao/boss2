@@ -41,7 +41,6 @@ import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
 
 
-import yi from "./compoments/role/1.vue";
 import  Back from './compoments/user/back.vue'
 
 export default[
