@@ -14,7 +14,11 @@
         </nav>
     </div>
 </template>
-
+<style scoped>
+    nav ul li{
+        user-select: none;
+    }
+</style>
 <script>
     export default {
         props: ['pg'],

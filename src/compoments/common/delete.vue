@@ -28,10 +28,14 @@
         methods: {
 //              确认删除
             deleteMsg () {
+                console.log(this.msg.nowIndex);
                 if (this.msg.nowIndex === -3) {
+                    // 全部删除
                     this.msg.myData = [];
                 } else {
-                    this.msg.myData.splice(this.msg.nowIndex, 1);
+//                    this.msg.myData.splice(this.msg.nowIndex, 1);
+                    this.$emit('yes');
+//                    this.dele();
                 }
             }
         }

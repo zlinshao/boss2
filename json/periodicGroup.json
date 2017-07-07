@@ -1,0 +1,62 @@
+{
+  "code": "90020",
+  "msg": "收房喜报查询成功",
+  "data": {
+    "group" : [
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "realAchieve" : 6000,
+        "goalAchieve" : 5200,
+        "balance" : 1200,
+        "collect" : 20,
+        "renting" : 5,
+        "headman" : "哈哈哈"
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "realAchieve" : 6000,
+        "goalAchieve" : 5200,
+        "balance" : 1200,
+        "collect" : 20,
+        "renting" : 5,
+        "headman" : "哈哈哈"
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "realAchieve" : 6000,
+        "goalAchieve" : 5200,
+        "balance" : 1200,
+        "collect" : 20,
+        "renting" : 5,
+        "headman" : "哈哈哈"
+      },
+      {
+        "id" : 1,
+        "region" : {
+          "id" : 1,
+          "name" : "铁心桥一组"
+        },
+        "realAchieve" : 6000,
+        "goalAchieve" : 5200,
+        "balance" : 1200,
+        "collect" : 20,
+        "renting" : 5,
+        "headman" : "哈哈哈"
+      }
+    ],
+    "user": [],
+    "pages": 5
+  }
+}

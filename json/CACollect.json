@@ -1,0 +1,185 @@
+{
+  "code": "90020",
+  "msg": "收房喜报查询成功",
+  "data": {
+    "companyAchieveCollect": [
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 2,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      },
+      {
+        "id" : 1,
+        "date" : "201702-12",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "people" : "哈哈哈",
+        "address" : "亚东观云3-403",
+        "type" : {
+          "id" : 1,
+          "name" : "商用"
+        },
+        "price" : 1200,
+        "years" : 2,
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "vacancyTime" : 30,
+        "isAgency" : 1,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000,
+        "allAchieve" : 36000
+      }
+    ],
+    "user": [],
+    "pages": 5
+  }
+}

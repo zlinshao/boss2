@@ -1,0 +1,120 @@
+{
+  "code": "90020",
+  "msg": "",
+  "data": {
+    "collectTips" : {
+      "receivables" : 1212,
+      "payables" : 54544,
+      "remainingFunds" : 54564
+    },
+    "payTips" : {
+      "payables" : 54544,
+      "payments" : 121,
+      "remainingFunds" : 54564
+    },
+    "collectFlowList": [
+      {
+        "id" : 1,
+        "people" : "颠三倒",
+        "region" : {
+          "id" : 1,
+          "name" : "啊会计师"
+        },
+        "address" : "大叔大婶多",
+        "subject" : {
+          "id" : 1,
+          "name" : "颠三倒四"
+        },
+        "account" : 213541341,
+        "receiptTime" : "45545454",
+        "receivables" : 425425,
+        "payables" : 54544,
+        "remainingFunds" : 54564,
+        "fillTime" : "4554354",
+        "price" : 25425,
+        "payWay" : {
+          "id" : 1,
+          "name" : "说的算"
+        },
+        "byHand" : "颠三倒四"
+      },
+      {
+        "id" : 2,
+        "people" : "颠三倒",
+        "region" : {
+          "id" : 1,
+          "name" : "啊会计师"
+        },
+        "address" : "大叔大婶多",
+        "subject" : {
+          "id" : 1,
+          "name" : "颠三倒四"
+        },
+        "account" : 213541341,
+        "receiptTime" : "45545454",
+        "receivables" : 425425,
+        "payables" : 54544,
+        "remainingFunds" : 54564,
+        "fillTime" : "4554354",
+        "price" : 25425,
+        "payWay" : {
+          "id" : 1,
+          "name" : "说的算"
+        },
+        "byHand" : "颠三倒四"
+      }
+    ],
+    "payFlowList": [
+      {
+        "id" : 1,
+        "people" : "说的算",
+        "region" : {
+          "id" : 1,
+          "name" : "对对对"
+        },
+        "address" : "的士速递",
+        "expenditureAccount" : "打打球多",
+        "account" : 43353456,
+        "receivables" : 425425,
+        "payables" : 54544,
+        "remainingFunds" : 54564,
+        "payTime" : "4654565",
+        "fillTime" : "4554354",
+        "payWay" : {
+          "id" : 1,
+          "name" : "说的算"
+        },
+        "vacancyTime" : 20,
+        "collectPrice" : "1000,1200,1300",
+        "years" : 5,
+        "byHand" : "颠三倒四"
+      },
+      {
+        "id" : 2,
+        "people" : "说的算",
+        "region" : {
+          "id" : 1,
+          "name" : "对对对"
+        },
+        "address" : "的士速递",
+        "expenditureAccount" : "打打球多",
+        "account" : 43353456,
+        "receivables" : 425425,
+        "payables" : 54544,
+        "remainingFunds" : 54564,
+        "payTime" : "4654565",
+        "fillTime" : "4554354",
+        "payWay" : {
+          "id" : 1,
+          "name" : "说的算"
+        },
+        "vacancyTime" : 20,
+        "collectPrice" : "1000,1200,1300",
+        "years" : 5,
+        "byHand" : "颠三倒四"
+      }
+    ],
+    "user": [],
+    "pages": 5
+  }
+}

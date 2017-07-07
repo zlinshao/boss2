@@ -7,45 +7,26 @@
             <li class="active">租房</li>
         </ol>
 
-        <div class="col-lg-12">
+        <div class="panel col-lg-12">
             <form class="form-inline clearFix" role="form">
 
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">全部</option>
-                        <option value="1">南京</option>
-                        <option value="2">苏州</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">全部</option>
-                        <option value="1">仙林一组</option>
-                        <option value="2">河西一组</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">全部</option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">对对对</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
+                <Cascade @change="getCascadeData"></Cascade>
+
+                <!--<div class="dropdown form-group">
                     <select name="" class="form-control">
                         <option value="0">全部</option>
                         <option value="1">鸡腿</option>
                         <option value="2">梦想</option>
                     </select>
-                </div>
+                </div>-->
 
-                <div class="form-group">
-                    <label class="sr-only" for="star_time">开始时间</label>
-                    <input type="date" class="form-control" id="star_time" placeholder="开始时间">
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="end_time">结束时间</label>
-                    <input type="date" class="form-control" id="end_time" placeholder="结束时间">
+                <div class="form-group datetime">
+                    <label>
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                    </label>
+                    <label>
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                    </label>
                 </div>
 
                 <div class="input-group bootstrap-timepicker">
@@ -75,33 +56,34 @@
                         <th class="text-center">付款方式</th>
                         <th class="text-center">租房价格</th>
                         <th class="text-center">价格差</th>
-                        <th class="text-center">空置期差</th>
+                        <th class="text-center">空置期</th>
                         <th class="text-center">总业绩</th>
                         <th class="text-center">租实际业绩</th>
                         <th class="text-center">租溢出业绩</th>
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                        <router-link tag="tr" class="text-center" :to="{path:'calc' , query:{id:1}}">
-                            <td>LJS321456</td>
-                            <td>啊啊啊</td>
-                            <td>2017/12/12</td>
-                            <td>2017/12/12</td>
-                            <td>北苑二村18-205</td>
-                            <td>马群一组</td>
-                            <td>一年付</td>
-                            <td>680</td>
-                            <td>20</td>
-                            <td>20</td>
-                            <td>8160</td>
-                            <td>4080</td>
-                            <td>3672</td>
-                        </router-link>
+                    <router-link tag="tr" class="text-center" :key="item.id" :to="{path:'calc' , query:{address:item.address}}" v-for="item in myData">
+                        <td>{{item.identify}}</td>
+                        <td>{{item.people}}</td>
+                        <td>{{item.startDate}}</td>
+                        <td>{{item.finishDate}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.region.name}}</td>
+                        <td>{{item.payWay.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.priceBalance}}</td>
+                        <td>{{item.vacancyTime}}</td>
+                        <td>{{item.allAchieve}}</td>
+                        <td>{{item.realAchieve}}</td>
+                        <td>{{item.moreAchieve}}</td>
+                    </router-link>
                     </tbody>
                 </table>
             </section>
         </div>
-
+        <!--分页-->
+        <Page :pg="paging" @pag="getData"></Page>
     </div>
 </template>
 <style scoped>
@@ -111,21 +93,79 @@
 </style>
 <script>
     import Modal from './WAModal.vue'
+    import Page from '../../common/page.vue'
+    import Cascade from '../../common/cascade.vue'
+
     export default{
         data(){
             return {
-                id : ''
+                id : '',
+                params : {
+                    city: '',
+                    group: "",
+                    people: "",
+                    region: "",
+                    startDataTime : '',
+                    finishDataTime : '',
+                    searchInfo : ''
+                },
+                myData : [],
+                paging : ''
             }
         },
+        created (){
+            this.caRentingList();
+        },
+        updated (){
+//            时间选择
+            this.remindData();
+        },
         components: {
-            Modal
+            Modal,
+            Page,
+            Cascade
         },
         methods : {
+            caRentingList (){
+                this.$http.get('json/WARenting.json').then((res) => {
+//                    this.collectList = res.data.data.gleeFulCollect;
+                    this.myData = res.data.data.wageAchieveRenting;
+//                    console.log(res.data);
+                    this.paging = res.data.data.pages;
+                })
+            },
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+//                    console.log($(ev.target).attr('placeholder'));
+//                    console.log(ev.target.placeholder);
+                    if (ev.target.placeholder == '开始时间'){
+                        this.params.startDataTime = ev.target.value;
+                    } else {
+                        this.params.finishDataTime = ev.target.value;
+                    }
+//                    console.log(this.startDataTime);
+                }.bind(this));
+            },
             showDetail(num){
                 this.id = num;
             },
             search(){
-
+                console.log(this.params);
+            },
+            getData(data){
+                console.log(data);
+            },
+            getCascadeData(data){
+                for(var attr in data){
+                    this.params[attr]=data[attr];
+                }
             }
         }
     }

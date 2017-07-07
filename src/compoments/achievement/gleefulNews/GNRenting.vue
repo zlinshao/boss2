@@ -6,43 +6,25 @@
             <li class="active">租房</li>
         </ol>
 
-        <div class="col-lg-12">
-            <form class="form-inline clearFix" role="form">
+        <div class="panel col-lg-12">
+            <form class="form-inline clearFix" v-show="operId==0" role="form">
+
+                <Cascade @change="getCascadeData"></Cascade>
 
                 <div class="dropdown form-group">
                     <select name="" class="form-control">
-                        <option value="0">全部</option>
-                        <option value="1">南京</option>
-                        <option value="2">苏州</option>
-                    </select>
-                </div>
-
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">玄武</option>
-                        <option value="1">栖霞</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">组员</option>
+                        <option value="">组员</option>
                         <option value="1">组员</option>
                         <option value="2">组员</option>
                     </select>
                 </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="0">新租</option>
-                        <option value="1">续租</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="star_time">开始时间</label>
-                    <input type="date" class="form-control" id="star_time" placeholder="开始时间">
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="end_time">结束时间</label>
-                    <input type="date" class="form-control" id="end_time" placeholder="结束时间">
+                <div class="form-group datetime">
+                    <label>
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                    </label>
+                    <label>
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                    </label>
                 </div>
                 <div class="input-group bootstrap-timepicker">
                     <label class="sr-only" for="search_info">搜索</label>
@@ -57,6 +39,14 @@
                     </a>
                 </div>
             </form>
+            <div class="choosed" v-show="operId!=0">
+                <ul class="clearFix">
+                    <li><a>已选中&nbsp;1&nbsp;项</a></li>
+                    <li>
+                        <a @click="oper">编辑</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
 
@@ -66,60 +56,37 @@
                 <table class="table table-striped table-advance table-hover">
                     <thead>
                     <tr>
+                        <th></th>
                         <th class="text-center">喜报日期</th>
-                        <th class="text-center">喜报情况</th>
+                        <th class="text-center">租房情况</th>
                         <th class="text-center">租房片区</th>
                         <th class="text-center">租房签约人</th>
                         <th class="text-center">房屋地址</th>
                         <th class="text-center">付款方式</th>
                         <th class="text-center">租房价格</th>
                         <th class="text-center">已收类型</th>
-                        <th class="text-center">已收金额</th>
-                        <th class="text-center">租实际业绩</th>
-                        <th class="text-center">租溢出业绩</th>
-                        <th class="text-center">总业绩</th>
+                        <th class="text-center">已收款项</th>
                         <th class="text-center">喜报状态</th>
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr class="text-center">
-                        <td>2017-05-18</td>
-                        <td>新租</td>
-                        <td>秦淮一组</td>
-                        <td>彩云姐</td>
+                    <tr class="text-center" :key="item.id" v-for="(item,index) in cont.myData">
                         <td>
-                            亚东观云 <br>
-                            3-403
+                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
                         </td>
-                        <td>半年付</td>
-                        <td>35000</td>
-                        <td>部分定金</td>
-                        <td>35000</td>
-                        <td>35000</td>
-                        <td>35000</td>
-                        <td>35000</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.situation.name}}</td>
+                        <td>{{item.region.name}}</td>
+                        <td>{{item.people}}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" disabled>已退单</button>
+                            {{item.address}}
                         </td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>2017-05-18</td>
-                        <td>新租</td>
-                        <td>秦淮一组</td>
-                        <td>彩云姐</td>
+                        <td>{{item.type.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.alreadyType.name}}</td>
+                        <td>{{item.alreadyMoney}}</td>
                         <td>
-                            亚东观云 <br>
-                            3-403
-                        </td>
-                        <td>半年付</td>
-                        <td>35000</td>
-                        <td>部分定金</td>
-                        <td>35000</td>
-                        <td>35000</td>
-                        <td>35000</td>
-                        <td>35000</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" @click="operGleefulNews(1)" data-toggle="modal" data-target="#myModal">待审核</button>
+                            <button class="btn btn-primary btn-sm">{{item.status.name}}</button>
                         </td>
                     </tr>
 
@@ -139,68 +106,134 @@
                         <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
                     </div>
                     <div class="modal-body clearFix">
-                        <div class="col-lg-6 renting">
-                            <div class="modalList">
-                                <span>房屋地址:</span>
-                                <input type="text" class="form-control">
+                        <div class="renting clearFix">
+
+                            <div class="form-group">
+                                <label for="villageName" class="col-sm-3 control-label">小区名称:</label>
+                                <div class="col-sm-8 input-group">
+                                    <input title="请点击选择" type="text" class="form-control" id="villageName" v-model="formData.village.villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>租房签约人:</span>
-                                <input type="text" class="form-control">
+                            <!--<div class="form-group">
+                                <label for="villageAddress" class="control-label">地址:</label>
+                                <div>
+                                    <input type="text" class="form-control" id="villageAddress" v-model="formData.villageAddress" readonly>
+                                </div>
+                            </div>-->
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">栋:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" v-model="formData.building" @blur="searchCollectInfo">
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>租房情况:</span>
-                                <input type="text" class="form-control">
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">室:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" v-model="formData.room" @blur="searchCollectInfo">
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>租房片区:</span>
-                                <select name="" class="form-control">
-                                    <option value="0">马群</option>
-                                    <option value="1">迈皋桥</option>
-                                </select>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">租房签约人:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" v-model="formData.people">
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>付款方式:</span>
-                                <select name="" class="form-control">
-                                    <option value="0">季付</option>
-                                    <option value="1">月付</option>
-                                </select>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">租房情况:</label>
+                                <div class="col-sm-8">
+                                    <div class="dropdown">
+                                        <select name="" class="form-control" v-model="formData.situation">
+                                            <option value="1">转租</option>
+                                            <option value="2">调租</option>
+                                            <option value="3">续租</option>
+                                            <option value="4">新租</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>租房价格:</span>
-                                <input type="number" class="form-control">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">租房片区:</label>
+                                <div class="col-sm-8">
+                                    <div class="dropdown">
+                                        <select name="" class="form-control" v-model="formData.region">
+                                            <option value="1">马群</option>
+                                            <option value="2">迈皋桥</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>已收类型:</span>
-                                <select name="" class="form-control">
-                                    <option value="0">季付</option>
-                                    <option value="1">月付</option>
-                                </select>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">付款方式:</label>
+                                <div class="col-sm-8">
+                                    <div class="dropdown">
+                                        <select name="" class="form-control" v-model="formData.payWay">
+                                            <option value="1">季付</option>
+                                            <option value="2">月付</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="modalList">
-                                <span>已收金额:</span>
-                                <input type="number" class="form-control">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">租房价格:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" min="0" class="form-control" v-model="formData.price">
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>是否中介:</span>
-                                <input type="text" class="form-control">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">已收类型:</label>
+                                <div class="col-sm-8">
+                                    <div class="dropdown">
+                                        <select name="" class="form-control" v-model="formData.alreadyType">
+                                            <option value="1">季付</option>
+                                            <option value="2">月付</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">已收金额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" min="0" class="form-control" v-model="formData.alreadyMoney">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否中介:</label>
+                                <div class="col-sm-8">
+                                    <div class="dropdown">
+                                        <select name="" class="form-control" v-model="formData.isAgency">
+                                            <option value="1">是</option>
+                                            <option value="2">否</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 collect">
-                            <div class="modalList">
-                                <span>收房签约人:</span>
-                                <input type="text" class="form-control" disabled>
+                        <div class="collect clearFix">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">收房签约人:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" readonly v-model="formData.collectPeople">
+                                </div>
                             </div>
-                            <div class="modalList">
-                                <span>房屋类型:</span>
-                                <select name="" class="form-control" disabled>
-                                    <option value="0">住宅</option>
-                                    <option value="1">商用</option>
-                                </select>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">房屋类型:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" readonly v-model="formData.type.name">
+                                </div>
+
                             </div>
-                            <div class="modalList">
-                                <span>房屋价格:</span>
-                                <input type="number" class="form-control" disabled>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">房屋价格:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" min="0" class="form-control" readonly v-model="formData.collectPrice">
+                                </div>
                             </div>
                         </div>
 
@@ -212,39 +245,225 @@
                         </div>
                         <div v-else="add">
                             <button type="button" class="btn btn-primary">修改</button>
-                            <button type="button" class="btn btn-danger">取消合作</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">删除</button>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--模态框 删除-->
+        <Delete :msg="cont" @yes="dele"></Delete>
+
+        <!--分页-->
+        <Page :pg="paging" @pag="getData"></Page>
+
+        <!--选择小区控件-->
+        <ChooseAddress @getChildData="getAddress"></ChooseAddress>
+
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 </template>
 <style scoped>
-
+    .pull-right{
+        padding-top: 5px;
+    }
+    label{
+        line-height: 34px;
+    }
+    .choosed{
+        /*padding-bottom: 10px;*/
+    }
+    .choosed ul li{
+        float: left;
+    }
+    .choosed ul li+li:before{
+        content: '|';
+        display: inline-block;
+        margin: 0 10px;
+    }
+    div.input-group{
+        padding: 0 15px;
+    }
+    .collect{
+        border-top: 1px dashed #ddd;
+        padding-top: 20px;
+    }
+    tbody tr input[type=checkbox]{
+        width: 17px;
+        height: 17px;
+    }
 </style>
 <script>
+    import Page from '../../common/page.vue'
+    import Delete from '../../common/delete.vue'
+    import Cascade from '../../common/cascade.vue'
+    import ChooseAddress from '../../common/chooseAddress.vue'
+    import Status from '../../common/status.vue';
+
     export default{
         data(){
             return {
+                operId : 0,
+//                rentingtList : [],
+                paging : '',
+                page : 1,
+
                 title : '',
-                add : true      // 是否新增
+                add : true,      // 是否新增
+                cont: {
+                    myData: [],      //列表数据
+                    nowIndex: '',      //删除索引
+                },
+                formData : {
+//                    villageAddress : '',
+                    building : '',      // 栋
+                    room : '',          // 室
+                    people : '',
+                    situation : 1,
+                    region : 1,
+                    payWay : 1,
+                    price : '',
+                    alreadyType : 1,
+                    alreadyMoney : '',
+                    isAgency : 1,
+
+                    collectPeople : '',
+                    type : '',
+                    collectPrice : '',
+                    village : {
+                        villageName : ''       // 小区名称
+                    }
+                },
+
+                params : {
+                    city: '',
+                    group: "",
+                    people: "",
+                    region: "",
+                    startDataTime : '',
+                    finishDataTime : '',
+                    searchInfo : ''
+                },
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
 
             }
         },
-        components: {},
+        created (){
+            this.gnRentingList();
+        },
+        updated (){
+//            时间选择
+            this.remindData();
+        },
+        components: {Page,Delete,Cascade,ChooseAddress,Status},
         methods : {
+            changeIndex(ev,id){
+//                console.log("一开始"+this.operId);
+                if (ev.currentTarget.checked){
+                    this.operId = id;
+//                    console.log(this.operId);
+                }else {
+                    this.operId = 0;
+                }
+
+
+            },
+            gnRentingList (){
+                this.$http.get('json/GNRenting.json').then((res) => {
+                    this.cont.myData = res.data.data.gleeFulRenting;
+//                    console.log(res.data);
+                    this.paging = res.data.data.pages;
+                })
+            },
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+//                    console.log($(ev.target).attr('placeholder'));
+//                    console.log(ev.target.placeholder);
+                    if (ev.target.placeholder === '开始时间'){
+                        this.params.startDataTime = ev.target.value;
+                    } else {
+                        this.params.finishDataTime = ev.target.value;
+                    }
+//                    console.log(this.startDataTime);
+                }.bind(this));
+            },
             addGleefulNews(){
                 this.title = '新增租房喜报';
                 this.add = true;
             },
-            operGleefulNews(num){
+            operGleefulNews(id,index){
                 this.title = '编辑租房喜报';
                 this.add = false;
+                this.cont.nowIndex = index;
             },
             search(){
+                console.log(this.params);
+            },
+            dele(){
+                alert(2);
+            },
+            getData(data){
+                // 页数
+                console.log(data);
+            },
+            getCascadeData(data){
+                console.log(data);
+                for(var attr in data){
+                    this.params[attr]=data[attr];
+                }
+            },
+            clearForm(){
+                $('#myModal').find('input').val('');
+                $('#myModal').find('select').val('');
 
+                $('#myModal').modal('hide');
+            },
+            getAddress(data){
+                console.log(data);
+                this.formData.village = data;
+//                console.log(this.formData.village);
+//                this.formData.villageAddress = data.district+data.address;
+            },
+            searchCollectInfo(){
+                // 根据房屋地址获取收房信息
+                var that = this;
+
+                if (that.formData.village.villageName.length!=0 && that.formData.building.length!=0 && that.formData.room.length!=0){
+                    let houseInfo =  that.formData.village.villageName+that.formData.building+this.formData.room;
+
+                    // 回调
+                    /*that.formData.collectPeople = res.people;
+                    that.formData.type = res.type.name;
+                    that.formData.collectPrice = res.price;*/
+                }
+            },
+            oper(){
+                console.log(this.operId);
+
+                //                请求成功打开模态框
+                $('#myModal').modal('show');
+//                失败弹出错误信息
+                /*this.info.state_error = true;
+                 this.info.error = '您没有编辑权限';*/
             }
         }
     }

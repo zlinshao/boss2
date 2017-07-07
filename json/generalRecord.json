@@ -1,0 +1,58 @@
+{
+  "code": "90020",
+  "msg": "",
+  "data": {
+    "generalRecordList": [
+      {
+        "id" : 1,
+        "date" : "4524",
+        "outOfAccount" : 45454545445,
+        "outAccountBalance" : 5454,
+        "turnInAccount" : 1212121212,
+        "turnInAccountBalance" : 2323,
+        "transferamount" : 1212,
+        "people" : "神叨叨",
+        "remark" : "颠三倒四"
+
+      },
+      {
+        "id" : 2,
+        "date" : "4524",
+        "outOfAccount" : 45454545445,
+        "outAccountBalance" : 5454,
+        "turnInAccount" : 1212121212,
+        "turnInAccountBalance" : 2323,
+        "transferamount" : 1212,
+        "people" : "神叨叨",
+        "remark" : "颠三倒四"
+
+      },
+      {
+        "id" : 3,
+        "date" : "4524",
+        "outOfAccount" : 45454545445,
+        "outAccountBalance" : 5454,
+        "turnInAccount" : 1212121212,
+        "turnInAccountBalance" : 2323,
+        "transferamount" : 1212,
+        "people" : "神叨叨",
+        "remark" : "颠三倒四"
+
+      },
+      {
+        "id" : 4,
+        "date" : "4524",
+        "outOfAccount" : 45454545445,
+        "outAccountBalance" : 5454,
+        "turnInAccount" : 1212121212,
+        "turnInAccountBalance" : 2323,
+        "transferamount" : 1212,
+        "people" : "神叨叨",
+        "remark" : "颠三倒四"
+
+      }
+    ],
+    "user": [],
+    "pages": 5
+  }
+}

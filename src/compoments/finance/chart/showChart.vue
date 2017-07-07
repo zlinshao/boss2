@@ -68,28 +68,27 @@
             return {
                 x : [],      // 横坐标
                 screenWidth: document.body.clientWidth,      // 页面宽度
-                myChart1 : '',
-                mtChart2 : '',
-                mtChart3 : '',
-                mtChart4 : ''
+                myChart : [],
+                collectData : [],
+                rentingData : [],
+                goalData : [],
+                finishData : []
             }
         },
         components: {},
-        created : function () {
-            console.log(macarons);
-
+        created (){
         },
         mounted : function () {
-            this.myChart1 = this.$echarts.init(document.getElementById('collect'),shine);
-            this.myChart2 = this.$echarts.init(document.getElementById('renting'));
-            this.myChart3 = this.$echarts.init(document.getElementById('goal'),macarons);
-            this.myChart4 = this.$echarts.init(document.getElementById('finish'),macarons);
+            this.myChart[0] = this.$echarts.init(document.getElementById('collect'));
+            this.myChart[1] = this.$echarts.init(document.getElementById('renting'));
+            this.myChart[2] = this.$echarts.init(document.getElementById('goal'));
+            this.myChart[3] = this.$echarts.init(document.getElementById('finish'));
 
+            this.getData();
             this.getCurrentMonth();
-            this.collect();
-            this.renting();
-            this.goal();
-            this.finish();
+
+
+
             let that = this;
             window.onresize = () => {
                 return (() => {
@@ -107,10 +106,11 @@
                     setTimeout(function () {
                         // that.screenWidth = that.$store.state.canvasWidth
 //                        console.log(that.screenWidth);
-                        that.myChart1.resize();
-                        that.myChart2.resize();
-                        that.myChart3.resize();
-                        that.myChart4.resize();
+                        for (let i = 0 ; i < that.myChart.length ; i++){
+                            (function () {
+                                that.myChart[i].resize();
+                            })(i)
+                        }
                         that.timer = false;
                     }, 200)
                 }
@@ -130,15 +130,6 @@
                 }
             },
             collect(){
-                // 过渡---------------------
-                this.myChart1.showLoading({
-                    text: '正在努力的读取数据中...',    //loading话术
-                });
-                // ajax getting data...............
-
-                // ajax callback
-                this.myChart1.hideLoading();
-
                 var option = {
                     title : {
                         text: '每月收房套数',
@@ -177,7 +168,7 @@
                         {
                             name:'收房套数',
                             type:'line',
-                            data:[6, 11, 15, 13, 25, 13],
+                            data:this.collectData,
                             markPoint : {
                                 data : [
                                     {type : 'max', name: '最大值'},
@@ -192,18 +183,10 @@
                         }
                     ]
                 };
-                this.myChart1.setOption(option);
+//                console.log(this.myChart);
+                this.myChart[0].setOption(option);
             },
             renting(){
-                // 过渡---------------------
-                this.myChart2.showLoading({
-                    text: '正在努力的读取数据中...',    //loading话术
-                });
-                // ajax getting data...............
-
-                // ajax callback
-                this.myChart2.hideLoading();
-
                 var option = {
                     title : {
                         text: '每月租房套数',
@@ -242,7 +225,7 @@
                         {
                             name:'收房套数',
                             type:'line',
-                            data:[6, 11, 15, 13, 25, 13],
+                            data:this.rentingData,
                             markPoint : {
                                 data : [
                                     {type : 'max', name: '最大值'},
@@ -257,18 +240,9 @@
                         }
                     ]
                 };
-                this.myChart2.setOption(option);
+                this.myChart[1].setOption(option);
             },
             goal(){
-                // 过渡---------------------
-                this.myChart3.showLoading({
-                    text: '正在努力的读取数据中...',    //loading话术
-                });
-                // ajax getting data...............
-
-                // ajax callback
-                this.myChart3.hideLoading();
-
                 var option = {
                     title : {
                         text: '每月目标业绩',
@@ -307,7 +281,7 @@
                         {
                             name:'收房套数',
                             type:'line',
-                            data:[6, 11, 15, 13, 25, 13],
+                            data:this.goalData,
                             markPoint : {
                                 data : [
                                     {type : 'max', name: '最大值'},
@@ -322,18 +296,9 @@
                         }
                     ]
                 };
-                this.myChart3.setOption(option);
+                this.myChart[2].setOption(option);
             },
             finish(){
-                // 过渡---------------------
-                this.myChart4.showLoading({
-                    text: '正在努力的读取数据中...',    //loading话术
-                });
-                // ajax getting data...............
-
-                // ajax callback
-                this.myChart4.hideLoading();
-
                 var option = {
                     title : {
                         text: '每月完成的业绩',
@@ -372,7 +337,7 @@
                         {
                             name:'收房套数',
                             type:'line',
-                            data:[6, 11, 15, 13, 25, 13],
+                            data:this.finishData,
                             markPoint : {
                                 data : [
                                     {type : 'max', name: '最大值'},
@@ -387,8 +352,46 @@
                         }
                     ]
                 };
-                this.myChart4.setOption(option);
+                this.myChart[3].setOption(option);
             },
+            getData(){
+                // 过渡---------------------
+//                console.log(this.myChart.length);
+                var that = this;
+                for (let i = 0 ; i < this.myChart.length ; i++){
+                    (function () {
+                        that.myChart[i].showLoading({
+                            text: '正在努力的读取数据中...',    //loading话术
+                        });
+                    })(i)
+                }
+
+                // ajax getting data...............
+
+                this.$http.get('json/chartData.json').then((res) => {
+//                    console.log(res.data);
+                    for (let i = 0 ; i < that.myChart.length ; i++){
+                        (function () {
+                            that.myChart[i].hideLoading();
+                        })(i)
+                    }
+
+                    that.collectData = res.data.data.collect;
+//                    console.log(that.collectData);
+                    that.rentingData = res.data.data.renting;
+                    that.goalData = res.data.data.goal;
+                    that.finishData = res.data.data.finish;
+
+
+                    that.collect();
+                    that.renting();
+                    that.goal();
+                    that.finish();
+                })
+                // ajax callback
+//                this.myChart2.hideLoading();
+
+            }
 
         }
     }

@@ -227,9 +227,7 @@
         padding: 8px;
         padding-bottom: 0;
     }
-    .datetime{
-        padding-top: 5px;
-    }
+
     input[type=checkbox],input[type=radio]{
         width: 17px;
         height: 17px;

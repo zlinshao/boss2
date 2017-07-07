@@ -175,9 +175,22 @@
         font-size: 15px;
         line-height: 40px;
     }
-    .renting{
-        border-right: 2px dashed #ddd;
+    .collect, .renting{
+        padding: 20px 0;
     }
+    @media (min-width: 1200px){
+        .renting{
+            border-right: 2px dashed #ddd;
+        }
+    }
+    @media (max-width: 1199px){
+        .renting{
+            border-bottom: 2px dashed #ddd;
+        }
+    }
+    /*.renting{
+        border-right: 2px dashed #ddd;
+    }*/
     .compareContainer{
         background-color: white;
         border-radius: 10px;
@@ -189,12 +202,19 @@
     export default{
         data(){
             return {
-                id : ''
+                address : '',
+                collect : {
+
+                },
+                renting : {
+
+                }
             }
         },
         components: {},
         created : function () {
-            this.id = this.$route.query.id;
+            this.address = this.$route.query.address;
+//            console.log(this.address);
         }
     }
 </script>

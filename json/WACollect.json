@@ -1,0 +1,32 @@
+{
+  "code": "90020",
+  "msg": "收房喜报查询成功",
+  "data": {
+    "wageAchieveCollect": [
+      {
+        "id" : 1,
+        "identify" : "LSJ245245",
+        "people" : "花花胡",
+        "startDate" : "2017-02-23",
+        "finishDate" : "2017-02-23",
+        "address" : "亚东观云3-403",
+        "region" : {
+          "id" : 1,
+          "name" : "秦淮一组"
+        },
+        "payWay" : {
+          "id" : 1,
+          "name" : "季付"
+        },
+        "price" : 1200,
+        "priceBalance" : 100,
+        "vacancyTime" : 30,
+        "allAchieve" : 36000,
+        "realAchieve" : 35000,
+        "moreAchieve" : 2000
+      }
+    ],
+    "user": [],
+    "pages": 3
+  }
+}
