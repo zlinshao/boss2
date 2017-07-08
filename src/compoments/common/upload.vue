@@ -3,28 +3,28 @@
         <div class="dropzone form-horizontal">
             <div @click="uploadPic(result)" :id="result">
 
-                <div v-for="(p, index) in pic_id"
+                <div v-for="(p, index) in idPhotos.cus_idPhotos"
                      class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                     <div class="dz-image">
-                        <img data-dz-thumbnail="" alt="" :src="p.big">
+                        <img data-dz-thumbnail="" alt="" :src="p.small">
                     </div>
                     <a class="dz-remove" @click="rules(index)">删除图片</a>
                 </div>
 
             </div>
         </div>
-        {{pic_id}}{{pics}}
     </div>
 </template>
 
 <script>
     export default {
-        props: ['result', 'pic_id'],
+        props: ['result', 'idPhotos'],
         data () {
             return {
                 pics: [],
             };
         },
+
         methods: {
             rules (rul){
                 let index = this.pics.indexOf(rul);
@@ -32,11 +32,11 @@
                     this.pics.splice(index, 1);
                 }
                 this.$emit('delete', rul);
-                this.$delete(this.pic_id, rul);
+                this.$delete(this.idPhotos.cus_idPhotos, rul);
             },
 
             uploadPic (res){
-
+                this.pics = this.idPhotos.cus_idPhoto;
                 let _this = this;
                 let myDropzone = new Dropzone('#' + res, {
                     url: globalConfig.pic_address,
@@ -57,7 +57,7 @@
                             //上传成功时触发的事件
                         });
                         this.on("addedfile", function (file) {
-//                            console.log(file.previewTemplate.outerText);
+                            $(file._removeLink.offsetParent).addClass('rem_div');
                             //上传文件时触发的事件
                         });
                         this.on("queuecomplete", function (file) {

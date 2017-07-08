@@ -5,14 +5,14 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        客户信息
+                        客户信息{{cus_Id}}
                         <!--编辑-->
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a data-toggle="modal" href="#customModel">编辑</a></li>
+                                <li><a href="#customModel" @click="customers_rev('rev')">编辑</a></li>
                                 <li><a>增加提醒</a></li>
                                 <!--<li class="divider"></li>-->
                             </ul>
@@ -22,46 +22,64 @@
                         <a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a>
                     </h4>
                 </header>
-                <div class="panel-body table-responsive client_info">
+                <div class="panel-body table-responsive client_info" v-for="info in cus_info">
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <div><span class="text-primary">客户姓名：</span><span>诸葛孔明 lorem</span></div>
-                            <div><span class="text-primary">尊称：</span><span>先生</span></div>
-                            <div><span class="text-primary">生日：</span><span>1990-01-01</span></div>
-                            <div><span class="text-primary">手机号：</span><span>15151515151</span></div>
-                            <div><span class="text-primary">负责人：</span><span>黑骑，蓝染</span></div>
+                            <div><span class="text-primary">客户姓名：</span><span>{{info.name}}</span></div>
+                            <div><span class="text-primary">尊称：</span>
+                                <span>{{select_list.gender[info.gender]}}</span>
+                            </div>
+                            <div><span class="text-primary">手机号：</span><span>{{info.mobile}}</span></div>
+                            <div><span class="text-primary">负责人：</span><span>{{info.staff_id}}</span></div>
                         </div>
                         <div class="col-md-8">
-                            <div><span class="text-primary">客户身份：</span><span>业主/租客</span></div>
+                            <div><span
+                                    class="text-primary">客户身份：</span><span>{{select_list.identity[info.identity]}}</span>
+                            </div>
                             <div><span style="vertical-align: top;" class="text-primary">跟进进度：</span>
                                 <a data-v-2f43a2b3="" href="#">
                                     <div data-v-2f43a2b3="" class="progress1 progress progress-striped active">
                                         <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
-                                             :style="{ width: progress + '%'}">
-                                            <span data-v-2f43a2b3="" class="sr-only">{{progress}}%</span>
+                                             :style="{ width: cus_progress + '%'}">
+                                            <span data-v-2f43a2b3="" class="sr-only">{{cus_progress}}%</span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                            <div><span class="text-primary">客户意向：</span><span>高</span></div>
-                            <div><span class="text-primary">客户来源：</span><span>客户推荐</span></div>
+                            <div><span
+                                    class="text-primary">客户意向：</span><span>{{select_list.customer_will[info.customer_will]}}</span>
+                            </div>
+                            <div><span
+                                    class="text-primary">客户来源：</span><span>{{select_list.customer_source[info.customer_source]}}</span>
+                            </div>
                         </div>
                     </div>
                     <div v-if="open_on" class="col-md-12">
                         <div class="col-md-4">
-                            <div><span class="text-primary">婚姻状况：</span><span>未婚</span></div>
-                            <div><span class="text-primary">QQ：</span><span>123456</span></div>
-                            <div><span class="text-primary">邮箱：</span><span>123456@qq.com</span></div>
-                            <div><span class="text-primary">性格：</span><span>和蔼可亲</span></div>
-                            <div><span class="text-primary">备注：</span><span>无</span></div>
+                            <div><span
+                                    class="text-primary">婚姻状况：</span><span>{{select_list.marriage_status[info.marriage_status]}}</span>
+                            </div>
+                            <div><span class="text-primary">QQ：</span><span>{{info.qq}}</span></div>
+                            <div><span class="text-primary">邮箱：</span><span>{{info.e_mail}}</span></div>
+                            <div><span
+                                    class="text-primary">性格：</span><span>{{select_list.character[info.character]}}</span>
+                            </div>
+                            <div><span class="text-primary">备注：</span><span>{{info.remarks}}</span></div>
                         </div>
                         <div class="col-md-8">
-                            <div><span class="text-primary">客户状态：</span><span>跟进中</span></div>
-                            <div><span class="text-primary">客户优先级：</span><span>80</span></div>
-                            <div><span class="text-primary">个人/中介：</span><span>个人</span></div>
-                            <div><span class="text-primary">身份证号：</span><span>320320320320320320</span></div>
-                            <div><span class="text-primary">身份张照片：</span><span>320320320320320320</span></div>
+                            <div><span
+                                    class="text-primary">客户状态：</span><span>{{select_list.customer_status[info.customer_status]}}</span>
+                            </div>
+                            <div><span
+                                    class="text-primary">个人/中介：</span><span>{{select_list.person_medium[info.person_medium]}}</span>
+                            </div>
+                            <div><span class="text-primary">身份证号：</span><span>{{info.id_num}}</span></div>
+                            <div><span class="text-primary">身份张照片：</span>
+                                <a  data-toggle="modal" href="#myModal2" v-for="pic in photos" style="margin: 10px 10px 0 0;display: inline-block;">
+                                    <img :src="pic.small">
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="text-right">
@@ -70,10 +88,8 @@
                         <a class="text-primary" v-if="open_on" @click="open_close">收起&nbsp;&nbsp;<i
                                 class="fa fa-sort-amount-desc"></i></a></div>
                 </div>
-
             </div>
         </section>
-
         <!--内容区-->
         <div class="row">
             <!--合同信息-->
@@ -188,6 +204,27 @@
                                         </div>
                                     </div>
                                 </section>
+                                <section class="panel">
+                                    <div class="panel-body">
+                                        <div class="panel-body table-responsive cheek">
+                                            <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
+                                            <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
+                                            <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
+                                            <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section> <section class="panel">
+                                <div class="panel-body">
+                                    <div class="panel-body table-responsive cheek">
+                                        <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
+                                        <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
+                                        <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
+                                        <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
 
                             </div>
 
@@ -234,22 +271,66 @@
         </div>
 
         <!--客户编辑-->
-        <New_add></New_add>
+        <New_add :msg="revise_state" :revise="revise_info" :selects="select_list"></New_add>
+
+        <!--查看大图-->
+        <pic-modal :src="card"></pic-modal>
     </div>
 </template>
 
 <script>
     import New_add from './new_add.vue'
+    import picModal from '../common/largePic.vue'       //查看大图
     export default {
-        components: { New_add },
+        components: {New_add, picModal},
         data (){
             return {
-                progress: 30,               //进度
+                revise_state: '',
+                cus_progress: '',           //进度
+                progress: '20',             //进度
                 open_on: false,             //展示收起
-                follow_up: ''               //跟进记录
+                follow_up: '',              //跟进记录
+                cus_Id: '',                 //客户ID
+                cus_info: [],               //客户信息
+                revise_info: {},            //修改专用
+                select_list: {},            //字典
+                photos: {},                 //图片
+                card: [],
+
             }
         },
+        mounted (){
+            this.cus_Id = this.$route.query.nameId;
+            this.detailed_info(this.cus_Id);
+        },
         methods: {
+            detailed_info (val){
+//                字典
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.select_list = res.data;
+//                    客户信息
+                    this.$http.get('core/customer/readCustomer/id/' + val).then((res) => {
+
+                        this.revise_info = res.data.data;
+
+                        this.cus_info.push(res.data.data);
+
+                        this.cus_progress = res.data.data.follow;
+                        this.photos = res.data.data.album.id_pic;
+                        for (let i in this.photos) {
+                            this.card.push(this.photos[i].big);
+                        }
+                    });
+                });
+            },
+            customers_rev (val){
+                $('#customModel').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+            big_pic (val){
+                this.card.push(val);
+            },
 //            展示收起
             open_close (){
                 this.open_on = !this.open_on;
@@ -257,7 +338,6 @@
 //            跟进记录
             follow_up_take (val){
                 if (val === 'ok' && this.follow_up.length > 0) {
-                    console.log("111");
                 } else {
                     this.follow_up = '';
                 }
@@ -336,5 +416,19 @@
 
     .paddingTop {
         padding-top: 13px;
+    }
+
+    .roll::-webkit-scrollbar {
+        width:8px;
+    }
+    .roll::-webkit-scrollbar-button    {
+        background-color:#ffff;
+    }
+    .roll::-webkit-scrollbar-track {
+        background:#ffffff;
+    }
+    .roll::-webkit-scrollbar-thumb{
+        background:#E4393C;
+        border-radius:10px;
     }
 </style>

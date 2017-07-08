@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Status :state='info'></Status>
         <!--客户池-->
         <section class="panel">
             <div class="panel-body">
@@ -10,10 +11,8 @@
                         <label>
                             <select class="form-control" @click="sea_status_s($event)">
                                 <option value="" selected="selected">客户状态</option>
-                                <option value="1">新建</option>
-                                <option value="2">跟进中客户</option>
-                                <option value="3">已成交客户</option>
-                                <option value="4">已失败客户</option>
+                                <option v-for="(val,index) in select_list.customer_status" :value="index">{{val}}
+                                </option>
                             </select>
                         </label>
                     </div>
@@ -21,9 +20,7 @@
                         <label>
                             <select class="form-control" @click="sea_intention_c($event)">
                                 <option value="" selected="selected">客户意向</option>
-                                <option value="1">低</option>
-                                <option value="2">中</option>
-                                <option value="3">高</option>
+                                <option v-for="(val,index) in select_list.customer_will" :value="index">{{val}}</option>
                             </select>
                         </label>
                     </div>
@@ -31,8 +28,7 @@
                         <label>
                             <select class="form-control" @click="sea_id_s($event)">
                                 <option value="" selected="selected">客户身份</option>
-                                <option value="1">业主</option>
-                                <option value="3">租客</option>
+                                <option v-for="(val,index) in select_list.identity" :value="index">{{val}}</option>
                             </select>
                         </label>
                     </div>
@@ -40,10 +36,8 @@
                         <label>
                             <select class="form-control" @click="ser_source_s($event)">
                                 <option value="" selected="selected">客户来源</option>
-                                <option value="1">25</option>
-                                <option value="2">26</option>
-                                <option value="3">27</option>
-                                <option value="4">28</option>
+                                <option v-for="(val,index) in select_list.customer_source" :value="index">{{val}}
+                                </option>
                             </select>
                         </label>
                     </div>
@@ -51,8 +45,8 @@
                         <label>
                             <select class="form-control" @click="sea_belong_s($event)">
                                 <option value="" selected="selected">客户所属</option>
-                                <option value="1">乐伽</option>
-                                <option value="2">线下</option>
+                                <option v-for="(val,index) in select_list.belong" :value="index">{{val}}
+                                </option>
                             </select>
                         </label>
                     </div>
@@ -60,16 +54,20 @@
                         <label>
                             <select class="form-control" @click="sea_type_s($event)">
                                 <option value="" selected="selected">个人/中介</option>
-                                <option value="1">个人</option>
-                                <option value="2">中介</option>
+                                <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
                             </select>
                         </label>
                     </div>
+                    <div class="pro-sort">
+                        <button class="btn btn-success" type="button" @click="search_all">重置</button>
+                    </div>
+
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="search_pool"
+                                   placeholder="客户名/手机号">
                             <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" @click="search_pool()">搜索</button>
+                            <button class="btn btn-success" type="button" @click="search_pool">搜索</button>
                         </span>
                         </div>
                     </div>
@@ -100,52 +98,54 @@
                             <th class="text-center">客户名称</th>
                             <th class="text-center">尊称</th>
                             <th class="text-center">手机号</th>
-                            <th class="text-center">客户优先级</th>
                             <th class="text-center">客户意向</th>
                             <th class="text-center">跟进进度</th>
                             <th class="text-center">来源</th>
                             <th class="text-center">客户状态</th>
-                            <th class="text-center">客户行业</th>
-                            <th class="text-center">房屋所属</th>
+                            <th class="text-center">客户身份</th>
+                            <th class="text-center">个人/中介</th>
+                            <th class="text-center">客户所属</th>
+                            <th class="text-center">负责人</th>
                             <th class="text-center">置顶</th>
                             <th class="text-center">更多</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(cus, index) in custom_list">
+                        <tr v-for="list in custom_list">
                             <td class="text-center">
                                 <label for="cus_id"></label>
                                 <input id="cus_id" type="checkbox" class="pull-left"
-                                       @click="rules(index, $event, cus.name)">
+                                       @click="rules(list.id, $event, list.name)">
                             </td>
-                            <td class="text-center">{{cus.name}}</td>
-                            <td class="text-center">{{cus.sex}}</td>
-                            <td class="text-center">{{cus.phone}}</td>
-                            <td class="text-center">{{cus.priority}}</td>
-                            <td class="text-center">{{cus.intention}}</td>
+                            <td class="text-center">{{list.name}}</td>
+                            <td class="text-center">{{select_list.gender[list.gender]}}</td>
+                            <td class="text-center">{{list.mobile}}</td>
+                            <td class="text-center">{{select_list.customer_will[list.customer_will]}}</td>
                             <td class="text-center">
                                 <a data-v-2f43a2b3="" href="#">
                                     <div data-v-2f43a2b3="" class="progress progress-striped active">
                                         <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
-                                             :style="{ width: cus.progress + '%'}">
-                                            <span data-v-2f43a2b3="" class="sr-only">{{cus.progress}}%</span>
+                                             :style="{ width: list.follow + '%'}">
+                                            <span data-v-2f43a2b3="" class="sr-only">{{list.follow}}%</span>
                                         </div>
                                     </div>
                                 </a>
-                                {{cus.progress}}%
+                                <!--<span>{{list.follow}}%</span>-->
                             </td>
-                            <td class="text-center">{{cus.source}}</td>
-                            <td class="text-center">{{cus.state}}</td>
-                            <td class="text-center">{{cus.client}}</td>
-                            <td class="text-center">{{cus.status}}</td>
-                            <td class="text-center"><a @click="stick(index)"><i class="fa fa-paperclip"></i></a></td>
+                            <td class="text-center">{{select_list.customer_source[list.customer_source]}}</td>
+                            <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
+                            <td class="text-center">{{select_list.identity[list.identity]}}</td>
+                            <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
+                            <td class="text-center">{{list.belong}}</td>
+                            <td class="text-center">{{list.staff_id}}</td>
+                            <td class="text-center"><a><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
                                 <router-link to="/details">更多</router-link>
                             </td>
                         </tr>
                         <tr v-show="custom_list.length === 0">
-                            <td colspan="13" class="text-center text-muted">
+                            <td colspan="14" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -159,19 +159,22 @@
         <Distribution :msg="cus_name"></Distribution>
 
         <!--分页-->
-        <Page :pg="paging"></Page>
+        <Page @psg="search_pool" :pg="paging"></Page>
     </div>
 </template>
 
 <script>
-    import Page from '.././common/page.vue'
+    import Page from '../common/page.vue'
     import New_add from './new_add.vue'
+    import Status from '../common/status.vue';                  //提示信息
     import remindDaily from './remindDaily.vue'
     import Distribution from '../common/distribution.vue'       //分配
     export default {
-        components: {Page, Distribution, New_add, remindDaily},
+        components: {Status, Page, Distribution, New_add, remindDaily},
         data (){
             return {
+                sea_info: '',               //客户名/手机号搜索
+                select_list: {},            //select字典
                 custom_list: [],            //列表
                 paging: '',                 //总页数
                 pitch: [],                  //选中id
@@ -184,6 +187,12 @@
                 sea_source: '',             //客户来源
                 sea_belong: '',             //客户所属
                 sea_type: '',               //个人/中介
+                info: {
+                    //失败状态 ***
+                    state_error: false,
+                    //失败信息 ***
+                    error: ''
+                }
             }
         },
         created (){
@@ -192,14 +201,55 @@
         methods: {
 //            客户列表
             collectList (){
-                this.$http.get('json/tsconfig.json').then((res) => {
-                    this.custom_list = res.data.data.custom;
-                    this.paging = res.data.data.pages;
-                })
+//                字典
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.select_list = res.data;
+//                    列表
+                    this.$http.post('core/customer_pool/customerpool').then((res) => {
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    });
+                });
+            },
+//            查看所有/重置
+            search_all (){
+                this.$http.post('core/customer_pool/customerpool', {
+                    customer_status: '',
+                    customer_will: '',
+                    identity: '',
+                    customer_source: '',
+                    person_medium: '',
+                    keywords: '',
+                    belong: '',
+                }).then((res) => {
+                    if (res.data.code === '70040') {
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    }
+                });
             },
 //            搜索
-            search_pool (){
-
+            search_pool (val){
+                this.$http.post('core/customer_pool/customerpool/' + val, {
+                    customer_status: this.sea_status,
+                    customer_will: this.sea_intention,
+                    identity: this.sea_id,
+                    customer_source: this.sea_source,
+                    person_medium: this.sea_type,
+                    keywords: this.sea_info,
+                    belong: this.sea_belong,
+                }).then((res) => {
+                    if (res.data.code === '70040') {
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    } else {
+                        this.custom_list = [];
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
             },
 //            分配
             rules (rul, eve, cus){

@@ -28,6 +28,7 @@
                 showItem: 5,            //显示条数
             }
         },
+
         computed: {
             pages() {
                 let pag = [];
