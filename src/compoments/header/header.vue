@@ -348,7 +348,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>公司业绩</span>
                                 </a>
@@ -358,6 +358,19 @@
                                     </li>
                                     <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
                                         <router-link to="/cARenting">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>-->
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>业务员工资</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 16}" @click='pitch_on(16)'>
+                                        <router-link to="">梦想包</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
+                                        <router-link to="">鸡腿包</router-link>
                                     </li>
                                 </ul>
                             </li>
@@ -376,7 +389,7 @@
                             </li>
                             <li class="sub-menu">
                                 <a href="javascript:;">
-                                    <span>工资业绩</span>
+                                    <span>每单工资</span>
                                 </a>
                                 <ul class="sub">
                                     <li :class="{'active': isActive == 20}" @click='pitch_on(20)'>

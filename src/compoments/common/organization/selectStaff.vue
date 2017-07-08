@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade " id="selectCustom">
+        <div class="modal fade " id="selectCustom" data-backdrop="static" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close"  aria-label="Close" @click="closeModal" >
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">选人</h4>
@@ -147,7 +147,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="selectUser">确定</button>
                     </div>
                 </div>
@@ -237,11 +237,25 @@
                     }
                 }else if(val.class==='amount'){
                     this.noDepartment=true;
+                }else if(val.class==='onlyOneDpm'){
+                    this.noStaff=true;
                 }
             },
             'member':{
                 handler: function (val, oldVal) {
-                    if(this.myConfigure.name==='amount'){
+                    if(this.myConfigure.class==='amount'){
+                        if(this.member.length>this.myConfigure.length){
+                            this.member.splice(this.myConfigure.length,1);
+                            this.info.success = '选择超过限制';
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭成功信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            },2000);
+                        }
+                    }else if(this.myConfigure.class==='onlyOneDpm'){
+                        this.isChecked();
                         if(this.member.length>this.myConfigure.length){
                             this.member.splice(this.myConfigure.length,1);
                             this.info.success = '选择超过限制';
@@ -520,7 +534,27 @@
                 this.member=[];
                 this.checkboxModel=[];
                 this.checkIndex=[];
+                this.myConfigure={};
+                this.noDepartment=false;
+                this.noStaff=false;
             },
+            closeModal(){
+                $('#selectCustom').modal('hide');
+                this.organize={
+                    department:[
+
+                    ],
+                    staff:[
+
+                    ]
+                };
+                this.member=[];
+                this.checkboxModel=[];
+                this.checkIndex=[];
+                this.myConfigure={};
+                this.noDepartment=false;
+                this.noStaff=false;
+            }
         },
     }
 </script>

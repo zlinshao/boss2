@@ -228,7 +228,7 @@
         <button CLASS="btn btn-white" @click="select">选择{{selectDate}}</button>
         <SelectStaff :configure="configure"  @Staff="receive"></SelectStaff>
         <button CLASS="btn btn-white" @click="select1">选择2</button>
-        <SelectStaff :configure="configure "  @Staff="receive1"></SelectStaff>
+        <!--<SelectStaff :configure="configure "  @Staff="receive1"></SelectStaff>-->
         <SelectCustom @clientAdd="selectClient"></SelectCustom>
     </div>
 </template>

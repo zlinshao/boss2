@@ -442,7 +442,8 @@
                 </div>
             </div>
         </div>
-
+        <button @click="test">click</button>
+        <STAFF :configure="configure" ></STAFF>
         <!--模态框 删除-->
         <Delete :msg="cont" @yes="dele"></Delete>
 
@@ -454,6 +455,7 @@
 
         <!--提示信息-->
         <Status :state='info'></Status>
+
     </div>
 </template>
 <style scoped>
@@ -524,9 +526,11 @@
     import Cascade from '../../common/cascade.vue'
     import ChooseAddress from '../../common/chooseAddress.vue'
     import Status from '../../common/status.vue';
-
+    import STAFF from  '../../common/organization/selectStaff.vue'
     export default{
+        components: {Page,Delete,Cascade,ChooseAddress,Status,STAFF},
         data(){
+
             return {
                 operId : 0,
 //                rentingtList : [],
@@ -578,7 +582,8 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                configure:[],
 
             }
         },
@@ -589,7 +594,7 @@
 //            时间选择
             this.remindData();
         },
-        components: {Page,Delete,Cascade,ChooseAddress,Status},
+
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
@@ -686,6 +691,11 @@
 //                失败弹出错误信息
                 /*this.info.state_error = true;
                  this.info.error = '您没有编辑权限';*/
+            },
+            test(){
+                $('#selectCustom').modal({backdrop: 'static',});
+                $('#selectCustom').modal('show');
+                this.configure={length:1,class:'amount'};
             }
         }
     }

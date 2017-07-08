@@ -35,8 +35,21 @@
                         </a>
                     </div>
                 </form>
-                <div class="selectStaff">
-                    <SelectStaff :configures="configures" @Select="selectDateSend"></SelectStaff>
+
+
+                <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
+                    <h4>部门</h4>
+                    <span class="tag" v-for="item in filtrate.departmentList">
+                    <span >{{item.name}}&nbsp;&nbsp;</span>
+                    <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
+                </span>
+                </div>
+                <div class="tagsinput " v-show="filtrate.staffList.length!=0">
+                    <h4>员工</h4>
+                    <span class="tag" v-for="item in filtrate.staffList">
+                    <span >{{item.name}}&nbsp;&nbsp;</span>
+                    <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
+                </span>
                 </div>
             </div>
 
@@ -157,15 +170,14 @@
                                 <label class="col-sm-3 control-label">所属部门:</label>
                                 <div class="col-sm-8">
 
-                                    <input type="text" class="form-control" readonly v-model="formData.department_id.name" @click="selectDepartment">
-                                    <!--<SelectStaff :configures="configures" @Select="selectDateSend"></SelectStaff>-->
+                                    <input type="text" class="form-control" readonly v-model="formData.department_id.name" @click="seleDepartment">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">收房开单人:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly v-model="formData.staff_id.name" @click="selectStaff">
+                                    <input type="text" class="form-control" readonly v-model="formData.staff_id.name" @click="seleStaff">
                                 </div>
                             </div>
 
@@ -272,14 +284,14 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">应付款项:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control">
+                                    <input type="number" min="0" class="form-control" v-model="formData.payables">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">剩余款项:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control">
+                                    <input type="number" min="0" class="form-control" v-model="formData.remaining_sum">
                                 </div>
                             </div>
 
@@ -298,28 +310,28 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">补齐时间:</label>
                                 <div class="col-sm-8">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime" v-model="formData.polishing_time">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">特殊款:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="formData.special_sum">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">组长备注:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="formData.group_leader_remark">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">财务备注:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="formData.finance_remark">
                                 </div>
                             </div>
 
@@ -357,89 +369,13 @@
         <!--确认信息-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
+        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+
+
         <!--<Select :configure="configure" @Staff="receive"></Select>-->
     </div>
 </template>
-<style scoped>
-    #myModal{
-        z-index: 1042;
-    }
-    .selectStaff{
-        display: inline-block;
-    }
-    .form-group{
-        padding-top: 5px;
-    }
-    div.input-group{
-        padding: 0 15px;
-    }
-    label{
-        line-height: 34px;
-    }
-    .choosed{
-        /*padding-bottom: 1px;*/
-    }
-    .choosed ul li{
-        float: left;
-    }
-    /*.choosed ul li span{
-        display: inline-block;
-        vertical-align: middle;
-        !*font-size: 16px;*!
-        color: green;
-        font-weight: bold;
-    }*/
-    ul.dropdown-menu{
-        text-align: center;
-        font-size: 16px;
-    }
-    ul.dropdown-menu li{
-        padding: 6px 0;
-    }
-    ul.dropdown-menu li:hover{
-        cursor: pointer;
-        background-color: #f2f2f2;
-    }
-    .choosed ul li+li:before{
-        content: '|';
-        display: inline-block;
-        margin: 0 10px;
-    }
-    tbody tr input[type=checkbox]{
-        width: 17px;
-        height: 17px;
-    }
-    td button{
-        /*display: inline-block;*/
-        /*padding: 8px 12px;*/
-        /*color: white;*/
-        border-radius: 30px;
-        user-select: none;
-        /*position: relative;*/
-    }
-    .table-responsive{
-        overflow: inherit;
-    }
 
-    .yellow{
-        background-color: #F9E175;
-    }
-    .gray{
-        background-color: #CCCCCC;
-    }
-    .green{
-        background-color: #83E96D;
-    }
-    /*.panel span{
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        margin-left: 5px;
-        background-color: #00a6b2;
-        border-radius: 50%;
-        border: 1px solid #ddd;
-    }*/
-</style>
 <script>
     import Page from '../../common/page.vue'
     import Delete from '../../common/delete.vue'
@@ -448,10 +384,12 @@
     import FlexBox from '../../common/flexBox.vue'
     import ChooseAddress from '../../common/chooseAddress.vue'
     import Confirm from '../../common/confirm.vue'
-    import SelectStaff from '../../common/organization/selectStaffExp.vue'
-//    import Select from '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/organization/selectStaff.vue'
+
+    //    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
+        components: {Page,Delete,Cascade,ChooseAddress,Status,FlexBox,Confirm,STAFF},
         data(){
             return {
                 operId : 0,
@@ -491,7 +429,13 @@
                     years : '',         // 年限
                     price : [],
                     pay_type : 1,        // 付款方式
-                    is_medi : 1       // 是否中介
+                    payables : '',        // 应付款项
+                    remaining_sum : '',     // 剩余款项
+                    polishing_time : '',    // 补齐时间
+                    is_medi : 1,       // 是否中介（房屋来源）
+                    special_sum : '',   // 特殊款
+                    group_leader_remark : '',   // 组长备注
+                    finance_remark : ''         // 财务备注
                 },
                 add : true,          // 是否新增
                 cont: {
@@ -522,12 +466,12 @@
                     name : '收房价格',
                     maxLength : 10
                 },
-                configures:[],
-                selectDate:[],
-                departmentList:[],
-                staffList:[],
+                filtrate : {
+                    departmentList:[],
+                    staffList:[]
+                },
                 configure:[],
-                selectConfigure : ''
+                idArray:{departmentId:[],staffId:[]},
             }
         },
         created (){
@@ -547,7 +491,7 @@
             this.remindData();
 //            时间选择
         },
-        components: {Page,Delete,Cascade,ChooseAddress,Status,FlexBox,Confirm,SelectStaff},
+
         methods : {
             changeIndex(ev,id,index,statusId){
 //                console.log("一开始"+this.operId);
@@ -592,7 +536,8 @@
                     } else if (ev.target.placeholder === '结束时间') {
                         this.params.to = ev.target.value;
                     } else {
-                        this.formData.create_time = ev.target.value;
+                        // 补齐时间
+                        this.formData.polishing_time = ev.target.value;
                     }
 //                    console.log(this.startDataTime);
                 }.bind(this));
@@ -856,58 +801,51 @@
                     )
             },
             select(){
+
                 this.selectConfigure = 'all';
                 $('#selectCustom').modal({backdrop: 'static',});
+                this.configure={type:'all',class:'selectType'};
                 $('#selectCustom').modal('show');
-                this.configures={type:'all',class:'selectType'};
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },
-            selectDepartment(){
+            seleDepartment(){
                 this.selectConfigure = 'department';
+                this.configure={length : 1,class:'onlyOneDpm'};
                 $('#selectCustom').modal('show');
-                this.configure={type:'department',class:'selectType'};
             },
-            selectStaff(){
+            seleStaff(){
                 this.selectConfigure = 'staff';
+                this.configure={length :1,class : 'amount'};
                 $('#selectCustom').modal('show');
-                this.configure={type:'staff',class:'selectType'};
             },
             selectDateSend(val){
-                console.log(this.selectConfigure)
-                console.log(val)
-                if (this.selectConfigure=='all'){
-                    // all
-                    alert('all');
-                    this.selectDate=[];
-                    this.selectDate.push(val);
-                    this.params.department_id = val.departmentId;
-                    this.params.staff_id = val.staffId;
-                } else if (this.selectConfigure=='department'){
-                    // 选择的是部门
-                    alert('部门');
-                } else {
-                    // 选择员工
-                    alert('员工');
-                }
-
-//                console.log(this.params)
-            },
-            /*receive(val){
+                console.log(this.configure);
+//                console.log(this.selectConfigure)
                 console.log(val);
                 if (this.selectConfigure=='all'){
                     // all
-                    alert(all);
+                    alert('all');
+                    this.receive(val);
+                    this.filtrate.departmentList = val.department;
+                    this.filtrate.staffList = val.staff;
                 } else if (this.selectConfigure=='department'){
                     // 选择的是部门
                     alert('部门');
+                    this.formData.department_id = val.department[0];
+//                    console.log(this.formData.department_id)
                 } else {
                     // 选择员工
                     alert('员工');
+                    this.formData.staff_id = val.staff[0];
+//                    console.log(this.formData.staff_id)
                 }
+
+            },
+            receive(val){
                 for(let j=0;j<val.department.length;j++){
                     if($.inArray(val.department[j].id,this.idArray.departmentId)===-1){
-                        this.departmentList.push(val.department[j]);
+                        this.filtrate.departmentList.push(val.department[j]);
                         this.idArray.departmentId.push(val.department[j].id)
                     }else {
                         this.info.success = '成员已经存在';
@@ -935,8 +873,93 @@
                     }
 
                 }
-            },*/
+            },
 
         }
     }
 </script>
+
+<style scoped>
+    .tagsinput{
+        border:none;
+    }
+    h4{
+        display: inline-block;
+        margin: 0;
+    }
+    #myModal{
+        z-index: 1042;
+    }
+    .form-group{
+        padding-top: 5px;
+    }
+    div.input-group{
+        padding: 0 15px;
+    }
+    label{
+        line-height: 34px;
+    }
+    .choosed{
+        /*padding-bottom: 1px;*/
+    }
+    .choosed ul li{
+        float: left;
+    }
+    /*.choosed ul li span{
+        display: inline-block;
+        vertical-align: middle;
+        !*font-size: 16px;*!
+        color: green;
+        font-weight: bold;
+    }*/
+    ul.dropdown-menu{
+        text-align: center;
+        font-size: 16px;
+    }
+    ul.dropdown-menu li{
+        padding: 6px 0;
+    }
+    ul.dropdown-menu li:hover{
+        cursor: pointer;
+        background-color: #f2f2f2;
+    }
+    .choosed ul li+li:before{
+        content: '|';
+        display: inline-block;
+        margin: 0 10px;
+    }
+    tbody tr input[type=checkbox]{
+        width: 17px;
+        height: 17px;
+    }
+    td button{
+        /*display: inline-block;*/
+        /*padding: 8px 12px;*/
+        /*color: white;*/
+        border-radius: 30px;
+        user-select: none;
+        /*position: relative;*/
+    }
+    .table-responsive{
+        overflow: inherit;
+    }
+
+    .yellow{
+        background-color: #F9E175;
+    }
+    .gray{
+        background-color: #CCCCCC;
+    }
+    .green{
+        background-color: #83E96D;
+    }
+    /*.panel span{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
+        background-color: #00a6b2;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+    }*/
+</style>
