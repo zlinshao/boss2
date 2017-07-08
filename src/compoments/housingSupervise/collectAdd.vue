@@ -267,7 +267,7 @@
                 $('#selectCustom').modal('show');
                 this.configure={type:'staff',class:'selectType'};
 //                this.configure={id:[],class:'department'};
-//                this.configure={length:2,class:'amount'};
+                this.configure={length:2,class:'amount'};
             },
             select1(){
                 $('#selectCustom').modal({backdrop: 'static',});

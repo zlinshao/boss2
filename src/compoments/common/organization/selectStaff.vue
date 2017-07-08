@@ -637,4 +637,7 @@
     .hide{
         display: none;
     }
+    *{
+        user-select: none;
+    }
 </style>

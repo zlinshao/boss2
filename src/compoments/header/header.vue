@@ -233,10 +233,24 @@
                     <li>
                         <input type="text" class="form-control search" placeholder="">
                     </li>
+                    <li class="dropdown" style="padding-top: 2px;">
+                        <a href="javascript:;" style="border:none" class="dropdown-toggle"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell" style="font-size: 25px"></i>
+                        </a>
+                        <ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">
+                            <li @click="lookRemind">
+                                <a href="#">查看提醒</a>
+                            </li>
+                            <li @click="addRemind">
+                                <a href="#">添加提醒</a>
+                            </li>
+                        </ul>
+                    </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" :src="Card" style="width: 29px;height: 29px;">
+                            <img alt="" :src="Card" style="width: 30px;height: 30px;border-radius:50% ">
                             <span class="username">{{Name}}</span>
                             <b class="caret"></b>
                         </a>
@@ -492,6 +506,17 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>消息中心</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to='/messageCenter'>消息中心</router-link>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -646,11 +671,16 @@
             </ul>
         </div>
         <!-- Right Slidebar end -->
+        <LookRemind></LookRemind>
+        <AddRemind></AddRemind>
     </div>
 </template>
 
 <script>
+    import LookRemind from '../common/remind/checkRemind.vue';
+    import AddRemind from  '../common/remind/addRemind.vue'
     export default {
+        components:{LookRemind,AddRemind},
         props:['Name','Card'],
         data(){
             return {
@@ -673,6 +703,12 @@
             },
             clearCookie(){
 
+            },
+            lookRemind(){
+                $('#checkRemind').modal('show');
+            },
+            addRemind(){
+                $('#addRemind').modal('show');
             }
         }
     }
@@ -680,5 +716,7 @@
 
 
 <style scoped>
-
+    ul.top-menu > li > a  {
+         border:none !important;
+    }
 </style>
