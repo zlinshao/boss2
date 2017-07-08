@@ -39,6 +39,7 @@ import GeneralOperation from './compoments/finance/generalOperation.vue'        
 import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
 import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
+import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 
 
 import  Back from './compoments/user/back.vue'
@@ -237,5 +238,10 @@ export default[
         path: '/logRecord',
         name: 'LogRecord',
         component: LogRecord
-    }
+    },
+    {
+        path: '/messageCenter',
+        name: 'MessageCenter',
+        component: MessageCenter
+    },
 ]

@@ -427,8 +427,8 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended {
-    max-width: 300px !important;
-    min-width: 160px !important;
+    max-width: 300px;
+    min-width: 160px;
     top: 42px;
     width: 235px !important;
     padding: 0;
