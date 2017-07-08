@@ -1,14 +1,14 @@
 <template>
     <div>
        <div>
-           <div class="tagsinput " >
+           <div class="tagsinput" v-show="departmentList.length!=0" >
                <h4>部门</h4>
                 <span class="tag" v-for="item in departmentList" v-if="departmentList!=''">
                     <span >{{item.name}}&nbsp;&nbsp;</span>
                     <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
                 </span>
            </div>
-           <div class="tagsinput " >
+           <div class="tagsinput" v-show="staffList.length!=0" >
                <h4>员工</h4>
                 <span class="tag" v-for="item in staffList" v-if="staffList!=''">
                     <span >{{item.name}}&nbsp;&nbsp;</span>

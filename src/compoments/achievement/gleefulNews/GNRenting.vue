@@ -61,14 +61,23 @@
                     <tr>
                         <th></th>
                         <th class="text-center">喜报日期</th>
-                        <th class="text-center">租房情况</th>
+                        <th class="text-center">租房类型</th>
                         <th class="text-center">租房片区</th>
                         <th class="text-center">租房签约人</th>
                         <th class="text-center">房屋地址</th>
+                        <th class="text-center">门牌号</th>
+                        <th class="text-center">房型</th>
                         <th class="text-center">付款方式</th>
                         <th class="text-center">租房价格</th>
-                        <th class="text-center">已收类型</th>
+                        <th class="text-center">应收款项</th>
+                        <th class="text-center">已收科目</th>
                         <th class="text-center">已收款项</th>
+                        <th class="text-center">剩余款项</th>
+                        <th class="text-center">补齐时间</th>
+                        <th class="text-center">租客来源</th>
+                        <th class="text-center">特殊款</th>
+                        <th class="text-center">组长备注</th>
+                        <th class="text-center">财务备注</th>
                         <th class="text-center">喜报状态</th>
                     </tr>
                     </thead>
@@ -103,53 +112,110 @@
 
 
         <!--modal-->
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade full-width-modal-right bs-example-modal-lg" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
                     </div>
                     <div class="modal-body clearFix">
-                        <div class="renting clearFix">
+                        <div class="renting col-lg-6 clearFix">
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label for="villageName" class="col-sm-3 control-label">小区名称:</label>
-                                <div class="col-sm-8 input-group">
+                                <div class="col-lg-8 input-group">
                                     <input title="请点击选择" type="text" class="form-control" id="villageName" v-model="formData.village.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                <label for="villageAddress" class="control-label">地址:</label>
-                                <div>
-                                    <input type="text" class="form-control" id="villageAddress" v-model="formData.villageAddress" readonly>
-                                </div>
-                            </div>-->
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">栋:</label>
-                                <div class="col-sm-8">
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">栋:</label>
+                                <div class="col-lg-8">
                                     <input type="text" class="form-control" v-model="formData.building" @blur="searchCollectInfo">
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">室:</label>
-                                <div class="col-sm-8">
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">室:</label>
+                                <div class="col-lg-8">
                                     <input type="text" class="form-control" v-model="formData.room" @blur="searchCollectInfo">
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">租房签约人:</label>
+                            <div class="form-group clearFix">
+                                <label class="col-sm-3 control-label">房型:</label>
                                 <div class="col-sm-8">
+                                    <div class="col-sm-4">
+                                        <div class="dropdown">
+                                            <select name="" class="form-control">
+                                                <option value="1">1室</option>
+                                                <option value="2">2室</option>
+                                                <option value="3">3室</option>
+                                                <option value="4">4室</option>
+                                                <option value="5">5室</option>
+                                                <option value="6">6室</option>
+                                                <option value="7">7室</option>
+                                                <option value="8">8室</option>
+                                                <option value="9">9室</option>
+                                                <option value="10">10室</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="dropdown">
+                                            <select name="" class="form-control">
+                                                <option value="1">1厅</option>
+                                                <option value="2">2厅</option>
+                                                <option value="3">3厅</option>
+                                                <option value="4">4厅</option>
+                                                <option value="5">5厅</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="dropdown">
+                                            <select name="" class="form-control">
+                                                <option value="1">1卫</option>
+                                                <option value="2">2卫</option>
+                                                <option value="3">3卫</option>
+                                                <option value="4">4卫</option>
+                                                <option value="5">5卫</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">租房开单人:</label>
+                                <div class="col-lg-8">
                                     <input type="text" class="form-control" v-model="formData.people">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">租房情况:</label>
-                                <div class="col-sm-8">
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">租房价格:</label>
+                                <div class="col-lg-8">
+                                    <input type="number" min="0" class="form-control" v-model="formData.price">
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">付款方式:</label>
+                                <div class="col-lg-8">
+                                    <div class="dropdown">
+                                        <select name="" class="form-control" v-model="formData.payWay">
+                                            <option value="1">季付</option>
+                                            <option value="2">月付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">租房情况:</label>
+                                <div class="col-lg-8">
                                     <div class="dropdown">
                                         <select name="" class="form-control" v-model="formData.situation">
                                             <option value="1">转租</option>
@@ -160,57 +226,52 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">租房片区:</label>
-                                <div class="col-sm-8">
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">应收款项:</label>
+                                <div class="col-lg-8">
+                                    <input type="number" min="0" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">已收科目:</label>
+                                <div class="col-lg-8">
                                     <div class="dropdown">
-                                        <select name="" class="form-control" v-model="formData.region">
-                                            <option value="1">马群</option>
-                                            <option value="2">迈皋桥</option>
+                                        <select name="" class="form-control">
+                                            <option value="1">啊啊</option>
+                                            <option value="2">查查</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">付款方式:</label>
-                                <div class="col-sm-8">
-                                    <div class="dropdown">
-                                        <select name="" class="form-control" v-model="formData.payWay">
-                                            <option value="1">季付</option>
-                                            <option value="2">月付</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">租房价格:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control" v-model="formData.price">
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">已收款项:</label>
+                                <div class="col-lg-8">
+                                    <input type="number" min="0" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">已收类型:</label>
-                                <div class="col-sm-8">
-                                    <div class="dropdown">
-                                        <select name="" class="form-control" v-model="formData.alreadyType">
-                                            <option value="1">季付</option>
-                                            <option value="2">月付</option>
-                                        </select>
-                                    </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">剩余款项:</label>
+                                <div class="col-lg-8">
+                                    <input type="number" min="0" class="form-control">
                                 </div>
+                            </div>
 
 
-                            </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">已收金额:</label>
+                                <label class="col-sm-3 control-label">补齐时间:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control" v-model="formData.alreadyMoney">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">是否中介:</label>
-                                <div class="col-sm-8">
+
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">租客来源:</label>
+                                <div class="col-lg-8">
                                     <div class="dropdown">
                                         <select name="" class="form-control" v-model="formData.isAgency">
                                             <option value="1">是</option>
@@ -219,27 +280,151 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="collect clearFix">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">收房签约人:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly v-model="formData.collectPeople">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">房屋类型:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly v-model="formData.type.name">
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">房屋价格:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control" readonly v-model="formData.collectPrice">
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">特殊款:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control">
                                 </div>
                             </div>
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">组长备注:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">财务备注:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="collect col-lg-6 clearFix">
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">房屋地址:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">房型:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">收房开单人:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">所属部门:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">收房价格:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">付款方式:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">年限:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">空置期:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <!--<input type="text" class="form-control" readonly>-->
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">应付款项:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">实付款项:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">剩余款项:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">补齐时间:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">收房价格:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">房屋来源:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">特殊款:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">组长备注:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-lg-3 control-label">财务备注:</label>
+                                <div class="col-lg-8">
+                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -277,6 +462,7 @@
     }
     label{
         line-height: 34px;
+        /*vertical-align: middle;*/
     }
     .choosed{
         /*padding-bottom: 10px;*/
@@ -292,9 +478,13 @@
     div.input-group{
         padding: 0 15px;
     }
+    .collect,.renting{
+        padding: 15px 0;
+    }
     .collect{
-        border-top: 1px dashed #ddd;
-        padding-top: 20px;
+        /*border-top: 1px dashed #ddd;*/
+        /*padding-top: 20px;*/
+        background-color: #F2F2F2;
     }
     tbody tr input[type=checkbox]{
         width: 17px;
@@ -315,6 +505,17 @@
     }
     .green{
         background-color: #83E96D;
+    }
+    span.collectInfo{
+        width: 100%;
+        display: inline-block;
+        border-bottom: 1px solid #ddd;
+        line-height: 34px;
+        padding-left: 12px;
+        margin-bottom: 16px;
+    }
+    .modal .form_datetime{
+        margin-bottom: 32px;
     }
 </style>
 <script>

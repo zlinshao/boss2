@@ -7,31 +7,39 @@
         </ol>
 
         <div class="panel col-lg-12 clearFix">
-            <form class="form-inline clearFix" v-show="operId==0" role="form">
+            <div v-show="operId==0">
 
-                <!--<Cascade @change="getCascadeData"></Cascade>-->
-
-                <div class="form-group datetime">
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
-                    </label>
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
-                    </label>
-                </div>
-                <div class="input-group bootstrap-timepicker">
-                    <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search"  @keydown.enter.prevent="search">
-                    <span class="input-group-btn">
+                <form class="form-inline clearFix" role="form">
+                    <!--<Cascade @change="getCascadeData"></Cascade>-->
+                    <div class="input-group bootstrap-timepicker">
+                        <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
+                    </div>
+                    <div class="form-group datetime">
+                        <label>
+                            <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                        </label>
+                        <label>
+                            <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                        </label>
+                    </div>
+                    <div class="input-group bootstrap-timepicker">
+                        <label class="sr-only" for="search_info">搜索</label>
+                        <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search"  @keydown.enter.prevent="search">
+                        <span class="input-group-btn">
                         <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                     </span>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addGleefulNews">
+                            <i class="fa fa-plus-square"></i>&nbsp;新增收房喜报
+                        </a>
+                    </div>
+                </form>
+                <div class="selectStaff">
+                    <SelectStaff :configures="configures" @Select="selectDateSend"></SelectStaff>
                 </div>
-                <div class="form-group pull-right">
-                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addGleefulNews">
-                        <i class="fa fa-plus-square"></i>&nbsp;新增收房喜报
-                    </a>
-                </div>
-            </form>
+            </div>
+
             <div class="choosed" v-show="operId!=0">
                 <ul class="clearFix">
                     <li><a>已选中&nbsp;1&nbsp;项</a></li>
@@ -56,16 +64,20 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th class="text-center">发喜报日期</th>
-                        <th class="text-center">所属部门</th>
+                        <th class="text-center">喜报日期</th>
                         <th class="text-center">收房开单人</th>
+                        <th class="text-center">所属部门</th>
                         <th class="text-center">房屋地址</th>
                         <th class="text-center">门牌号</th>
                         <th class="text-center">房型</th>
                         <th class="text-center">收房价格</th>
                         <th class="text-center">年限</th>
                         <th class="text-center">付款方式</th>
-                        <th class="text-center">空置期</th>
+                        <th class="text-center">应付款项</th>
+                        <th class="text-center">实付款项</th>
+                        <th class="text-center">剩余款项</th>
+                        <th class="text-center">补齐时间</th>
+                        <th class="text-center">空置期天数</th>
                         <th class="text-center">房屋来源</th>
                         <!--<th class="text-center">收实际业绩</th>
                         <th class="text-center">收溢出业绩</th>-->
@@ -78,14 +90,25 @@
                                 <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id,index,item.status)">
                             </td>
                             <td>{{item.create_time}}</td>
-                            <td>{{dict.department_id[item.department_id]}}</td>
                             <td>{{item.id}}</td>
+                            <td>{{dict.department_id[item.department_id]}}</td>
                             <td>{{item.address}}</td>
-                            <td>{{item.address}}</td>
-                            <td>{{item.room_quant}}</td>
-                            <td>{{item.price}}</td>
+                            <td>{{item.building}}-{{item.room}}</td>
+                            <td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>
+                            <!--<td>{{item.price}}</td>-->
+                            <td class="dropdown">
+                                <!--<a tabindex="0" class="btn btn-sm btn-primary" role="button" data-toggle="popover" data-trigger="focus" title="每年价格" data-content="aaa<br/>bbb">价格</a>-->
+                                <button class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item.price[0]}}</button>
+                                <ul class="dropdown-menu dropdown-menu-center">
+                                    <li v-for="price in item.price">{{price}}</li>
+                                </ul>
+                            </td>
                             <td>{{item.years}}</td>
                             <td>{{dict.pay_type[item.pay_type]}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>{{item.vac_sum_days}}</td>
                             <td>{{dict.is_medi[item.is_medi]}}</td>
                             <!--<td>{{item.is_medi==1?"是":"否"}}</td>-->
@@ -124,23 +147,25 @@
                     </div>
                     <div class="modal-body clearFix">
                         <div class="form">
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-3 control-label">发喜报日期:</label>
                                 <div class="col-sm-8">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="发喜报日期" v-model="formData.create_time" class="form-control form_datetime">
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">所属部门:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly v-model="formData.department_id">
+
+                                    <input type="text" class="form-control" readonly v-model="formData.department_id.name" @click="selectDepartment">
+                                    <!--<SelectStaff :configures="configures" @Select="selectDateSend"></SelectStaff>-->
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">收房开单人:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly v-model="formData.staff_id">
+                                    <input type="text" class="form-control" readonly v-model="formData.staff_id.name" @click="selectStaff">
                                 </div>
                             </div>
 
@@ -242,10 +267,24 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
+
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">是否中介:</label>
+                                <label class="col-sm-3 control-label">应付款项:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" min="0" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">剩余款项:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" min="0" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">房屋来源:</label>
                                 <div class="col-sm-8">
                                     <div class="dropdown">
                                         <select name="" class="form-control" v-model="formData.is_medi">
@@ -255,6 +294,35 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">补齐时间:</label>
+                                <div class="col-sm-8">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">特殊款:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">组长备注:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">财务备注:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -288,10 +356,17 @@
 
         <!--确认信息-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+
+        <!--<Select :configure="configure" @Staff="receive"></Select>-->
     </div>
 </template>
 <style scoped>
-
+    #myModal{
+        z-index: 1042;
+    }
+    .selectStaff{
+        display: inline-block;
+    }
     .form-group{
         padding-top: 5px;
     }
@@ -373,7 +448,8 @@
     import FlexBox from '../../common/flexBox.vue'
     import ChooseAddress from '../../common/chooseAddress.vue'
     import Confirm from '../../common/confirm.vue'
-
+    import SelectStaff from '../../common/organization/selectStaffExp.vue'
+//    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
         data(){
@@ -392,9 +468,15 @@
                 },
                 title : '新增收房喜报',         // 新增/修改
                 formData : {
-                    create_time : '',
-                    department_id : '',
-                    staff_id : '',
+//                    create_time : '',
+                    department_id : {
+                        id : '',
+                        name : ''
+                    },
+                    staff_id : {
+                        id : '',
+                        name : ''
+                    },
                     village : {
                         villageName : ''       // 小区名称
                     },
@@ -438,8 +520,14 @@
                 },
                 flexData : {
                     name : '收房价格',
-                    maxLength : 5
-                }
+                    maxLength : 10
+                },
+                configures:[],
+                selectDate:[],
+                departmentList:[],
+                staffList:[],
+                configure:[],
+                selectConfigure : ''
             }
         },
         created (){
@@ -459,7 +547,7 @@
             this.remindData();
 //            时间选择
         },
-        components: {Page,Delete,Cascade,ChooseAddress,Status,FlexBox,Confirm},
+        components: {Page,Delete,Cascade,ChooseAddress,Status,FlexBox,Confirm,SelectStaff},
         methods : {
             changeIndex(ev,id,index,statusId){
 //                console.log("一开始"+this.operId);
@@ -766,7 +854,88 @@
                             }
                         }
                     )
-            }
+            },
+            select(){
+                this.selectConfigure = 'all';
+                $('#selectCustom').modal({backdrop: 'static',});
+                $('#selectCustom').modal('show');
+                this.configures={type:'all',class:'selectType'};
+//                this.configure={id:[],class:'department'};
+//                this.configure={length:2,class:'amount'};
+            },
+            selectDepartment(){
+                this.selectConfigure = 'department';
+                $('#selectCustom').modal('show');
+                this.configure={type:'department',class:'selectType'};
+            },
+            selectStaff(){
+                this.selectConfigure = 'staff';
+                $('#selectCustom').modal('show');
+                this.configure={type:'staff',class:'selectType'};
+            },
+            selectDateSend(val){
+                console.log(this.selectConfigure)
+                console.log(val)
+                if (this.selectConfigure=='all'){
+                    // all
+                    alert('all');
+                    this.selectDate=[];
+                    this.selectDate.push(val);
+                    this.params.department_id = val.departmentId;
+                    this.params.staff_id = val.staffId;
+                } else if (this.selectConfigure=='department'){
+                    // 选择的是部门
+                    alert('部门');
+                } else {
+                    // 选择员工
+                    alert('员工');
+                }
+
+//                console.log(this.params)
+            },
+            /*receive(val){
+                console.log(val);
+                if (this.selectConfigure=='all'){
+                    // all
+                    alert(all);
+                } else if (this.selectConfigure=='department'){
+                    // 选择的是部门
+                    alert('部门');
+                } else {
+                    // 选择员工
+                    alert('员工');
+                }
+                for(let j=0;j<val.department.length;j++){
+                    if($.inArray(val.department[j].id,this.idArray.departmentId)===-1){
+                        this.departmentList.push(val.department[j]);
+                        this.idArray.departmentId.push(val.department[j].id)
+                    }else {
+                        this.info.success = '成员已经存在';
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        },2000);
+                    }
+
+                }
+                for(let i=0;i<val.staff.length;i++){
+                    if($.inArray(val.staff[i].id,this.idArray.staffId)===-1){
+                        this.staffList.push(val.staff[i]);
+                        this.idArray.staffId.push(val.staff[i].id)
+                    }else {
+                        this.info.success = '成员已经存在';
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        },2000);
+                    }
+
+                }
+            },*/
 
         }
     }

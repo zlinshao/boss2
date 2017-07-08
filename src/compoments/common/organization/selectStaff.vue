@@ -86,7 +86,7 @@
                                                             </p>
                                                         </div>
                                                     </li>
-                                                    <li v(ior="item in organizeList" v-if="type==4" >
+                                                    <li v-for="item in organizeList" v-if="type==4" >
                                                         <label class="checkbox-inline check">
                                                             <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
                                                                    :disabled="noDepartment"  @click="checkedOne(item)" :value="item">
