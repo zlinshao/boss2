@@ -454,10 +454,6 @@
                                 this.info.state_error = false;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
-                                //一秒自动关闭成功信息弹窗 ***
-                                setTimeout(() => {
-                                    this.info.state_success = false;
-                                },1000);
                                 if (url === 'saveCustomer') {
                                     this.$emit('cus_list', res.data.data);  //push新增列表
                                 }

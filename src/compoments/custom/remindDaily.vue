@@ -85,12 +85,17 @@
                 </div>
             </div>
         </div>
+
+        <!--组织架构-->
+        <select-staff></select-staff>
     </div>
 </template>
 
 <script>
+    import selectStaff from '../common/organization/selectStaff.vue';   //组织架构
     export default {
         props: ['state', 'cus_name'],
+        components:{ selectStaff },
         data (){
             return {
                 cus_distribute: '',
