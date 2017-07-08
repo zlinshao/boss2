@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- 房屋 新增/编辑-->
+        <!--&lt;!&ndash; 房屋 新增/编辑&ndash;&gt;-->
         <div class="modal fade full-width-modal-right" id="collectAdd" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
@@ -224,14 +224,17 @@
                 </div>
             </div>
         </div>
+
         <button CLASS="btn btn-white" @click="select">选择{{selectDate}}</button>
-        <SelectStaff :configures="configures" @Select="selectDateSend"></SelectStaff>
+        <SelectStaff :configure="configure"  @Staff="receive"></SelectStaff>
+        <button CLASS="btn btn-white" @click="select1">选择2</button>
+        <SelectStaff :configure="configure "  @Staff="receive1"></SelectStaff>
         <SelectCustom @clientAdd="selectClient"></SelectCustom>
     </div>
 </template>
 
 <script>
-    import SelectStaff from '../common/organization/selectStaffExp.vue'
+    import SelectStaff from '../common/organization/selectStaff.vue'
     import SelectCustom from '../common/selectClient.vue'
     export default {
         components:{SelectCustom,SelectStaff},
@@ -241,9 +244,10 @@
                 inter_state: false,             //中介
                 stat: true,
                 member:'',
-                configures:[],
+                configure:[],
                 selectDate:[],
-                client:''
+                client:'',
+                configures1:[],
             }
         },
         methods: {
@@ -258,15 +262,24 @@
                 this.member=val[0]
             },
             select(){
+                this.configures1=[];
                 $('#selectCustom').modal({backdrop: 'static',});
                 $('#selectCustom').modal('show');
-//                this.configures={type:'department',class:'selectType'};
+                this.configure={type:'staff',class:'selectType'};
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },
-            selectDateSend(val){
-                this.selectDate=[];
-                this.selectDate.push(val);
+            select1(){
+                $('#selectCustom').modal({backdrop: 'static',});
+                $('#selectCustom').modal('show');
+                this.configure={type:'department',class:'selectType'};
+//                this.configures1={type:'department',class:'selectType'};
+            },
+            receive(val){
+                console.log(val)
+            },
+            receive1(val){
+                console.log(val)
             },
             selectClient(val){
                 this.client=val.name;

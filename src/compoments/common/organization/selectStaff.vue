@@ -29,7 +29,9 @@
                                                     <div class="head"></div>
                                                     <div style="display: inline-block">
                                                         <p style="height:14px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
-                                                        <p style="height:10px;font-size: 10px">{{item.enroll_time}}</p>
+                                                        <p style="height:10px;font-size: 10px">
+                                                            {{item.department[0].name}}&nbsp;
+                                                        </p>
                                                         <p style="height:10px;font-size: 10px">{{item.mobile}}</p>
                                                     </div>
 
