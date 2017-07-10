@@ -37,7 +37,7 @@
                         <label>
                             <select class="form-control" @click="ser_source_s($event)" :value="sea_source">
                                 <option value="" selected="selected">客户来源</option>
-                                <option v-for="(val,index) in select_list.customer_source" :value="index">{{val}}
+                                <option v-for="(val,index) in select_list.source" :value="index">{{val}}
                                 </option>
                             </select>
                         </label>
@@ -133,7 +133,7 @@
                                 </a>
                                 <!--<span>{{list.follow}}%</span>-->
                             </td>
-                            <td class="text-center">{{select_list.customer_source[list.customer_source]}}</td>
+                            <td class="text-center">{{select_list.source[list.source]}}</td>
                             <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
                             <td class="text-center">{{select_list.identity[list.identity]}}</td>
                             <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
@@ -231,7 +231,7 @@
                     customer_status: this.sea_status,
                     customer_will: this.sea_intention,
                     identity: this.sea_id,
-                    customer_source: this.sea_source,
+                    source: this.sea_source,
                     person_medium: this.sea_type,
                     keywords: this.sea_info,
                     belong: this.sea_belong,

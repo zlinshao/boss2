@@ -127,7 +127,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户来源</label>
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_source_c($event)" :value="cus_source">
-                                            <option v-for="(val,index) in select_c.customer_source" :value="index">{{val}}
+                                            <option v-for="(val,index) in select_c.source" :value="index">{{val}}
                                             </option>
                                         </select>
                                     </div>
@@ -374,7 +374,7 @@
                 this.cus_phone = val.mobile;                                    //手机号
                 this.cus_status_quo = val.customer_status;                      //客户状态
                 this.cus_intention = val.customer_will;                         //客户意向
-                this.cus_source = val.customer_source;                          //客户来源
+                this.cus_source = val.source;                          //客户来源
 
                 this.cus_intermediate = String(val.person_medium);                      //是否中介
                 this.cus_intermediate_name = val.medium_name;                   //中介名称
@@ -424,7 +424,7 @@
                             mobile: this.cus_phone,                     //手机号
                             customer_status: this.cus_status_quo,       //客户状态
                             customer_will: this.cus_intention,          //客户意向
-                            customer_source: this.cus_source,           //客户来源
+                            source: this.cus_source,           //客户来源
 
                             person_medium: this.cus_intermediate,       //个人/中介
                             medium_name: this.cus_intermediate_name,    //中介电话

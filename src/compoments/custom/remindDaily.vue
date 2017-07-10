@@ -92,7 +92,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button"  @click="follow_up_take">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button" @click="follow_up_take">取消
+                        </button>
                         <button class="btn btn-success" type="button" @click="confirm_ok"> 确定</button>
                     </div>
                 </div>
@@ -123,7 +124,7 @@
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
                 dataTime: '',               //提醒时间
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -139,6 +140,9 @@
             this.$http.get('core/customer/dict').then((res) => {
                 this.select_list = res.data;
             });
+        },
+        updated (){
+            this.remindData();
         },
         methods: {
 //            确定
@@ -186,7 +190,7 @@
             },
             follow_up_take (){
 //                取消跟进
-                if(this.daily_state === true){
+                if (this.daily_state === true) {
                     this.follow_up = '';
                     this.follow_w = '1';
                 }

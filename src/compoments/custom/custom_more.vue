@@ -51,7 +51,7 @@
                                     class="text-primary">客户意向：</span><span>{{select_list.customer_will[info.customer_will]}}</span>
                             </div>
                             <div><span
-                                    class="text-primary">客户来源：</span><span>{{select_list.customer_source[info.customer_source]}}</span>
+                                    class="text-primary">客户来源：</span><span>{{select_list.source[info.source]}}</span>
                             </div>
                         </div>
                     </div>
@@ -76,8 +76,8 @@
                             </div>
                             <div><span class="text-primary">身份证号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">身份张照片：</span>
-                                <a data-toggle="modal" href="#myModal2" v-for="(pic,index) in photos"
-                                   style="margin: 10px 10px 0 0;display: inline-block;">
+                                <a href="#myModal2" v-for="(pic,index) in photos"
+                                   style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
                                     <img :src="pic.small">
                                 </a>
                             </div>
@@ -201,9 +201,14 @@
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek">
                                             <div><span>{{daily.create_time}}</span></div>
-                                            <div><span class="text-primary">跟进方式：</span><span>{{select_list.follow_way[daily.follow_way]}}</span></div>
-                                            <div><span class="text-primary">跟进人：</span><span>{{daily.staff_id}}</span></div>
-                                            <div><span class="text-primary">跟进记录：</span><span>{{daily.remarks}}</span></div>
+                                            <div>
+                                                <span class="text-primary">跟进方式：</span>
+                                                <span>{{select_list.follow_way[daily.follow_way]}}</span>
+                                            </div>
+                                            <div><span class="text-primary">跟进人：</span><span>{{daily.staff_id}}</span>
+                                            </div>
+                                            <div><span class="text-primary">跟进记录：</span><span>{{daily.remarks}}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
@@ -256,7 +261,7 @@
         <New_add :msg="revise_state" :revise="revise_info" :selects="select_list"></New_add>
 
         <!--查看大图-->
-        <PicModal :src="card"></PicModal>
+        <PicModal :largePic="largePic"></PicModal>
 
         <!--提醒-->
         <Status :state='info'></Status>
@@ -282,6 +287,7 @@
                 select_list: {},            //字典
                 photos: {},                 //图片
                 card: [],                   //大图
+                largePic: [],               //点击放大图片
                 follow_w: '1',              //跟进方式
                 daily_record: [],           //沟通日志
                 info: {
@@ -332,9 +338,9 @@
                 });
             },
             showLargePic(num){
-                this.photos = [{
-                    src : this.card,
-                    i : num
+                this.largePic = [{
+                    src: this.card,
+                    i: num
                 }];
                 $('#myModal2').modal('show');
             },
