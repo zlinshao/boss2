@@ -40,16 +40,16 @@
                 <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
                     <h4>部门</h4>
                     <span class="tag" v-for="item in filtrate.departmentList">
-                    <span >{{item.name}}&nbsp;&nbsp;</span>
-                    <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
-                </span>
+                        <span >{{item.name}}&nbsp;&nbsp;</span>
+                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
+                    </span>
                 </div>
                 <div class="tagsinput " v-show="filtrate.staffList.length!=0">
                     <h4>员工</h4>
                     <span class="tag" v-for="item in filtrate.staffList">
-                    <span >{{item.name}}&nbsp;&nbsp;</span>
-                    <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
-                </span>
+                        <span >{{item.name}}&nbsp;&nbsp;</span>
+                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
+                    </span>
                 </div>
             </div>
 
@@ -103,7 +103,7 @@
                                 <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id,index,item.status)">
                             </td>
                             <td>{{item.create_time}}</td>
-                            <td>{{item.id}}</td>
+                            <td>{{item.real_name}}</td>
                             <td>{{dict.department_id[item.department_id]}}</td>
                             <td>{{item.address}}</td>
                             <td>{{item.building}}-{{item.room}}</td>
@@ -118,10 +118,10 @@
                             </td>
                             <td>{{item.years}}</td>
                             <td>{{dict.pay_type[item.pay_type]}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{item.price_should}}</td>
+                            <td>{{item.price_paid}}</td>
+                            <td>{{item.price_remain}}</td>
+                            <td>{{item.complete_date}}</td>
                             <td>{{item.vac_sum_days}}</td>
                             <td>{{dict.is_medi[item.is_medi]}}</td>
                             <!--<td>{{item.is_medi==1?"是":"否"}}</td>-->
@@ -129,18 +129,20 @@
                             <td>{{item.moreAchieve}}</td>-->
                             <td class="dropdown">
                                 <!--<button class="btn btn-primary btn-sm" @click="changeStatus(item.status,item.id)">{{dict.status[item.status]}}</button>-->
-                                <button type="button" :class="{'btn':true,'dropdown-toggle':true,'yellow':item.status===1,'green':item.status===2,'gray':item.status===3}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" :class="{'btn':true,'dropdown-toggle':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3,'gray':item.status===4}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{dict.status[item.status]}}
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=3">
-                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">审核通过</li>
+                                <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=4">
+                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">一审通过</li>
+                                    <li v-show="item.status==2" @click="reverify(item.id)" data-toggle="modal" data-target="#confirm">二审通过</li>
                                     <li v-show="item.status==2" @click="revert(item.id)" data-toggle="modal" data-target="#confirm">撤销审核</li>
+                                    <li v-show="item.status==3" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">返回一审</li>
                                     <li @click="cancel(item.id)" data-toggle="modal" data-target="#confirm">退单</li>
                                 </ul>
                             </td>
                         </tr>
                     <tr class="text-center" v-show="cont.myData.length===0">
-                        <td colspan="13">暂无数据...</td>
+                        <td colspan="17">暂无数据...</td>
                     </tr>
 
 
@@ -280,20 +282,27 @@
                                     </div>
                                 </div>
                             </div>
-
+<!--
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">应付款项:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control" v-model="formData.payables">
+                                    <input type="number" min="0" class="form-control" v-model="formData.price_should">
+                                </div>
+                            </div>-->
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">实付款项:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" min="0" class="form-control" v-model="formData.price_paid">
                                 </div>
                             </div>
-
+<!--
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">剩余款项:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" class="form-control" v-model="formData.remaining_sum">
+                                    <input type="number" min="0" class="form-control" v-model="formData.price_remain">
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">房屋来源:</label>
@@ -310,7 +319,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">补齐时间:</label>
                                 <div class="col-sm-8">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime" v-model="formData.polishing_time">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control modal_form_datetime" v-model="formData.complete_date">
                                 </div>
                             </div>
 
@@ -379,7 +388,6 @@
 <script>
     import Page from '../../common/page.vue'
     import Delete from '../../common/delete.vue'
-    import Cascade from '../../common/cascade.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
     import ChooseAddress from '../../common/chooseAddress.vue'
@@ -389,7 +397,7 @@
     //    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
-        components: {Page,Delete,Cascade,ChooseAddress,Status,FlexBox,Confirm,STAFF},
+        components: {Page,Delete,ChooseAddress,Status,FlexBox,Confirm,STAFF},
         data(){
             return {
                 operId : 0,
@@ -429,9 +437,10 @@
                     years : '',         // 年限
                     price : [],
                     pay_type : 1,        // 付款方式
-                    payables : '',        // 应付款项
-                    remaining_sum : '',     // 剩余款项
-                    polishing_time : '',    // 补齐时间
+//                    price_should : '',        // 应付款项
+                    price_paid : '',            // 实付款项
+//                    price_remain : '',     // 剩余款项
+                    complete_date : '',    // 补齐时间
                     is_medi : 1,       // 是否中介（房屋来源）
                     special_sum : '',   // 特殊款
                     group_leader_remark : '',   // 组长备注
@@ -445,12 +454,11 @@
                 dict : {},          // 字典
 
                 params : {
-                    department_id : '',
-                    staff_id : '',
+                    department_id : [],
+                    staff_id : [],
                     from : '',
                     to : '',
                     search : ''
-
                 },
                 info:{
                     //成功状态 ***
@@ -471,7 +479,8 @@
                     staffList:[]
                 },
                 configure:[],
-                idArray:{departmentId:[],staffId:[]},
+                selectConfigure : ''
+//                idArray:{departmentId:[],staffId:[]},
             }
         },
         created (){
@@ -528,6 +537,9 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
+//                    pickerPosition: "bottom-left"
+                    endDate : new Date(),
+//                    todayHighlight : true
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
@@ -535,10 +547,21 @@
                         this.params.from = ev.target.value;
                     } else if (ev.target.placeholder === '结束时间') {
                         this.params.to = ev.target.value;
-                    } else {
-                        // 补齐时间
-                        this.formData.polishing_time = ev.target.value;
                     }
+//                    console.log(this.startDataTime);
+                }.bind(this));
+
+                $('.modal_form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                    pickerPosition: "top-left"
+//                    todayHighlight : true
+                }).on('changeDate', function (ev) {
+                        this.formData.complete_date = ev.target.value;
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
@@ -583,14 +606,25 @@
 //                    (res)=>
                 )*/
                 console.log(this.formData);
-                this.$http.post('glee/collect',{
-                    params : this.formData
-                })
+                this.$http.post('glee/collect',this.formData)
                     .then(
                         (res) => {
-                            console.log();
-                            $('#myModal').modal('hide');
+                            console.log(res);
+                            if (res.data.code !=18200){
+                                this.info.state_error = true;
+                                this.info.error = res.data.msg;
+                                return;
+                            } else {
+                                $('#myModal').modal('hide');
+                                this.info.success = res.data.msg;
+                                //关闭失败弹窗 ***
+                                this.info.state_error = false;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            }
 //                            this.clear();
+                            this.gnCollectList();
+
                         }
                     )
             },
@@ -743,22 +777,27 @@
 //                alert(id);
 //                let that = this;
                 this.confirmMsg.id = id;
-                this.confirmMsg.msg = '确定通过审核吗？';
-                this.confirmMsg.status = 1;
+                this.confirmMsg.msg = '确定通过一审吗？';
+                this.confirmMsg.status = '1-2';
 
+            },
+            reverify(id){
+                this.confirmMsg.id = id;
+                this.confirmMsg.msg = '确定通过二审吗？';
+                this.confirmMsg.status = '2-3';
             },
             revert(id){
 //                驳回
                 this.confirmMsg.id = id;
                 this.confirmMsg.msg = '确定撤销审核吗？';
-                this.confirmMsg.status = 2;
+                this.confirmMsg.status = '3-1';
 
             },
             cancel(id){
                 // 退单
                 this.confirmMsg.id = id;
                 this.confirmMsg.msg = '确定退单吗？';
-                this.confirmMsg.status = 3;
+                this.confirmMsg.status = '4';
 
             },
             modifyGNCollect(){
@@ -770,18 +809,21 @@
             },
             getConfirm(){
                 let url = '';
-                if (this.confirmMsg.status === 1){
-                    // 通过审核
+                if (this.confirmMsg.status === '1-2'){
+                    // 通过一审
                     url = 'glee/collect/verify/';
 
-                } else if(this.confirmMsg.status === 2){
+                } else if(this.confirmMsg.status === '2-3'){
+                   // 通过二审
+                    url = 'glee/collect/reverify/';
+
+                } else if (this.confirmMsg.status === '3-1') {
                     // 撤销审核
                     url = 'glee/collect/revert/';
 
                 } else {
                     // 退单
                     url = 'glee/collect/cancel/';
-
                 }
                 this.$http.get(url+this.confirmMsg.id)
                     .then(
@@ -825,18 +867,18 @@
                 console.log(val);
                 if (this.selectConfigure=='all'){
                     // all
-                    alert('all');
+//                    alert('all');
                     this.receive(val);
                     this.filtrate.departmentList = val.department;
                     this.filtrate.staffList = val.staff;
                 } else if (this.selectConfigure=='department'){
                     // 选择的是部门
-                    alert('部门');
+//                    alert('部门');
                     this.formData.department_id = val.department[0];
 //                    console.log(this.formData.department_id)
                 } else {
                     // 选择员工
-                    alert('员工');
+//                    alert('员工');
                     this.formData.staff_id = val.staff[0];
 //                    console.log(this.formData.staff_id)
                 }
@@ -844,9 +886,9 @@
             },
             receive(val){
                 for(let j=0;j<val.department.length;j++){
-                    if($.inArray(val.department[j].id,this.idArray.departmentId)===-1){
+                    if($.inArray(val.department[j].id,this.params.department_id)===-1){
                         this.filtrate.departmentList.push(val.department[j]);
-                        this.idArray.departmentId.push(val.department[j].id)
+                        this.params.department_id.push(val.department[j].id)
                     }else {
                         this.info.success = '成员已经存在';
                         //显示成功弹窗 ***
@@ -859,9 +901,10 @@
 
                 }
                 for(let i=0;i<val.staff.length;i++){
-                    if($.inArray(val.staff[i].id,this.idArray.staffId)===-1){
-                        this.staffList.push(val.staff[i]);
-                        this.idArray.staffId.push(val.staff[i].id)
+                    if($.inArray(val.staff[i].id,this.params.staff_id)===-1){
+                        console.log()
+                        this.filtrate.staffList.push(val.staff[i]);
+                        this.params.staff_id.push(val.staff[i].id)
                     }else {
                         this.info.success = '成员已经存在';
                         //显示成功弹窗 ***
@@ -874,6 +917,14 @@
 
                 }
             },
+            deleteStaff(item){
+                this.filtrate.staffList=this.filtrate.staffList.filter((x)=>x!==item);
+                this.params.staff_id=this.params.staff_id.filter((x)=>x!=item.id)
+            },
+            deleteDepartment(item){
+                this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
+                this.params.department_id=this.params.staff_id.filter((x)=>x!=item.id)
+            }
 
         }
     }
@@ -947,11 +998,15 @@
     .yellow{
         background-color: #F9E175;
     }
-    .gray{
-        background-color: #CCCCCC;
+    .orange{
+        background-color: #FCB322;
     }
+
     .green{
         background-color: #83E96D;
+    }
+    .gray{
+        background-color: #CCCCCC;
     }
     /*.panel span{
         display: inline-block;

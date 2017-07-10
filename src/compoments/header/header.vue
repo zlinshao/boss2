@@ -381,10 +381,10 @@
                                 </a>
                                 <ul class="sub">
                                     <li :class="{'active': isActive == 16}" @click='pitch_on(16)'>
-                                        <router-link to="">梦想包</router-link>
+                                        <router-link to="/dream">梦想包</router-link>
                                     </li>
                                     <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
-                                        <router-link to="">鸡腿包</router-link>
+                                        <router-link to="/drumstick">鸡腿包</router-link>
                                     </li>
                                 </ul>
                             </li>
@@ -411,6 +411,19 @@
                                     </li>
                                     <li :class="{'active': isActive == 21}" @click='pitch_on(21)'>
                                         <router-link to="/wARenting">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>中介费申请</span>
+                                </a>
+                                <ul class="sub">
+                                    <li>
+                                        <router-link to="/aFACollect">收房</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/aFARenting">租房</router-link>
                                     </li>
                                 </ul>
                             </li>

@@ -159,7 +159,7 @@
                 }
             },
             sendData(){
-                this.$emit('sendData',this.data)
+                this.$emit('sendData',this.data.slice(0,this.moreYears-1))
             }
         }
     }
