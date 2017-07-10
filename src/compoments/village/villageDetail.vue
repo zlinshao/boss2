@@ -48,9 +48,9 @@
                             </li>
                             <li>
                                 <span>照片</span>
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic(0)">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic(1)">
+                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic(2)">
                             </li>
                         </ul>
                     </div>
@@ -83,7 +83,7 @@
 
         <!--模态框-->
         <Modal :oper="oper"></Modal>
-        <PicModal :src="src"></PicModal>
+        <PicModal :largePic="largePic"></PicModal>
     </div>
 </template>
 <style scoped>
@@ -161,11 +161,21 @@
                     villageId : 10
                 },
                 picSrc : '',
-                src : [
+                largePic : [],
+                srcs : [
                     'http://123.206.184.218:8080/cup/images/b18-2.jpg',
                     'http://123.206.184.218:8080/cup/images/b1-2.jpg',
                     'http://123.206.184.218:8080/cup/images/b18-1.jpg'
                 ]
+                /*largePic : {
+                    src : [
+                        'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                        'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                        'http://123.206.184.218:8080/cup/images/b18-1.jpg'
+                    ],
+//                    i : 0
+                }*/
+
             }
         },
         components: {
@@ -173,8 +183,14 @@
             PicModal
         },
         methods : {
-            showLargePic(){
+            showLargePic(num){
 //                this.picSrc = src;
+//                console.log(this.largePic);
+                this.largePic = [{
+                    src : this.srcs,
+                    i : num
+                }];
+//                console.log(this.largePic);
                 $('#myModal2').modal('show');
             }
         }
