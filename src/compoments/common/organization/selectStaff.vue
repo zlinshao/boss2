@@ -428,32 +428,52 @@
             },
             //鼠标增加事件
             mouseAdd(item){
-                if($.inArray(item.real_name, this.member)===-1){
-                    let staff={}
-                    staff.flag=1;
-                    staff.id=this.hovId;
-                    staff.name=this.hovName;
-                    this.member.push(staff);
-                    this.organize.staff.push(staff);
-                    this.keywords='';
-                    this.search();
-                    this.active1=-1;
+                if(!this.noStaff){
+                    if($.inArray(item.real_name, this.member)===-1){
+                        let staff={}
+                        staff.flag=1;
+                        staff.id=this.hovId;
+                        staff.name=this.hovName;
+                        this.member.push(staff);
+                        this.organize.staff.push(staff);
+                        this.keywords='';
+                        this.search();
+                        this.active1=-1;
+                    }
+                }else {
+                    this.info.success = '您只能选择部门';
+                    //显示成功弹窗 ***
+                    this.info.state_success = true;
+                    //一秒自动关闭成功信息弹窗 ***
+                    setTimeout(() => {
+                        this.info.state_success = false;
+                    },2000);
                 }
             },
             //键盘enter事件
             keydownAdd(){
-                if(this.hovName!==''&& $.inArray(this.hovName, this.member)===-1){
-                    let staff={}
-                    staff.flag=1;
-                    staff.id=this.hovId;
-                    staff.name=this.hovName;
-                    this.member.push(staff);
-                    this.organize.staff.push(staff);
-                    this.keywords='';
-                    this.search();
-                    this.active1=-1;
+                if(!this.noStaff){
+                    if(this.hovName!==''&& $.inArray(this.hovName, this.member)===-1){
+                        let staff={}
+                        staff.flag=1;
+                        staff.id=this.hovId;
+                        staff.name=this.hovName;
+                        this.member.push(staff);
+                        this.organize.staff.push(staff);
+                        this.keywords='';
+                        this.search();
+                        this.active1=-1;
+                    }
+                    this.hovName='';
+                }else{
+                    this.info.success = '您只能选择部门';
+                    //显示成功弹窗 ***
+                    this.info.state_success = true;
+                    //一秒自动关闭成功信息弹窗 ***
+                    setTimeout(() => {
+                        this.info.state_success = false;
+                    },2000);
                 }
-                this.hovName='';
             },
             //回车删除事件
             backSpace(){
@@ -670,5 +690,8 @@
     }
     .hide{
         display: none;
+    }
+    *{
+        user-select: none;
     }
 </style>

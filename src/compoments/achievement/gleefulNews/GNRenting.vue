@@ -7,38 +7,48 @@
         </ol>
 
         <div class="panel col-lg-12">
-            <form class="form-inline clearFix" v-show="operId==0" role="form">
-
-                <Cascade @change="getCascadeData"></Cascade>
-
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">组员</option>
-                        <option value="1">组员</option>
-                        <option value="2">组员</option>
-                    </select>
-                </div>
-                <div class="form-group datetime">
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
-                    </label>
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
-                    </label>
-                </div>
-                <div class="input-group bootstrap-timepicker">
-                    <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" @keydown.enter.prevent="search">
-                    <span class="input-group-btn">
+            <div v-show="operId==0">
+                <form class="form-inline clearFix" role="form">
+                    <div class="input-group bootstrap-timepicker">
+                        <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
+                    </div>
+                    <div class="form-group datetime">
+                        <label>
+                            <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                        </label>
+                        <label>
+                            <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                        </label>
+                    </div>
+                    <div class="input-group bootstrap-timepicker">
+                        <label class="sr-only" for="search_info">搜索</label>
+                        <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" @keydown.enter.prevent="search">
+                        <span class="input-group-btn">
                         <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                     </span>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addGleefulNews">
+                            <i class="fa fa-plus-square"></i>&nbsp;新增租房喜报
+                        </a>
+                    </div>
+                </form>
+                <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
+                    <h4>部门</h4>
+                    <span class="tag" v-for="item in filtrate.departmentList">
+                        <span >{{item.name}}&nbsp;&nbsp;</span>
+                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
+                    </span>
                 </div>
-                <div class="form-group pull-right">
-                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addGleefulNews">
-                        <i class="fa fa-plus-square"></i>&nbsp;新增租房喜报
-                    </a>
+                <div class="tagsinput " v-show="filtrate.staffList.length!=0">
+                    <h4>员工</h4>
+                    <span class="tag" v-for="item in filtrate.staffList">
+                        <span >{{item.name}}&nbsp;&nbsp;</span>
+                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
+                    </span>
                 </div>
-            </form>
+            </div>
+
             <div class="choosed" v-show="operId!=0">
                 <ul class="clearFix">
                     <li><a>已选中&nbsp;1&nbsp;项</a></li>
@@ -82,7 +92,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr class="text-center" :key="item.id" v-for="(item,index) in cont.myData">
+                    <tr v-show="cont.myData.length!==0" class="text-center" :key="item.id" v-for="(item,index) in cont.myData">
                         <td>
                             <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
                         </td>
@@ -102,6 +112,9 @@
                             <!--<span :class="{'yellow':item.status===1,'green':item.status===2,'gray':item.status===3,}">{{dict.status[item.status]}}</span>-->
 
                         </td>
+                    </tr>
+                    <tr class="text-center" v-show="cont.myData.length===0">
+                        <td colspan="20">暂无数据...</td>
                     </tr>
 
                     </tbody>
@@ -264,7 +277,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">补齐时间:</label>
                                 <div class="col-sm-8">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control modal_form_datetime">
                                 </div>
                             </div>
 
@@ -442,8 +455,7 @@
                 </div>
             </div>
         </div>
-        <button @click="test">click</button>
-        <STAFF :configure="configure" ></STAFF>
+        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
         <!--模态框 删除-->
         <Delete :msg="cont" @yes="dele"></Delete>
 
@@ -459,6 +471,13 @@
     </div>
 </template>
 <style scoped>
+    .tagsinput{
+        border:none;
+    }
+    h4{
+        display: inline-block;
+        margin: 0;
+    }
     .pull-right{
         padding-top: 5px;
     }
@@ -523,12 +542,11 @@
 <script>
     import Page from '../../common/page.vue'
     import Delete from '../../common/delete.vue'
-    import Cascade from '../../common/cascade.vue'
     import ChooseAddress from '../../common/chooseAddress.vue'
     import Status from '../../common/status.vue';
     import STAFF from  '../../common/organization/selectStaff.vue'
     export default{
-        components: {Page,Delete,Cascade,ChooseAddress,Status,STAFF},
+        components: {Page,Delete,ChooseAddress,Status,STAFF},
         data(){
 
             return {
@@ -536,6 +554,7 @@
 //                rentingtList : [],
                 paging : '',
                 page : 1,
+                dict : {},
 
                 title : '',
                 add : true,      // 是否新增
@@ -565,13 +584,15 @@
                 },
 
                 params : {
-                    city: '',
-                    group: "",
-                    people: "",
-                    region: "",
-                    startDataTime : '',
-                    finishDataTime : '',
-                    searchInfo : ''
+                    department_id : [],
+                    staff_id : [],
+                    from : '',
+                    to : '',
+                    search : ''
+                },
+                filtrate : {
+                    departmentList:[],
+                    staffList:[]
                 },
                 info:{
                     //成功状态 ***
@@ -584,11 +605,22 @@
                     error: ''
                 },
                 configure:[],
+                selectConfigure : ''
 
             }
         },
         created (){
-            this.gnRentingList();
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+                    (res) => {
+                        this.dict = res.data;
+//                        console.log(this.dict);
+//                        alert(1);
+                        this.gnRentingList();
+
+                    }
+                );
+
         },
         updated (){
 //            时间选择
@@ -626,10 +658,23 @@
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
                     if (ev.target.placeholder === '开始时间'){
-                        this.params.startDataTime = ev.target.value;
-                    } else {
-                        this.params.finishDataTime = ev.target.value;
+                        this.params.from = ev.target.value;
+                    } else if (ev.target.placeholder === '结束时间') {
+                        this.params.to = ev.target.value;
                     }
+//                    console.log(this.startDataTime);
+                }.bind(this));
+                $('.modal_form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                    pickerPosition: "top-left"
+//                    todayHighlight : true
+                }).on('changeDate', function (ev) {
+//                    this.formData.complete_date = ev.target.value;
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
@@ -692,10 +737,88 @@
                 /*this.info.state_error = true;
                  this.info.error = '您没有编辑权限';*/
             },
-            test(){
+            select(){
+
+                this.selectConfigure = 'all';
                 $('#selectCustom').modal({backdrop: 'static',});
+                this.configure={type:'all',class:'selectType'};
                 $('#selectCustom').modal('show');
-                this.configure={length:1,class:'amount'};
+//                this.configure={id:[],class:'department'};
+//                this.configure={length:2,class:'amount'};
+            },
+            seleDepartment(){
+                this.selectConfigure = 'department';
+                this.configure={length : 1,class:'onlyOneDpm'};
+                $('#selectCustom').modal('show');
+            },
+            seleStaff(){
+                this.selectConfigure = 'staff';
+                this.configure={length :1,class : 'amount'};
+                $('#selectCustom').modal('show');
+            },
+            selectDateSend(val){
+//                console.log(this.configure);
+//                console.log(this.selectConfigure)
+                console.log(val);
+                if (this.selectConfigure=='all'){
+                    // all
+//                    alert('all');
+                    this.receive(val);
+                    this.filtrate.departmentList = val.department;
+                    this.filtrate.staffList = val.staff;
+                } else if (this.selectConfigure=='department'){
+                    // 选择的是部门
+//                    alert('部门');
+                    this.formData.department_id = val.department[0];
+//                    console.log(this.formData.department_id)
+                } else {
+                    // 选择员工
+//                    alert('员工');
+                    this.formData.staff_id = val.staff[0];
+//                    console.log(this.formData.staff_id)
+                }
+
+            },
+            receive(val){
+                for(let j=0;j<val.department.length;j++){
+                    if($.inArray(val.department[j].id,this.params.department_id)===-1){
+                        this.filtrate.departmentList.push(val.department[j]);
+                        this.params.department_id.push(val.department[j].id)
+                    }else {
+                        this.info.success = '成员已经存在';
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        },2000);
+                    }
+
+                }
+                for(let i=0;i<val.staff.length;i++){
+                    if($.inArray(val.staff[i].id,this.params.staff_id)===-1){
+                        console.log()
+                        this.filtrate.staffList.push(val.staff[i]);
+                        this.params.staff_id.push(val.staff[i].id)
+                    }else {
+                        this.info.success = '成员已经存在';
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        },2000);
+                    }
+
+                }
+            },
+            deleteStaff(item){
+                this.filtrate.staffList=this.filtrate.staffList.filter((x)=>x!==item);
+                this.params.staff_id=this.params.staff_id.filter((x)=>x!=item.id)
+            },
+            deleteDepartment(item){
+                this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
+                this.params.department_id=this.params.staff_id.filter((x)=>x!=item.id)
             }
         }
     }

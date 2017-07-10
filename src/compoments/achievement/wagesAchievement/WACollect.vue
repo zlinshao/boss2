@@ -3,7 +3,7 @@
 
         <ol class="breadcrumb">
             <li>业绩管理</li>
-            <li>工资业绩</li>
+            <li>每单工资</li>
             <li class="active">收房</li>
         </ol>
 
