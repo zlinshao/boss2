@@ -80,30 +80,31 @@
                     </div>
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                        <button class="btn btn-success" type="button"> 确定</button>
+                        <button class="btn btn-success" type="button" @click="confirm_ok"> 确定</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!--组织架构-->
-        <select-staff></select-staff>
     </div>
 </template>
 
 <script>
-    import selectStaff from '../common/organization/selectStaff.vue';   //组织架构
+
     export default {
-        props: ['state', 'cus_name'],
-        components:{ selectStaff },
+        props: ['state', 'msg'],
         data (){
             return {
-                cus_distribute: '',
                 daily_state: false,         //增加日志
                 inter_state: false,         //提醒内容
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
-                dataTime: ''
+                dataTime: '',               //提醒时间
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //成功信息 ***
+                    success: '',
+                }
             }
         },
         updated (){
@@ -111,7 +112,24 @@
             this.remindData();
         },
         methods: {
-
+//            确定
+            confirm_ok (){
+                if(this.pool === true){
+                    this.$http.post('core/customer/putInPool',{
+                        id: this.msg
+                    }).then((res) => {
+                        $('#remindDaily').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.$emit('pitches');
+                    });
+                }
+                if(this.inter_state === true){
+                    alert(this.inter_state);
+                }
+            },
 //            时间选择
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -132,10 +150,6 @@
             },
         },
         watch: {
-
-            cus_name (val){
-                this.cus_distribute = this.cus_name.join(',');
-            },
             state(val) {
                 if (val === 'daily') {
                     this.daily_state = true;      //增加日志
