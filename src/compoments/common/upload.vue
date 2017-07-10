@@ -61,6 +61,7 @@
                             //上传文件时触发的事件
                         });
                         this.on("queuecomplete", function (file) {
+                            _this.$emit('complete','ok');
                             //上传完成后触发的方法
                         });
                         this.on("removedfile", function (file) {

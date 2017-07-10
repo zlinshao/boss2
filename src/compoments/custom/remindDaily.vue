@@ -198,6 +198,7 @@
 //            跟进方式
             follow_way_s (val){
                 this.follow_w = val.target.value;
+                this.$emit('pitches')
             },
 //            时间选择
             remindData (){

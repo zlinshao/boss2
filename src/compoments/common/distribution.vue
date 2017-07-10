@@ -22,11 +22,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+
                                 <label class="col-lg-2 col-sm-2 control-label">派发对象</label>
-                                <div class="col-lg-10">
+                                <div class="col-lg-10 iconic-input right">
+                                    <i class="fa fa-plus-square"></i>
                                     <input type="text" @click="distributions"
                                            class="form-control" v-model="salesman"
-                                           placeholder="请输入姓名">
+                                           placeholder="请选择姓名" readonly>
                                 </div>
                             </div>
                         </form>
@@ -117,5 +119,7 @@
 
 
 <style scoped>
-
+    .iconic-input.right i{
+        right: 20px;
+    }
 </style>

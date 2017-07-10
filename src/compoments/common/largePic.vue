@@ -95,7 +95,6 @@
         watch :{
             deep : true,
             largePic(val){
-                console.log(val);
                 this.src = val[0].src;
                 this.index = val[0].i;
             }

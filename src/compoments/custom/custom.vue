@@ -259,16 +259,16 @@
         methods: {
 //            三天未成交
             trid(val) {
-                if(val.target.checked === true){
-                    this.$http.post('core/customer/customerList',{
+                if (val.target.checked === true) {
+                    this.$http.post('core/customer/customerList', {
                         unsettled: true
                     }).then((res) => {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
                     });
                 }
-                if(val.target.checked === false){
-                    this.$http.post('core/customer/customerList',{
+                if (val.target.checked === false) {
+                    this.$http.post('core/customer/customerList', {
                         unsettled: false
                     }).then((res) => {
                         this.custom_list = res.data.data.list;
@@ -278,6 +278,7 @@
             },
 //            分配成功更新列表
             pitch_dele (){
+                this.pitch = [];
 //                列表
                 this.$http.post('core/customer/customerList').then((res) => {
                     this.custom_list = res.data.data.list;
