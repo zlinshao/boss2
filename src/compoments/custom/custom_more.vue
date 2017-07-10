@@ -76,7 +76,7 @@
                             </div>
                             <div><span class="text-primary">身份证号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">身份张照片：</span>
-                                <a data-toggle="modal" href="#myModal2" v-for="pic in photos"
+                                <a data-toggle="modal" href="#myModal2" v-for="(pic,index) in photos"
                                    style="margin: 10px 10px 0 0;display: inline-block;">
                                     <img :src="pic.small">
                                 </a>
@@ -256,7 +256,7 @@
         <New_add :msg="revise_state" :revise="revise_info" :selects="select_list"></New_add>
 
         <!--查看大图-->
-        <pic-modal :src="card"></pic-modal>
+        <PicModal :src="card"></PicModal>
 
         <!--提醒-->
         <Status :state='info'></Status>
@@ -266,9 +266,9 @@
 <script>
     import New_add from './new_add.vue'
     import Status from '../common/status.vue';
-    import picModal from '../common/largePic.vue'       //查看大图
+    import PicModal from '../common/largePic.vue'       //查看大图
     export default {
-        components: {New_add, picModal, Status},
+        components: {New_add, PicModal, Status},
         data (){
             return {
                 revise_state: '',           //修改
@@ -331,8 +331,12 @@
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
-            big_pic (val){
-                this.card.push(val);
+            showLargePic(num){
+                this.photos = [{
+                    src : this.card,
+                    i : num
+                }];
+                $('#myModal2').modal('show');
             },
 //            展示收起
             open_close (){
