@@ -76,7 +76,8 @@
                             </div>
                             <div><span class="text-primary">身份证号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">身份张照片：</span>
-                                <a  data-toggle="modal" href="#myModal2" v-for="pic in photos" style="margin: 10px 10px 0 0;display: inline-block;">
+                                <a data-toggle="modal" href="#myModal2" v-for="pic in photos"
+                                   style="margin: 10px 10px 0 0;display: inline-block;">
                                     <img :src="pic.small">
                                 </a>
                             </div>
@@ -166,8 +167,9 @@
                                     <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
                                     <div class="col-sm-10" style="padding-left: 0;">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" @click="follow_way_s($event)"
+                                                    :value="follow_w">
+                                                <option v-for="(way,index) in select_list.follow_way" :value="index">{{way}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -187,44 +189,24 @@
                                         <textarea class="form-control" v-model="follow_up"
                                                   style="margin-bottom: 16px;"></textarea>
                                         <div class="pull-right">
+                                            <button class="btn btn-default" @click="follow_up_take('resetting')">取消
+                                            </button>
                                             <button class="btn btn-primary" @click="follow_up_take('ok')">确定</button>
-                                            <button class="btn btn-default" @click="follow_up_take">取消</button>
                                         </div>
                                     </div>
                                 </div>
                                 <!--跟进记录-->
-                                <section class="panel">
+                                <section class="panel" v-for="daily in daily_record"
+                                         style="margin-bottom: 0;padding-bottom: 0;">
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek">
-                                            <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
-                                            <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
-                                            <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
-                                            <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
-                                            </div>
+                                            <div><span>{{daily.create_time}}</span></div>
+                                            <div><span class="text-primary">跟进方式：</span><span>{{select_list.follow_way[daily.follow_way]}}</span></div>
+                                            <div><span class="text-primary">跟进人：</span><span>{{daily.staff_id}}</span></div>
+                                            <div><span class="text-primary">跟进记录：</span><span>{{daily.remarks}}</span></div>
                                         </div>
                                     </div>
                                 </section>
-                                <section class="panel">
-                                    <div class="panel-body">
-                                        <div class="panel-body table-responsive cheek">
-                                            <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
-                                            <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
-                                            <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
-                                            <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section> <section class="panel">
-                                <div class="panel-body">
-                                    <div class="panel-body table-responsive cheek">
-                                        <div><span>2017-07-20</span>&nbsp;&nbsp;<span>14:00</span></div>
-                                        <div><span class="text-primary">跟进方式：</span><span>电话</span></div>
-                                        <div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>
-                                        <div><span class="text-primary">跟进记录：</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, cupiditate et itaque ratione reiciendis tempora. Ad animi doloremque earum odio possimus, quam voluptatum? Expedita quam tempora totam unde veniam voluptatum?</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
 
                             </div>
 
@@ -275,17 +257,21 @@
 
         <!--查看大图-->
         <pic-modal :src="card"></pic-modal>
+
+        <!--提醒-->
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import New_add from './new_add.vue'
+    import Status from '../common/status.vue';
     import picModal from '../common/largePic.vue'       //查看大图
     export default {
-        components: {New_add, picModal},
+        components: {New_add, picModal, Status},
         data (){
             return {
-                revise_state: '',
+                revise_state: '',           //修改
                 cus_progress: '',           //进度
                 progress: '20',             //进度
                 open_on: false,             //展示收起
@@ -295,8 +281,19 @@
                 revise_info: {},            //修改专用
                 select_list: {},            //字典
                 photos: {},                 //图片
-                card: [],
-
+                card: [],                   //大图
+                follow_w: '1',              //跟进方式
+                daily_record: [],           //沟通日志
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
             }
         },
         mounted (){
@@ -322,6 +319,12 @@
                         }
                     });
                 });
+
+                this.$http.get('core/customer_talk_log/talklist/id/' + val).then((res) => {
+                    if (res.data.data) {
+                        this.daily_record = res.data.data;
+                    }
+                });
             },
             customers_rev (val){
                 $('#customModel').modal({
@@ -338,13 +341,53 @@
 //            跟进记录
             follow_up_take (val){
                 if (val === 'ok' && this.follow_up.length > 0) {
+//                新增跟进记录
+                    this.$http.post('core/customer_talk_log/savetalklog', {
+                        follow_way: this.follow_w,
+                        remarks: this.follow_up,
+                        customer_id: this.cus_Id,
+                    }).then((res) => {
+                        if (res.data.code === '70090') {
+                            this.$http.get('core/customer_talk_log/talklist/id/' + this.cus_Id).then((res) => {
+                                if (res.data.data) {
+                                    this.daily_record = res.data.data;
+                                }
+                            });
+                            //成功信息 ***
+                            this.info.success = res.data.msg;
+                            //关闭失败弹窗 ***
+                            this.info.state_error = false;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+
+                            this.follow_up = '';
+                            this.follow_w = '1';
+                        } else {
+                            //关闭成功信息(可选)
+                            this.info.state_success = false;
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    });
+                } else if (val === 'resetting') {
+                    this.follow_up = '';
+                    this.follow_w = '1';
                 } else {
                     this.follow_up = '';
+                    this.follow_w = '1';
+                    this.info.state_success = false;
+                    //失败信息 ***
+                    this.info.error = '跟进记录不能为空';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
                 }
-
+            },
+            follow_way_s (val){
+                this.follow_w = val.target.value;
             }
         }
-
     }
 </script>
 
@@ -419,16 +462,19 @@
     }
 
     .roll::-webkit-scrollbar {
-        width:8px;
+        width: 8px;
     }
-    .roll::-webkit-scrollbar-button    {
-        background-color:#ffff;
+
+    .roll::-webkit-scrollbar-button {
+        background-color: #ffff;
     }
+
     .roll::-webkit-scrollbar-track {
-        background:#ffffff;
+        background: #ffffff;
     }
-    .roll::-webkit-scrollbar-thumb{
-        background:#E4393C;
-        border-radius:10px;
+
+    .roll::-webkit-scrollbar-thumb {
+        background: #E4393C;
+        border-radius: 10px;
     }
 </style>

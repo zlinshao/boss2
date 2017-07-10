@@ -9,16 +9,17 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_status_s($event)">
+                            <select class="form-control" @click="sea_status_s($event)" :value="sea_status">
                                 <option value="" selected="selected">客户状态</option>
                                 <option v-for="(val,index) in select_list.customer_status" :value="index">{{val}}
                                 </option>
                             </select>
                         </label>
                     </div>
+
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_intention_c($event)">
+                            <select class="form-control" @click="sea_intention_c($event)" :value="sea_intention">
                                 <option value="" selected="selected">客户意向</option>
                                 <option v-for="(val,index) in select_list.customer_will" :value="index">{{val}}</option>
                             </select>
@@ -26,7 +27,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_id_s($event)">
+                            <select class="form-control" @click="sea_id_s($event)" :value="sea_id">
                                 <option value="" selected="selected">客户身份</option>
                                 <option v-for="(val,index) in select_list.identity" :value="index">{{val}}</option>
                             </select>
@@ -34,7 +35,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="ser_source_s($event)">
+                            <select class="form-control" @click="ser_source_s($event)" :value="sea_source">
                                 <option value="" selected="selected">客户来源</option>
                                 <option v-for="(val,index) in select_list.customer_source" :value="index">{{val}}
                                 </option>
@@ -43,7 +44,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_belong_s($event)">
+                            <select class="form-control" @click="sea_belong_s($event)" :value="sea_belong">
                                 <option value="" selected="selected">客户所属</option>
                                 <option v-for="(val,index) in select_list.belong" :value="index">{{val}}
                                 </option>
@@ -52,14 +53,14 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_type_s($event)">
+                            <select class="form-control" @click="sea_type_s($event)" :value="sea_type">
                                 <option value="" selected="selected">个人/中介</option>
                                 <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
                             </select>
                         </label>
                     </div>
                     <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="search_all">重置</button>
+                        <button class="btn btn-success" type="button" @click="collectList">重置</button>
                     </div>
 
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
@@ -106,7 +107,6 @@
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">客户所属</th>
                             <th class="text-center">负责人</th>
-                            <th class="text-center">置顶</th>
                             <th class="text-center">更多</th>
                         </tr>
                         </thead>
@@ -139,9 +139,10 @@
                             <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
                             <td class="text-center">{{list.belong}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
-                            <td class="text-center"><a><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
-                                <router-link to="/details">更多</router-link>
+                                <router-link :to="{path:'/details',query: {nameId: list.id}}">
+                                    更多
+                                </router-link>
                             </td>
                         </tr>
                         <tr v-show="custom_list.length === 0">
@@ -156,7 +157,7 @@
         </div>
 
         <!--分配-->
-        <Distribution :msg="cus_name"></Distribution>
+        <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
         <Page @psg="search_pool" :pg="paging"></Page>
@@ -199,8 +200,21 @@
             this.collectList();
         },
         methods: {
+//            分配成功更新列表
+            pitch_dele (){
+                this.$http.post('core/customer_pool/customerpool').then((res) => {
+                    this.custom_list = res.data.data.list;
+                    this.paging = res.data.data.pages;
+                });
+            },
 //            客户列表
             collectList (){
+                this.sea_status = '';             //客户状态
+                this.sea_intention = '';          //客户意向
+                this.sea_id = '';                 //客户身份
+                this.sea_source = '';             //客户来源
+                this.sea_belong = '';             //客户所属
+                this.sea_type = '';               //个人/中介
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
@@ -209,23 +223,6 @@
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
                     });
-                });
-            },
-//            查看所有/重置
-            search_all (){
-                this.$http.post('core/customer_pool/customerpool', {
-                    customer_status: '',
-                    customer_will: '',
-                    identity: '',
-                    customer_source: '',
-                    person_medium: '',
-                    keywords: '',
-                    belong: '',
-                }).then((res) => {
-                    if (res.data.code === '70040') {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
-                    }
                 });
             },
 //            搜索

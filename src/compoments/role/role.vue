@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Status :state="info"></Status>
+
         <!--新增权限管理-->
         <div class="form-group text-right">
             <button class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
@@ -85,6 +85,9 @@
                 </section>
             </div>
         </div>
+
+        <!--提醒-->
+        <Status :state="info"></Status>
     </div>
 </template>
 
@@ -242,10 +245,6 @@
 //                        显示成功信息
                         this.info.state_error = false;
                         this.info.state_success = true;
-//                        一秒自动关闭成功信息
-                        setTimeout(() => {
-                            this.info.state_success = false
-                        }, 1000);
                         this.role_info.push({
                             id: res.data.data.id,
                             title: res.data.data.title
