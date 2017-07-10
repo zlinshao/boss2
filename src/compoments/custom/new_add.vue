@@ -106,7 +106,7 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_status_quo_c($event)"
                                                 :value="cus_status_quo">
-                                            <option v-for="(val,index) in select_c.customer_status" :value="index">{{val}}
+                                            <option v-for="(val,index) in select_c.customer_status" v-if="index != 3" :value="index">{{val}}
                                             </option>
                                         </select>
                                     </div>

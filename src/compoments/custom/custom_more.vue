@@ -342,7 +342,7 @@
             follow_up_take (val){
                 if (val === 'ok' && this.follow_up.length > 0) {
 //                新增跟进记录
-                    this.$http.post('/core/customer_talk_log/savetalklog', {
+                    this.$http.post('core/customer_talk_log/savetalklog', {
                         follow_way: this.follow_w,
                         remarks: this.follow_up,
                         customer_id: this.cus_Id,
@@ -370,7 +370,6 @@
                             //显示失败弹窗 ***
                             this.info.state_error = true;
                         }
-
                     });
                 } else if (val === 'resetting') {
                     this.follow_up = '';
@@ -389,7 +388,6 @@
                 this.follow_w = val.target.value;
             }
         }
-
     }
 </script>
 
