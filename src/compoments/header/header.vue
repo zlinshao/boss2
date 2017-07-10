@@ -236,7 +236,7 @@
                     <li class="dropdown" style="padding-top: 2px;">
                         <a href="javascript:;" style="border:none" class="dropdown-toggle"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell" style="font-size: 25px"></i>
+                            <i class="fa fa-bell-o" style="font-size: 25px"></i>
                         </a>
                         <ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">
                             <li @click="lookRemind">
@@ -328,6 +328,9 @@
                         <ul class="sub">
                             <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
                                 <router-link to='/user'>用户管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
+                                <router-link to='/orderManage'>订单管理</router-link>
                             </li>
                             <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
                                 <router-link to='/role'>角色管理</router-link>

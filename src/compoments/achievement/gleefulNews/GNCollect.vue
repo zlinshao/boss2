@@ -843,7 +843,6 @@
                     )
             },
             select(){
-
                 this.selectConfigure = 'all';
                 $('#selectCustom').modal({backdrop: 'static',});
                 this.configure={type:'all',class:'selectType'};

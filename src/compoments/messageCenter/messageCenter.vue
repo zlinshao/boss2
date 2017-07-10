@@ -35,7 +35,7 @@
                                     <i class=" fa fa-github"></i> boss小秘书
                                 </a>
                             </li>
-                            <li>
+                            <li @click="Message">
                                 <a href="#">
                                     <i class=" fa fa-heart"></i> 收藏
                                 </a>
@@ -45,7 +45,7 @@
                     <aside class="lg-side">
                         <div class="inbox-head">
                             <h3>
-                                <i :class="[fa, font]"></i>&nbsp;&nbsp; {{message}}
+                                <i :class="[fa,font]"></i>&nbsp;&nbsp;{{message}}
                             </h3>
                             <form class="pull-right position" action="#">
                                 <div class="input-append" v-if="isSystem">
@@ -311,6 +311,30 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <!--收藏-->
+                            <table class="table table-striped table-advance table-hover" v-if="isMessage">
+                                <thead>
+                                <tr>
+                                    <th>收藏时间时间</th>
+                                    <th>相关对象</th>
+                                    <th>类别</th>
+                                    <th>内容</th>
+                                    <th>收藏</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="unread" @click="announceDetail">
+                                    <td >2017/07/07</td>
+                                    <td>张三丰</td>
+                                    <td>合同</td>
+                                    <td>请大家今天9:30在创意中央总部集合</td>
+                                    <td  @click.stop="isCollect">
+                                        <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
+                                        <i class=" fa fa-heart-o"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </aside>
                 </div>
@@ -325,13 +349,17 @@
     import AnnouncementAdd from './announcementAdd.vue'
     import AnnouncementDetail from './announcemeDetail.vue'
     export default{
-        components:{AnnouncementAdd,AnnouncementDetail},
+        components:{
+            AnnouncementAdd,
+            AnnouncementDetail,
+        },
         data(){
             return{
                 isSystem:true,
                 isExamine:false,
                 isSubstitute:false,
                 isSecretary:false,
+                isMessage:false,
                 message:'',
                 fa:'fa',
                 font:''
@@ -352,6 +380,7 @@
                 this.isExamine =false;
                 this.isSubstitute=false;
                 this.isSecretary=false;
+                this.isMessage=false;
                 this.message='系统公告';
                 this.font='fa-volume-up';
             },
@@ -360,6 +389,7 @@
                 this.isExamine =true;
                 this.isSubstitute=false;
                 this.isSecretary=false;
+                this.isMessage=false;
                 this.message='审批提醒';
                 this.font='fa-user';
             },
@@ -368,6 +398,7 @@
                 this.isExamine =false;
                 this.isSubstitute=true;
                 this.isSecretary=false;
+                this.isMessage=false;
                 this.message='代办提醒';
                 this.font='fa-bell';
             },
@@ -376,11 +407,21 @@
                 this.isExamine =false;
                 this.isSubstitute=false;
                 this.isSecretary=true;
+                this.isMessage=false;
                 this.message='BOSS小秘书';
                 this.font='fa-github';
             },
+            Message(){
+                this.isSystem = false;
+                this.isExamine =false;
+                this.isSubstitute=false;
+                this.isSecretary=false;
+                this.isMessage=true;
+                this.message='收藏';
+                this.font='fa-heart';
+            },
             isCollect(){
-                alert(1)
+                alert(1);
             }
         }
     }
