@@ -82,15 +82,17 @@
         components: {Page,Organize},
         data (){
             return {
-                picks:'',
-                pages:'',
-                configure:[],
-                selected:[],
+                picks:'',   //选中checkout框
+                pages:'',   //总页数
+                configure:[],//配置项
+                configureType:'',//配置类型
+                selected:[],   //选中部门和员工
             }
         },
         created (){
         },
         methods: {
+            //选中的checkout框
             picked (e){
                 if(e.target.checked===true){
                     this.picks++;
@@ -98,24 +100,33 @@
                     this.picks--;
                 }
             },
+            //选择部门和成员搜索
             select(){
                 $('#selectCustom').modal({backdrop: 'static',});
                 $('#selectCustom').modal('show');
+                this.configureType='select';
                 this.configure={type:'all',class:'selectType'};
             },
-            isSelect(val){
-                for(let i=0;i<val.department.length;i++){
-                    this.selected.push(val.department[i].name);
-                };
-                for(let i=0;i<val.staff.length;i++){
-                    this.selected.push(val.staff[i].name);
-                };
-            },
+            //选择分配部门
             distribution(){
                 $('#selectCustom').modal({backdrop: 'static',});
                 $('#selectCustom').modal('show');
+                this.configureType='distribution';
                 this.configure={length:1,class:'onlyOneDpm'};
-            }
+            },
+            //选中后处理事件
+            isSelect(val){
+                if(this.configureType==='select'){
+                    for(let i=0;i<val.department.length;i++){
+                        this.selected.push(val.department[i].name);
+                    }
+                    for(let i=0;i<val.staff.length;i++){
+                        this.selected.push(val.staff[i].name);
+                    }
+                }else if(this.configureType==='distribution'){
+                    alert(2)
+                }
+            },
         }
     }
 </script>
@@ -131,14 +142,6 @@
 
     select {
         margin-bottom: 0;
-    }
-
-    .pro-sort {
-        padding-right: 6px;
-    }
-
-    .pro-sort select.form-control {
-        padding: 6px 8px;
     }
     .remind li {
         float: left;
