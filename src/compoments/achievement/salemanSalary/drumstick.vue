@@ -1,10 +1,8 @@
 <template>
     <div>
-
         <ol class="breadcrumb">
-            <li>业绩管理</li>
-            <li>周期表</li>
-            <li class="active">个人</li>
+            <li>业务员工资</li>
+            <li class="active">鸡腿包</li>
         </ol>
 
         <div class="panel col-lg-12">
@@ -12,26 +10,20 @@
                 <div class="input-group bootstrap-timepicker">
                     <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
                 </div>
-
-
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">全部</option>
-                        <option value="1">鸡腿</option>
-                        <option value="2">梦想</option>
-                    </select>
-                </div>
-
                 <div class="form-group datetime">
                     <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime" v-model="params.from">
                     </label>
                     <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime" v-model="params.to">
                     </label>
                 </div>
-                <div class="input-group" style="margin-bottom: 18px;" @click="search">
-                    <button type="button" class="btn btn-success">搜索</button>
+                <div class="input-group bootstrap-timepicker">
+                    <label class="sr-only" for="search_info">搜索</label>
+                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" @keydown.enter.prevent="search" v-model="params.search">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
             </form>
             <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
@@ -48,104 +40,42 @@
                         <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
                     </span>
             </div>
-
         </div>
-
         <!--表格-->
         <div class="col-lg-12">
             <section class="panel table table-responsive">
-                <table class="table table-striped table-advance">
+                <table class="table table-striped table-advance table-hover">
                     <thead>
                     <tr>
                         <th class="text-center">城市</th>
-                        <th class="text-center">小组</th>
+                        <th class="text-center">组别</th>
                         <th class="text-center">组长</th>
                         <th class="text-center">组员</th>
-                        <th class="text-center">实际业绩</th>
-                        <th class="text-center">溢出业绩</th>
-                        <th class="text-center">收房/套</th>
-                        <th class="text-center">租房/套</th>
                         <th class="text-center">绩效套餐</th>
+                        <th class="text-center">无责底薪</th>
+                        <th class="text-center">收/套</th>
+                        <th class="text-center">租/套</th>
+                        <th class="text-center">业绩工资</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr class="text-center">
-                        <td rowspan="3" class="table-bordered">南京</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
+                        <td>南京</td>
+                        <td>仙林一组</td>
+                        <td>哈哈</td>
+                        <td>哈哈</td>
+                        <td>哈哈</td>
+                        <td>哈哈</td>
+                        <td>哈哈</td>
+                        <td>哈哈</td>
+                        <td>哈哈</td>
                     </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-
-                    <!--<tr class="text-center" v-for="item in myData">
-                        <td>{{item.region.name}}</td>
-                        <td>{{item.headman}}</td>
-                        <td>{{item.people}}</td>
-                        <td>{{item.realAchieve}}</td>
-                        <td>{{item.moreAchieve}}</td>
-                        <td>{{item.collect}}</td>
-                        <td>{{item.renting}}</td>
-                        <td>{{item.ranking}}</td>
-                        <td>{{item.achievePackage.name}}</td>
-                    </tr>-->
-
-
-                    </tbody>
-                    <tbody>
-                    <tr class="text-center">
-                        <td rowspan="3" class="table-bordered">南京</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-
                     </tbody>
                 </table>
             </section>
         </div>
-        <!--分页-->
-        <Page :pg="paging" @pag="getData"></Page>
+
+
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
     </div>
@@ -160,48 +90,27 @@
     }
 </style>
 <script>
-    import Page from '../../common/page.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
-
     export default{
-        components: {Page,STAFF},
+        components: {STAFF},
         data(){
             return {
-                params : {
-                    city : '',
-                    region : '',
-                    people : '',
-                    startDataTime : '',
-                    finishDataTime : ''
-                },
-                myData : [],
-                paging : '',
-
-
                 filtrate : {
                     departmentList:[],
                     staffList:[]
                 },
                 selectConfigure : '',
                 configure : {},
+                params : {
+                    department_id : [],
+                    staff_id : [],
+                    from : '',
+                    to : '',
+                    search : ''
+                }
             }
         },
-        created (){
-            this.perPersonList();
-        },
-        updated (){
-//            时间选择
-            this.remindData();
-        },
-        methods : {
-            perPersonList (){
-                this.$http.get('json/periodicPerson.json').then((res) => {
-//                    this.collectList = res.data.data.gleeFulCollect;
-                    this.myData = res.data.data.person;
-                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                })
-            },
+        methods: {
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -213,20 +122,16 @@
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder == '开始时间'){
-                        this.params.startDataTime = ev.target.value;
-                    } else {
-                        this.params.finishDataTime = ev.target.value;
+                    if (ev.target.placeholder === '开始时间'){
+                        this.params.from = ev.target.value;
+                    } else if (ev.target.placeholder === '结束时间') {
+                        this.params.to = ev.target.value;
                     }
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
-            getData(data){
-                // 页数
-                console.log(data);
-            },
             search(){
-                console.log(this.params);
+
             },
             select(){
 
@@ -300,7 +205,7 @@
             deleteDepartment(item){
                 this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
                 this.params.department_id=this.params.staff_id.filter((x)=>x!=item.id)
-            },
+            }
         }
     }
 </script>

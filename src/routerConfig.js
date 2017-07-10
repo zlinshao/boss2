@@ -13,6 +13,10 @@ import WACollect from './compoments/achievement/wagesAchievement/WACollect.vue'
 import WARenting from './compoments/achievement/wagesAchievement/WARenting.vue'
 import Compare from './compoments/achievement/companyAchievement/compare.vue'   // 公司业绩收租房对比
 import Calc from './compoments/achievement/wagesAchievement/calc.vue'       // 计算详情
+import Dream from './compoments/achievement/salemanSalary/dream.vue'        // 梦想包
+import Drumstick from './compoments/achievement/salemanSalary/drumstick.vue'    // 鸡腿包
+import AFACollect from './compoments/achievement/agencyFeeAplicarion/AFACollect.vue'    // 收房中介费
+import AFARenting from './compoments/achievement/agencyFeeAplicarion/AFARenting.vue'    // 租房中介费
 
 import Custom from "./compoments/custom/custom.vue";                        //客户
 import Details from "./compoments/custom/custom_more.vue";                  //客户详情
@@ -147,6 +151,26 @@ export default[
         path: '/compare',
         name: 'Compare',
         component: Compare
+    },
+    {
+        path: '/dream',
+        name: 'Dream',
+        component: Dream
+    },
+    {
+        path: '/drumstick',
+        name: 'Drumstick',
+        component: Drumstick
+    },
+    {
+        path: '/aFACollect',
+        name: 'AFACollect',
+        component: AFACollect
+    },
+    {
+        path: '/aFARenting',
+        name: 'AFARenting',
+        component: AFARenting
     },
     {
         path: '/calc',
