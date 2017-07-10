@@ -160,7 +160,7 @@
         <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
-        <Page @psg="search_pool" :pg="paging"></Page>
+        <Page @pag="search_pool" :pg="paging"></Page>
     </div>
 </template>
 
@@ -227,7 +227,7 @@
             },
 //            搜索
             search_pool (val){
-                this.$http.post('core/customer_pool/customerpool/' + val, {
+                this.$http.post('core/customer_pool/customerpool/page/' + val, {
                     customer_status: this.sea_status,
                     customer_will: this.sea_intention,
                     identity: this.sea_id,
