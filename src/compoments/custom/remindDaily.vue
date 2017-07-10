@@ -32,8 +32,21 @@
                     <div v-if="daily_state" class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
+                                <div class="col-sm-10" style="padding-left: 0;">
+                                    <div class="col-sm-4">
+                                        <select class="form-control" @click="follow_way_s($event)"
+                                                :value="follow_w">
+                                            <option v-for="(way,index) in select_list.follow_way" :value="index">
+                                                {{way}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-lg-12">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" v-model="follow_up"></textarea>
                                 </div>
                             </div>
                         </form>
@@ -79,43 +92,59 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button"  @click="follow_up_take">取消</button>
                         <button class="btn btn-success" type="button" @click="confirm_ok"> 确定</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--提醒-->
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
-
+    import Status from '../common/status.vue';
     export default {
         props: ['state', 'msg'],
+        components: {Status},
         data (){
             return {
+                select_list: {},            //字典
+
                 daily_state: false,         //增加日志
+                follow_w: '1',              //沟通日志类型
+                follow_up: '',              //沟通日志内容
+//                resetting: true,            //沟通日志内容
+
                 inter_state: false,         //提醒内容
+
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
                 dataTime: '',               //提醒时间
                 info:{
                     //成功状态 ***
                     state_success: false,
+                    //失败状态 ***
+                    state_error: false,
                     //成功信息 ***
                     success: '',
+                    //失败信息 ***
+                    error: ''
                 }
             }
         },
-        updated (){
-//            时间选择
-            this.remindData();
+        mounted (){
+            this.$http.get('core/customer/dict').then((res) => {
+                this.select_list = res.data;
+            });
         },
         methods: {
 //            确定
             confirm_ok (){
-                if(this.pool === true){
-                    this.$http.post('core/customer/putInPool',{
+                if (this.pool === true) {
+                    this.$http.post('core/customer/putInPool', {
                         id: this.msg
                     }).then((res) => {
                         $('#remindDaily').modal('hide');
@@ -126,9 +155,45 @@
                         this.$emit('pitches');
                     });
                 }
-                if(this.inter_state === true){
-                    alert(this.inter_state);
+//                新增跟进记录
+                if (this.daily_state === true) {
+                    this.$http.post('core/customer_talk_log/savetalklog', {
+                        follow_way: this.follow_w,
+                        remarks: this.follow_up,
+                        customer_id: String(this.msg),
+                    }).then((res) => {
+                        $('#remindDaily').modal('hide');
+                        if (res.data.code === '70090') {
+                            //成功信息 ***
+                            this.info.success = res.data.msg;
+                            //关闭失败弹窗 ***
+                            this.info.state_error = false;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+
+                            this.follow_up = '';
+                            this.follow_w = '1';
+                        } else {
+                            //关闭成功信息(可选)
+                            this.info.state_success = false;
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    });
                 }
+            },
+            follow_up_take (){
+//                取消跟进
+                if(this.daily_state === true){
+                    this.follow_up = '';
+                    this.follow_w = '1';
+                }
+            },
+//            跟进方式
+            follow_way_s (val){
+                this.follow_w = val.target.value;
             },
 //            时间选择
             remindData (){

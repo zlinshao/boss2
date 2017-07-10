@@ -107,7 +107,6 @@
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">客户所属</th>
                             <th class="text-center">负责人</th>
-                            <th class="text-center">置顶</th>
                             <th class="text-center">更多</th>
                         </tr>
                         </thead>
@@ -140,9 +139,10 @@
                             <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
                             <td class="text-center">{{list.belong}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
-                            <td class="text-center"><a><i class="fa fa-paperclip"></i></a></td>
                             <td class="text-center">
-                                <router-link to="/details">更多</router-link>
+                                <router-link :to="{path:'/details',query: {nameId: list.id}}">
+                                    更多
+                                </router-link>
                             </td>
                         </tr>
                         <tr v-show="custom_list.length === 0">

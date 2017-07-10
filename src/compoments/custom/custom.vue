@@ -50,7 +50,7 @@
                     </div>
                     <div class="pro-sort" style="height: 39px;">
                         <label style="margin-top: 8px;">
-                            <input type="checkbox" class="pull-left" @click="trid(pitch)">三天内未成交
+                            <input type="checkbox" class="pull-left" @click="trid($event)">三天内未成交
                         </label>
                     </div>
                     <div class="pro-sort">
@@ -173,7 +173,7 @@
                             <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
-                                <a v-if="list.top === 1" @click="stick(pitch,top)">
+                                <a v-if="list.top === 1" @click="stick(list.id,2)">
                                     <i class="fa fa-paperclip"></i>
                                 </a>
                             </td>
@@ -242,8 +242,12 @@
                 sea_source: '',             //客户来源
                 sea_type: '',               //个人/中介
                 info: {
+                    //成功状态 ***
+                    state_success: false,
                     //失败状态 ***
                     state_error: false,
+                    //成功信息 ***
+                    success: '',
                     //失败信息 ***
                     error: ''
                 },
@@ -255,7 +259,22 @@
         methods: {
 //            三天未成交
             trid(val) {
-
+                if(val.target.checked === true){
+                    this.$http.post('core/customer/customerList',{
+                        unsettled: true
+                    }).then((res) => {
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    });
+                }
+                if(val.target.checked === false){
+                    this.$http.post('core/customer/customerList',{
+                        unsettled: false
+                    }).then((res) => {
+                        this.custom_list = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                    });
+                }
             },
 //            分配成功更新列表
             pitch_dele (){
@@ -268,13 +287,13 @@
 //            新增客户展示列表
             succ (val){
                 console.log(val);
-                if(val.code === 70010){
+                if (val.code === 70010) {
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
                     });
                 }
-//                this.custom_list.unshift(val);
+//                this.custom_list.unshift(val);     //压入数组最前
             },
 //            客户列表
             collectList (){
@@ -283,6 +302,7 @@
                 this.sea_id = '';
                 this.sea_source = '';
                 this.sea_type = '';
+                this.sea_info = '';
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
@@ -388,6 +408,10 @@
 //            置顶
             stick (val, num){
                 this.$http.get('core/customer/stick/id/' + val + '/top/' + num).then((res) => {
+                    //成功信息 ***
+                    this.info.success = res.data.msg;
+                    //显示成功弹窗 ***
+                    this.info.state_success = true;
                     if (this.top === 1) {
                         this.top = 2;
                     } else if (this.top === 2) {
@@ -398,7 +422,7 @@
                         this.paging = res.data.data.pages;
                     });
                 });
-            }
+            },
         }
     }
 </script>
@@ -439,18 +463,6 @@
     .progress.progress-striped.active {
         margin-bottom: 0;
         height: 10px;
-    }
-
-    #custom-handle {
-        width: 24px;
-        height: 24px;
-        top: 50%;
-        text-align: center;
-        line-height: 20px;
-    }
-
-    #custom-handle:focus {
-        border: 0;
     }
 
 </style>
