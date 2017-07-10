@@ -201,12 +201,9 @@
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek">
                                             <div><span>{{daily.create_time}}</span></div>
-                                            <div><span
-                                                    class="text-primary">跟进方式：</span><span>{{select_list.follow_way[daily.follow_way]}}</span>
-                                            </div>
-                                            <!--<div><span class="text-primary">沟通房源：</span><span>积善公寓2-302</span></div>-->
-                                            <div><span class="text-primary">跟进记录：</span><span>{{daily.remarks}}</span>
-                                            </div>
+                                            <div><span class="text-primary">跟进方式：</span><span>{{select_list.follow_way[daily.follow_way]}}</span></div>
+                                            <div><span class="text-primary">跟进人：</span><span>{{daily.staff_id}}</span></div>
+                                            <div><span class="text-primary">跟进记录：</span><span>{{daily.remarks}}</span></div>
                                         </div>
                                     </div>
                                 </section>
@@ -351,7 +348,11 @@
                         customer_id: this.cus_Id,
                     }).then((res) => {
                         if (res.data.code === '70090') {
-                            this.daily_record.unshift(res.data.data);
+                            this.$http.get('core/customer_talk_log/talklist/id/' + this.cus_Id).then((res) => {
+                                if (res.data.data) {
+                                    this.daily_record = res.data.data;
+                                }
+                            });
                             //成功信息 ***
                             this.info.success = res.data.msg;
                             //关闭失败弹窗 ***

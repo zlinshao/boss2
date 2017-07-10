@@ -157,7 +157,7 @@
         </div>
 
         <!--分配-->
-        <Distribution :msg="cus_name"></Distribution>
+        <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
         <Page @psg="search_pool" :pg="paging"></Page>
@@ -200,6 +200,13 @@
             this.collectList();
         },
         methods: {
+//            分配成功更新列表
+            pitch_dele (){
+                this.$http.post('core/customer_pool/customerpool').then((res) => {
+                    this.custom_list = res.data.data.list;
+                    this.paging = res.data.data.pages;
+                });
+            },
 //            客户列表
             collectList (){
                 this.sea_status = '';             //客户状态

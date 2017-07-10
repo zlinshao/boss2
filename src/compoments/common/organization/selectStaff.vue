@@ -8,7 +8,7 @@
                         <button type="button" class="close"  aria-label="Close" @click="closeModal" >
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">选人</h4>
+                        <h4 class="modal-title">选人{{noDepartment}}</h4>
                     </div>
                     <div class="modal-body scoll">
                             <div class="row">
@@ -209,7 +209,7 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
             }
         },
         mounted(){
@@ -269,7 +269,13 @@
                     }
 
                 },
-            }
+            },
+            'noDepartment':{
+                deep:true,
+                handler: function (val, oldVal) {
+                   this.noDepartment=val;
+                },
+            },
         },
         methods:{
             /*******************************右侧组织架构***************************************/
@@ -365,7 +371,7 @@
                     }else{
                         for(let i=0;i<this.member.length;i++){
                             if(id===this.member[i].id){
-                                this.member.splice(i,1)
+                                this.member.splice(i,1);
                                 this.organize.staff.splice(i,1)
                             }
                         }
@@ -443,7 +449,7 @@
             //键盘enter事件
             keydownAdd(){
                 if(this.hovName!==''&& $.inArray(this.hovName, this.member)===-1){
-                    let staff={}
+                    let staff={};
                     staff.flag=1;
                     staff.id=this.hovId;
                     staff.name=this.hovName;
@@ -499,7 +505,7 @@
                     this.checkIndex=this.checkIndex.filter((x)=>x!==item.id);
                     for(let i=0;i<this.member.length;i++){
                         if(item.id===this.member[i].id){
-                            this.member.splice(i,1)
+                            this.member.splice(i,1);
                             this.organize.department.splice(i,1)
                         }
                     }

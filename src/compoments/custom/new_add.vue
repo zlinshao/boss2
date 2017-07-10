@@ -93,15 +93,9 @@
                                     <div class="col-lg-10 sliders">
                                         <select class="form-control" @click="progress_c($event)" :value="cus_progress">
                                             <option value="0">0%</option>
-                                            <option value="10">10%</option>
-                                            <option value="20">20%</option>
-                                            <option value="30">30%</option>
-                                            <option value="40">40%</option>
+                                            <option value="25">25%</option>
                                             <option value="50">50%</option>
-                                            <option value="60">60%</option>
-                                            <option value="70">70%</option>
-                                            <option value="80">80%</option>
-                                            <option value="90">90%</option>
+                                            <option value="75">75%</option>
                                             <option value="100">100%</option>
                                         </select>
                                     </div>
@@ -300,7 +294,7 @@
                 cus_intermediate_name: '',          //中介名
                 cus_intermediate_phone: '',         //联系方式
                 village: {
-                    villageId: '',                      //高德ID
+//                    villageId: '',                      //高德ID
                     villageAddress: '',                 //小区地址
                     villageName: '',                    //小区名称
                 },
@@ -315,7 +309,7 @@
                 cus_email: '',                      //邮箱
                 cus_nature: '1',                    //性格
                 cus_remarks: '',                    //备注
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -455,7 +449,7 @@
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
                                 if (url === 'saveCustomer') {
-                                    this.$emit('cus_list', res.data.data);  //push新增列表
+                                    this.$emit('cus_list', res.data);  //push新增列表
                                 }
                             } else {
                                 //关闭成功信息(可选)
@@ -504,9 +498,7 @@
             },
             getData(val){
 //            小区/地址
-                this.village.villageId = val.id;
-                this.village.villageName = val.villageName;
-                this.village.villageAddress = val.villageAddress;
+                this.village = val;
             },
 //            证件类型
             cus_credentials_state_c (val){

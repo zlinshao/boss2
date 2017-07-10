@@ -2,7 +2,7 @@
     <!--分配-->
     <div>
         <div class="modal fade " id="distribution" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
+             aria-hidden="true" style="z-index: 1048">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -24,7 +24,9 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">派发对象</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" placeholder="请输入姓名">
+                                    <input type="text" @click="distributions"
+                                           class="form-control" v-model="salesman"
+                                           placeholder="请输入姓名">
                                 </div>
                             </div>
                         </form>
@@ -32,19 +34,84 @@
 
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                        <button class="btn btn-success" type="button"> 确定</button>
+                        <button class="btn btn-success" type="button" @click="distribution_ok"> 确定</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <Status :state='info'></Status>
+
+        <SelectStaff @Staff="selectDateSend" :configure="configure"></SelectStaff>
     </div>
 </template>
 
 <script>
-
+    import SelectStaff from '../common/organization/selectStaff.vue'
+    import Status from '../common/status.vue';                          //提示信息
     export default {
-        props: ['msg']
+        components: {SelectStaff, Status},
+        props: ['pitches', 'msg'],
+        data (){
+            return {
+                configure: [],
+                salesman: [],       //客户姓名
+                salesman_id: [],    //客户ID
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
+
+            }
+        },
+        methods: {
+//            组织架构
+            distributions (){
+                $('#selectCustom').modal('show');
+                this.configure = {
+                    length: 1,
+                    class: 'amount'
+                };
+            },
+//            获得派发对象
+            selectDateSend (val){
+                this.salesman = [];
+                this.salesman.push(val.staff[0].name);
+                this.salesman_id.push(val.staff[0].id);
+            },
+            distribution_ok (){
+                this.$http.post('core/customer_pool/allotCustomer', {
+
+                    customer_id: this.pitches,                   //客户id
+                    staff_id: String(this.salesman_id)           //员工id
+
+                }).then((res) => {
+                    if (res.data.code === '70070') {
+                        $('#distribution').modal('hide');
+                        this.$emit('pitches');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else{
+                        //关闭成功信息(可选)
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
+            }
+        }
     }
 </script>
 
