@@ -164,19 +164,19 @@
         components:{Status},
         data(){
             return{
-                searchList:[],
-                organizeList:[],
-                member:[],
-                keywords:'',
-                active1: '-1',
-                hovName:'',
-                hovId:'',
-                type:'',
-                checkIndex:[],
-                secondName:'',
-                thirdName:'',
-                fourName:'',
-                fiveName:'',
+                searchList:[], //搜索列表
+                organizeList:[],//人资列表
+                member:[],      //显示label数组
+                keywords:'',    //搜索关键字
+                active1: '-1',  //当前li索引
+                hovName:'',     //hover名字
+                hovId:'',       //hover Id
+                type:'',        //部门类型
+                checkIndex:[],  //选中索引,展示被选中的checkbox
+                secondName:'',  //二级部门名称
+                thirdName:'',   //三级部门名称
+                fourName:'',    //四级
+                fiveName:'',    //五级
                 secondId:'',
                 thirdId:'',
                 fourId:'',
@@ -185,21 +185,21 @@
                 isThird:false,
                 isFour:false,
                 isFive:false,
-                checked:false,
-                checkboxModel:[],
+                checked:false,  //
+                checkboxModel:[],   //选中数组
                 checkbox1:[],
-                organize:{
-                    department:[
+                organize:{          //发送回父组件的数据
+                    department:[    //部门
 
                         ],
-                    staff:[
+                    staff:[         //员工
 
                     ]
                 },
-                noDepartment:false,
-                noStaff:false,
-                isMarket:[],
-                myConfigure:{},
+                noDepartment:false,//只选员工
+                noStaff:false,     //只选部门
+                isMarket:[],       //不需要提供给用户的部门id数组
+                myConfigure:{},    //配置项
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -213,12 +213,12 @@
             }
         },
         mounted(){
-          this.getFirst();
+          this.getFirst();  //获取以及部门列表
         },
         watch: {//深度 watcher
-            configure(val){
-                this.myConfigure=val;
-                if(val.class==='selectType'){
+            configure(val){ //父组件配置项
+                this.myConfigure=val;  //保存父组件数据
+                if(val.class==='selectType'){   //通过configure 提供不同需求
                     if(val.type==='all'){
                         this.noDepartment=false;
                         this.noStaff=false;
@@ -229,20 +229,20 @@
                         this.noStaff=true;
                         this.noDepartment=false;
                     }
-                }else if(val.class==='department'){
+                }else if(val.class==='department'){ //顶级部门的需求
                     let arr=[2,4,9,10];
                     for(let i=0;i<val.id.length;i++){
-                        this.isMarket=arr.filter((x)=>x!==val.id[i]);
-                        this.checkIndex=arr.filter((x)=>x!==val.id[i]);
+                        this.isMarket=arr.filter((x)=>x!==val.id[i]);  //把不需要展示的部门id赋值给isMarket 防止用户进入下级部门
+                        this.checkIndex=arr.filter((x)=>x!==val.id[i]);// 同时赋值给checkIndex 防止用户选中
                     }
-                }else if(val.class==='amount'){
+                }else if(val.class==='amount'){ //提供员工单选
                     this.noDepartment=true;
-                }else if(val.class==='onlyOneDpm'){
+                }else if(val.class==='onlyOneDpm'){ //提供部门单选
                     this.noStaff=true;
                 }
             },
             'member':{
-                handler: function (val, oldVal) {
+                handler: function (val, oldVal) {   //监听被选中的部门或员工的增删
                     if(this.myConfigure.class==='amount'){
                         if(this.member.length>this.myConfigure.length){
                             this.member.splice(this.myConfigure.length,1);
@@ -347,22 +347,22 @@
                     this.isFive=true;
                 })
             },
-            select(id,name){
-                let staff={};
+            select(id,name){  //左侧组织架构选中员工事件
+                let staff={}; //创建员工对象
                 let isExist=false;
-                staff.flag=1;
+                staff.flag=1;       //区分部门和员工
                 staff.id=id;
                 staff.name=name;
-                for(let i=0;i<this.member.length;i++){
+                for(let i=0;i<this.member.length;i++){//判断该id是否已经被选中
                     if(id===this.member[i].id){
                         isExist=true;
                     }
                 }
-                if(!this.noStaff){
-                    if(!isExist){
+                if(!this.noStaff){  //判断是否是只选部门
+                    if(!isExist){   //如果不存在 就添加进数组
                         this.member.push(staff);
                         this.organize.staff.push(staff);
-                    }else{
+                    }else{  //如果存在则点击为取消事件
                         for(let i=0;i<this.member.length;i++){
                             if(id===this.member[i].id){
                                 this.member.splice(i,1)
@@ -370,7 +370,7 @@
                             }
                         }
                     }
-                }else {
+                }else { //如果只选部门则提示信息
                     this.info.success = '您只能选择部门';
                     //显示成功弹窗 ***
                     this.info.state_success = true;
@@ -489,6 +489,7 @@
                 this.isChecked();
 
             },
+            //选中checkbox事件
             checkedOne:  function (item){
                 let _this=this;
                 let staff={};
@@ -496,16 +497,16 @@
                 staff.flag=2;
                 staff.id=item.id;
                 staff.name=item.name;
-                for(let i=0;i<this.member.length;i++){
+                for(let i=0;i<this.member.length;i++){  //判断是否存在
                     if(item.id===this.member[i].id){
                         isExist=true;
                     }
                 }
-                if(isExist===false){
+                if(isExist===false){    //不存在 就push进数组
                     this.checkIndex.push(item.id);
                     this.member.push(staff);
                     this.organize.department.push(staff);
-                }else {
+                }else {     //存在则执行反选
                     this.checkIndex=this.checkIndex.filter((x)=>x!==item.id);
                     for(let i=0;i<this.member.length;i++){
                         if(item.id===this.member[i].id){
@@ -515,9 +516,9 @@
                     }
                 }
             },
-            isChecked(){
-                this.checkbox1=[];
-                this.checkIndex=[];
+            isChecked(){    //监听member数组是否发生变化，如果删除则相应的checkbox取消勾选
+                this.checkbox1=[];  //清空中介数组
+                this.checkIndex=[]; //清空被选中checkbox数组
                 for(var i=0;i<this.member.length;i++){
                     for(var j=0;j<this.checkboxModel.length;j++){
                         if(this.checkboxModel[j].name===this.member[i].name){
@@ -541,6 +542,7 @@
 
                     ]
                 };
+                //点击确定清空相应数组
                 this.member=[];
                 this.checkboxModel=[];
                 this.checkIndex=[];
@@ -550,6 +552,7 @@
             },
             closeModal(){
                 $('#selectCustom').modal('hide');
+                //关闭模态框，清空之前为保存的已选部门和员工
                 this.organize={
                     department:[
 
