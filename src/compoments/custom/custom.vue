@@ -283,6 +283,7 @@
                 this.sea_id = '';
                 this.sea_source = '';
                 this.sea_type = '';
+                this.sea_info = '';
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;

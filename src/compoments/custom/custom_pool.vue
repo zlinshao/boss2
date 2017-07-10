@@ -215,6 +215,7 @@
                 this.sea_source = '';             //客户来源
                 this.sea_belong = '';             //客户所属
                 this.sea_type = '';               //个人/中介
+                this.sea_info = '';               //搜索
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
