@@ -232,6 +232,7 @@
                 }else if(val.class==='department'){ //顶级部门的需求
                     let arr=[2,4,9,10];
                     if(val.id.length===1 && val.name!==undefined){
+                        this.noStaff=true;
                         let id=val.id[0];
                         let name=val.name;
                         this.getSecond(id,name);
