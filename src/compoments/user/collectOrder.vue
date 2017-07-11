@@ -44,8 +44,9 @@
                         <thead>
                         <tr>
                             <th class="text-center" @click="pickedAll($event)">
-                                <input id="allCheck" type="checkbox" class="pull-left" @click="pickedAll($event)">
-                                <label for="allCheck">全选本页</label>
+                                <input id="allCheck" type="checkbox" class="pull-left"
+                                      v-model="allCheck" @click="pickedAll($event)">
+                                <label for="allCheck"></label>
                             </th>
                             <th class="text-center">合同编号</th>
                             <th class="text-center">上传时间</th>
@@ -93,7 +94,7 @@
     import Organize from  '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue'
     export default {
-        components: {Page,Organize},
+        components: {Page,Organize,Status},
         data (){
             return {
                 pages:'',   //总页数
@@ -110,6 +111,7 @@
                 checkbox:[],
                 page:'',
                 keywords:'',
+                allCheck:'',
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -219,8 +221,11 @@
                         }
                     ).then((res) => {
                             if(res.data.code==='80020'){
+                                this.checkboxModel=[];
+                                this.distribute=[];
+                                this.allCheck=false;
                                 this.orderLIstSearch();
-                                this.info.success =res.data.code;
+                                this.info.success =res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭成功信息弹窗 ***
@@ -228,7 +233,7 @@
                                     this.info.state_success = false;
                                 },2000);
                             }else {
-                                this.info.success =res.data.code;
+                                this.info.success =res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭成功信息弹窗 ***
