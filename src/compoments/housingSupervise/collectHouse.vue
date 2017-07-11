@@ -126,7 +126,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="item in custom_list">
+                        <tr>
                             <td class="text-center">
                                 <label for="item_id"></label>
                                 <input id="item_id" type="checkbox" class="pull-left"
@@ -176,10 +176,9 @@
 
 <script>
     import Page from '.././common/page.vue'
-    import remindDaily from '../custom/remindDaily.vue'
     import Distribution from '../common/distribution.vue'          //分配
     export default {
-        components: {Page, Distribution, remindDaily},
+        components: {Page, Distribution},
         data (){
             return {
                 custom_list: [],            //列表
@@ -204,13 +203,6 @@
 //            锁定状态
             clock(){
                 this.isClock=!this.isClock;
-            },
-//            增删数组
-            indexOf (val) {
-                for (let i = 0; i < this.length; i++) {
-                    if (this[i] === val) return i;
-                }
-                return -1;
             },
             rules (rul, eve, cus){
                 if (eve.target.checked === true) {
@@ -243,8 +235,6 @@
         width: 17px;
         height: 17px;
     }
-
-
     .remind li {
         float: left;
     }
