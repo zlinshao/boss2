@@ -473,7 +473,7 @@
 
     .pro-sort {
         padding-right: 6px;
-        height: 30px;
+        height: 39px;
     }
 
     .pro-sort select.form-control {
