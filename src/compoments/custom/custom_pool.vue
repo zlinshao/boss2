@@ -115,6 +115,7 @@
                             <td class="text-center">
                                 <label for="cus_id"></label>
                                 <input id="cus_id" type="checkbox" class="pull-left"
+                                       :checked="pitch.indexOf(list.id) > -1"
                                        @click="rules(list.id, $event, list.name)">
                             </td>
                             <td class="text-center">{{list.name}}</td>
