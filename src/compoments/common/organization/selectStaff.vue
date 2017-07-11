@@ -273,6 +273,7 @@
                             },2000);
                         }
                     }else if(this.myConfigure.class==='department' && this.myConfigure.length!==''){
+                        this.isChecked();
                         if(this.member.length>this.myConfigure.length){
                             this.member.splice(this.myConfigure.length,1);
                             this.info.success = '选择超过限制';
