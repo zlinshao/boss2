@@ -105,9 +105,12 @@
                             <td>{{item.create_time}}</td>
                             <td>{{item.real_name}}</td>
                             <td>{{dict.department_id[item.department_id]}}</td>
-                            <td>{{item.address}}</td>
-                            <td>{{item.building}}-{{item.room}}</td>
-                            <td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>
+                            <!--<td>{{item.address}}</td>-->
+                            <td>{{item.villa_id}}</td>
+                            <td>{{item.villa_id}}</td>
+                            <td>{{item.villa_id}}</td>
+                            <!--<td>{{item.building}}-{{item.room}}</td>-->
+                            <!--<td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>-->
                             <!--<td>{{item.price}}</td>-->
                             <td class="dropdown">
                                 <!--<a tabindex="0" class="btn btn-sm btn-primary" role="button" data-toggle="popover" data-trigger="focus" title="每年价格" data-content="aaa<br/>bbb">价格</a>-->
@@ -133,7 +136,7 @@
                                     {{dict.status[item.status]}}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=4">
-                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">一审通过</li>
+                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">通过一审</li>
                                     <li v-show="item.status==2" @click="reverify(item.id)" data-toggle="modal" data-target="#confirm">二审通过</li>
                                     <li v-show="item.status==2" @click="revert(item.id)" data-toggle="modal" data-target="#confirm">撤销审核</li>
                                     <li v-show="item.status==3" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">返回一审</li>
@@ -168,28 +171,37 @@
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="发喜报日期" v-model="formData.create_time" class="form-control form_datetime">
                                 </div>
                             </div>-->
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">所属部门:</label>
-                                <div class="col-sm-8">
-
+                                <div class="col-sm-8 input-group">
                                     <input type="text" class="form-control" readonly v-model="formData.department_id.name" @click="seleDepartment">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">收房开单人:</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 input-group">
                                     <input type="text" class="form-control" readonly v-model="formData.staff_id.name" @click="seleStaff">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
+                                <label class="col-sm-3 control-label">房屋地址:</label>
+                                <div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control" readonly>
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
+                                </div>
+                            </div>
+
+                            <!--<div class="form-group clearFix">
                                 <label for="villageName" class="col-sm-3 control-label">房屋地址:</label>
                                 <div class="col-sm-8 input-group">
                                     <input title="请点击选择" type="text" class="form-control" id="villageName" v-model="formData.village.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!--<div class="form-group">
                                 <label for="villageAddress" class="col-sm-3 control-label">地址:</label>
                                 <div class="col-sm-8">
@@ -197,28 +209,28 @@
                                 </div>
                             </div>-->
 
-                            <div class="form-group">
+                            <!--<div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">栋:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" v-model="formData.building">
                                 </div>
-                            </div>
+                            </div>-->
 
-                            <div class="form-group">
+                            <!--<div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">室:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" v-model="formData.room">
                                 </div>
-                            </div>
+                            </div>-->
 
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">空置期:</label>
                                 <div class="col-sm-8">
                                     <input type="number" min="0" class="form-control" v-model="formData.vac_sum_days">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">房型:</label>
                                 <div class="col-sm-8">
                                     <div class="col-sm-4">
@@ -260,9 +272,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">年限:</label>
                                 <div class="col-sm-8">
                                     <input type="number" min="0" class="form-control" v-model="formData.years">
@@ -271,7 +283,7 @@
                             <FlexBox :flexData="flexData" @sendData="getFlexData"></FlexBox>
 
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">付款方式:</label>
                                 <div class="col-sm-8">
                                     <div class="dropdown">
@@ -290,7 +302,7 @@
                                 </div>
                             </div>-->
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">实付款项:</label>
                                 <div class="col-sm-8">
                                     <input type="number" min="0" class="form-control" v-model="formData.price_paid">
@@ -304,7 +316,7 @@
                                 </div>
                             </div>-->
 
-                            <div class="form-group">
+                            <!--<div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">房屋来源:</label>
                                 <div class="col-sm-8">
                                     <div class="dropdown">
@@ -314,30 +326,30 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">补齐时间:</label>
                                 <div class="col-sm-8">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control modal_form_datetime" v-model="formData.complete_date">
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">特殊款:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" v-model="formData.special_sum">
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">组长备注:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" v-model="formData.group_leader_remark">
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">财务备注:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" v-model="formData.finance_remark">
@@ -370,7 +382,7 @@
 
 
         <!--选择小区控件-->
-        <ChooseAddress @getChildData="getAddress"></ChooseAddress>
+        <!--<ChooseAddress @getChildData="getAddress"></ChooseAddress>-->
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -390,14 +402,14 @@
     import Delete from '../../common/delete.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
-    import ChooseAddress from '../../common/chooseAddress.vue'
+//    import ChooseAddress from '../../common/chooseAddress.vue'
     import Confirm from '../../common/confirm.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
 
     //    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
-        components: {Page,Delete,ChooseAddress,Status,FlexBox,Confirm,STAFF},
+        components: {Page,Delete,Status,FlexBox,Confirm,STAFF},
         data(){
             return {
                 operId : 0,
@@ -423,17 +435,17 @@
                         id : '',
                         name : ''
                     },
-                    village : {
+                    /*village : {
                         villageName : ''       // 小区名称
-                    },
-                    building : '',
-                    room : '',
+                    },*/
+//                    building : '',
+//                    room : '',
                     vac_sum_days : '',   // 空置期
-                    house_type : {
+                    /*house_type : {
                         rooms : 1,
                         halls : 1,
                         toilets : 1
-                    },
+                    },*/
                     years : '',         // 年限
                     price : [],
                     pay_type : 1,        // 付款方式
@@ -441,7 +453,7 @@
                     price_paid : '',            // 实付款项
 //                    price_remain : '',     // 剩余款项
                     complete_date : '',    // 补齐时间
-                    is_medi : 1,       // 是否中介（房屋来源）
+//                    is_medi : 1,       // 是否中介（房屋来源）
                     special_sum : '',   // 特殊款
                     group_leader_remark : '',   // 组长备注
                     finance_remark : ''         // 财务备注
@@ -536,7 +548,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
 //                    pickerPosition: "bottom-left"
                     endDate : new Date(),
 //                    todayHighlight : true
@@ -557,7 +569,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                     pickerPosition: "top-left"
 //                    todayHighlight : true
                 }).on('changeDate', function (ev) {
@@ -702,12 +714,12 @@
                     this.params[attr]=data[attr];
                 }
             },
-            getAddress(data){
+            /*getAddress(data){
                 console.log(data);
                 this.formData.village = data;
 //                console.log(this.formData.village);
 //                this.formData.villageAddress = data.district+data.address;
-            },
+            },*/
             oper(){
                 console.log(this.operId);
                 this.title = '编辑收房喜报';

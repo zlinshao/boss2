@@ -38,9 +38,9 @@
                                 </div>
                                 <hr>
                                 <h3 style="margin-bottom: 22px">基本信息
-                                    <h4 v-if="!btn_state" class="pull-right" style="margin-top: 0;">
-                                        <a>修改日志</a>
-                                    </h4>
+                                    <!--<h4 v-if="!btn_state" class="pull-right" style="margin-top: 0;">-->
+                                    <!--<a>修改日志</a>-->
+                                    <!--</h4>-->
                                 </h3>
 
                                 <!--客户姓名-->
@@ -93,15 +93,9 @@
                                     <div class="col-lg-10 sliders">
                                         <select class="form-control" @click="progress_c($event)" :value="cus_progress">
                                             <option value="0">0%</option>
-                                            <option value="10">10%</option>
-                                            <option value="20">20%</option>
-                                            <option value="30">30%</option>
-                                            <option value="40">40%</option>
+                                            <option value="25">25%</option>
                                             <option value="50">50%</option>
-                                            <option value="60">60%</option>
-                                            <option value="70">70%</option>
-                                            <option value="80">80%</option>
-                                            <option value="90">90%</option>
+                                            <option value="75">75%</option>
                                             <option value="100">100%</option>
                                         </select>
                                     </div>
@@ -112,7 +106,8 @@
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_status_quo_c($event)"
                                                 :value="cus_status_quo">
-                                            <option v-for="(val,index) in select_c.customer_status" :value="index">{{val}}
+                                            <option v-for="(val,index) in select_c.customer_status" v-if="index != 3"
+                                                    :value="index">{{val}}
                                             </option>
                                         </select>
                                     </div>
@@ -133,7 +128,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户来源</label>
                                     <div class="col-lg-10">
                                         <select class="form-control" @click="cus_source_c($event)" :value="cus_source">
-                                            <option v-for="(val,index) in select_c.customer_source" :value="index">{{val}}
+                                            <option v-for="(val,index) in select_c.source" :value="index">{{val}}
                                             </option>
                                         </select>
                                     </div>
@@ -205,9 +200,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label" style="z-index: 10;">证件照片</label>
+                                    <label class="col-lg-2 col-sm-2 control-label" style="z-index: 10;">证件照片{{complete_ok}}</label>
                                     <div class="col-lg-10">
-                                        <up-load @photo="idNumber" @delete="idNumber_delete"
+                                        <up-load @photo="idNumber" @delete="idNumber_delete" @complete="complete"
                                                  :result="'id_number'" :idPhotos="photos"></up-load>
                                     </div>
                                 </div>
@@ -282,7 +277,6 @@
         data (){
             return {
                 btn_state: false,                   //新增/修改
-
                 select_c: {},                       //字典
                 cus_id: '',                         //修改ID
                 cus_status: '',                     //业主/租客
@@ -300,22 +294,24 @@
                 cus_intermediate_name: '',          //中介名
                 cus_intermediate_phone: '',         //联系方式
                 village: {
-                    villageId: '',                      //高德ID
                     villageAddress: '',                 //小区地址
                     villageName: '',                    //小区名称
                 },
                 cus_credentials_state: '1',         //证件类型
                 cus_idNumber: '',                   //证件号
+
                 photos: {
                     cus_idPhotos: {},                   //修改图片ID
                     cus_idPhoto: [],                    //证件照片
                 },
+                complete_ok: '',                        //图片上传完成
+
                 cus_marriage: '1',                  //婚姻状况
                 cus_qq: '',                         //qq号
                 cus_email: '',                      //邮箱
                 cus_nature: '1',                    //性格
                 cus_remarks: '',                    //备注
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -364,10 +360,10 @@
                     this.cus_email = '';                      //邮箱
                     this.cus_nature = '1';                    //性格
                     this.cus_remarks = '';                    //备注
-
                 }
                 if (val === 'rev') {
                     this.btn_state = false;                    //修改
+                    this.complete_ok = 'ok';
                 }
             },
             revise (val){
@@ -380,9 +376,9 @@
                 this.cus_phone = val.mobile;                                    //手机号
                 this.cus_status_quo = val.customer_status;                      //客户状态
                 this.cus_intention = val.customer_will;                         //客户意向
-                this.cus_source = val.customer_source;                          //客户来源
+                this.cus_source = val.source;                                   //客户来源
 
-                this.cus_intermediate = String(val.person_medium);                      //是否中介
+                this.cus_intermediate = String(val.person_medium);              //是否中介
                 this.cus_intermediate_name = val.medium_name;                   //中介名称
                 this.cus_intermediate_phone = val.medium_mobile;                //中介联系方式
 
@@ -408,6 +404,10 @@
             idNumber (val){
                 this.photos.cus_idPhoto = val;
             },
+//            图片上传完成
+            complete(val){
+                this.complete_ok = val;
+            },
 //            删除照片ID
             idNumber_delete (val){
                 let index = this.photos.cus_idPhoto.indexOf(val);
@@ -415,65 +415,74 @@
                     this.photos.cus_idPhoto.splice(index, 1);
                 }
             },
+
 //            确定新增/修改
             cus_confirm (url){
                 this.$http.defaults.withCredentials = true;
-                this.$http.get('api/picture/poll').then((res) => {
-                    if (res.data.data === 0) {
-                        this.$http.post('core/customer/' + url, {
-                            id: this.cus_id,
-                            identity: this.cus_status,                  //业主/租客
-                            name: this.cus_name,                        //客户姓名
-                            gender: this.cus_gender,                    //性别
-                            follow: this.cus_progress,                  //进度
-                            nationality: this.cus_nationality,          //国籍
-                            mobile: this.cus_phone,                     //手机号
-                            customer_status: this.cus_status_quo,       //客户状态
-                            customer_will: this.cus_intention,          //客户意向
-                            customer_source: this.cus_source,           //客户来源
 
-                            person_medium: this.cus_intermediate,       //个人/中介
-                            medium_name: this.cus_intermediate_name,    //中介电话
-                            medium_mobile: this.cus_intermediate_phone, //中介电话
+//                this.$http.get('api/picture/poll').then((res) => {
+//                    if (res.data.data === 0) {
+                if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
+//                this.$http.get('api/picture/poll').then((res) => {
+//                    if (res.data.data === 0) {
+                    this.succeed(url);
+//                    }
+//                });
+                } else {
+                    this.info.error = '图片正在上传';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }
 
-                            amap_id: this.village,                      //高德ID
-                            id_type: this.cus_credentials_state,        //证件类型
-                            id_num: this.cus_idNumber,                  //证件号
-                            id_pic: this.photos.cus_idPhoto,                   //证件照片
-                            marriage_status: this.cus_marriage,         //婚姻状况
-                            qq: this.cus_qq,                            //QQ
-                            e_mail: this.cus_email,                     //email
-                            character: this.cus_nature,                 //性格
-                            remarks: this.cus_remarks,                  //备注
-                        }).then((res) => {
-                            if (res.data.code === '70010') {
-                                $('#customModel').modal('hide');            //成功关闭模态框
-                                //成功信息 ***
-                                this.info.success = res.data.msg;
-                                //关闭失败弹窗 ***
-                                this.info.state_error = false;
-                                //显示成功弹窗 ***
-                                this.info.state_success = true;
-                                //一秒自动关闭成功信息弹窗 ***
-                                setTimeout(() => {
-                                    this.info.state_success = false;
-                                },1000);
-                                if (url === 'saveCustomer') {
-                                    this.$emit('cus_list', res.data.data);  //push新增列表
-                                }
-                            } else {
-                                //关闭成功信息(可选)
-                                this.info.state_success = false;
-                                //失败信息 ***
-                                this.info.error = res.data.msg;
-                                //显示失败弹窗 ***
-                                this.info.state_error = true;
-                            }
-                        });
+            },
+//            修改/新增 调用
+            succeed (val){
+                this.$http.post('core/customer/' + val, {
+                    id: this.cus_id,
+                    identity: this.cus_status,                  //业主/租客
+                    name: this.cus_name,                        //客户姓名
+                    gender: this.cus_gender,                    //性别
+                    follow: this.cus_progress,                  //进度
+                    nationality: this.cus_nationality,          //国籍
+                    mobile: this.cus_phone,                     //手机号
+                    customer_status: this.cus_status_quo,       //客户状态
+                    customer_will: this.cus_intention,          //客户意向
+                    source: this.cus_source,                    //客户来源
+
+                    person_medium: this.cus_intermediate,       //个人/中介
+                    medium_name: this.cus_intermediate_name,    //中介电话
+                    medium_mobile: this.cus_intermediate_phone, //中介电话
+
+                    amap_id: this.village,                      //高德ID
+                    id_type: this.cus_credentials_state,        //证件类型
+                    id_num: this.cus_idNumber,                  //证件号
+                    id_pic: this.photos.cus_idPhoto,            //证件照片
+                    marriage_status: this.cus_marriage,         //婚姻状况
+                    qq: this.cus_qq,                            //QQ
+                    e_mail: this.cus_email,                     //email
+                    character: this.cus_nature,                 //性格
+                    remarks: this.cus_remarks,                  //备注
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        $('#customModel').modal('hide');            //成功关闭模态框
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+
+                        this.$emit('cus_list', res.data);           // 更新客户列表
+
+                    } else {
+                        //关闭成功信息(可选)
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
                     }
                 });
-
-
             },
 //            中介/个人
             intermediary (e){
@@ -508,9 +517,7 @@
             },
             getData(val){
 //            小区/地址
-                this.village.villageId = val.id;
-                this.village.villageName = val.villageName;
-                this.village.villageAddress = val.villageAddress;
+                this.village = val;
             },
 //            证件类型
             cus_credentials_state_c (val){

@@ -8,7 +8,7 @@
             <p>{{state.success}}</p>
         </div>
         <div id="err" v-if="state.state_error" class="alert alert-block alert-danger fade in pull-right text-center">
-            <button data-dismiss="alert" class="close close-sm" type="button" @click="errorClick">
+            <button data-dismiss="alert" class="close close-sm" type="button">
                 <i class="fa fa-times"></i>
             </button>
             <p>{{state.error}}</p>
@@ -19,11 +19,14 @@
 <script>
     export default {
         props: ['state'],
-        methods: {
-            errorClick (){
+        updated (){
+            setTimeout(() => {
+                this.state.state_success = false;
+            },1000);
+            setTimeout(() => {
                 this.state.state_error = false;
-            }
-        }
+            },2000);
+        },
     }
 </script>
 

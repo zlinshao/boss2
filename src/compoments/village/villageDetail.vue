@@ -48,9 +48,8 @@
                             </li>
                             <li>
                                 <span>照片</span>
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic()">
+                                <img v-for="(item,index) in srcs" :src="item.small" alt="" @click="showLargePic(index)">
+
                             </li>
                         </ul>
                     </div>
@@ -83,7 +82,7 @@
 
         <!--模态框-->
         <Modal :oper="oper"></Modal>
-        <PicModal :src="src"></PicModal>
+        <PicModal :largePic="largePic"></PicModal>
     </div>
 </template>
 <style scoped>
@@ -161,20 +160,59 @@
                     villageId : 10
                 },
                 picSrc : '',
-                src : [
-                    'http://123.206.184.218:8080/cup/images/b18-2.jpg',
-                    'http://123.206.184.218:8080/cup/images/b1-2.jpg',
-                    'http://123.206.184.218:8080/cup/images/b18-1.jpg'
-                ]
+                largePic : [],
+                srcs : {
+                    11 :
+                        {
+                            'big':'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                            'raw':'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                            'small':'http://123.206.184.218:8080/cup/images/b18-2.jpg'
+                        },
+
+                    22 :
+                        {
+                            'big':'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                            'raw':'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                            'small':'http://123.206.184.218:8080/cup/images/b1-2.jpg'
+                        },
+
+                    33 :
+                        {
+                            'big':'http://123.206.184.218:8080/cup/images/b18-1.jpg',
+                            'raw':'http://123.206.184.218:8080/cup/images/b18-1.jpg',
+                            'small':'http://123.206.184.218:8080/cup/images/b18-1.jpg'
+                        },
+
+                }
+                /*largePic : {
+                    src : [
+                        'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                        'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                        'http://123.206.184.218:8080/cup/images/b18-1.jpg'
+                    ],
+//                    i : 0
+                }*/
+
             }
         },
         components: {
             Modal,
             PicModal
         },
+        created (){
+
+        },
         methods : {
-            showLargePic(){
+            showLargePic(num){
+//                console.log(num);
+//                console.log(this.srcs);
 //                this.picSrc = src;
+//                console.log(this.largePic);
+                this.largePic = [{
+                    src : this.srcs,
+                    i : num
+                }];
+//                console.log(this.largePic);
                 $('#myModal2').modal('show');
             }
         }

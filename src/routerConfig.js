@@ -2,7 +2,7 @@ import Power from "./compoments/power/power.vue";                       //权限
 import User from "./compoments/user/user.vue";                          //用户管理
 import Role from "./compoments/role/role.vue";                          //角色
 // import Village from "./compoments/village/village.vue";
-import VillageDetail from "./compoments/village/villageDetail.vue";
+// import VillageDetail from "./compoments/village/villageDetail.vue";
 import CACollect from './compoments/achievement/companyAchievement/CACollect.vue'
 import CARenting from './compoments/achievement/companyAchievement/CARenting.vue'
 import GNCollect from './compoments/achievement/gleefulNews/GNCollect.vue'
@@ -66,16 +66,16 @@ export default[
         name: 'Role',
         component: Role
     },
-    // {
-    //     path: '/village',
-    //     name: 'Village',
-    //     component: Village
-    // },
+    /*{
+        path: '/village',
+        name: 'Village',
+        component: Village
+    },
     {
         path: '/villageDetail',
         name: 'VillageDetail',
         component: VillageDetail
-    },
+    },*/
     {
         path: '/cACollect',
         name: 'CACollect',

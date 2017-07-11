@@ -43,7 +43,7 @@
                     addRemoveLinks: true,
                     dictRemoveLinks: "x",
                     dictCancelUpload: "正在上传",
-                    maxFiles: 10,       //一次性上传的文件数量上限
+                    maxFiles: 60,       //一次性上传的文件数量上限
                     maxFilesize: 20,    //MB
                     acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp",
                     dictMaxFilesExceeded: "您最多只能上传10个文件！",
@@ -52,15 +52,19 @@
                     init: function () {
                         this.on("success", function (file) {
                             let card = (JSON.parse(file.xhr.response).data);
+//                            console.log(file);
                             _this.pics.push(card);
                             _this.$emit('photo', _this.pics);
                             //上传成功时触发的事件
                         });
                         this.on("addedfile", function (file) {
+                            console.log(file);
                             $(file._removeLink.offsetParent).addClass('rem_div');
+                            _this.$emit('complete','no');
                             //上传文件时触发的事件
                         });
                         this.on("queuecomplete", function (file) {
+                            _this.$emit('complete','ok');
                             //上传完成后触发的方法
                         });
                         this.on("removedfile", function (file) {

@@ -240,12 +240,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group clearFix">
+                            <!--<div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">应收款项:</label>
                                 <div class="col-lg-8">
                                     <input type="number" min="0" class="form-control">
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">已收科目:</label>
@@ -266,12 +266,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group clearFix">
+                           <!-- <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">剩余款项:</label>
                                 <div class="col-lg-8">
                                     <input type="number" min="0" class="form-control">
                                 </div>
-                            </div>
+                            </div>-->
 
 
                             <div class="form-group">
@@ -470,75 +470,6 @@
 
     </div>
 </template>
-<style scoped>
-    .tagsinput{
-        border:none;
-    }
-    h4{
-        display: inline-block;
-        margin: 0;
-    }
-    .pull-right{
-        padding-top: 5px;
-    }
-    label{
-        line-height: 34px;
-        /*vertical-align: middle;*/
-    }
-    .choosed{
-        /*padding-bottom: 10px;*/
-    }
-    .choosed ul li{
-        float: left;
-    }
-    .choosed ul li+li:before{
-        content: '|';
-        display: inline-block;
-        margin: 0 10px;
-    }
-    div.input-group{
-        padding: 0 15px;
-    }
-    .collect,.renting{
-        padding: 15px 0;
-    }
-    .collect{
-        /*border-top: 1px dashed #ddd;*/
-        /*padding-top: 20px;*/
-        background-color: #F2F2F2;
-    }
-    tbody tr input[type=checkbox]{
-        width: 17px;
-        height: 17px;
-    }
-    td span{
-        display: inline-block;
-        padding: 8px 12px;
-        color: white;
-        border-radius: 30px;
-        user-select: none;
-    }
-    .yellow{
-        background-color: #F9E175;
-    }
-    .gray{
-        background-color: #CCCCCC;
-    }
-    .green{
-        background-color: #83E96D;
-    }
-    span.collectInfo{
-        width: 100%;
-        display: inline-block;
-        border-bottom: 1px solid #ddd;
-        line-height: 34px;
-        padding-left: 12px;
-        margin-bottom: 16px;
-    }
-    .modal .form_datetime{
-        margin-bottom: 32px;
-    }
-</style>
 <script>
     import Page from '../../common/page.vue'
     import Delete from '../../common/delete.vue'
@@ -654,6 +585,8 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
+                    endDate : new Date(),
+
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
@@ -823,3 +756,72 @@
         }
     }
 </script>
+<style scoped>
+    .tagsinput{
+        border:none;
+    }
+    h4{
+        display: inline-block;
+        margin: 0;
+    }
+    .pull-right{
+        padding-top: 5px;
+    }
+    label{
+        line-height: 34px;
+        /*vertical-align: middle;*/
+    }
+    .choosed{
+        /*padding-bottom: 10px;*/
+    }
+    .choosed ul li{
+        float: left;
+    }
+    .choosed ul li+li:before{
+        content: '|';
+        display: inline-block;
+        margin: 0 10px;
+    }
+    div.input-group{
+        padding: 0 15px;
+    }
+    .collect,.renting{
+        padding: 15px 0;
+    }
+    .collect{
+        /*border-top: 1px dashed #ddd;*/
+        /*padding-top: 20px;*/
+        background-color: #F2F2F2;
+    }
+    tbody tr input[type=checkbox]{
+        width: 17px;
+        height: 17px;
+    }
+    td span{
+        display: inline-block;
+        padding: 8px 12px;
+        color: white;
+        border-radius: 30px;
+        user-select: none;
+    }
+    .yellow{
+        background-color: #F9E175;
+    }
+    .gray{
+        background-color: #CCCCCC;
+    }
+    .green{
+        background-color: #83E96D;
+    }
+    span.collectInfo{
+        width: 100%;
+        display: inline-block;
+        border-bottom: 1px solid #ddd;
+        line-height: 34px;
+        padding-left: 12px;
+        margin-bottom: 10px;
+    }
+    .modal .modal_form_datetime{
+        margin-bottom: 32px;
+    }
+</style>
