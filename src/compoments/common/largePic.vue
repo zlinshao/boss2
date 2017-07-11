@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade modal-dialog-center in" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal fade modal-dialog-center in" id="largePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
@@ -8,12 +8,16 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body" id="pic">
-                            <img id="img" :src="src[index]">
-                            <!--<img :src="item" alt="" v-for="item in src" @click="rotate($event)">-->
+                            <img id="img" v-if="index!=0" :src="src[index].big">
+                            <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
                             <div class="changePic">
                                 <div @click="prev" title="上一张"><i class="fa fa-long-arrow-left"></i></div>
                                 <div @click="rotateLeft" title="逆时针旋转"><i class="fa fa-rotate-left"></i></div>
-                                <div @click="download" title="下载图片"><i class="fa fa-download"></i></div>
+                                <div title="下载图片">
+                                    <a v-if="index!=0" :href="src[index].raw" download="">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                </div>
                                 <div @click="rotateRight" title="顺时针旋转"><i class="fa fa-rotate-right"></i></div>
                                 <div @click="next" title="下一站"><i class="fa fa-long-arrow-right"></i></div>
                             </div>
@@ -25,7 +29,9 @@
     </div>
 </template>
 <style scoped>
-
+    a{
+        color: inherit;
+    }
     .modal-body{
         position: relative;
     }
@@ -79,12 +85,14 @@
             return {
                 current : 0,
                 index : 0,
-                src : []
+                src : {},
+                idArr : [],
+                currentIndex : ''
             }
         },
         components: {},
         created (){
-            console.log(this.largePic);
+//            console.log(this.largePic);
         },
         updated (){
             this.setRem();
@@ -95,8 +103,15 @@
         watch :{
             deep : true,
             largePic(val){
+//                console.log(val[0]);
                 this.src = val[0].src;
                 this.index = val[0].i;
+//                console.log(this.src[this.index].big)
+                for (let key in this.src){
+//                    console.log(key);
+                    this.idArr.push(key);
+                }
+//                console.log(this.idArr);
             }
         },
         methods : {
@@ -153,34 +168,43 @@
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
             },
             prev(){
-                if (this.index == 0){
-                    this.index = this.largePic.src.length-1;
+                /*console.log(this.current);
+                document.getElementById('img').style.transform = 'rotate('+(Math.abs(this.current)-360)+'deg)';
+                console.log(Math.abs(this.current)-360);*/
+                this.rotateBack();
+                this.currentIndex = this.idArr.indexOf(this.index);
+//                console.log(this.idArr.indexOf(this.index));
+
+                if (this.currentIndex == 0){
+                    this.currentIndex = this.idArr.length-1;
                 } else {
-                    this.index--;
+                    this.currentIndex--;
                 }
+                this.index = this.idArr[this.currentIndex];
             },
             next(){
-                if (this.index == this.largePic.src.length-1){
-                    this.index = 0;
+                this.rotateBack();
+
+                this.currentIndex = this.idArr.indexOf(this.index);
+//                console.log(this.idArr.indexOf(this.index));
+
+                if (this.currentIndex == this.idArr.length-1){
+                    this.currentIndex = 0;
                 } else {
-                    this.index++;
+                    this.currentIndex++;
                 }
+                this.index = this.idArr[this.currentIndex];
+
             },
-            download(){
-                this.saveImageAs(this.largePic.src[this.index]);
-            },
-            /*savetxt(fileURL){
-                let fileURL=window.open (fileURL,"_blank","height=0,width=0,toolbar=no,menubar=no,scrollbars=no,resizable=on,location=no,status=no");
-                fileURL.document.execCommand("SaveAs");
-                fileURL.window.close();
-                fileURL.close();
-            }*/
-            saveImageAs(imgOrURL) {
-                if (typeof imgOrURL == 'object')
-                    imgOrURL = imgOrURL.src;
-                window.win = open (imgOrURL);
-                setTimeout('win.document.execCommand("SaveAs")', 500);
+            /*download(){
+//                console.log(this.src[this.index].raw);
+
+            },*/
+            rotateBack(){
+                this.current = 0;
+                document.getElementById('img').style.transform = 'rotate('+(-this.current)+'deg)';
             }
+
         }
     }
 </script>

@@ -48,9 +48,8 @@
                             </li>
                             <li>
                                 <span>照片</span>
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic(0)">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic(1)">
-                                <img src="../../../src/assets/img/sm-img-1.jpg" alt="" @click="showLargePic(2)">
+                                <img v-for="(item,index) in srcs" :src="item.small" alt="" @click="showLargePic(index)">
+
                             </li>
                         </ul>
                     </div>
@@ -162,11 +161,29 @@
                 },
                 picSrc : '',
                 largePic : [],
-                srcs : [
-                    'http://123.206.184.218:8080/cup/images/b18-2.jpg',
-                    'http://123.206.184.218:8080/cup/images/b1-2.jpg',
-                    'http://123.206.184.218:8080/cup/images/b18-1.jpg'
-                ]
+                srcs : {
+                    11 :
+                        {
+                            'big':'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                            'raw':'http://123.206.184.218:8080/cup/images/b18-2.jpg',
+                            'small':'http://123.206.184.218:8080/cup/images/b18-2.jpg'
+                        },
+
+                    22 :
+                        {
+                            'big':'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                            'raw':'http://123.206.184.218:8080/cup/images/b1-2.jpg',
+                            'small':'http://123.206.184.218:8080/cup/images/b1-2.jpg'
+                        },
+
+                    33 :
+                        {
+                            'big':'http://123.206.184.218:8080/cup/images/b18-1.jpg',
+                            'raw':'http://123.206.184.218:8080/cup/images/b18-1.jpg',
+                            'small':'http://123.206.184.218:8080/cup/images/b18-1.jpg'
+                        },
+
+                }
                 /*largePic : {
                     src : [
                         'http://123.206.184.218:8080/cup/images/b18-2.jpg',
@@ -182,8 +199,13 @@
             Modal,
             PicModal
         },
+        created (){
+
+        },
         methods : {
             showLargePic(num){
+//                console.log(num);
+//                console.log(this.srcs);
 //                this.picSrc = src;
 //                console.log(this.largePic);
                 this.largePic = [{
