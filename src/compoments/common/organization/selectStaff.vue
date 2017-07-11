@@ -235,10 +235,11 @@
                         let id=val.id[0];
                         let name=val.name;
                         this.getSecond(id,name);
-                    }
-                    for(let i=0;i<val.id.length;i++){
-                        this.isMarket=arr.filter((x)=>x!==val.id[i]);  //把不需要展示的部门id赋值给isMarket 防止用户进入下级部门
-                        this.checkIndex=arr.filter((x)=>x!==val.id[i]);// 同时赋值给checkIndex 防止用户选中
+                    }else{
+                        for(let i=0;i<val.id.length;i++){
+                            this.isMarket=arr.filter((x)=>x!==val.id[i]);  //把不需要展示的部门id赋值给isMarket 防止用户进入下级部门
+                            this.checkIndex=arr.filter((x)=>x!==val.id[i]);// 同时赋值给checkIndex 防止用户选中
+                        }
                     }
                 }else if(val.class==='amount'){ //提供员工单选
                     this.noDepartment=true;
