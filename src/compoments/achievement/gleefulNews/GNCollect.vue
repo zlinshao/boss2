@@ -105,9 +105,12 @@
                             <td>{{item.create_time}}</td>
                             <td>{{item.real_name}}</td>
                             <td>{{dict.department_id[item.department_id]}}</td>
-                            <td>{{item.address}}</td>
-                            <td>{{item.building}}-{{item.room}}</td>
-                            <td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>
+                            <!--<td>{{item.address}}</td>-->
+                            <td>{{item.villa_id}}</td>
+                            <td>{{item.villa_id}}</td>
+                            <td>{{item.villa_id}}</td>
+                            <!--<td>{{item.building}}-{{item.room}}</td>-->
+                            <!--<td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>-->
                             <!--<td>{{item.price}}</td>-->
                             <td class="dropdown">
                                 <!--<a tabindex="0" class="btn btn-sm btn-primary" role="button" data-toggle="popover" data-trigger="focus" title="每年价格" data-content="aaa<br/>bbb">价格</a>-->
@@ -133,7 +136,7 @@
                                     {{dict.status[item.status]}}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=4">
-                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">一审通过</li>
+                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">通过一审</li>
                                     <li v-show="item.status==2" @click="reverify(item.id)" data-toggle="modal" data-target="#confirm">二审通过</li>
                                     <li v-show="item.status==2" @click="revert(item.id)" data-toggle="modal" data-target="#confirm">撤销审核</li>
                                     <li v-show="item.status==3" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">返回一审</li>
@@ -170,16 +173,25 @@
                             </div>-->
                             <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">所属部门:</label>
-                                <div class="col-sm-8">
-
+                                <div class="col-sm-8 input-group">
                                     <input type="text" class="form-control" readonly v-model="formData.department_id.name" @click="seleDepartment">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">收房开单人:</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 input-group">
                                     <input type="text" class="form-control" readonly v-model="formData.staff_id.name" @click="seleStaff">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearFix">
+                                <label class="col-sm-3 control-label">房屋地址:</label>
+                                <div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control" readonly>
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
 

@@ -13,17 +13,87 @@
             <loading v-show="loading"></loading>
 
 
-                <button id="custom_service" type="button"
+                <!--<button id="custom_service" type="button"
                         class="btn btn-default"
                         data-toggle="tooltip"
                         data-placement="left"
                         title="陆宣羽(15851899908)蔡云杰(13327823182)">
 
                     <i class="fa fa-phone"></i>
-                </button>
-
-
+                </button>-->
+            <div id="custom_service" @mouseenter="show" @mouseleave="hide">
+                <img src="../src/assets/img/u1032.png" alt="">
+                <ul>
+                    <li data-toggle="modal" data-target="#contact">
+                        <i class="fa fa-phone"></i>咨询电话
+                    </li>
+                    <li data-toggle="modal" data-target="#edit">
+                        <i class="fa fa-edit"></i>建议反馈
+                    </li>
+                </ul>
+            </div>
         </section>
+
+        <!--咨询电话-->
+        <div class="modal fade bs-example-modal-sm" id="contact" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">咨询电话</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <span>陆宣羽</span>
+                            <span>15851899908</span>
+                            <span>
+                                <a href="tel:15851899908">电话</a>
+                                <a href="sms:15851899908">发短信</a>
+                            </span>
+                        </div>
+                        <div>
+                            <span>蔡云杰</span>
+                            <span>13327823182</span>
+                            <span>
+                                <a href="tel:13327823182">电话</a>
+                                <a href="sms:13327823182">发短信</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--建议反馈-->
+        <div class="modal fade bs-example-modal-sm" id="edit" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">建议反馈</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group clearFix">
+                            <label class="col-sm-2 control-label">问题描述</label>
+                            <div class="col-sm-10">
+                                <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
+                                <textarea cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group clearFix">
+                            <label class="col-sm-2 control-label">建议方案</label>
+                            <div class="col-sm-10">
+                                <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
+                                <textarea cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,6 +124,14 @@
                     this.urlCard = res.data.avatar;
                 }
             });
+        },
+        methods : {
+            show(){
+                $('#custom_service ul').show()
+            },
+            hide(){
+                $('#custom_service ul').hide()
+            }
         }
     }
 </script>
@@ -65,9 +143,57 @@
         bottom: 10px;
         right: 10px;
         font-size: 20px;
-        background: #00C1DE;
+        /*background: #00C1DE;*/
+        background-color: white;
         z-index: 100;
         border: 0;
         border-radius: 50%;
+    }
+    #custom_service img{
+        width: 50px;
+    }
+    #custom_service ul{
+        background-color: white;
+        padding: 0 10px;
+        margin: 0;
+        position: absolute;
+        top: -86px;
+        right: 0;
+        border-radius: 10px;
+        border: 1px solid #000;
+        font-size: 16px;
+        display: none;
+    }
+    #custom_service ul li{
+        padding: 10px 12px;
+        text-align: center;
+        width: 140px;
+        cursor: pointer;
+    }
+    #custom_service ul li:hover{
+        color: #000;
+    }
+    #custom_service ul li i{
+        margin-right: 12px;
+    }
+    #custom_service ul li+li{
+        border-top: 1px solid #ddd;
+    }
+    #contact .modal-body{
+        padding: 0 30px;
+    }
+    #contact .modal-body div{
+        text-align: center;
+        font-size: 15px;
+        padding: 30px 0;
+    }
+    #contact .modal-body div a{
+        font-size: 13px;
+    }
+    #contact .modal-body div+div{
+        border-top: 1px solid #ddd;
+    }
+    #edit textarea{
+        resize: none;
     }
 </style>
