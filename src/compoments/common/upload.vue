@@ -58,6 +58,7 @@
                         });
                         this.on("addedfile", function (file) {
                             $(file._removeLink.offsetParent).addClass('rem_div');
+                            _this.$emit('complete','no');
                             //上传文件时触发的事件
                         });
                         this.on("queuecomplete", function (file) {

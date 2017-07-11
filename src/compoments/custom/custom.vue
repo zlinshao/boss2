@@ -288,7 +288,7 @@
 //            新增客户展示列表
             succ (val){
                 console.log(val);
-                if (val.code === 70010) {
+                if (val.code === '70010') {
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
