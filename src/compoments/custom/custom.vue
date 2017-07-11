@@ -204,7 +204,7 @@
         <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
-        <Page @pag="sea_cus" :pg="paging"></Page>
+        <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
 
         <!--提醒-->
         <Status :state='info'></Status>
@@ -223,11 +223,15 @@
         components: {Page, Distribution, newAdd, remindDaily, Status},
         data (){
             return {
+                Trid: '',                   //三天内未成交
                 top: '',                    //置顶/取消置顶
                 sea_info: '',               //客户名/手机号搜索
                 select_list: {},            //select字典
                 custom_list: [],            //列表
+
                 paging: '',                 //总页数
+                beforePage: 1,              //当前页数
+
                 pitch: [],                  //选中id
                 bool: '',
                 cus_name: [],               //派发信息
@@ -257,14 +261,16 @@
             this.collectList();
         },
         methods: {
-//            三天未成交
+//            三天内未成交
             trid(val) {
+                this.Trid = val.target.checked;
                 if (val.target.checked === true) {
                     this.$http.post('core/customer/customerList', {
                         unsettled: true
                     }).then((res) => {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
+                        this.beforePage = 1;
                     });
                 }
                 if (val.target.checked === false) {
@@ -273,6 +279,7 @@
                     }).then((res) => {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
+                        this.beforePage = 1;
                     });
                 }
             },
@@ -317,6 +324,15 @@
 
 //            搜索
             sea_cus (val){
+                if(this.Trid === true){
+                    this.sea_status = '';
+                    this.sea_intention = '';
+                    this.sea_id = '';
+                    this.sea_source = '';
+                    this.sea_type = '';
+                    this.sea_info = '';
+                }
+                this.beforePage = val;
                 this.$http.post('core/customer/customerList/page/' + val, {
                     customer_status: this.sea_status,
                     customer_will: this.sea_intention,
@@ -324,6 +340,7 @@
                     source: this.sea_source,
                     person_medium: this.sea_type,
                     keywords: this.sea_info,
+                    unsettled: this.Trid,
                 }).then((res) => {
                     if (res.data.code === '70030') {
                         this.custom_list = res.data.data.list;
@@ -455,6 +472,7 @@
 
     .pro-sort {
         padding-right: 6px;
+        height: 30px;
     }
 
     .pro-sort select.form-control {

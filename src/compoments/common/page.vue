@@ -7,7 +7,7 @@
                 <li v-for="index in pages" @click="go_to(index)" :class="{'active':page == index}" :key="index">
                     <a>{{index}}</a>
                 </li>
-                <li v-show="pg != page && pg != 0 " @click="page++ && go_to(page++)"><a>下一页</a></li>
+                <li v-show="pg != page && pg != 0" @click="page++ && go_to(page++)"><a>下一页</a></li>
                 <li v-show="pg != page" @click="go_to(pg)"><a>尾页</a></li>
                 <li><a>共&nbsp;(&nbsp;{{pg}}&nbsp;)&nbsp;页</a></li>
             </ul>
@@ -15,20 +15,24 @@
     </div>
 </template>
 <style scoped>
-    nav ul li{
+    nav ul li {
         user-select: none;
     }
 </style>
 <script>
     export default {
-        props: ['pg'],
+        props: ['pg','beforePage'],
         data (){
             return {
-                page: 1,                //分页
+                page: 1,               //分页
                 showItem: 5,            //显示条数
             }
         },
-
+        watch: {
+            beforePage (val){
+                this.page = val;
+            }
+        },
         computed: {
             pages() {
                 let pag = [];
