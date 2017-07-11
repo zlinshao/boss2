@@ -161,7 +161,7 @@
         <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
-        <Page @pag="search_pool" :pg="paging"></Page>
+        <Page @pag="search_pool" :pg="paging" :beforePage="beforePage"></Page>
     </div>
 </template>
 
@@ -178,7 +178,10 @@
                 sea_info: '',               //客户名/手机号搜索
                 select_list: {},            //select字典
                 custom_list: [],            //列表
+
                 paging: '',                 //总页数
+                beforePage: 1,              //当前页数
+
                 pitch: [],                  //选中id
                 bool: '',                   //remindDaily状态
                 cus_name: [],               //分派名称
@@ -216,6 +219,7 @@
                 this.sea_source = '';             //客户来源
                 this.sea_belong = '';             //客户所属
                 this.sea_type = '';               //个人/中介
+                this.beforePage = 1;
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
@@ -228,6 +232,7 @@
             },
 //            搜索
             search_pool (val){
+                this.beforePage = val;
                 this.$http.post('core/customer_pool/customerpool/page/' + val, {
                     customer_status: this.sea_status,
                     customer_will: this.sea_intention,

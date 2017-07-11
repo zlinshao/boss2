@@ -67,7 +67,7 @@
                             <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus"
                                    placeholder="客户名/手机号">
                             <span class="input-group-btn">
-                            <button class="btn btn-success" @click="sea_cus" type="button">搜索</button>
+                            <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
                         </span>
                         </div>
                     </div>
@@ -311,6 +311,7 @@
                 this.sea_source = '';
                 this.sea_type = '';
                 this.sea_info = '';
+                this.beforePage = 1;
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
