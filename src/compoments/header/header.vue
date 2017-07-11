@@ -260,8 +260,8 @@
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
                             <li><a><i class="fa fa-key"></i> Log Out</a></li>
-                            <!--<li><a @click="logout"><i class="fa fa-key"></i> Log Out</a></li>-->
-                            <!--@click="logout"-->
+                            <li><a @click="logOut"><i class="fa fa-key"></i> Log Out</a></li>
+
                         </ul>
                     </li>
 
@@ -731,7 +731,7 @@
                 this.isActive = n;
             },
             logOut (){
-                this.$http.post('/staff/logout').then(() =>{
+                this.$http.post('staff/logout').then(() =>{
                     let keys=document.cookie.match(/[^ =;]+(?=\=)/g);
                     if (keys) {
                         for (let i =  keys.length; i--;)

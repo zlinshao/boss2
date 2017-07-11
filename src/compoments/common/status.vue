@@ -25,7 +25,7 @@
             },1000);
             setTimeout(() => {
                 this.state.state_error = false;
-            },2000);
+            },3000);
         },
     }
 </script>
