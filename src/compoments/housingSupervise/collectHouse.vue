@@ -91,7 +91,7 @@
             <div v-if="pitch.length > 0" class="col-lg-12 remind">
                 <ul>
                     <li>
-                        <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
+                        <h5><a>已选中&nbsp;{{}}&nbsp;项</a></h5>
                     </li>
                     <li>
                         <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
@@ -128,22 +128,21 @@
                         <tbody>
                         <tr>
                             <td class="text-center">
-                                <label for="item_id"></label>
-                                <input id="item_id" type="checkbox" class="pull-left"
-                                       @click="rules(item.id, $event, item.address)">
+                                <label ></label>
+                                <input type="checkbox" class="pull-left">
                             </td>
-                            <td class="text-center">{{item.address}}</td>
-                            <td class="text-center">{{item.room_type}}</td>
-                            <td class="text-center">{{item.proportion}}</td>
-                            <td class="text-center">{{item.decorate}}</td>
-                            <td class="text-center">{{item.install}}</td>
-                            <td class="text-center">{{item.floor}}</td>
-                            <td class="text-center">{{item.chara}}</td>
-                            <td class="text-center">{{item.reprises}}</td>
-                            <td class="text-center">{{item.vacant}}</td>
-                            <td class="text-center">{{item.stay}}</td>
-                            <td class="text-center">{{item.attribute}}</td>
-                            <td class="text-center">{{item.charge}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
+                            <td class="text-center">{{}}</td>
                             <td class="text-center" @click="clock">
                                 <i class="fa fa-unlock-alt" v-if="isClock"></i>
                                 <i class="fa fa-unlock" v-else="isClock"></i>
@@ -195,10 +194,10 @@
         methods: {
 //            客户列表
             collectList (){
-                this.$http.get( 'json/collects.json').then((res) => {
-                    this.custom_list = res.data.data.custom;
-                    this.paging = res.data.data.pages;
-                })
+//                this.$http.get( 'json/collects.json').then((res) => {
+//                    this.custom_list = res.data.data.custom;
+//                    this.paging = res.data.data.pages;
+//                })
             },
 //            锁定状态
             clock(){
