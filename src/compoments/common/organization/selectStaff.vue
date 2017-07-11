@@ -354,7 +354,7 @@
                 staff.id=id;
                 staff.name=name;
                 for(let i=0;i<this.member.length;i++){//判断该id是否已经被选中
-                    if(id===this.member[i].id){
+                    if(id===this.member[i].id && name===this.member[i].name){
                         isExist=true;
                     }
                 }
@@ -364,7 +364,7 @@
                         this.organize.staff.push(staff);
                     }else{  //如果存在则点击为取消事件
                         for(let i=0;i<this.member.length;i++){
-                            if(id===this.member[i].id){
+                            if(id===this.member[i].id && name===this.member[i].name){
                                 this.member.splice(i,1)
                                 this.organize.staff.splice(i,1)
                             }
@@ -508,7 +508,7 @@
                 staff.id=item.id;
                 staff.name=item.name;
                 for(let i=0;i<this.member.length;i++){  //判断是否存在
-                    if(item.id===this.member[i].id){
+                    if(item.id===this.member[i].id && item.name===this.member[i].name){
                         isExist=true;
                     }
                 }
@@ -519,7 +519,7 @@
                 }else {     //存在则执行反选
                     this.checkIndex=this.checkIndex.filter((x)=>x!==item.id);
                     for(let i=0;i<this.member.length;i++){
-                        if(item.id===this.member[i].id){
+                        if(item.id===this.member[i].id && item.name===this.member[i].name){
                             this.member.splice(i,1)
                             this.organize.department.splice(i,1)
                         }

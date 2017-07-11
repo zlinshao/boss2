@@ -8,28 +8,29 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" style="text-align: center">添加公告</h4>
+                        <h4 class="modal-title" style="text-align: center">公告详情
+                        </h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
                                     <div class="row">
-                                        <b  class="col-sm-2" >标题：</b>
-                                        <div class="col-sm-4">
+                                        <b  class="col-sm-2 col-xs-5" >标题：</b>
+                                        <div class="col-sm-4 col-xs-6">
                                             年会
                                         </div>
-                                        <b  class="col-sm-2" >选择部门：</b>
-                                        <div class="col-sm-4">
+                                        <b  class="col-sm-2 col-xs-5" >选择部门：</b>
+                                        <div class="col-sm-4 col-xs-6">
                                             行政部
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <b  class="col-sm-2" >发布时间：</b>
-                                        <div class="col-sm-4">
+                                        <b  class="col-sm-2 col-xs-5" >发布时间：</b>
+                                        <div class="col-sm-4 col-xs-6">
                                             2017-07-07
                                         </div>
-                                        <b  class="col-sm-2" >发布人：</b>
-                                        <div class="col-sm-4">
+                                        <b  class="col-sm-2 col-xs-5" >发布人：</b>
+                                        <div class="col-sm-4 col-xs-6">
                                             王梦媛
                                         </div>
                                     </div>

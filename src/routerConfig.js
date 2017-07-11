@@ -44,7 +44,8 @@ import GeneralRecord from './compoments/finance/generalRecord.vue'              
 import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
 import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
-import OrderManage from './compoments/user/orderManage.vue'
+import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
+import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
 
 
 import  Back from './compoments/user/back.vue'
@@ -271,7 +272,12 @@ export default[
     },
     {
         path: '/orderManage',
-        name: 'OrderManage',
-        component: OrderManage
+        name: 'CollectOrder',
+        component: CollectOrder
+    },
+    {
+        path: '/rentingOrder',
+        name: 'RentingOrder',
+        component: RentingOrder
     }
 ]
