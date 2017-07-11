@@ -196,7 +196,7 @@
                 $('#selectCustom').modal({backdrop: 'static',});
                 $('#selectCustom').modal('show');
                 this.configureType='distribution';
-                this.configure={length:1,class:'onlyOneDpm'};
+                this.configure={length:1,class:'department',id:[9],name:'市场部'};
             },
             //选中后处理事件
             isSelect(val){
