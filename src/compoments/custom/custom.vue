@@ -64,7 +64,7 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus"
+                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus(1)"
                                    placeholder="客户名/手机号">
                             <span class="input-group-btn">
                             <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>

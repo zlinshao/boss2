@@ -339,7 +339,7 @@
             },
             showLargePic(num){
                 this.largePic = [{
-                    src: this.card,
+                    src: this.photos,
                     i: num
                 }];
                 $('#myModal2').modal('show');
