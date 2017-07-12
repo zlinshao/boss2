@@ -76,7 +76,7 @@
                             </div>
                             <div><span class="text-primary">身份证号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">身份张照片：</span>
-                                <a href="#myModal2" v-for="(pic,index) in photos"
+                                <a href="#largePic" v-for="(pic,index) in photos"
                                    style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
                                     <img :src="pic.small">
                                 </a>
@@ -342,7 +342,7 @@
                     src: this.photos,
                     i: num
                 }];
-                $('#myModal2').modal('show');
+                $('#largePic').modal('show');
             },
 //            展示收起
             open_close (){

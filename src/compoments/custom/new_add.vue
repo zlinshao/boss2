@@ -367,6 +367,7 @@
                 }
             },
             revise (val){
+
                 this.cus_id = val.id;                                           //修改ID
                 this.cus_status = val.identity;                                 //业主/租客
                 this.cus_name = val.name;                                       //客户姓名
@@ -381,10 +382,10 @@
                 this.cus_intermediate = String(val.person_medium);              //是否中介
                 this.cus_intermediate_name = val.medium_name;                   //中介名称
                 this.cus_intermediate_phone = val.medium_mobile;                //中介联系方式
-
-                this.village.villageAddress = val.amap_id.villageAddress;       //小区地址
-                this.village.villageName = val.amap_id.villageName;             //小区名称
-
+                if (val.amap_id) {
+                    this.village.villageAddress = val.amap_id.villageAddress;       //小区地址
+                    this.village.villageName = val.amap_id.villageName;             //小区名称
+                }
                 this.cus_credentials_state = val.id_type;                       //证件类型
                 this.cus_idNumber = val.id_num;                                 //证件号
                 this.photos.cus_idPhoto = [];
@@ -397,6 +398,7 @@
                 this.cus_email = val.e_mail;                                    //邮箱
                 this.cus_nature = val.character;                                //性格
                 this.cus_remarks = val.remarks                                  //备注
+
             }
         },
         methods: {
