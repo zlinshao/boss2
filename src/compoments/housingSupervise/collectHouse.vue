@@ -270,6 +270,20 @@
             },
             searchHouseList(){
                 this.currentPage=this.page;
+                if(this.our_group===true){
+                    this.house_type = '';
+                    this.rooms = '';
+                    this.decoration = '';
+                    this.reference = '';
+                    this.house_feature = '';
+                    this.villa_status = '';
+                    this.belong = '';
+                    this.area='';
+                    this.page=1;
+                    this.departmentName='';
+                    this.departmentId='';
+                }
+
                 this.$http.post('core/villa/receivedvillalist',
                     {
                         "house_type" : this.house_type,//房屋类型

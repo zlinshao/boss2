@@ -424,27 +424,27 @@
             },
             //删除照片ID
             picDelete (val){
-                let house = this.housePic.cus_idPhoto.indexOf(val);
+                let house = this.houseEdit.house_pic.indexOf(val);
                 if (house > -1) {
                     this.housePic.cus_idPhoto.splice(house, 1);
                     this.houseEdit.house_pic.splice(house, 1);
                 }
-                let water = this.waterPic.cus_idPhoto.indexOf(val);
+                let water = this.houseEdit.water_card_pic.indexOf(val);
                 if (water > -1) {
                     this.waterPic.cus_idPhoto.splice(water, 1);
                     this.houseEdit.water_card_pic.splice(water, 1);
                 }
-                let ele = this.elePic.cus_idPhoto.indexOf(val);
+                let ele = this.houseEdit.elec_card_pic.indexOf(val);
                 if (ele > -1) {
                     this.elePic.cus_idPhoto.splice(ele, 1);
                     this.houseEdit.elec_card_pic.splice(ele, 1);
                 }
-                let gas = this.gasPic.cus_idPhoto.indexOf(val);
+                let gas = this.houseEdit.gas_card_pic.indexOf(val);
                 if (gas > -1) {
                     this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.houseEdit.gas_card_pic.splice(gas, 1);
                 }
-                let property = this.propertyPic.cus_idPhoto.indexOf(val);
+                let property = this.houseEdit.property_pic.indexOf(val);
                 if (property > -1) {
                     this.propertyPic.cus_idPhoto.splice(property, 1);
                     this.houseEdit.property_pic.splice(property, 1);
@@ -483,50 +483,50 @@
                             setTimeout(() => {
                                 this.info.state_success = false;
                             },2000);
-//                            this.houseAdd.amap_json.villageAddress='';
-//                            this.houseAdd.amap_json.villageName='';
-//                            this.houseAdd.amap_json.district='';
-//                            this.houseAdd.amap_json.address='';
-//                            this.houseAdd.amap_json.id='';
-//                            this.houseAdd.amap_json.location='';
-//                            this.houseAdd.building='';
-//                            this.houseAdd.house_number='';
-//                            this.houseAdd.rooms.rooms='';
-//                            this.houseAdd.rooms.hall='';
-//                            this.houseAdd.rooms.toilet='';
-//                            this.houseAdd.area='';
-//                            this.houseAdd.decoration='';
-//                            this.houseAdd.floor='';
-//                            this.houseAdd.total_floor='';
-//                            this.houseAdd.house_type='';
-//                            this.houseAdd.house_feature='';
-//                            this.houseAdd.floor_type='';
-//                            this.houseAdd.person_medium='';
-//                            this.houseAdd.source='';
-//                            this.houseAdd.elec_card_num='';
-//                            this.houseAdd.water_card_num='';
-//                            this.houseAdd.gas_card_num='';
-//                            this.houseAdd.remarks='';
-//                            this.houseAdd.reference='';
-//                            this.houseAdd.facility=[];
-//                            this.houseAdd.house_pic = [];
-//                            this.houseAdd.water_card_pic = [];
-//                            this.houseAdd.elec_card_pic = [];
-//                            this.houseAdd.gas_card_pic = [];
-//                            this.houseAdd.property_pic = [];
-//                            this.housePic.cus_idPhoto=[];
-//                            this.waterPic.cus_idPhoto=[];
-//                            this.elePic.cus_idPhoto=[];
-//                            this.gasPic.cus_idPhoto=[];
-//                            this.propertyPic.cus_idPhoto=[];
-//                            this.housePic.cus_idPhotos={};
-//                            this.waterPic.cus_idPhotos={};
-//                            this.elePic.cus_idPhotos={};
-//                            this.gasPic.cus_idPhotos={};
-//                            this.propertyPic.cus_idPhotos={};
-//                            this.checkboxModel=[];
+                            this.houseEdit.amap_json.villageAddress='';
+                            this.houseEdit.amap_json.villageName='';
+                            this.houseEdit.amap_json.district='';
+                            this.houseEdit.amap_json.address='';
+                            this.houseEdit.amap_json.id='';
+                            this.houseEdit.amap_json.location='';
+                            this.houseEdit.building='';
+                            this.houseEdit.house_number='';
+                            this.houseEdit.rooms.rooms='';
+                            this.houseEdit.rooms.hall='';
+                            this.houseEdit.rooms.toilet='';
+                            this.houseEdit.area='';
+                            this.houseEdit.decoration='';
+                            this.houseEdit.floor='';
+                            this.houseEdit.total_floor='';
+                            this.houseEdit.house_type='';
+                            this.houseEdit.house_feature='';
+                            this.houseEdit.floor_type='';
+                            this.houseEdit.person_medium='';
+                            this.houseEdit.source='';
+                            this.houseEdit.elec_card_num='';
+                            this.houseEdit.water_card_num='';
+                            this.houseEdit.gas_card_num='';
+                            this.houseEdit.remarks='';
+                            this.houseEdit.reference='';
+                            this.houseEdit.facility=[];
+                            this.houseEdit.house_pic = [];
+                            this.houseEdit.water_card_pic = [];
+                            this.houseEdit.elec_card_pic = [];
+                            this.houseEdit.gas_card_pic = [];
+                            this.houseEdit.property_pic = [];
+                            this.housePic.cus_idPhoto=[];
+                            this.waterPic.cus_idPhoto=[];
+                            this.elePic.cus_idPhoto=[];
+                            this.gasPic.cus_idPhoto=[];
+                            this.propertyPic.cus_idPhoto=[];
+                            this.housePic.cus_idPhotos={};
+                            this.waterPic.cus_idPhotos={};
+                            this.elePic.cus_idPhotos={};
+                            this.gasPic.cus_idPhotos={};
+                            this.propertyPic.cus_idPhotos={};
+                            this.checkboxModel=[];
 
-
+//
 
                         }else{
                             this.info.error =res.data.msg;
