@@ -13,7 +13,7 @@
                 <div class="panel-body table-responsive client_info" v-for="item in houseDetail">
                     <div>
                         <div class="col-md-4">
-                            <div><span class="text-primary">房屋地址：</span><span>{{item.detailed_address}}</span></div>
+                            <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
                             <div>
                                 <span class="text-primary">房型：</span>
                                 <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
@@ -255,43 +255,49 @@
             <!--沟通日志/房屋信息-->
             <div class="col-md-9 box">
                 <section class="panel roll box">
-                    <div class="panel-body">
+                    <div class="panel-body client_info">
                         <header>
                             <h4>房屋信息</h4>
                         </header>
                         <div class="row"  v-for="item in houseDetail">
                             <div class="col-md-12">
-                                <section class="panel table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-primary width100">房屋照片</td>
-                                                <td v-for="(img,index) in item.album.house_pic"> <img :src="img.small"
-                                                      @click="showLargePic('house_pic',index)"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">产权证照片</td>
-                                                <td v-for="(img,index) in item.album.property_pic"> <img :src="img.small"
-                                                  @click="showLargePic('property_pic',index)"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">水卡照片</td>
-                                                <td v-for="(img,index) in item.album.water_card_pic"> <img :src="img.small"
-                                                  @click="showLargePic('water_card_pic',index)" ></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">电卡照片</td>
-                                                <td v-for="(img,index) in item.album.elec_card_pic"> <img :src="img.small"
-                                                   @click="showLargePic('elec_card_pic',index)"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">燃气卡照片</td>
-                                                <td v-for="(img,index) in item.album.gas_card_pic"> <img :src="img.small"
-                                                   @click="showLargePic('gas_card_pic',index)"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
+                                <div>
+                                    <div>
+                                        <span class="text-primary">房屋照片：</span>
+                                        <a v-for="(img,index) in item.album.house_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('house_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">委托书照片：</span>
+                                        <a v-for="(img,index) in item.album.property_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('property_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">水卡照片：</span>
+                                        <a v-for="(img,index) in item.album.water_card_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">电卡照片：</span>
+                                        <a v-for="(img,index) in item.album.elec_card_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">燃气卡照片：</span>
+                                        <a v-for="(img,index) in item.album.gas_card_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -413,7 +419,7 @@
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > > div span.text-primary {
+    .client_info > div > div > div span.text-primary {
         display: inline-block;
         padding-right: 20px;
         text-align: right;

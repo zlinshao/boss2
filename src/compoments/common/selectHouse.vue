@@ -94,6 +94,7 @@
             },
             ensure(){
                 this.$emit('House',this.houseAddress);
+                this.houseList=[];
                 $('#selectHouse').modal('hide');
             }
         }
