@@ -10,7 +10,7 @@
                         <!--新增-->
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">×</button>
-                            <h4 class="modal-title">编辑房屋</h4>
+                            <h4 class="modal-title">编辑房屋{{houseEdit.house_pic}}</h4>
                         </div>
 
                         <!--新增/编辑-->
@@ -342,6 +342,7 @@
                 this.houseEdit.gas_card_num=val.gas_card_num;
                 this.houseEdit.remarks=val.remarks;
                 this.houseEdit.reference=val.reference;
+                this.houseEdit.facility=[];
                 for(let i=0;i<val.facility.length;i++){
                     this.houseEdit.facility.push(val.facility[i])
                 }
