@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--&lt;!&ndash; 房屋 新增/编辑&ndash;&gt;-->
-        <div class="modal fade full-width-modal-right" id="houseEdit" tabindex="-1" role="dialog"
+        <div class="modal fade full-width-modal-right" id="houseEdit" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -9,7 +9,7 @@
 
                         <!--新增-->
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">×</button>
                             <h4 class="modal-title">编辑房屋</h4>
                         </div>
 
@@ -209,7 +209,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                            <button data-dismiss="modal" class="btn btn-default" type="button" @click="closeModal">取消</button>
                             <button class="btn btn-warning" type="button" @click="houseRevise">修改</button>
                         </div>
                     </div>
@@ -342,10 +342,11 @@
                 this.houseEdit.gas_card_num=val.gas_card_num;
                 this.houseEdit.remarks=val.remarks;
                 this.houseEdit.reference=val.reference;
-                this.houseEdit.facility=val.facility;
+                for(let i=0;i<val.facility.length;i++){
+                    this.houseEdit.facility.push(val.facility[i])
+                }
 
                 this.checkboxModel=val.facility;;
-
                 this.housePic.cus_idPhoto = [];
                 this.houseEdit.house_pic = [];
                 this.housePic.cus_idPhotos = val.album.house_pic;                    //修改图片ID
@@ -474,50 +475,6 @@
                         if(res.data.code==='80010'){
                             this.$emit('reviseHouse',this.reviseHouseId);
                             $('#houseEdit').modal('hide');
-                            this.houseAdd.amap_json.villageAddress='';
-                            this.houseAdd.amap_json.villageName='';
-                            this.houseAdd.amap_json.district='';
-                            this.houseAdd.amap_json.address='';
-                            this.houseAdd.amap_json.id='';
-                            this.houseAdd.amap_json.location='';
-                            this.houseAdd.building='';
-                            this.houseAdd.house_number='';
-                            this.houseAdd.rooms.rooms='';
-                            this.houseAdd.rooms.hall='';
-                            this.houseAdd.rooms.toilet='';
-                            this.houseAdd.area='';
-                            this.houseAdd.decoration='';
-                            this.houseAdd.floor='';
-                            this.houseAdd.total_floor='';
-                            this.houseAdd.house_type='';
-                            this.houseAdd.house_feature='';
-                            this.houseAdd.floor_type='';
-                            this.houseAdd.person_medium='';
-                            this.houseAdd.source='';
-                            this.houseAdd.elec_card_num='';
-                            this.houseAdd.water_card_num='';
-                            this.houseAdd.gas_card_num='';
-                            this.houseAdd.remarks='';
-                            this.houseAdd.reference='';
-                            this.houseAdd.facility=[];
-                            this.houseAdd.house_pic = [];
-                            this.houseAdd.water_card_pic = [];
-                            this.houseAdd.elec_card_pic = [];
-                            this.houseAdd.gas_card_pic = [];
-                            this.houseAdd.property_pic = [];
-                            this.housePic.cus_idPhoto=[];
-                            this.waterPic.cus_idPhoto=[];
-                            this.elePic.cus_idPhoto=[];
-                            this.gasPic.cus_idPhoto=[];
-                            this.propertyPic.cus_idPhoto=[];
-                            this.housePic.cus_idPhotos={};
-                            this.waterPic.cus_idPhotos={};
-                            this.elePic.cus_idPhotos={};
-                            this.gasPic.cus_idPhotos={};
-                            this.propertyPic.cus_idPhotos={};
-                            this.checkboxModel=[];
-
-
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
@@ -525,6 +482,51 @@
                             setTimeout(() => {
                                 this.info.state_success = false;
                             },2000);
+//                            this.houseAdd.amap_json.villageAddress='';
+//                            this.houseAdd.amap_json.villageName='';
+//                            this.houseAdd.amap_json.district='';
+//                            this.houseAdd.amap_json.address='';
+//                            this.houseAdd.amap_json.id='';
+//                            this.houseAdd.amap_json.location='';
+//                            this.houseAdd.building='';
+//                            this.houseAdd.house_number='';
+//                            this.houseAdd.rooms.rooms='';
+//                            this.houseAdd.rooms.hall='';
+//                            this.houseAdd.rooms.toilet='';
+//                            this.houseAdd.area='';
+//                            this.houseAdd.decoration='';
+//                            this.houseAdd.floor='';
+//                            this.houseAdd.total_floor='';
+//                            this.houseAdd.house_type='';
+//                            this.houseAdd.house_feature='';
+//                            this.houseAdd.floor_type='';
+//                            this.houseAdd.person_medium='';
+//                            this.houseAdd.source='';
+//                            this.houseAdd.elec_card_num='';
+//                            this.houseAdd.water_card_num='';
+//                            this.houseAdd.gas_card_num='';
+//                            this.houseAdd.remarks='';
+//                            this.houseAdd.reference='';
+//                            this.houseAdd.facility=[];
+//                            this.houseAdd.house_pic = [];
+//                            this.houseAdd.water_card_pic = [];
+//                            this.houseAdd.elec_card_pic = [];
+//                            this.houseAdd.gas_card_pic = [];
+//                            this.houseAdd.property_pic = [];
+//                            this.housePic.cus_idPhoto=[];
+//                            this.waterPic.cus_idPhoto=[];
+//                            this.elePic.cus_idPhoto=[];
+//                            this.gasPic.cus_idPhoto=[];
+//                            this.propertyPic.cus_idPhoto=[];
+//                            this.housePic.cus_idPhotos={};
+//                            this.waterPic.cus_idPhotos={};
+//                            this.elePic.cus_idPhotos={};
+//                            this.gasPic.cus_idPhotos={};
+//                            this.propertyPic.cus_idPhotos={};
+//                            this.checkboxModel=[];
+
+
+
                         }else{
                             this.info.error =res.data.msg;
                             //显示成功弹窗 ***
@@ -540,6 +542,9 @@
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                 }
+            },
+            closeModal(){
+                this.$emit('reviseHouse',this.reviseHouseId);
             }
 
         }

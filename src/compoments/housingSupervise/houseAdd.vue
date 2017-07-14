@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--&lt;!&ndash; 房屋 新增/编辑&ndash;&gt;-->
-        <div class="modal fade full-width-modal-right" id="collectAdd" tabindex="-1" role="dialog"
+        <div class="modal fade full-width-modal-right" id="collectAdd" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -9,7 +9,7 @@
 
                         <!--新增-->
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >×</button>
                             <h4 class="modal-title">新增房屋</h4>
                         </div>
 
@@ -415,6 +415,15 @@
                 if (this.complete_ok === 'ok') {
                     this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
                         if(res.data.code==='80010'){
+                            this.$emit('addHouse','addHouse');
+                            $('#collectAdd').modal('hide');
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭成功信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            },2000);
                             this.houseAdd.amap_json.villageAddress='';
                             this.houseAdd.amap_json.villageName='';
                             this.houseAdd.amap_json.district='';
@@ -457,15 +466,6 @@
                             this.gasPic.cus_idPhotos={};
                             this.propertyPic.cus_idPhotos={};
                             this.checkboxModel=[];
-                            this.$emit('addHouse','addHouse');
-                            $('#collectAdd').modal('hide');
-                            this.info.success =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
                         }else{
                             this.info.error =res.data.msg;
                             //显示成功弹窗 ***

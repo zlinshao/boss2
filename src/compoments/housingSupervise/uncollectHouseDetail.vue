@@ -110,9 +110,8 @@
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
                     this.$http.get('core/villa/readvilla/id/'+this.houseId).then((res) => {
-                        this.houseDetail.push(res.data.data);
                         this.houseRevise=res.data.data;
-                        console.log(this.houseDetail);
+                        this.houseDetail.push(res.data.data);
                     });
 
                 });
