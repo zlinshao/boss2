@@ -69,17 +69,6 @@
 
 </template>
 <style scoped>
-    /*.chooseContainer{
-        position: fixed;
-        z-index: 1001;
-        width: 600px;
-        height: 400px;
-        top:50%;
-        left: 50%;
-        margin-top: -200px;
-        margin-left: -300px;
-        background-color: white;
-    }*/
     .title{
         color: white;
         padding: 12px 24px;

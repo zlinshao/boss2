@@ -105,7 +105,7 @@
         data (){
             return {
                 urlName: '',
-                urlCard: ''
+                urlCard: '',
             }
         },
         computed: mapGetters([

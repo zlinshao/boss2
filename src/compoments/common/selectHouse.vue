@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade " id="selectClient">
+        <div class="modal fade " id="selectHouse">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -26,22 +26,24 @@
                             <table class="table">
                                 <thead>
                                 <tr class="lightGray">
-                                    <td></td>
-                                    <td>房屋地址</td>
-                                    <td>房型</td>
-                                    <td>面积</td>
-                                    <td>装修</td>
+                                    <th></th>
+                                    <th>房屋地址</th>
+                                    <th>房型</th>
+                                    <th>面积</th>
+                                    <th>装修</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in customerList" >
+                                <tr v-for="item in houseList" >
                                     <td>
-                                        <input type="radio" name="radio" @click="selectClient(item)">
+                                        <input type="radio" name="radio" @click="selectHouse(item)">
                                     </td>
-                                    <td>{{}}</td>
-                                    <td>{{}}</td>
-                                    <td>{{}}</td>
-                                    <td>{{}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>
+                                        <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                    </td>
+                                    <td>{{item.area}}㎡</td>
+                                    <td>{{dictionary.decoration[item.decoration]}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -49,7 +51,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">确定</button>
+                        <button type="button" class="btn btn-primary" @click="ensure">确定</button>
                     </div>
                 </div>
             </div>
@@ -62,19 +64,39 @@
             return {
                 keywords:'',
                 houseList:[],
+                dictionary:[],
+                houseAddress:{          //发送回父组件的数据
+                    id:'',
+                    address:''
+                },
             }
         },
         mounted(){
+            this.getDictionary();
         },
         methods : {
-            search(){
-//                if(this.keywords!==''){
-//                    this.$http.post('core/customer/customerList',{'keywords':this.keywords}).then((res) => {
-//                        this.houseList=res.data.data.list;
-//                        this.keywords='';
-//                    })
-//                }
+            getDictionary(){
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.dictionary=res.data;
+                });
             },
+            search(){
+                if(this.keywords!==''){
+                    this.$http.get('core/core_common/villalist/keywords/'+this.keywords).then((res) => {
+                        this.houseList=res.data.data;
+                        this.keywords='';
+                    })
+                }
+            },
+            selectHouse(item){
+                this.houseAddress.id=item.id;
+                this.houseAddress.address=item.address;
+            },
+            ensure(){
+                this.$emit('House',this.houseAddress);
+                this.houseList=[];
+                $('#selectHouse').modal('hide');
+            }
         }
     }
 </script>

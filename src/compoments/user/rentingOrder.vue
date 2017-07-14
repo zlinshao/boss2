@@ -281,4 +281,7 @@
     .panel-body {
         padding: 15px;
     }
+    *{
+        user-select: none;
+    }
 </style>

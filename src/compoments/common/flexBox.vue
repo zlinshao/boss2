@@ -117,25 +117,20 @@
 </style>
 <script>
     export default{
-        props : ['flexData'],
+        props : ['flexData','datas'],
         data(){
             return {
                 moreYears : 1,
                 data : ['','','','','','','','','','']
-                /*data : {
-                    one : '',
-                    two : '',
-                    three : '',
-                    four : '',
-                    five : '',
-                    six : '',
-                    seven : '',
-                    eight : '',
-                    nine : '',
-                    ten : '',
-                }*/
-
             }
+        },
+        watch: {
+//            deep : true,
+            datas (val){
+//                alert(val);
+                console.log(val);
+                this.setData(val);
+            },
         },
         components: {},
         methods: {
@@ -159,7 +154,22 @@
                 }
             },
             sendData(){
-                this.$emit('sendData',this.data.slice(0,this.moreYears-1))
+                this.$emit('sendData',this.data.slice(0,this.moreYears))
+            },
+            setData(val){
+                if (val.length===0){
+                    this.moreYears = 1;
+                } else {
+                    let that = this;
+                    this.moreYears = val.length;
+                    this.data = ['','','','','','','','','',''];
+                    for (let i = 0;i<val.length ; i++){
+                        (function (i) {
+                            that.data[i] = val[i];
+                        })(i)
+                    }
+//                    console.log(this.data);
+                }
             }
         }
     }

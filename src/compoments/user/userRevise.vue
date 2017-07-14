@@ -297,14 +297,6 @@
                 for(let i=0;i<this.role.length;i++){
                     this.newBox.push(this.role[i].title);
                 };
-                //匹配复选框与请求数据相同项
-//                for (let s in this.newBox) {
-//                    for (let x in this.oldBox) {
-//                        if (this.newBox[s] === this.oldBox[x]) {
-//                            this.checkboxModel.push(this.newBox[s]);
-//                        }
-//                    }
-//                };
                 this.checkboxModel=this.newBox;
                 for (let s in this.checkboxModel) {
                     for (let x in this.oldRoleBox) {
