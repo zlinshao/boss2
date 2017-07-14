@@ -300,7 +300,6 @@
                         this.paging = res.data.data.pages;
                     });
                 }
-//                this.custom_list.unshift(val);     //压入数组最前
             },
 //            客户列表
             collectList (){
@@ -389,6 +388,7 @@
             },
 //            新增客户
             customers_new (val){
+                $('.rem_div').remove();
                 this.revise_state = val;
                 $('#customModel').modal({
                     backdrop: 'static',         //空白处模态框不消失

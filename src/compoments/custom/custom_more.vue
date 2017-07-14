@@ -74,8 +74,8 @@
                             <div><span
                                     class="text-primary">个人/中介：</span><span>{{select_list.person_medium[info.person_medium]}}</span>
                             </div>
-                            <div><span class="text-primary">身份证号：</span><span>{{info.id_num}}</span></div>
-                            <div><span class="text-primary">身份张照片：</span>
+                            <div><span class="text-primary">证件号：</span><span>{{info.id_num}}</span></div>
+                            <div><span class="text-primary">证件照片：</span>
                                 <a href="#largePic" v-for="(pic,index) in photos"
                                    style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
                                     <img :src="pic.small">
@@ -257,7 +257,7 @@
         </div>
 
         <!--客户编辑-->
-        <New_add :msg="revise_state" :revise="revise_info" :selects="select_list"></New_add>
+        <New_add @cus_list="succ" :msg="revise_state" :revise="revise_info" :selects="select_list"></New_add>
 
         <!--查看大图-->
         <PicModal :largePic="largePic"></PicModal>
@@ -307,16 +307,15 @@
         },
         methods: {
             detailed_info (val){
+                this.card = [];
+                this.cus_info = [];
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
 //                    客户信息
                     this.$http.get('core/customer/readCustomer/id/' + val).then((res) => {
-
                         this.revise_info = res.data.data;
-
                         this.cus_info.push(res.data.data);
-
                         this.cus_progress = res.data.data.follow;
                         this.photos = res.data.data.album.id_pic;
                         for (let i in this.photos) {
@@ -330,6 +329,10 @@
                         }
                     });
                 });
+            },
+            succ (){
+                $('.rem_div').remove();
+                this.detailed_info(this.cus_Id);
             },
             customers_rev (val){
                 this.revise_state = val;
@@ -434,7 +437,7 @@
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > > div span.text-primary {
+    .client_info > div > div > div span.text-primary {
         display: inline-block;
         padding-right: 20px;
         text-align: right;
