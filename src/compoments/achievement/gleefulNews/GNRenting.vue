@@ -51,7 +51,10 @@
 
             <div class="choosed" v-show="operId!=0">
                 <ul class="clearFix">
-                    <li><a>已选中&nbsp;1&nbsp;项</a></li>
+                    <li><span>已选中&nbsp;1&nbsp;项</span></li>
+                    <li>
+                        <span v-if="statusId!=0" :class="{'status' : true,'yellow':statusId===1,'orange':statusId===2,'green':statusId===3,'gray':statusId===4}">{{statusName}}</span>
+                    </li>
                     <li>
                         <a @click="oper">编辑</a>
                     </li>
@@ -72,8 +75,8 @@
                         <th></th>
                         <th class="text-center">喜报日期</th>
                         <th class="text-center">租房类型</th>
-                        <th class="text-center">租房片区</th>
-                        <th class="text-center">租房签约人</th>
+                        <th class="text-center">租房开单人</th>
+                        <th class="text-center">所属部门</th>
                         <th class="text-center">房屋地址</th>
                         <th class="text-center">门牌号</th>
                         <th class="text-center">房型</th>
@@ -94,21 +97,37 @@
                     <tbody id="rentingId">
                     <tr v-show="cont.myData.length!==0" class="text-center" :key="item.id" v-for="(item,index) in cont.myData">
                         <td>
-                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
+                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id,index,item.status)">
                         </td>
-                        <td>{{item.date}}</td>
-                        <td>{{item.situation.name}}</td>
-                        <td>{{item.region.name}}</td>
-                        <td>{{item.people}}</td>
-                        <td>
-                            {{item.address}}
-                        </td>
-                        <td>{{item.type.name}}</td>
+                        <td>{{item.create_time}}</td>
+                        <td>{{dict.rent_type[item.rent_type]}}</td>
+                        <td>{{item.real_name}}</td>
+                        <td>{{dict.department_id[item.department_id]}}</td>
+                        <td>{{item.village_name}}</td>
+                        <td>{{item.building}}-{{item.house_number}}</td>
+                        <td>{{item.rooms.rooms}}室{{item.rooms.halls}}厅{{item.rooms.toilets}}卫</td>
+                        <td>押{{item.bet}}付{{item.pay}}</td>
                         <td>{{item.price}}</td>
-                        <td>{{item.alreadyType.name}}</td>
-                        <td>{{item.alreadyMoney}}</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm">{{item.status.name}}</button>
+                        <td>{{item.price_sum}}</td>
+                        <td>{{dict.subject[item.received_type]}}</td>
+                        <td>{{item.price_received}}</td>
+                        <td>{{item.price_remain}}</td>
+                        <td>{{item.complete_date}}</td>
+                        <td>{{dict.is_medi[item.is_medi]}}</td>
+                        <td>{{item.special_price}}</td>
+                        <td>{{item.remark_marshal}}</td>
+                        <td>{{item.remark_accountant}}</td>
+                        <td class="dropdown">
+                            <button :class="{'btn':true,'dropdown-toggle':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3,'gray':item.status===4}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{dict.status[item.status]}}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=4">
+                                <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">通过一审</li>
+                                <li v-show="item.status==2" @click="reverify(item.id)" data-toggle="modal" data-target="#confirm">通过二审</li>
+                                <li v-show="item.status==2" @click="revert(item.id)" data-toggle="modal" data-target="#confirm">撤销审核</li>
+                                <li v-show="item.status==3" @click="verify(item.id)" data-toggle="modal" data-target="#confirm">返回一审</li>
+                                <li @click="cancel(item.id)" data-toggle="modal" data-target="#confirm">退单</li>
+                            </ul>
                             <!--<span :class="{'yellow':item.status===1,'green':item.status===2,'gray':item.status===3,}">{{dict.status[item.status]}}</span>-->
 
                         </td>
@@ -129,13 +148,13 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" aria-label="Close" @click="clear"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <div class="renting col-lg-6 clearFix">
 
-                            <div class="form-group clearFix">
+                            <!--<div class="form-group clearFix">
                                 <label for="villageName" class="col-sm-3 control-label">小区名称:</label>
                                 <div class="col-lg-8 input-group">
                                     <input title="请点击选择" type="text" class="form-control" id="villageName" v-model="formData.village.villageName" readonly  data-toggle="modal" data-target="#myModal1">
@@ -198,15 +217,28 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
+                            </div>-->
                             <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">租房开单人:</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" v-model="formData.people">
+                                <label class="col-sm-3 control-label">所属部门:</label>
+                                <div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control" readonly @click="seleDepartment" v-model="formData.department_id.name">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
-
+                            <div class="form-group clearFix">
+                                <label class="col-sm-3 control-label">收房开单人:</label>
+                                <div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control" readonly @click="seleStaff" v-model="formData.staff_id.name">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
+                                </div>
+                            </div>
+                            <div class="form-group clearFix">
+                                <label class="col-sm-3 control-label">房屋地址:</label>
+                                <div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name">
+                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
+                                </div>
+                            </div>
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">租房价格:</label>
                                 <div class="col-lg-8">
@@ -217,24 +249,23 @@
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">付款方式:</label>
                                 <div class="col-lg-8">
-                                    <div class="dropdown">
-                                        <select name="" class="form-control" v-model="formData.payWay">
-                                            <option value="1">季付</option>
-                                            <option value="2">月付</option>
-                                        </select>
+                                    <label class="col-lg-1 control-label">押</label>
+                                    <div class="col-lg-4">
+                                        <input type="number" min="0" class="form-control" v-model="formData.bet">
+                                    </div>
+                                    <label class="col-lg-1 control-label">付</label>
+                                    <div class="col-lg-5">
+                                        <input type="number" min="0" class="form-control" v-model="formData.pay">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">租房情况:</label>
+                                <label class="col-lg-3 control-label">租房类型:</label>
                                 <div class="col-lg-8">
                                     <div class="dropdown">
-                                        <select name="" class="form-control" v-model="formData.situation">
-                                            <option value="1">转租</option>
-                                            <option value="2">调租</option>
-                                            <option value="3">续租</option>
-                                            <option value="4">新租</option>
+                                        <select name="" class="form-control" v-model="formData.rent_type">
+                                            <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -251,9 +282,8 @@
                                 <label class="col-lg-3 control-label">已收科目:</label>
                                 <div class="col-lg-8">
                                     <div class="dropdown">
-                                        <select name="" class="form-control">
-                                            <option value="1">啊啊</option>
-                                            <option value="2">查查</option>
+                                        <select name="" class="form-control" v-model="formData.received_type">
+                                            <option :value="value" v-for="(key,value) in dict.subject">{{key}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -262,7 +292,7 @@
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">已收款项:</label>
                                 <div class="col-lg-8">
-                                    <input type="number" min="0" class="form-control">
+                                    <input type="number" min="0" class="form-control" v-model="formData.price_received">
                                 </div>
                             </div>
 
@@ -277,7 +307,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">补齐时间:</label>
                                 <div class="col-sm-8">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control modal_form_datetime">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control modal_form_datetime" v-model="formData.complete_date">
                                 </div>
                             </div>
 
@@ -286,9 +316,8 @@
                                 <label class="col-lg-3 control-label">租客来源:</label>
                                 <div class="col-lg-8">
                                     <div class="dropdown">
-                                        <select name="" class="form-control" v-model="formData.isAgency">
-                                            <option value="1">是</option>
-                                            <option value="2">否</option>
+                                        <select name="" class="form-control" v-model="formData.is_medi">
+                                            <option :value="value" v-for="(key,value) in dict.is_medi">{{key}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -297,80 +326,78 @@
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">特殊款:</label>
                                 <div class="col-lg-8">
-                                    <input type="text" class="form-control">
+                                    <input type="number" min="0" class="form-control" v-model="formData.special_price">
                                 </div>
                             </div>
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">组长备注:</label>
                                 <div class="col-lg-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="formData.remark_marshal">
                                 </div>
                             </div>
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">财务备注:</label>
                                 <div class="col-lg-8">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="formData.remark_accountant">
                                 </div>
                             </div>
 
                         </div>
 
 
-
-
                         <div class="collect col-lg-6 clearFix">
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">房屋地址:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">房型:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">收房开单人:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">所属部门:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">收房价格:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">付款方式:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">年限:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">空置期:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                     <!--<input type="text" class="form-control" readonly>-->
                                 </div>
                             </div>
@@ -378,63 +405,63 @@
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">应付款项:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">实付款项:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">剩余款项:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">补齐时间:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">收房价格:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">房屋来源:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">特殊款:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">组长备注:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
                             <div class="form-group clearFix">
                                 <label class="col-lg-3 control-label">财务备注:</label>
                                 <div class="col-lg-8">
-                                    <span class="collectInfo">电视电话刷卡机的</span>
+                                    <span class="collectInfo"></span>
                                 </div>
                             </div>
 
@@ -444,10 +471,10 @@
 
                     <div class="modal-footer">
                         <div v-if="add">
-                            <button type="button" class="btn btn-primary">完成</button>
+                            <button type="button" class="btn btn-primary" @click="addRent">完成</button>
                         </div>
                         <div v-else="add">
-                            <button type="button" class="btn btn-primary">修改</button>
+                            <button type="button" class="btn btn-primary" @click="modifyRent">修改</button>
                             <!--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">删除</button>-->
                         </div>
 
@@ -462,28 +489,32 @@
         <!--分页-->
         <Page :pg="paging" @pag="getData"></Page>
 
-        <!--选择小区控件-->
-        <ChooseAddress @getChildData="getAddress"></ChooseAddress>
+
 
         <!--提示信息-->
         <Status :state='info'></Status>
+
+        <!--确认信息-->
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
     </div>
 </template>
 <script>
     import Page from '../../common/page.vue'
     import Delete from '../../common/delete.vue'
-    import ChooseAddress from '../../common/chooseAddress.vue'
     import Status from '../../common/status.vue';
     import STAFF from  '../../common/organization/selectStaff.vue'
+    import Confirm from '../../common/confirm.vue'
+
     export default{
-        components: {Page,Delete,ChooseAddress,Status,STAFF},
+        components: {Page,Delete,Status,STAFF,Confirm},
         data(){
 
             return {
                 operId : 0,
 //                rentingtList : [],
                 paging : '',
+                statusName : '',
                 page : 1,
                 dict : {},
 
@@ -495,23 +526,34 @@
                 },
                 formData : {
 //                    villageAddress : '',
-                    building : '',      // 栋
-                    room : '',          // 室
-                    people : '',
-                    situation : 1,
-                    region : 1,
-                    payWay : 1,
+                    /*building : '',      // 栋
+                    room : '',          // 室*/
+                    department_id : {
+                        id : '',
+                        name : ''
+                    },
+                    staff_id : {
+                        id : '',
+                        name : ''
+                    },
+                    villa_id : {
+                        id : 1,
+                        name : ''
+                    },
                     price : '',
-                    alreadyType : 1,
-                    alreadyMoney : '',
-                    isAgency : 1,
+                    pay : '',
+                    bet : '',
+                    rent_type : 1,
+                    received_type : 1,
+                    price_received : '',
+                    complete_date : '',    // 补齐时间
+                    special_price: '',   // 特殊款
+                    remark_marshal: '',   // 组长备注
+                    remark_accountant: '',         // 财务备注
+                    is_medi : 1
+                },
+                collectInfo : {
 
-                    collectPeople : '',
-                    type : '',
-                    collectPrice : '',
-                    village : {
-                        villageName : ''       // 小区名称
-                    }
                 },
 
                 params : {
@@ -536,8 +578,12 @@
                     error: ''
                 },
                 configure:[],
-                selectConfigure : ''
-
+                selectConfigure : '',
+                confirmMsg : {
+                    id : '',
+                    msg : '',
+                    status : ''         // 1:通过审核，2:撤销审核，3:退单
+                },
             }
         },
         created (){
@@ -559,10 +605,15 @@
         },
 
         methods : {
-            changeIndex(ev,id){
+            changeIndex(ev,id,index,statusId){
 //                console.log("一开始"+this.operId);
                 if (ev.currentTarget.checked){
                     this.operId = id;
+                    this.cont.nowIndex = index;
+//                    console.log()
+                    this.statusName = this.dict.status[statusId];
+//                    console.log(this.statusName);
+                    this.statusId = statusId;
 //                    console.log(this.operId);
                 }else {
                     this.operId = 0;
@@ -571,10 +622,10 @@
 
             },
             gnRentingList (){
-                this.$http.get('json/GNRenting.json').then((res) => {
-                    this.cont.myData = res.data.data.gleeFulRenting;
-//                    console.log(res.data);
-                    this.paging = res.data.data.pages;
+                this.$http.get('glee/rent').then((res) => {
+                    console.log(res)
+                    this.cont.myData = res.data.data.data;
+                    this.paging = res.data.data.page;
                 })
             },
             remindData (){
@@ -584,7 +635,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                     endDate : new Date(),
 
                 }).on('changeDate', function (ev) {
@@ -603,11 +654,11 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                     pickerPosition: "top-left"
 //                    todayHighlight : true
                 }).on('changeDate', function (ev) {
-//                    this.formData.complete_date = ev.target.value;
+                    this.formData.complete_date = ev.target.value;
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
@@ -615,40 +666,34 @@
                 this.title = '新增租房喜报';
                 this.add = true;
             },
-            operGleefulNews(id,index){
-                this.title = '编辑租房喜报';
-                this.add = false;
-                this.cont.nowIndex = index;
-            },
             search(){
                 console.log(this.params);
-            },
-            dele(){
-                alert(2);
+                this.$http.get('glee/rent?page='+this.page,{
+                    params : this.params
+                })
+                    .then((res) => {
+//                    this.collectList = res.data.data.gleeFulCollect;
+//                        console.log(res)
+                        if (res.data.code!=18110){
+                            this.cont.myData = [];
+                            return;
+                        }else {
+                            if (res.data.data.page !==this.paging){
+                                this.paging = res.data.data.page;
+                                this.page = 1;
+                            }
+                            console.log(res.data);
+                            this.cont.myData = res.data.data.data;
+                            this.paging = res.data.data.page;
+                        }
+                    });
             },
             getData(data){
                 // 页数
                 console.log(data);
+                this.page = data;
             },
-            getCascadeData(data){
-                console.log(data);
-                for(var attr in data){
-                    this.params[attr]=data[attr];
-                }
-            },
-            clearForm(){
-                $('#myModal').find('input').val('');
-                $('#myModal').find('select').val('');
-
-                $('#myModal').modal('hide');
-            },
-            getAddress(data){
-                console.log(data);
-                this.formData.village = data;
-//                console.log(this.formData.village);
-//                this.formData.villageAddress = data.district+data.address;
-            },
-            searchCollectInfo(){
+           /* searchCollectInfo(){
                 // 根据房屋地址获取收房信息
                 var that = this;
 
@@ -656,13 +701,105 @@
                     let houseInfo =  that.formData.village.villageName+that.formData.building+this.formData.room;
 
                     // 回调
-                    /*that.formData.collectPeople = res.people;
+                    /!*that.formData.collectPeople = res.people;
                     that.formData.type = res.type.name;
-                    that.formData.collectPrice = res.price;*/
+                    that.formData.collectPrice = res.price;*!/
                 }
+            },*/
+            addRent(){
+//                alert(1);
+                console.log(this.formData);
+                this.$http.post('glee/rent',this.formData)
+                    .then(
+                        (res) => {
+                            console.log(res);
+                            /*if (res.data.code !=18200){
+                             this.info.state_error = true;
+                             this.info.error = res.data.msg;
+                             return;
+                             } else {
+                             $('#myModal').modal('hide');
+                             this.info.success = res.data.msg;
+                             //关闭失败弹窗 ***
+                             this.info.state_error = false;
+                             //显示成功弹窗 ***
+                             this.info.state_success = true;
+                             }*/
+                            this.clear();
+                            this.gnRentingList();
+
+                        }
+                    )
+            },
+            modifyRent(){
+                this.$http.put('glee/rent/'+this.operId,this.formData)
+                    .then(
+                        (res) => {
+                            console.log(res);
+                            /*if (res.data.code !=18200){
+                             this.info.state_error = true;
+                             this.info.error = res.data.msg;
+                             return;
+                             } else {
+                             $('#myModal').modal('hide');
+                             this.info.success = res.data.msg;
+                             //关闭失败弹窗 ***
+                             this.info.state_error = false;
+                             //显示成功弹窗 ***
+                             this.info.state_success = true;
+                             }*/
+                            this.clear();
+                            this.search();
+                            this.operId = 0;
+                        }
+                    )
             },
             oper(){
+                this.title = '编辑租房喜报';
+                this.add = false;
                 console.log(this.operId);
+                if (this.statusId===3||this.statusId===4){
+                    //                请求成功打开模态框
+
+//                失败弹出错误信息
+//                失败弹出错误信息
+                    this.info.state_error = true;
+                    this.info.error = '该条数据不可编辑';
+                    return;
+                }
+
+                this.$http.get('glee/rent/' + this.operId)
+                    .then(
+                        (res) => {
+                            let val = res.data.data;
+                            console.log(val);
+                            this.formData.department_id = {
+                                id: val.department_id,
+                                name: this.dict.department_id[val.department_id]
+                            };
+                            this.formData.staff_id = {
+                                id: val.staff_id,
+                                name: this.dict.staff_id[val.staff_id]
+                            };
+                            this.formData.villa_id = {
+                                id: val.villa_id,
+                                name: val.villa.detailed_address
+                            };
+                            this.formData.price = val.price_sum;
+//                            this.formData.pay_type =
+                            this.formData.pay = val.pay;
+                            this.formData.bet = val.bet;
+                            this.formData.rent_type = val.rent_type;
+                            this.formData.received_type = val.received_type;
+                            this.formData.price_received = val.price_received;
+                            this.formData.complete_date = val.complete_date;
+                            this.formData.is_medi = val.is_medi;
+                            this.formData.special_price = val.special_price;
+                            this.formData.remark_marshal = val.remark_marshal;
+                            this.formData.remark_accountant = val.remark_accountant;
+
+                        }
+                    );
 
                 //                请求成功打开模态框
                 $('#myModal').modal('show');
@@ -670,6 +807,34 @@
                 /*this.info.state_error = true;
                  this.info.error = '您没有编辑权限';*/
             },
+            clear(){
+                this.formData.department_id = {
+                    id: '',
+                    name: ''
+                };
+                this.formData.staff_id = {
+                    id: '',
+                    name: ''
+                };
+                this.formData.villa_id = {
+                    id: '',
+                    name: ''
+                };
+                this.formData.price = '';
+//                            this.formData.pay_type =
+                this.formData.pay = '';
+                this.formData.bet = '';
+                this.formData.rent_type = 1;
+                this.formData.received_type = 1;
+                this.formData.price_received = '';
+                this.formData.complete_date = '';
+                this.formData.is_medi = 1;
+                this.formData.special_price = '';
+                this.formData.remark_marshal = '';
+                this.formData.remark_accountant = '';
+                $('#myModal').modal('hide');
+            },
+
             select(){
 
                 this.selectConfigure = 'all';
@@ -715,7 +880,7 @@
             receive(val){
                 for(let j=0;j<val.department.length;j++){
                     if($.inArray(val.department[j].id,this.params.department_id)===-1){
-                        this.filtrate.departmentList.push(val.department[j]);
+//                        this.filtrate.departmentList.push(val.department[j]);
                         this.params.department_id.push(val.department[j].id)
                     }else {
                         this.info.success = '成员已经存在';
@@ -730,8 +895,7 @@
                 }
                 for(let i=0;i<val.staff.length;i++){
                     if($.inArray(val.staff[i].id,this.params.staff_id)===-1){
-                        console.log()
-                        this.filtrate.staffList.push(val.staff[i]);
+//                        this.filtrate.staffList.push(val.staff[i]);
                         this.params.staff_id.push(val.staff[i].id)
                     }else {
                         this.info.success = '成员已经存在';
@@ -751,8 +915,89 @@
             },
             deleteDepartment(item){
                 this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
-                this.params.department_id=this.params.staff_id.filter((x)=>x!=item.id)
-            }
+                this.params.department_id=this.params.department_id.filter((x)=>x!=item.id)
+            },
+
+            verify(id){
+                // 审核通过
+//                alert(id);
+//                let that = this;
+                this.confirmMsg.id = id;
+                this.confirmMsg.msg = '确定通过一审吗？';
+                this.confirmMsg.status = '1-2';
+
+            },
+            reverify(id){
+                this.confirmMsg.id = id;
+                this.confirmMsg.msg = '确定通过二审吗？';
+                this.confirmMsg.status = '2-3';
+            },
+            revert(id){
+//                驳回
+                this.confirmMsg.id = id;
+                this.confirmMsg.msg = '确定撤销审核吗？';
+                this.confirmMsg.status = '3-1';
+
+            },
+            cancel(id){
+                // 退单
+                this.confirmMsg.id = id;
+                this.confirmMsg.msg = '确定退单吗？';
+                this.confirmMsg.status = '4';
+
+            },
+            dele(){
+                // 删除
+//                alert(this.operId);
+                this.$http.get('glee/rent/delete/'+this.operId)
+                    .then(
+                        (res) => {
+                            /*if (res.data.data.page !==this.paging){
+                             this.paging = res.data.data.page;
+                             this.page = 1;
+                             }*/
+                            this.search();
+                            this.operId = 0;
+//                            console.log(res.data)
+                        }
+                    )
+            },
+            getConfirm(){
+                let url = '';
+                if (this.confirmMsg.status === '1-2'){
+                    // 通过一审
+                    url = 'glee/rent/verify/';
+
+                } else if(this.confirmMsg.status === '2-3'){
+                    // 通过二审
+                    url = 'glee/rent/reverify/';
+
+                } else if (this.confirmMsg.status === '3-1') {
+                    // 撤销审核
+                    url = 'glee/rent/revert/';
+
+                } else {
+                    // 退单
+                    url = 'glee/rent/cancel/';
+                }
+                this.$http.get(url+this.confirmMsg.id)
+                    .then(
+                        (res) => {
+                            /*this.cont.myData = res.data.data;
+                             this.paging = res.data.page;*/
+                            console.log(res.data.code);
+                            if (res.data.code==18100){
+                                // 成功
+                                console.log(res.data);
+//                                that.gnCollectList();
+                                /*this.cont.myData = res.data.data.data;
+                                 this.paging = res.data.data.page;*/
+                                this.search();
+                            }
+                        }
+                    )
+            },
+
         }
     }
 </script>
@@ -797,21 +1042,35 @@
         width: 17px;
         height: 17px;
     }
-    td span{
-        display: inline-block;
-        padding: 8px 12px;
-        color: white;
-        border-radius: 30px;
+
+    .table-responsive{
+        /*overflow: inherit;*/
+    }
+    td button{
         user-select: none;
+    }
+    ul.dropdown-menu{
+        text-align: center;
+        font-size: 16px;
+    }
+    ul.dropdown-menu li{
+        padding: 6px 0;
+    }
+    ul.dropdown-menu li:hover{
+        cursor: pointer;
+        background-color: #f2f2f2;
     }
     .yellow{
         background-color: #F9E175;
     }
-    .gray{
-        background-color: #CCCCCC;
+    .orange{
+        background-color: #FCB322;
     }
     .green{
         background-color: #83E96D;
+    }
+    .gray{
+        background-color: #CCCCCC;
     }
     span.collectInfo{
         width: 100%;
@@ -823,5 +1082,9 @@
     }
     .modal .modal_form_datetime{
         margin-bottom: 32px;
+    }
+    .status{
+        padding: 3px 8px;
+        border-radius: 5px;
     }
 </style>
