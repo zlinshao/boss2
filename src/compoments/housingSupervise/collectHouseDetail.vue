@@ -6,7 +6,7 @@
                 <header>
                     <h4>
                         <router-link to="/NoCollect" tag="button" class="btn btn-white" style="border: none">首页</router-link>
-                        客户信息
+                        已收房屋信息
                         <a data-toggle="modal" class="pull-right" href="#houseEdit">编辑</a>
                     </h4>
                 </header>
@@ -270,7 +270,7 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <span class="text-primary">委托书照片：</span>
+                                        <span class="text-primary">产权证照片：</span>
                                         <a v-for="(img,index) in item.album.property_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
                                             <img :src="img.small" @click="showLargePic('property_pic',index)">
