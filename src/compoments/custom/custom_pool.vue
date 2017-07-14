@@ -206,9 +206,11 @@
         methods: {
 //            分配成功更新列表
             pitch_dele (){
+                this.pitch=[];
                 this.$http.post('core/customer_pool/customerpool').then((res) => {
                     this.custom_list = res.data.data.list;
                     this.paging = res.data.data.pages;
+
                 });
             },
 //            客户列表
