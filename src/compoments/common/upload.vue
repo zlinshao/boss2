@@ -24,9 +24,9 @@
                 pics: [],
             };
         },
-       updated (){
-            this.uploadPic(this.result);
-        },
+//       updated (){
+//            this.uploadPic(this.result);
+//        },
         methods: {
             rules (rul){
                 let index = this.pics.indexOf(rul);
