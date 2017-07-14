@@ -347,30 +347,35 @@
                 this.checkboxModel=val.facility;;
 
                 this.housePic.cus_idPhoto = [];
+                this.houseEdit.house_pic = [];
                 this.housePic.cus_idPhotos = val.album.house_pic;                    //修改图片ID
                 for (let i in this.housePic.cus_idPhotos) {
                     this.housePic.cus_idPhoto.push(i);
                     this.houseEdit.house_pic.push(i);
                 }
                 this.waterPic.cus_idPhoto = [];
+                this.houseEdit.water_card_pic = [];
                 this.waterPic.cus_idPhotos = val.album.water_card_pic;                    //修改图片ID
                 for (let i in this.waterPic.cus_idPhotos) {
                     this.waterPic.cus_idPhoto.push(i);
                     this.houseEdit.water_card_pic.push(i);
                 }
                 this.elePic.cus_idPhoto = [];
+                this.houseEdit.elec_card_pic = [];
                 this.elePic.cus_idPhotos = val.album.elec_card_pic;                    //修改图片ID
                 for (let i in this.elePic.cus_idPhotos) {
                     this.elePic.cus_idPhoto.push(i);
                     this.houseEdit.elec_card_pic.push(i);
                 }
                 this.gasPic.cus_idPhoto = [];
+                this.houseEdit.gas_card_pic = [];
                 this.gasPic.cus_idPhotos = val.album.gas_card_pic;                    //修改图片ID
                 for (let i in this.gasPic.cus_idPhotos) {
                     this.gasPic.cus_idPhoto.push(i);
                     this.houseEdit.gas_card_pic.push(i);
                 }
                 this.propertyPic.cus_idPhoto = [];
+                this.houseEdit.property_pic = [];
                 this.propertyPic.cus_idPhotos = val.album.property_pic;                    //修改图片ID
                 for (let i in this.propertyPic.cus_idPhotos) {
                     this.propertyPic.cus_idPhoto.push(i);
@@ -420,22 +425,27 @@
                 let house = this.housePic.cus_idPhoto.indexOf(val);
                 if (house > -1) {
                     this.housePic.cus_idPhoto.splice(house, 1);
+                    this.houseEdit.house_pic.splice(house, 1);
                 }
                 let water = this.waterPic.cus_idPhoto.indexOf(val);
                 if (water > -1) {
                     this.waterPic.cus_idPhoto.splice(water, 1);
+                    this.houseEdit.water_card_pic.splice(water, 1);
                 }
                 let ele = this.elePic.cus_idPhoto.indexOf(val);
                 if (ele > -1) {
                     this.elePic.cus_idPhoto.splice(ele, 1);
+                    this.houseEdit.elec_card_pic.splice(ele, 1);
                 }
                 let gas = this.gasPic.cus_idPhoto.indexOf(val);
                 if (gas > -1) {
                     this.gasPic.cus_idPhoto.splice(gas, 1);
+                    this.houseEdit.gas_card_pic.splice(gas, 1);
                 }
                 let property = this.propertyPic.cus_idPhoto.indexOf(val);
                 if (property > -1) {
                     this.propertyPic.cus_idPhoto.splice(property, 1);
+                    this.houseEdit.property_pic.splice(property, 1);
                 }
 
             },
@@ -458,11 +468,56 @@
             },
             houseRevise(){
                 this.$http.defaults.withCredentials = true;
+                $('.rem_div').remove();
                 if (this.complete_ok === 'ok') {
                     this.$http.post('core/villa/updatevilla/id/'+this.reviseHouseId,this.houseEdit).then((res) => {
                         if(res.data.code==='80010'){
                             this.$emit('reviseHouse',this.reviseHouseId);
                             $('#houseEdit').modal('hide');
+                            this.houseAdd.amap_json.villageAddress='';
+                            this.houseAdd.amap_json.villageName='';
+                            this.houseAdd.amap_json.district='';
+                            this.houseAdd.amap_json.address='';
+                            this.houseAdd.amap_json.id='';
+                            this.houseAdd.amap_json.location='';
+                            this.houseAdd.building='';
+                            this.houseAdd.house_number='';
+                            this.houseAdd.rooms.rooms='';
+                            this.houseAdd.rooms.hall='';
+                            this.houseAdd.rooms.toilet='';
+                            this.houseAdd.area='';
+                            this.houseAdd.decoration='';
+                            this.houseAdd.floor='';
+                            this.houseAdd.total_floor='';
+                            this.houseAdd.house_type='';
+                            this.houseAdd.house_feature='';
+                            this.houseAdd.floor_type='';
+                            this.houseAdd.person_medium='';
+                            this.houseAdd.source='';
+                            this.houseAdd.elec_card_num='';
+                            this.houseAdd.water_card_num='';
+                            this.houseAdd.gas_card_num='';
+                            this.houseAdd.remarks='';
+                            this.houseAdd.reference='';
+                            this.houseAdd.facility=[];
+                            this.houseAdd.house_pic = [];
+                            this.houseAdd.water_card_pic = [];
+                            this.houseAdd.elec_card_pic = [];
+                            this.houseAdd.gas_card_pic = [];
+                            this.houseAdd.property_pic = [];
+                            this.housePic.cus_idPhoto=[];
+                            this.waterPic.cus_idPhoto=[];
+                            this.elePic.cus_idPhoto=[];
+                            this.gasPic.cus_idPhoto=[];
+                            this.propertyPic.cus_idPhoto=[];
+                            this.housePic.cus_idPhotos={};
+                            this.waterPic.cus_idPhotos={};
+                            this.elePic.cus_idPhotos={};
+                            this.gasPic.cus_idPhotos={};
+                            this.propertyPic.cus_idPhotos={};
+                            this.checkboxModel=[];
+
+
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
