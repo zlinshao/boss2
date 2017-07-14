@@ -261,7 +261,7 @@
                         </header>
                         <div class="row"  v-for="item in houseDetail">
                             <div class="col-md-12">
-                                <div>
+                                <div id="pirture">
                                     <div>
                                         <span class="text-primary">房屋照片：</span>
                                         <a v-for="(img,index) in item.album.house_pic"
@@ -421,12 +421,13 @@
 
     .client_info > div > div > div span.text-primary {
         display: inline-block;
-        padding: 10px;
         padding-right: 20px;
         text-align: right;
         min-width: 100px;
     }
-
+    #pirture>div{
+        padding: 10px;
+    }
     .roll {
         height: 500px;
         overflow: auto;
