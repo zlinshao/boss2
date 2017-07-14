@@ -402,6 +402,7 @@
         methods: {
 //            照片ID
             idNumber (val){
+                console.log(val)
                 this.photos.cus_idPhoto = val;
             },
 //            图片上传完成
