@@ -25,13 +25,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">栋数</label>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" v-model="houseEdit.building" placeholder="几栋">
+                                    <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
+                                    <div class="col-lg-3">
+                                        <input type="number" class="form-control" v-model="houseEdit.building" placeholder="栋/座">
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">门牌号</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" v-model="houseEdit.house_number" placeholder="x-xxx">
+                                    <div class="col-lg-3">
+                                        <input type="number" class="form-control" v-model="houseEdit.unit" placeholder="栋/座">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="number" class="form-control" v-model="houseEdit.house_number" placeholder="门牌号">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -263,6 +265,7 @@
                         location:''
                     },
                     building:'',
+                    unit:'',
                     house_number:'',
                     rooms:{
                         rooms:'1',
@@ -324,6 +327,7 @@
                 this.houseEdit.amap_json.id=val.amap_json.id;
                 this.houseEdit.amap_json.location=val.amap_json.location;
                 this.houseEdit.building=val.building;
+                this.houseEdit.unit=val.unit;
                 this.houseEdit.house_number=val.house_number;
                 this.houseEdit.rooms.rooms=val.rooms.rooms;
                 this.houseEdit.rooms.hall=val.rooms.hall;
@@ -490,6 +494,7 @@
                             this.houseEdit.amap_json.id='';
                             this.houseEdit.amap_json.location='';
                             this.houseEdit.building='';
+                            this.houseEdit.unit='';
                             this.houseEdit.house_number='';
                             this.houseEdit.rooms.rooms='';
                             this.houseEdit.rooms.hall='';

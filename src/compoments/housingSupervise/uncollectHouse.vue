@@ -5,7 +5,7 @@
                 <div v-if="seletedId===0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="house_type">
+                            <select class="form-control" v-model="house_type" @change="search">
                                 <option value="">房屋类型</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.house_type">{{value}}</option>
                             </select>
@@ -13,7 +13,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="rooms">
+                            <select class="form-control" v-model="rooms" @change="search">
                                 <option value="">房型</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.rooms">{{value}}</option>
                             </select>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="decoration">
+                            <select class="form-control" v-model="decoration" @change="search">
                                 <option value="">房屋装修</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.decoration">{{value}}</option>
                             </select>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="floor_type">
+                            <select class="form-control" v-model="floor_type" @change="search">
                                 <option value="">建筑楼层</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.floor_type">{{value}}</option>
                             </select>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="house_feature">
+                            <select class="form-control" v-model="house_feature" @change="search">
                                 <option value="">房屋特色</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.house_feature">{{value}}</option>
                             </select>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="area">
+                            <select class="form-control" v-model="area" @change="search">
                                 <option value="">面积</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.area">{{value}}</option>
                             </select>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="person_medium">
+                            <select class="form-control" v-model="person_medium" @change="search">
                                 <option value="">个人/中介</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.person_medium">{{value}}</option>
                             </select>
@@ -67,9 +67,13 @@
                             </span>
                         </div>
                     </div>
-                    <div class="pull-right">
+                    <div class="pull-right" style="margin-left: 10px">
                         <a class="btn btn-success" @click="collectAdd"><i
                                 class="fa fa-plus-square"></i>&nbsp;增加房屋
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <a class="btn btn-success" @click="reset">&nbsp;重置
                         </a>
                     </div>
                 </div>
@@ -226,6 +230,7 @@
                 });
             },
             searchUncollect(){
+                this.currentPage=this.page;
                 this.$http.post('core/villa/villalist',{
                     "house_type" : this.house_type,//房屋类型
                     'rooms':this.rooms,     //房型
@@ -267,6 +272,19 @@
 //                    }
 //                }
 //            },
+            //重置
+            reset(){
+                this.house_type = '';
+                this.rooms = '';
+                this.decoration = '';
+                this.house_feature = '';
+                this.person_medium = '';
+                this.area='';
+                this.page=1;
+                this.keywords='',
+                this.floor_type='',
+                this.searchUncollect();
+            },
             changeIndex(e,id){
                 if (e.target.checked){
                     this.seletedId = id;

@@ -25,13 +25,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">幢/座</label>
-                                    <div class="col-lg-4">
+                                    <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
+                                    <div class="col-lg-3">
                                         <input type="number" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">门牌号</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" v-model="houseAdd.house_number" placeholder="单元-门牌号">
+                                    <div class="col-lg-3">
+                                        <input type="number" class="form-control" v-model="houseAdd.unit" placeholder="单元">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control" v-model="houseAdd.house_number" placeholder="门牌号">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -300,6 +302,7 @@
                         location:''
                     },
                     building:'',
+                    unit:'',
                     house_number:'',
                     rooms:{
                         rooms:'1',

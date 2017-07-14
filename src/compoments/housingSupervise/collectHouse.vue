@@ -3,94 +3,114 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
-                <div v-if="houseSeleted===0">
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="house_type">
-                                <option value="">房屋类型</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.house_type">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="rooms">
-                                <option value="">房型</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.rooms">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="decoration">
-                                <option value="">房屋装修</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.decoration">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="reference">
-                                <option value="">参考价格</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.reference">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="house_feature">
-                                <option value="">房屋特色</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.house_feature">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="area">
-                                <option value="">面积</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.area">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="villa_status">
-                                <option value="">房屋状态</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.villa_status">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="belong">
-                                <option value="">房屋所属</option>
-                                <option :value="key"  v-for="(value,key) in dictionary.belong">{{value}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <input type="text" readonly class="form-control" placeholder="点击选择部门"
-                                @click="selectDpm" v-model="departmentName">
-                        </label>
-                    </div>
-                    <div class="pro-sort" style="height: 39px;">
-                        <label style="margin-top: 8px;">
-                            <input type="checkbox" class="pull-left" v-model="our_group">显示本组房屋
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="reset">重置</button>
-                    </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
-                            <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" @click="search">搜索</button>
-                        </span>
+                <div v-if="houseSeleted===0" class="row">
+                    <div class="col-lg-12">
+                        <div class="pro-sort">
+                            <h5 style="font-weight: bold">房屋属性：</h5>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="house_type" @change="search">
+                                    <option value="">房屋类型</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.house_type">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="rooms" @change="search">
+                                    <option value="">房型</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.rooms">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="decoration" @change="search">
+                                    <option value="">房屋装修</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.decoration">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="reference" @change="search">
+                                    <option value="">参考价格</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.reference">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="house_feature" @change="search">
+                                    <option value="">房屋特色</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.house_feature">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="area" @change="search">
+                                    <option value="">面积</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.area">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="villa_status" @change="search">
+                                    <option value="">房屋状态</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.villa_status">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="belong" @change="search">
+                                    <option value="">房屋所属</option>
+                                    <option :value="key"  v-for="(value,key) in dictionary.belong">{{value}}</option>
+                                </select>
+                            </label>
                         </div>
                     </div>
+
+                    <div class="col-lg-12" >
+                        <div class="pro-sort">
+                            <h5 style="font-weight: bold">部门属性：</h5>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <input type="text" readonly class="form-control" placeholder="点击选择部门"
+                                       @click="selectDpm" v-model="departmentName">
+                            </label>
+                        </div>
+                        <div class="pro-sort" style="height: 39px;">
+                            <label style="margin-top: 8px;">
+                                <input type="checkbox" class="pull-left" v-model="our_group">显示本组房屋
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12" >
+                        <div class="pro-sort">
+                            <h5 style="font-weight: bold">&nbsp;&nbsp;&nbsp;关键字：</h5>
+                        </div>
+                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button" @click="search">搜索</button>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="pro-sort" style="">
+                            <button class="btn btn-success" type="button" @click="reset">重置</button>
+                        </div>
+
+                    </div>
+
                 </div>
+
                 <!--选中-->
                 <div class="col-lg-12 remind" v-if="houseSeleted>0">
                     <ul>
@@ -286,6 +306,7 @@
                     this.belong = '';
                     this.area='';
                     this.page=1;
+                    this.keywords='',
                     this.departmentName='';
                     this.departmentId='';
                 }
@@ -385,6 +406,7 @@
                 this.belong = '';
                 this.area='';
                 this.page=1;
+                this.keywords='',
                 this.departmentName='';
                 this.departmentId='';
                 this.searchHouseList();
