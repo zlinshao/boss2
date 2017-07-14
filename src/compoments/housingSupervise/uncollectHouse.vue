@@ -131,8 +131,8 @@
                                 </router-link>
                             </td>
                         </tr>
-                        <tr v-show="">
-                            <td colspan="12" class="text-center text-muted" v-if="villalist.length===0">
+                        <tr v-if="villalist.length == 0">
+                            <td colspan="12" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
