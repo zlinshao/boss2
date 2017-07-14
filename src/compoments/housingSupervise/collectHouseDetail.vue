@@ -421,6 +421,7 @@
 
     .client_info > div > div > div span.text-primary {
         display: inline-block;
+        padding: 10px;
         padding-right: 20px;
         text-align: right;
         min-width: 100px;
