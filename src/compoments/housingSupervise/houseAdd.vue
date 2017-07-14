@@ -85,7 +85,7 @@
                                     <div class="col-lg-10">
                                         <label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
                                             <input type="checkbox" class="pull-left" :value="key" @click="rules(key,$event)"
-                                            > {{value}}
+                                            v-model="checkboxModel"> {{value}}
                                         </label>
                                     </div>
                                 </div>
@@ -267,6 +267,7 @@
         data (){
             return {
                 myDictionary :[],
+                checkboxModel:[],
                 housePic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
@@ -318,12 +319,12 @@
                     elec_card_num:'',
                     water_card_num:'',
                     gas_card_num:'',
-                    elec_card_pic:'',
-                    water_card_pic:'',
-                    gas_card_pic:'',
+                    elec_card_pic:[],
+                    water_card_pic:[],
+                    gas_card_pic:[],
                     remarks:'',
-                    house_pic:'',
-                    property_pic:'',
+                    house_pic:[],
+                    property_pic:[],
                     reference:''
                 },
                 info:{
@@ -410,11 +411,53 @@
             },
             addHouse(){
                 this.$http.defaults.withCredentials = true;
+                $('.rem_div').remove();
                 if (this.complete_ok === 'ok') {
                     this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
                         if(res.data.code==='80010'){
+                            this.houseAdd.amap_json.villageAddress='';
+                            this.houseAdd.amap_json.villageName='';
+                            this.houseAdd.amap_json.district='';
+                            this.houseAdd.amap_json.address='';
+                            this.houseAdd.amap_json.id='';
+                            this.houseAdd.amap_json.location='';
+                            this.houseAdd.building='';
+                            this.houseAdd.house_number='';
+                            this.houseAdd.rooms.rooms='';
+                            this.houseAdd.rooms.hall='';
+                            this.houseAdd.rooms.toilet='';
+                            this.houseAdd.area='';
+                            this.houseAdd.decoration='';
+                            this.houseAdd.floor='';
+                            this.houseAdd.total_floor='';
+                            this.houseAdd.house_type='';
+                            this.houseAdd.house_feature='';
+                            this.houseAdd.floor_type='';
+                            this.houseAdd.person_medium='';
+                            this.houseAdd.source='';
+                            this.houseAdd.elec_card_num='';
+                            this.houseAdd.water_card_num='';
+                            this.houseAdd.gas_card_num='';
+                            this.houseAdd.remarks='';
+                            this.houseAdd.reference='';
+                            this.houseAdd.facility=[];
+                            this.houseAdd.house_pic = [];
+                            this.houseAdd.water_card_pic = [];
+                            this.houseAdd.elec_card_pic = [];
+                            this.houseAdd.gas_card_pic = [];
+                            this.houseAdd.property_pic = [];
+                            this.housePic.cus_idPhoto=[];
+                            this.waterPic.cus_idPhoto=[];
+                            this.elePic.cus_idPhoto=[];
+                            this.gasPic.cus_idPhoto=[];
+                            this.propertyPic.cus_idPhoto=[];
+                            this.housePic.cus_idPhotos={};
+                            this.waterPic.cus_idPhotos={};
+                            this.elePic.cus_idPhotos={};
+                            this.gasPic.cus_idPhotos={};
+                            this.propertyPic.cus_idPhotos={};
+                            this.checkboxModel=[];
                             this.$emit('addHouse','addHouse');
-                            this.houseAdd={};
                             $('#collectAdd').modal('hide');
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
