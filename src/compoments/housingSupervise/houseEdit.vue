@@ -10,7 +10,7 @@
                         <!--新增-->
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">×</button>
-                            <h4 class="modal-title">编辑房屋{{houseEdit.house_pic}}</h4>
+                            <h4 class="modal-title">编辑房屋</h4>
                         </div>
 
                         <!--新增/编辑-->
