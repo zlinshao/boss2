@@ -168,7 +168,7 @@
                                 </router-link>
                             </td>
                         </tr>
-                        <tr v-if="houseList.length===0">
+                        <tr v-if="isShow">
                             <td colspan="15" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
@@ -198,6 +198,7 @@
                 dictionary:[],      //字典列表
                 configure:[],       //配置项
                 houseList:[],
+                isShow:false,
                 checkboxModel:[],
                 houseSeleted:0,
                 top: '',            //置顶/取消置顶
@@ -260,6 +261,11 @@
                     this.$http.post('core/villa/receivedvillalist').then((res) => {
                         if(res.data.code==='80030'){
                             this.houseList=res.data.data.list;
+                            if(this.houseList===0){
+                                this.isShow=true;
+                            }else {
+                                this.isShow=false;
+                            }
                             this.pages=res.data.data.pages;
                         }else{
                             this.houseList=[];
@@ -302,6 +308,12 @@
                 ).then((res) => {
                     if(res.data.code==='80030'){
                         this.houseList=res.data.data.list;
+                        this.houseList=res.data.data.list;
+                        if(this.houseList===0){
+                            this.isShow=true;
+                        }else {
+                            this.isShow=false;
+                        }
                         this.pages=res.data.data.pages;
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***

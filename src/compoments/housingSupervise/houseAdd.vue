@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">幢/座</label>
                                     <div class="col-lg-4">
-                                        <input type="text" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
+                                        <input type="number" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
                                     </div>
                                     <label class="col-lg-2 col-sm-2 control-label">门牌号</label>
                                     <div class="col-lg-4">

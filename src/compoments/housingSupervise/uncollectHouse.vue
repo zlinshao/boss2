@@ -131,7 +131,7 @@
                                 </router-link>
                             </td>
                         </tr>
-                        <tr v-if="villalist.length == 0">
+                        <tr v-if="isShow">
                             <td colspan="12" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
@@ -173,6 +173,7 @@
                 /***MR'D***/
                 dictionary:[],      //字典列表
                 villalist:[],       //未收房屋列表
+                isShow:false,
                 checkboxModel:[],
                 deleteHouseId:[],
                 house_type:"",//房屋类型
@@ -210,7 +211,11 @@
                     this.$http.post('core/villa/villalist').then((res) => {
                         if(res.data.code==='80030'){
                             this.villalist = res.data.data.list;
-                            console.log(res.data.data.pages)
+                            if(this.villalist===0){
+                                this.isShow=true;
+                            }else {
+                                this.isShow=false;
+                            }
                             this.pages=res.data.data.pages;
                         }else{
                             this.villalist = [];
@@ -234,6 +239,11 @@
                 }).then((res) => {
                     if(res.data.code==='80030'){
                         this.villalist=res.data.data.list;
+                        if(this.villalist===0){
+                            this.isShow=true;
+                        }else {
+                            this.isShow=false;
+                        }
                         this.pages=res.data.data.pages;;
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***

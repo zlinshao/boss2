@@ -87,7 +87,8 @@
                         <a class="text-primary" v-if="!open_on" @click="open_close">展示&nbsp;&nbsp;<i
                                 class="fa fa-sort-amount-asc"></i></a>
                         <a class="text-primary" v-if="open_on" @click="open_close">收起&nbsp;&nbsp;<i
-                                class="fa fa-sort-amount-desc"></i></a></div>
+                                class="fa fa-sort-amount-desc"></i></a>
+                    </div>
                 </div>
             </div>
         </section>

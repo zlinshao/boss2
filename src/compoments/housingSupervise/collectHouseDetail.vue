@@ -12,38 +12,40 @@
                 </header>
                 <div class="panel-body table-responsive client_info" v-for="item in houseDetail">
                     <div>
-                        <div class="col-md-4">
-                            <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
-                            <div>
-                                <span class="text-primary">房型：</span>
-                                <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                        <div  class="col-md-12">
+                            <div class="col-md-4">
+                                <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
+                                <div>
+                                    <span class="text-primary">房型：</span>
+                                    <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                </div>
+                                <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
+                                <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
+                                <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
                             </div>
-                            <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
-                            <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
-                            <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
-                        </div>
-                        <div class="col-md-8">
-                            <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
-                            <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
-                            <div><span class="text-primary">参考租金：</span><span>{{item.reference}}</span></div>
-                            <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span></div>
-                        </div>
-                    </div>
-                    <div v-if="open_on" class="col-md-12">
-                        <div class="col-md-4">
-                            <div>
-                                <span class="text-primary">配套设备：</span>
-                                <span v-for="list in item.facility">{{dictionary.facility[list]}}&nbsp; &nbsp;</span>
+                            <div class="col-md-8">
+                                <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
+                                <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
+                                <div><span class="text-primary">参考租金：</span><span>{{item.reference}}</span></div>
+                                <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span></div>
                             </div>
-                            <div><span class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span></div>
-                            <div><span class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span></div>
-                            <div><span class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span></div>
                         </div>
-                        <div class="col-md-8">
-                            <div><span class="text-primary">房屋类型：</span><span>{{dictionary.house_type[item.house_type]}}</span></div>
-                            <div><span class="text-primary">水费卡号：</span><span>{{item.water_card_num}}</span></div>
-                            <div><span class="text-primary">电费卡号：</span><span>{{item.elec_card_num}}</span></div>
-                            <div><span class="text-primary">燃气卡号：</span><span>{{item.gas_card_num}}</span></div>
+                        <div v-if="open_on" class="col-md-12">
+                            <div class="col-md-4">
+                                <div>
+                                    <span class="text-primary">配套设备：</span>
+                                    <span v-for="list in item.facility">{{dictionary.facility[list]}}&nbsp; &nbsp;</span>
+                                </div>
+                                <div><span class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span></div>
+                                <div><span class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span></div>
+                                <div><span class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div><span class="text-primary">房屋类型：</span><span>{{dictionary.house_type[item.house_type]}}</span></div>
+                                <div><span class="text-primary">水费卡号：</span><span>{{item.water_card_num}}</span></div>
+                                <div><span class="text-primary">电费卡号：</span><span>{{item.elec_card_num}}</span></div>
+                                <div><span class="text-primary">燃气卡号：</span><span>{{item.gas_card_num}}</span></div>
+                            </div>
                         </div>
                     </div>
                     <div class="text-right">
@@ -415,7 +417,7 @@
         margin-bottom: 10px;
     }
 
-    .client_info > div > div > div {
+    .client_info > div > div > div > div {
         margin-bottom: 20px;
     }
 
