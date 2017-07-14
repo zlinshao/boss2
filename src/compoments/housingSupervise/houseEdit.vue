@@ -21,7 +21,7 @@
                                     <label for="villageName" class="col-sm-2 control-label">小区名称</label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control" id="villageName"
-                                               v-model="houseEdit.amap_json.address" readonly  data-toggle="modal" data-target="#myModal1">
+                                               v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -344,7 +344,7 @@
                 this.houseEdit.reference=val.reference;
                 this.houseEdit.facility=val.facility;
 
-                this.checkboxModel=this.houseEdit.facility;
+                this.checkboxModel=val.facility;;
 
                 this.housePic.cus_idPhoto = [];
                 this.housePic.cus_idPhotos = val.album.house_pic;                    //修改图片ID
@@ -379,6 +379,7 @@
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
+                    console.log(this.checkboxModel.length)
                     if (this.checkboxModel.length === this.oldFacility.length) {
                         this.checked = true;
                     } else {

@@ -12,7 +12,7 @@
                 <div class="panel-body table-responsive client_info"  v-for="item in houseDetail">
                     <div>
                         <div class="col-md-4">
-                            <div><span class="text-primary">房屋地址：</span><span>{{item.detailed_address}}</span></div>
+                            <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
                             <div>
                                 <span class="text-primary">房型：</span>
                                 <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
@@ -38,40 +38,43 @@
                             <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
                         </div>
                     </div>
-                    <table class="table table-hover"  v-for="item in houseDetail">
-                        <tbody>
-                            <tr>
-                                <td class="text-primary width100 col-lg-2">房屋照片</td>
-                                <td v-for="(img,index) in item.album.house_pic" class=" col-lg-10">
-                                    <img :src="img.small" @click="showLargePic('house_pic',index)">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-primary width100 col-lg-2">产权证照片</td>
-                                <td v-for="(img,index) in item.album.property_pic" class=" col-lg-10">
-                                    <img :src="img.small" @click="showLargePic('property_pic',index)">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-primary width100 col-lg-2">水卡照片</td>
-                                <td v-for="(img,index) in item.album.water_card_pic" class=" col-lg-10">
-                                    <img :src="img.small" @click="showLargePic('water_card_pic',index)" >
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-primary width100 col-lg-2">电卡照片</td>
-                                <td v-for="(img,index) in item.album.elec_card_pic" class=" col-lg-10">
-                                    <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-primary width100 col-lg-2">燃气卡照片</td>
-                                <td v-for="(img,index) in item.album.gas_card_pic" class=" col-lg-10">
-                                    <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="client_ col-xs-12">
+                        <div>
+                            <span class="text-primary">房屋照片：</span>
+                            <a v-for="(img,index) in item.album.house_pic"
+                               style="margin: 10px 10px 0 0;display: inline-block;">
+                                <img :src="img.small" @click="showLargePic('house_pic',index)">
+                            </a>
+                        </div>
+                        <div>
+                            <span class="text-primary">委托书照片：</span>
+                            <a v-for="(img,index) in item.album.property_pic"
+                               style="margin: 10px 10px 0 0;display: inline-block;">
+                                <img :src="img.small" @click="showLargePic('property_pic',index)">
+                            </a>
+                        </div>
+                        <div>
+                            <span class="text-primary">水卡照片：</span>
+                            <a v-for="(img,index) in item.album.water_card_pic"
+                                style="margin: 10px 10px 0 0;display: inline-block;">
+                                <img :src="img.small" @click="showLargePic('water_card_pic',index)">
+                            </a>
+                        </div>
+                        <div>
+                            <span class="text-primary">电卡照片：</span>
+                            <a v-for="(img,index) in item.album.elec_card_pic"
+                               style="margin: 10px 10px 0 0;display: inline-block;">
+                                <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
+                            </a>
+                        </div>
+                        <div>
+                            <span class="text-primary">燃气卡照片：</span>
+                            <a v-for="(img,index) in item.album.gas_card_pic"
+                               style="margin: 10px 10px 0 0;display: inline-block;">
+                                <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -147,11 +150,11 @@
         border-bottom: 1px solid #aaaaaa;
     }
 
-    .client_info > div > div > div {
+    .client_info > div > div > div,.client_ > div  {
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > > div span.text-primary {
+    .client_info > div > div > div span.text-primary,.client_ > div span.text-primary {
         display: inline-block;
         padding-right: 20px;
         text-align: right;

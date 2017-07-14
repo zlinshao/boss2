@@ -61,9 +61,9 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="按地址搜索" v-model="keywords" @keydown.enter="searchUncollect">
+                            <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" type="button" @click="searchUncollect">搜索</button>
+                                <button class="btn btn-success" type="button" @click="search">搜索</button>
                             </span>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                                 <input id="cus_id" type="checkbox" class="pull-left" :value="item.id"
                                        :checked="seletedId===item.id" @click="changeIndex($event,item.id)">
                             </td>
-                            <td class="text-center">{{item.address}}</td>
+                            <td class="text-center">{{item.amap_json.villageName}}</td>
                             <td class="text-center">{{dictionary.house_type[item.house_type]}}</td>
                             <td class="text-center">
                                 {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
@@ -145,7 +145,7 @@
         <Collect-add :dictionary="dictionary" @addHouse="alreadyAdd"></Collect-add>
 
         <!--分页-->
-        <Page :pg="paging"></Page>
+        <Page :pg="pages" @pag="pageSearch" :beforePage="currentPage"></Page>
 
         <Delete @IsSure="deleteHouse"></Delete>
 
@@ -193,7 +193,10 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                pages:'',   // 总页数
+                page:'',
+                currentPage:1,
             }
         },
         created (){
@@ -206,10 +209,12 @@
                     this.dictionary=res.data;
                     this.$http.post('core/villa/villalist').then((res) => {
                         if(res.data.code==='80030'){
-                            this.villalist=res.data.data.list;
-                            console.log(this.villalist)
+                            this.villalist = res.data.data.list;
+                            console.log(res.data.data.pages)
+                            this.pages=res.data.data.pages;
                         }else{
-                            this.villalist=[];
+                            this.villalist = [];
+                            this.pages = 1;
                         }
 
                     });
@@ -225,11 +230,17 @@
                     'person_medium':this.person_medium,
                     'floor_type':this.floor_type,
                     'keywords':this.keywords,
+                    'page' : this.page,
                 }).then((res) => {
                     if(res.data.code==='80030'){
                         this.villalist=res.data.data.list;
+                        this.pages=res.data.data.pages;;
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
                     }else{
-                        this.villalist=[];
+                        this.villalist = [];
+                        this.pages = 1;
                     }
 
                 });
@@ -295,6 +306,15 @@
 
                     });
                 }
+            },
+            //分页
+            pageSearch(val){
+                this.page=val;
+                this.searchUncollect();
+            },
+            search(){
+                this.page=1;
+                this.searchUncollect();
             }
         }
     }
