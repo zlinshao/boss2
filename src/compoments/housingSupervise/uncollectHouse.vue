@@ -69,7 +69,7 @@
                     </div>
                     <div class="pull-right">
                         <a class="btn btn-success" @click="collectAdd"><i
-                                class="fa fa-plus-square"></i>&nbsp;增加客户
+                                class="fa fa-plus-square"></i>&nbsp;增加房屋
                         </a>
                     </div>
                 </div>
