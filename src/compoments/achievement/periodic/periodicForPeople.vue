@@ -24,11 +24,13 @@
 
                 <div class="form-group datetime">
                     <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                        <input @click="remindData" type="text" name="addtime" value="" placeholder="选择月份" class="form-control form_datetime">
                     </label>
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
-                    </label>
+                </div>
+                <div class="dropdown form-group">
+                    <select name="" class="form-control" v-model="params.periodic">
+                        <option :value="value" v-for="(key,value) in dict">{{key}}</option>
+                    </select>
                 </div>
                 <div class="input-group" style="margin-bottom: 18px;" @click="search">
                     <button type="button" class="btn btn-success">搜索</button>
@@ -58,7 +60,7 @@
                     <thead>
                     <tr>
                         <th class="text-center">城市</th>
-                        <th class="text-center">小组</th>
+                        <th class="text-center">部门</th>
                         <th class="text-center">组长</th>
                         <th class="text-center">组员</th>
                         <th class="text-center">实际业绩</th>
@@ -144,6 +146,8 @@
                 </table>
             </section>
         </div>
+        <!--提示信息-->
+        <Status :state='info'></Status>
         <!--分页-->
         <Page :pg="paging" @pag="getData"></Page>
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
@@ -162,36 +166,73 @@
 <script>
     import Page from '../../common/page.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
+    import Status from '../../common/status.vue';
 
     export default{
-        components: {Page,STAFF},
+        components: {Page,STAFF,Status},
         data(){
             return {
+                dict : '',
                 params : {
-                    city : '',
-                    region : '',
-                    people : '',
-                    startDataTime : '',
-                    finishDataTime : ''
+                    department_id : [],
+                    staff_id : [],
+                    month : '',
+                    periodic : 1
                 },
                 myData : [],
                 paging : '',
 
-
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
                 filtrate : {
                     departmentList:[],
                     staffList:[]
                 },
-                selectConfigure : '',
+//                selectConfigure : '',
                 configure : {},
             }
         },
-        created (){
-            this.perPersonList();
+        mounted (){
+            let that = this;
+            this.$http.get('periodic/range')
+                .then(
+                    (res) => {
+                        that.dict = res.data.data;
+                    }
+                );
+
         },
         updated (){
+
 //            时间选择
             this.remindData();
+        },
+        watch : {
+            'params.month':{
+                handler(val,oldVal){
+                    console.log(val);
+                    let that = this;
+                    this.$http.get('periodic/range?month='+val)
+                        .then(
+                            (res) => {
+//                                console.log(that.params.month)
+                                that.dict = res.data.data;
+                                that.params.periodic = 1
+//                                console.log(that.dict)
+//                                console.log(res.data.data)
+                            }
+                        )
+//                    console.log(oldVal)
+                }
+            }
         },
         methods : {
             perPersonList (){
@@ -200,24 +241,25 @@
                     this.myData = res.data.data.person;
                     console.log(res.data);
                     this.paging = res.data.data.pages;
-                })
+                });
+                this.$http.get('periodic/now')
+                    .then(
+                        (res) => this.params.periodic = res.data.data
+                    );
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
+                    format: 'yyyy-mm',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
+                    endDate : new Date()
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder == '开始时间'){
-                        this.params.startDataTime = ev.target.value;
-                    } else {
-                        this.params.finishDataTime = ev.target.value;
-                    }
+                    this.params.month = ev.target.value;
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
@@ -227,10 +269,12 @@
             },
             search(){
                 console.log(this.params);
+                this.$http.get('json/periodicPerson.json',this.params)
+                    .then()
             },
             select(){
 
-                this.selectConfigure = 'all';
+//                this.selectConfigure = 'all';
                 $('#selectCustom').modal({backdrop: 'static',});
                 this.configure={type:'all',class:'selectType'};
                 $('#selectCustom').modal('show');
@@ -241,56 +285,40 @@
 //                console.log(this.configure);
 //                console.log(this.selectConfigure)
                 console.log(val);
-                if (this.selectConfigure=='all'){
+
                     // all
 //                    alert('all');
-                    this.receive(val);
-                    this.filtrate.departmentList = val.department;
-                    this.filtrate.staffList = val.staff;
-                } else if (this.selectConfigure=='department'){
-                    // 选择的是部门
-//                    alert('部门');
-                    this.formData.department_id = val.department[0];
-//                    console.log(this.formData.department_id)
-                } else {
-                    // 选择员工
-//                    alert('员工');
-                    this.formData.staff_id = val.staff[0];
-//                    console.log(this.formData.staff_id)
-                }
-
-            },
-            receive(val){
+                this.filtrate.departmentList = val.department;
+                this.filtrate.staffList = val.staff;
+                console.log(this.filtrate.departmentList);
+                console.log(this.params.department_id);
                 for(let j=0;j<val.department.length;j++){
                     if($.inArray(val.department[j].id,this.params.department_id)===-1){
-                        this.filtrate.departmentList.push(val.department[j]);
-                        this.params.department_id.push(val.department[j].id)
+                        this.params.department_id.push(val.department[j].id);
+                        console.log(this.filtrate.departmentList);
+                        console.log(this.params.department_id);
                     }else {
-                        this.info.success = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
+                        this.info.error = '成员已经存在';
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
                         setTimeout(() => {
-                            this.info.state_success = false;
+                            this.info.state_error = false;
                         },2000);
                     }
-
                 }
                 for(let i=0;i<val.staff.length;i++){
                     if($.inArray(val.staff[i].id,this.params.staff_id)===-1){
-                        console.log()
-                        this.filtrate.staffList.push(val.staff[i]);
-                        this.params.staff_id.push(val.staff[i].id)
+                        this.params.staff_id.push(val.staff[i].id);
                     }else {
-                        this.info.success = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
+                        this.info.error = '成员已经存在';
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
                         setTimeout(() => {
-                            this.info.state_success = false;
+                            this.info.state_error = false;
                         },2000);
                     }
-
                 }
             },
             deleteStaff(item){
@@ -299,7 +327,7 @@
             },
             deleteDepartment(item){
                 this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
-                this.params.department_id=this.params.staff_id.filter((x)=>x!=item.id)
+                this.params.department_id=this.params.department_id.filter((x)=>x!=item.id)
             },
         }
     }

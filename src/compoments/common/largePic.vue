@@ -196,10 +196,6 @@
                 this.index = this.idArr[this.currentIndex];
 
             },
-            /*download(){
-//                console.log(this.src[this.index].raw);
-
-            },*/
             rotateBack(){
                 this.current = 0;
                 document.getElementById('img').style.transform = 'rotate('+(-this.current)+'deg)';
