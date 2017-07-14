@@ -72,8 +72,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">国籍&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_nationality_c($event)"
-                                                :value="cus_nationality">
+                                        <select class="form-control" v-model="cus_nationality">
                                             <option v-for="(val,index) in select_c.nationality" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -91,7 +90,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">进度</label>
                                     <div class="col-lg-10 sliders">
-                                        <select class="form-control" @click="progress_c($event)" :value="cus_progress">
+                                        <select class="form-control" v-model="cus_progress">
                                             <option value="0">0%</option>
                                             <option value="25">25%</option>
                                             <option value="50">50%</option>
@@ -104,8 +103,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">客户状态</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_status_quo_c($event)"
-                                                :value="cus_status_quo">
+                                        <select class="form-control" v-model="cus_status_quo">
                                             <option v-for="(val,index) in select_c.customer_status" v-if="index != 3"
                                                     :value="index">{{val}}
                                             </option>
@@ -116,8 +114,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">客户意向</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_intention_c($event)"
-                                                :value="cus_intention">
+                                        <select class="form-control" v-model="cus_intention">
                                             <option v-for="(val,index) in select_c.customer_will" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -127,7 +124,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">客户来源</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_source_c($event)" :value="cus_source">
+                                        <select class="form-control" v-model="cus_source">
                                             <option v-for="(val,index) in select_c.source" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -137,8 +134,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">个人/中介</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="intermediary($event)"
-                                                :value="cus_intermediate">
+                                        <select class="form-control" v-model="cus_intermediate">
                                             <option v-for="(val,index) in select_c.person_medium" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -185,8 +181,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">证件类型</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_credentials_state_c($event)"
-                                                :value="cus_credentials_state">
+                                        <select class="form-control" v-model="cus_credentials_state">
                                             <option v-for="(val,index) in select_c.credentials" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -200,7 +195,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label" style="z-index: 10;">证件照片{{complete_ok}}</label>
+                                    <label class="col-lg-2 col-sm-2 control-label" style="z-index: 10;">证件照片</label>
                                     <div class="col-lg-10">
                                         <up-load @photo="idNumber" @delete="idNumber_delete" @complete="complete"
                                                  :result="'id_number'" :idPhotos="photos"></up-load>
@@ -209,8 +204,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">婚姻状况</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_marriage_c($event)"
-                                                :value="cus_marriage">
+                                        <select class="form-control" v-model="cus_marriage">
                                             <option v-for="(val,index) in select_c.marriage_status" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -231,7 +225,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">性格</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" @click="cus_nature_c($event)" :value="cus_nature">
+                                        <select class="form-control" v-model="cus_nature">
                                             <option v-for="(val,index) in select_c.character" :value="index">{{val}}
                                             </option>
                                         </select>
@@ -367,7 +361,6 @@
                 }
             },
             revise (val){
-
                 this.cus_id = val.id;                                           //修改ID
                 this.cus_status = val.identity;                                 //业主/租客
                 this.cus_name = val.name;                                       //客户姓名
@@ -389,7 +382,7 @@
                 this.cus_credentials_state = val.id_type;                       //证件类型
                 this.cus_idNumber = val.id_num;                                 //证件号
                 this.photos.cus_idPhoto = [];
-                this.photos.cus_idPhotos = val.album.id_pic;                           //修改图片ID
+                this.photos.cus_idPhotos = val.album.id_pic;                    //修改图片ID
                 for (let i in this.photos.cus_idPhotos) {
                     this.photos.cus_idPhoto.push(i);
                 }
@@ -497,41 +490,9 @@
                     this.inter_state = true;
                 }
             },
-//            国籍
-            cus_nationality_c (val){
-                this.cus_nationality = val.target.value;
-            },
-//            进度
-            progress_c (val){
-                this.cus_progress = val.target.value;
-            },
-//            客户状态
-            cus_status_quo_c (val){
-                this.cus_status_quo = val.target.value;
-            },
-//            客户意向
-            cus_intention_c (val){
-                this.cus_intention = val.target.value;
-            },
-//            客户来源
-            cus_source_c (val){
-                this.cus_source = val.target.value;
-            },
-            getData(val){
 //            小区/地址
+            getData(val){
                 this.village = val;
-            },
-//            证件类型
-            cus_credentials_state_c (val){
-                this.cus_credentials_state = val.target.value;
-            },
-//            婚姻状况
-            cus_marriage_c (val){
-                this.cus_marriage = val.target.value;
-            },
-//            性格
-            cus_nature_c (val){
-                this.cus_nature = val.target.value;
             },
 //            备注
             cus_remarks_c (val){

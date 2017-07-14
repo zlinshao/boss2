@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="control-label" @click="senior"><a
-                                                    class=" text-primary">高级选项</a></label>
+                                                    class=" text-primary">高级选项+</a></label>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                         <div class="col-sm-6">
                                             <input @click="remindData" type="text"
                                                    class="form-control form_datetime" id="addtime"
-                                                   name="addtime" value="" placeholder="请选择时间">
+                                                   name="addtime" value="" placeholder="请选择时间" readonly>
                                         </div>
                                     </div>
                                 </div>

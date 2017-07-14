@@ -9,7 +9,7 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_status_s($event)" :value="sea_status">
+                            <select class="form-control" v-model="sea_status">
                                 <option value="" selected="selected">客户状态</option>
                                 <option v-for="(val,index) in select_list.customer_status" :value="index">{{val}}
                                 </option>
@@ -19,7 +19,7 @@
 
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_intention_c($event)" :value="sea_intention">
+                            <select class="form-control" v-model="sea_intention">
                                 <option value="" selected="selected">客户意向</option>
                                 <option v-for="(val,index) in select_list.customer_will" :value="index">{{val}}</option>
                             </select>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_id_s($event)" :value="sea_id">
+                            <select class="form-control" v-model="sea_id">
                                 <option value="" selected="selected">客户身份</option>
                                 <option v-for="(val,index) in select_list.identity" :value="index">{{val}}</option>
                             </select>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="ser_source_s($event)" :value="sea_source">
+                            <select class="form-control" v-model="sea_source">
                                 <option value="" selected="selected">客户来源</option>
                                 <option v-for="(val,index) in select_list.source" :value="index">{{val}}
                                 </option>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_belong_s($event)" :value="sea_belong">
+                            <select class="form-control" v-model="sea_belong">
                                 <option value="" selected="selected">客户所属</option>
                                 <option v-for="(val,index) in select_list.belong" :value="index">{{val}}
                                 </option>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @click="sea_type_s($event)" :value="sea_type">
+                            <select class="form-control" v-model="sea_type">
                                 <option value="" selected="selected">个人/中介</option>
                                 <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
                             </select>
@@ -274,30 +274,6 @@
 //            remindDaily状态
             add_state (val){
                 this.bool = val;
-            },
-//            客户状态
-            sea_status_s (val){
-                this.sea_status = val.target.value;
-            },
-//            客户意向
-            sea_intention_c (val){
-                this.sea_intention = val.target.value;
-            },
-//            客户身份
-            sea_id_s (val){
-                this.sea_id = val.target.value;
-            },
-//            客户来源
-            ser_source_s (val){
-                this.sea_source = val.target.value;
-            },
-//            客户所属
-            sea_belong_s (val){
-                this.sea_belong = val.target.value;
-            },
-//            个人/中介
-            sea_type_s (val){
-                this.sea_type = val.target.value;
             },
         }
     }

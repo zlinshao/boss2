@@ -24,7 +24,9 @@
                 pics: [],
             };
         },
-
+       updated (){
+            this.uploadPic(this.result);
+        },
         methods: {
             rules (rul){
                 let index = this.pics.indexOf(rul);
@@ -58,7 +60,7 @@
                             //上传成功时触发的事件
                         });
                         this.on("addedfile", function (file) {
-                            console.log(file);
+//                            console.log(file);
                             $(file._removeLink.offsetParent).addClass('rem_div');
                             _this.$emit('complete','no');
                             //上传文件时触发的事件

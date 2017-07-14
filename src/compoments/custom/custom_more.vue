@@ -5,7 +5,7 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        客户信息{{cus_Id}}
+                        客户信息
                         <!--编辑-->
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
@@ -167,8 +167,7 @@
                                     <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
                                     <div class="col-sm-10" style="padding-left: 0;">
                                         <div class="col-sm-4">
-                                            <select class="form-control" @click="follow_way_s($event)"
-                                                    :value="follow_w">
+                                            <select class="form-control" v-model="follow_w">
                                                 <option v-for="(way,index) in select_list.follow_way" :value="index">{{way}}</option>
                                             </select>
                                         </div>
@@ -232,7 +231,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <td class="text-center">
-                                                        <router-link :to="{path:'/okCollect',query: {nameId: ''}}">
+                                                        <router-link :to="{path:'/okCollect',query: {houseId: ''}}">
                                                             积善公寓2-302
                                                         </router-link>
                                                     </td>
@@ -324,15 +323,16 @@
                             this.card.push(this.photos[i].big);
                         }
                     });
-                });
-
-                this.$http.get('core/customer_talk_log/talklist/id/' + val).then((res) => {
-                    if (res.data.data) {
-                        this.daily_record = res.data.data;
-                    }
+//                   获取沟通日志
+                    this.$http.get('core/customer_talk_log/talklist/id/' + val).then((res) => {
+                        if (res.data.data) {
+                            this.daily_record = res.data.data;
+                        }
+                    });
                 });
             },
             customers_rev (val){
+                this.revise_state = val;
                 $('#customModel').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
@@ -394,9 +394,6 @@
                     this.info.state_error = true;
                 }
             },
-            follow_way_s (val){
-                this.follow_w = val.target.value;
-            }
         }
     }
 </script>
