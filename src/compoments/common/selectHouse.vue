@@ -34,11 +34,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in houseList" @click="chooseItem($event)">
+                                <tr v-for="item in houseList" @click="chooseItem($event,item)">
                                     <td>
-                                        <input type="radio" name="radio" @click="selectHouse(item)">
+                                        <input type="radio" name="radio" >
                                     </td>
-                                    <td>{{item.address}}</td>
+                                    <td>{{item.amap_json.villageName}}</td>
                                     <td>
                                         <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
                                     </td>
@@ -82,25 +82,25 @@
             },
             search(){
                 if(this.keywords!==''){
-                    this.$http.get('core/core_common/villalist/keywords/'+this.keywords).then((res) => {
+                    this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
                         this.houseList=res.data.data;
                         this.keywords='';
                     })
                 }
             },
-            selectHouse(item){
-                this.houseAddress.id=item.id;
-                this.houseAddress.address=item.address;
-            },
+//            selectHouse(item){
+//                this.houseAddress.id=item.id;
+//                this.houseAddress.address=item.address;
+//            },
             ensure(){
                 this.$emit('House',this.houseAddress);
                 this.houseList=[];
                 $('#selectHouse').modal('hide');
             },
-            chooseItem(ev){// 点击行选中
+            chooseItem(ev,item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
-                this.villageId = $(ev.currentTarget).find('input').val();
-//                console.log(this.villageId);
+                this.houseAddress.id=item.id;
+                this.houseAddress.address=item.amap_json.villageName;
             }
         }
     }
