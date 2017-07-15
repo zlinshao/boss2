@@ -139,6 +139,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">参考租金</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" v-model="houseEdit.reference" class="form-control" placeholder="参考租金">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label">房屋照片</label>
                                     <div class="col-lg-10">
                                         <up-load @photo="housePicId" @delete="picDelete" @complete="complete"
@@ -287,6 +293,7 @@
                     house_type:'1',
                     house_feature:'1',
                     floor_type:'1',
+                    reference:'0.00',     //参考租金
                     person_medium:'1',
                     source:'',
                     elec_card_num:'',
@@ -298,7 +305,6 @@
                     remarks:'',
                     house_pic:[],
                     property_pic:[],
-                    reference:''
                 },
                 myHouseEdit:[],   //接受房屋数据
                 checkboxModel:[], //已被选中的多选框
@@ -521,7 +527,7 @@
                                     this.houseEdit.water_card_num='';
                                     this.houseEdit.gas_card_num='';
                                     this.houseEdit.remarks='';
-                                    this.houseEdit.reference='';
+                                    this.houseEdit.reference='0.00';
                                     this.houseEdit.facility=[];
                                     this.houseEdit.house_pic = [];
                                     this.houseEdit.water_card_pic = [];

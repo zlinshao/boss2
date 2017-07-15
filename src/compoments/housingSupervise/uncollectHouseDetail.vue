@@ -18,6 +18,7 @@
                                 <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
                             </div>
                             <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
+                            <div><span class="text-primary">面积：</span><span>{{item.reference}} 元</span></div>
                             <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
                             <div>
                                 <span class="text-primary">个人/中介：</span>
