@@ -49,6 +49,9 @@
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.district}}</td>
                                             </tr>
+                                            <tr class="text-center" v-show="villages.length===0">
+                                                <td colspan="3">暂无数据...</td>
+                                            </tr>
 
                                             </tbody>
                                         </table>
@@ -65,6 +68,9 @@
                 </div>
             </div>
         </div>
+
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 
 </template>
@@ -102,7 +108,9 @@
 
 </style>
 <script>
-    let addr="http://restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=all";
+    import Status from './status.vue';
+
+    let addr="http://restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=poi&types=120300";
     let cityAddr = 'http://restapi.amap.com/v3/ip?key=181a17662347392d30ce7962d0deb60a&ip=';
     export default{
 
@@ -120,10 +128,20 @@
                     id : '',
                     location : ''
                 },
-                ip : ''
+                ip : '',
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
-        components: {},
+        components: {Status},
         created : function () {
 //            let that = this;
             this.$http.get('http://test.v2.api.boss.lejias.cn/ip')
@@ -161,8 +179,25 @@
                 this.villages = []
             },
             save(){
-                if (this.villageId.length === 0){
+                if (this.villages.length==0){
+                    this.info.error = '您尚未选择地址';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                    //一秒自动关闭成功信息弹窗 ***
+                    setTimeout(() => {
+                        this.info.state_error = false;
+                    },2000);
                     return;
+                }
+                if (this.villageId==''){
+                    this.info.error = '地址选择异常';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                    //一秒自动关闭成功信息弹窗 ***
+                    setTimeout(() => {
+                        this.info.state_error = false;
+                    },2000);
+//                    return;
                 }else {
                     for ( var i in this.villages){
 //                        console.log(this.villages[i]);
@@ -182,8 +217,12 @@
 
             },
             chooseItem(ev){// 点击行选中
-                $(ev.currentTarget).find('input').prop('checked' , 'true');
-                this.villageId = $(ev.currentTarget).find('input').val();
+//                if ($(ev.currentTarget).find('input').val()!=''){
+                    $(ev.currentTarget).find('input').prop('checked' , 'true');
+                    this.villageId = $(ev.currentTarget).find('input').val();
+//                }
+
+                console.log(this.villageId);
 //                console.log(this.villageId);
             },
             getCurrentCity(){
