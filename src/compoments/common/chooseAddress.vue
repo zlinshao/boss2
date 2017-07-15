@@ -15,8 +15,8 @@
                                         <div class="dropdown form-group">
                                             <select name="" class="form-control" v-model="chooseCity" @change="search">
                                                 <option value="" selected>所有城市</option>
-                                                <option value="南京">南京</option>
-                                                <option value="苏州">苏州</option>
+                                                <option value="南京市">南京市</option>
+                                                <option value="苏州市">苏州市</option>
                                             </select>
                                         </div>
                                         <div class="input-group bootstrap-timepicker">
@@ -102,7 +102,8 @@
 
 </style>
 <script>
-    var addr="http://restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=all";
+    let addr="http://restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=all";
+    let cityAddr = 'http://restapi.amap.com/v3/ip?key=181a17662347392d30ce7962d0deb60a&ip=';
     export default{
 
         data(){
@@ -118,12 +119,25 @@
                     address : '',
                     id : '',
                     location : ''
-                }
+                },
+                ip : ''
             }
         },
         components: {},
         created : function () {
+//            let that = this;
+            this.$http.get('http://test.v2.api.boss.lejias.cn/ip')
+                .then(
+                    (res) => {
+//                        console.log(res.data);
+                        this.ip = res.data;
+                        this.getCurrentCity();
+                    }
+                );
 
+        },
+        updated (){
+            this.getCurrentCity();
         },
         methods : {
             search(){
@@ -171,6 +185,21 @@
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
                 this.villageId = $(ev.currentTarget).find('input').val();
 //                console.log(this.villageId);
+            },
+            getCurrentCity(){
+                this.$http.defaults.withCredentials = false;
+                this.$http.defaults.headers = {};
+                this.$http.get(cityAddr+this.ip)
+                    .then(
+                        (res) => {
+                            if (res.data.city == '南京市' || res.data.city == '苏州市'){
+                                this.chooseCity = res.data.city
+                            } else {
+                                this.chooseCity = ''
+                            }
+                        }
+                    );
+                this.$http.defaults.withCredentials = true;
             }
         }
     }

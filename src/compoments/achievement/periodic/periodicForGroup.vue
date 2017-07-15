@@ -64,7 +64,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr v-show="myData.length!=0" class="text-center" v-for="item in myData" @click="showGroupDetail(item.department_id,item.department_name)">
+                    <tr v-show="myData.length!=0" class="text-center" v-for="item in myData" @click="showGroupDetail(item.department_id,item.city,item.department_name)">
                         <td>{{item.city}}</td>
                         <td>{{item.department_name}}</td>
                         <td>{{item.marshal}}</td>
@@ -74,7 +74,7 @@
                         <td>{{item.collect}}</td>
                         <td>{{item.rent}}</td>
                     </tr>
-                    <tr v-show="myData.length==0" class="text-center">
+                    <tr v-show="isShow" class="text-center">
                         <td colspan="7">暂无数据...</td>
                     </tr>
 
@@ -91,17 +91,14 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{groupName}}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{city}}&emsp;{{department_name}}</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <div class="col-lg-12">
                             <section class="panel table table-responsive">
-                                <table class="table table-bordered table-advance">
+                                <table class="table table-striped table-hover table-advance">
                                     <thead>
                                     <tr>
-                                        <th class="text-center">城市</th>
-                                        <th class="text-center">部门</th>
-                                        <th class="text-center">组长</th>
                                         <th class="text-center">组员</th>
                                         <th class="text-center">实际业绩</th>
                                         <th class="text-center">溢出业绩</th>
@@ -111,33 +108,18 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="text-center">
-                                        <td rowspan="3" class="table-bordered">南京</td>
-                                        <td rowspan="3" class="table-bordered">城南一组</td>
-                                        <td rowspan="3" class="table-bordered">城南一组</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
+                                    <tr class="text-center" v-show="detailCode==18300" v-for="item in staffs">
+                                        <td>{{item.real_name}}</td>
+                                        <td>{{item.real_achv}}</td>
+                                        <td>{{item.overflow_achv}}</td>
+                                        <td>{{item.collect}}</td>
+                                        <td>{{item.rent}}</td>
+                                        <td></td>
                                     </tr>
-                                    <tr class="text-center">
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
+                                    <tr class="text-center" v-show="detailCode!=18300 || staffs.length==0">
+                                        <td colspan="6">当前小组无成员...</td>
                                     </tr>
-                                    <tr class="text-center">
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                        <td>水滴技术</td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </section>
@@ -179,7 +161,7 @@
         components: {Page,STAFF,Status},
         data(){
             return {
-                groupName : '',
+                isShow : false,
                 dict : '',
                 params : {
                     department_id : [],
@@ -206,6 +188,12 @@
                 },
 //                selectConfigure : '',
                 configure : {},
+
+                city : '',
+                department_name : '',
+                detailCode : '',
+
+                staffs : []
             }
         },
         watch : {
@@ -231,17 +219,13 @@
 //            alert(1)
             this.$http.get('periodic/range')
                 .then(
-                    (res) => this.dict = res.data.data
+                    (res) => {
+                        this.dict = res.data.data;
+                        this.perGroupList();
+                    }
 
                 );
-            this.$http.get('periodic/now')
-                .then(
-                    (res) => {
-                        this.params.periodic = res.data.data;
-//                        alert(this.params.periodic)
-                    }
-                );
-            this.perGroupList();
+
         },
         updated (){
 
@@ -254,9 +238,16 @@
 
                 this.$http.get('periodic').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-                    this.myData = res.data.data.data;
 //                    console.log(res);
-                    this.paging = res.data.data.pages;
+                    if (res.data.code == 18300){
+                        this.myData = res.data.data.data;
+//                    console.log(res);
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                    }
+
                 });
                 this.$http.get('periodic/now')
                     .then(
@@ -274,7 +265,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
-                    endDate : new Date()
+                    endDate: new Date(),
 
                 }).on('changeDate', function (ev) {
                     this.params.month = ev.target.value;
@@ -287,15 +278,20 @@
                 this.page = data;
             },
             search(){
-                console.log(this.params);
-                this.$http.get('periodic',{
+//                console.log(this.params);
+                this.$http.get('periodic?page='+this.page,{
                     params : this.params
                 }).then(
                     (res) => {
-                        this.myData = res.data.data.data;
-                        console.log(this.myData.length)
-//                    console.log(res);
-                        this.paging = res.data.data.pages;
+                        if (res.data.code == 18300){
+                            this.paging = res.data.data.pages;
+                            this.myData = res.data.data.data;
+                            this.isShow = false;
+                        } else {
+                            this.myData = [];
+                            this.isShow = true;
+                            this.paging = '';
+                        }
                     }
                 )
             },
@@ -347,9 +343,30 @@
 //                console.log(this.params.department_id)
                 this.params.department_id=this.params.department_id.filter((x)=>x!=item.id);
             },
-            showGroupDetail(id,name){
+            showGroupDetail(id,city,department){
                 console.log(id);
-                this.groupName = name;
+                this.city = city;
+                this.department_name = department;
+                let that = this;
+                this.$http.get('periodic/group',{
+                    params : {
+                        department_id : id,
+                        month : that.params.month,
+                        periodic : that.params.periodic
+                    }
+                })
+                    .then(
+                        (res) => {
+                            console.log(res);
+                            that.detailCode = res.data.code;
+                            if (res.data.code == "18300"){
+                                that.staffs = res.data.data.staffs;
+                            } else {
+                                return;
+                            }
+
+                        }
+                    );
 //                this.$http.get('periodic')
                 $('#showDetail').modal('show');
             }

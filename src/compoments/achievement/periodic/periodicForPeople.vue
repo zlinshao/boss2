@@ -9,18 +9,18 @@
 
         <div class="panel col-lg-12">
             <form class="form-inline clearFix" role="form">
-                <div class="input-group bootstrap-timepicker">
+                <!--<div class="input-group bootstrap-timepicker">
                     <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
-                </div>
+                </div>-->
 
 
-                <div class="dropdown form-group">
+                <!--<div class="dropdown form-group">
                     <select name="" class="form-control">
                         <option value="">全部</option>
                         <option value="1">鸡腿</option>
                         <option value="2">梦想</option>
                     </select>
-                </div>
+                </div>-->
 
                 <div class="form-group datetime">
                     <label>
@@ -59,9 +59,9 @@
                 <table class="table table-striped table-advance">
                     <thead>
                     <tr>
-                        <th class="text-center">城市</th>
-                        <th class="text-center">部门</th>
-                        <th class="text-center">组长</th>
+                        <!--<th class="text-center">城市</th>-->
+                        <!--<th class="text-center">部门</th>-->
+                        <!--<th class="text-center">组长</th>-->
                         <th class="text-center">组员</th>
                         <th class="text-center">实际业绩</th>
                         <th class="text-center">溢出业绩</th>
@@ -71,77 +71,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="text-center">
-                        <td rowspan="3" class="table-bordered">南京</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-
-                    <!--<tr class="text-center" v-for="item in myData">
-                        <td>{{item.region.name}}</td>
-                        <td>{{item.headman}}</td>
-                        <td>{{item.people}}</td>
-                        <td>{{item.realAchieve}}</td>
-                        <td>{{item.moreAchieve}}</td>
+                    <tr class="text-center" v-for="item in myData" v-show="myData.length!=0">
+                        <td>{{item.real_name}}</td>
+                        <td>{{item.real_achv_sum}}</td>
+                        <td>{{item.overflow_achv_sum}}</td>
                         <td>{{item.collect}}</td>
-                        <td>{{item.renting}}</td>
-                        <td>{{item.ranking}}</td>
-                        <td>{{item.achievePackage.name}}</td>
-                    </tr>-->
-
-
-                    </tbody>
-                    <tbody>
-                    <tr class="text-center">
-                        <td rowspan="3" class="table-bordered">南京</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td rowspan="3" class="table-bordered">城南一组</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
+                        <td>{{item.rent}}</td>
+                        <td></td>
                     </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
+                    <tr class="text-center" v-show="isShow">
+                        <td colspan="6">暂无数据...</td>
                     </tr>
-                    <tr class="text-center">
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                        <td>水滴技术</td>
-                    </tr>
-
                     </tbody>
                 </table>
             </section>
@@ -172,15 +112,17 @@
         components: {Page,STAFF,Status},
         data(){
             return {
+                isShow : false,
                 dict : '',
                 params : {
-                    department_id : [],
-                    staff_id : [],
+//                    department_id : [],
+//                    staff_id : [],
                     month : '',
                     periodic : 1
                 },
                 myData : [],
                 paging : '',
+                page : '',
 
                 info: {
                     //成功状态 ***
@@ -201,11 +143,11 @@
             }
         },
         mounted (){
-            let that = this;
             this.$http.get('periodic/range')
                 .then(
                     (res) => {
-                        that.dict = res.data.data;
+                        this.dict = res.data.data;
+                        this.perPersonList();
                     }
                 );
 
@@ -236,12 +178,20 @@
         },
         methods : {
             perPersonList (){
-                this.$http.get('json/periodicPerson.json').then((res) => {
-//                    this.collectList = res.data.data.gleeFulCollect;
-                    this.myData = res.data.data.person;
-                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                });
+                this.$http.get('revenue/periodic/ranking')
+                    .then(
+                        (res) => {
+//                            console.log(res);
+                            if (res.data.code == 18300){
+                                this.paging = res.data.data.pages;
+                                this.myData = res.data.data.data;
+                                this.isShow = false;
+                            } else {
+                                this.isShow = true;
+                            }
+
+                        }
+                    );
                 this.$http.get('periodic/now')
                     .then(
                         (res) => this.params.periodic = res.data.data
@@ -255,7 +205,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
-                    endDate : new Date()
+                    endDate: new Date(),
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
@@ -265,12 +215,30 @@
             },
             getData(data){
                 // 页数
-                console.log(data);
+//                console.log(data);
+                this.page = data;
+                this.search();
             },
             search(){
                 console.log(this.params);
-                this.$http.get('json/periodicPerson.json',this.params)
-                    .then()
+                this.$http.get('revenue/periodic/ranking?page='+this.page,{
+                    params : this.params
+                })
+                    .then(
+                        (res) => {
+//                            console.log(res);
+                            if (res.data.code == 18300){
+                                this.paging = res.data.data.pages;
+                                this.myData = res.data.data.data;
+                                this.isShow = false;
+                            } else {
+                                this.myData = [];
+                                this.isShow = true;
+                                this.paging = '';
+                            }
+
+                        }
+                    )
             },
             select(){
 

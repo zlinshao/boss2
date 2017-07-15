@@ -3,7 +3,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">{{flexData.name}}:</label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">一:</label>
+                <label class="col-sm-1 control-label">一</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
@@ -17,7 +17,7 @@
         <div class="form-group" v-show="moreYears>=2">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">二:</label>
+                <label class="col-sm-1 control-label">二</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[1]" @blur="sendData">
                 </div>
@@ -26,7 +26,7 @@
         <div class="form-group"  v-show="moreYears>=3">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">三:</label>
+                <label class="col-sm-1 control-label">三</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[2]" @blur="sendData">
                 </div>
@@ -35,7 +35,7 @@
         <div class="form-group"  v-show="moreYears>=4">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">四:</label>
+                <label class="col-sm-1 control-label">四</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[3]" @blur="sendData">
                 </div>
@@ -44,7 +44,7 @@
         <div class="form-group"  v-show="moreYears>=5">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">五:</label>
+                <label class="col-sm-1 control-label">五</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[4]" @blur="sendData">
                 </div>
@@ -53,7 +53,7 @@
         <div class="form-group"  v-show="moreYears>=6">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">六:</label>
+                <label class="col-sm-1 control-label">六</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[5]" @blur="sendData">
                 </div>
@@ -62,7 +62,7 @@
         <div class="form-group"  v-show="moreYears>=7">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">七:</label>
+                <label class="col-sm-1 control-label">七</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[6]" @blur="sendData">
                 </div>
@@ -71,7 +71,7 @@
         <div class="form-group"  v-show="moreYears>=8">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">八:</label>
+                <label class="col-sm-1 control-label">八</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[7]" @blur="sendData">
                 </div>
@@ -80,7 +80,7 @@
         <div class="form-group"  v-show="moreYears>=9">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">九:</label>
+                <label class="col-sm-1 control-label">九</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[8]" @blur="sendData">
                 </div>
@@ -89,7 +89,7 @@
         <div class="form-group"  v-show="moreYears>=10">
             <label class="col-sm-3 control-label"></label>
             <div class="form-group col-sm-8">
-                <label class="col-sm-1 control-label">十:</label>
+                <label class="col-sm-1 control-label">十</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" v-model="data[9]" @blur="sendData">
                 </div>

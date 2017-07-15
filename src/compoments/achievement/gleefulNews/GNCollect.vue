@@ -105,7 +105,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr class="text-center" :key="item.id" v-for="(item,index) in cont.myData">
+                    <tr v-show="cont.myData.length!==0" :class="{'lightYellow' : operId===item.id , 'text-center' : true}" :key="item.id" v-for="(item,index) in cont.myData">
                         <td>
                             <input type="checkbox" :value="item.id" :checked="operId===item.id"
                                    @click="changeIndex($event,item.id,index,item.status)">
@@ -167,7 +167,7 @@
                             </ul>
                         </td>
                     </tr>
-                    <tr class="text-center" v-show="cont.myData.length===0">
+                    <tr class="text-center" v-show="isShow">
                         <td colspan="17">暂无数据...</td>
                     </tr>
 
@@ -217,40 +217,10 @@
                             <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">房屋地址:</label>
                                 <div class="col-sm-8 input-group">
-                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name">
+                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name" data-toggle="modal" data-target="#selectHouse">
                                     <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
-
-                            <!--<div class="form-group clearFix">
-                                <label for="villageName" class="col-sm-3 control-label">房屋地址:</label>
-                                <div class="col-sm-8 input-group">
-                                    <input title="请点击选择" type="text" class="form-control" id="villageName" v-model="formData.village.villageName" readonly  data-toggle="modal" data-target="#myModal1">
-                                    <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
-                                </div>
-                            </div>-->
-                            <!--<div class="form-group">
-                                <label for="villageAddress" class="col-sm-3 control-label">地址:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="villageAddress" readonly v-model="formData.villageAddress">
-                                </div>
-                            </div>-->
-
-                            <!--<div class="form-group clearFix">
-                                <label class="col-sm-3 control-label">栋:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" v-model="formData.building">
-                                </div>
-                            </div>-->
-
-                            <!--<div class="form-group clearFix">
-                                <label class="col-sm-3 control-label">室:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" v-model="formData.room">
-                                </div>
-                            </div>-->
-
-
                             <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">空置期:</label>
                                 <div class="col-sm-8">
@@ -315,8 +285,7 @@
                                 <div class="col-sm-8">
                                     <div class="dropdown">
                                         <select name="" class="form-control" v-model="formData.pay_type">
-                                            <option value="1">季付</option>
-                                            <option value="2">年付</option>
+                                            <option :value="value" v-for="(key,value) in dict.pay_type">{{key}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -420,6 +389,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
+        <SelectHouse @House="getHouse"></SelectHouse>
 
         <!--<Select :configure="configure" @Staff="receive"></Select>-->
     </div>
@@ -433,13 +403,15 @@
     //    import ChooseAddress from '../../common/chooseAddress.vue'
     import Confirm from '../../common/confirm.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
+    import SelectHouse from '../../common/selectHouse.vue'
 
     //    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
-        components: {Page, Delete, Status, FlexBox, Confirm, STAFF},
+        components: {Page, Delete, Status, FlexBox, Confirm, STAFF,SelectHouse},
         data(){
             return {
+                isShow : false,
                 operId: 0,
                 statusName: '',
                 statusId: '',
@@ -557,7 +529,7 @@
                     this.statusName = this.dict.status[statusId];
 //                    console.log(this.statusName);
                     this.statusId = statusId;
-//                    console.log(this.operId);
+                    console.log(this.operId);
                 } else {
                     this.operId = 0;
                 }
@@ -569,8 +541,14 @@
 //                    this.collectList = res.data.data.gleeFulCollect;
 //                    console.log(res.data);
 //                    alert(2);
-                    this.cont.myData = res.data.data.data;
-                    this.paging = res.data.data.page;
+                    if (res.data.code == 18210){
+                        this.cont.myData = res.data.data.data;
+                        this.paging = res.data.data.page;
+                        this.isShow = false
+                    } else {
+                        this.isShow = true;
+                    }
+
 //                    console.log(this.paging)
                 })
             },
@@ -650,11 +628,11 @@
                  }).then(
                  //                    (res)=>
                  )*/
-                console.log(this.formData);
+//                console.log(this.formData);
                 this.$http.post('glee/collect', this.formData)
                     .then(
                         (res) => {
-                            console.log(res);
+//                            console.log(res);
                             if (res.data.code != 18200) {
                                 this.info.state_error = true;
                                 this.info.error = res.data.msg;
@@ -701,7 +679,7 @@
                 $('#myModal').modal('hide');
             },
             search(){
-                console.log(this.params);
+//                console.log(this.params);
                 this.$http.get('glee/collect?page=' + this.page, {
                     params: this.params
                 })
@@ -710,13 +688,15 @@
 //                        console.log(res)
                         if (res.data.code == 18204) {
                             this.cont.myData = [];
-                            return;
+                            this.isShow = true;
+                            this.paging = '';
                         } else {
+                            this.isShow = false;
                             if (res.data.data.page !== this.paging) {
                                 this.paging = res.data.data.page;
                                 this.page = 1;
                             }
-                            console.log(res.data);
+//                            console.log(res.data);
                             this.cont.myData = res.data.data.data;
                             this.paging = res.data.data.page;
                         }
@@ -745,7 +725,7 @@
                 this.search();
             },
             oper(){
-                console.log(this.operId);
+//                console.log(this.operId);
                 this.title = '编辑收房喜报';
                 this.add = false;
 
@@ -763,7 +743,7 @@
                 this.$http.get('glee/collect/' + this.operId)
                     .then(
                         (res) => {
-                            console.log(res.data.data);
+//                            console.log(res.data.data);
                             let val = res.data.data;
                             this.formData.department_id = {
                                 id: val.department_id,
@@ -812,7 +792,7 @@
                 this.$http.put('glee/collect/'+this.operId,this.formData)
                     .then(
                         (res) => {
-                            console.log(res);
+//                            console.log(res);
                             /*if (res.data.code !=18200){
                              this.info.state_error = true;
                              this.info.error = res.data.msg;
@@ -878,7 +858,7 @@
 
             },
             getFlexData(data){
-                console.log(data);
+//                console.log(data);
                 this.formData.price = data;
             },
             getConfirm(){
@@ -904,10 +884,10 @@
                         (res) => {
                             /*this.cont.myData = res.data.data;
                              this.paging = res.data.page;*/
-                            console.log(res.data.code);
+//                            console.log(res.data.code);
                             if (res.data.code == 18200) {
                                 // 成功
-                                console.log(res.data);
+//                                console.log(res.data);
 //                                that.gnCollectList();
                                 /*this.cont.myData = res.data.data.data;
                                  this.paging = res.data.data.page;*/
@@ -935,9 +915,9 @@
                 $('#selectCustom').modal('show');
             },
             selectDateSend(val){
-                console.log(this.configure);
+//                console.log(this.configure);
 //                console.log(this.selectConfigure)
-                console.log(val);
+//                console.log(val);
                 if (this.selectConfigure == 'all') {
                     // all
 //                    alert('all');
@@ -975,7 +955,6 @@
                 }
                 for (let i = 0; i < val.staff.length; i++) {
                     if ($.inArray(val.staff[i].id, this.params.staff_id) === -1) {
-                        console.log()
 //                        this.filtrate.staffList.push(val.staff[i]);
                         this.params.staff_id.push(val.staff[i].id);
                     } else {
@@ -997,6 +976,13 @@
             deleteDepartment(item){
                 this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
                 this.params.department_id = this.params.department_id.filter((x) => x != item.id)
+            },
+            getHouse(data){
+//                console.log(data);
+                this.formData.villa_id = {
+                    id : data.id,
+                    name : data.address
+                }
             }
 
         }
@@ -1099,6 +1085,9 @@
     .status{
         padding: 3px 8px;
         border-radius: 5px;
+    }
+    .table-hover>tbody>tr.lightYellow{
+        background-color: #fffcd9;
     }
 
     /*.panel span{

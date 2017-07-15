@@ -95,7 +95,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr v-show="cont.myData.length!==0" class="text-center" :key="item.id" v-for="(item,index) in cont.myData">
+                    <tr v-show="cont.myData.length!==0" :class="{'lightYellow' : operId===item.id , 'text-center' : true}" :key="item.id" v-for="(item,index) in cont.myData">
                         <td>
                             <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id,index,item.status)">
                         </td>
@@ -132,7 +132,7 @@
 
                         </td>
                     </tr>
-                    <tr class="text-center" v-show="cont.myData.length===0">
+                    <tr class="text-center" v-show="isShow">
                         <td colspan="20">暂无数据...</td>
                     </tr>
 
@@ -235,7 +235,7 @@
                             <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">房屋地址:</label>
                                 <div class="col-sm-8 input-group">
-                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name">
+                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name" data-toggle="modal" data-target="#selectHouse">
                                     <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
@@ -346,124 +346,124 @@
 
 
                         <div class="collect col-lg-6 clearFix">
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">房屋地址:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                            <div v-if="collectMsg.status===3">
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">房屋地址:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.villa.amap_json.villageName}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">房型:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">房型:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.villa.rooms.rooms}}室{{collectMsg.villa.rooms.hall}}厅{{collectMsg.villa.rooms.toilet}}卫</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">收房开单人:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">收房开单人:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{dict.staff_id[collectMsg.staff_id]}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">所属部门:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">所属部门:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{dict.department_id[collectMsg.department_id]}}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">收房价格:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">收房价格:</label>
+                                    <div class="col-lg-8">
+                                        <!--<span class="collectInfo">{{collectMsg.price}}</span>-->
+                                        <span class="collectInfo">
+                                            <span class="price" v-for="item in collectMsg.price">{{item}}</span>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">付款方式:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">付款方式:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{dict.pay_type[collectMsg.pay_type]}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">年限:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">年限:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.years}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">空置期:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
-                                    <!--<input type="text" class="form-control" readonly>-->
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">空置期:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.vac_sum_days}}</span>
+                                        <!--<input type="text" class="form-control" readonly>-->
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">应付款项:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">应付款项:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.price_should}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">实付款项:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">实付款项:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.price_paid}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">剩余款项:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">剩余款项:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.price_remain}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">补齐时间:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">补齐时间:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.complete_date}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">收房价格:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">房屋来源:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{dict.is_medi[collectMsg.is_medi]}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">房屋来源:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">特殊款:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.special_price}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">特殊款:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">组长备注:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.remark_marshal==''?'无':collectMsg.remark_marshal}}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">组长备注:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
+                                <div class="form-group clearFix">
+                                    <label class="col-lg-3 control-label">财务备注:</label>
+                                    <div class="col-lg-8">
+                                        <span class="collectInfo">{{collectMsg.remark_accountant==''?'无':collectMsg.remark_accountant}}</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="msg" v-else="collectMsg.status===3">{{collectMsg.msg}}</div>
 
-                            <div class="form-group clearFix">
-                                <label class="col-lg-3 control-label">财务备注:</label>
-                                <div class="col-lg-8">
-                                    <span class="collectInfo"></span>
-                                </div>
-                            </div>
 
                         </div>
 
@@ -490,7 +490,7 @@
         <Page :pg="paging" @pag="getData"></Page>
 
 
-
+        <SelectHouse @House="getHouse"></SelectHouse>
         <!--提示信息-->
         <Status :state='info'></Status>
 
@@ -505,16 +505,19 @@
     import Status from '../../common/status.vue';
     import STAFF from  '../../common/organization/selectStaff.vue'
     import Confirm from '../../common/confirm.vue'
+    import SelectHouse from '../../common/selectHouse.vue'
 
     export default{
-        components: {Page,Delete,Status,STAFF,Confirm},
+        components: {Page,Delete,Status,STAFF,Confirm,SelectHouse},
         data(){
 
             return {
+                isShow : false,
                 operId : 0,
 //                rentingtList : [],
                 paging : '',
                 statusName : '',
+                statusId : '',
                 page : 1,
                 dict : {},
 
@@ -584,6 +587,25 @@
                     msg : '',
                     status : ''         // 1:通过审核，2:撤销审核，3:退单
                 },
+                collectMsg : {
+                    status : 1,
+                    msg : '请选择房屋',
+                    // 房屋地址 villa_id
+                    // 收房开单人 staff_id
+                    // 所属部门 department_id
+                    // 付款方式 pay_type
+                    // 年限 years
+                    // 空置期 vac_sum_days
+                    // 应付款项 price_should
+                    // 实付款项 price_paid
+                    // 剩余款项 price_remain
+                    // 补齐时间 complete_date
+                    // 收房价格 price
+                    // 房屋来源 is_medi
+                    // 特殊款 special_price
+                    // 组长备注 remark_marshal
+                    // 财务备注 remark_accountant
+                }
             }
         },
         created (){
@@ -603,7 +625,14 @@
 //            时间选择
             this.remindData();
         },
-
+        watch : {
+            'formData.villa_id.id':{
+                handler(val){
+//                    console.log(val)
+                    this.searchCollectInfo(val);
+                }
+            }
+        },
         methods : {
             changeIndex(ev,id,index,statusId){
 //                console.log("一开始"+this.operId);
@@ -623,9 +652,16 @@
             },
             gnRentingList (){
                 this.$http.get('glee/rent').then((res) => {
-                    console.log(res)
-                    this.cont.myData = res.data.data.data;
-                    this.paging = res.data.data.page;
+//                    console.log(res);
+                    if (res.data.code == 18110){
+                        this.cont.myData = res.data.data.data;
+                        this.paging = res.data.data.page;
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.paging = '';
+                    }
+
                 })
             },
             remindData (){
@@ -667,7 +703,7 @@
                 this.add = true;
             },
             search(){
-                console.log(this.params);
+//                console.log(this.params);
                 this.$http.get('glee/rent?page='+this.page,{
                     params : this.params
                 })
@@ -676,13 +712,15 @@
 //                        console.log(res)
                         if (res.data.code!=18110){
                             this.cont.myData = [];
-                            return;
+                            this.isShow = true;
+                            this.paging = '';
                         }else {
+                            this.isShow = false;
                             if (res.data.data.page !==this.paging){
                                 this.paging = res.data.data.page;
                                 this.page = 1;
                             }
-                            console.log(res.data);
+//                            console.log(res.data);
                             this.cont.myData = res.data.data.data;
                             this.paging = res.data.data.page;
                         }
@@ -690,29 +728,44 @@
             },
             getData(data){
                 // 页数
-                console.log(data);
+//                console.log(data);
                 this.page = data;
             },
-           /* searchCollectInfo(){
+            searchCollectInfo(val){
                 // 根据房屋地址获取收房信息
-                var that = this;
-
-                if (that.formData.village.villageName.length!=0 && that.formData.building.length!=0 && that.formData.room.length!=0){
-                    let houseInfo =  that.formData.village.villageName+that.formData.building+this.formData.room;
-
-                    // 回调
-                    /!*that.formData.collectPeople = res.people;
-                    that.formData.type = res.type.name;
-                    that.formData.collectPrice = res.price;*!/
-                }
-            },*/
+//                alert(val);
+                let that = this;
+                this.$http.get('glee/rent/search?villa_id='+val)
+                    .then(
+                        (res) => {
+//                                console.log(res.data.code);
+                            if (res.data.code == 18104){
+                                // 未收先祖
+                                that.collectMsg = {
+                                    status : 2,
+                                    msg : '未收先租'
+                                }
+                            } else {
+                                // 成功
+                                let val = res.data.data;
+                                that.collectMsg = {
+                                    status : 3,
+                                };
+                                for (let i in val){
+                                    that.collectMsg[i] = val[i];
+                                }
+//                                console.log(that.collectMsg)
+                            }
+                        }
+                    )
+            },
             addRent(){
 //                alert(1);
-                console.log(this.formData);
+//                console.log(this.formData);
                 this.$http.post('glee/rent',this.formData)
                     .then(
                         (res) => {
-                            console.log(res);
+//                            console.log(res);
                             /*if (res.data.code !=18200){
                              this.info.state_error = true;
                              this.info.error = res.data.msg;
@@ -735,7 +788,7 @@
                 this.$http.put('glee/rent/'+this.operId,this.formData)
                     .then(
                         (res) => {
-                            console.log(res);
+//                            console.log(res);
                             /*if (res.data.code !=18200){
                              this.info.state_error = true;
                              this.info.error = res.data.msg;
@@ -757,7 +810,7 @@
             oper(){
                 this.title = '编辑租房喜报';
                 this.add = false;
-                console.log(this.operId);
+//                console.log(this.operId);
                 if (this.statusId===3||this.statusId===4){
                     //                请求成功打开模态框
 
@@ -772,7 +825,7 @@
                     .then(
                         (res) => {
                             let val = res.data.data;
-                            console.log(val);
+//                            console.log(val);
                             this.formData.department_id = {
                                 id: val.department_id,
                                 name: this.dict.department_id[val.department_id]
@@ -800,6 +853,7 @@
 
                         }
                     );
+                this.searchCollectInfo(this.formData.villa_id.villa_id);
 
                 //                请求成功打开模态框
                 $('#myModal').modal('show');
@@ -857,7 +911,7 @@
             selectDateSend(val){
 //                console.log(this.configure);
 //                console.log(this.selectConfigure)
-                console.log(val);
+//                console.log(val);
                 if (this.selectConfigure=='all'){
                     // all
 //                    alert('all');
@@ -985,10 +1039,10 @@
                         (res) => {
                             /*this.cont.myData = res.data.data;
                              this.paging = res.data.page;*/
-                            console.log(res.data.code);
+//                            console.log(res.data.code);
                             if (res.data.code==18100){
                                 // 成功
-                                console.log(res.data);
+//                                console.log(res.data);
 //                                that.gnCollectList();
                                 /*this.cont.myData = res.data.data.data;
                                  this.paging = res.data.data.page;*/
@@ -996,6 +1050,13 @@
                             }
                         }
                     )
+            },
+            getHouse(data){
+//                console.log(data);
+                this.formData.villa_id = {
+                    id : data.id,
+                    name : data.address
+                }
             },
 
         }
@@ -1086,5 +1147,17 @@
     .status{
         padding: 3px 8px;
         border-radius: 5px;
+    }
+    .collect .msg{
+        font-size: 20px;
+        text-align: center;
+    }
+    .collectInfo .price{
+        /*content: '';*/
+        display: inline-block;
+        margin: 0 0 5px;
+    }
+    .table-hover>tbody>tr.lightYellow{
+        background-color: #fffcd9;
     }
 </style>
