@@ -6,44 +6,46 @@
                 <header>
                     <h4>
                         <router-link to="/NoCollect" tag="button" class="btn btn-white" style="border: none">首页</router-link>
-                        客户信息
+                        已收房屋信息
                         <a data-toggle="modal" class="pull-right" href="#houseEdit">编辑</a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info" v-for="item in houseDetail">
                     <div>
-                        <div class="col-md-4">
-                            <div><span class="text-primary">房屋地址：</span><span>{{item.detailed_address}}</span></div>
-                            <div>
-                                <span class="text-primary">房型：</span>
-                                <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                        <div  class="col-md-12">
+                            <div class="col-md-4">
+                                <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
+                                <div>
+                                    <span class="text-primary">房型：</span>
+                                    <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                </div>
+                                <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
+                                <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
+                                <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
                             </div>
-                            <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
-                            <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
-                            <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
-                        </div>
-                        <div class="col-md-8">
-                            <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
-                            <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
-                            <div><span class="text-primary">参考租金：</span><span>{{item.reference}}</span></div>
-                            <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span></div>
-                        </div>
-                    </div>
-                    <div v-if="open_on" class="col-md-12">
-                        <div class="col-md-4">
-                            <div>
-                                <span class="text-primary">配套设备：</span>
-                                <span v-for="list in item.facility">{{dictionary.facility[list]}}&nbsp; &nbsp;</span>
+                            <div class="col-md-8">
+                                <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
+                                <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
+                                <div><span class="text-primary">参考租金：</span><span>{{item.reference}}</span></div>
+                                <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span></div>
                             </div>
-                            <div><span class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span></div>
-                            <div><span class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span></div>
-                            <div><span class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span></div>
                         </div>
-                        <div class="col-md-8">
-                            <div><span class="text-primary">房屋类型：</span><span>{{dictionary.house_type[item.house_type]}}</span></div>
-                            <div><span class="text-primary">水费卡号：</span><span>{{item.water_card_num}}</span></div>
-                            <div><span class="text-primary">电费卡号：</span><span>{{item.elec_card_num}}</span></div>
-                            <div><span class="text-primary">燃气卡号：</span><span>{{item.gas_card_num}}</span></div>
+                        <div v-if="open_on" class="col-md-12">
+                            <div class="col-md-4">
+                                <div>
+                                    <span class="text-primary">配套设备：</span>
+                                    <span v-for="list in item.facility">{{dictionary.facility[list]}}&nbsp; &nbsp;</span>
+                                </div>
+                                <div><span class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span></div>
+                                <div><span class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span></div>
+                                <div><span class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div><span class="text-primary">房屋类型：</span><span>{{dictionary.house_type[item.house_type]}}</span></div>
+                                <div><span class="text-primary">水费卡号：</span><span>{{item.water_card_num}}</span></div>
+                                <div><span class="text-primary">电费卡号：</span><span>{{item.elec_card_num}}</span></div>
+                                <div><span class="text-primary">燃气卡号：</span><span>{{item.gas_card_num}}</span></div>
+                            </div>
                         </div>
                     </div>
                     <div class="text-right">
@@ -255,43 +257,49 @@
             <!--沟通日志/房屋信息-->
             <div class="col-md-9 box">
                 <section class="panel roll box">
-                    <div class="panel-body">
+                    <div class="panel-body client_info">
                         <header>
                             <h4>房屋信息</h4>
                         </header>
                         <div class="row"  v-for="item in houseDetail">
                             <div class="col-md-12">
-                                <section class="panel table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-primary width100">房屋照片</td>
-                                                <td v-for="(img,index) in item.album.house_pic"> <img :src="img.small"
-                                                      @click="showLargePic('house_pic',index)"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">产权证照片</td>
-                                                <td v-for="(img,index) in item.album.property_pic"> <img :src="img.small"
-                                                  @click="showLargePic('property_pic',index)"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">水卡照片</td>
-                                                <td v-for="(img,index) in item.album.water_card_pic"> <img :src="img.small"
-                                                  @click="showLargePic('water_card_pic',index)" ></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">电卡照片</td>
-                                                <td v-for="(img,index) in item.album.elec_card_pic"> <img :src="img.small"
-                                                   @click="showLargePic('elec_card_pic',index)"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-primary width100">燃气卡照片</td>
-                                                <td v-for="(img,index) in item.album.gas_card_pic"> <img :src="img.small"
-                                                   @click="showLargePic('gas_card_pic',index)"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
+                                <div id="pirture">
+                                    <div>
+                                        <span class="text-primary">房屋照片：</span>
+                                        <a v-for="(img,index) in item.album.house_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('house_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">产权证照片：</span>
+                                        <a v-for="(img,index) in item.album.property_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('property_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">水卡照片：</span>
+                                        <a v-for="(img,index) in item.album.water_card_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">电卡照片：</span>
+                                        <a v-for="(img,index) in item.album.elec_card_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="text-primary">燃气卡照片：</span>
+                                        <a v-for="(img,index) in item.album.gas_card_pic"
+                                           style="margin: 10px 10px 0 0;display: inline-block;">
+                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -409,17 +417,19 @@
         margin-bottom: 10px;
     }
 
-    .client_info > div > div > div {
+    .client_info > div > div > div > div {
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > > div span.text-primary {
+    .client_info > div > div > div span.text-primary {
         display: inline-block;
         padding-right: 20px;
         text-align: right;
         min-width: 100px;
     }
-
+    #pirture>div{
+        padding: 10px;
+    }
     .roll {
         height: 500px;
         overflow: auto;

@@ -146,7 +146,7 @@
                                 </router-link>
                             </td>
                         </tr>
-                        <tr v-show="custom_list.length === 0">
+                        <tr v-show="isShow">
                             <td colspan="14" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
@@ -197,7 +197,8 @@
                     state_error: false,
                     //失败信息 ***
                     error: ''
-                }
+                },
+                isShow:false,
             }
         },
         created (){
@@ -206,9 +207,11 @@
         methods: {
 //            分配成功更新列表
             pitch_dele (){
+                this.pitch=[];
                 this.$http.post('core/customer_pool/customerpool').then((res) => {
                     this.custom_list = res.data.data.list;
                     this.paging = res.data.data.pages;
+
                 });
             },
 //            客户列表
@@ -225,8 +228,18 @@
                     this.select_list = res.data;
 //                    列表
                     this.$http.post('core/customer_pool/customerpool').then((res) => {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
+                        if (res.data.code === '70040') {
+                            this.custom_list = res.data.data.list;
+                            this.paging = res.data.data.pages;
+                            this.isShow = false;
+                        } else {
+                            this.custom_list = [];
+                            this.isShow = true;
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     });
                 });
             },
@@ -245,8 +258,10 @@
                     if (res.data.code === '70040') {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
+                        this.isShow = false;
                     } else {
                         this.custom_list = [];
+                        this.isShow = true;
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***

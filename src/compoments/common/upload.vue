@@ -24,9 +24,9 @@
                 pics: [],
             };
         },
-       updated (){
-            this.uploadPic(this.result);
-        },
+//       updated (){
+//            this.uploadPic(this.result);
+//        },
         methods: {
             rules (rul){
                 let index = this.pics.indexOf(rul);
@@ -61,13 +61,14 @@
                         });
                         this.on("addedfile", function (file) {
 //                            console.log(file);
-                            $(file._removeLink.offsetParent).addClass('rem_div');
                             _this.$emit('complete','no');
                             //上传文件时触发的事件
+                            $(file._removeLink.offsetParent).addClass('rem_div');
                         });
                         this.on("queuecomplete", function (file) {
                             _this.$emit('complete','ok');
                             //上传完成后触发的方法
+
                         });
                         this.on("removedfile", function (file) {
                             let card = (JSON.parse(file.xhr.response).data);

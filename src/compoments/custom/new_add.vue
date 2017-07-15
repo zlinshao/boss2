@@ -419,12 +419,13 @@
 //                this.$http.get('api/picture/poll').then((res) => {
 //                    if (res.data.data === 0) {
                 if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
-//                this.$http.get('api/picture/poll').then((res) => {
-//                    if (res.data.data === 0) {
-                    this.succeed(url);
-//                    }
-//                });
-                } else {
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0) {
+                            this.succeed(url);
+                        }
+                    });
+                }
+                else {
                     this.info.error = '图片正在上传';
                     //显示失败弹窗 ***
                     this.info.state_error = true;

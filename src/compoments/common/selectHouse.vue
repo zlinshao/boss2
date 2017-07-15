@@ -34,7 +34,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in houseList" >
+                                <tr v-for="item in houseList" @click="chooseItem($event)">
                                     <td>
                                         <input type="radio" name="radio" @click="selectHouse(item)">
                                     </td>
@@ -94,7 +94,13 @@
             },
             ensure(){
                 this.$emit('House',this.houseAddress);
+                this.houseList=[];
                 $('#selectHouse').modal('hide');
+            },
+            chooseItem(ev){// 点击行选中
+                $(ev.currentTarget).find('input').prop('checked' , 'true');
+                this.villageId = $(ev.currentTarget).find('input').val();
+//                console.log(this.villageId);
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--&lt;!&ndash; 房屋 新增/编辑&ndash;&gt;-->
-        <div class="modal fade full-width-modal-right" id="collectAdd" tabindex="-1" role="dialog"
+        <div class="modal fade full-width-modal-right" id="collectAdd" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -9,7 +9,7 @@
 
                         <!--新增-->
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >×</button>
                             <h4 class="modal-title">新增房屋</h4>
                         </div>
 
@@ -21,17 +21,26 @@
                                     <label for="villageName" class="col-sm-2 control-label">小区名称</label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control" id="villageName"
-                                               v-model="houseAdd.amap_json.address" readonly  data-toggle="modal" data-target="#myModal1">
+                                               v-model="houseAdd.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">幢/座</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
+                                    <label class="col-sm-2 control-label">小区地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control"
+                                               v-model="houseAdd.amap_json.villageAddress" disabled >
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">门牌号</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" v-model="houseAdd.house_number" placeholder="单元-门牌号">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
+                                    <div class="col-lg-3">
+                                        <input type="number" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="number" class="form-control" v-model="houseAdd.unit" placeholder="单元">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control" v-model="houseAdd.house_number" placeholder="门牌号">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -85,7 +94,7 @@
                                     <div class="col-lg-10">
                                         <label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
                                             <input type="checkbox" class="pull-left" :value="key" @click="rules(key,$event)"
-                                            > {{value}}
+                                            v-model="checkboxModel"> {{value}}
                                         </label>
                                     </div>
                                 </div>
@@ -139,7 +148,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">负责人</label>
                                     <div class="col-lg-10">
-                                        <input type="text" disabled class="form-control" placeholder="负责人">
+                                        <input type="text" v-model="staff_id" disabled class="form-control" placeholder="负责人">
                                     </div>
                                 </div>
                                 <hr>
@@ -267,6 +276,7 @@
         data (){
             return {
                 myDictionary :[],
+                checkboxModel:[],
                 housePic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
@@ -299,6 +309,7 @@
                         location:''
                     },
                     building:'',
+                    unit:'',
                     house_number:'',
                     rooms:{
                         rooms:'1',
@@ -318,14 +329,15 @@
                     elec_card_num:'',
                     water_card_num:'',
                     gas_card_num:'',
-                    elec_card_pic:'',
-                    water_card_pic:'',
-                    gas_card_pic:'',
+                    elec_card_pic:[],
+                    water_card_pic:[],
+                    gas_card_pic:[],
                     remarks:'',
-                    house_pic:'',
-                    property_pic:'',
+                    house_pic:[],
+                    property_pic:[],
                     reference:''
                 },
+                staff_id:'',
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -338,12 +350,20 @@
                 }
             }
         },
+        mounted(){
+            this.Info();
+        },
         watch:{
             dictionary(val){
                 this.myDictionary=val;
             }
         },
         methods: {
+            Info(){
+              this.$http.get('staff/info').then((res)=>{
+                  this.staff_id=res.data.name;
+              })
+            },
             selectAddress(val){
                 this.houseAdd.amap_json=val;
             },
@@ -410,29 +430,76 @@
             },
             addHouse(){
                 this.$http.defaults.withCredentials = true;
+                $('.rem_div').remove();
                 if (this.complete_ok === 'ok') {
-                    this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
-                        if(res.data.code==='80010'){
-                            this.$emit('addHouse','addHouse');
-                            this.houseAdd={};
-                            $('#collectAdd').modal('hide');
-                            this.info.success =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
-                        }else{
-                            this.info.error =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            },2000);
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0) {
+                            this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
+                                if(res.data.code==='80010'){
+                                    this.$emit('addHouse','addHouse');
+                                    $('#collectAdd').modal('hide');
+                                    this.info.success =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_success = false;
+                                    },2000);
+                                    this.houseAdd.amap_json.villageAddress='';
+                                    this.houseAdd.amap_json.villageName='';
+                                    this.houseAdd.amap_json.district='';
+                                    this.houseAdd.amap_json.address='';
+                                    this.houseAdd.amap_json.id='';
+                                    this.houseAdd.amap_json.location='';
+                                    this.houseAdd.building='';
+                                    this.houseAdd.house_number='';
+                                    this.houseAdd.rooms.rooms='';
+                                    this.houseAdd.rooms.hall='';
+                                    this.houseAdd.rooms.toilet='';
+                                    this.houseAdd.area='';
+                                    this.houseAdd.decoration='';
+                                    this.houseAdd.floor='';
+                                    this.houseAdd.total_floor='';
+                                    this.houseAdd.house_type='';
+                                    this.houseAdd.house_feature='';
+                                    this.houseAdd.floor_type='';
+                                    this.houseAdd.person_medium='';
+                                    this.houseAdd.source='';
+                                    this.houseAdd.elec_card_num='';
+                                    this.houseAdd.water_card_num='';
+                                    this.houseAdd.gas_card_num='';
+                                    this.houseAdd.remarks='';
+                                    this.houseAdd.reference='';
+                                    this.houseAdd.facility=[];
+                                    this.houseAdd.house_pic = [];
+                                    this.houseAdd.water_card_pic = [];
+                                    this.houseAdd.elec_card_pic = [];
+                                    this.houseAdd.gas_card_pic = [];
+                                    this.houseAdd.property_pic = [];
+                                    this.housePic.cus_idPhoto=[];
+                                    this.waterPic.cus_idPhoto=[];
+                                    this.elePic.cus_idPhoto=[];
+                                    this.gasPic.cus_idPhoto=[];
+                                    this.propertyPic.cus_idPhoto=[];
+                                    this.housePic.cus_idPhotos={};
+                                    this.waterPic.cus_idPhotos={};
+                                    this.elePic.cus_idPhotos={};
+                                    this.gasPic.cus_idPhotos={};
+                                    this.propertyPic.cus_idPhotos={};
+                                    this.checkboxModel=[];
+                                }else{
+                                    this.info.error =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_error = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_error = false;
+                                    },2000);
+                                }
+                            });
                         }
                     });
+
                 } else {
                     this.info.error = '图片正在上传';
                     //显示失败弹窗 ***
