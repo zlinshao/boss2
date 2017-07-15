@@ -399,7 +399,6 @@
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
-                    console.log(this.checkboxModel.length)
                     if (this.checkboxModel.length === this.oldFacility.length) {
                         this.checked = true;
                     } else {
@@ -563,6 +562,16 @@
                 }
             },
             closeModal(){
+                this.housePic.cus_idPhoto=[];
+                this.waterPic.cus_idPhoto=[];
+                this.elePic.cus_idPhoto=[];
+                this.gasPic.cus_idPhoto=[];
+                this.propertyPic.cus_idPhoto=[];
+                this.housePic.cus_idPhotos={};
+                this.waterPic.cus_idPhotos={};
+                this.elePic.cus_idPhotos={};
+                this.gasPic.cus_idPhotos={};
+                this.propertyPic.cus_idPhotos={};
                 this.$emit('reviseHouse',this.reviseHouseId);
             }
 
