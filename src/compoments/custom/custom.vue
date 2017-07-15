@@ -408,6 +408,7 @@
 //            增加日志/增加提醒/放入客户池
             add_state (val){
                 this.bool = val;
+                this.collectList();
             },
 //            新增客户
             customers_new (val){
