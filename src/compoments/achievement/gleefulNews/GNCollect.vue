@@ -168,7 +168,7 @@
                         </td>
                     </tr>
                     <tr class="text-center" v-show="isShow">
-                        <td colspan="17">暂无数据...</td>
+                        <td colspan="20">暂无数据...</td>
                     </tr>
 
 

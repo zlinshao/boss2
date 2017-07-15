@@ -308,20 +308,6 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>财务管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li :class="{'active': isActive == 6}" @click='pitch_on(6)'>
-                                <router-link to='/'>业绩管理</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 7}" @click='pitch_on(7)'>
-                                <router-link to='/'>账本</router-link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
                             <i class="fa fa-tasks"></i>
                             <span>人资管理</span>
                         </a>
@@ -442,6 +428,30 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>合同管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to="/collectContract">
+                                    <span>收房合同</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/rentingContract">
+                                    <span>租房合同</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span>打印合同</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -508,29 +518,6 @@
                                 <router-link to="/chart">
                                     <span>可视报表</span>
                                 </router-link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>合同管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li>
-                                <router-link to="/collectContract">
-                                    <span>收房合同</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/rentingContract">
-                                    <span>租房合同</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span>打印合同</span>
-                                </a>
                             </li>
                         </ul>
                     </li>

@@ -346,7 +346,7 @@
 
 
                         <div class="collect col-lg-6 clearFix">
-                            <div v-if="collectMsg.status===3">
+                            <div v-if="collectReturn.status===3">
                                 <div class="form-group clearFix">
                                     <label class="col-lg-3 control-label">房屋地址:</label>
                                     <div class="col-lg-8">
@@ -462,7 +462,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="msg" v-else="collectMsg.status===3">{{collectMsg.msg}}</div>
+                            <div class="msg" v-else="collectReturn.status!==3">{{collectMsg.msg}}</div>
 
 
                         </div>
@@ -587,9 +587,13 @@
                     msg : '',
                     status : ''         // 1:通过审核，2:撤销审核，3:退单
                 },
-                collectMsg : {
+
+                collectReturn : {
                     status : 1,
                     msg : '请选择房屋',
+                },
+                collectMsg : {
+
                     // 房屋地址 villa_id
                     // 收房开单人 staff_id
                     // 所属部门 department_id
@@ -734,27 +738,29 @@
             searchCollectInfo(val){
                 // 根据房屋地址获取收房信息
 //                alert(val);
-                let that = this;
                 this.$http.get('glee/rent/search?villa_id='+val)
                     .then(
                         (res) => {
-//                                console.log(res.data.code);
+                                console.log(res.data.code);
                             if (res.data.code == 18104){
                                 // 未收先祖
-                                that.collectMsg = {
+                                this.collectReturn = {
                                     status : 2,
                                     msg : '未收先租'
                                 }
                             } else {
                                 // 成功
+                                alert('成功');
                                 let val = res.data.data;
-                                that.collectMsg = {
+                                this.collectReturn = {
                                     status : 3,
+                                    msg : ''
                                 };
                                 for (let i in val){
-                                    that.collectMsg[i] = val[i];
+                                    this.collectMsg[i] = val[i];
                                 }
-//                                console.log(that.collectMsg)
+                                console.log(this.collectMsg)
+                                console.log(this.collectReturn.status)
                             }
                         }
                     )
@@ -1140,6 +1146,8 @@
         line-height: 34px;
         padding-left: 12px;
         margin-bottom: 10px;
+        height: 34px;
+        box-sizing: border-box;
     }
     .modal .modal_form_datetime{
         margin-bottom: 32px;
