@@ -483,73 +483,78 @@
                 this.$http.defaults.withCredentials = true;
                 $('.rem_div').remove();
                 if (this.complete_ok === 'ok') {
-                    this.$http.post('core/villa/updatevilla/id/'+this.reviseHouseId,this.houseEdit).then((res) => {
-                        if(res.data.code==='80010'){
-                            this.$emit('reviseHouse',this.reviseHouseId);
-                            $('#houseEdit').modal('hide');
-                            this.info.success =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
-                            this.houseEdit.amap_json.villageAddress='';
-                            this.houseEdit.amap_json.villageName='';
-                            this.houseEdit.amap_json.district='';
-                            this.houseEdit.amap_json.address='';
-                            this.houseEdit.amap_json.id='';
-                            this.houseEdit.amap_json.location='';
-                            this.houseEdit.building='';
-                            this.houseEdit.unit='';
-                            this.houseEdit.house_number='';
-                            this.houseEdit.rooms.rooms='';
-                            this.houseEdit.rooms.hall='';
-                            this.houseEdit.rooms.toilet='';
-                            this.houseEdit.area='';
-                            this.houseEdit.decoration='';
-                            this.houseEdit.floor='';
-                            this.houseEdit.total_floor='';
-                            this.houseEdit.house_type='';
-                            this.houseEdit.house_feature='';
-                            this.houseEdit.floor_type='';
-                            this.houseEdit.person_medium='';
-                            this.houseEdit.source='';
-                            this.houseEdit.elec_card_num='';
-                            this.houseEdit.water_card_num='';
-                            this.houseEdit.gas_card_num='';
-                            this.houseEdit.remarks='';
-                            this.houseEdit.reference='';
-                            this.houseEdit.facility=[];
-                            this.houseEdit.house_pic = [];
-                            this.houseEdit.water_card_pic = [];
-                            this.houseEdit.elec_card_pic = [];
-                            this.houseEdit.gas_card_pic = [];
-                            this.houseEdit.property_pic = [];
-                            this.housePic.cus_idPhoto=[];
-                            this.waterPic.cus_idPhoto=[];
-                            this.elePic.cus_idPhoto=[];
-                            this.gasPic.cus_idPhoto=[];
-                            this.propertyPic.cus_idPhoto=[];
-                            this.housePic.cus_idPhotos={};
-                            this.waterPic.cus_idPhotos={};
-                            this.elePic.cus_idPhotos={};
-                            this.gasPic.cus_idPhotos={};
-                            this.propertyPic.cus_idPhotos={};
-                            this.checkboxModel=[];
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0) {
+                            this.$http.post('core/villa/updatevilla/id/'+this.reviseHouseId,this.houseEdit).then((res) => {
+                                if(res.data.code==='80010'){
+                                    this.$emit('reviseHouse',this.reviseHouseId);
+                                    $('#houseEdit').modal('hide');
+                                    this.info.success =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_success = false;
+                                    },2000);
+                                    this.houseEdit.amap_json.villageAddress='';
+                                    this.houseEdit.amap_json.villageName='';
+                                    this.houseEdit.amap_json.district='';
+                                    this.houseEdit.amap_json.address='';
+                                    this.houseEdit.amap_json.id='';
+                                    this.houseEdit.amap_json.location='';
+                                    this.houseEdit.building='';
+                                    this.houseEdit.unit='';
+                                    this.houseEdit.house_number='';
+                                    this.houseEdit.rooms.rooms='';
+                                    this.houseEdit.rooms.hall='';
+                                    this.houseEdit.rooms.toilet='';
+                                    this.houseEdit.area='';
+                                    this.houseEdit.decoration='';
+                                    this.houseEdit.floor='';
+                                    this.houseEdit.total_floor='';
+                                    this.houseEdit.house_type='';
+                                    this.houseEdit.house_feature='';
+                                    this.houseEdit.floor_type='';
+                                    this.houseEdit.person_medium='';
+                                    this.houseEdit.source='';
+                                    this.houseEdit.elec_card_num='';
+                                    this.houseEdit.water_card_num='';
+                                    this.houseEdit.gas_card_num='';
+                                    this.houseEdit.remarks='';
+                                    this.houseEdit.reference='';
+                                    this.houseEdit.facility=[];
+                                    this.houseEdit.house_pic = [];
+                                    this.houseEdit.water_card_pic = [];
+                                    this.houseEdit.elec_card_pic = [];
+                                    this.houseEdit.gas_card_pic = [];
+                                    this.houseEdit.property_pic = [];
+                                    this.housePic.cus_idPhoto=[];
+                                    this.waterPic.cus_idPhoto=[];
+                                    this.elePic.cus_idPhoto=[];
+                                    this.gasPic.cus_idPhoto=[];
+                                    this.propertyPic.cus_idPhoto=[];
+                                    this.housePic.cus_idPhotos={};
+                                    this.waterPic.cus_idPhotos={};
+                                    this.elePic.cus_idPhotos={};
+                                    this.gasPic.cus_idPhotos={};
+                                    this.propertyPic.cus_idPhotos={};
+                                    this.checkboxModel=[];
 
 //
 
-                        }else{
-                            this.info.error =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            },2000);
+                                }else{
+                                    this.info.error =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_error = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_error = false;
+                                    },2000);
+                                }
+                            });
                         }
                     });
+
                 } else {
                     this.info.error = '图片正在上传';
                     //显示失败弹窗 ***

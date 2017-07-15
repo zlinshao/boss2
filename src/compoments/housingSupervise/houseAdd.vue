@@ -423,69 +423,74 @@
                 this.$http.defaults.withCredentials = true;
                 $('.rem_div').remove();
                 if (this.complete_ok === 'ok') {
-                    this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
-                        if(res.data.code==='80010'){
-                            this.$emit('addHouse','addHouse');
-                            $('#collectAdd').modal('hide');
-                            this.info.success =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
-                            this.houseAdd.amap_json.villageAddress='';
-                            this.houseAdd.amap_json.villageName='';
-                            this.houseAdd.amap_json.district='';
-                            this.houseAdd.amap_json.address='';
-                            this.houseAdd.amap_json.id='';
-                            this.houseAdd.amap_json.location='';
-                            this.houseAdd.building='';
-                            this.houseAdd.house_number='';
-                            this.houseAdd.rooms.rooms='';
-                            this.houseAdd.rooms.hall='';
-                            this.houseAdd.rooms.toilet='';
-                            this.houseAdd.area='';
-                            this.houseAdd.decoration='';
-                            this.houseAdd.floor='';
-                            this.houseAdd.total_floor='';
-                            this.houseAdd.house_type='';
-                            this.houseAdd.house_feature='';
-                            this.houseAdd.floor_type='';
-                            this.houseAdd.person_medium='';
-                            this.houseAdd.source='';
-                            this.houseAdd.elec_card_num='';
-                            this.houseAdd.water_card_num='';
-                            this.houseAdd.gas_card_num='';
-                            this.houseAdd.remarks='';
-                            this.houseAdd.reference='';
-                            this.houseAdd.facility=[];
-                            this.houseAdd.house_pic = [];
-                            this.houseAdd.water_card_pic = [];
-                            this.houseAdd.elec_card_pic = [];
-                            this.houseAdd.gas_card_pic = [];
-                            this.houseAdd.property_pic = [];
-                            this.housePic.cus_idPhoto=[];
-                            this.waterPic.cus_idPhoto=[];
-                            this.elePic.cus_idPhoto=[];
-                            this.gasPic.cus_idPhoto=[];
-                            this.propertyPic.cus_idPhoto=[];
-                            this.housePic.cus_idPhotos={};
-                            this.waterPic.cus_idPhotos={};
-                            this.elePic.cus_idPhotos={};
-                            this.gasPic.cus_idPhotos={};
-                            this.propertyPic.cus_idPhotos={};
-                            this.checkboxModel=[];
-                        }else{
-                            this.info.error =res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            },2000);
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0) {
+                            this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
+                                if(res.data.code==='80010'){
+                                    this.$emit('addHouse','addHouse');
+                                    $('#collectAdd').modal('hide');
+                                    this.info.success =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_success = false;
+                                    },2000);
+                                    this.houseAdd.amap_json.villageAddress='';
+                                    this.houseAdd.amap_json.villageName='';
+                                    this.houseAdd.amap_json.district='';
+                                    this.houseAdd.amap_json.address='';
+                                    this.houseAdd.amap_json.id='';
+                                    this.houseAdd.amap_json.location='';
+                                    this.houseAdd.building='';
+                                    this.houseAdd.house_number='';
+                                    this.houseAdd.rooms.rooms='';
+                                    this.houseAdd.rooms.hall='';
+                                    this.houseAdd.rooms.toilet='';
+                                    this.houseAdd.area='';
+                                    this.houseAdd.decoration='';
+                                    this.houseAdd.floor='';
+                                    this.houseAdd.total_floor='';
+                                    this.houseAdd.house_type='';
+                                    this.houseAdd.house_feature='';
+                                    this.houseAdd.floor_type='';
+                                    this.houseAdd.person_medium='';
+                                    this.houseAdd.source='';
+                                    this.houseAdd.elec_card_num='';
+                                    this.houseAdd.water_card_num='';
+                                    this.houseAdd.gas_card_num='';
+                                    this.houseAdd.remarks='';
+                                    this.houseAdd.reference='';
+                                    this.houseAdd.facility=[];
+                                    this.houseAdd.house_pic = [];
+                                    this.houseAdd.water_card_pic = [];
+                                    this.houseAdd.elec_card_pic = [];
+                                    this.houseAdd.gas_card_pic = [];
+                                    this.houseAdd.property_pic = [];
+                                    this.housePic.cus_idPhoto=[];
+                                    this.waterPic.cus_idPhoto=[];
+                                    this.elePic.cus_idPhoto=[];
+                                    this.gasPic.cus_idPhoto=[];
+                                    this.propertyPic.cus_idPhoto=[];
+                                    this.housePic.cus_idPhotos={};
+                                    this.waterPic.cus_idPhotos={};
+                                    this.elePic.cus_idPhotos={};
+                                    this.gasPic.cus_idPhotos={};
+                                    this.propertyPic.cus_idPhotos={};
+                                    this.checkboxModel=[];
+                                }else{
+                                    this.info.error =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_error = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_error = false;
+                                    },2000);
+                                }
+                            });
                         }
                     });
+
                 } else {
                     this.info.error = '图片正在上传';
                     //显示失败弹窗 ***

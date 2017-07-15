@@ -183,7 +183,7 @@
                                 </router-link>
                             </td>
                         </tr>
-                        <tr v-show="custom_list.length === 0">
+                        <tr v-show="isShow">
                             <td colspan="14" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
@@ -255,6 +255,7 @@
                     //失败信息 ***
                     error: ''
                 },
+                isShow:false,
             }
         },
         created (){
@@ -315,8 +316,18 @@
                     this.select_list = res.data;
 //                列表
                     this.$http.post('core/customer/customerList').then((res) => {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
+                        if (res.data.code === '70030') {
+                            this.custom_list = res.data.data.list;
+                            this.paging = res.data.data.pages;
+                            this.isShow=false;
+                        } else {
+                            this.custom_list = [];
+                            this.isShow=true;
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     });
                 });
             },
@@ -344,8 +355,10 @@
                     if (res.data.code === '70030') {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
+                        this.isShow=false;
                     } else {
                         this.custom_list = [];
+                        this.isShow=true;
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***

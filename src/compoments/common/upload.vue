@@ -58,13 +58,12 @@
                             _this.pics.push(card);
                             _this.$emit('photo', _this.pics);
                             //上传成功时触发的事件
-                            $(file._removeLink.offsetParent).addClass('rem_div');
                         });
                         this.on("addedfile", function (file) {
 //                            console.log(file);
                             _this.$emit('complete','no');
                             //上传文件时触发的事件
-
+                            $(file._removeLink.offsetParent).addClass('rem_div');
                         });
                         this.on("queuecomplete", function (file) {
                             _this.$emit('complete','ok');
