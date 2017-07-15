@@ -346,7 +346,7 @@
 
 
                         <div class="collect col-lg-6 clearFix">
-                            <div v-if="collectReturn.status===3">
+                            <div v-if="collectReturn.status==3">
                                 <div class="form-group clearFix">
                                     <label class="col-lg-3 control-label">房屋地址:</label>
                                     <div class="col-lg-8">
@@ -462,7 +462,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="msg" v-else="collectReturn.status!==3">{{collectMsg.msg}}</div>
+                            <div class="msg" v-else="collectReturn.status!=3">{{collectReturn.msg}}</div>
 
 
                         </div>
@@ -528,6 +528,7 @@
                     nowIndex: '',      //删除索引
                 },
                 formData : {
+                    relative_id : '',
 //                    villageAddress : '',
                     /*building : '',      // 栋
                     room : '',          // 室*/
@@ -750,7 +751,7 @@
                                 }
                             } else {
                                 // 成功
-                                alert('成功');
+//                                alert('成功');
                                 let val = res.data.data;
                                 this.collectReturn = {
                                     status : 3,
@@ -759,8 +760,10 @@
                                 for (let i in val){
                                     this.collectMsg[i] = val[i];
                                 }
-                                console.log(this.collectMsg)
-                                console.log(this.collectReturn.status)
+//                                this.collectMsg[collect_id] =
+                                this.formData.relative_id = this.collectMsg.id;
+                                console.log(this.collectMsg);
+                                console.log(this.collectReturn.status);
                             }
                         }
                     )
@@ -786,7 +789,10 @@
                              }*/
                             this.clear();
                             this.gnRentingList();
-
+                            this.collectReturn = {
+                                status : 1,
+                                msg : '请选择房屋'
+                            }
                         }
                     )
             },
@@ -1167,5 +1173,8 @@
     }
     .table-hover>tbody>tr.lightYellow{
         background-color: #fffcd9;
+    }
+    .table-responsive {
+        overflow: inherit;
     }
 </style>
