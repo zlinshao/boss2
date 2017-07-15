@@ -144,7 +144,7 @@
         components: {Status},
         created : function () {
 //            let that = this;
-            this.$http.get('http://test.v2.api.boss.lejias.cn/ip')
+            this.$http.get('ip')
                 .then(
                     (res) => {
 //                        console.log(res.data);
