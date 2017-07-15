@@ -430,7 +430,6 @@
             },
             addHouse(){
                 this.$http.defaults.withCredentials = true;
-                $('.rem_div').remove();
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
                         if (res.data.data === 0) {

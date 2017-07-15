@@ -296,6 +296,7 @@
                 index=0;
             },
             collectAdd(){
+                $('.rem_div').remove();
                 $('#collectAdd').modal({backdrop: 'static',});
                 $('#collectAdd').modal('show');
             },
