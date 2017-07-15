@@ -419,7 +419,7 @@
 //                    if (res.data.data === 0) {
                 if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
                     this.$http.get('api/picture/poll').then((res) => {
-                        if (res.data.data === 0) {
+                        if (res.data.data === 0 || res.data.data ===null) {
                             this.succeed(url);
                         }
                     });

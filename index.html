@@ -28,14 +28,91 @@
     <link href="src/assets/css/style.css" rel="stylesheet">
     <link href="src/assets/css/style-responsive.css" rel="stylesheet"/>
     <style>
-        body{
-           background: #19224f;
-        }
-        #log{
+        .zns-loading{
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top:500px;
+            z-index: 1000;
+            width:100%;
+        }
+        .znsLoadingInner{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @-webkit-keyframes ballSpinFadeLoader {
+            50% {
+                opacity: 0.3;
+                -webkit-transform: scale(0.4);
+                transform: scale(0.4); }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1); } }
+
+        @keyframes ballSpinFadeLoader {
+            50% {
+                opacity: 0.3;
+                -webkit-transform: scale(0.4);
+                transform: scale(0.4); }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1); } }
+
+        .ballSpinFadeLoader {
+            position: relative; }
+        .ballSpinFadeLoader > div:nth-child(1) {
+            top: 25px;
+            left: 0;
+            -webkit-animation: ballSpinFadeLoader 1s 0s infinite linear;
+            animation: ballSpinFadeLoader 1s 0s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(2) {
+            top: 17.04545px;
+            left: 17.04545px;
+            -webkit-animation: ballSpinFadeLoader 1s 0.12s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.12s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(3) {
+            top: 0;
+            left: 25px;
+            -webkit-animation: ballSpinFadeLoader 1s 0.24s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.24s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(4) {
+            top: -17.04545px;
+            left: 17.04545px;
+            -webkit-animation: ballSpinFadeLoader 1s 0.36s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.36s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(5) {
+            top: -25px;
+            left: 0;
+            -webkit-animation: ballSpinFadeLoader 1s 0.48s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.48s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(6) {
+            top: -17.04545px;
+            left: -17.04545px;
+            -webkit-animation: ballSpinFadeLoader 1s 0.6s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.6s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(7) {
+            top: 0;
+            left: -25px;
+            -webkit-animation: ballSpinFadeLoader 1s 0.72s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.72s infinite linear; }
+        .ballSpinFadeLoader > div:nth-child(8) {
+            top: 17.04545px;
+            left: -17.04545px;
+            -webkit-animation: ballSpinFadeLoader 1s 0.84s infinite linear;
+            animation: ballSpinFadeLoader 1s 0.84s infinite linear; }
+        .ballSpinFadeLoader > div {
+            background-color: #26daf5;
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            margin: 2px;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            position: absolute;
+            margin-top: 250px;
         }
     </style>
 
@@ -53,7 +130,18 @@
 </head>
 <body>
 <div id="log">
-    <img src="src/assets/img/6565cc_th.gif">
+    <div class="znsLoadingInner">
+        <div class="ballSpinFadeLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 </div>
 <div id="app"></div>
 <script src="/dist/build.js"></script>
