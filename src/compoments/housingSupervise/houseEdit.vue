@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
                                     <div class="col-lg-3">
-                                        <input type="number" class="form-control" v-model="houseEdit.building" placeholder="栋/座">
+                                        <input type="text" class="form-control" v-model="houseEdit.building" placeholder="栋/座">
                                     </div>
                                     <div class="col-lg-3">
                                         <input type="number" class="form-control" v-model="houseEdit.unit" placeholder="栋/座">
