@@ -86,7 +86,7 @@
                         </div>
                         <div class="pro-sort" style="height: 39px;">
                             <label style="margin-top: 8px;">
-                                <input type="checkbox" class="pull-left" v-model="our_group">显示本组房屋
+                                <input type="checkbox" class="pull-left" v-model="our_group" @click="search">显示本组房屋
                             </label>
                         </div>
 
@@ -281,15 +281,12 @@
                     this.$http.post('core/villa/receivedvillalist').then((res) => {
                         if(res.data.code==='80030'){
                             this.houseList=res.data.data.list;
-                            if(this.houseList===0){
-                                this.isShow=true;
-                            }else {
-                                this.isShow=false;
-                            }
+                            this.isShow=false;
                             this.pages=res.data.data.pages;
                         }else{
                             this.houseList=[];
                             this.pages=1;
+                            this.isShow=true;
                         }
                     });
                 });
@@ -330,11 +327,7 @@
                     if(res.data.code==='80030'){
                         this.houseList=res.data.data.list;
                         this.houseList=res.data.data.list;
-                        if(this.houseList===0){
-                            this.isShow=true;
-                        }else {
-                            this.isShow=false;
-                        }
+                        this.isShow=false;
                         this.pages=res.data.data.pages;
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
@@ -342,6 +335,7 @@
                     }else {
                         this.houseList=[];
                         this.pages=1;
+                        this.isShow=true;
                     }
 
 

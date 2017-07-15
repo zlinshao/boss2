@@ -23,6 +23,13 @@
                                         <input title="请点击选择" type="text" class="form-control" id="villageName"
                                                v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     </div>
+                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">小区地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control"
+                                               v-model="houseEdit.amap_json.villageAddress" disabled >
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>

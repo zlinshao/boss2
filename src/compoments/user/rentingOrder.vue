@@ -58,7 +58,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="item in orderList">
+                        <tr v-for="item in orderList" :class="{'selected': distribute.indexOf(item.id)>-1}">
                             <td class="text-center">
                                 <label for="cus_id"></label>
                                 <input id="cus_id" type="checkbox" class="pull-left" :value="item.id"
@@ -283,5 +283,8 @@
     }
     *{
         user-select: none;
+    }
+    .selected{
+        background: #fffcd9 !important;
     }
 </style>

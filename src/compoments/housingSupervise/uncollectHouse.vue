@@ -215,15 +215,12 @@
                     this.$http.post('core/villa/villalist').then((res) => {
                         if(res.data.code==='80030'){
                             this.villalist = res.data.data.list;
-                            if(this.villalist===0){
-                                this.isShow=true;
-                            }else {
-                                this.isShow=false;
-                            }
+                            this.isShow=false;
                             this.pages=res.data.data.pages;
                         }else{
                             this.villalist = [];
                             this.pages = 1;
+                            this.isShow=true;
                         }
 
                     });
@@ -244,11 +241,7 @@
                 }).then((res) => {
                     if(res.data.code==='80030'){
                         this.villalist=res.data.data.list;
-                        if(this.villalist===0){
-                            this.isShow=true;
-                        }else {
-                            this.isShow=false;
-                        }
+                        this.isShow=false;
                         this.pages=res.data.data.pages;;
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
@@ -256,6 +249,7 @@
                     }else{
                         this.villalist = [];
                         this.pages = 1;
+                        this.isShow=true;
                     }
 
                 });

@@ -25,6 +25,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">小区地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control"
+                                               v-model="houseAdd.amap_json.villageAddress" disabled >
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
                                     <div class="col-lg-3">
                                         <input type="number" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
