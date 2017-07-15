@@ -64,7 +64,7 @@
                     </tr>
                     </thead>
                     <tbody id="rentingId">
-                    <tr v-show="myData.length!=0" class="text-center" v-for="item in myData" @click="showGroupDetail(item.department_id,item.city,item.department_name)">
+                    <tr v-show="myData.length!=0" class="text-center" v-for="item in myData" @click="showGroupDetail(item.department_id,item.city,item.department_name,item.marshal)">
                         <td>{{item.city}}</td>
                         <td>{{item.department_name}}</td>
                         <td>{{item.marshal}}</td>
@@ -91,7 +91,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{city}}&emsp;{{department_name}}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{city}}&emsp;{{department_name}}&emsp;组长:{{marshal_name}}</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <div class="col-lg-12">
@@ -191,6 +191,7 @@
 
                 city : '',
                 department_name : '',
+                marshal_name : '',
                 detailCode : '',
 
                 staffs : []
@@ -343,10 +344,11 @@
 //                console.log(this.params.department_id)
                 this.params.department_id=this.params.department_id.filter((x)=>x!=item.id);
             },
-            showGroupDetail(id,city,department){
+            showGroupDetail(id,city,department,marshal){
                 console.log(id);
                 this.city = city;
                 this.department_name = department;
+                this.marshal_name = marshal;
                 let that = this;
                 this.$http.get('periodic/group',{
                     params : {
