@@ -6,7 +6,7 @@
                     <h4>
                         <router-link to="/OkCollect" tag="button" class="btn btn-white" style="border: none">首页</router-link>
                         未收房屋信息
-                        <a data-toggle="modal" class="pull-right" href="#houseEdit">编辑</a>
+                        <a data-toggle="modal" class="pull-right" @click="editUncollect">编辑</a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info"  v-for="item in houseDetail">
@@ -131,6 +131,11 @@
                     i : index
                 }];
                 $('#largePic').modal('show');
+            },
+            editUncollect(){
+                $('.rem_div').remove();
+                $('#houseEdit').modal({backdrop: 'static',});
+                $('#houseEdit').modal('show');
             }
         },
 
