@@ -148,7 +148,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">负责人</label>
                                     <div class="col-lg-10">
-                                        <input type="text" disabled class="form-control" placeholder="负责人">
+                                        <input type="text" v-model="staff_id" disabled class="form-control" placeholder="负责人">
                                     </div>
                                 </div>
                                 <hr>
@@ -337,6 +337,7 @@
                     property_pic:[],
                     reference:''
                 },
+                staff_id:'',
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -349,12 +350,20 @@
                 }
             }
         },
+        mounted(){
+            this.Info();
+        },
         watch:{
             dictionary(val){
                 this.myDictionary=val;
             }
         },
         methods: {
+            Info(){
+              this.$http.get('staff/info').then((res)=>{
+                  this.staff_id=res.data.name;
+              })
+            },
             selectAddress(val){
                 this.houseAdd.amap_json=val;
             },

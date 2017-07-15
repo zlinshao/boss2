@@ -148,7 +148,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">负责人</label>
                                     <div class="col-lg-10">
-                                        <input type="text" disabled class="form-control" placeholder="负责人">
+                                        <input type="text" v-model="staff_id" disabled class="form-control" placeholder="负责人">
                                     </div>
                                 </div>
                                 <hr>
@@ -313,7 +313,8 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                staff_id:'',  //负责人
             }
         },
         watch:{
@@ -327,6 +328,7 @@
                 this.myHouseEdit=val;
                 this.complete_ok='ok';
                 this.reviseHouseId=val.id;
+                this.staff_id = val.staff_id;
                 this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
                 this.houseEdit.amap_json.villageName=val.amap_json.villageName;
                 this.houseEdit.amap_json.district=val.amap_json.district;
