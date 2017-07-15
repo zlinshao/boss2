@@ -432,7 +432,7 @@
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
-                        if (res.data.data === 0) {
+                        if (res.data.data === 0 || res.data.data ===null ) {
                             this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
                                 if(res.data.code==='80010'){
                                     this.$emit('addHouse','addHouse');

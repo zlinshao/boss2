@@ -485,7 +485,7 @@
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
-                        if (res.data.data === 0) {
+                        if (res.data.data === 0 || res.data.data ===null ) {
                             this.$http.post('core/villa/updatevilla/id/'+this.reviseHouseId,this.houseEdit).then((res) => {
                                 if(res.data.code==='80010'){
                                     this.$emit('reviseHouse',this.reviseHouseId);
