@@ -278,9 +278,19 @@
                     this.$http.post('core/customer/customerList', {
                         unsettled: false
                     }).then((res) => {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
-                        this.beforePage = 1;
+                        if (res.data.code === '70030') {
+                            this.custom_list = res.data.data.list;
+                            this.paging = res.data.data.pages;
+                            this.beforePage = 1;
+                            this.isShow=false;
+                        } else {
+                            this.custom_list = [];
+                            this.isShow=true;
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     });
                 }
             },

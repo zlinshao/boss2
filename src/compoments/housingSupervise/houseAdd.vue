@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
                                     <div class="col-lg-3">
-                                        <input type="number" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
+                                        <input type="text" class="form-control" v-model="houseAdd.building" placeholder="幢/座">
                                     </div>
                                     <div class="col-lg-3">
                                         <input type="number" class="form-control" v-model="houseAdd.unit" placeholder="单元">
@@ -139,9 +139,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">参考租金</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" v-model="houseAdd.reference" class="form-control" placeholder="参考租金">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label">房屋照片</label>
                                     <div class="col-lg-10">
-                                        <up-load @photo="housePicId" @delete="picDelete" @complete="complete"
+                                        <up-load @photo="housePicId" @delete="picDelete" @complete="complete"  placeholder="房屋照片"
                                                  :result="'housePic'" :idPhotos="housePic"></up-load>
                                     </div>
                                 </div>
@@ -320,6 +326,7 @@
                     decoration:'',
                     facility:[],
                     floor:'',
+                    reference:'0.00',     //参考租金
                     total_floor:'',
                     house_type:'1',
                     house_feature:'1',
@@ -335,7 +342,6 @@
                     remarks:'',
                     house_pic:[],
                     property_pic:[],
-                    reference:''
                 },
                 staff_id:'',
                 info:{
@@ -470,6 +476,7 @@
                                     this.houseAdd.remarks='';
                                     this.houseAdd.reference='';
                                     this.houseAdd.facility=[];
+                                    this.houseAdd.reference='0.00';
                                     this.houseAdd.house_pic = [];
                                     this.houseAdd.water_card_pic = [];
                                     this.houseAdd.elec_card_pic = [];
