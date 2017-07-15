@@ -2,7 +2,6 @@
     <div>
         <div class="dropzone form-horizontal">
             <div @click="uploadPic(result)" :id="result">
-
                 <div v-for="(p, index) in idPhotos.cus_idPhotos"
                      class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                     <div class="dz-image">
@@ -22,10 +21,18 @@
         data () {
             return {
                 pics: [],
+//                id_photos:this.idPhotos
             };
         },
 //       updated (){
 //            this.uploadPic(this.result);
+//        },
+//        watch:{
+//            'id_photos':{
+//                handler(val,oldVal){
+//                    console.log(val)
+//                }
+//            }
 //        },
         methods: {
             rules (rul){
