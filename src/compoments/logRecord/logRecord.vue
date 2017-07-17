@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>日志管理</li>
-            <li class="active">操作记录{{params.startDataTime}}{{params.finishDataTime}}</li>
+            <li class="active">操作记录</li>
         </ol>
 
         <div class="panel col-lg-12 clearFix">
@@ -12,13 +12,13 @@
                     <!--<label>操作模块</label>-->
                     <select class="form-control" v-model="params.module">
                         <option value="0">全部操作模块</option>
-                        <option  v-for="(value,key) in dictionary.module"  :value="value">{{value}}</option>
+                        <option v-for="(value,key) in myModules" :value="key">{{value}}</option>
                     </select>
                 </div>
 
                 <div class="dropdown form-group">
                     <!--<label>操作类型</label>-->
-                    <select class="form-control" v-model="params.type">
+                    <select class="form-control" v-model="params.operation">
                         <option value="0">全部操作类型</option>
                         <option  v-for="(value,key) in dictionary.operation" :value="key">{{value}}</option>
                     </select>
@@ -65,7 +65,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="item in searchList">
-                            <td class="text-center">{{item.username}}</td>
+                            <td class="text-center">{{item.staff_name}}</td>
                             <td class="text-center">{{item.department_name}}</td>
                             <td class="text-center">{{item.create_time}}</td>
                             <td class="text-center">{{item.system}}</td>
@@ -105,20 +105,23 @@
                 page : 1,      // 当前页数
                 params : {
                     module : 0,
-                    type : 0,
+                    operation : 0,
                     start_time : '',
                     end_time : '',
-                    user_id : '',
+                    staff_id : '',
                     page:1
                 },
                 configure:'',
                 searchList:[],
                 dictionary:[],
                 user_name:'',
+                myModules:[],
             }
         },
         mounted(){
             this.getDictionary();
+        },
+        updated(){
             this.remindData ();
         },
         methods: {
@@ -133,6 +136,7 @@
                     if(res.data.code==='90000'){
                         this.searchList=res.data.data.data;
                         this.pages=res.data.data.pages;
+                        this.myModules=res.data.data.modules;
                     }else {
                         this.searchList=[];
                         this.pages=1;
@@ -176,10 +180,10 @@
             reset(){
                 this.user_name='';
                 this.params.module=0;
-                this.params.type=0;
+                this.params.operation=0;
                 this.params.start_time='';
                 this.params.end_time='';
-                this.params.user_id='';
+                this.params.staff_id='';
                 this.params.page=1;
                 this.search();
             }
