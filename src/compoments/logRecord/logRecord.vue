@@ -82,23 +82,29 @@
                                 <!--</button>-->
                             <!--</td>-->
                         </tr>
+                        <tr v-if="isShow">
+                            <td colspan="10" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </section>
         </div>
 
         <!--分页-->
-        <Page :pg="pages" @pag="getData"></Page>
+        <Page :pg="pages" @pag="getData" :beforePage="currentPage"></Page>
         <Staff :configure='configure' @Staff="staffSeleted"></Staff>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import Page from '../common/page.vue'
     import Staff from '../common/organization/selectStaff.vue'
-
+    import Status from '../common/status.vue';                          //提示信息
     export default{
-        components: {Page,Staff},
+        components: {Page,Staff,Status},
         data(){
             return {
                 pages: 1,     //总页数
@@ -116,6 +122,18 @@
                 dictionary:[],
                 user_name:'',
                 myModules:[],
+                currentPage:1,
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
+                isShow:false,
             }
         },
         mounted(){
@@ -132,14 +150,27 @@
               })
             },
             search(){
+                this.getList();
+            },
+            getList(){
+                this.currentPage=this.page;
                 this.$http.post('log/log',this.params).then((res)=>{
                     if(res.data.code==='90000'){
                         this.searchList=res.data.data.data;
                         this.pages=res.data.data.pages;
                         this.myModules=res.data.data.modules;
+                        this.isShow = false;
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
                     }else {
                         this.searchList=[];
                         this.pages=1;
+                        this.myModules=res.data.data.modules;
+                        this.isShow = true;
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
                     }
 
                 })
@@ -165,7 +196,7 @@
             },
             getData(data){
                 this.params.page = data;
-                this.search();
+                this.getList();
             },
             staffSeleted(val){
                 if(val.staff.length){
