@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>日志管理</li>
-            <li class="active">操作记录</li>
+            <li class="active">操作记录{{page}}</li>
         </ol>
 
         <div class="panel col-lg-12 clearFix">
@@ -150,10 +150,11 @@
               })
             },
             search(){
+                this.params.page = 1
                 this.getList();
             },
             getList(){
-                this.currentPage=this.page;
+                this.currentPage=this.params.page;
                 this.$http.post('log/log',this.params).then((res)=>{
                     if(res.data.code==='90000'){
                         this.searchList=res.data.data.data;
