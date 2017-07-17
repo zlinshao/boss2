@@ -58,178 +58,178 @@
                         <div class="inbox-body panel table table-responsive">
                             <!--系统公告-->
                             <table class="table table-striped table-advance table-hover" v-if="isSystem">
-                                <thead>
+                                <thead class="text-center"ead>
                                     <tr>
-                                        <th>发布时间</th>
-                                        <th>发布人</th>
-                                        <th>标题</th>
-                                        <th>主要内容</th>
-                                        <th>阅读时间</th>
-                                        <th>收藏</th>
+                                        <th class="text-center">发布时间</th>
+                                        <th class="text-center">发布人</th>
+                                        <th class="text-center">标题</th>
+                                        <th class="text-center">主要内容</th>
+                                        <th class="text-center">阅读时间</th>
+                                        <th class="text-center">收藏</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td  @click.stop="isCollect">
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center"  @click.stop="isCollect">
                                             <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                             <i class=" fa fa-heart-o"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                             <i class=" fa fa-heart-o"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                             <i class=" fa fa-heart-o"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                             <i class=" fa fa-heart-o"></i>
                                         </td>
                                     </tr>
                                     <tr class="unread" @click="announceDetail">
-                                        <td >2017/07/07</td>
-                                        <td>张三丰</td>
-                                        <td>《年会》</td>
-                                        <td>请大家今天9:30在创意中央总部集合</td>
-                                        <td>2017/07/09</td>
-                                        <td>
+                                        <td class="text-center" >2017/07/07</td>
+                                        <td class="text-center">张三丰</td>
+                                        <td class="text-center">《年会》</td>
+                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                        <td class="text-center">2017/07/09</td>
+                                        <td class="text-center">
                                             <i class=" fa fa-heart" style="color: #e4393c"></i>
                                         </td>
                                     </tr>
@@ -237,28 +237,28 @@
                             </table>
                             <!--审批提醒-->
                             <table class="table table-striped table-advance table-hover" v-if="isExamine">
-                                <thead>
+                                <thead class="text-center"ead>
                                 <tr>
-                                    <th>申请时间</th>
-                                    <th>申请人</th>
-                                    <th>类别</th>
-                                    <th>审批项目</th>
-                                    <th>审批人</th>
-                                    <th>审批状态</th>
-                                    <th>收藏</th>
+                                    <th class="text-center">申请时间</th>
+                                    <th class="text-center">申请人</th>
+                                    <th class="text-center">类别</th>
+                                    <th class="text-center">审批项目</th>
+                                    <th class="text-center">审批人</th>
+                                    <th class="text-center">审批状态</th>
+                                    <th class="text-center">收藏</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td >2017/07/07</td>
-                                    <td>张三丰</td>
-                                    <td>《年会》</td>
-                                    <td>请大家今天9:30在创意中央总部集合</td>
-                                    <td>2017/07/09</td>
-                                    <td>
+                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">张三丰</td>
+                                    <td class="text-center">《年会》</td>
+                                    <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                    <td class="text-center">2017/07/09</td>
+                                    <td class="text-center">
                                         <span class="label label-success ">已通过</span>
                                     </td>
-                                    <td @click.stop="isCollect">
+                                    <td class="text-center" @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>
@@ -267,20 +267,20 @@
                             </table>
                             <!--代办提醒-->
                             <table class="table table-striped table-advance table-hover" v-if="isSubstitute">
-                                <thead>
+                                <thead class="text-center"ead>
                                 <tr>
-                                    <th>提醒时间</th>
-                                    <th>提醒人</th>
-                                    <th>提醒内容</th>
-                                    <th>收藏</th>
+                                    <th class="text-center">提醒时间</th>
+                                    <th class="text-center">提醒人</th>
+                                    <th class="text-center">提醒内容</th>
+                                    <th class="text-center">收藏</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td >2017/07/07</td>
-                                    <td>张三丰</td>
-                                    <td>请大家今天9:30在创意中央总部集合</td>
-                                    <td  @click.stop="isCollect">
+                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">张三丰</td>
+                                    <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                    <td class="text-center"  @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>
@@ -289,22 +289,22 @@
                             </table>
                             <!--BOSS小秘书-->
                             <table class="table table-striped table-advance table-hover" v-if="isSecretary">
-                                <thead>
+                                <thead class="text-center"ead>
                                 <tr>
-                                    <th>时间</th>
-                                    <th>发信人</th>
-                                    <th>类别</th>
-                                    <th>提醒内容</th>
-                                    <th>收藏</th>
+                                    <th class="text-center">时间</th>
+                                    <th class="text-center">发信人</th>
+                                    <th class="text-center">类别</th>
+                                    <th class="text-center">提醒内容</th>
+                                    <th class="text-center">收藏</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td >2017/07/07</td>
-                                    <td>张三丰</td>
-                                    <td>合同</td>
-                                    <td>请大家今天9:30在创意中央总部集合</td>
-                                    <td  @click.stop="isCollect">
+                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">张三丰</td>
+                                    <td class="text-center">合同</td>
+                                    <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                    <td class="text-center"  @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>
@@ -313,22 +313,22 @@
                             </table>
                             <!--收藏-->
                             <table class="table table-striped table-advance table-hover" v-if="isMessage">
-                                <thead>
-                                <tr>
-                                    <th>收藏时间时间</th>
-                                    <th>相关对象</th>
-                                    <th>类别</th>
-                                    <th>内容</th>
-                                    <th>收藏</th>
-                                </tr>
+                                <thead class="text-center"ead>
+                                    <tr>
+                                        <th class="text-center">收藏时间时间</th>
+                                        <th class="text-center">相关对象</th>
+                                        <th class="text-center">类别</th>
+                                        <th class="text-center">内容</th>
+                                        <th class="text-center">收藏</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td >2017/07/07</td>
-                                    <td>张三丰</td>
-                                    <td>合同</td>
-                                    <td>请大家今天9:30在创意中央总部集合</td>
-                                    <td  @click.stop="isCollect">
+                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">张三丰</td>
+                                    <td class="text-center">合同</td>
+                                    <td class="text-center">请大家今天9:30在创意中央总部集合</td>
+                                    <td class="text-center"  @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>

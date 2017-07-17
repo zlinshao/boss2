@@ -559,10 +559,10 @@
     }
     .cStatus{
         display: inline-block;
-        width: 80px;
+        width: 60px;
         padding: 8px 0;
         color: white;
-        border-radius: 20px;
+        border-radius: 5px;
         text-align: center;
         margin-left: 10px;
     }

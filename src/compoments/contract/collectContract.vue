@@ -87,7 +87,7 @@
             </div>
         </section>
         <!--表格-->
-        <div class="col-lg-12">
+        <div>
             <section class="panel table table-responsive">
                 <table class="table table-striped table-advance table-hover">
                     <thead>
@@ -124,7 +124,7 @@
                         <td>充公</td>
                         <td>未回访</td>
                         <td>
-                            <span v-bind:class="contractStatus">待审核</span>
+                            <span :class="contractStatus">待审核</span>
                         </td>
                         <td>
                             <router-link to="/contractDetail">更多</router-link>
@@ -179,8 +179,8 @@
                 pitch : [],      // 选中id
                 contractStatus : {
                     'cStatus' : true ,
-                    'yellow' : true,
-                    'gray' : false,
+                    'yellow' : false,
+                    'gray' : true,
                     'green' : false
                 },           // 合同状态样式
                 isLock : true,      // 是否锁定
@@ -190,7 +190,16 @@
 //            时间选择
             this.remindData();
         },
+        mounted(){
+            this.getDictionary();
+        },
         methods : {
+            getDictionary(){
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.dictionary=res.data;
+                    console.log(this.dictionary)
+                });
+            },
             search(){
 
             },
@@ -272,10 +281,10 @@
     }
     .cStatus{
         display: inline-block;
-        width: 80px;
+        width: 60px;
         padding: 8px 0;
         color: white;
-        border-radius: 20px;
+        border-radius: 5px;
     }
     .yellow{
         background-color: #F9E175;
