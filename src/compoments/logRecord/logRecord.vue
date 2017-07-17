@@ -26,10 +26,10 @@
 
                 <div class="form-group datetime">
                     <label>
-                        <input @click="remindData" readonly placeholder="开始时间" class="form-control form_datetime">
+                        <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time" class="form-control form_datetime">
                     </label>
                     <label>
-                        <input @click="remindData" readonly placeholder="结束时间" class="form-control form_datetime">
+                        <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time" class="form-control form_datetime">
                     </label>
                 </div>
                 <div class="input-group bootstrap-timepicker">
@@ -164,14 +164,17 @@
                 this.search();
             },
             staffSeleted(val){
-                console.log(val.staff[0].id);
-                this.params.user_id=val.staff[0].id;
-                this.user_name=val.staff[0].name;
+                if(val.staff.length){
+                    this.params.user_id=val.staff[0].id;
+                    this.user_name=val.staff[0].name;
+                }
+
             },
 //            detail(){
 //                $('.detail').popover();
 //            }
             reset(){
+                this.user_name='';
                 this.params.module=0;
                 this.params.type=0;
                 this.params.start_time='';
