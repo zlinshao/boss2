@@ -414,9 +414,6 @@
 //            确定新增/修改
             cus_confirm (url){
                 this.$http.defaults.withCredentials = true;
-
-//                this.$http.get('api/picture/poll').then((res) => {
-//                    if (res.data.data === 0) {
                 if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
                     this.$http.get('api/picture/poll').then((res) => {
                         if (res.data.data === 0 || res.data.data ===null) {
@@ -429,7 +426,6 @@
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                 }
-
             },
 //            修改/新增 调用
             succeed (val){
@@ -446,7 +442,7 @@
                     source: this.cus_source,                    //客户来源
 
                     person_medium: this.cus_intermediate,       //个人/中介
-                    medium_name: this.cus_intermediate_name,    //中介电话
+                    medium_name: this.cus_intermediate_name,    //中介名称
                     medium_mobile: this.cus_intermediate_phone, //中介电话
 
                     amap_id: this.village,                      //高德ID

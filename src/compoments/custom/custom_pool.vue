@@ -9,7 +9,7 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_status">
+                            <select class="form-control" v-model="sea_status" @change="search_c">
                                 <option value="" selected="selected">客户状态</option>
                                 <option v-for="(val,index) in select_list.customer_status" :value="index">{{val}}
                                 </option>
@@ -19,7 +19,7 @@
 
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_intention">
+                            <select class="form-control" v-model="sea_intention" @change="search_c">
                                 <option value="" selected="selected">客户意向</option>
                                 <option v-for="(val,index) in select_list.customer_will" :value="index">{{val}}</option>
                             </select>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_id">
+                            <select class="form-control" v-model="sea_id" @change="search_c">
                                 <option value="" selected="selected">客户身份</option>
                                 <option v-for="(val,index) in select_list.identity" :value="index">{{val}}</option>
                             </select>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_source">
+                            <select class="form-control" v-model="sea_source" @change="search_c">
                                 <option value="" selected="selected">客户来源</option>
                                 <option v-for="(val,index) in select_list.source" :value="index">{{val}}
                                 </option>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_belong">
+                            <select class="form-control" v-model="sea_belong" @change="search_c">
                                 <option value="" selected="selected">客户所属</option>
                                 <option v-for="(val,index) in select_list.belong" :value="index">{{val}}
                                 </option>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_type">
+                            <select class="form-control" v-model="sea_type" @change="search_c">
                                 <option value="" selected="selected">个人/中介</option>
                                 <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
                             </select>
@@ -205,6 +205,11 @@
             this.collectList();
         },
         methods: {
+            //            select搜索
+            search_c (){
+                this.search_pool();
+                this.beforePage = 1
+            },
 //            分配成功更新列表
             pitch_dele (){
                 this.pitch=[];
