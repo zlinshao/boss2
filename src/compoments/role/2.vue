@@ -1,3 +1,18 @@
+<template>
+    <div>
+
+    </div>
+</template>
+
+<script>
+    export default {}
+</script>
+
+
+<style scoped>
+
+</style>
+
 <!--<template>-->
     <!--<div :action="url" class="vue-dropzone dropzone" :id="id">-->
         <!--<slot></slot>-->
