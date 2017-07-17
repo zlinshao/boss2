@@ -46,6 +46,7 @@ import LogRecord from './compoments/logRecord/logRecord.vue'                    
 import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
 import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
+import yi from './compoments/role/1.vue'    //租房订单管理
 
 import  Back from './compoments/user/back.vue'
 
@@ -278,5 +279,9 @@ export default[
         path: '/rentingOrder',
         name: 'RentingOrder',
         component: RentingOrder
+    }, {
+        path: '/yi',
+        name: 'yi',
+        component: yi
     },
 ]
