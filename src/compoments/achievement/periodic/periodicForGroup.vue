@@ -14,11 +14,8 @@
                 <div class="input-group bootstrap-timepicker">
                     <button class="btn btn-primary" type="button" @click="select">筛选部门</button>
                 </div>
-                <div class="form-group datetime">
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="选择月份" class="form-control form_datetime">
-                    </label>
-                </div>
+                <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+
 
                 <div class="dropdown form-group">
                     <select name="" class="form-control" v-model="params.periodic">
@@ -44,6 +41,7 @@
                         <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
                     </span>
             </div>
+
 
         </div>
 
@@ -156,9 +154,10 @@
     import Page from '../../common/page.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
     import Status from '../../common/status.vue';
+    import DatePicker from '../../common/datePicker.vue'
 
     export default{
-        components: {Page,STAFF,Status},
+        components: {Page,STAFF,Status,DatePicker},
         data(){
             return {
                 isShow : false,
@@ -167,7 +166,8 @@
                     department_id : [],
 //                    staff_id : [],
                     month : '',
-                    periodic : 1
+                    periodic : 1,
+                    dateRange : ''
                 },
                 myData : [],
                 paging : '',
@@ -194,7 +194,13 @@
                 marshal_name : '',
                 detailCode : '',
 
-                staffs : []
+                staffs : [],
+                dateConfigure : [
+                    {
+                        range : true,
+                        needHour : false
+                    }
+                ]
             }
         },
         watch : {
@@ -228,12 +234,7 @@
                 );
 
         },
-        updated (){
 
-
-//            时间选择
-            this.remindData();
-        },
         methods : {
             perGroupList (){
 
@@ -258,29 +259,15 @@
                         }
                     );
             },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-                    endDate: new Date(),
 
-                }).on('changeDate', function (ev) {
-                    this.params.month = ev.target.value;
-//                    console.log(this.startDataTime);
-                }.bind(this));
-            },
             getData(data){
                 // 页数
                 console.log(data);
                 this.page = data;
             },
             search(){
-//                console.log(this.params);
-                this.$http.get('periodic?page='+this.page,{
+                console.log(this.params);
+                /*this.$http.get('periodic?page='+this.page,{
                     params : this.params
                 }).then(
                     (res) => {
@@ -294,7 +281,7 @@
                             this.paging = '';
                         }
                     }
-                )
+                )*/
             },
             select(){
 
@@ -371,6 +358,9 @@
                     );
 //                this.$http.get('periodic')
                 $('#showDetail').modal('show');
+            },
+            getDate(data){
+                console.log(data)
             }
         }
     }

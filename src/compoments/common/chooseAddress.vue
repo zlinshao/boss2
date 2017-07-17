@@ -14,7 +14,7 @@
                                     <form class="form-inline clearFix" role="form" method="get">
                                         <div class="dropdown form-group">
                                             <select name="" class="form-control" v-model="chooseCity" @change="search">
-                                                <option value="" selected>所有城市</option>
+                                                <!--<option value="" selected>所有城市</option>-->
                                                 <option value="南京市">南京市</option>
                                                 <option value="苏州市">苏州市</option>
                                             </select>

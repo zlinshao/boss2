@@ -27,7 +27,7 @@
                     <li data-toggle="modal" data-target="#contact">
                         <i class="fa fa-phone"></i>咨询电话
                     </li>
-                    <li data-toggle="modal" data-target="#edit">
+                    <li data-toggle="modal" data-target="#suggest">
                         <i class="fa fa-edit"></i>建议反馈
                     </li>
                 </ul>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <!--建议反馈-->
-        <div class="modal fade bs-example-modal-sm" id="edit" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="mySmallModalLabel">
+        <div class="modal fade bs-example-modal-sm" id="suggest" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -73,23 +73,23 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group clearFix">
-                            <label class="col-sm-2 control-label">问题描述</label>
+                            <label class="col-sm-2 control-label">问题描述:</label>
                             <div class="col-sm-10">
                                 <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
                                 <textarea cols="30" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group clearFix">
-                            <label class="col-sm-2 control-label">建议方案</label>
+                            <label class="col-sm-2 control-label">建议方案:</label>
                             <div class="col-sm-10">
                                 <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
-                                <textarea cols="30" rows="5" class="form-control"></textarea>
+                                <textarea cols="30" rows="5" class="form-control" v-model="suggest.problem"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">确定</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" @click="sendSuggest">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-model="suggest.solution">取消</button>
                     </div>
                 </div>
             </div>
@@ -106,6 +106,12 @@
             return {
                 urlName: '',
                 urlCard: '',
+
+                // 建议反馈
+                suggest : {
+                    problem : '',
+                    solution : ''
+                }
             }
         },
         computed: mapGetters([
@@ -131,6 +137,10 @@
             },
             hide(){
                 $('#custom_service ul').hide()
+            },
+            sendSuggest(){
+                console.log(this.suggest);
+//                $('#suggest').modal('hide');
             }
         }
     }
@@ -193,7 +203,7 @@
     #contact .modal-body div+div{
         border-top: 1px solid #ddd;
     }
-    #edit textarea{
+    #suggest textarea{
         resize: none;
     }
 </style>
