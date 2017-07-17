@@ -529,7 +529,7 @@
                     this.statusName = this.dict.status[statusId];
 //                    console.log(this.statusName);
                     this.statusId = statusId;
-                    console.log(this.operId);
+//                    console.log(this.operId);
                 } else {
                     this.operId = 0;
                 }
