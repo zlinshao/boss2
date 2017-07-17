@@ -241,7 +241,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">取消
+                            <button data-dismiss="modal" class="btn btn-default" type="button" @click="remove_s">取消
                             </button>
                             <button v-if="btn_state" class="btn btn-success" type="button"
                                     @click="cus_confirm('saveCustomer')"> 确定
@@ -395,6 +395,9 @@
             }
         },
         methods: {
+            remove_s (){
+                $('.rem_div').remove();
+            },
 //            照片ID
             idNumber (val){
                 this.photos.cus_idPhoto = val;
