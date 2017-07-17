@@ -198,7 +198,7 @@
                 dateConfigure : [
                     {
                         range : true,
-                        needHour : false
+                        needHour : true
                     }
                 ]
             }

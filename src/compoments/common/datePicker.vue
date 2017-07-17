@@ -1,16 +1,17 @@
 <template>
     <div class="datePickerContainer" v-if="range">
-        <div class="input-group" v-show="isPC">
+        <!--<div class="input-group" v-show="isPC">-->
             <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="form-control" style="width:300px;">
-        </div>
+        <!--</div>-->
 
-        <div class="input-group" v-show="!isPC">
-            <input type="date" class="form-control" @change="sendDate" v-model="from">
-        </div>
+        <!--<div class="input-group" v-show="!isPC">-->
+            <!--<input type="date" class="form-control" @change="sendDate">-->
 
+        <!--</div>-->
+<!--
         <div class="input-group" v-show="!isPC">
             <input type="date" class="form-control" @change="sendDate" v-model="to">
-        </div>
+        </div>-->
     </div>
     <div class="datePickerContainer" v-else="range">
         <div class="form-group datetime" v-show="hour">
