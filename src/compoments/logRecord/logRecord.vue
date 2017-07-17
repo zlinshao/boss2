@@ -169,7 +169,7 @@
             },
             staffSeleted(val){
                 if(val.staff.length){
-                    this.params.user_id=val.staff[0].id;
+                    this.params.staff_id=val.staff[0].id;
                     this.user_name=val.staff[0].name;
                 }
 
