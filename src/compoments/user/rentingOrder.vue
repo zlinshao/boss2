@@ -281,9 +281,6 @@
     .panel-body {
         padding: 15px;
     }
-    *{
-        user-select: none;
-    }
     .selected{
         background: #fffcd9 !important;
     }
