@@ -68,7 +68,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" @click="clear">&times;</span></button>
                         <h4 class="modal-title">建议反馈</h4>
                     </div>
                     <div class="modal-body">
@@ -76,28 +76,31 @@
                             <label class="col-sm-2 control-label">问题描述:</label>
                             <div class="col-sm-10">
                                 <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
-                                <textarea cols="30" rows="5" class="form-control"></textarea>
+                                <textarea cols="30" rows="5" class="form-control" v-model="suggestMsg.problem"></textarea>
                             </div>
                         </div>
                         <div class="form-group clearFix">
                             <label class="col-sm-2 control-label">建议方案:</label>
                             <div class="col-sm-10">
                                 <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
-                                <textarea cols="30" rows="5" class="form-control" v-model="suggest.problem"></textarea>
+                                <textarea cols="30" rows="5" class="form-control" v-model="suggestMsg.suggest"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" @click="sendSuggest">确定</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-model="suggest.solution">取消</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="clear">取消</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Status from './compoments/common/status.vue';
     import HeaderVue from './compoments/header/header.vue'
     import {mapGetters, mapActions} from 'vuex'
 
@@ -108,17 +111,28 @@
                 urlCard: '',
 
                 // 建议反馈
-                suggest : {
+                suggestMsg : {
                     problem : '',
-                    solution : ''
-                }
+                    suggest : ''
+                },
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         computed: mapGetters([
             'loading'
         ]),
         components: {
-            HeaderVue
+            HeaderVue,
+            Status
         },
         created (){
             this.$http.get('staff/info').then((res) => {
@@ -139,8 +153,35 @@
                 $('#custom_service ul').hide()
             },
             sendSuggest(){
-                console.log(this.suggest);
+//                console.log(this.suggestMsg);
+                this.$http.post('feedback/index',this.suggestMsg)
+                    .then(
+                        (res) => {
+                            if (res.data.code==10020){
+                                // 成功
+                                $('#suggest').modal('hide');
+                                this.clear();
+                                this.info.success = res.data.msg;
+                                //关闭失败弹窗 ***
+                                this.info.state_error = false;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            } else {
+                                this.info.error = res.data.msg;
+                                //关闭失败弹窗 ***
+                                this.info.state_error = true;
+                                //显示成功弹窗 ***
+                                this.info.state_success = false;
+                            }
+                        }
+                    )
 //                $('#suggest').modal('hide');
+            },
+            clear(){
+                this.suggestMsg = {
+                    problem : '',
+                    suggest : ''
+                };
             }
         }
     }
