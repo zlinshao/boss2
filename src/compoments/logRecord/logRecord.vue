@@ -10,7 +10,7 @@
 
                 <div class="dropdown form-group">
                     <!--<label>操作模块</label>-->
-                    <select class="form-control" v-model="params.module">
+                    <select class="form-control" v-model="params.module" @change="search">
                         <option value="0">全部操作模块</option>
                         <option v-for="(value,key) in myModules" :value="key">{{value}}</option>
                     </select>
@@ -18,7 +18,7 @@
 
                 <div class="dropdown form-group">
                     <!--<label>操作类型</label>-->
-                    <select class="form-control" v-model="params.operation">
+                    <select class="form-control" v-model="params.operation" @change="search">
                         <option value="0">全部操作类型</option>
                         <option  v-for="(value,key) in dictionary.operation" :value="key">{{value}}</option>
                     </select>
@@ -142,6 +142,20 @@
         updated(){
             this.remindData ();
         },
+        watch:{
+          'params.start_time':{
+              deep:true,
+              handler(val,oldVal){
+                  this.search();
+              }
+          },
+            'params.end_time':{
+                deep:true,
+                handler(val,oldVal){
+                    this.search();
+                }
+            },
+        },
         methods: {
             getDictionary(){
               this.$http.get('log/log/dict').then((res)=>{
@@ -203,6 +217,7 @@
                 if(val.staff.length){
                     this.params.staff_id=val.staff[0].id;
                     this.user_name=val.staff[0].name;
+                    this.search();
                 }
 
             },
