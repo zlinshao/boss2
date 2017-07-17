@@ -278,7 +278,6 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    console.log(this.dictionary)
                     this.$http.post('core/villa/receivedvillalist').then((res) => {
                         if(res.data.code==='80030'){
                             this.houseList=res.data.data.list;
