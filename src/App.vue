@@ -155,7 +155,7 @@
             },
             sendSuggest(){
 //                console.log(this.$route.name);
-                this.suggestMsg.feedback_url = this.$route.name
+                this.suggestMsg.feedback_url = this.$route.fullPath;
 //                console.log(this.suggestMsg);
                 this.$http.post('feedback/index',this.suggestMsg)
                     .then(
