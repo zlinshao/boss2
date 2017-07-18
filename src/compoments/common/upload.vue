@@ -21,19 +21,11 @@
         data () {
             return {
                 pics: [],
-//                id_photos:this.idPhotos
             };
         },
-//       updated (){
-//            this.uploadPic(this.result);
-//        },
-//        watch:{
-//            'id_photos':{
-//                handler(val,oldVal){
-//                    console.log(val)
-//                }
-//            }
-//        },
+        updated (){
+            this. uploadPic(this.result);
+        },
         methods: {
             rules (rul){
                 let index = this.pics.indexOf(rul);
