@@ -176,7 +176,6 @@
                     <!-- notification dropdown start-->
                     <li id="header_notification_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
                             <i class="fa fa-bell-o"></i>
                             <span class="badge bg-warning">7</span>
                         </a>
@@ -233,6 +232,15 @@
                     <li>
                         <input type="text" class="form-control search" placeholder="">
                     </li>
+
+                    <!--锁屏-->
+                    <li style="padding-top: 4px;">
+                        <a href="#lock_screen" class="btn btn-primary" style="border:none"
+                           @click="lock_state">
+                            <i class="fa fa-lock" style="font-size: 25px"></i>
+                        </a>
+                    </li>
+                    <!--消息提醒-->
                     <li class="dropdown" style="padding-top: 2px;">
                         <a href="javascript:;" style="border:none" class="dropdown-toggle"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -337,10 +345,10 @@
                         </ul>
                     </li>
                     <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
-                        <!--<router-link to="/village">-->
-                            <!--<i class="fa fa-dashboard"></i>-->
-                            <!--<span>小区管理</span>-->
-                        <!--</router-link>-->
+                    <!--<router-link to="/village">-->
+                    <!--<i class="fa fa-dashboard"></i>-->
+                    <!--<span>小区管理</span>-->
+                    <!--</router-link>-->
                     <!--</li>-->
                     <li class="sub-menu">
                         <a href="javascript:;">
@@ -691,6 +699,50 @@
                 </li>
             </ul>
         </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm lock-screen" id="deblocking">
+            <div class="lock-wrapper">
+                <div id="time"></div>
+                <div class="lock-box text-center">
+                    <!--<img src="img/follower-avatar.jpg" alt="lock avatar"/>-->
+                    <h1>解锁密码</h1>
+                    <span class="locked"></span>
+                    <form role="form" class="form-inline">
+                        <div class="form-group col-lg-12">
+                            <input type="password" placeholder="请输入密码" v-model="debLocking" @keyup.a.prevent="deblock"
+                                   class="form-control lock-input">
+                            <button class="btn btn-lock" type="button" @click="deblock">
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="lock_screen">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">锁屏密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="lockScreen" @keyup.enter="lock_screen"
+                                   placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                        <button data-dismiss="modal" class="btn btn-primary btn-md" @click="lock_screen">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Right Slidebar end -->
         <LookRemind></LookRemind>
 
@@ -702,23 +754,26 @@
     import LookRemind from '../common/remind/checkRemind.vue';
     import AddRemind from  '../common/remind/addRemind.vue'
     export default {
-        components:{ LookRemind,AddRemind },
-        props:['Name','Card'],
+        components: {LookRemind, AddRemind},
+        props: ['Name', 'Card'],
         data(){
             return {
                 isActive: 0,
+                lockScreen: '',     //锁屏
+                debLocking: '',     //解锁
             }
         },
+
         methods: {
             pitch_on (n){
                 this.isActive = n;
             },
             logOut (){
-                this.$http.post('staff/logout').then(() =>{
-                    let keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+                this.$http.post('staff/logout').then(() => {
+                    let keys = document.cookie.match(/[^ =;]+(?=\=)/g);
                     if (keys) {
-                        for (let i =  keys.length; i--;)
-                            document.cookie=keys[i]+'=0;expires=' + new Date(0).toUTCString()
+                        for (let i = keys.length; i--;)
+                            document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
                     }
                     window.location.href = "login.html";
                 })
@@ -731,6 +786,65 @@
             },
             addRemind(){
                 $('#addRemind').modal('show');
+            },
+            lock_state (){
+                $('#lock_screen').modal({
+                    backdrop: 'static',         //空白处不消失
+                });
+            },
+//            锁屏
+            lock_screen (){
+                this.$http.post('auth/auth/lock_screen_status', {
+                    pwd_lock: '',
+                    set_pwd_lock: this.lockScreen,
+                    lock_status: ''
+                }).then((res) => {
+                    this.lockScreen = '';
+                    if (res.data.code === '80030') {
+                        $('#lock_screen').modal('hide');
+                        $('#deblocking').modal({
+                            backdrop: 'static',         //空白处不消失
+                            keyboard: false             //动态打开
+                        });
+                        this.startTime();
+                        console.log(res.data);
+                    }
+                });
+            },
+//            解锁
+            deblock (){
+                alert(1);
+                this.$http.post('auth/auth/lock_screen_status', {
+                    pwd_lock: this.debLocking,
+                    set_pwd_lock: '',
+                    lock_status: ''
+                }).then((res) => {
+                    console.log(res.data);
+                    this.debLocking = '';
+                    if (res.data.code === '80032') {
+                        $('#deblocking').modal('hide');
+                    }
+                });
+            },
+
+            startTime (){
+                let today = new Date();
+                let h = today.getHours();
+                let m = today.getMinutes();
+                let s = today.getSeconds();
+                // add a zero in front of numbers<10
+                m = this.checkTime(m);
+                s = this.checkTime(s);
+                document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+                setTimeout(function () {
+                    this.startTime();
+                }.bind(this), 500);
+            },
+            checkTime (i){
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
             }
         }
     }
@@ -738,7 +852,7 @@
 
 
 <style scoped>
-    ul.top-menu > li > a  {
-         border:none !important;
+    ul.top-menu > li > a {
+        border: none !important;
     }
 </style>
