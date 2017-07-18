@@ -311,17 +311,6 @@
                                                 <span class="col-lg-8">多层</span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">房屋照片</span>
-                                                <span class="col-lg-8">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="infoList clearFix">
                                                 <span class="col-lg-4">所属小区</span>
                                                 <span class="col-lg-8">积善公寓</span>
                                             </div>
@@ -340,6 +329,17 @@
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">燃气卡号</span>
                                                 <span class="col-lg-8">025333131</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">房屋照片</span>
+                                                <span class="col-lg-8">
+                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">水卡照片</span>
@@ -377,64 +377,64 @@
                             <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">证件照片</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">证件照片</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">押金收条</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">押金收条</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">银行卡照片</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">银行卡照片</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">合同照片<sup>*</sup></span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">合同照片<sup>*</sup></span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">水费照片</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">水费照片</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">电费照片</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">电费照片</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">燃气照片</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">燃气照片</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">交接单</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">交接单</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">委托书</span>
-                                        <span class="col-lg-8">
+                                        <span class="col-lg-2">委托书</span>
+                                        <span class="col-lg-10">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                             <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
                                         </span>
@@ -597,7 +597,6 @@
         margin-top: 20px;
     }
     .infoContainer{
-        width: 90%;
         margin: auto;
     }
     .infoContainer .infoList{
@@ -620,7 +619,6 @@
         margin-left: 5px;
     }
     #contract .infoContainer{
-        width: 50%;
         margin: auto;
     }
     #house .infoContainer .infoList sup{

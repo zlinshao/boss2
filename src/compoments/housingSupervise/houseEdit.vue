@@ -578,6 +578,7 @@
                 this.elePic.cus_idPhotos={};
                 this.gasPic.cus_idPhotos={};
                 this.propertyPic.cus_idPhotos={};
+                $('.rem_div').remove();
                 this.$emit('reviseHouse',this.reviseHouseId);
             }
 

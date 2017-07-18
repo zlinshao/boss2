@@ -35,7 +35,6 @@
                 this.$emit('delete', rul);
                 this.$delete(this.idPhotos.cus_idPhotos, rul);
             },
-
             uploadPic (res){
                 this.pics = this.idPhotos.cus_idPhoto;
                 let _this = this;
