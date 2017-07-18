@@ -260,7 +260,7 @@
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
                             <li><a><i class="fa fa-key"></i> Log Out</a></li>
-                            <li><a @click="logOut"><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a @click="logOut"><i class="fa fa-key"></i>退出登录</a></li>
 
                         </ul>
                     </li>
@@ -707,7 +707,7 @@
     import LookRemind from '../common/remind/checkRemind.vue';
     import AddRemind from  '../common/remind/addRemind.vue'
     export default {
-        components:{LookRemind,AddRemind},
+        components:{ LookRemind,AddRemind },
         props:['Name','Card'],
         data(){
             return {
