@@ -20,17 +20,17 @@
         var DRPTemplate = '<div class="daterangepicker dropdown-menu">' +
                 '<div class="calendar left">' +
                     '<div class="daterangepicker_end_input">' +
-
                         '<input class="form-control" type="text" name="daterangepicker_end" value="" />' +
                         '<i class="fa fa-calendar glyphicon glyphicon-calendar"></i>' +
                     '</div>' +
+                    '<div class="calendar-date"></div>' +
                 '</div>' +
                 '<div class="calendar right">' +
                     '<div class="daterangepicker_start_input">' +
-
                         '<input class="form-control" type="text" name="daterangepicker_start" value="" />' +
                         '<i class="fa fa-calendar glyphicon glyphicon-calendar"></i>' +
                     '</div>' +
+                    '<div class="calendar-date"></div>' +
                 '</div>' +
                 '<div class="ranges">' +
                   '<div class="range_inputs">' +
@@ -732,9 +732,9 @@
             this.leftCalendar.calendar = this.buildCalendar(this.leftCalendar.month.month(), this.leftCalendar.month.year(), this.leftCalendar.month.hour(), this.leftCalendar.month.minute(), 'left');
             this.rightCalendar.calendar = this.buildCalendar(this.rightCalendar.month.month(), this.rightCalendar.month.year(), this.rightCalendar.month.hour(), this.rightCalendar.month.minute(), 'right');
             // this.container.find('.calendar.left').html(this.renderCalendar(this.leftCalendar.calendar, this.startDate, this.minDate, this.maxDate));
-            this.container.find('.calendar.left').append(this.renderCalendar(this.leftCalendar.calendar, this.startDate, this.minDate, this.maxDate));
+            this.container.find('.calendar.left .calendar-date').html(this.renderCalendar(this.leftCalendar.calendar, this.startDate, this.minDate, this.maxDate));
             // this.container.find('.calendar.right').html(this.renderCalendar(this.rightCalendar.calendar, this.endDate, this.startDate, this.maxDate));
-            this.container.find('.calendar.right').append(this.renderCalendar(this.rightCalendar.calendar, this.endDate, this.startDate, this.maxDate));
+            this.container.find('.calendar.right .calendar-date').html(this.renderCalendar(this.rightCalendar.calendar, this.endDate, this.startDate, this.maxDate));
 
             this.container.find('.ranges li').removeClass('active');
             var customRange = true;
@@ -829,8 +829,8 @@
 
         renderCalendar: function (calendar, selected, minDate, maxDate) {
 
-            var html = '<div class="calendar-date">';
-            html += '<table class="table-condensed">';
+            // var html = '<div class="calendar-date">';
+            var html = '<table class="table-condensed">';
             html += '<thead>';
             html += '<tr>';
 
@@ -907,7 +907,7 @@
 
             html += '</tbody>';
             html += '</table>';
-            html += '</div>';
+            // html += '</div>';
 
             if (this.timePicker) {
 
