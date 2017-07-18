@@ -144,7 +144,8 @@
     display: block;
     vertical-align: middle;
     margin: 0 0 5px 0;
-    padding: 0 6px 0 28px;
+    /*padding: 0 6px 0 28px;*/
+    text-align: center;
     width: 100%; }
     .daterangepicker .input-mini.active {
       border: 1px solid #08c;
@@ -170,6 +171,7 @@
     .daterangepicker .calendar-time select.disabled {
       color: #ccc;
       cursor: not-allowed; }
+
 
 .ranges {
   font-size: 11px;

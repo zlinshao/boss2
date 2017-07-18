@@ -113,7 +113,8 @@
                 // 建议反馈
                 suggestMsg : {
                     problem : '',
-                    suggest : ''
+                    suggest : '',
+                    feedback_url : ''
                 },
                 info: {
                     //成功状态 ***
@@ -153,6 +154,8 @@
                 $('#custom_service ul').hide()
             },
             sendSuggest(){
+//                console.log(this.$route.name);
+                this.suggestMsg.feedback_url = this.$route.name
 //                console.log(this.suggestMsg);
                 this.$http.post('feedback/index',this.suggestMsg)
                     .then(
