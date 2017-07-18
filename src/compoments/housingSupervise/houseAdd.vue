@@ -139,12 +139,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">参考租金</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" v-model="houseAdd.reference" class="form-control" placeholder="参考租金">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-lg-2 control-label">房屋照片</label>
                                     <div class="col-lg-10">
                                         <up-load @photo="housePicId" @delete="picDelete" @complete="complete"  placeholder="房屋照片"
@@ -326,7 +320,6 @@
                     decoration:'',
                     facility:[],
                     floor:'',
-                    reference:'0.00',     //参考租金
                     total_floor:'',
                     house_type:'1',
                     house_feature:'1',
@@ -481,9 +474,7 @@
                                     this.houseAdd.water_card_num='';
                                     this.houseAdd.gas_card_num='';
                                     this.houseAdd.remarks='';
-                                    this.houseAdd.reference='';
                                     this.houseAdd.facility=[];
-                                    this.houseAdd.reference='0.00';
                                     this.houseAdd.house_pic = [];
                                     this.houseAdd.water_card_pic = [];
                                     this.houseAdd.elec_card_pic = [];
