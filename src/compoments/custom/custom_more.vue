@@ -5,7 +5,7 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        客户信息
+                        <i class="fa fa-user"></i>&nbsp;客户信息
                         <!--编辑-->
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
@@ -98,7 +98,7 @@
             <div class="col-md-3">
                 <section class="panel roll">
                     <header class="panel-heading">
-                        合同信息
+                        <i class="fa fa-file-text"></i>&nbsp;合同信息
                     </header>
                     <!--合同信息-->
                     <div class="panel-body table-responsive">
@@ -151,10 +151,10 @@
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a data-toggle="tab" href="#home" aria-expanded="true">沟通日志</a>
+                                <a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-pencil-square-o"></i>&nbsp;沟通日志</a>
                             </li>
                             <li class="">
-                                <a data-toggle="tab" href="#about" aria-expanded="false">房屋信息</a>
+                                <a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-home"></i>&nbsp;房屋信息</a>
                             </li>
 
                         </ul>
@@ -199,7 +199,7 @@
                                 <section class="panel" v-for="daily in daily_record"
                                          style="margin-bottom: 0;padding-bottom: 0;">
                                     <div class="panel-body">
-                                        <div class="panel-body table-responsive cheek">
+                                        <div class="panel-body table-responsive cheek cheek1">
                                             <div><span>{{daily.create_time}}</span></div>
                                             <div>
                                                 <span class="text-primary">跟进方式：</span>
@@ -438,7 +438,7 @@
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > div span.text-primary {
+    .client_info > div > div > div span.text-primary, .cheek1 > div > span:first-child {
         display: inline-block;
         padding-right: 20px;
         text-align: right;

@@ -81,7 +81,7 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
+                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -107,7 +107,7 @@
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">客户所属</th>
                             <th class="text-center">负责人</th>
-                            <th class="text-center">更多</th>
+                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -142,7 +142,7 @@
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
                                 <router-link :to="{path:'/details',query: {nameId: list.id}}">
-                                    更多
+                                   详情
                                 </router-link>
                             </td>
                         </tr>
