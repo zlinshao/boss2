@@ -409,7 +409,7 @@
         },
         methods: {
             getBranch(){
-                if(this.type!=1){
+                if(this.type !== 1){
                     this.page=1
                 };
                 this.$http.get('manager/user/departmentIndex/page/'+this.page).then((res) => {
@@ -426,14 +426,14 @@
                 })
             },
             getSecond(id,name){
-                if(this.type!=2){
+                if(this.type!==2){
                     this.page=1
                 };
                 this.$http.get('manager/user/departmentIndex/id/'+id+'/page/'+this.page).then((res) => {
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
-                    if(res.data.data.department.length==0){
+                    if(res.data.data.department.length === 0){
                         this.type = 1;
                     }else {
                         this.type = 2;
@@ -659,10 +659,10 @@
             },
             //查询成员
             search(){
-                if(this.type!=6){
+                if(this.type !== 6){
                     this.page=1
                 };
-                if (this.keywords != '') {
+                if (this.keywords !== '') {
                     this.isThird=false;
                     this.isSecond=false;
                     this.isFirst=false;
@@ -670,7 +670,7 @@
                     this.isDepartment=false;
                     this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+this.page).then((res) => {
                         this.type = 6;
-                        if (res.data.code == 90020) {
+                        if (res.data.code === 90020) {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
 

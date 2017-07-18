@@ -347,8 +347,10 @@
                 this.configure={length:1,class:'department',id:[9],name:'市场部'};
             },
             dpmSeleted(val){
-                this.departmentName=val.department[0].name;
-                this.departmentId=val.department[0].id;
+                if(val.department.length){
+                    this.departmentName=val.department[0].name;
+                    this.departmentId=val.department[0].id;
+                }
             },
             //选中的checkout框
             picked (id,e,top){

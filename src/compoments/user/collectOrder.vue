@@ -72,7 +72,7 @@
                             <td class="text-center">{{item.address}}</td>
                             <td class="text-center">{{item.department}}</td>
                         </tr>
-                        <tr v-show="orderList.length===0">
+                        <tr v-show="isShow">
                             <td colspan="12" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
@@ -122,6 +122,7 @@
                     //失败信息 ***
                     error: ''
                 },
+                isShow:false,
             }
         },
         mounted(){
@@ -140,12 +141,14 @@
                         this.orderList=res.data.data.list;
                         this.pages=res.data.data.pages;
                         this.allId=[];
+                        this.isShow = false;
                         for(let j=0;j<this.orderList.length;j++){
                             this.allId.push(this.orderList[j].id)
                         }
                     }else{
                         this.orderList=[];
                         this.pages=1;
+                        this.isShow = true;
                         this.allId=[];
                     }
 
@@ -212,37 +215,40 @@
                     this.keywords='';
                     this.orderLIstSearch();
                 }else if(this.configureType==='distribution'){
-                    this.distributeDpm=val.department[0].id;
-                    this.$http.post('manager/move_rent_order/moveorder',
-                        {
-                            'department_id' : this.distributeDpm,
-                            'type' : 'collect',
-                            'id' :this.distribute,
-                        }
-                    ).then((res) => {
-                            if(res.data.code==='80020'){
-                                this.checkboxModel=[];
-                                this.distribute=[];
-                                this.allCheck=false;
-                                this.orderLIstSearch();
-                                this.info.success =res.data.msg;
-                                //显示成功弹窗 ***
-                                this.info.state_success = true;
-                                //一秒自动关闭成功信息弹窗 ***
-                                setTimeout(() => {
-                                    this.info.state_success = false;
-                                },2000);
-                            }else {
-                                this.info.success =res.data.msg;
-                                //显示成功弹窗 ***
-                                this.info.state_success = true;
-                                //一秒自动关闭成功信息弹窗 ***
-                                setTimeout(() => {
-                                    this.info.state_success = false;
-                                },2000);
+                    if(val.department.length){
+                        this.distributeDpm=val.department[0].id;
+                        this.$http.post('manager/move_rent_order/moveorder',
+                            {
+                                'department_id' : this.distributeDpm,
+                                'type' : 'collect',
+                                'id' :this.distribute,
                             }
-                        }
-                    )
+                        ).then((res) => {
+                                if(res.data.code==='80020'){
+                                    this.checkboxModel=[];
+                                    this.distribute=[];
+                                    this.allCheck=false;
+                                    this.orderLIstSearch();
+                                    this.info.success =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_success = false;
+                                    },2000);
+                                }else {
+                                    this.info.success =res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_success = false;
+                                    },2000);
+                                }
+                            }
+                        )
+                    }
+
                 }
             },
             keywordSearch(){

@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>日志管理</li>
-            <li class="active">操作记录{{page}}</li>
+            <li class="active">操作记录</li>
         </ol>
 
         <div class="panel col-lg-12 clearFix">
