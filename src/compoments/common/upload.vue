@@ -24,7 +24,7 @@
             };
         },
         updated (){
-            this. uploadPic(this.result);
+            this.uploadPic(this.result);
         },
         methods: {
             rules (rul){

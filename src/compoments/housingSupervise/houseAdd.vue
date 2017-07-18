@@ -362,6 +362,13 @@
         watch:{
             dictionary(val){
                 this.myDictionary=val;
+                //触发up-load
+                this.propertyPic.cus_idPhoto=[];
+                this.housePic.cus_idPhotos={};
+                this.waterPic.cus_idPhotos={};
+                this.elePic.cus_idPhotos={};
+                this.gasPic.cus_idPhotos={};
+                this.propertyPic.cus_idPhotos={};
             }
         },
         methods: {
