@@ -81,23 +81,23 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('daily')">增加沟通日志</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('daily')"><i class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('inter')">提醒</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('inter')"><i class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')">放入客户池</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
+                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
                         </li>
                         <li>
-                            <h5><a href="#customModel" @click="customers_rev('rev')">编辑</a></h5>
+                            <h5><a href="#customModel" @click="customers_rev('rev')"><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li>
-                            <h5><a v-if="top === 1" @click="stick(pitch,top)">置顶</a></h5>
-                            <h5><a v-if="top === 2" @click="stick(pitch,top)">取消置顶</a></h5>
+                            <h5><a v-if="top === 1" @click="stick(pitch,top)"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a></h5>
+                            <h5><a v-if="top === 2" @click="stick(pitch,top)"><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -109,10 +109,10 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')">放入客户池</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution">分配</a></h5>
+                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -139,7 +139,7 @@
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">负责人</th>
                             <th class="text-center">置顶</th>
-                            <th class="text-center">更多</th>
+                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -174,12 +174,12 @@
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
                                 <a v-if="list.top === 1" @click="stick(list.id,2)">
-                                    <i class="fa fa-paperclip"></i>
+                                    <i class="fa fa-thumb-tack"></i>
                                 </a>
                             </td>
                             <td class="text-center">
                                 <router-link :to="{path:'/details',query: {nameId: list.id}}">
-                                    更多
+                                    详情
                                 </router-link>
                             </td>
                         </tr>
@@ -465,6 +465,10 @@
 
     select {
         margin-bottom: 0;
+    }
+
+    .panel{
+        padding-top: 0;
     }
 
     .remind li {

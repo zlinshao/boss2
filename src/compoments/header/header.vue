@@ -280,7 +280,7 @@
                 <ul class="sidebar-menu" id="nav-accordion">
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-user"></i>
                             <span>客户管理</span>
                         </a>
                         <ul class="sub">
@@ -294,7 +294,7 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-home"></i>
                             <span>房屋管理</span>
                         </a>
                         <ul class="sub">
@@ -308,7 +308,7 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-tasks"></i>
+                            <i class="fa fa-sitemap"></i>
                             <span>人资管理</span>
                         </a>
                         <ul class="sub">
@@ -344,7 +344,7 @@
                     <!--</li>-->
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-bar-chart-o"></i>
                             <span>业绩管理</span>
                         </a>
                         <ul class="sub">
@@ -431,7 +431,7 @@
 
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-file-text"></i>
                             <span>合同管理</span>
                         </a>
                         <ul class="sub">
@@ -494,11 +494,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--<li>
-                                <router-link to="/incomeFlow">
-                                    <span>收支流水</span>
-                                </router-link>
-                            </li>-->
                             <li>
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
@@ -523,7 +518,7 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-pencil-square-o"></i>
                             <span>日志管理</span>
                         </a>
                         <ul class="sub">
@@ -534,7 +529,7 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-bell-o"></i>
                             <span>消息中心</span>
                         </a>
                         <ul class="sub">
