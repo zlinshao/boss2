@@ -1,6 +1,9 @@
 <template>
     <div>
-        <Status :state='info'></Status>
+        <ol class="breadcrumb">
+            <li>客户管理</li>
+            <li>客户池</li>
+        </ol>
         <!--客户池-->
         <section class="panel">
             <div class="panel-body">
@@ -159,7 +162,8 @@
 
         <!--分配-->
         <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
-
+        <!--提示信息-->
+        <Status :state='info'></Status>
         <!--分页-->
         <Page @pag="search_pool" :pg="paging" :beforePage="beforePage"></Page>
     </div>

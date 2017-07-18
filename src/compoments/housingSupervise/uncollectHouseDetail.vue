@@ -1,11 +1,15 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>房屋管理</li>
+            <li><router-link to="/noCollect">未收房源</router-link></li>
+            <li>未收房源详情</li>
+        </ol>
         <section class="panel">
             <div class="panel-body">
                 <header>
                     <h4>
-                        <router-link to="/OkCollect" tag="button" class="btn btn-white" style="border: none">首页</router-link>
-                        未收房屋信息
+                        <i class="fa fa-home"></i>&nbsp;未收房屋信息
                         <a data-toggle="modal" class="pull-right" @click="editUncollect">编辑</a>
                     </h4>
                 </header>

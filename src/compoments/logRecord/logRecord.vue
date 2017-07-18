@@ -5,45 +5,47 @@
             <li class="active">操作记录{{page}}</li>
         </ol>
 
-        <div class="panel col-lg-12 clearFix">
-            <form class="form-inline clearFix" role="form">
+        <section class="panel">
+            <div class="panel-body">
+                <form class="form-inline clearFix" role="form">
 
-                <div class="dropdown form-group">
-                    <!--<label>操作模块</label>-->
-                    <select class="form-control" v-model="params.module" @change="search">
-                        <option value="0">全部操作模块</option>
-                        <option v-for="(value,key) in myModules" :value="key">{{value}}</option>
-                    </select>
-                </div>
+                    <div class="dropdown form-group">
+                        <!--<label>操作模块</label>-->
+                        <select class="form-control" v-model="params.module" @change="search">
+                            <option value="0">全部操作模块</option>
+                            <option v-for="(value,key) in myModules" :value="key">{{value}}</option>
+                        </select>
+                    </div>
 
-                <div class="dropdown form-group">
-                    <!--<label>操作类型</label>-->
-                    <select class="form-control" v-model="params.operation" @change="search">
-                        <option value="0">全部操作类型</option>
-                        <option  v-for="(value,key) in dictionary.operation" :value="key">{{value}}</option>
-                    </select>
-                </div>
+                    <div class="dropdown form-group">
+                        <!--<label>操作类型</label>-->
+                        <select class="form-control" v-model="params.operation" @change="search">
+                            <option value="0">全部操作类型</option>
+                            <option  v-for="(value,key) in dictionary.operation" :value="key">{{value}}</option>
+                        </select>
+                    </div>
 
-                <div class="form-group datetime">
-                    <label>
-                        <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time" class="form-control form_datetime">
-                    </label>
-                    <label>
-                        <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time" class="form-control form_datetime">
-                    </label>
-                </div>
-                <div class="input-group bootstrap-timepicker">
-                    <input type="text" class="form-control" id="search_info" placeholder="请点击选择操作人" readonly
-                           v-model="user_name"  @click="selete">
-                    <span class="input-group-btn">
+                    <div class="form-group datetime">
+                        <label>
+                            <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time" class="form-control form_datetime">
+                        </label>
+                        <label>
+                            <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time" class="form-control form_datetime">
+                        </label>
+                    </div>
+                    <div class="input-group bootstrap-timepicker" style="margin-bottom: 0;">
+                        <input type="text" class="form-control" id="search_info" placeholder="请点击选择操作人" readonly
+                               v-model="user_name"  @click="selete">
+                        <span class="input-group-btn">
                         <button class="btn btn-success" id="search" type="button" @click="search">搜索</button>
                     </span>
-                </div>
-                <div class="input-group reset" >
-                    <button class="btn btn-success" type="button" @click="reset">重置</button>
-                </div>
-            </form>
-        </div>
+                    </div>
+                    <div class="input-group reset" >
+                        <button class="btn btn-success" type="button" @click="reset">重置</button>
+                    </div>
+                </form>
+            </div>
+        </section>
 
         <!--表格-->
         <div>
@@ -246,8 +248,10 @@
     }
     @media (min-width : 768px) {
         .reset{
-            margin-top: -18px;
             margin-left: 15px;
         }
+    }
+    .clearFix input, .clearFix select  {
+        margin-bottom: 0;
     }
 </style>

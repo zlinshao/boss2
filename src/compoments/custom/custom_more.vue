@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>客户管理</li>
+            <li>客户详情</li>
+        </ol>
         <!--头部-->
         <section class="panel">
             <div class="panel-body">

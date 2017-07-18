@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>房屋管理</li>
+            <li>已收房源</li>
+        </ol>
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
@@ -118,8 +122,8 @@
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a v-if="top == 1" @click="stick(houseSeleted,top)">置顶</a></h5>
-                            <h5><a v-if="top == 2" @click="stick(houseSeleted,top)">取消置顶</a></h5>
+                            <h5><a v-if="top == 1" @click="stick(houseSeleted,top)"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a></h5>
+                            <h5><a v-if="top == 2" @click="stick(houseSeleted,top)"><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -149,7 +153,7 @@
                             <th class="text-center">负责人</th>
                             <th class="text-center">锁定</th>
                             <th class="text-center">置顶</th>
-                            <th class="text-center">更多</th>
+                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -179,12 +183,12 @@
                             </td>
                             <td class="text-center">
                                 <a v-if="item.top===1" @click="stick(item.id,2)">
-                                    <i class="fa fa-paperclip"></i>
+                                    <i class="fa fa-thumb-tack"></i>
                                 </a>
                             </td>
                             <td class="text-center">
                                 <router-link :to="{path:'/collectDetail',query: {CollectId: item.id}}">
-                                    更多
+                                    详情
                                 </router-link>
                             </td>
                         </tr>

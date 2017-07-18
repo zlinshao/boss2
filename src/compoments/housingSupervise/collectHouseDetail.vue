@@ -1,13 +1,17 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>房屋管理</li>
+            <li><router-link to="/okCollect">已收房源</router-link></li>
+            <li>已收房源详情</li>
+        </ol>
         <!--头部-->
         <section class="panel">
             <div class="panel-body">
                 <header>
                     <h4 class="row">
-                        <router-link to="/NoCollect" tag="button" class="btn btn-white"
-                                     style="border: none">首页</router-link>
-                        已收房屋信息
+
+                        <i class="fa fa-home"></i>&nbsp;已收房屋信息
                         <a data-toggle="modal" class="pull-right"  @click="editcollect">编辑</a>
                     </h4>
                 </header>
@@ -67,10 +71,10 @@
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a data-toggle="tab" href="#home" aria-expanded="true">收房合同</a>
+                                <a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-file-text"></i>&nbsp;收房合同</a>
                             </li>
                             <li class="">
-                                <a data-toggle="tab" href="#about" aria-expanded="false">租房合同</a>
+                                <a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-file-text"></i>&nbsp;租房合同</a>
                             </li>
 
                         </ul>
@@ -260,7 +264,7 @@
                 <section class="panel roll box">
                     <div class="panel-body client_info">
                         <header>
-                            <h4>房屋信息</h4>
+                            <h4><i class="fa fa-home"></i>&nbsp;房屋信息</h4>
                         </header>
                         <div class="row"  v-for="item in houseDetail">
                             <div class="col-md-12">
@@ -456,7 +460,7 @@
         background:#f0f0f8;
     }
     .box::-webkit-scrollbar-thumb{
-        background:#80d3d9;
+        background:#e4393c;
         border-radius:4px;
     }
     .paddingTop {
