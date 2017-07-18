@@ -83,7 +83,7 @@
             </div>
         </div>
         <!--分页-->
-        <Page :pg="pages" @pag="pageSearch"></Page>
+        <Page :pg="pages" @pag="pageSearch" :beforePage="page"></Page>
         <Organize :configure="configure" @Staff="isSelect"></Organize>
         <Status :state='info'></Status>
     </div>
