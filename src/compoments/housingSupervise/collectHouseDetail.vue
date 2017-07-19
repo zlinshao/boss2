@@ -2,7 +2,9 @@
     <div>
         <ol class="breadcrumb">
             <li>房屋管理</li>
-            <li><router-link to="/okCollect">已收房源</router-link></li>
+            <li>
+                <router-link to="/okCollect">已收房源</router-link>
+            </li>
             <li>已收房源详情</li>
         </ol>
         <!--头部-->
@@ -12,27 +14,30 @@
                     <h4 class="row">
 
                         <i class="fa fa-home"></i>&nbsp;已收房屋信息
-                        <a data-toggle="modal" class="pull-right"  @click="editcollect">编辑</a>
+                        <a data-toggle="modal" class="pull-right" @click="editcollect">编辑</a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info" v-for="item in houseDetail">
                     <div>
-                        <div  class="col-md-12">
+                        <div class="col-md-12">
                             <div class="col-md-4">
-                                <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
+                                <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span>
+                                </div>
                                 <div>
                                     <span class="text-primary">房型：</span>
                                     <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
                                 </div>
                                 <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
-                                <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
+                                <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span>
+                                </div>
                                 <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
                             </div>
                             <div class="col-md-8">
                                 <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
                                 <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
                                 <div><span class="text-primary">参考租金：</span><span>{{item.reference}} 元</span></div>
-                                <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span></div>
+                                <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span>
+                                </div>
                             </div>
                         </div>
                         <div v-if="open_on" class="col-md-12">
@@ -41,12 +46,20 @@
                                     <span class="text-primary">配套设备：</span>
                                     <span v-for="list in item.facility">{{dictionary.facility[list]}}&nbsp; &nbsp;</span>
                                 </div>
-                                <div><span class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span></div>
-                                <div><span class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span></div>
-                                <div><span class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span></div>
+                                <div><span
+                                        class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span>
+                                </div>
+                                <div><span
+                                        class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span>
+                                </div>
+                                <div><span
+                                        class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span>
+                                </div>
                             </div>
                             <div class="col-md-8">
-                                <div><span class="text-primary">房屋类型：</span><span>{{dictionary.house_type[item.house_type]}}</span></div>
+                                <div><span
+                                        class="text-primary">房屋类型：</span><span>{{dictionary.house_type[item.house_type]}}</span>
+                                </div>
                                 <div><span class="text-primary">水费卡号：</span><span>{{item.water_card_num}}</span></div>
                                 <div><span class="text-primary">电费卡号：</span><span>{{item.elec_card_num}}</span></div>
                                 <div><span class="text-primary">燃气卡号：</span><span>{{item.gas_card_num}}</span></div>
@@ -266,7 +279,7 @@
                         <header>
                             <h4><i class="fa fa-home"></i>&nbsp;房屋信息</h4>
                         </header>
-                        <div class="row"  v-for="item in houseDetail">
+                        <div class="row" v-for="item in houseDetail">
                             <div class="col-md-12">
                                 <div id="pirture">
                                     <div>
@@ -339,12 +352,12 @@
                     newState: false,                //新增房屋
                     sss: false
                 },
-                houseId:'',
-                houseDetail:[],
-                houseRevise:[],
-                dictionary:[],
-                largePic : [],
-                srcs : {}
+                houseId: '',
+                houseDetail: [],
+                houseRevise: [],
+                dictionary: [],
+                largePic: [],
+                srcs: {}
             }
         },
         mounted (){
@@ -355,10 +368,10 @@
             //字典列表
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
-                    this.dictionary=res.data;
-                    this.$http.get('core/villa/readvilla/id/'+this.houseId).then((res) => {
+                    this.dictionary = res.data;
+                    this.$http.get('core/villa/readvilla/id/' + this.houseId).then((res) => {
                         this.houseDetail.push(res.data.data);
-                        this.houseRevise=res.data.data;
+                        this.houseRevise = res.data.data;
                     });
 
                 });
@@ -368,18 +381,18 @@
                 this.open_on = !this.open_on
             },
             alreadyRevise(val){
-                this.houseDetail=[];
-                this.houseRevise=[];
-                this.$http.get('core/villa/readvilla/id/'+val).then((res) => {
+                this.houseDetail = [];
+                this.houseRevise = [];
+                this.$http.get('core/villa/readvilla/id/' + val).then((res) => {
                     this.houseDetail.push(res.data.data);
-                    this.houseRevise=res.data.data;
+                    this.houseRevise = res.data.data;
                 });
             },
-            showLargePic(name,index){
+            showLargePic(name, index){
                 this.srcs = this.houseDetail[0].album[name];
                 this.largePic = [{
-                    src : this.srcs,
-                    i : index
+                    src: this.srcs,
+                    i: index
                 }];
                 $('#largePic').modal('show');
             },
@@ -396,17 +409,20 @@
 
 <style scoped>
 
-    .width100{
+    .width100 {
         width: 100px;
         text-align: right;
     }
+
     h4 {
         border-bottom: 1px solid #aaaaaa;
         padding: 0 30px 8px;
     }
-    h4 > a{
+
+    h4 > a {
         margin-left: 10px;
     }
+
     .contract_info td {
         border-top: 0;
     }
@@ -437,9 +453,11 @@
         text-align: right;
         min-width: 100px;
     }
-    #pirture>div{
+
+    #pirture > div {
         padding: 10px;
     }
+
     .roll {
         height: 500px;
         overflow: auto;
@@ -449,25 +467,31 @@
         margin-bottom: 0;
         height: 10px;
     }
+
     .box::-webkit-scrollbar {
-        width:8px;
-        height:300px;
+        width: 8px;
+        height: 300px;
     }
-    .box::-webkit-scrollbar-button    {
-        background-color:#f0f0f8;
+
+    .box::-webkit-scrollbar-button {
+        background-color: #f0f0f8;
     }
-    .box::-webkit-scrollbar-track     {
-        background:#f0f0f8;
+
+    .box::-webkit-scrollbar-track {
+        background: #f0f0f8;
     }
-    .box::-webkit-scrollbar-thumb{
-        background:#e4393c;
-        border-radius:4px;
+
+    .box::-webkit-scrollbar-thumb {
+        background: rgba(121, 121, 121, .2);
+        border-radius: 4px;
     }
+
     .paddingTop {
         padding-top: 15px;
     }
-    @media(max-width: 768px) {
-        .roll{
+
+    @media (max-width: 768px) {
+        .roll {
             overflow: visible;
             height: 100%;
         }

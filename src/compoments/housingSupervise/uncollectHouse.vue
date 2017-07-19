@@ -63,22 +63,22 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
+                    <div class="pro-sort" style="height: 39px;">
+                        <a class="btn btn-success" @click="reset">&nbsp;重置
+                        </a>
+                    </div>
+                    <div class="pull-right" style="margin-left: 10px;height: 39px;">
+                        <a class="btn btn-success" @click="collectAdd"><i
+                                class="fa fa-plus-square"></i>&nbsp;增加房屋
+                        </a>
+                    </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" @click="search">搜索</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="pull-right" style="margin-left: 10px">
-                        <a class="btn btn-success" @click="collectAdd"><i
-                                class="fa fa-plus-square"></i>&nbsp;增加房屋
-                        </a>
-                    </div>
-                    <div class="pull-right">
-                        <a class="btn btn-success" @click="reset">&nbsp;重置
-                        </a>
                     </div>
                 </div>
                 <!--选中-->

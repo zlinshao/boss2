@@ -45,6 +45,7 @@ import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
 import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
+import Country from './compoments/common/country.vue'           //国家
 import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
 
 import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
@@ -300,5 +301,10 @@ export default[
         path: '/reportedRenting',
         name: 'ReportedRenting',
         component: ReportedRenting
+    },
+    {
+        path: '/country',
+        name: 'country',
+        component: Country
     }
 ]

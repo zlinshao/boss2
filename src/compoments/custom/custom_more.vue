@@ -489,7 +489,7 @@
     }
 
     .roll::-webkit-scrollbar-thumb {
-        background: #E4393C;
+        background: rgba(121,121,121,.2);
         border-radius: 10px;
     }
 </style>

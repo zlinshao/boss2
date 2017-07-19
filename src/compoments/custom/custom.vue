@@ -20,7 +20,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                             <select class="form-control" v-model="sea_intention" @change="search_c">
+                            <select class="form-control" v-model="sea_intention" @change="search_c">
                                 <option value="" selected="selected">客户意向</option>
                                 <option v-for="(val, index) in select_list.customer_will" :value="index">{{val}}
                                 </option>
@@ -85,23 +85,30 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('daily')"><i class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('daily')"><i
+                                    class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('inter')"><i class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('inter')"><i
+                                    class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i
+                                    class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
+                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
+                            </h5>
                         </li>
                         <li>
-                            <h5><a href="#customModel" @click="customers_rev('rev')"><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
+                            <h5><a href="#customModel" @click="customers_rev('rev')"><i class="fa fa-pencil"></i>&nbsp;编辑</a>
+                            </h5>
                         </li>
                         <li>
-                            <h5><a v-if="top === 1" @click="stick(pitch,top)"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a></h5>
-                            <h5><a v-if="top === 2" @click="stick(pitch,top)"><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a></h5>
+                            <h5><a v-if="top === 1" @click="stick(pitch,top)"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
+                            </h5>
+                            <h5><a v-if="top === 2" @click="stick(pitch,top)"><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -113,10 +120,12 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
+                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i
+                                    class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
+                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -259,7 +268,7 @@
                     //失败信息 ***
                     error: ''
                 },
-                isShow:false,
+                isShow: false,
             }
         },
         created (){
@@ -291,10 +300,10 @@
                             this.custom_list = res.data.data.list;
                             this.paging = res.data.data.pages;
                             this.beforePage = 1;
-                            this.isShow=false;
+                            this.isShow = false;
                         } else {
                             this.custom_list = [];
-                            this.isShow=true;
+                            this.isShow = true;
                             //失败信息 ***
                             this.info.error = res.data.msg;
                             //显示失败弹窗 ***
@@ -338,10 +347,10 @@
                         if (res.data.code === '70030') {
                             this.custom_list = res.data.data.list;
                             this.paging = res.data.data.pages;
-                            this.isShow=false;
+                            this.isShow = false;
                         } else {
                             this.custom_list = [];
-                            this.isShow=true;
+                            this.isShow = true;
                             //失败信息 ***
                             this.info.error = res.data.msg;
                             //显示失败弹窗 ***
@@ -353,7 +362,7 @@
 
 //            搜索
             sea_cus (val){
-                if(this.Trid === true){
+                if (this.Trid === true) {
                     this.sea_status = '';
                     this.sea_intention = '';
                     this.sea_id = '';
@@ -374,10 +383,10 @@
                     if (res.data.code === '70030') {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
-                        this.isShow=false;
+                        this.isShow = false;
                     } else {
                         this.custom_list = [];
-                        this.isShow=true;
+                        this.isShow = true;
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -473,10 +482,9 @@
         margin-bottom: 0;
     }
 
-    .panel{
+    .panel {
         padding-top: 0;
     }
-
 
     .pro-sort {
         padding-right: 6px;
