@@ -132,7 +132,7 @@
                         <td class="icon">
                             <i class="fa fa-lock" v-if="isLock"></i>
                             <i class="fa fa-unlock" v-else="isLock"></i>
-                            <i class="fa fa-paperclip"></i>
+                            <i class="fa fa-thumb-tack"></i>
                         </td>
 
                     </tr>
@@ -157,7 +157,7 @@
                         <td class="icon">
                             <i class="fa fa-lock" v-if="isLock"></i>
                             <i class="fa fa-unlock" v-else="isLock"></i>
-                            <i class="fa fa-paperclip"></i>
+                            <i class="fa fa-thumb-tack"></i>
                         </td>
 
                     </tr>
