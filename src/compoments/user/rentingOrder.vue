@@ -28,7 +28,7 @@
                                 <h5><a>已选中&nbsp;{{distribute.length}}&nbsp;项</a></h5>
                             </li>
                             <li>
-                                <h5 @click="distribution"><a>分配</a></h5>
+                                <h5 @click="distribution"><a><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
                             </li>
                         </ul>
                     </div>

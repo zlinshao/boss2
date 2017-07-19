@@ -6,80 +6,121 @@
             <li>周期表</li>
             <li class="active">小组</li>
         </ol>
+        <section class="panel">
+            <div class="panel-body">
+                <form class="form-inline clearFix" role="form">
+                    <div class="input-group bootstrap-timepicker" style="margin: 0 15px 0 0;">
+                        <button class="btn btn-primary" type="button" @click="select">筛选部门</button>
+                    </div>
 
-        <div class="panel col-lg-12">
-            <form class="form-inline clearFix" role="form">
+                    <div class="padd">
+                        <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                    </div>
 
+                    <div class="dropdown form-group">
+                        <select name="" class="form-control" v-model="params.periodic" style="margin: 0 15px 0 0;">
+                            <option :value="value" v-for="(key,value) in dict">{{key}}</option>
+                        </select>
+                    </div>
 
-                <div class="input-group bootstrap-timepicker">
-                    <button class="btn btn-primary" type="button" @click="select">筛选部门</button>
-                </div>
-                <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
-
-
-                <div class="dropdown form-group">
-                    <select name="" class="form-control" v-model="params.periodic">
-                        <option :value="value" v-for="(key,value) in dict">{{key}}</option>
-                    </select>
-                </div>
-
-                <div class="input-group" style="margin-bottom: 18px;" @click="search">
-                    <button type="button" class="btn btn-success">搜索</button>
-                </div>
-            </form>
-            <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
-                <h4>部门</h4>
-                <span class="tag" v-for="item in filtrate.departmentList">
+                    <div class="input-group" @click="search">
+                        <button type="button" class="btn btn-success">搜索</button>
+                    </div>
+                </form>
+                <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
+                    <h4>部门</h4>
+                    <span class="tag" v-for="item in filtrate.departmentList">
                         <span >{{item.name}}&nbsp;&nbsp;</span>
                         <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
                     </span>
-            </div>
-            <div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                <h4>员工</h4>
-                <span class="tag" v-for="item in filtrate.staffList">
+                </div>
+                <div class="tagsinput " v-show="filtrate.staffList.length!=0">
+                    <h4>员工</h4>
+                    <span class="tag" v-for="item in filtrate.staffList">
                         <span >{{item.name}}&nbsp;&nbsp;</span>
                         <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
                     </span>
+                </div>
             </div>
+        </section>
+        <!--<div class="panel col-lg-12">-->
+            <!--<form class="form-inline clearFix" role="form">-->
+                <!--<div class="input-group bootstrap-timepicker">-->
+                    <!--<button class="btn btn-primary" type="button" @click="select">筛选部门</button>-->
+                <!--</div>-->
+
+                <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
 
 
-        </div>
+                <!--<div class="dropdown form-group">-->
+                    <!--<select name="" class="form-control" v-model="params.periodic">-->
+                        <!--<option :value="value" v-for="(key,value) in dict">{{key}}</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+
+                <!--<div class="input-group" style="margin-bottom: 18px;" @click="search">-->
+                    <!--<button type="button" class="btn btn-success">搜索</button>-->
+                <!--</div>-->
+            <!--</form>-->
+            <!--<div class="tagsinput" v-show="filtrate.departmentList.length!=0">-->
+                <!--<h4>部门</h4>-->
+                <!--<span class="tag" v-for="item in filtrate.departmentList">-->
+                        <!--<span >{{item.name}}&nbsp;&nbsp;</span>-->
+                        <!--<a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>-->
+                    <!--</span>-->
+            <!--</div>-->
+            <!--<div class="tagsinput " v-show="filtrate.staffList.length!=0">-->
+                <!--<h4>员工</h4>-->
+                <!--<span class="tag" v-for="item in filtrate.staffList">-->
+                        <!--<span >{{item.name}}&nbsp;&nbsp;</span>-->
+                        <!--<a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>-->
+                    <!--</span>-->
+            <!--</div>-->
+
+
+        <!--</div>-->
 
         <!--表格-->
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel table table-responsive">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">城市</th>
+                            <th class="text-center">部门</th>
+                            <th class="text-center">组长</th>
+                            <th class="text-center">实际业绩</th>
+                            <th class="text-center">溢出业绩</th>
+                            <!--<th class="text-center">差额</th>-->
+                            <th class="text-center">收房/套</th>
+                            <th class="text-center">租房/套</th>
+                        </tr>
+                        </thead>
+                        <tbody id="rentingId">
+                        <tr v-show="myData.length!=0" class="text-center" v-for="item in myData" @click="showGroupDetail(item.department_id,item.city,item.department_name,item.marshal)">
+                            <td>{{item.city}}</td>
+                            <td>{{item.department_name}}</td>
+                            <td>{{item.marshal}}</td>
+                            <td>{{item.real_achv}}</td>
+                            <td>{{item.overflow_achv}}</td>
+                            <!--<td>差额</td>-->
+                            <td>{{item.collect}}</td>
+                            <td>{{item.rent}}</td>
+                        </tr>
+                        <tr v-show="isShow" class="text-center">
+                            <td colspan="7">暂无数据...</td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+
         <div class="col-lg-12">
-            <section class="panel table table-responsive">
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                    <tr>
-                        <th class="text-center">城市</th>
-                        <th class="text-center">部门</th>
-                        <th class="text-center">组长</th>
-                        <th class="text-center">实际业绩</th>
-                        <th class="text-center">溢出业绩</th>
-                        <!--<th class="text-center">差额</th>-->
-                        <th class="text-center">收房/套</th>
-                        <th class="text-center">租房/套</th>
-                    </tr>
-                    </thead>
-                    <tbody id="rentingId">
-                    <tr v-show="myData.length!=0" class="text-center" v-for="item in myData" @click="showGroupDetail(item.department_id,item.city,item.department_name,item.marshal)">
-                        <td>{{item.city}}</td>
-                        <td>{{item.department_name}}</td>
-                        <td>{{item.marshal}}</td>
-                        <td>{{item.real_achv}}</td>
-                        <td>{{item.overflow_achv}}</td>
-                        <!--<td>差额</td>-->
-                        <td>{{item.collect}}</td>
-                        <td>{{item.rent}}</td>
-                    </tr>
-                    <tr v-show="isShow" class="text-center">
-                        <td colspan="7">暂无数据...</td>
-                    </tr>
 
-
-                    </tbody>
-                </table>
-            </section>
         </div>
 
         <!--modal-->
@@ -148,6 +189,10 @@
     }
     .table-striped tbody tr{
         cursor: pointer;
+    }
+    div.padd {
+        display: inline-block;
+        padding: 0 15px 0 0;
     }
 </style>
 <script>

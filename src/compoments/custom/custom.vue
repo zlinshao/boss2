@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>客户管理</li>
+            <li>客户</li>
+        </ol>
         <!--客户-->
         <section class="panel">
             <div class="panel-body">
@@ -444,9 +448,11 @@
                     } else if (this.top === 2) {
                         this.top = 1;
                     }
+
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
+                        this.pitch = [];
                     });
                 });
             },
@@ -471,17 +477,6 @@
         padding-top: 0;
     }
 
-    .remind li {
-        float: left;
-    }
-
-    .remind li a {
-        padding: 0 10px;
-    }
-
-    .remind li + li a {
-        border-left: 1px solid #aaaaaa;
-    }
 
     .pro-sort {
         padding-right: 6px;

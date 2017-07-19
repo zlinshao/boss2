@@ -1,8 +1,8 @@
 <template>
-    <div class="datePickerContainer">
+    <div class="datePickerContainer form-group">
         <div v-if="range">
             <div class="input-group" v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="form-control" style="width:300px;">
+                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="form-control">
             </div>
 
             <div class="input-group mobileTimePicker" v-show="!isPC">
@@ -59,15 +59,17 @@
     </div>
 </template>
 <style scoped>
+    #reservation{
+        width: 250px;
+    }
     .datePickerContainer{
+        padding-top: 0;
         display: inline-block;
     }
-    .input-group {
-        margin-bottom: 18px
-    }
     .mobileTimePicker{
-        width: 300px;
+        width: 250px;
         position: relative;
+        /*padding-left: 13px;*/
     }
     .mobileTime{
         padding: 12px;

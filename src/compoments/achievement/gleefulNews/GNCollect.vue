@@ -6,175 +6,207 @@
             <li class="active">收房</li>
         </ol>
 
-        <div class="panel col-lg-12 clearFix">
-            <div v-show="operId==0">
+        <section class="panel clearFix">
+            <div class="panel-body">
 
-                <form class="form-inline clearFix" role="form">
-                    <!--<Cascade @change="getCascadeData"></Cascade>-->
-                    <div class="input-group bootstrap-timepicker">
-                        <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
-                    </div>
-                    <div class="form-group datetime">
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间"
-                                   class="form-control form_datetime">
-                        </label>
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间"
-                                   class="form-control form_datetime">
-                        </label>
-                    </div>
-                    <div class="input-group bootstrap-timepicker">
-                        <label class="sr-only" for="search_info">搜索</label>
-                        <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
-                               v-model="params.search" @keydown.enter.prevent="search">
-                        <span class="input-group-btn">
-                        <button class="btn btn-success" id="search" type="button" @click="search"><i
-                                class="fa fa-search"></i></button>
-                    </span>
-                    </div>
-                    <div class="form-group pull-right">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addGleefulNews">
-                            <i class="fa fa-plus-square"></i>&nbsp;新增收房喜报
-                        </a>
-                    </div>
-                </form>
+                <div v-show="operId==0">
+
+                    <form class="form-inline clearFix" role="form">
+                        <!--<Cascade @change="getCascadeData"></Cascade>-->
+                        <div class="input-group clearFix">
+                            <button class="btn btn-primary " type="button" @click="select" style="margin-right: 15px;">
+                                筛选部门及员工
+                            </button>
+                        </div>
+                        <!--<div class="form-group datetime">
+
+                            <label>
+                                <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间"
+                                       class="form-control form_datetime">
+                            </label>
+                            <label>
+                                <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间"
+                                       class="form-control form_datetime">
+                            </label>
+                        </div>-->
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </div>
 
 
-                <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
-                    <h4>部门</h4>
-                    <span class="tag" v-for="item in filtrate.departmentList">
+                        <div class="input-group clearFix">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
+                                   v-model="params.search" @keydown.enter.prevent="search">
+                            <span class="input-group-btn">
+                            <button class="btn btn-success" id="search" type="button" @click="search"><i
+                                    class="fa fa-search"></i></button>
+                        </span>
+                        </div>
+                        <div class="form-group pull-right">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#myModal"
+                               @click="addGleefulNews">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增收房喜报
+                            </a>
+                        </div>
+                    </form>
+
+
+                    <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
+                        <h4>部门</h4>
+                        <span class="tag" v-for="item in filtrate.departmentList">
                         <span>{{item.name}}&nbsp;&nbsp;</span>
                         <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
                     </span>
-                </div>
-                <div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                    <h4>员工</h4>
-                    <span class="tag" v-for="item in filtrate.staffList">
+                    </div>
+                    <div class="tagsinput " v-show="filtrate.staffList.length!=0">
+                        <h4>员工</h4>
+                        <span class="tag" v-for="item in filtrate.staffList">
                         <span>{{item.name}}&nbsp;&nbsp;</span>
                         <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
                     </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="choosed" v-show="operId!=0">
-                <ul class="clearFix">
-                    <li><span>已选中&nbsp;1&nbsp;项</span></li>
-                    <li>
-                        <span v-if="statusId!=0" :class="{'status' : true,'yellow':statusId===1,'orange':statusId===2,'green':statusId===3,'gray':statusId===4}">{{statusName}}</span>
-                    </li>
-                    <li>
-                        <a @click="oper">编辑</a>
-                    </li>
-                    <li>
-                        <a data-toggle="modal" data-target="#delete">删除</a>
-                    </li>
-                </ul>
+
+                <div v-if="operId!=0" class="col-lg-12 remind">
+                    <ul class="">
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <!--<li>
+                            <a v-if="statusId!=0">{{statusName}}</a>
+                        </li>-->
+                        <li>
+                            <h5><a @click="oper"><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
+                        </li>
+                        <li>
+                            <h5><a data-toggle="modal" data-target="#delete"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a>
+                            </h5>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="remind" v-show="operId!=0">
+                     <ul class="clearFix">
+                         <li><a>已选中&nbsp;1&nbsp;项</a></li>
+                         &lt;!&ndash;<li>
+                             <a v-if="statusId!=0">{{statusName}}</a>
+                         </li>&ndash;&gt;
+                         <li>
+                             <a @click="oper"><i class="fa fa-pencil"></i>&nbsp;编辑</a>
+                         </li>
+                         <li>
+                             <a data-toggle="modal" data-target="#delete"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a>
+                         </li>
+                     </ul>
+                 </div>-->
             </div>
-        </div>
+        </section>
 
 
         <!--表格-->
-        <div class="col-lg-12">
-            <section class="panel table table-responsive">
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-center">喜报日期</th>
-                        <th class="text-center">收房开单人</th>
-                        <th class="text-center">所属部门</th>
-                        <th class="text-center">房屋地址</th>
-                        <th class="text-center">门牌号</th>
-                        <th class="text-center">房型</th>
-                        <th class="text-center">收房价格</th>
-                        <th class="text-center">年限</th>
-                        <th class="text-center">付款方式</th>
-                        <th class="text-center">应付款项</th>
-                        <th class="text-center">实付款项</th>
-                        <th class="text-center">剩余款项</th>
-                        <th class="text-center">补齐时间</th>
-                        <th class="text-center">空置期天数</th>
-                        <th class="text-center">房屋来源</th>
-                        <th class="text-center">特殊款</th>
-                        <th class="text-center">组长备注</th>
-                        <th class="text-center">财务备注</th>
-                        <!--<th class="text-center">收实际业绩</th>
-                        <th class="text-center">收溢出业绩</th>-->
-                        <th class="text-center">喜报状态</th>
-                    </tr>
-                    </thead>
-                    <tbody id="rentingId">
-                    <tr v-show="cont.myData.length!==0" :class="{'lightYellow' : operId===item.id , 'text-center' : true}" :key="item.id" v-for="(item,index) in cont.myData">
-                        <td>
-                            <input type="checkbox" :value="item.id" :checked="operId===item.id"
-                                   @click="changeIndex($event,item.id,index,item.status)">
-                        </td>
-                        <td>{{item.create_time}}</td>
-                        <td>{{item.real_name}}</td>
-                        <td>{{dict.department_id[item.department_id]}}</td>
-                        <!--<td>{{item.address}}</td>-->
-                        <td>{{item.village_name}}</td>
-                        <td>{{item.building}}-{{item.house_number}}</td>
-                        <td>{{item.rooms.rooms}}室{{item.rooms.halls}}厅{{item.rooms.toilets}}卫</td>
-                        <!--<td>{{item.building}}-{{item.room}}</td>-->
-                        <!--<td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>-->
-                        <!--<td>{{item.price}}</td>-->
-                        <td class="dropdown">
-                            <!--<a tabindex="0" class="btn btn-sm btn-primary" role="button" data-toggle="popover" data-trigger="focus" title="每年价格" data-content="aaa<br/>bbb">价格</a>-->
-                            <button class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">{{item.price[0]}}
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-center">
-                                <li v-for="price in item.price">{{price}}</li>
-                            </ul>
-                        </td>
-                        <td>{{item.years}}</td>
-                        <td>{{dict.pay_type[item.pay_type]}}</td>
-                        <td>{{item.price_should}}</td>
-                        <td>{{item.price_paid}}</td>
-                        <td>{{item.price_remain}}</td>
-                        <td>{{item.complete_date}}</td>
-                        <td>{{item.vac_sum_days}}</td>
-                        <td>{{dict.is_medi[item.is_medi]}}</td>
-                        <!--<td>{{item.is_medi==1?"是":"否"}}</td>-->
-                        <!--<td>{{item.realAchieve}}</td>
-                        <td>{{item.moreAchieve}}</td>-->
-                        <td>{{item.special_price}}</td>
-                        <td>{{item.remark_marshal}}</td>
-                        <td>{{item.remark_accountant}}</td>
-                        <td class="dropdown">
-                            <!--<button class="btn btn-primary btn-sm" @click="changeStatus(item.status,item.id)">{{dict.status[item.status]}}</button>-->
-                            <button type="button"
-                                    :class="{'btn':true,'dropdown-toggle':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3,'gray':item.status===4}"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{dict.status[item.status]}}
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=4">
-                                <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal"
-                                    data-target="#confirm">通过一审
-                                </li>
-                                <li v-show="item.status==2" @click="reverify(item.id)" data-toggle="modal"
-                                    data-target="#confirm">通过二审
-                                </li>
-                                <li v-show="item.status==2" @click="revert(item.id)" data-toggle="modal"
-                                    data-target="#confirm">撤销审核
-                                </li>
-                                <li v-show="item.status==3" @click="verify(item.id)" data-toggle="modal"
-                                    data-target="#confirm">返回一审
-                                </li>
-                                <li @click="cancel(item.id)" data-toggle="modal" data-target="#confirm">退单</li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr class="text-center" v-show="isShow">
-                        <td colspan="20">暂无数据...</td>
-                    </tr>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel table-responsive">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">喜报日期</th>
+                            <th class="text-center">收房开单人</th>
+                            <th class="text-center">所属部门</th>
+                            <th class="text-center">房屋地址</th>
+                            <th class="text-center">门牌号</th>
+                            <th class="text-center">房型</th>
+                            <th class="text-center">收房价格</th>
+                            <th class="text-center">年限</th>
+                            <th class="text-center">付款方式</th>
+                            <th class="text-center">应付款项</th>
+                            <th class="text-center">实付款项</th>
+                            <th class="text-center">剩余款项</th>
+                            <th class="text-center">补齐时间</th>
+                            <th class="text-center">空置期天数</th>
+                            <th class="text-center">房屋来源</th>
+                            <th class="text-center">特殊款</th>
+                            <th class="text-center">组长备注</th>
+                            <th class="text-center">财务备注</th>
+                            <!--<th class="text-center">收实际业绩</th>
+                            <th class="text-center">收溢出业绩</th>-->
+                            <th class="text-center">喜报状态</th>
+                        </tr>
+                        </thead>
+                        <tbody id="rentingId">
+                        <tr v-show="cont.myData.length!==0"
+                            :class="{'lightYellow' : operId===item.id , 'text-center' : true}" :key="item.id"
+                            v-for="(item,index) in cont.myData">
+                            <td>
+                                <input type="checkbox" :value="item.id" :checked="operId===item.id"
+                                       @click="changeIndex($event,item.id,index,item.status)">
+                            </td>
+                            <td>{{item.create_time}}</td>
+                            <td>{{item.real_name}}</td>
+                            <td>{{dict.department_id[item.department_id]}}</td>
+                            <!--<td>{{item.address}}</td>-->
+                            <td>{{item.village_name}}</td>
+                            <td>{{item.building}}-{{item.house_number}}</td>
+                            <td>{{item.rooms.rooms}}室{{item.rooms.halls}}厅{{item.rooms.toilets}}卫</td>
+                            <!--<td>{{item.building}}-{{item.room}}</td>-->
+                            <!--<td>{{item.house_type.rooms}}室{{item.house_type.halls}}厅{{item.house_type.toilets}}卫</td>-->
+                            <!--<td>{{item.price}}</td>-->
+                            <td class="dropdown">
+                                <!--<a tabindex="0" class="btn btn-sm btn-primary" role="button" data-toggle="popover" data-trigger="focus" title="每年价格" data-content="aaa<br/>bbb">价格</a>-->
+                                <button class="btn btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">{{item.price[0]}}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-center">
+                                    <li v-for="price in item.price">{{price}}</li>
+                                </ul>
+                            </td>
+                            <td>{{item.years}}</td>
+                            <td>{{dict.pay_type[item.pay_type]}}</td>
+                            <td>{{item.price_should}}</td>
+                            <td>{{item.price_paid}}</td>
+                            <td>{{item.price_remain}}</td>
+                            <td>{{item.complete_date}}</td>
+                            <td>{{item.vac_sum_days}}</td>
+                            <td>{{dict.is_medi[item.is_medi]}}</td>
+                            <!--<td>{{item.is_medi==1?"是":"否"}}</td>-->
+                            <!--<td>{{item.realAchieve}}</td>
+                            <td>{{item.moreAchieve}}</td>-->
+                            <td>{{item.special_price}}</td>
+                            <td>{{item.remark_marshal}}</td>
+                            <td>{{item.remark_accountant}}</td>
+                            <td class="dropdown">
+                                <!--<button class="btn btn-primary btn-sm" @click="changeStatus(item.status,item.id)">{{dict.status[item.status]}}</button>-->
+                                <button type="button"
+                                        :class="{'btn':true,'btn-sm':true,'dropdown-toggle':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3,'gray':item.status===4}"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{dict.status[item.status]}}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" v-show="item.status!=4">
+                                    <li v-show="item.status==1" @click="verify(item.id)" data-toggle="modal"
+                                        data-target="#confirm">通过一审
+                                    </li>
+                                    <li v-show="item.status==2" @click="reverify(item.id)" data-toggle="modal"
+                                        data-target="#confirm">通过二审
+                                    </li>
+                                    <li v-show="item.status==2" @click="revert(item.id)" data-toggle="modal"
+                                        data-target="#confirm">撤销审核
+                                    </li>
+                                    <li v-show="item.status==3" @click="verify(item.id)" data-toggle="modal"
+                                        data-target="#confirm">返回一审
+                                    </li>
+                                    <li @click="cancel(item.id)" data-toggle="modal" data-target="#confirm">退单</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="20">暂无数据...</td>
+                        </tr>
 
 
-                    </tbody>
-                </table>
-            </section>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
 
 
@@ -217,7 +249,8 @@
                             <div class="form-group clearFix">
                                 <label class="col-sm-3 control-label">房屋地址:</label>
                                 <div class="col-sm-8 input-group">
-                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name" data-toggle="modal" data-target="#selectHouse">
+                                    <input type="text" class="form-control" readonly v-model="formData.villa_id.name"
+                                           data-toggle="modal" data-target="#selectHouse">
                                     <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                                 </div>
                             </div>
@@ -400,6 +433,7 @@
     import Delete from '../../common/delete.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
+    import DatePicker from '../../common/datePicker.vue'
     //    import ChooseAddress from '../../common/chooseAddress.vue'
     import Confirm from '../../common/confirm.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
@@ -408,10 +442,10 @@
     //    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
-        components: {Page, Delete, Status, FlexBox, Confirm, STAFF,SelectHouse},
+        components: {Page, Delete, Status, FlexBox, Confirm, STAFF, SelectHouse, DatePicker},
         data(){
             return {
-                isShow : false,
+                isShow: false,
                 operId: 0,
                 statusName: '',
                 statusId: '',
@@ -488,15 +522,21 @@
                 },
                 datas: [],
                 flexData: {
-                        name: '收房价格',
-                        maxLength: 10,
-                    },
+                    name: '收房价格',
+                    maxLength: 10,
+                },
                 filtrate: {
                     departmentList: [],
                     staffList: []
                 },
                 configure: [],
-                selectConfigure: ''
+                selectConfigure: '',
+                dateConfigure: [
+                    {
+                        range: true,
+                        needHour: true
+                    }
+                ]
 //                idArray:{departmentId:[],staffId:[]},
             }
         },
@@ -541,7 +581,7 @@
 //                    this.collectList = res.data.data.gleeFulCollect;
 //                    console.log(res.data);
 //                    alert(2);
-                    if (res.data.code == 18210){
+                    if (res.data.code == 18210) {
                         this.cont.myData = res.data.data.data;
                         this.paging = res.data.data.page;
                         this.isShow = false
@@ -789,7 +829,7 @@
 
             },
             modifyCollect(){
-                this.$http.put('glee/collect/'+this.operId,this.formData)
+                this.$http.put('glee/collect/' + this.operId, this.formData)
                     .then(
                         (res) => {
 //                            console.log(res);
@@ -980,9 +1020,12 @@
             getHouse(data){
 //                console.log(data);
                 this.formData.villa_id = {
-                    id : data.id,
-                    name : data.address
+                    id: data.id,
+                    name: data.address
                 }
+            },
+            getDate(data){
+                console.log(data)
             }
 
         }
@@ -1003,36 +1046,18 @@
         z-index: 1042;
     }
 
-    .form-group {
-        padding-top: 5px;
-    }
-
-    div.input-group {
-        padding: 0 15px;
+    div.padd {
+        display: inline-block;
+        padding: 0 15px 0 0;
     }
 
     label {
         line-height: 34px;
     }
 
-    .choosed {
-        /*padding-bottom: 1px;*/
-    }
-
-    .choosed ul li {
-        float: left;
-    }
-
-    /*.choosed ul li span{
-        display: inline-block;
-        vertical-align: middle;
-        !*font-size: 16px;*!
-        color: green;
-        font-weight: bold;
-    }*/
     ul.dropdown-menu {
         text-align: center;
-        font-size: 16px;
+        /*font-size: 12px;*/
     }
 
     ul.dropdown-menu li {
@@ -1044,27 +1069,19 @@
         background-color: #f2f2f2;
     }
 
-    .choosed ul li + li:before {
-        content: '|';
-        display: inline-block;
-        margin: 0 10px;
-    }
-
     tbody tr input[type=checkbox] {
         width: 17px;
         height: 17px;
     }
 
     td button {
-        /*display: inline-block;*/
-        /*padding: 8px 12px;*/
-        /*color: white;*/
+        background-color: white;
         user-select: none;
-        /*position: relative;*/
+
     }
 
     .table-responsive {
-        overflow: inherit;
+        overflow-y: inherit;
     }
 
     .yellow {
@@ -1082,12 +1099,22 @@
     .gray {
         background-color: #CCCCCC;
     }
-    .status{
+
+    .status {
         padding: 3px 8px;
         border-radius: 5px;
     }
-    .table-hover>tbody>tr.lightYellow{
+
+    .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
+    }
+
+    .pro-sort {
+        padding-right: 6px;
+    }
+
+    .pro-sort select.form-control {
+        padding: 6px 8px;
     }
 
     /*.panel span{

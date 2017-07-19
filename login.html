@@ -36,7 +36,7 @@
     <script src="src/boss.config.js"></script>
     <script>
         window.onload = function () {
-            if ( navigator.userAgent.indexOf('Edge') != -1 || ( navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1 )) {
+            if (navigator.userAgent.indexOf('Edge') != -1 || ( navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1 )) {
                 document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/download">下载</a></h4>');
             }
         }
@@ -66,15 +66,15 @@
                      style="margin-top: 30px;padding-left: 0;padding-right: 0;">
                     <div class="form-group">
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" placeholder="手机号" autofocus>
+                            <input id="phone" type="text" class="form-control" placeholder="手机号" autofocus>
                         </div>
                         <div class="col-sm-5">
                             <input type="button" class="identifying_code form-control btn btn-default" value="获取验证码">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
-                        <input type="text" class="form-control" placeholder="请输入验证码" v-if="code">
-                        <button class="btn btn-lg btn-login btn-block" type="submit">登陆</button>
+                        <input type="text" class="form-control" placeholder="请输入验证码" id="code" style="display: none;">
+                        <button id="landing" class="btn btn-lg btn-login btn-block" type="button">登陆</button>
                     </div>
                 </div>
 
@@ -92,7 +92,10 @@
 
 </body>
 <script>
-//    登陆
+    let url = window.location.href;
+    let url_index = url.split("login")[0];
+    console.log(url_index);
+    //    登陆
     $('#computer_PC').click(function () {
         $(this).css('display', 'none');
         $('.computer').css('display', 'none');
@@ -108,10 +111,50 @@
 
     });
 
-//    二维码
+    //    短信登陆
     $('.identifying_code').click(function () {
-        console.log(globalConfig.server);
+        let phone = $('#phone').val();
+        $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
+            url: globalConfig.server + 'auth/login/sms?phone=' + phone,
+            success: function (data) {
+                if (data.code === '80000') {
+                    $('#code').css('display', 'block');
+                    $('.identifying_code').attr('disabled', true);
+                    let time = 60;
+                    let t = setInterval(function () {
+                        if(time > 0){
+                            time--;
+                            if (time === 0) {
+                                $('.identifying_code').attr('disabled', false).val('获取验证码');
+                            }
+                            if (time > 0) {
+                                $('.identifying_code').attr('disabled', true).val(time + 's 后重发');
+                            }
+                        }
+                    }, 1000);
+
+                }
+            }
+        })
     });
+    $('#landing').click(function () {
+        let code = $('#code').val();
+        $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
+            url: globalConfig.server + 'auth/login/validateSms?code=' + code,
+            success: function (data) {
+                window.location.href = url_index;
+                console.log(data);
+            }
+        })
+    });
+
+    //    二维码
     let obj = DDLogin({
         id: "login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
         goto: encodeURIComponent("https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=" + globalConfig.appId

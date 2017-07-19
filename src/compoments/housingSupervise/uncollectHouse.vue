@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>房屋管理</li>
+            <li>未收房源</li>
+        </ol>
         <section class="panel">
             <div class="panel-body">
                 <div v-if="seletedId===0">
@@ -84,7 +88,7 @@
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#delete">删除</a></h5>
+                            <h5><a data-toggle="modal" href="#delete"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                     </ul>
                 </div>
