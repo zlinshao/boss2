@@ -812,8 +812,7 @@
                         });
                     }
                     if (res.data.code === '80035') {
-                        window.location.href = globalConfig.host + 'lockScreen';
-//                        window.location.href = 'http://localhost:8080/lockScreen';
+                        window.location.href = 'lockScreen';
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
