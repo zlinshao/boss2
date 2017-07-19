@@ -26,7 +26,13 @@
                                             <ul>
                                                 <li v-for="(item,index) in searchList" :class="{'hov':active1==index}"
                                                     @mouseover="changeClass(index,item)" @click="mouseAdd(item)">
-                                                    <div class="head"></div>
+                                                    <div class="head">
+                                                        <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                    </div>
+                                                    <div class="head">
+                                                        <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                    </div>
+
                                                     <div style="display: inline-block">
                                                         <p style="height:14px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
                                                         <p style="height:10px;font-size: 10px">
@@ -80,7 +86,12 @@
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==3" @click="select(item.id,item.real_name)"
                                                         :disabled='true'>
-                                                        <div class="head"></div>
+                                                        <div class="head">
+                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                        </div>
+                                                        <div class="head">
+                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                        </div>
                                                         <div style="display: inline-block">
                                                             <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
                                                             <p style="height:14px;font-size: 10px">
@@ -101,7 +112,12 @@
                                                         </div>
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==5" @click="select(item.id,item.real_name)">
-                                                        <div class="head"></div>
+                                                        <div class="head">
+                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                        </div>
+                                                        <div class="head">
+                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                        </div>
                                                         <div style="display: inline-block">
                                                             <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
                                                             <p style="height:14px;font-size: 10px">
@@ -122,7 +138,12 @@
                                                         </div>
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==7" @click="select(item.id,item.real_name)">
-                                                        <div class="head"></div>
+                                                        <div class="head">
+                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                        </div>
+                                                        <div class="head">
+                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                        </div>
                                                         <div style="display: inline-block">
                                                             <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
                                                             <p style="height:14px;font-size: 10px">
@@ -131,7 +152,12 @@
                                                         </div>
                                                     </li>
                                                     <li v-for="item in organizeList" v-if="type==8" @click="select(item.id,item.real_name)">
-                                                        <div class="head"></div>
+                                                        <div class="head">
+                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                        </div>
+                                                        <div class="head">
+                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                        </div>
                                                         <div style="display: inline-block">
                                                             <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
                                                             <p style="height:14px;font-size: 10px">
@@ -666,11 +692,13 @@
     }
     .head{
         display: inline-block;
+    }
+    .head img{
+        vertical-align:baseline;
+        display: inline-block;
         width: 38px;
         height: 38px;
         border-radius: 50%;
-        border: 1px solid #eeeeee;
-        background: url(../../../assets/img/chat-avatar.jpg) no-repeat -5px -5px;
     }
     p {
        margin: 2px;
