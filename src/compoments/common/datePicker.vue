@@ -217,9 +217,9 @@
                 }.bind(this));
 
                 $('.form_datetimeNeedHour').datetimepicker({
-                    minView: "hour",                     //选择日期后，不会再跳转去选择时分秒
+                    minView: "hour",                     //选择日期后，再跳转去选择时分秒
                     language: 'zh-CN',
-                    format: 'yyyy-mm-dd hh:ii',
+                    format: 'yyyy-mm-dd hh:00',
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
@@ -294,42 +294,17 @@
 //                alert(this.from+'&&'+this.to);
                 this.$emit('sendDate',this.from+'to'+this.to);
             },
-            ifNeedHour(){
-//                    alert(this.needHour);
-                if (this.needHour){
-                    $('.form_datetime').datetimepicker({
-                        minView: "hour",                     //选择日期后，不会再跳转去选择时分秒
-                        language: 'zh-CN',
-                        format: 'yyyy-mm-dd hh',
-                        todayBtn: 1,
-                        autoclose: 1,
-                        clearBtn: true,                     //清除按钮
-//                    endDate: new Date(),
-                    })
-                } else {
-                    $('.form_datetime').datetimepicker({
-                        minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                        language: 'zh-CN',
-                        format: 'yyyy-mm-dd',
-                        todayBtn: 1,
-                        autoclose: 1,
-                        clearBtn: true,                     //清除按钮
-//                    endDate: new Date(),
-                    })
-                }
-
-            },
             selectDay(num){
                 this.getDates();
                 let date;
-                if (num == 0){
-                    date = '';
+                if (num == 11){
+                    this.isCustom = true;
 //                    return;
                 } else {
                     this.isActive = num;
 //                console.log(this.isActive);
-                    if (num == 11){
-                        this.isCustom = true;
+                    if (num == 0){
+                        date = '';
                     } else {
                         this.isCustom = false;
                         if (num == 1){
@@ -368,10 +343,11 @@
                             date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
                         }
                     }
+                    this.mobilePickerDate = date;
+                    this.showPicker = false;
+                    this.$emit('sendDate',this.mobilePickerDate);
                 }
-                this.mobilePickerDate = date;
-                this.showPicker = false;
-                this.$emit('sendDate',this.mobilePickerDate);
+
 
             },
             saveMobilePicker(){

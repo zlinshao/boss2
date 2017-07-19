@@ -16,17 +16,6 @@
                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                     </div>
 
-
-
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success" @click="search">搜索</button>
-                    </div>
-
-                    <!--<div class="form-group pull-right">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal">
-                            立即签到
-                        </a>
-                    </div>-->
                 </form>
                 <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
                     <h4>部门</h4>
@@ -44,28 +33,52 @@
                 </div>
             </div>
         </section>
+
+
+        <!--列表-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="checkInContainer">
+
+                    <div class="checkInList" v-for="item in myData">
+                        <div class="checkInItem">
+                            <div class="person">
+                                <div class="image">
+                                    <img :src="item.avatar" alt="">
+                                </div>
+                                <div class="name">
+                                    <a>{{item.name}}</a>
+                                </div>
+                            </div>
+                            <div class="position">
+                                <i class="fa fa-map-marker"></i>&nbsp;
+                                {{item.province}}{{item.city}}{{item.district}}{{item.street}}{{item.township}}{{item.streetNumber}}
+                            </div>
+                            <div class="time">
+                                <i class="fa fa-clock-o"></i>&nbsp;
+                                {{item.create_time}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="noList" v-show="noData">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;暂无签到记录
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="mapContainer"></div>
+            </div>
+        </div>
+
         <!--提示信息-->
         <Status :state='info'></Status>
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
     </div>
 </template>
-<style scoped>
-    div.padd {
-        display: inline-block;
-        padding: 0 15px 0 0;
-    }
-    select{
-        margin-bottom: 0;
-    }
-    .tagsinput {
-        border: none;
-    }
 
-    .tagsinput h4 {
-        display: inline-block;
-        margin: 0;
-    }
-</style>
 <script>
     import STAFF from  '../common/organization/selectStaff.vue'
     import DatePicker from '../common/datePicker.vue'
@@ -74,6 +87,7 @@
         components: {DatePicker,STAFF,Status},
         data(){
             return {
+                noData : false,
                 dateConfigure : [
                     {
                         range : true,
@@ -89,7 +103,6 @@
                     department_id : [],
                     staff_id : [],
                     date_range : '',
-                    search : ''
                 },
                 info: {
                     //成功状态 ***
@@ -101,20 +114,57 @@
                     //失败信息 ***
                     error: ''
                 },
+                myData : []
             }
         },
+        mounted(){
+            this.getCheckInList();
+
+        },
         methods: {
+            getCheckInList(){
+                this.$http.post('amap/signin/index')
+                    .then(
+                        (res) => {
+//                            console.log(res);
+
+                            if (res.data.code=='20011'){
+                                this.noData = true;
+                            } else {
+                                this.myData = res.data.data;
+                                this.noData = false;
+                            }
+                            this.getMap();
+                        }
+                    )
+            },
             search(){
-                console.log(this.params);
+//                console.log(this.params);
+                if (this.params.department_id.length==0&&this.params.staff_id.length==0&&this.params.date_range==''){
+                    this.getCheckInList();
+                } else {
+                    this.$http.post('amap/signin/search',this.params)
+                        .then(
+                            (res) => {
+                                console.log(res);
+                                if (res.data.code=='20011'){
+                                    this.noData = true;
+                                    this.myData = [];
+                                } else {
+                                    this.myData = res.data.data;
+                                    this.noData = false;
+                                }
+                            }
+                        )
+                }
+
+
             },
             getDate(data){
                 // 时间
                 console.log(data);
                 this.params.date_range = data;
-            },
-            select(){
-                this.configure={type:'all',class:'selectType'};
-                $('#selectCustom').modal('show');
+                this.search();
             },
             select(){
                 this.configure = {type: 'all', class: 'selectType'};
@@ -154,18 +204,112 @@
                     }
 
                 }
+                this.search();
 //                this.filtrate.departmentList = val.department;
 //                this.filtrate.staffList = val.staff;
 
             },
             deleteStaff(item){
                 this.filtrate.staffList = this.filtrate.staffList.filter((x) => x !== item);
-                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id)
+                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id);
+                this.search();
             },
             deleteDepartment(item){
                 this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
-                this.params.department_id = this.params.department_id.filter((x) => x != item.id)
+                this.params.department_id = this.params.department_id.filter((x) => x != item.id);
+                this.search();
             },
+
+            getMap(){
+                let map = new AMap.Map('mapContainer', {
+                    resizeEnable: true
+                });
+            }
         }
     }
 </script>
+
+<style scoped>
+    div.padd {
+        display: inline-block;
+        padding: 0 15px 0 0;
+    }
+    select{
+        margin-bottom: 0;
+    }
+    .tagsinput {
+        border: none;
+    }
+
+    .tagsinput h4 {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .checkInContainer{
+        background-color: white;
+        height: 730px;
+        overflow-y: auto;
+    }
+
+    #mapContainer{
+        height: 730px;
+        border: 1px solid #ccc;
+    }
+    .checkInContainer::-webkit-scrollbar {
+        width:8px;
+        height:300px;
+    }
+    .checkInContainer::-webkit-scrollbar-button    {
+        background-color:#f0f0f8;
+    }
+    .checkInContainer::-webkit-scrollbar-track     {
+        background:#f0f0f8;
+    }
+    .checkInContainer::-webkit-scrollbar-thumb{
+        background:rgba(121,121,121,.2);
+        border-radius:4px;
+    }
+
+    .checkInList{
+        width: 90%;
+        margin: auto;
+    }
+    .checkInItem{
+        padding: 10px;
+        border-bottom: 1px dashed #ccc;
+    }
+    .checkInItem .person{
+        cursor: pointer;
+    }
+    .checkInItem .person .image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: middle;
+
+    }
+    .checkInItem .person .image img{
+        width: 100%;
+    }
+    .checkInItem .person .name{
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .checkInItem .position,.checkInItem .time{
+        color: #667A8F;
+        margin-top: 14px;
+    }
+
+    .noList{
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #CCCCCC;
+        line-height: 40px;
+    }
+</style>

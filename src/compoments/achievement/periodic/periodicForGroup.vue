@@ -174,7 +174,7 @@
                 params : {
                     department_id : [],
 //                    staff_id : [],
-                    dateRange : ''
+                    date_range : ''
                 },
                 myData : [],
                 paging : '',
@@ -204,8 +204,8 @@
                 staffs : [],
                 dateConfigure : [
                     {
-                        range : false,
-                        needHour : false
+                        range : true,
+                        needHour : true
                     }
                 ]
             }
@@ -271,10 +271,11 @@
                 // 页数
                 console.log(data);
                 this.page = data;
+                this.search();
             },
             search(){
                 console.log(this.params);
-                /*this.$http.get('periodic?page='+this.page,{
+                this.$http.get('periodic?page='+this.page,{
                     params : this.params
                 }).then(
                     (res) => {
@@ -288,7 +289,7 @@
                             this.paging = '';
                         }
                     }
-                )*/
+                )
             },
             select(){
 
@@ -329,14 +330,17 @@
                     }
 
                 }
+
+                this.search();
 //
 
             },
             deleteDepartment(item){
-                console.log(item)
+//                console.log(item)
                 this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
 //                console.log(this.params.department_id)
                 this.params.department_id=this.params.department_id.filter((x)=>x!=item.id);
+                this.search();
             },
             showGroupDetail(id,city,department,marshal){
                 console.log(id);
@@ -367,7 +371,9 @@
                 $('#showDetail').modal('show');
             },
             getDate(data){
-                console.log(data)
+                console.log(data);
+                this.date_range = data;
+                this.search();
             }
         }
     }

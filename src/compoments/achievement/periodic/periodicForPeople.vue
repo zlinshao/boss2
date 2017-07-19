@@ -21,35 +21,16 @@
                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                     </div>
 
-
-                    <!--<div class="dropdown form-group">
-                        <select name="" class="form-control" v-model="params.periodic" style="margin: 0 15px 0 0;">
-                            <option :value="value" v-for="(key,value) in dict">{{key}}</option>
-                        </select>
-                    </div>-->
+<!--
                     <div class="input-group" @click="search">
                         <button type="button" class="btn btn-success">搜索</button>
-                    </div>
+                    </div>-->
                 </form>
-                <!--<div class="tagsinput" v-show="filtrate.departmentList.length!=0">
-                    <h4>部门</h4>
-                    <span class="tag" v-for="item in filtrate.departmentList">
-                        <span >{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
-                    </span>
-                </div>
-                <div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                    <h4>员工</h4>
-                    <span class="tag" v-for="item in filtrate.staffList">
-                        <span >{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
-                    </span>
-                </div>-->
+
             </div>
         </section>
 
         <!--表格-->
-
         <div class="row">
             <div class="col-md-12">
                 <section class="panel table table-responsive">
@@ -89,18 +70,11 @@
         <Status :state='info'></Status>
         <!--分页-->
         <Page :pg="paging" @pag="getData"></Page>
-        <!--<STAFF :configure="configure" @Staff="selectDateSend"></STAFF>-->
 
     </div>
 </template>
 <style scoped>
-    .tagsinput{
-        border:none;
-    }
-    h4{
-        display: inline-block;
-        margin: 0;
-    }
+
     div.padd {
         display: inline-block;
         padding: 0 15px 0 0;
@@ -108,7 +82,6 @@
 </style>
 <script>
     import Page from '../../common/page.vue'
-//    import STAFF from  '../../common/organization/selectStaff.vue'
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
 
@@ -122,7 +95,7 @@
 //                    department_id : [],
 //                    staff_id : [],
                     periodic : 1,
-                    dateRange : ''
+                    date_range : ''
                 },
                 myData : [],
                 paging : '',
@@ -138,12 +111,7 @@
                     //失败信息 ***
                     error: ''
                 },
-                filtrate : {
-                    departmentList:[],
-                    staffList:[]
-                },
-//                selectConfigure : '',
-                configure : {},
+
                 dateConfigure : [
                     {
                         range : true,
@@ -234,65 +202,10 @@
                         }
                     )
             },
-            select(){
-
-//                this.selectConfigure = 'all';
-                $('#selectCustom').modal({backdrop: 'static',});
-                this.configure={type:'all',class:'selectType'};
-                $('#selectCustom').modal('show');
-//                this.configure={id:[],class:'department'};
-//                this.configure={length:2,class:'amount'};
-            },
-            selectDateSend(val){
-//                console.log(this.configure);
-//                console.log(this.selectConfigure)
-                console.log(val);
-
-                    // all
-//                    alert('all');
-                this.filtrate.departmentList = val.department;
-                this.filtrate.staffList = val.staff;
-                console.log(this.filtrate.departmentList);
-                console.log(this.params.department_id);
-                for(let j=0;j<val.department.length;j++){
-                    if($.inArray(val.department[j].id,this.params.department_id)===-1){
-                        this.params.department_id.push(val.department[j].id);
-                        console.log(this.filtrate.departmentList);
-                        console.log(this.params.department_id);
-                    }else {
-                        this.info.error = '成员已经存在';
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        },2000);
-                    }
-                }
-                for(let i=0;i<val.staff.length;i++){
-                    if($.inArray(val.staff[i].id,this.params.staff_id)===-1){
-                        this.params.staff_id.push(val.staff[i].id);
-                    }else {
-                        this.info.error = '成员已经存在';
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        },2000);
-                    }
-                }
-            },
-            deleteStaff(item){
-                this.filtrate.staffList=this.filtrate.staffList.filter((x)=>x!==item);
-                this.params.staff_id=this.params.staff_id.filter((x)=>x!=item.id)
-            },
-            deleteDepartment(item){
-                this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
-                this.params.department_id=this.params.department_id.filter((x)=>x!=item.id)
-            },
             getDate(data){
-                console.log(data)
+                console.log(data);
+                this.date_range = data;
+                this.search();
             }
         }
     }

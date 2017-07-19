@@ -447,7 +447,20 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-envelope"></i>
+                            <span>组长报备</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to='/reportedCollect'>收房报备</router-link>
+                            </li>
+                            <li>
+                                <router-link to='/reportedRenting'>租房报备</router-link>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-file-text"></i>
@@ -471,6 +484,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -556,6 +570,13 @@
                                 <router-link to='/messageCenter'>消息中心</router-link>
                             </li>
                         </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <router-link to="/checkIn">
+                            <i class="fa fa-map-marker"></i>
+                            <span>定位签到</span>
+                        </router-link>
+
                     </li>
                 </ul>
                 <!-- sidebar menu end-->

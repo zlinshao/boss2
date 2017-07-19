@@ -154,9 +154,9 @@
                 );
 
         },
-        updated (){
-            this.getCurrentCity();
-        },
+//        updated (){
+//            this.getCurrentCity();
+//        },
         methods : {
             search(){
                 this.$http.defaults.withCredentials = false;
@@ -175,7 +175,6 @@
             },
             clearInfo(){
                 this.searchInfo = '';
-                this.chooseCity = '';
                 this.villages = []
             },
             save(){
@@ -234,7 +233,7 @@
                             if (res.data.city == '南京市' || res.data.city == '苏州市'){
                                 this.chooseCity = res.data.city
                             } else {
-                                this.chooseCity = ''
+                                this.chooseCity = '南京市'
                             }
                         }
                     );

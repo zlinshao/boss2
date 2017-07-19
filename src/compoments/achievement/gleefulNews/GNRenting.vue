@@ -268,22 +268,26 @@
                     }
 
                 }
+                this.search();
 //                this.filtrate.departmentList = val.department;
 //                this.filtrate.staffList = val.staff;
 
             },
             deleteStaff(item){
                 this.filtrate.staffList = this.filtrate.staffList.filter((x) => x !== item);
-                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id)
+                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id);
+                this.search();
             },
             deleteDepartment(item){
                 this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
-                this.params.department_id = this.params.department_id.filter((x) => x != item.id)
+                this.params.department_id = this.params.department_id.filter((x) => x != item.id);
+                this.search();
             },
 
             getDate(data){
                 console.log(data);
                 this.params.date_range = data;
+                this.search();
             }
 
         }
