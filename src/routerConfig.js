@@ -49,7 +49,6 @@ import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单�
 
 import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
 
-import  Back from './compoments/user/back.vue'
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 
 export default[
