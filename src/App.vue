@@ -22,7 +22,7 @@
                     <i class="fa fa-phone"></i>
                 </button>-->
             <div id="custom_service" @mouseenter="show" @mouseleave="hide">
-                <img src="../src/assets/img/u1032.png" alt="">
+                <i class="fa fa-comment"></i>
                 <ul>
                     <li data-toggle="modal" data-target="#contact">
                         <i class="fa fa-phone"></i>咨询电话
@@ -198,22 +198,20 @@
         right: 10px;
         font-size: 20px;
         /*background: #00C1DE;*/
-        background-color: white;
         z-index: 100;
-        border: 0;
-        border-radius: 50%;
     }
-    #custom_service img{
-        width: 50px;
+    #custom_service i{
+        display: inline-block;
+        font-size: 35px;
     }
     #custom_service ul{
         background-color: white;
-        padding: 0 10px;
+        padding: 0 8px;
         margin: 0;
         position: absolute;
-        top: -86px;
-        right: 0;
-        border-radius: 10px;
+        top: -105px;
+        right: 35px;
+        border-radius: 4px;
         border: 1px solid #000;
         font-size: 16px;
         display: none;

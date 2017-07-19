@@ -8,7 +8,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">选择客户{{keywords}}</h4>
+                        <h4 class="modal-title">选择客户</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal tasi-form">
@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="iconic-input right col-lg-4">
                                     <i class="fa fa-search"></i>
-                                    <input type="text" class="form-control" placeholder="搜索客户" v-model="keywords"
+                                    <input type="text" class="form-control" placeholder="请输入客户名" v-model="keywords"
                                          @keydown.enter.prevent="search"  >
                                 </div>
                                 <div class="col-lg-2">
@@ -40,9 +40,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in customerList" >
+                                <tr v-for="item in customerList"  @click="selectClient($event,item)">
                                     <td>
-                                        <input type="radio" name="radio" @click="selectClient(item)">
+                                        <input type="radio" name="radio">
                                     </td>
                                     <td>{{item.name}}</td>
                                     <td>{{item.gender}}</td>
@@ -93,8 +93,13 @@
                     this.person_medium=res.data.person_medium;
                 })
             },
-            selectClient(item){
-                console.log(item)
+//            selectClient(item){
+//                console.log(item)
+//                this.selectClients=[];
+//                this.selectClients=item;
+//            },
+            selectClient(ev,item){// 点击行选中
+                $(ev.currentTarget).find('input').prop('checked' , 'true');
                 this.selectClients=[];
                 this.selectClients=item;
             },

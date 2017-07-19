@@ -36,10 +36,10 @@
                     </div>
                     <div class="form-group datetime">
                         <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                            <input @click="remindData" readonly placeholder="开始时间" v-model="start_time" class="form-control form_datetime">
                         </label>
                         <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
+                            <input @click="remindData" readonly placeholder="结束时间" v-model="end_time" class="form-control form_datetime">
                         </label>
                     </div>
                     <div class="input-group bootstrap-timepicker">
@@ -184,6 +184,8 @@
                     'green' : false
                 },           // 合同状态样式
                 isLock : true,      // 是否锁定
+                start_time:"",
+                end_time:'',
             }
         },
         updated (){
@@ -203,13 +205,19 @@
             search(){
 
             },
-            remindData (){   //日期选择
+            remindData (){
                 $('.form_datetime').datetimepicker({
-                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
-                    autoClose: 1,
+                    autoclose: 1,
+                }).on('changeDate', ev => {
+                    if (ev.target.placeholder === '开始时间'){
+                        this.start_time = ev.target.value;
+                    } else {
+                        this.end_time = ev.target.value;
+                    }
                 });
             },
             rules(id , ev){   //多选框选中

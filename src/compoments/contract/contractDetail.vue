@@ -47,14 +47,14 @@
                     <div class="panel-body table-responsive">
                         <table class="table">
                             <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <td>当月应付</td>
                                 <td>付款进度</td>
                                 <td>本次打款时间</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr class="text-center">
                                 <td>2000</td>
                                 <td>
                                     <div class="progress progress-striped active">
@@ -83,23 +83,23 @@
                         </div>
                         <table class="table">
                             <thead>
-                            <tr class="lightGray">
-                                <td>打款时间</td>
-                                <td>打款金额</td>
-                                <td>打款人</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>2017-06-23</td>
-                                <td>2000</td>
-                                <td>哈哈</td>
-                            </tr>
-                            <tr>
-                                <td>2017-06-23</td>
-                                <td>2000</td>
-                                <td>哈哈</td>
-                            </tr>
+                                <tr class="lightGray text-center">
+                                    <td>打款时间</td>
+                                    <td>打款金额</td>
+                                    <td>打款人</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="text-center">
+                                    <td>2017-06-23</td>
+                                    <td>2000</td>
+                                    <td>哈哈</td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td>2017-06-23</td>
+                                    <td>2000</td>
+                                    <td>哈哈</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -113,30 +113,30 @@
                     <div class="panel-body table-responsive">
                         <table class="table contract_info">
                             <tbody>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark"></i></a></td>
-                                <td colspan="2">2017-07-20&nbsp;至&nbsp;2017-05-16</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>合同编号</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>房屋地址</td>
-                                <td>合同编号合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>负责人</td>
-                                <td>合同编号</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>结束原因</td>
-                                <td>合约到期</td>
-                            </tr>
+                                <tr>
+                                    <td><a><i class="fa fa-bookmark"></i></a></td>
+                                    <td colspan="2">2017-07-20&nbsp;至&nbsp;2017-05-16</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>合同编号</td>
+                                    <td>合同编号</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>房屋地址</td>
+                                    <td>合同编号合同编号</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>负责人</td>
+                                    <td>合同编号</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>结束原因</td>
+                                    <td>合约到期</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -248,7 +248,11 @@
                                             </thead>
                                             <tbody id="collectId">
                                             <tr v-for="item in userList">
-                                                <td >{{item.real_name}}</td>
+                                                <td >
+                                                    <img :src="item.avatar" class="head" alt="" v-if="item.avatar !== '' ">
+                                                    <img src="../../assets/img/head.png" class="head" alt="" v-if="item.avatar === '' ">
+                                                    {{item.real_name}}
+                                                </td>
 
 
                                                 <td><span v-for="item1 in item.department">{{item1.name}}</span></td>
@@ -1057,5 +1061,12 @@
     }
     .table-responsive {
          overflow: visible;
+    }
+    .head{
+        vertical-align:middle;
+        display: inline-block;
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
     }
 </style>

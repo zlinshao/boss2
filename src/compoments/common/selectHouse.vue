@@ -16,7 +16,7 @@
                                 <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
                                 <div class="iconic-input right col-lg-4">
                                     <i class="fa fa-search"></i>
-                                    <input type="text" class="form-control" placeholder="搜索房屋" v-model="keywords"
+                                    <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords"
                                          @keydown.enter.prevent="search"  >
                                 </div>
                                 <div class="col-lg-2">
