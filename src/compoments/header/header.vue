@@ -234,12 +234,21 @@
                     </li>
 
                     <!--锁屏-->
-                    <li style="padding-top: 4px;">
-                        <a href="#lock_screen" class="btn btn-primary" style="border:none"
-                           @click="lock_state">
+                    <li class="dropdown" style="padding-top: 4px;">
+                        <a href="javascript:;" style="border:none" class="dropdown-toggle"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-lock" style="font-size: 25px"></i>
                         </a>
+                        <ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">
+                            <li>
+                                <a href="#" @click="lock_screen(lockScreen,1)">锁屏</a>
+                            </li>
+                            <li>
+                                <a href="#" @click="lock_state">修改密码</a>
+                            </li>
+                        </ul>
                     </li>
+
                     <!--消息提醒-->
                     <li class="dropdown" style="padding-top: 2px;">
                         <a href="javascript:;" style="border:none" class="dropdown-toggle"
@@ -700,26 +709,6 @@
             </ul>
         </div>
 
-        <div role="dialog" class="modal fade bs-example-modal-sm lock-screen" id="deblocking">
-            <div class="lock-wrapper">
-                <div id="time"></div>
-                <div class="lock-box text-center">
-                    <!--<img src="img/follower-avatar.jpg" alt="lock avatar"/>-->
-                    <h1>解锁密码</h1>
-                    <span class="locked"></span>
-                    <form role="form" class="form-inline">
-                        <div class="form-group col-lg-12">
-                            <input type="password" placeholder="请输入密码" v-model="debLocking" @keyup.a.prevent="deblock"
-                                   class="form-control lock-input">
-                            <button class="btn btn-lock" type="button" @click="deblock">
-                                <i class="fa fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <div role="dialog" class="modal fade bs-example-modal-sm" id="lock_screen">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -727,22 +716,28 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
-                        <h4 class="modal-title">锁屏密码</h4>
+                        <h4 class="modal-title">设置密码</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="lockScreen" @keyup.enter="lock_screen"
+                        <div v-if="lock_status" class="form-group">
+                            <input type="text" class="form-control" v-model="lockScreen" @keyup.enter.prevent="set_password"
+                                   placeholder="请输入密码">
+                        </div>
+                        <div v-if="!lock_status" class="form-group">
+                            <input type="text" class="form-control" v-model="lockScreen" @keyup.enter.prevent="revise_password(lockScreen)"
                                    placeholder="请输入密码">
                         </div>
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
-                        <button data-dismiss="modal" class="btn btn-primary btn-md" @click="lock_screen">确认</button>
+                        <button v-if="lock_status" class="btn btn-primary btn-md" @click="set_password">确认</button>
+                        <button v-if="!lock_status" class="btn btn-primary btn-md" @click="revise_password(lockScreen)">修改</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <Status :state='info'></Status>
         <!-- Right Slidebar end -->
         <LookRemind></LookRemind>
 
@@ -753,14 +748,25 @@
 <script>
     import LookRemind from '../common/remind/checkRemind.vue';
     import AddRemind from  '../common/remind/addRemind.vue'
+    import Status from '../common/status.vue';
     export default {
-        components: {LookRemind, AddRemind},
+        components: {LookRemind, AddRemind, Status},
         props: ['Name', 'Card'],
         data(){
             return {
                 isActive: 0,
+                lock_status: true,
                 lockScreen: '',     //锁屏
-                debLocking: '',     //解锁
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
             }
         },
 
@@ -791,60 +797,62 @@
                 $('#lock_screen').modal({
                     backdrop: 'static',         //空白处不消失
                 });
+                this.lock_status = false;
             },
 //            锁屏
-            lock_screen (){
+            lock_screen (val, lock){
+                this.lock_status = true;
                 this.$http.post('auth/auth/lock_screen_status', {
-                    pwd_lock: '',
-                    set_pwd_lock: this.lockScreen,
-                    lock_status: ''
+                    set_pwd_lock: val,
+                    lock_status: lock
                 }).then((res) => {
-                    this.lockScreen = '';
+                    if (res.data.code === '80034') {
+                        $('#lock_screen').modal({
+                            backdrop: 'static',         //空白处不消失
+                        });
+                    }
+                    if (res.data.code === '80035') {
+                        window.location.href = globalConfig.host + 'lockScreen';
+//                        window.location.href = 'http://localhost:8080/lockScreen';
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }
                     if (res.data.code === '80030') {
                         $('#lock_screen').modal('hide');
-                        $('#deblocking').modal({
-                            backdrop: 'static',         //空白处不消失
-                            keyboard: false             //动态打开
-                        });
-                        this.startTime();
-                        console.log(res.data);
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.lockScreen = ''
                     }
                 });
             },
-//            解锁
-            deblock (){
-                alert(1);
+//            设置密码
+            set_password (){
+                this.lock_screen(this.lockScreen);
+            },
+//            修改密码
+            revise_password (val){
                 this.$http.post('auth/auth/lock_screen_status', {
-                    pwd_lock: this.debLocking,
-                    set_pwd_lock: '',
-                    lock_status: ''
+                    set_pwd_lock: val,
                 }).then((res) => {
-                    console.log(res.data);
-                    this.debLocking = '';
-                    if (res.data.code === '80032') {
-                        $('#deblocking').modal('hide');
+                    if (res.data.code === '80035') {
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }
+                    if (res.data.code === '80030') {
+                        $('#lock_screen').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.lockScreen = ''
                     }
                 });
-            },
-
-            startTime (){
-                let today = new Date();
-                let h = today.getHours();
-                let m = today.getMinutes();
-                let s = today.getSeconds();
-                // add a zero in front of numbers<10
-                m = this.checkTime(m);
-                s = this.checkTime(s);
-                document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
-                setTimeout(function () {
-                    this.startTime();
-                }.bind(this), 500);
-            },
-            checkTime (i){
-                if (i < 10) {
-                    i = "0" + i;
-                }
-                return i;
             }
         }
     }
