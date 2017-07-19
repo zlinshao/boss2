@@ -135,7 +135,7 @@
                             <td class="text-center">{{item.staff_id}}</td>
                             <td class="text-center">
                                 <router-link :to="{path:'/collectMore',query: {unCollectId: item.id}}">
-                                    更多
+                                    详情
                                 </router-link>
                             </td>
                         </tr>
