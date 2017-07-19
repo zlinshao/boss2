@@ -295,6 +295,7 @@
                     });
                 });
             },
+            //搜索房屋列表
             searchHouseList(){
                 this.currentPage=this.page;
                 if(this.our_group===true){
