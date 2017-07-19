@@ -182,11 +182,6 @@ export default[
         component: Calc
     },
     {
-        path: '/back',
-        name: 'Back',
-        component: Back
-    },
-    {
         path: '/CollectContract',
         name: 'CollectContract',
         component: CollectContract
