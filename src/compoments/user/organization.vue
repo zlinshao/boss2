@@ -670,7 +670,7 @@
                     this.isDepartment=false;
                     this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+this.page).then((res) => {
                         this.type = 6;
-                        if (res.data.code === 90020) {
+                        if (res.data.code === '90020') {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
 
@@ -683,7 +683,7 @@
                 }else{
                     this.$http.get('manager/user/searchUser/page/' +this.page ).then((res) => {
                         this.type = 6;
-                        if (res.data.code == 90020) {
+                        if (res.data.code === '90020') {
                             this.userList=res.data.data.list;
                             this.pages=res.data.data.pages;
 
