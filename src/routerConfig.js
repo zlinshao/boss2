@@ -47,8 +47,6 @@ import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
 import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
 
-import  Back from './compoments/user/back.vue'
-
 export default[
     {
         path: '/power',             //权限管理
@@ -178,11 +176,6 @@ export default[
         path: '/calc',
         name: 'Calc',
         component: Calc
-    },
-    {
-        path: '/back',
-        name: 'Back',
-        component: Back
     },
     {
         path: '/CollectContract',
