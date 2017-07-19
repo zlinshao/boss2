@@ -834,6 +834,12 @@
             },
 //            修改密码
             revise_password (val){
+                if(this.lockScreen === ''){
+                    //失败信息 ***
+                    this.info.error = '密码不能为空';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }
                 this.$http.post('auth/auth/lock_screen_status', {
                     set_pwd_lock: val,
                 }).then((res) => {
@@ -850,6 +856,12 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         this.lockScreen = ''
+                    }
+                    if (res.data.code === '80031') {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
                     }
                 });
             }

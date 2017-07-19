@@ -164,7 +164,6 @@
                 this.$http.get('staff/info').then((res) => {
                     if (res.data.code === 80019) {
                         window.location.href = 'login.html'
-//                        this.$router.push({ path: 'lockScreen' });
                     } else {
                         globalConfig.urlName = res.data.name;
                         this.urlName = res.data.name;

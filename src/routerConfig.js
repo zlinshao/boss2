@@ -46,6 +46,7 @@ import LogRecord from './compoments/logRecord/logRecord.vue'                    
 import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
 import RentingOrder from './compoments/user/rentingOrder.vue'           //租房订单管理
+import Country from './compoments/common/country.vue'           //国家
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 
@@ -278,5 +279,10 @@ export default[
         path: '/lockScreen',
         name: 'lock_screen',
         component: lockScreen
+    },
+    {
+        path: '/country',
+        name: 'country',
+        component: Country
     }
 ]
