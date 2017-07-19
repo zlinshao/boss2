@@ -32,8 +32,8 @@
         data (){
             return {
                 debLocking: '',
-                head_sculpture: '',         //头像
-                name_debLocking: '',         //头像
+                head_sculpture: '',             //头像
+                name_debLocking: '',            //用户名
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -57,8 +57,6 @@
         methods: {
 //             解锁
             deblock (){
-                let url = window.location.href;
-                let url_index = url.split("lock")[0];
                 this.$http.post('auth/auth/unlock_screen', {
                     pwd_lock: this.debLocking,          //解锁密码
                 }).then((res) => {
@@ -71,7 +69,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
 
-                        window.location.href = url_index;
+                        this.$router.replace({ path: '/'});
                     } else {
                         //关闭成功信息(可选)
                         this.info.state_success = false;
