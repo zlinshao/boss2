@@ -4,41 +4,40 @@
         <ol class="breadcrumb">
             <li>业绩管理</li>
             <li>每单工资</li>
-            <li class="active">收房</li>
+            <li>收房</li>
         </ol>
 
-        <div class="panel col-lg-12">
-            <form class="form-inline clearFix" role="form">
+        <section class="panel clearFix">
+            <div class="panel-body">
+                <div>
+                    <form class="form-inline clearFix" role="form">
 
-                <Cascade @change="getCascadeData"></Cascade>
+                        <Cascade @change="getCascadeData"></Cascade>
 
-                <!--<div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">全部</option>
-                        <option value="1">鸡腿</option>
-                        <option value="2">梦想</option>
-                    </select>
-                </div>-->
+                        <!--<div class="dropdown form-group">
+                            <select name="" class="form-control">
+                                <option value="">全部</option>
+                                <option value="1">鸡腿</option>
+                                <option value="2">梦想</option>
+                            </select>
+                        </div>-->
 
-                <div class="form-group datetime">
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
-                    </label>
-                    <label>
-                        <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
-                    </label>
-                </div>
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </div>
 
-                <div class="input-group bootstrap-timepicker">
-                    <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="合同编号/业务员/地址" v-model="params.searchInfo" @keydown.enter.prevent="search">
-                    <span class="input-group-btn">
+                        <div class="input-group">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="合同编号/业务员/地址" v-model="params.searchInfo" @keydown.enter.prevent="search">
+                            <span class="input-group-btn">
                         <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                     </span>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+        </section>
 
-        </div>
 
         <!--表格-->
         <div class="col-lg-12">
@@ -93,11 +92,15 @@
     .table tbody tr{
         cursor: pointer;
     }
+    div.padd {
+        display: inline-block;
+        padding: 0 15px 0 0;
+    }
 </style>
 <script>
     import Modal from './WAModal.vue'
     import Page from '../../common/page.vue'
-    import Cascade from '../../common/cascade.vue'
+    import DatePicker from '../../common/datePicker.vue'
 
     export default{
         data(){
@@ -113,7 +116,13 @@
                     searchInfo : ''
                 },
                 myData : [],
-                paging : ''
+                paging : '',
+                dateConfigure: [
+                    {
+                        range: true,
+                        needHour: true
+                    }
+                ]
             }
         },
         created (){
@@ -126,7 +135,7 @@
         components: {
             Modal,
             Page,
-            Cascade
+            DatePicker
         },
         methods : {
             caCollectList (){

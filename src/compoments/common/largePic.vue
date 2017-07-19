@@ -8,7 +8,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body" id="pic">
-                            <img id="img" v-if="index!=0" :src="src[index].big">
+                            <img id="img" v-if="index!=0" :src="src[index].raw">
                             <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
                             <div class="changePic">
                                 <div @click="prev" title="上一张"><i class="fa fa-long-arrow-left"></i></div>

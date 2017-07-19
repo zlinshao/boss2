@@ -47,6 +47,8 @@ import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
 import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
 
+import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
+
 import  Back from './compoments/user/back.vue'
 
 export default[
@@ -278,5 +280,10 @@ export default[
         path: '/rentingOrder',
         name: 'RentingOrder',
         component: RentingOrder
+    },
+    {
+        path: '/checkIn',
+        name: 'CheckIn',
+        component: CheckIn
     }
 ]

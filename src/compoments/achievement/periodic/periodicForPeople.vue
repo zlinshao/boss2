@@ -22,16 +22,16 @@
                     </div>
 
 
-                    <div class="dropdown form-group">
+                    <!--<div class="dropdown form-group">
                         <select name="" class="form-control" v-model="params.periodic" style="margin: 0 15px 0 0;">
                             <option :value="value" v-for="(key,value) in dict">{{key}}</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="input-group" @click="search">
                         <button type="button" class="btn btn-success">搜索</button>
                     </div>
                 </form>
-                <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
+                <!--<div class="tagsinput" v-show="filtrate.departmentList.length!=0">
                     <h4>部门</h4>
                     <span class="tag" v-for="item in filtrate.departmentList">
                         <span >{{item.name}}&nbsp;&nbsp;</span>
@@ -44,48 +44,9 @@
                         <span >{{item.name}}&nbsp;&nbsp;</span>
                         <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
                     </span>
-                </div>
+                </div>-->
             </div>
         </section>
-        <!--<div class="panel col-lg-12">-->
-            <!--<form class="form-inline clearFix" role="form">-->
-                <!--&lt;!&ndash;<div class="dropdown form-group">-->
-                    <!--<select name="" class="form-control">-->
-                        <!--<option value="">全部</option>-->
-                        <!--<option value="1">鸡腿</option>-->
-                        <!--<option value="2">梦想</option>-->
-                    <!--</select>-->
-                <!--</div>&ndash;&gt;-->
-                <!--<div class="padd">-->
-                    <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
-                <!--</div>-->
-               <!---->
-
-                <!--<div class="dropdown form-group">-->
-                    <!--<select name="" class="form-control" v-model="params.periodic">-->
-                        <!--<option :value="value" v-for="(key,value) in dict">{{key}}</option>-->
-                    <!--</select>-->
-                <!--</div>-->
-                <!--<div class="input-group" style="margin-bottom: 18px;" @click="search">-->
-                    <!--<button type="button" class="btn btn-success">搜索</button>-->
-                <!--</div>-->
-            <!--</form>-->
-            <!--<div class="tagsinput" v-show="filtrate.departmentList.length!=0">-->
-                <!--<h4>部门</h4>-->
-                <!--<span class="tag" v-for="item in filtrate.departmentList">-->
-                        <!--<span >{{item.name}}&nbsp;&nbsp;</span>-->
-                        <!--<a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>-->
-                    <!--</span>-->
-            <!--</div>-->
-            <!--<div class="tagsinput " v-show="filtrate.staffList.length!=0">-->
-                <!--<h4>员工</h4>-->
-                <!--<span class="tag" v-for="item in filtrate.staffList">-->
-                        <!--<span >{{item.name}}&nbsp;&nbsp;</span>-->
-                        <!--<a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>-->
-                    <!--</span>-->
-            <!--</div>-->
-
-        <!--</div>-->
 
         <!--表格-->
 
@@ -128,7 +89,7 @@
         <Status :state='info'></Status>
         <!--分页-->
         <Page :pg="paging" @pag="getData"></Page>
-        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <!--<STAFF :configure="configure" @Staff="selectDateSend"></STAFF>-->
 
     </div>
 </template>
@@ -147,12 +108,12 @@
 </style>
 <script>
     import Page from '../../common/page.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+//    import STAFF from  '../../common/organization/selectStaff.vue'
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
 
     export default{
-        components: {Page,STAFF,Status,DatePicker},
+        components: {Page,Status,DatePicker},
         data(){
             return {
                 isShow : false,
@@ -160,8 +121,8 @@
                 params : {
 //                    department_id : [],
 //                    staff_id : [],
-                    month : '',
-                    periodic : 1
+                    periodic : 1,
+                    dateRange : ''
                 },
                 myData : [],
                 paging : '',
@@ -192,21 +153,21 @@
             }
         },
         mounted (){
-            this.$http.get('periodic/range')
+            /*this.$http.get('periodic/range')
                 .then(
                     (res) => {
                         this.dict = res.data.data;
                         this.perPersonList();
                     }
-                );
+                );*/
 
         },
         updated (){
 
 //            时间选择
-            this.remindData();
+//            this.remindData();
         },
-        watch : {
+        /*watch : {
             'params.month':{
                 handler(val,oldVal){
                     console.log(val);
@@ -224,7 +185,7 @@
 //                    console.log(oldVal)
                 }
             }
-        },
+        },*/
         methods : {
             perPersonList (){
                 this.$http.get('revenue/periodic/ranking')
@@ -245,22 +206,6 @@
                     .then(
                         (res) => this.params.periodic = res.data.data
                     );
-            },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-                    endDate: new Date(),
-                }).on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    this.params.month = ev.target.value;
-//                    console.log(this.startDataTime);
-                }.bind(this));
             },
             getData(data){
                 // 页数

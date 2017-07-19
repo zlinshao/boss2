@@ -17,11 +17,11 @@
                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                     </div>
 
-                    <div class="dropdown form-group">
+                    <!--<div class="dropdown form-group">
                         <select name="" class="form-control" v-model="params.periodic" style="margin: 0 15px 0 0;">
                             <option :value="value" v-for="(key,value) in dict">{{key}}</option>
                         </select>
-                    </div>
+                    </div>-->
 
                     <div class="input-group" @click="search">
                         <button type="button" class="btn btn-success">搜索</button>
@@ -34,51 +34,15 @@
                         <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
                     </span>
                 </div>
-                <div class="tagsinput " v-show="filtrate.staffList.length!=0">
+                <!--<div class="tagsinput " v-show="filtrate.staffList.length!=0">
                     <h4>员工</h4>
                     <span class="tag" v-for="item in filtrate.staffList">
                         <span >{{item.name}}&nbsp;&nbsp;</span>
                         <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
                     </span>
-                </div>
+                </div>-->
             </div>
         </section>
-        <!--<div class="panel col-lg-12">-->
-            <!--<form class="form-inline clearFix" role="form">-->
-                <!--<div class="input-group bootstrap-timepicker">-->
-                    <!--<button class="btn btn-primary" type="button" @click="select">筛选部门</button>-->
-                <!--</div>-->
-
-                <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
-
-
-                <!--<div class="dropdown form-group">-->
-                    <!--<select name="" class="form-control" v-model="params.periodic">-->
-                        <!--<option :value="value" v-for="(key,value) in dict">{{key}}</option>-->
-                    <!--</select>-->
-                <!--</div>-->
-
-                <!--<div class="input-group" style="margin-bottom: 18px;" @click="search">-->
-                    <!--<button type="button" class="btn btn-success">搜索</button>-->
-                <!--</div>-->
-            <!--</form>-->
-            <!--<div class="tagsinput" v-show="filtrate.departmentList.length!=0">-->
-                <!--<h4>部门</h4>-->
-                <!--<span class="tag" v-for="item in filtrate.departmentList">-->
-                        <!--<span >{{item.name}}&nbsp;&nbsp;</span>-->
-                        <!--<a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>-->
-                    <!--</span>-->
-            <!--</div>-->
-            <!--<div class="tagsinput " v-show="filtrate.staffList.length!=0">-->
-                <!--<h4>员工</h4>-->
-                <!--<span class="tag" v-for="item in filtrate.staffList">-->
-                        <!--<span >{{item.name}}&nbsp;&nbsp;</span>-->
-                        <!--<a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>-->
-                    <!--</span>-->
-            <!--</div>-->
-
-
-        <!--</div>-->
 
         <!--表格-->
         <div class="row">
@@ -210,8 +174,6 @@
                 params : {
                     department_id : [],
 //                    staff_id : [],
-                    month : '',
-                    periodic : 1,
                     dateRange : ''
                 },
                 myData : [],
@@ -242,13 +204,13 @@
                 staffs : [],
                 dateConfigure : [
                     {
-                        range : true,
-                        needHour : true
+                        range : false,
+                        needHour : false
                     }
                 ]
             }
         },
-        watch : {
+        /*watch : {
             'params.month':{
                 handler(val,oldVal){
                     console.log(val);
@@ -266,17 +228,17 @@
 //                    console.log(oldVal)
                 }
             }
-        },
+        },*/
         mounted (){
 //            alert(1)
-            this.$http.get('periodic/range')
+            /*this.$http.get('periodic/range')
                 .then(
                     (res) => {
                         this.dict = res.data.data;
                         this.perGroupList();
                     }
 
-                );
+                );*/
 
         },
 
