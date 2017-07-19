@@ -45,8 +45,11 @@ import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
 import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
 import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
-import RentingOrder from './compoments/user/rentingOrder.vue'           //租房订单管理
+import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
 
+import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
+
+import  Back from './compoments/user/back.vue'
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 
 export default[
@@ -180,6 +183,11 @@ export default[
         component: Calc
     },
     {
+        path: '/back',
+        name: 'Back',
+        component: Back
+    },
+    {
         path: '/CollectContract',
         name: 'CollectContract',
         component: CollectContract
@@ -278,5 +286,10 @@ export default[
         path: '/lockScreen',
         name: 'lock_screen',
         component: lockScreen
+    },
+    {
+        path: '/checkIn',
+        name: 'CheckIn',
+        component: CheckIn
     }
 ]

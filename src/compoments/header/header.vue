@@ -176,6 +176,7 @@
                     <!-- notification dropdown start-->
                     <li id="header_notification_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
                             <i class="fa fa-bell-o"></i>
                             <span class="badge bg-warning">7</span>
                         </a>
@@ -273,10 +274,11 @@
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                            <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <li><a><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a href="#"><i class=" fa fa-suitcase"></i>个人中心</a></li>
+                            <li><a href="#"><i class="fa fa-cog"></i>设置</a></li>
+                            <li><a href="#"><i class="fa fa-bell-o"></i> 通知</a></li>
+                            <!--<li><a><i class="fa fa-key"></i>退出登录</a></li>-->
+                            <li v-show="isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
                             <li><a @click="logOut"><i class="fa fa-key"></i>退出登录</a></li>
 
                         </ul>
@@ -354,10 +356,10 @@
                         </ul>
                     </li>
                     <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
-                    <!--<router-link to="/village">-->
-                    <!--<i class="fa fa-dashboard"></i>-->
-                    <!--<span>小区管理</span>-->
-                    <!--</router-link>-->
+                        <!--<router-link to="/village">-->
+                            <!--<i class="fa fa-dashboard"></i>-->
+                            <!--<span>小区管理</span>-->
+                        <!--</router-link>-->
                     <!--</li>-->
                     <li class="sub-menu">
                         <a href="javascript:;">
@@ -737,11 +739,13 @@
             </div>
         </div>
 
-        <Status :state='info'></Status>
         <!-- Right Slidebar end -->
         <LookRemind></LookRemind>
 
         <AddRemind></AddRemind>
+
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 </template>
 
@@ -766,10 +770,22 @@
                     success: '',
                     //失败信息 ***
                     error: ''
+                },
+                isPc : '',
+                mapMsg : {
+                    province : '',
+                    city : '',
+                    district : '',
+                    street : '',
+                    township : '',
+                    streetNumber : '',
+                    location : ''
                 }
             }
         },
-
+        mounted(){
+            this.isPc = this.IsPC();
+        },
         methods: {
             pitch_on (n){
                 this.isActive = n;
@@ -852,6 +868,83 @@
                         this.lockScreen = ''
                     }
                 });
+            },
+            clearMsg(){
+                this.mapMsg.checkInMsg = '';
+            },
+            saveCheckIn(){
+                let _this = this;
+                /*$('body').append(document.createElement('script').setAttribute('src','http://webapi.amap.com/maps?v=1.3&key=b5357e10019b0a6fd5a71488846b270a'));
+                $('body').append(document.createElement('script').setAttribute('src','http://cache.amap.com/lbs/static/addToolbar.js'));*/
+
+                let map, geolocation;
+                //加载地图，调用浏览器定位服务
+                map = new AMap.Map('aa', {
+                    resizeEnable: true
+                });
+                map.plugin('AMap.Geolocation', function() {
+                    geolocation = new AMap.Geolocation({
+                        enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                        timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                        buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                        zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                        buttonPosition:'RB'
+                    });
+                    map.addControl(geolocation);
+                    geolocation.getCurrentPosition();
+                    AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+                    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+                });
+                //解析定位结果
+                function onComplete(data) {
+                    console.log(data);
+//                    alert('成功');
+                    _this.mapMsg.location = '['+data.position.getLng()+','+data.position.getLat()+']';
+                    _this.mapMsg.province = data.addressComponent.province;
+                    _this.mapMsg.city = data.addressComponent.city;
+                    _this.mapMsg.district = data.addressComponent.district;
+                    _this.mapMsg.street = data.addressComponent.street;
+                    _this.mapMsg.township = data.addressComponent.township;
+                    _this.mapMsg.streetNumber = data.addressComponent.streetNumber;
+                    console.log(_this.mapMsg);
+
+                    _this.$http.post('amap/signin/saveSignin',_this.mapMsg)
+                        .then(
+                            (res) => {
+                                if (res.data.code==20020){
+                                    // 成功
+//                                    $('#checkIn').modal('hide');
+//                                    _this.info.success = res.data.msg;
+                                    _this.info.success = '签到成功';
+                                    //关闭失败弹窗 ***
+                                    _this.info.state_error = false;
+                                    //显示成功弹窗 ***
+                                    _this.info.state_success = true;
+                                } else {
+                                    _this.info.error = res.data.msg;
+                                    _this.info.error = '签到失败';
+                                    //关闭失败弹窗 ***
+                                    _this.info.state_error = true;
+                                    //显示成功弹窗 ***
+                                    _this.info.state_success = false;
+                                }
+                            }
+                        )
+                }
+                //解析定位错误信息
+                function onError(data) {
+//                    document.getElementById('tip').innerHTML = '定位失败';
+                    alert('失败')
+                }
+            },
+            IsPC(){
+                let userAgentInfo = navigator.userAgent;
+                let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+                let flag = true;
+                for (let v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+                }
+                return flag;
             }
         }
     }
@@ -859,7 +952,10 @@
 
 
 <style scoped>
-    ul.top-menu > li > a {
-        border: none !important;
+    ul.top-menu > li > a  {
+         border:none !important;
+    }
+    .modal-body textarea{
+        max-width: 100%;
     }
 </style>
