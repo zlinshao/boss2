@@ -278,7 +278,7 @@
                             <li><a href="#"><i class="fa fa-cog"></i>设置</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> 通知</a></li>
                             <!--<li><a><i class="fa fa-key"></i>退出登录</a></li>-->
-                            <li v-show="isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
+                            <li v-show="!isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
                             <li><a @click="logOut"><i class="fa fa-key"></i>退出登录</a></li>
 
                         </ul>

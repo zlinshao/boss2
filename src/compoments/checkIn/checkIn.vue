@@ -66,8 +66,15 @@
                         <i class="fa fa-exclamation-circle"></i>&nbsp;暂无签到记录
                     </div>
 
+
+                    <div class="page pull-right">
+                        <button class="btn btn-white" :disabled="page==1" @click="prev">上一页</button>
+                        <button class="btn btn-white" :disabled="page==paging" @click="next">下一页</button>
+                    </div>
+
                 </div>
             </div>
+
             <div class="col-md-9">
                 <div id="mapContainer"></div>
             </div>
@@ -87,6 +94,9 @@
         components: {DatePicker,STAFF,Status},
         data(){
             return {
+                paging : 5,
+                page : 1,
+
                 noData : false,
                 dateConfigure : [
                     {
@@ -140,13 +150,13 @@
             },
             search(){
 //                console.log(this.params);
-                if (this.params.department_id.length==0&&this.params.staff_id.length==0&&this.params.date_range==''){
+                /*if (this.params.department_id.length==0&&this.params.staff_id.length==0&&this.params.date_range==''){
                     this.getCheckInList();
-                } else {
-                    this.$http.post('amap/signin/search',this.params)
+                } else {*/
+                    this.$http.post('amap/signin/search?page='+this.page,this.params)
                         .then(
                             (res) => {
-                                console.log(res);
+//                                console.log(res);
                                 if (res.data.code=='20011'){
                                     this.noData = true;
                                     this.myData = [];
@@ -156,7 +166,7 @@
                                 }
                             }
                         )
-                }
+//                }
 
 
             },
@@ -224,6 +234,17 @@
                 let map = new AMap.Map('mapContainer', {
                     resizeEnable: true
                 });
+            },
+
+            prev(){
+                // 上一页
+                this.page--;
+                this.search();
+            },
+            next(){
+                // 下一页
+                this.page++;
+                this.search();
             }
         }
     }
@@ -311,5 +332,10 @@
         font-weight: bold;
         color: #CCCCCC;
         line-height: 40px;
+    }
+
+
+    .page{
+        margin: 12px ;
     }
 </style>

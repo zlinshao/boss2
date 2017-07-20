@@ -271,13 +271,19 @@
 //                    "startDate": "07/11/2017",
 //                    "endDate": "07/17/2017"
                 }, function(start, end, label) {
+//                    console.log('start-------'+start.format('YYYY-MM-DD'));
+//                    console.log('end-------'+end);
+//                    console.log('label-------'+label);
                     if(start.format('YYYY-MM-DD')=='Invalid date'){
+//                        alert(1)
                         _this.dateRange = '';
+                        $('#reservation').val('');
+                        _this.$emit('sendDate','');
                     } else {
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
+                        _this.$emit('sendDate',start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
                     }
 
-                    _this.$emit('sendDate',start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
 //                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
                 });
             },
