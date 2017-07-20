@@ -38,7 +38,7 @@
         <!--列表-->
         <div class="row">
             <div class="col-md-3">
-                <div class="checkInContainer">
+                <div class="checkInContainer clearFix">
 
                     <div class="checkInList" v-for="item in myData">
                         <div class="checkInItem">
@@ -67,7 +67,7 @@
                     </div>
 
 
-                    <div class="page pull-right">
+                    <div class="page pull-right" v-show="paging!=0">
                         <button class="btn btn-white" :disabled="page==1" @click="prev">上一页</button>
                         <button class="btn btn-white" :disabled="page==paging" @click="next">下一页</button>
                     </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-9" v-show="isPc">
                 <div id="mapContainer"></div>
             </div>
         </div>
@@ -94,9 +94,10 @@
         components: {DatePicker,STAFF,Status},
         data(){
             return {
-                paging : 5,
+                paging : '',
                 page : 1,
 
+                isPc : true,
                 noData : false,
                 dateConfigure : [
                     {
@@ -129,7 +130,11 @@
         },
         mounted(){
             this.getCheckInList();
-
+            this.isPc = this.IsPC();
+            if (this.isPc){
+//                setTimeout(() => this.getMap,1000);
+                setTimeout(this.getMap,1000)
+            }
         },
         methods: {
             getCheckInList(){
@@ -140,11 +145,12 @@
 
                             if (res.data.code=='20011'){
                                 this.noData = true;
+                                this.paging = 0;
                             } else {
-                                this.myData = res.data.data;
+                                this.myData = res.data.data.data;
+                                this.paging = res.data.data.pages;
                                 this.noData = false;
                             }
-                            this.getMap();
                         }
                     )
             },
@@ -157,12 +163,17 @@
                         .then(
                             (res) => {
 //                                console.log(res);
-                                if (res.data.code=='20011'){
+                                if (res.data.code=='20010'){
+                                    this.myData = res.data.data.data;
+                                    this.paging = res.data.data.pages;
+                                    this.noData = false;
+                                    if (this.isPc){
+                                        setTimeout(this.getMap,1000)
+                                    }
+                                } else {
                                     this.noData = true;
                                     this.myData = [];
-                                } else {
-                                    this.myData = res.data.data;
-                                    this.noData = false;
+                                    this.paging = 0;
                                 }
                             }
                         )
@@ -232,10 +243,38 @@
 
             getMap(){
                 let map = new AMap.Map('mapContainer', {
-                    resizeEnable: true
+                    resizeEnable: true,
+//                    zoom: 13
+                });
+                map.clearMap();  // 清除地图覆盖物
+
+                let markers = [];
+//                console.log(this.myData);
+//                let datas = this.myData
+
+                for (let i =0;i<this.myData.length;i++){
+                    markers.push({
+                        'icon' : this.myData[i].avatar,
+                        'position' : this.myData[i].location.split('[')[1].split(']')[0].split(',')
+
+                    })
+                }
+//                console.log(markers)
+                // 添加一些分布不均的点到地图上,地图上添加三个点标记，作为参照
+                markers.forEach(function(marker) {
+                    new AMap.Marker({
+                        map: map,
+//                        icon: marker.icon,
+                        icon: new AMap.Icon({
+                            image: marker.icon,
+                            size: new AMap.Size(128, 128),  //图标大小
+                            imageSize: new AMap.Size(50,50)
+                        }),
+                        position: [marker.position[0], marker.position[1]],
+                        offset: new AMap.Pixel(-12, -36)
+                    });
                 });
             },
-
             prev(){
                 // 上一页
                 this.page--;
@@ -243,8 +282,19 @@
             },
             next(){
                 // 下一页
+//                console.log(this.paging);
+//                console.log(this.page)
                 this.page++;
                 this.search();
+            },
+            IsPC(){
+                let userAgentInfo = navigator.userAgent;
+                let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+                let flag = true;
+                for (let v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+                }
+                return flag;
             }
         }
     }
@@ -269,9 +319,18 @@
 
     .checkInContainer{
         background-color: white;
-        height: 730px;
-        overflow-y: auto;
     }
+    @media(min-width: 799px) {
+        .checkInContainer{
+            height: 730px;
+            overflow-y: auto;
+        }
+    }
+    /*@media(max-width: 798px) {
+        .checkInContainer{
+
+        }
+    }*/
 
     #mapContainer{
         height: 730px;
@@ -337,5 +396,9 @@
 
     .page{
         margin: 12px ;
+    }
+
+    .amap-markers .amap-marker .amap-icon img{
+        border-radius: 50%;
     }
 </style>

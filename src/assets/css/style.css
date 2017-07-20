@@ -6229,3 +6229,7 @@ header.blue-bg .search:focus {
 .pro-sort select.form-control {
     padding: 6px 8px;
 }
+
+.amap-markers .amap-marker .amap-icon img{
+    border-radius: 50%;
+}
