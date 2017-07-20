@@ -216,7 +216,7 @@
                             <div class="col-lg-4 col-md-12 pull-right">
                                 <form  action="#">
                                         <input placeholder="搜索企业联系人" class="sr-input"
-                                               style="margin-bottom: 0px"     @keyup="search($event)" v-model="keywords" >
+                                               style="margin-bottom: 0px"     @keyup="search" v-model="keywords" >
                                         <button type="button" class="btn sr-btn"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
@@ -609,7 +609,7 @@
                 }else if(flag==5){
                     this.getFive(reId,reName);
                 }else if(flag==6){
-                    this.search(e);
+                    this.search();
                 }else if(flag==7){
                     this.getSix(reId,reName);
                 }
@@ -633,7 +633,7 @@
                 }else if(flag==5){
                     this.getFive(reId,reName);
                 }else if(flag==6){
-                    this.search(e);
+                    this.search();
                 }else if(flag==7){
                     this.getSix(reId,reName);
                 }
@@ -662,10 +662,7 @@
                 this.active1 = index;
             },
             //查询成员
-            search(e){
-                if(e.key === 'enter'){
-                    e.preventDefault();
-                }
+            search(){
                 if(this.type !== 6){
                     this.page=1
                 };
@@ -959,7 +956,7 @@
                     }else if(this.type==5){
                         this.getFive(reId,reName);
                     }else if(this.type==6){
-                        this.search(e);
+                        this.search();
                     } else if(this.type==7){
                         this.getSix(reId,reName);
                     }
@@ -985,7 +982,7 @@
                     }else if(this.type==5){
                         this.getFive(reId,reName);
                     }else if(this.type==6){
-                        this.search(e);
+                        this.search();
                     } else if(this.type==7){
                         this.getSix(reId,reName);
                     }
