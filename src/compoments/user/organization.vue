@@ -708,6 +708,7 @@
 
             //编辑账号
             edit(id){
+                $('.rem_div').remove();
                 $('#myModalRevise').modal({backdrop: 'static',});
                 $('#myModalRevise').modal('show');
                 this.$http.get('manager/user/readUser/id/'+id).then((res) => {
@@ -742,6 +743,7 @@
             },
             //增加账号
             addUser(){
+                $('.rem_div').remove();
                 $('#myModalAdd').modal({backdrop: 'static',});
                 $('#myModalAdd').modal('show');
             },
