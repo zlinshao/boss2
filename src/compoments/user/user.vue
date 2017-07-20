@@ -210,7 +210,7 @@
                                         <span style="color:#fff;font-size:16px;" v-if="isDepartment"> {{department}}</span>
                                     </h4>
                                 </div>
-                                <div class="col-lg-3 col-md-12">
+                                <div class="col-lg-3 col-md-12" style="visibility: hidden">
                                     <label style="margin-top: 8px;margin-right: 8px;">
                                         <input type="checkbox" class="pull-left" >本月过生日员工
                                     </label>
@@ -233,54 +233,51 @@
                         </div>
                         <div class="inbox-body panel table table-responsive">
 
-                            <section class="panel table table-responsive">
                                 <table class="table table-striped table-advance table-hover">
-                                    <thead>
+                                    <thead  class="text-center">
                                     <tr>
-                                        <th>员工</th>
-                                        <th>部门</th>
-                                        <th>职务</th>
-                                        <th>用户组</th>
-                                        <th>人员状态</th>
-                                        <th>手机号</th>
-                                        <th>入职时间</th>
-                                        <th>详情</th>
-                                        <th>操作</th>
+                                        <th class="text-center">员工</th>
+                                        <th class="text-center">部门</th>
+                                        <th class="text-center">职务</th>
+                                        <th class="text-center">用户组</th>
+                                        <th class="text-center">人员状态</th>
+                                        <th class="text-center">手机号</th>
+                                        <th class="text-center">入职时间</th>
+                                        <th class="text-center">详情</th>
+                                        <th class="text-center">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody id="collectId">
                                     <tr v-for="item in userList">
-                                        <td >
+                                        <td class="text-center">
                                             <img :src="item.avatar" class="head" alt="" v-if="item.avatar !== '' ">
                                             <img src="../../assets/img/head.png" class="head" alt="" v-if="item.avatar === '' ">
                                             {{item.real_name}}
                                         </td>
 
 
-                                        <td><span v-for="item1 in item.department">{{item1.name}}</span></td>
+                                        <td class="text-center"><span v-for="item1 in item.department">{{item1.name}}</span></td>
 
-                                        <td><span v-for="item1 in item.position_id">{{item1.vocation}}</span></td>
+                                        <td class="text-center"><span v-for="item1 in item.position_id">{{item1.vocation}}</span></td>
 
-                                        <td ><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>
-                                        <td v-if="item.status==1">
+                                        <td class="text-center"><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>
+                                        <td v-if="item.status==1" class="text-center">
                                             <span class="label label-success ">在职</span>
                                         </td>
-                                        <td v-if="item.status==3">
+                                        <td v-if="item.status==3" class="text-center">
                                             <span class="label label-warning ">离职</span>
                                         </td>
-                                        <td>{{item.mobile}}</td>
-                                        <td>{{item.enroll_time}}</td>
-                                        <td>
-                                            <router-link :to="{path:'/userDetail',query: {UserId: item.id}}" >
-                                                详情
+                                        <td class="text-center">{{item.mobile}}</td>
+                                        <td class="text-center">{{item.enroll_time}}</td>
+                                        <td class="text-center">
+                                            <router-link :to="{path:'/userDetail',query: {UserId: item.id}}" class="fa fa-th-list">
                                             </router-link>
                                         </td>
-                                        <td class="dropdown">
+                                        <td class="dropdown text-center">
                                             <a href="#"
-                                               class="dropdown-toggle btn btn-default text-white"
+                                               class="dropdown-toggle fa fa-gear"
                                                data-toggle="dropdown" role="button" aria-haspopup="true"
                                                aria-expanded="false">
-                                                更多
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-right" style="padding: 0;margin:0">
                                                 <li @click="edit(item.id)">
@@ -312,7 +309,6 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                            </section>
                             <div class="row pull-right" style="padding-right: 15px;">
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination">
@@ -615,7 +611,7 @@
                 }else if(flag==5){
                     this.getFive(reId,reName);
                 }else if(flag==6){
-                    this.search();
+                    this.searchStaff();
                 }else if(flag==7){
                     this.getSix(reId,reName);
                 }
@@ -639,7 +635,7 @@
                 }else if(flag==5){
                     this.getFive(reId,reName);
                 }else if(flag==6){
-                    this.search();
+                    this.searchStaff();
                 }else if(flag==7){
                     this.getSix(reId,reName);
                 }
@@ -667,8 +663,12 @@
             changeClass(index, name){
                 this.active1 = index;
             },
-            //查询成员
             search(){
+              this.page = 1;
+              this.searchStaff();
+            },
+            //查询成员
+            searchStaff(){
                 if(this.type !== 6){
                     this.page=1
                 };
@@ -962,7 +962,7 @@
                     }else if(this.type==5){
                         this.getFive(reId,reName);
                     }else if(this.type==6){
-                        this.search();
+                        this.searchStaff();
                     } else if(this.type==7){
                         this.getSix(reId,reName);
                     }
@@ -988,7 +988,7 @@
                     }else if(this.type==5){
                         this.getFive(reId,reName);
                     }else if(this.type==6){
-                        this.search();
+                        this.searchStaff();
                     } else if(this.type==7){
                         this.getSix(reId,reName);
                     }
@@ -1080,8 +1080,26 @@
         padding: 0;
     }
     .table-responsive {
-        overflow-y: visible;
-        overflow-x: auto;
+        overflow: visible;
+    }
+    .table-responsive::-webkit-scrollbar {
+        width:8px;
+    }
+    .table-responsive::-webkit-scrollbar-button    {
+        background-color:#ffff;
+    }
+    .table-responsive::-webkit-scrollbar-track     {
+        background:#ffffff;
+    }
+    .table-responsive::-webkit-scrollbar-thumb{
+        background:#ccc;
+        border-radius:10px;
+    }
+    @media(max-width: 768px) {
+        .table-responsive {
+            overflow-x: auto;
+            overflow-y: visible;
+        }
     }
     .head{
         vertical-align:middle;
