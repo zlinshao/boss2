@@ -238,7 +238,7 @@
                     format: 'YYYY-MM-DD',
                     showDropdowns: true,
                     autoApply: true,
-                    separator : 'to',
+                    separator : '至',
 
                     ranges : {
                         '清空': [null, null],
@@ -274,10 +274,10 @@
                     if(start.format('YYYY-MM-DD')=='Invalid date'){
                         _this.dateRange = '';
                     } else {
-                        _this.dateRange = start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD');
+                        _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
                     }
 
-                    _this.$emit('sendDate',_this.dateRange);
+                    _this.$emit('sendDate',start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
 //                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
                 });
             },
@@ -297,6 +297,8 @@
             selectDay(num){
                 this.getDates();
                 let date;
+                let from;
+                let to;
                 if (num == 11){
                     this.isCustom = true;
 //                    return;
@@ -310,42 +312,60 @@
                         if (num == 1){
                             // 今天
 //                        console.log(moment().startOf('day').format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
-                            date = moment().startOf('day').format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
+                            from = moment().startOf('day').format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+                            date = moment().startOf('day').format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
                         } else if (num == 2){
                             // 昨天
 //                        console.log(moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"to"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD'));
-                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"to"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
+                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"至"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
                         } else if (num == 3){
                             // 近7天
 //                        console.log(moment().subtract('days', 6).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
-                            date = moment().subtract('days', 6).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
+                            from = moment().subtract('days', 6).format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+                            date = moment().subtract('days', 6).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
                         } else if (num == 4){
                             // 近一个月
 //                        console.log(moment().subtract('days', 29).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
-                            date = moment().subtract('days', 29).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
+                            from = moment().subtract('days', 29).format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+                            date = moment().subtract('days', 29).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
                         } else if (num == 5){
                             // 上月
-                            date = moment().subtract('days', this.lastMonthDays+this.monthDates).format('YYYY-MM-DD')+"to"+moment().subtract('days', this.monthDates+1).format('YYYY-MM-DD');
+                            from = moment().subtract('days', this.lastMonthDays+this.monthDates).format('YYYY-MM-DD');
+                            to = moment().subtract('days', this.monthDates+1).format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.lastMonthDays+this.monthDates).format('YYYY-MM-DD')+"至"+moment().subtract('days', this.monthDates+1).format('YYYY-MM-DD');
                         } else if (num == 6){
                             // 本月
-                            date = moment().subtract('days', this.monthDates).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
+                            from = moment().subtract('days', this.monthDates).format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.monthDates).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
                         } else if (num == 7){
                             // 上季度
+                            from = moment().subtract('days', this.lastQuarterlyDays+this.quarterlyDates).format('YYYY-MM-DD');
+                            to = moment().subtract('days', this.quarterlyDates+1).format('YYYY-MM-DD');
                             date = moment().subtract('days', this.lastQuarterlyDays+this.quarterlyDates).format('YYYY-MM-DD')+"to"+moment().subtract('days', this.quarterlyDates+1).format('YYYY-MM-DD');
                         } else if (num == 8){
                             // 本季度
-                            date = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
+                            from = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
                         } else if (num == 9){
                             // 上一年
-                            date = moment().subtract('days', this.lastYearDays+this.yearDates).format('YYYY-MM-DD')+"to"+moment().subtract('days', this.yearDates+1).format('YYYY-MM-DD');
+                            from = moment().subtract('days', this.lastYearDays+this.yearDates).format('YYYY-MM-DD');
+                            to = moment().subtract('days', this.yearDates+1).format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.lastYearDays+this.yearDates).format('YYYY-MM-DD')+"至"+moment().subtract('days', this.yearDates+1).format('YYYY-MM-DD');
                         } else if (num == 10){
                             // 本年
-                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD');
+                            from = moment().subtract('days', this.yearDates).format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
                         }
                     }
                     this.mobilePickerDate = date;
                     this.showPicker = false;
-                    this.$emit('sendDate',this.mobilePickerDate);
+                    this.$emit('sendDate',from+"to"+to);
                 }
 
 
@@ -369,11 +389,11 @@
                     //显示成功弹窗 ***
                     this.info.state_success = false;
                 } else {
-                    this.mobilePickerDate = this.from+'to'+this.to;
+                    this.mobilePickerDate = this.from+'至'+this.to;
                     this.showPicker = false;
                     this.from = '';
                     this.to = '';
-                    this.$emit('sendDate',this.mobilePickerDate);
+                    this.$emit('sendDate',this.from+'to'+this.to);
                 }
             },
             showToggle(){
