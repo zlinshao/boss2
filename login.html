@@ -123,7 +123,7 @@
                     $('#code').css('display', 'block');
                     $('.identifying_code').attr('disabled', true);
                     let time = 60;
-                    let t = setInterval(function () {
+                    setInterval(function () {
                         if (time > 0) {
                             time--;
                             if (time === 0) {
@@ -136,6 +136,19 @@
                     }, 1000);
                 } else if (data.code === '80005') {
                     $('#code').css('display', 'block');
+                    $('.identifying_code').attr('disabled', true);
+                    let time = 60;
+                    setInterval(function () {
+                        if (time > 0) {
+                            time--;
+                            if (time === 0) {
+                                $('.identifying_code').attr('disabled', false).val('获取验证码');
+                            }
+                            if (time > 0) {
+                                $('.identifying_code').attr('disabled', true).val(time + 's 后重发');
+                            }
+                        }
+                    }, 1000);
                 }
             }
         })

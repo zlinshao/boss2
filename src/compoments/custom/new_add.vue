@@ -353,7 +353,7 @@
 //                    附加信息
                     this.cus_credentials_state = '1';         //证件类型
                     this.cus_idNumber = '';                   //证件号
-                    this.photos.cus_idPhoto = [];                    //证件照片
+                    this.photos.cus_idPhoto = [];             //证件照片
                     this.cus_marriage = '1';                  //婚姻状况
                     this.cus_qq = '';                         //qq号
                     this.cus_email = '';                      //邮箱
@@ -371,8 +371,10 @@
                 this.cus_name = val.name;                                               //客户姓名
                 this.cus_gender = val.gender;                                           //性别
                 this.cus_progress = val.follow;                                         //进度
-                this.cus_nationality = val.nationality;                                 //国籍ID
-                this.cus_nationality_name = this.all_count[val.nationality].zh_name;    //国籍
+                if(val.nationality){
+                    this.cus_nationality = val.nationality;                                 //国籍ID
+                    this.cus_nationality_name = this.all_count[val.nationality].zh_name;    //国籍
+                }
                 this.cus_phone = val.mobile;                                            //手机号
                 this.cus_status_quo = val.customer_status;                              //客户状态
                 this.cus_intention = val.customer_will;                                 //客户意向

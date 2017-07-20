@@ -31,7 +31,7 @@
         components: {Status},
         data (){
             return {
-                debLocking: '',
+                debLocking: '',                 //解锁密码
                 head_sculpture: '',             //头像
                 name_debLocking: '',            //用户名
                 info: {
@@ -111,6 +111,6 @@
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 10000000;
+        z-index: 10000;
     }
 </style>
