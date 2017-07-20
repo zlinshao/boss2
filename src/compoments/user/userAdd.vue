@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close"  aria-label="Close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title" style="text-align: center">新增用户</h4>
@@ -55,9 +55,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >身份证照</label>
+                                        <label class="col-lg-2 control-label">身份证照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" disabled placeholder="开发中，敬请期待...">
+                                            <up-load @photo="idPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'idPic'" :idPhotos="idPic"></up-load>
                                         </div>
                                     </div>
                                     <hr>
@@ -167,7 +168,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="increaseUse">新增</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -179,9 +180,10 @@
 
 <script>
     import Status from '../common/status.vue';
+    import upLoad from '../common/upload.vue'
     export default {
         props:['editDate'],
-        components: { Status },
+        components: { Status ,upLoad},
         data(){
             return {
                 //字典列表
@@ -226,7 +228,12 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                idPic : {
+                    cus_idPhotos : {},    //银行卡照片id
+                    cus_idPhoto : [],     //银行卡照片
+                },
+                complete_ok:'ok',
             }
         },
         mounted(){
@@ -238,6 +245,12 @@
 //            时间选择
             this.remindData();
             this.enrollDate();
+        },
+        watch:{
+            editDate(val){
+                this.idPic.cus_idPhotos={};
+            },
+
         },
         methods:{
             getFirstDepart(){
@@ -317,6 +330,20 @@
                     this.levelList=res.data.data;
                 })
             },
+            idPicId(val){      //获取成功上传身份证 id 数组
+                this.idPic.cus_idPhoto = val;
+            },
+            //图片上传完成
+            complete(val){          //监控上传进度
+                this.complete_ok = val;
+            },
+            //删除照片ID
+            picDelete (val){
+                let id = this.idPic.cus_idPhoto.indexOf(val);
+                if (id > -1) {
+                    this.idPic.cus_idPhoto.splice(id, 1);
+                }
+            },
             enrollDate(){
                 $('.form_datetime2').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -363,82 +390,102 @@
                 this.myResult==[];
             },
             increaseUse(){
-                this.$http.post('manager/user/saveUser',
-                    {
-                        "real_name":this.real_name,//真实姓名
-                        "gender":this. gender,//1男2女
-                        "birthday":this.birthday,//生日
-                        "mobile":this.mobile,//手机
-                        "emergency_call":this.emergency_call,//紧急联系电话
-                        "id_num":this.id_num,//身份证号
-                        "bank_num":this.bank_num,//银行卡号
-                        "id_pic":this.id_pic,//身份证照片id  字符串或数组
-                        "department":this.department,//部门
-                        "position_id":this.position_id,//职位id
-                        "role":this.role,//角色id
-                        "level":this.level,//等级
-                        "accident_insurance":this.accident_insurance,//意外险 1有2无
-                        "five_insurance":this.five_insurance,//五险 1有2无
-                        "id_copy":this.id_copy,// 身份证复印件 1有2无
-                        "photo":this.photo,
-                        "enroll":this.enroll,
-                    },
-                    {headers:{'Content-Type': 'application/json'}}
-                ).then((res)=>{
-                    if(res.data.code==90030){
-                        this.real_name='';       //真实姓名
-                        this.gender='';          //性别
-                        this.birthday='';        //生日
-                        this.mobile='';          //手机号
-                        this.emergency_call='';  //紧急联系方式
-                        this.id_num='';          //身份证
-                        this.bank_num='';        //银行卡
-                        this.id_pic=[];          //照片
-                        this.department='';      //部门
-                        this.position_id='';     //职位
-                        this.role=[];            //角色
-                        this.accident_insurance='';//意外险
-                        this.five_insurance='';  //五险
-                        this.level='';           //等级
-                        this.enroll='';          //入职时间
-                        this.id_copy='';        //身份证复印件
-                        this.photo='';           //有无照片
-                        this.department='';
-                        this.firstDepart=[];
-                        this.secondDepart=[];
-                        this.thirdDepart=[];
-                        this.fourDepart=[];
-                        this.fiveDepart=[];
-                        this.roleList=[];
-                        this.positionList=[];
-                        this.levelList=[];
-                        this.firstId='';
-                        this.secondId='';
-                        this.thirdId='';
-                        this.fourId='';
-                        this.fiveId='';
+                if (this.complete_ok === 'ok') {
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0 || res.data.data ===null ) {
+                            this.$http.post('manager/user/saveUser',
+                                {
+                                    "real_name":this.real_name,//真实姓名
+                                    "gender":this. gender,//1男2女
+                                    "birthday":this.birthday,//生日
+                                    "mobile":this.mobile,//手机
+                                    "emergency_call":this.emergency_call,//紧急联系电话
+                                    "id_num":this.id_num,//身份证号
+                                    "bank_num":this.bank_num,//银行卡号
+                                    "id_pic":this.id_pic,//身份证照片id  字符串或数组
+                                    "department":this.department,//部门
+                                    "position_id":this.position_id,//职位id
+                                    "role":this.role,//角色id
+                                    "level":this.level,//等级
+                                    "accident_insurance":this.accident_insurance,//意外险 1有2无
+                                    "five_insurance":this.five_insurance,//五险 1有2无
+                                    "id_copy":this.id_copy,// 身份证复印件 1有2无
+                                    "photo":this.photo,
+                                    "enroll":this.enroll,
+                                    "id_pic":this.idPic.cus_idPhoto,
+                                },
+                                {headers:{'Content-Type': 'application/json'}}
+                            ).then((res)=>{
+                                if(res.data.code==90030){
+                                    this.real_name='';       //真实姓名
+                                    this.gender='';          //性别
+                                    this.birthday='';        //生日
+                                    this.mobile='';          //手机号
+                                    this.emergency_call='';  //紧急联系方式
+                                    this.id_num='';          //身份证
+                                    this.bank_num='';        //银行卡
+                                    this.id_pic=[];          //照片
+                                    this.department='';      //部门
+                                    this.position_id='';     //职位
+                                    this.role=[];            //角色
+                                    this.accident_insurance='';//意外险
+                                    this.five_insurance='';  //五险
+                                    this.level='';           //等级
+                                    this.enroll='';          //入职时间
+                                    this.id_copy='';        //身份证复印件
+                                    this.photo='';           //有无照片
+                                    this.department='';
+                                    this.firstDepart=[];
+                                    this.secondDepart=[];
+                                    this.thirdDepart=[];
+                                    this.fourDepart=[];
+                                    this.fiveDepart=[];
+                                    this.roleList=[];
+                                    this.positionList=[];
+                                    this.levelList=[];
+                                    this.firstId='';
+                                    this.secondId='';
+                                    this.thirdId='';
+                                    this.fourId='';
+                                    this.fiveId='';
+                                    this.idPic.cus_idPhoto=[];
+                                    this.idPic.cus_idPhotos={};
 
-                        this.getFirstDepart(); //请求公司列表
-                        this.searchRoles();    //请求角色列表
-                        this.getLevel();       //请求等级字典
-                        $("#myModalAdd").modal('hide');//关闭模态框
-                        this.info.success = res.data.msg;
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        },2000);
-                    }else{
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
+                                    this.getFirstDepart(); //请求公司列表
+                                    this.searchRoles();    //请求角色列表
+                                    this.getLevel();       //请求等级字典
+                                    $("#myModalAdd").modal('hide');//关闭模态框
+                                    this.info.success = res.data.msg;
+                                    this.info.state_error = false;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
+                                    //一秒自动关闭成功信息弹窗 ***
+                                    setTimeout(() => {
+                                        this.info.state_success = false;
+                                    },2000);
+                                }else{
+                                    this.info.state_success = false;
+                                    //失败信息 ***
+                                    this.info.error = res.data.msg;
+                                    //显示失败弹窗 ***
+                                    this.info.state_error = true;
+                                }
+                            })
+                        }
+                    });
+                }else {
+                    this.info.error = '图片正在上传';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }
             },
+
+            closeModal(){
+                $('.rem_div').remove();
+                $("#myModalAdd").modal("hide");//关闭模态框
+            }
+
+
         }
     }
 </script>

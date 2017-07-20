@@ -58,7 +58,7 @@
                             //上传成功时触发的事件
                         });
                         this.on("addedfile", function (file) {
-//                            console.log(file);
+                            console.log(file);
                             _this.$emit('complete','no');
                             //上传文件时触发的事件
                             $(file._removeLink.offsetParent).addClass('rem_div');

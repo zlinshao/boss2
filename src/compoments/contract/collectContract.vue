@@ -231,7 +231,7 @@
                 }
             },
             addContract(){  //新增合同订单
-
+                $('.rem_div').remove();
                 $('#contractAdd').modal({backdrop: 'static',});
                 $('#contractAdd').modal('show')
             },

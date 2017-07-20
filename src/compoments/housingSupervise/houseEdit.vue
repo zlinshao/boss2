@@ -545,9 +545,6 @@
                                     this.gasPic.cus_idPhotos={};
                                     this.propertyPic.cus_idPhotos={};
                                     this.checkboxModel=[];
-
-//
-
                                 }else{
                                     this.info.error =res.data.msg;
                                     //显示成功弹窗 ***
