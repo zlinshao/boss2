@@ -393,7 +393,7 @@
                                     </li>
                                 </ul>
                             </li>-->
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>业务员工资</span>
                                 </a>
@@ -405,7 +405,7 @@
                                         <router-link to="/drumstick">鸡腿包</router-link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>周期表</span>
@@ -419,7 +419,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>每单工资</span>
                                 </a>
@@ -431,8 +431,8 @@
                                         <router-link to="/wARenting">租房</router-link>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="sub-menu">
+                            </li>-->
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>中介费申请</span>
                                 </a>
@@ -444,7 +444,7 @@
                                         <router-link to="/aFARenting">租房</router-link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -928,6 +928,7 @@
                     _this.mapMsg.township = data.addressComponent.township;
                     _this.mapMsg.streetNumber = data.addressComponent.streetNumber;
                     console.log(_this.mapMsg);
+                    alert(_this.mapMsg);
 
                     _this.$http.post('amap/signin/saveSignin',_this.mapMsg)
                         .then(
@@ -942,7 +943,7 @@
                                     //显示成功弹窗 ***
                                     _this.info.state_success = true;
                                 } else {
-                                    _this.info.error = res.data.msg;
+//                                    _this.info.error = res.data.msg;
                                     _this.info.error = '签到失败';
                                     //关闭失败弹窗 ***
                                     _this.info.state_error = true;

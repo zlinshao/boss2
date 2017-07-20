@@ -66,9 +66,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr class="text-center">
                             <td>
                                 <input type="checkbox">
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button type="button"
+                                        :class="{'btn':true,'btn-sm':true,'dropdown-toggle':true}"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    待审核
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
+                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
+                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
+                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
+                                </ul>
                             </td>
                         </tr>
                         </tbody>
@@ -84,7 +113,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" aria-label="Close">
+                        <button type="button" class="close" aria-label="Close" @click="closeModal">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">ssss</h4>
                     </div>
@@ -158,6 +187,10 @@
                 this.page = data;
                 this.search();
             },
+
+            closeModal(){
+                $('#myModal').modal('hide');
+            }
         }
     }
 </script>
@@ -170,5 +203,38 @@
     input[type=checkbox]{
         width: 17px;
         height: 17px;
+    }
+
+    ul.dropdown-menu {
+        text-align: center;
+        /*font-size: 12px;*/
+    }
+
+    ul.dropdown-menu li {
+        padding: 6px 0;
+    }
+
+    ul.dropdown-menu li:hover {
+        cursor: pointer;
+        background-color: #f2f2f2;
+    }
+    .yellow {
+        background-color: #F9E175;
+    }
+
+    .orange {
+        background-color: #FCB322;
+    }
+
+    .green {
+        background-color: #83E96D;
+    }
+
+    .gray {
+        background-color: #CCCCCC;
+    }
+
+    .table-responsive {
+        overflow-y: inherit;
     }
 </style>
