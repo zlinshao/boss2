@@ -58,7 +58,7 @@
                         <div class="inbox-body panel table table-responsive">
                             <!--系统公告-->
                             <table class="table table-striped table-advance table-hover" v-if="isSystem">
-                                <thead class="text-center"ead>
+                                <thead class="text-center">
                                     <tr>
                                         <th class="text-center">发布时间</th>
                                         <th class="text-center">发布人</th>

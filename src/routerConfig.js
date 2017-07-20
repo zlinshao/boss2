@@ -56,6 +56,7 @@ import ReportedRenting from './compoments/reported/reportedRenting.vue'    //租
 
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
+import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
 
 export default[
     {
@@ -306,5 +307,10 @@ export default[
         path: '/country',
         name: 'country',
         component: Country
-    }
+    },
+    {
+        path: '/userDetail',             //用户详情页
+        name: 'UserDetail',
+        component: UserDetail
+    },
 ]

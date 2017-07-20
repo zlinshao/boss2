@@ -7,56 +7,52 @@
 
         <section class="panel">
             <!--未选中-->
-            <div class="panel-body clearFix" v-if="pitch.length==0">
-                <form class="form-inline clearFix" role="form">
-                    <div class="dropdown form-group">
-                        <select name="" class="form-control">
-                            <option value="0">全部</option>
-                            <option value="1">已通过</option>
-                            <option value="2">未通过</option>
-                        </select>
-                    </div>
-
-                    <div class="dropdown form-group">
-                        <select name="" class="form-control">
-                            <option value="">全部</option>
-                            <option value="">秦淮区</option>
-                            <option value="">栖霞区</option>
-                            <option value="">建邺区</option>
-                            <option value="">雨花区</option>
-                            <option value="">江宁区</option>
-                        </select>
-                    </div>
-                    <div class="dropdown form-group">
-                        <select name="" class="form-control">
-                            <option value="">全部</option>
-                            <option value="">组员</option>
-                            <option value="">组员</option>
-                        </select>
-                    </div>
-                    <div class="form-group datetime">
+            <div class="panel-body">
+                <div v-if="pitch.length === 0">
+                    <div class="pro-sort">
                         <label>
-                            <input @click="remindData" readonly placeholder="开始时间" v-model="start_time" class="form-control form_datetime">
-                        </label>
-                        <label>
-                            <input @click="remindData" readonly placeholder="结束时间" v-model="end_time" class="form-control form_datetime">
+                            <select class="form-control">
+                                <option value="">房屋类型</option>
+                                <option>{{}}</option>
+                            </select>
                         </label>
                     </div>
-                    <div class="input-group bootstrap-timepicker">
-                        <label class="sr-only" for="search_info">搜索</label>
-                        <input type="text" class="form-control" id="search_info" @keydown.enter.prevent="search">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" ><i class="fa fa-search"></i></button>
-                        </span>
+                    <div class="pro-sort">
+                        <label>
+                            <select class="form-control">
+                                <option value="">房屋类型</option>
+                                <option>{{}}</option>
+                            </select>
+                        </label>
                     </div>
-
-                    <div class="input-group showWay">
+                    <div class="pro-sort">
+                        <label>
+                            <select class="form-control">
+                                <option value="">房屋类型</option>
+                                <option>{{}}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="pro-sort">
+                        <label>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </label>
+                    </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入房屋地址" >
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" >搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="pro-sort" style="margin-left: 10px;margin-top: 15px">
                         <label>
                             <input type="checkbox">
                             快到期合同
                         </label>
                     </div>
-                    <div class="input-group showWay">
+                    <div class="pro-sort"  style="margin-left: 10px;margin-top: 15px">
                         <span>排序方式：</span>
                         <label>
                             <input type="radio" name="sort">默认排序
@@ -65,25 +61,24 @@
                             <input type="radio" name="sort">最新发布
                         </label>
                     </div>
-                    <div class="pull-right">
+                    <div class="pull-right pro-sort">
                         <a @click="addContract" class="btn btn-success"><i
-                                 class="fa fa-plus-square"></i>&nbsp;新增合同
+                                class="fa fa-plus-square"></i>&nbsp;新增合同
                         </a>
                     </div>
-                </form>
-            </div>
-
-            <!--选中-->
-            <div class="panel-body" v-if="pitch.length>0">
-                <ul>
-                    <li>已选中&nbsp;{{pitch.length}}&nbsp;项</li>
-                    <li>
-                        <a href="">标记</a>
-                    </li>
-                    <li>
-                        <a href="">删除</a>
-                    </li>
-                </ul>
+                </div>
+                <!--选中-->
+                <div class="panel-body" v-if="pitch.length>0" style="padding: 0;">
+                    <ul>
+                        <li>已选中&nbsp;{{pitch.length}}&nbsp;项</li>
+                        <li>
+                            <a href="">标记</a>
+                        </li>
+                        <li>
+                            <a href="">删除</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
         <!--表格-->
@@ -172,8 +167,9 @@
 </template>
 <script>
     import contractAdd from  './contractAdd.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default{
-        components: { contractAdd },
+        components: { contractAdd , DatePicker},
         data(){
             return {
                 pitch : [],      // 选中id
@@ -186,11 +182,15 @@
                 isLock : true,      // 是否锁定
                 start_time:"",
                 end_time:'',
+                dateConfigure : [{
+                    range : true, // 是否选择范围
+                    needHour : false // 是否需要选择小时
+                }]
             }
         },
         updated (){
-//            时间选择
-            this.remindData();
+////            时间选择
+//            this.remindData();
         },
         mounted(){
             this.getDictionary();
@@ -205,21 +205,24 @@
             search(){
 
             },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '开始时间'){
-                        this.start_time = ev.target.value;
-                    } else {
-                        this.end_time = ev.target.value;
-                    }
-                });
+            getDate(val){
+                console.log(val)
             },
+//            remindData (){
+//                $('.form_datetime').datetimepicker({
+//                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+//                }).on('changeDate', ev => {
+//                    if (ev.target.placeholder === '开始时间'){
+//                        this.start_time = ev.target.value;
+//                    } else {
+//                        this.end_time = ev.target.value;
+//                    }
+//                });
+//            },
             rules(id , ev){   //多选框选中
                 if (ev.target.checked){
                     this.pitch.push(id);
@@ -254,11 +257,8 @@
     input[type=radio]{
         margin-left: 5px;
     }
-    .showWay{
-        line-height: 20px;
-        vertical-align: text-bottom;
-        margin-left: 10px;
-        font-size: 14px;
+    .pro-sort{
+        margin-top: 10px;
     }
     .panel-body ul{
         margin: 0;
@@ -302,5 +302,8 @@
     }
     .green{
         background-color: #83E96D;
+    }
+    .form-group {
+        margin-bottom: 11px !important;
     }
 </style>
