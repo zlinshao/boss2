@@ -239,7 +239,7 @@
         position: absolute;
         top: -86px;
         right: 0;
-        border-radius: 10px;
+        border-radius: 5px;
         border: 1px solid #000;
         font-size: 16px;
         display: none;

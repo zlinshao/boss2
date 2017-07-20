@@ -78,7 +78,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-2">
-                                            <label class="checkbox-inline check"  @click="payMethod">
+                                            <label class="checkbox-inline check"  @click="payMethods">
                                                 <input type="checkbox" class="pull-left" v-model="payMethod"
                                                        value="1"> 变化
                                             </label>
@@ -133,7 +133,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-2">
-                                            <label class="checkbox-inline check"  @click="priceIncrease">
+                                            <label class="checkbox-inline check"  @click="priceIncreases">
                                                 <input type="checkbox" class="pull-left" v-model="priceIncrease"
                                                        value="1"> 递增
                                             </label>
@@ -346,10 +346,10 @@
 //                    clearBtn: true,                     //清除按钮
                 })
             },
-            payMethod(){
+            payMethods(){
                 this.payMethod=!this.payMethod;
             },
-            priceIncrease(){
+            priceIncreases(){
                 this.priceIncrease=this.priceIncrease;
             }
         }
