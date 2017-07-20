@@ -978,21 +978,24 @@
                     map.addControl(geolocation);
                     geolocation.getCurrentPosition();
                     AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-//                    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+                    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
                 });
                 //解析定位结果
                 function onComplete(data) {
-//                    console.log(data);
+                    console.log(data);
 //                    alert('成功');
-                    _this.mapMsg.location = '['+data.position.getLng()+','+data.position.getLat()+']';
+//                    _this.mapMsg.location = [];
+//                    _this.mapMsg.location.push(data.position.getLng());
+//                    _this.mapMsg.location.push(data.position.getLat());
+                    _this.mapMsg.location = data.position.getLng()+','+data.position.getLat();
                     _this.mapMsg.province = data.addressComponent.province;
                     _this.mapMsg.city = data.addressComponent.city;
                     _this.mapMsg.district = data.addressComponent.district;
                     _this.mapMsg.street = data.addressComponent.street;
                     _this.mapMsg.township = data.addressComponent.township;
                     _this.mapMsg.streetNumber = data.addressComponent.streetNumber;
-                    console.log(_this.mapMsg);
-//                    alert(_this.mapMsg);
+//                    console.log(typeof _this.mapMsg.location);
+                    alert(_this.mapMsg.location);
 
                     _this.$http.post('amap/signin/saveSignin',_this.mapMsg)
                         .then(
@@ -1016,6 +1019,12 @@
                                 }
                             }
                         )
+                }
+
+                function onError(data) {
+                    alert('定位失败');
+                    alert(data);
+                    console.log(data);
                 }
             },
             IsPC(){

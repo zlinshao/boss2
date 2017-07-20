@@ -67,7 +67,7 @@
                     </div>
 
 
-                    <div class="page pull-right" v-show="paging!=0">
+                    <div class="page pull-right" v-show="paging!=''">
                         <button class="btn btn-white" :disabled="page==1" @click="prev">上一页</button>
                         <button class="btn btn-white" :disabled="page==paging" @click="next">下一页</button>
                     </div>
@@ -155,30 +155,34 @@
                     )
             },
             search(){
-//                console.log(this.params);
-                /*if (this.params.department_id.length==0&&this.params.staff_id.length==0&&this.params.date_range==''){
-                    this.getCheckInList();
-                } else {*/
-                    this.$http.post('amap/signin/search?page='+this.page,this.params)
-                        .then(
-                            (res) => {
+                this.page = 1;
+                this.$http.post('amap/signin/search?page=1',this.params)
+                    .then(
+                        (res) => {
 //                                console.log(res);
-                                if (res.data.code=='20010'){
-                                    this.myData = res.data.data.data;
-                                    this.paging = res.data.data.pages;
-                                    this.noData = false;
-                                    if (this.isPc){
-                                        setTimeout(this.getMap,1000)
-                                    }
-                                } else {
+                            if (res.data.code=='20010'){
+                                this.myData = res.data.data.data;
+                                this.paging = res.data.data.pages;
+                                this.noData = false;
+
+                                if (res.data.data.data.length==0){
                                     this.noData = true;
                                     this.myData = [];
-                                    this.paging = 0;
+                                    this.paging = '';
+                                    this.page = 1
                                 }
-                            }
-                        )
-//                }
+                                if (this.isPc){
+                                    setTimeout(this.getMap,1000)
+                                }
 
+                            } else {
+                                this.noData = true;
+                                this.myData = [];
+                                this.paging = '';
+                                this.page = 1
+                            }
+                        }
+                    )
 
             },
             getDate(data){
@@ -255,8 +259,7 @@
                 for (let i =0;i<this.myData.length;i++){
                     markers.push({
                         'icon' : this.myData[i].avatar,
-                        'position' : this.myData[i].location.split('[')[1].split(']')[0].split(',')
-
+                        'position' : this.myData[i].location.split(',')
                     })
                 }
 //                console.log(markers)
@@ -278,14 +281,14 @@
             prev(){
                 // 上一页
                 this.page--;
-                this.search();
+                this.searchByPage();
             },
             next(){
                 // 下一页
 //                console.log(this.paging);
 //                console.log(this.page)
                 this.page++;
-                this.search();
+                this.searchByPage();
             },
             IsPC(){
                 let userAgentInfo = navigator.userAgent;
@@ -295,6 +298,34 @@
                     if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
                 }
                 return flag;
+            },
+            searchByPage(){
+                this.$http.post('amap/signin/search?page='+this.page,this.params)
+                    .then(
+                        (res) => {
+                            if (res.data.code=='20010'){
+                                this.myData = res.data.data.data;
+                                this.paging = res.data.data.pages;
+                                this.noData = false;
+
+                                if (res.data.data.data.length==0){
+                                    this.noData = true;
+                                    this.myData = [];
+                                    this.paging = '';
+                                    this.page = 1
+                                }
+                                if (this.isPc){
+                                    setTimeout(this.getMap,1000)
+                                }
+
+                            } else {
+                                this.noData = true;
+                                this.myData = [];
+                                this.paging = '';
+                                this.page = 1
+                            }
+                        }
+                    )
             }
         }
     }
@@ -322,18 +353,13 @@
     }
     @media(min-width: 799px) {
         .checkInContainer{
-            height: 730px;
+            height: 650px;
             overflow-y: auto;
         }
     }
-    /*@media(max-width: 798px) {
-        .checkInContainer{
-
-        }
-    }*/
 
     #mapContainer{
-        height: 730px;
+        height: 650px;
         border: 1px solid #ccc;
     }
     .checkInContainer::-webkit-scrollbar {
