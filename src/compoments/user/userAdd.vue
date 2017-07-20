@@ -20,7 +20,7 @@
                                         <div class="col-lg-4">
                                             <input type="text" v-model="real_name" class="form-control" placeholder="真实姓名">
                                         </div>
-                                        <label class="col-sm-2 control-label col-lg-2" >姓别</label>
+                                        <label class="col-sm-2 control-label col-lg-2" >性别</label>
                                         <div class="col-lg-4">
                                             <label class="radio-inline">
                                                 <input type="radio" checked value="1" v-model="gender"> 男

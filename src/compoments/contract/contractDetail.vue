@@ -479,7 +479,16 @@
                 isCollect : true,   // 租房或收房
             }
         },
+        mounted(){
+            this.contractDetail();
+        },
+
         methods : {
+            contractDetail(){
+                this.$http.get('core/collect/readcontract/id/1').then((res)=>{
+                    console.log(res)
+                })
+            },
             showUl(){           // 点击更多
                 this.show = !this.show;
             },
