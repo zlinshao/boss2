@@ -8,179 +8,235 @@
             <!--logo start-->
             <a class="logo">B<span>OSS</span></a>
             <!--logo end-->
-            <div class="nav notify-row" id="top_menu">
-                <!--  notification start -->
-                <ul class="nav top-menu">
-                    <!-- settings start -->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="fa fa-tasks"></i>
-                            <span class="badge bg-success">6</span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-green"></div>
-                            <li>
-                                <p class="green">You have 6 pending tasks</p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Dashboard v1.3</div>
-                                        <div class="percent">40%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar"
-                                             aria-valuenow="40"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Database Update</div>
-                                        <div class="percent">60%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar"
-                                             aria-valuenow="60"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Iphone Development</div>
-                                        <div class="percent">87%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-info" role="progressbar"
-                                             aria-valuenow="20"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 87%">
-                                            <span class="sr-only">87% Complete</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Mobile App</div>
-                                        <div class="percent">33%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar"
-                                             aria-valuenow="80"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                            <span class="sr-only">33% Complete (danger)</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Dashboard v1.3</div>
-                                        <div class="percent">45%</div>
-                                    </div>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100" style="width: 45%">
-                                            <span class="sr-only">45% Complete</span>
-                                        </div>
-                                    </div>
+            <!--<div class="nav notify-row" id="top_menu">-->
+                <!--&lt;!&ndash;  notification start &ndash;&gt;-->
+                <!--<ul class="nav top-menu">-->
+                    <!--&lt;!&ndash; settings start &ndash;&gt;-->
+                    <!--<li class="dropdown">-->
+                        <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">-->
+                            <!--<i class="fa fa-tasks"></i>-->
+                            <!--<span class="badge bg-success">6</span>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu extended tasks-bar">-->
+                            <!--<div class="notify-arrow notify-arrow-green"></div>-->
+                            <!--<li>-->
+                                <!--<p class="green">You have 6 pending tasks</p>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div class="task-info">-->
+                                        <!--<div class="desc">Dashboard v1.3</div>-->
+                                        <!--<div class="percent">40%</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="progress progress-striped">-->
+                                        <!--<div class="progress-bar progress-bar-success" role="progressbar"-->
+                                             <!--aria-valuenow="40"-->
+                                             <!--aria-valuemin="0" aria-valuemax="100" style="width: 40%">-->
+                                            <!--<span class="sr-only">40% Complete (success)</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div class="task-info">-->
+                                        <!--<div class="desc">Database Update</div>-->
+                                        <!--<div class="percent">60%</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="progress progress-striped">-->
+                                        <!--<div class="progress-bar progress-bar-warning" role="progressbar"-->
+                                             <!--aria-valuenow="60"-->
+                                             <!--aria-valuemin="0" aria-valuemax="100" style="width: 60%">-->
+                                            <!--<span class="sr-only">60% Complete (warning)</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div class="task-info">-->
+                                        <!--<div class="desc">Iphone Development</div>-->
+                                        <!--<div class="percent">87%</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="progress progress-striped">-->
+                                        <!--<div class="progress-bar progress-bar-info" role="progressbar"-->
+                                             <!--aria-valuenow="20"-->
+                                             <!--aria-valuemin="0" aria-valuemax="100" style="width: 87%">-->
+                                            <!--<span class="sr-only">87% Complete</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div class="task-info">-->
+                                        <!--<div class="desc">Mobile App</div>-->
+                                        <!--<div class="percent">33%</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="progress progress-striped">-->
+                                        <!--<div class="progress-bar progress-bar-danger" role="progressbar"-->
+                                             <!--aria-valuenow="80"-->
+                                             <!--aria-valuemin="0" aria-valuemax="100" style="width: 33%">-->
+                                            <!--<span class="sr-only">33% Complete (danger)</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div class="task-info">-->
+                                        <!--<div class="desc">Dashboard v1.3</div>-->
+                                        <!--<div class="percent">45%</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="progress progress-striped active">-->
+                                        <!--<div class="progress-bar" role="progressbar" aria-valuenow="45"-->
+                                             <!--aria-valuemin="0"-->
+                                             <!--aria-valuemax="100" style="width: 45%">-->
+                                            <!--<span class="sr-only">45% Complete</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                </a>
-                            </li>
-                            <li class="external">
-                                <a href="#">See All Tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- settings end -->
-                    <!-- inbox dropdown start-->
-                    <li id="header_inbox_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="badge bg-important">5</span>
-                        </a>
-                        <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-red"></div>
-                            <li>
-                                <p class="red">You have 5 new messages</p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar"
-                                                             src="./../../assets/img/avatar-mini.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jonathan Smith</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is an example msg.
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar"
-                                                             src="./../../assets/img/avatar-mini2.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jhon Doe</span>
-                                    <span class="time">10 mins</span>
-                                    </span>
-                                    <span class="message">
-                                     Hi, Jhon Doe Bhai how are you ?
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar"
-                                                             src="./../../assets/img/avatar-mini3.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jason Stathum</span>
-                                    <span class="time">3 hrs</span>
-                                    </span>
-                                    <span class="message">
-                                        This is awesome dashboard.
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar"
-                                                             src="./../../assets/img/avatar-mini4.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jondi Rose</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is metrolab
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">See all messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- inbox dropdown end -->
-                    <!-- notification dropdown start-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="external">-->
+                                <!--<a href="#">See All Tasks</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <!--&lt;!&ndash; settings end &ndash;&gt;-->
+                    <!--&lt;!&ndash; inbox dropdown start&ndash;&gt;-->
+                    <!--<li id="header_inbox_bar" class="dropdown">-->
+                        <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">-->
+                            <!--<i class="fa fa-envelope-o"></i>-->
+                            <!--<span class="badge bg-important">5</span>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu extended inbox">-->
+                            <!--<div class="notify-arrow notify-arrow-red"></div>-->
+                            <!--<li>-->
+                                <!--<p class="red">You have 5 new messages</p>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<span class="photo"><img alt="avatar"-->
+                                                             <!--src="./../../assets/img/avatar-mini.jpg"></span>-->
+                                    <!--<span class="subject">-->
+                                    <!--<span class="from">Jonathan Smith</span>-->
+                                    <!--<span class="time">Just now</span>-->
+                                    <!--</span>-->
+                                    <!--<span class="message">-->
+                                        <!--Hello, this is an example msg.-->
+                                    <!--</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<span class="photo"><img alt="avatar"-->
+                                                             <!--src="./../../assets/img/avatar-mini2.jpg"></span>-->
+                                    <!--<span class="subject">-->
+                                    <!--<span class="from">Jhon Doe</span>-->
+                                    <!--<span class="time">10 mins</span>-->
+                                    <!--</span>-->
+                                    <!--<span class="message">-->
+                                     <!--Hi, Jhon Doe Bhai how are you ?-->
+                                    <!--</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<span class="photo"><img alt="avatar"-->
+                                                             <!--src="./../../assets/img/avatar-mini3.jpg"></span>-->
+                                    <!--<span class="subject">-->
+                                    <!--<span class="from">Jason Stathum</span>-->
+                                    <!--<span class="time">3 hrs</span>-->
+                                    <!--</span>-->
+                                    <!--<span class="message">-->
+                                        <!--This is awesome dashboard.-->
+                                    <!--</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<span class="photo"><img alt="avatar"-->
+                                                             <!--src="./../../assets/img/avatar-mini4.jpg"></span>-->
+                                    <!--<span class="subject">-->
+                                    <!--<span class="from">Jondi Rose</span>-->
+                                    <!--<span class="time">Just now</span>-->
+                                    <!--</span>-->
+                                    <!--<span class="message">-->
+                                        <!--Hello, this is metrolab-->
+                                    <!--</span>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">See all messages</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <!--&lt;!&ndash; inbox dropdown end &ndash;&gt;-->
+                    <!--&lt;!&ndash; notification dropdown start&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li id="header_notification_bar" class="dropdown">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a data-toggle="dropdown" class="dropdown-toggle" href="#">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<i class="fa fa-bell-o"></i>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span class="badge bg-warning">7</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<ul class="dropdown-menu extended notification">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="notify-arrow notify-arrow-yellow"></div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<p class="yellow">You have 7 new notifications</p>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="label label-danger"><i class="fa fa-bolt"></i></span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Server #3 overloaded.&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="small italic">34 mins</span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="label label-warning"><i class="fa fa-bell"></i></span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Server #10 not respoding.&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="small italic">1 Hours</span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="label label-danger"><i class="fa fa-bolt"></i></span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Database overloaded 24%.&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="small italic">4 hrs</span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="label label-success"><i class="fa fa-plus"></i></span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;New user registered.&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="small italic">Just now</span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="label label-info"><i class="fa fa-bullhorn"></i></span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Application error.&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="small italic">10 mins</span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="#">See all notifications</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash; notification dropdown end &ndash;&gt;-->
+                <!--</ul>-->
+            <!--</div>-->
+            <div class="top-nav">
+                <div  class="nav notify-row" id="top_menu" style="display: inline-block;width: 26px;margin-top: 8px;">
+                    <ul>
                     <li id="header_notification_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="font-size: 20px;">
                             <i class="fa fa-bell-o"></i>
-                            <span class="badge bg-warning">7</span>
+                            <span class="badge bg-warning" style="top: -4px;">7</span>
                         </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-yellow"></div>
+                        <ul class="dropdown-menu extended notification" style="top: 30px;left: -88px;">
+                            <div class="notify-arrow notify-arrow-yellow" style="left: 88px;"></div>
                             <li>
                                 <p class="yellow">You have 7 new notifications</p>
                             </li>
@@ -223,46 +279,42 @@
                                 <a href="#">See all notifications</a>
                             </li>
                         </ul>
-                    </li>
-                    <!-- notification dropdown end -->
-                </ul>
-            </div>
-            <div class="top-nav ">
+                    </li></ul>
+                </div>
                 <ul class="nav pull-right top-menu">
-                    <li>
-                        <input type="text" class="form-control search" placeholder="">
-                    </li>
-
                     <!--锁屏-->
-                    <li class="dropdown" style="padding-top: 4px;">
-                        <a href="javascript:;" style="border:none" class="dropdown-toggle"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-lock" style="font-size: 25px"></i>
-                        </a>
-                        <ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">
-                            <li>
-                                <a href="#" @click="lock_screen(lockScreen,1)">锁屏</a>
-                            </li>
-                            <li>
-                                <a href="#" @click="lock_state">修改密码</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="dropdown" style="padding-top: 4px;">-->
+                    <!--<a href="javascript:;" style="border:none" class="dropdown-toggle"-->
+                    <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--<i class="fa fa-lock" style="font-size: 25px"></i>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">-->
+                    <!--<li>-->
+                    <!--<a href="#" @click="lock_screen(lockScreen,1)">锁屏</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="#" @click="lock_state">修改密码</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
 
                     <!--消息提醒-->
-                    <li class="dropdown" style="padding-top: 2px;">
-                        <a href="javascript:;" style="border:none" class="dropdown-toggle"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell-o" style="font-size: 25px"></i>
-                        </a>
-                        <ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">
-                            <li @click="lookRemind">
-                                <a href="#">查看提醒</a>
-                            </li>
-                            <li @click="addRemind">
-                                <a href="#">添加提醒</a>
-                            </li>
-                        </ul>
+                    <!--<li class="dropdown" style="padding-top: 2px;">-->
+                    <!--<a href="javascript:;" style="border:none" class="dropdown-toggle"-->
+                    <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--<i class="fa fa-bell-o" style="font-size: 25px"></i>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu extended " style="max-width: 150px; text-align: center; ">-->
+                    <!--<li @click="lookRemind">-->
+                    <!--<a href="#">查看提醒</a>-->
+                    <!--</li>-->
+                    <!--<li @click="addRemind">-->
+                    <!--<a href="#">添加提醒</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <li>
+                        <input type="text" class="form-control search" placeholder="">
                     </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
@@ -273,15 +325,13 @@
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                            <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <li><a><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a @click="addRemind"><i class="fa fa-plus"></i>增加提醒</a></li>
+                            <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
+                            <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
                             <li><a @click="logOut"><i class="fa fa-key"></i>退出登录</a></li>
 
                         </ul>
                     </li>
-
                     <!-- user login dropdown end -->
                     <li class="sb-toggle-right">
                         <i class="fa  fa-align-right"></i>
@@ -720,18 +770,22 @@
                     </div>
                     <div class="modal-body">
                         <div v-if="lock_status" class="form-group">
-                            <input type="text" class="form-control" v-model="lockScreen" @keyup.enter.prevent="set_password"
+                            <input type="text" class="form-control" v-model="lockScreen"
+                                   @keyup.enter.prevent="set_password"
                                    placeholder="请输入密码">
                         </div>
                         <div v-if="!lock_status" class="form-group">
-                            <input type="text" class="form-control" v-model="lockScreen" @keyup.enter.prevent="revise_password(lockScreen)"
+                            <input type="text" class="form-control" v-model="lockScreen"
+                                   @keyup.enter.prevent="revise_password(lockScreen)"
                                    placeholder="请输入密码">
                         </div>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default btn-md" @click="lock_empty">取消</button>
                         <button v-if="lock_status" class="btn btn-primary btn-md" @click="set_password">确认</button>
-                        <button v-if="!lock_status" class="btn btn-primary btn-md" @click="revise_password(lockScreen)">修改</button>
+                        <button v-if="!lock_status" class="btn btn-primary btn-md" @click="revise_password(lockScreen)">
+                            修改
+                        </button>
                     </div>
                 </div>
             </div>
@@ -739,18 +793,18 @@
 
         <Status :state='info'></Status>
         <!-- Right Slidebar end -->
-        <LookRemind></LookRemind>
+        <!--<LookRemind></LookRemind>-->
 
         <AddRemind></AddRemind>
     </div>
 </template>
 
 <script>
-    import LookRemind from '../common/remind/checkRemind.vue';
+    //    import LookRemind from '../common/remind/checkRemind.vue';
     import AddRemind from  '../common/remind/addRemind.vue'
     import Status from '../common/status.vue';
     export default {
-        components: {LookRemind, AddRemind, Status},
+        components: {AddRemind, Status},
         props: ['Name', 'Card'],
         data(){
             return {
@@ -771,6 +825,10 @@
         },
 
         methods: {
+//            清空
+            lock_empty (){
+                this.lockScreen = '';
+            },
             pitch_on (n){
                 this.isActive = n;
             },
@@ -812,7 +870,7 @@
                         });
                     }
                     if (res.data.code === '80035') {
-                        this.$router.push({ path: 'lockScreen' });
+                        this.$router.push({path: 'lockScreen'});
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
@@ -834,7 +892,7 @@
             },
 //            修改密码
             revise_password (val){
-                if(this.lockScreen === ''){
+                if (this.lockScreen === '') {
                     //失败信息 ***
                     this.info.error = '密码不能为空';
                     //显示失败弹窗 ***
