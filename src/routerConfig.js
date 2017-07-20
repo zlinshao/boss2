@@ -50,6 +50,8 @@ import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单�
 import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
 
 import ReportedCollect from './compoments/reported/reportedCollect.vue'    //收房报备
+import ReopetedCollectDetail from './compoments/reported/collectDetail.vue'// 收房报备详情
+
 import ReportedRenting from './compoments/reported/reportedRenting.vue'    //租房报备
 
 

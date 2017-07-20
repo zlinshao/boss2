@@ -46,12 +46,12 @@
         <div class="datePickerContainer" v-else="range">
             <div class="input-group" v-show="hour">
                 <label>
-                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date" class="form-control form_datetimeNeedHour" style="margin-bottom: -9px">
+                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date" class="form-control form_datetimeNeedHour">
                 </label>
             </div>
-            <div class="form-group" v-show="!hour">
+            <div class="input-group" v-show="!hour">
                 <label>
-                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择日期" v-model="date" class="form-control form_datetime" style="margin-bottom: -5px;">
+                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择日期" v-model="date" class="form-control form_datetime">
                 </label>
             </div>
         </div>
@@ -210,6 +210,7 @@
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
 //                    endDate: new Date(),
+                    pickerPosition: "top-left"
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
                     this.$emit('sendDate',ev.target.value);
@@ -224,6 +225,7 @@
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
 //                    endDate: new Date(),
+                    pickerPosition: "top-left"
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
                     this.$emit('sendDate',ev.target.value);

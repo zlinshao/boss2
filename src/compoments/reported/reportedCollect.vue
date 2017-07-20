@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="input-group pull-right">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square"></i>&nbsp;新增收房报备
+                        <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增收房报备
                         </a>
                     </div>
 
@@ -49,8 +49,8 @@
                             <th class="text-center">签约人</th>
                             <th class="text-center">所属部门</th>
                             <th class="text-center">负责人</th>
+                            <th class="text-center">签约日期</th>
                             <th class="text-center">房屋地址</th>
-                            <th class="text-center">门牌号</th>
                             <th class="text-center">房型</th>
                             <th class="text-center">收月单价</th>
                             <th class="text-center">收房年限</th>
@@ -58,47 +58,49 @@
                             <th class="text-center">空置期</th>
                             <th class="text-center">押金</th>
                             <th class="text-center">中介费</th>
-                            <th class="text-center">汇款方式</th>
-                            <th class="text-center">汇款账户</th>
-                            <th class="text-center">签约日期</th>
-                            <th class="text-center">备注</th>
                             <th class="text-center">状态</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
+                        <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox">
+                                <input type="checkbox" @click.stop="changeCurrentIndex($event,1)">
                             </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
+                            <td>{{item.staff.real_name}}</td>
+                            <td>{{item.department.name}}</td>
+                            <td>{{item.leader.real_name}}</td>
+                            <td>{{item.deal_time}}</td>
+                            <td>{{item.house.detailed_address}}</td>
+                            <td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>
+                            <td>{{item.price[0]}}</td>
+                            <!--<td class="dropdown">
+                                <button class="btn btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">{{item.price[0]}}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-center">
+                                    <li v-for="price in item.price">{{price}}</li>
+                                </ul>
+                            </td>-->
+                            <td>{{item.years}}</td>
+                            <td>{{dict.pay_type[item.pay_type[0]]}}</td>
+                            <td>{{item.vacancy}}</td>
+                            <td>{{item.cost_deposit}}</td>
+                            <td>{{item.cost_medi}}</td>
+                            <td class="dropdown">
                                 <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'dropdown-toggle':true}"
+                                        :class="{'btn':true,'btn-sm':true,'dropdown-toggle':true,'yellow':item.status===1,'green':item.status===2,'gray':item.status===3}"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    待审核
+                                    {{dict.status[item.status]}}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
-                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
-                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
-                                    <li data-toggle="modal" data-target="#confirm">通过一审</li>
+                                    <li v-show="item.status==1" data-toggle="modal" data-target="#confirm">通过审核</li>
+                                    <li v-show="item.status==2" data-toggle="modal" data-target="#confirm">撤回</li>
+                                    <li data-toggle="modal" data-target="#confirm">退单</li>
                                 </ul>
                             </td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="15">暂无数据...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -108,31 +110,18 @@
 
 
         <!--modal-->
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true"
-             data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" aria-label="Close" @click="closeModal">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">ssss</h4>
-                    </div>
-                    <div class="modal-body clearFix">
-                        ashdjkasnd
-                    </div>
-                    <div class="modal-footer">
-                        <div>
-                            <button type="button" class="btn btn-primary">完成</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--新增-->
+        <AddModal></AddModal>
+
+        <!--编辑-->
+        <EditModal></EditModal>
 
         <!--提示信息-->
         <Status :state='info'></Status>
         <!--分页-->
-        <Page :pg="paging" @pag="getData"></Page>
+        <Page :pg="paging" @pag="getPage"></Page>
+
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
     </div>
 </template>
@@ -141,14 +130,20 @@
     import Page from '../common/page.vue'
     import Status from '../common/status.vue';
     import DatePicker from '../common/datePicker.vue'
+    import Confirm from '../common/confirm.vue'
+
+    import AddModal from './collectAdd.vue'
+    import EditModal from './collectEdit.vue'
     export default{
-        components: {Page,Status,DatePicker},
+        components: {Page,Status,DatePicker,AddModal,EditModal,Confirm},
         data(){
             return {
                 isShow : false,
 
+                dict : {},
                 paging : '',
-                page : '',
+                myData : '',
+                page : 1,
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -165,14 +160,53 @@
                         needHour : true
                     }
                 ],
-                myData : [],
                 params : {
                     date_range : '',
                     search : ''
                 },
+
+                confirmMsg: {
+                    id: '',
+                    msg: '',
+                    status: ''         // 1:通过审核，2:撤销审核，3:退单
+                },
             }
         },
+        mounted (){
+            this.$http.get('http://test.v2.api.boss.lejias.cn/revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+//                        console.log(this.dict);
+                        this.getCollectList();
+                    }
+                )
+
+        },
         methods: {
+            getCollectList(){
+                this.$http.get('checkin/collect')
+                    .then(
+                        (res) => {
+//                            console.log(res.data.code);
+//                            console.log(res.data.data.data);
+                            if (res.data.code == 18200){
+                                // 成功
+                                this.paging = res.data.data.pages;
+                                this.myData = res.data.data.data;
+                                this.isShow = false;
+                            } else {
+                                this.isShow = true;
+                            }
+//                            console.log(this.myData)
+                        }
+                    )
+            },
+            changeCurrentIndex(ev,id){
+
+            },
+
             search(){
                 console.log(this.params);
             },
@@ -181,15 +215,14 @@
                 this.date_range = data;
                 this.search();
             },
-            getData(data){
+            getPage(data){
                 // 页数
 //                console.log(data);
                 this.page = data;
                 this.search();
             },
-
-            closeModal(){
-                $('#myModal').modal('hide');
+            getConfirm(){
+                // 提示信息
             }
         }
     }
@@ -222,10 +255,6 @@
         background-color: #F9E175;
     }
 
-    .orange {
-        background-color: #FCB322;
-    }
-
     .green {
         background-color: #83E96D;
     }
@@ -235,6 +264,6 @@
     }
 
     .table-responsive {
-        overflow-y: inherit;
+        overflow: visible;
     }
 </style>
