@@ -982,7 +982,7 @@
                 });
                 //解析定位结果
                 function onComplete(data) {
-                    console.log(data);
+//                    console.log(data);
 //                    alert('成功');
                     _this.mapMsg.location = '['+data.position.getLng()+','+data.position.getLat()+']';
                     _this.mapMsg.province = data.addressComponent.province;
@@ -992,7 +992,7 @@
                     _this.mapMsg.township = data.addressComponent.township;
                     _this.mapMsg.streetNumber = data.addressComponent.streetNumber;
                     console.log(_this.mapMsg);
-                    alert(_this.mapMsg);
+//                    alert(_this.mapMsg);
 
                     _this.$http.post('amap/signin/saveSignin',_this.mapMsg)
                         .then(
