@@ -236,10 +236,10 @@
                                 <table class="table table-striped table-advance table-hover">
                                     <thead  class="text-center">
                                     <tr>
-                                        <th class="text-center">员工</th>
-                                        <th class="text-center">部门</th>
-                                        <th class="text-center">职务</th>
-                                        <th class="text-center">用户组</th>
+                                        <th>员工</th>
+                                        <th>部门</th>
+                                        <th>职务</th>
+                                        <th>用户组</th>
                                         <th class="text-center">人员状态</th>
                                         <th class="text-center">手机号</th>
                                         <th class="text-center">入职时间</th>
@@ -249,18 +249,18 @@
                                     </thead>
                                     <tbody id="collectId">
                                     <tr v-for="item in userList">
-                                        <td class="text-center">
+                                        <td>
                                             <img :src="item.avatar" class="head" alt="" v-if="item.avatar !== '' ">
                                             <img src="../../assets/img/head.png" class="head" alt="" v-if="item.avatar === '' ">
                                             {{item.real_name}}
                                         </td>
 
 
-                                        <td class="text-center"><span v-for="item1 in item.department">{{item1.name}}</span></td>
+                                        <td><span v-for="item1 in item.department">{{item1.name}}</span></td>
 
-                                        <td class="text-center"><span v-for="item1 in item.position_id">{{item1.vocation}}</span></td>
+                                        <td><span v-for="item1 in item.position_id">{{item1.vocation}}</span></td>
 
-                                        <td class="text-center"><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>
+                                        <td><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>
                                         <td v-if="item.status==1" class="text-center">
                                             <span class="label label-success ">在职</span>
                                         </td>
