@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="empty_info">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title" style="text-align: center">添加公告</h4>
@@ -40,7 +40,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="empty_info">关闭</button>
                         <button type="button" class="btn btn-primary" @click="add_info">添加</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -57,7 +57,7 @@
     import DepartmentSelect from '../common/organization/selectStaff.vue';
     import Status from '../common/status.vue';
     export default {
-        components: { DepartmentSelect, Status },
+        components: {DepartmentSelect, Status},
         data(){
             return {
                 configure: [],
@@ -65,7 +65,7 @@
                 contents: '',           //公告内容
                 departmentName: [],     //部门名称
                 departmentId: [],       //部门ID
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -105,13 +105,24 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         this.$emit('success_system');
-                    }else{
+                        this.titles = '';             //标题
+                        this.contents = '';           //公告内容
+                        this.departmentName = [];     //部门名称
+                        this.departmentId = [];       //部门ID
+                    } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                     }
                 });
+            },
+//            清空信息
+            empty_info (){
+                this.titles = '';             //标题
+                this.contents = '';           //公告内容
+                this.departmentName = [];     //部门名称
+                this.departmentId = [];       //部门ID
             }
         }
     }
