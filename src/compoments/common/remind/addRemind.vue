@@ -62,7 +62,7 @@
                 dateConfigure: [
                     {
                         range: false,        // 是否选择范围
-                        needHour : true    // 是否需要选择小时
+                        needHour: true    // 是否需要选择小时
                     }
                 ]
             }
@@ -74,21 +74,9 @@
             Advanced(){
                 this.isAdvanced = !this.isAdvanced;
             },
-//            remindData (){
-//                $('.form_datetime').datetimepicker({
-//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-//                    language: 'zh-CN',
-//                    format: 'yyyy-mm-dd',
-//                    todayBtn: 1,
-//                    autoclose: 1,
-////                    clearBtn: true,                     //清除按钮
-//                }).on('changeDate', function (ev) {
-//                    this.remindTime = ev.target.value;
-//                }.bind(this));
-//            },
             getDate(data){
                 console.log(data)
-            }
+            },
         }
     }
 </script>
