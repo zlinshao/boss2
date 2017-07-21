@@ -200,6 +200,9 @@
 //                this.ifNeedHour();
             }
         },
+        updated (){
+            this.remindData()
+        },
         methods: {
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -210,7 +213,7 @@
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
 //                    endDate: new Date(),
-                    pickerPosition: "top-left"
+                    pickerPosition: this.dateConfigure[0].position
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
                     this.$emit('sendDate',ev.target.value);
@@ -225,7 +228,7 @@
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
 //                    endDate: new Date(),
-                    pickerPosition: "top-left"
+                    pickerPosition: this.dateConfigure[0].position
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
                     this.$emit('sendDate',ev.target.value);

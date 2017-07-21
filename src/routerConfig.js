@@ -302,5 +302,10 @@ export default[
         path: '/reportedRenting',
         name: 'ReportedRenting',
         component: ReportedRenting
+    },
+    {
+        path: '/reopetedCollectDetail',
+        name: 'ReopetedCollectDetail',
+        component: ReopetedCollectDetail
     }
 ]
