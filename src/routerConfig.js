@@ -331,4 +331,9 @@ export default[
         name: 'UserDetail',
         component: UserDetail
     },
+    {
+        path: '/reopetedCollectDetail',
+        name: 'ReopetedCollectDetail',
+        component: ReopetedCollectDetail
+    }
 ]

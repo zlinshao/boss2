@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly v-model="chooseResult.customer_name">
                                 </div>
                             </div>
 
@@ -57,8 +57,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款方式</label>
                                 <div class="col-sm-7">
-                                    <select class="form-control">
-                                        <option value="">季付</option>
+                                    <select class="form-control" v-model="one_type">
+                                        <option :value="value" v-for="(key,value) in dict.pay_type">{{key}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
@@ -66,11 +66,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" v-show="formData.pay_type.length!=0">
-                                <div class="col-sm-6" v-for="(item,index) in formData.pay_type">
+                            <div class="form-group" v-show="pay_typeChange">
+                                <div class="col-sm-6" v-for="(item,index) in more_type">
                                     <label class="col-sm-5 control-label">第{{index+1}}年</label>
                                     <div class="col-sm-7">
-                                        <select class="form-control" v-model="formData.pay_type[index]">
+                                        <select class="form-control" v-model="more_type[index]">
                                             <option :value="value" v-for="(key,value) in dict.pay_type">{{key}}</option>
                                         </select>
                                     </div>
@@ -82,23 +82,23 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">空置期</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" v-model="formData.vacancy">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">押金</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" v-model="formData.cost_deposit">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">是否中介</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="formData.is_medi" @change="medi">
                                         <option value="1">是</option>
-                                        <option value="0">否</option>
+                                        <option value="2">否</option>
                                     </select>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">中介费</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" v-model="formData.cost_medi" :readonly="formData.is_medi==2" >
                                 </div>
                             </div>
 
@@ -120,7 +120,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">汇款方式</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="formData.payment">
                                         <option value="">银行卡</option>
                                     </select>
                                 </div>
@@ -129,14 +129,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">汇款账户</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="formData.account">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">备注</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" cols="5"></textarea>
+                                    <textarea class="form-control" cols="5" v-model="formData.remark"></textarea>
                                 </div>
                             </div>
 
@@ -145,8 +145,9 @@
                     </div>
                     <div class="modal-footer">
                         <div>
-                            <button type="button" class="btn btn-default">取消</button>
-                            <button type="button" class="btn btn-primary">完成</button>
+                            <button type="button" class="btn btn-default" @click="closeModal">取消</button>
+                            <button type="button" class="btn btn-primary">保存为草稿</button>
+                            <button type="button" class="btn btn-warning" @click="save">保存并提交</button>
                         </div>
                     </div>
                 </div>
@@ -156,7 +157,10 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <SelectHouse @House="getHouse"></SelectHouse>
+        <!--提示信息-->
+        <Status :state='info'></Status>
 
+        <SelectClient @clientAdd="getClient"></SelectClient>
     </div>
 </template>
 
@@ -165,8 +169,12 @@
     import SelectHouse from '../common/selectHouse.vue'
     import FlexBox from '../common/flexBox.vue'
     import DatePicker from '../common/datePicker.vue'
+    import Status from '../common/status.vue';
+    // 选择客户
+    import SelectClient from '../common/selectClient.vue'
+
     export default{
-        components: {STAFF,SelectHouse,FlexBox,DatePicker},
+        components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},
         data(){
             return {
                 dict : {},
@@ -178,32 +186,51 @@
                 dateConfigure : [
                     {
                         range : false,
-                        needHour : false
+                        needHour : false,
+                        position : 'top-left'
                     }
                 ],
+
+                pay_typeChange : false,
+                one_type : '1',
+                more_type : [],
 
                 chooseResult : {
                     staff_name : '',
                     house_name : '',
                     department_name : '',
                     leader_name : '',
+                    customer_name : ''
                 },
                 formData : {
                     staff_id : '',
                     department_id : '',
                     leader_id : '',
                     house_id : '',
+                    customer_id : '',
                     years : '',
                     pay_type : [],
                     price : [],
                     vacancy : '',
-                    cost_medi : '',
-                    is_midi : '',
+                    cost_medi : '0',
+                    is_medi : 1,
                     cost_deposit : '',
                     deal_time : '',
+                    payment : 1,
                     remark : '',
                     account : ''
-                }
+                },
+
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
 
             }
         },
@@ -219,13 +246,37 @@
                 .then(
                     (res) => {
                         let val = res.data;
-                        console.log(val);
+//                        console.log(val);
                         this.chooseResult.leader_name = val.leader_name;
                         this.chooseResult.department_name = val.department_name;
                         this.formData.leader_id = val.leader_id;
                         this.formData.department_id = val.department_id;
                     }
                 )
+
+            this.formData.pay_type.push(this.one_type);
+        },
+        watch : {
+            one_type(curVal,oldVal){
+                if (curVal!=oldVal){
+                    if (!this.pay_typeChange){
+                        this.formData.pay_type = [];
+                        this.formData.pay_type.push(curVal);
+                    }
+                }
+            },
+
+            pay_typeChange(curVal,oldVal){
+//                console.log(curVal)
+//                console.log(oldVal)
+                this.formData.pay_type = [];
+                if (curVal){
+                    // 变化
+                    this.formData.pay_type = this.more_type;
+                } else {
+                    this.formData.pay_type.push(this.one_type);
+                }
+            }
         },
         methods: {
             closeModal(){
@@ -258,21 +309,70 @@
 //                console.log(data);
                 this.formData.deal_time = data;
             },
+            getClient(data){
+                // 选择客户
+//                console.log(data);
+                this.formData.customer_id = data.id;
+                this.chooseResult.customer_name = data.name;
+
+            },
 
             changePayType(ev){
+                this.formData.pay_type = [];
                 if (ev.currentTarget.checked){
-                    console.log(this.formData.years)
+//                    console.log(this.formData.years);
+                    this.pay_typeChange = true;
+                    this.more_type = [];
                     if (this.formData.years!=''){
                         for (let i = 0;i<this.formData.years;i++){
-                            this.formData.pay_type.push('1');
+                            this.more_type.push('1');
                         }
                     }
+//                    console.log(this.more_type)
                 } else {
-                    this.formData.pay_type = [];
+                    this.pay_typeChange = false;
+//                    this.formData.pay_type.push(one_type);
                 }
 //                console.log(this.formData.pay_type);
 //                console.log(this.formData.pay_type.length);
             },
+            save(){
+                // 新增
+//                console.log(this.formData);
+                this.$http.post('checkin/collect',this.formData)
+                    .then(
+                        (res) => {
+                            if (res.data.code == 18210){
+                                // 成功
+                                this.info.success = '新增报备成功';
+                                //显示失败弹窗 ***
+                                this.info.state_success = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_success = false;
+                                }, 2000);
+                            } else {
+                                // 失败
+                                this.info.error = '新增报备失败';
+                                //显示失败弹窗 ***
+                                this.info.state_error = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_error = false;
+                                }, 2000);
+                            }
+                        }
+                    )
+                this.closeModal()
+            },
+            medi(){
+                // 是否中介
+                if (this.formData.is_medi==2){
+                    // 否
+                    this.formData.cost_medi = 0;
+                }
+//                console.log(this.formData.cost_medi)
+            }
 
         }
     }

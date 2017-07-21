@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>this is template body</div>
+        <div>收房报备详情</div>
     </div>
 </template>
 <style scoped>
