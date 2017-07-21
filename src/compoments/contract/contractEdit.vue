@@ -18,19 +18,21 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >业主姓名</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="业主姓名" >
+                                            <input type="text" class="form-control" v-model="customer_name"
+                                                   readonly placeholder="业主姓名" @click="selectClient">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="房屋地址">
+                                            <input type="text" class="form-control" v-model="villa_name"
+                                                   readonly placeholder="房屋地址" @click="selectHouse">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >合同编号</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="合同编号">
+                                            <input type="text" class="form-control" v-model="contractAdd.contract_num" placeholder="合同编号">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -46,25 +48,25 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >空置期起始日期</label>
                                         <div class="col-md-4">
-                                            <input @click="remindData" type="text" class="form-control form_datetime"
-                                                   value="" placeholder="空置期起始日期">
+                                            <input @click="remindData" type="text" v-model="contractAdd.vac_start_date"
+                                                   class="form-control form_datetime" value="" placeholder="空置期起始日期">
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >空置期结束日期</label>
                                         <div class="col-md-4">
-                                            <input @click="remindData" type="text" class="form-control form_datetime"
-                                                   value="" placeholder="空置期结束日期">
+                                            <input @click="remindData" type="text" v-model="contractAdd.vac_end_date"
+                                                   class="form-control form_datetime" value="" placeholder="空置期结束日期">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >合同起始日期</label>
                                         <div class="col-md-4">
                                             <input @click="remindData" type="text" class="form-control form_datetime"
-                                                   value="" placeholder="合同起始日期">
+                                                   v-model="contractAdd.start_date"  value="" placeholder="合同起始日期">
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-md-4">
                                             <input @click="remindData" type="text" class="form-control form_datetime"
-                                                   value="" placeholder="合同结束日期">
+                                                   v-model="contractAdd.end_date" placeholder="合同结束日期">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -79,7 +81,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <label class="checkbox-inline check"  @click="payMethods">
-                                                <input type="checkbox" class="pull-left" v-model="payMethod"
+                                                <input type="checkbox" class="pull-left"
                                                        value="1"> 变化
                                             </label>
                                         </div>
@@ -134,7 +136,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <label class="checkbox-inline check"  @click="priceIncreases">
-                                                <input type="checkbox" class="pull-left" v-model="priceIncrease"
+                                                <input type="checkbox" class="pull-left"
                                                        value="1"> 递增
                                             </label>
                                         </div>
@@ -260,51 +262,59 @@
                                     <hr>
                                     <h3>合同附件</h3>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >银行卡照片</label>
+                                        <label class="col-lg-2 control-label">银行卡照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="银行卡照片">
+                                            <up-load @photo="bankPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'bankPic'" :idPhotos="bankPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >合同照片</label>
+                                        <label class="col-lg-2 control-label">合同</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="合同照片">
+                                            <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'contractPic'" :idPhotos="contractPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >水费照片</label>
+                                        <label class="col-lg-2 control-label">水卡照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="水费照片">
+                                            <up-load @photo="waterPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'waterPic'" :idPhotos="waterPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >电费照片</label>
+                                        <label class="col-lg-2 control-label">电卡照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="电费照片">
+                                            <up-load @photo="elePicId" @delete="picDelete" @complete="complete"
+                                                     :result="'elePic'" :idPhotos="elePic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >燃气照片</label>
+                                        <label class="col-lg-2 control-label">燃气卡照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="燃气照片">
+                                            <up-load @photo="gasPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'gasPic'" :idPhotos="gasPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >交接单照片</label>
+                                        <label class="col-lg-2 control-label">交接单照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="交接单照片">
+                                            <up-load @photo="handoverPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'handoverPic'" :idPhotos="handoverPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >委托书照片</label>
+                                        <label class="col-lg-2 control-label">委托书照片</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="委托书照片">
+                                            <up-load @photo="proxyPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'proxyPic'" :idPhotos="proxyPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >押金收条</label>
+                                        <label class="col-lg-2 control-label">押金收条</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control"  placeholder="押金收条">
+                                            <up-load @photo="receiptPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
                                         </div>
                                     </div>
                                 </form>
@@ -318,14 +328,79 @@
                 </div>
             </div>
         </div>
+        <SelectClient @clientAdd="receiveClient"> </SelectClient>
+        <SelectHouse @House="receiveHouse"> </SelectHouse>
     </div>
 </template>
 <script>
+    import SelectClient from '../common/selectClient.vue'
+    import SelectHouse from  '../common/selectHouse.vue'
+    import upLoad from '../common/upload.vue'
     export default{
+        components:{
+            SelectClient,
+            SelectHouse,
+            upLoad
+        },
         data(){
             return {
+                complete_ok:'ok',
+                bankPic : {
+                    cus_idPhotos : {},    //银行卡照片id
+                    cus_idPhoto : [],     //银行卡照片
+                },
+                contractPic : {
+                    cus_idPhotos : {},    //合同图片ID
+                    cus_idPhoto : [],     //合同照片
+                },
+                waterPic : {
+                    cus_idPhotos : {},    //修改图片ID
+                    cus_idPhoto : [],     //证件照片
+                },
+                elePic : {
+                    cus_idPhotos : {},    //修改图片ID
+                    cus_idPhoto : [],     //证件照片
+                },
+                gasPic : {
+                    cus_idPhotos : {},    //修改图片ID
+                    cus_idPhoto : [],     //证件照片
+                },
+                proxyPic : {
+                    cus_idPhotos : {},    //委托书图片ID
+                    cus_idPhoto : [],     //围殴托书照片
+                },
+                handoverPic : {
+                    cus_idPhotos : {},    //交接单图片ID
+                    cus_idPhoto : [],     //交接单照片
+                },
+                receiptPic : {
+                    cus_idPhotos : {},    //押金收条ID
+                    cus_idPhoto : [],     //押金收条照片
+                },
                 payMethod:false,
                 priceIncrease:false,
+                customer_name:'',
+                villa_name:'',
+                contractAdd : {
+                    customer_id:'',         //客户id
+                    villa_id:'',            //房屋id
+                    contract_num:'',        //合同编号
+                    vac_start_date:'',      //空置期开始日期
+                    vac_end_date:'',        //空置期结束日期
+                    start_date:'',          //合同开始日期
+                    end_date:'',            //合同结束日期
+                    pay_date:'',            //打房租日期
+                    complete_date:'',       //资料补齐时间
+                    bank_pic:[],            //银行卡照片
+                    contract_pic:[],        //合同照片
+                    water_card_pic:[],      //水卡照片
+                    elec_card_pic:[],       //电卡照片
+                    gas_card_pic:[],        //燃气卡卡照片
+                    proxy_pic:[],           //委托书照片
+                    handover_pic:[],        //交接单照片
+                    receipt_pic:[],         //押金收条
+                }
+
             }
         },
         updated (){
@@ -343,15 +418,93 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
                 })
             },
             payMethods(){
                 this.payMethod=!this.payMethod;
             },
             priceIncreases(){
-                this.priceIncrease=this.priceIncrease;
-            }
+                this.priceIncrease=!this.priceIncrease;
+            },
+            selectClient(){         //选择业主姓名
+                $('#selectClient').modal('show');
+            },
+            receiveClient(val){     //接收业主id
+                this.contractAdd.customer_id = val.id;
+                this.customer_name = val.name;
+            },
+            selectHouse(){          //选择房屋地址
+                $('#selectHouse').modal('show');
+            },
+            receiveHouse(val){     //接收房屋地址id
+                this.contractAdd.villa_id = val.id;
+                this.villa_name = val.address;
+            },
+
+            //获取图片id
+            bankPicId(val){         //获取成功上传银行卡 id 数组
+                this.contractAdd.bank_pic = val;
+            },
+            contractPicId(val){     //获取成功上传合同 id 数组
+                this.contractAdd.contract_pic = val;
+            },
+            waterPicId(val){        //获取成功上传水卡 id 数组
+                this.contractAdd.water_card_pic = val;
+            },
+            elePicId(val){          //获取成功上传电卡 id 数组
+                this.contractAdd.elec_card_pic = val;
+            },
+            gasPicId(val){          //获取成功上传燃气卡 id 数组
+                this.contractAdd.gas_card_pic = val;
+            },
+            proxyPicId(val){        //获取成功上传委托书卡 id 数组
+                this.contractAdd.proxy_pic = val;
+            },
+            handoverPicId(val){     //获取成功上传交接单 id 数组
+                this.contractAdd.handover_pic = val;
+            },
+            receiptPicId(val){      //获取成功上传押金收条 id 数组
+                this.contractAdd.receipt_pic = val;
+            },
+            //图片上传完成
+            complete(val){          //监控上传进度
+                this.complete_ok = val;
+            },
+            //删除照片ID
+            picDelete (val){
+                let bank = this.bankPic.cus_idPhoto.indexOf(val);
+                if (bank > -1) {
+                    this.bankPic.cus_idPhoto.splice(bank, 1);
+                }
+                let contract = this.contractPic.cus_idPhoto.indexOf(val);
+                if (contract > -1) {
+                    this.contractPic.cus_idPhoto.splice(contract, 1);
+                }
+                let water = this.waterPic.cus_idPhoto.indexOf(val);
+                if (water > -1) {
+                    this.waterPic.cus_idPhoto.splice(water, 1);
+                }
+                let ele = this.elePic.cus_idPhoto.indexOf(val);
+                if (ele > -1) {
+                    this.elePic.cus_idPhoto.splice(ele, 1);
+                }
+                let gas = this.gasPic.cus_idPhoto.indexOf(val);
+                if (gas > -1) {
+                    this.gasPic.cus_idPhoto.splice(gas, 1);
+                }
+                let proxy = this.proxyPic.cus_idPhoto.indexOf(val);
+                if (proxy > -1) {
+                    this.proxy.cus_idPhoto.splice(proxy, 1);
+                }
+                let handover = this.handoverPic.cus_idPhoto.indexOf(val);
+                if (handover > -1) {
+                    this.handoverPic.cus_idPhoto.splice(handover, 1);
+                }
+                let receipt = this.receiptPic.cus_idPhoto.indexOf(val);
+                if (receipt > -1) {
+                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
+                }
+            },
         }
     }
 </script>

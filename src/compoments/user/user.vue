@@ -243,7 +243,6 @@
                                         <th class="text-center">人员状态</th>
                                         <th class="text-center">手机号</th>
                                         <th class="text-center">入职时间</th>
-                                        <th class="text-center">详情</th>
                                         <th class="text-center">操作</th>
                                     </tr>
                                     </thead>
@@ -269,11 +268,9 @@
                                         </td>
                                         <td class="text-center">{{item.mobile}}</td>
                                         <td class="text-center">{{item.enroll_time}}</td>
-                                        <td class="text-center">
-                                            <router-link :to="{path:'/userDetail',query: {UserId: item.id}}" class="fa fa-th-list">
-                                            </router-link>
-                                        </td>
                                         <td class="dropdown text-center">
+                                            <router-link :to="{path:'/userDetail',query: {UserId: item.id}}" title="查看详情" class=" fa fa-eye">
+                                            </router-link>
                                             <a href="#"
                                                class="dropdown-toggle fa fa-gear"
                                                data-toggle="dropdown" role="button" aria-haspopup="true"

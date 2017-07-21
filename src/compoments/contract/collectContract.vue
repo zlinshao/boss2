@@ -101,7 +101,7 @@
                         <th class="text-center">过期情况</th>
                         <th class="text-center">回访情况</th>
                         <th class="text-center">资料状态</th>
-                        <th>更多</th>
+                        <th class="text-center">更多</th>
                         <th class="text-center">操作</th>
                     </tr>
                     </thead>
@@ -185,7 +185,7 @@
                 dateConfigure : [{
                     range : true, // 是否选择范围
                     needHour : false // 是否需要选择小时
-                }]
+                }],
             }
         },
         updated (){

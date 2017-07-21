@@ -10,44 +10,47 @@
                         </button>
                         <h4 class="modal-title">选择房屋</h4>
                     </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal tasi-form">
-                            <div class="row">
-                                <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
-                                <div class="iconic-input right col-lg-4">
-                                    <i class="fa fa-search"></i>
-                                    <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords"
-                                         @keydown.enter.prevent="search"  >
-                                </div>
-                                <div class="col-lg-2">
-                                    <a class="btn btn-success" @click="search">搜索</a>
-                                </div>
+                    <div class="modal-body inbox-body panel table table-responsive">
+                        <div class="row">
+                            <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
+                            <div class="iconic-input right col-lg-4">
+                                <i class="fa fa-search"></i>
+                                <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords"
+                                     @keydown.enter.prevent="search"  >
                             </div>
-                            <table class="table">
-                                <thead>
-                                <tr class="lightGray">
-                                    <th></th>
-                                    <th>房屋地址</th>
-                                    <th>房型</th>
-                                    <th>面积</th>
-                                    <th>装修</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="item in houseList" @click="chooseItem($event,item)">
-                                    <td>
-                                        <input type="radio" name="radio" >
-                                    </td>
-                                    <td>{{item.amap_json.villageName}}</td>
-                                    <td>
-                                        <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
-                                    </td>
-                                    <td>{{item.area}}㎡</td>
-                                    <td>{{dictionary.decoration[item.decoration]}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
+                            <div class="col-lg-2">
+                                <a class="btn btn-success" @click="search">搜索</a>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-advance table-hover">
+                            <thead>
+                            <tr class="lightGray">
+                                <th></th>
+                                <th>房屋地址</th>
+                                <th>房型</th>
+                                <th>面积</th>
+                                <th>装修</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in houseList" @click="chooseItem($event,item)">
+                                <td>
+                                    <input type="radio" name="radio" >
+                                </td>
+                                <td>{{item.amap_json.villageName}}</td>
+                                <td>
+                                    <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                </td>
+                                <td>{{item.area}}㎡</td>
+                                <td>{{dictionary.decoration[item.decoration]}}</td>
+                            </tr>
+                            <tr v-if="isShow">
+                                <td colspan="10" class="text-center text-muted">
+                                    暂无数据...
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -69,6 +72,7 @@
                     id:'',
                     address:''
                 },
+                isShow:false,
             }
         },
         mounted(){
@@ -83,15 +87,18 @@
             search(){
                 if(this.keywords!==''){
                     this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
-                        this.houseList=res.data.data;
-                        this.keywords='';
+                        if(res.data.code === '60010'){
+                            this.houseList=res.data.data;
+                            this.keywords='';
+                            this.isShow = false;
+                        }else {
+                            this.houseList=[];
+                            this.keywords='';
+                            this.isShow = true;
+                        }
                     })
                 }
             },
-//            selectHouse(item){
-//                this.houseAddress.id=item.id;
-//                this.houseAddress.address=item.address;
-//            },
             ensure(){
                 this.$emit('House',this.houseAddress);
                 this.houseList=[];
@@ -111,5 +118,8 @@
     }
     .iconic-input i {
         margin: 8px 25px 8px 10px;
+    }
+    div.table.table-responsive table tr td:first-child {
+        width: 80px ;
     }
 </style>
