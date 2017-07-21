@@ -452,7 +452,7 @@
 
                 this.monthDates = thisDay.diff(thisMonth,'days');
                 this.lastMonthDays = thisMonth.diff(lastMonth,'days')-1;
-                
+
                 this.quarterlyDates = thisDay.diff(thisQuarterlyStart,'days');
                 this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd,'days')-1;
 
