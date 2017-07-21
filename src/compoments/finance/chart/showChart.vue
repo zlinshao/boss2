@@ -41,18 +41,19 @@
     </div>
 </template>
 <style scoped>
-    .panel>div>div{
+    .panel > div > div {
         width: 80%;
         height: 300px;
         margin: auto;
     }
-    .panel-heading{
+
+    .panel-heading {
         background-color: #A9D86E;
         color: #333;
         font-weight: 500;
     }
 
-    .row:nth-child(1){
+    .row:nth-child(1) {
         margin-top: 20px;
     }
 
@@ -60,25 +61,25 @@
 <script>
     import macarons from 'echarts/theme/macarons'
     import shine from 'echarts/theme/shine'
-//    var macarons = require('echarts/theme/macarons')
-//        var macarons = require('echarts/theme/macarons');
-//    import roma from 'echarts/theme/roma'
+    //    var macarons = require('echarts/theme/macarons')
+    //        var macarons = require('echarts/theme/macarons');
+    //    import roma from 'echarts/theme/roma'
     export default{
         data(){
             return {
-                x : [],      // 横坐标
+                x: [],      // 横坐标
                 screenWidth: document.body.clientWidth,      // 页面宽度
-                myChart : [],
-                collectData : [],
-                rentingData : [],
-                goalData : [],
-                finishData : []
+                myChart: [],
+                collectData: [],
+                rentingData: [],
+                goalData: [],
+                finishData: []
             }
         },
         components: {},
         created (){
         },
-        mounted : function () {
+        mounted: function () {
             this.myChart[0] = this.$echarts.init(document.getElementById('collect'));
             this.myChart[1] = this.$echarts.init(document.getElementById('renting'));
             this.myChart[2] = this.$echarts.init(document.getElementById('goal'));
@@ -86,7 +87,6 @@
 
             this.getData();
             this.getCurrentMonth();
-
 
 
             let that = this;
@@ -106,7 +106,7 @@
                     setTimeout(function () {
                         // that.screenWidth = that.$store.state.canvasWidth
 //                        console.log(that.screenWidth);
-                        for (let i = 0 ; i < that.myChart.length ; i++){
+                        for (let i = 0; i < that.myChart.length; i++) {
                             (function () {
                                 that.myChart[i].resize();
                             })(i)
@@ -116,68 +116,68 @@
                 }
             }
         },
-        methods : {
+        methods: {
             getCurrentYear(){
                 // 获取当前年份
                 this.currentYear = new Date().getFullYear();
             },
             getCurrentMonth(){
                 // 获取当前月
-                var month = new Date().getMonth()+1;
+                var month = new Date().getMonth() + 1;
 //                console.log(date.getMonth());
-                for (var i = 1 ; i<=month ; i++){
-                    this.x.push(i+'月');
+                for (var i = 1; i <= month; i++) {
+                    this.x.push(i + '月');
                 }
             },
             collect(){
                 var option = {
-                    title : {
+                    title: {
                         text: '每月收房套数',
                         //subtext: '纯属虚构'
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'axis'
                     },
                     toolbox: {
-                        show : true,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: true},
-                            magicType : {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: true},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
                         }
                     },
-                    calculable : true,
-                    xAxis : [
+                    calculable: true,
+                    xAxis: [
                         {
-                            type : 'category',
-                            boundaryGap : false,
-                            data : this.x
+                            type: 'category',
+                            boundaryGap: false,
+                            data: this.x
                         }
                     ],
-                    yAxis : [
+                    yAxis: [
                         {
-                            type : 'value',
-                            axisLabel : {
+                            type: 'value',
+                            axisLabel: {
                                 formatter: '{value}套'
                             }
                         }
                     ],
-                    series : [
+                    series: [
                         {
-                            name:'收房套数',
-                            type:'line',
-                            data:this.collectData,
-                            markPoint : {
-                                data : [
-                                    {type : 'max', name: '最大值'},
-                                    {type : 'min', name: '最小值'}
+                            name: '收房套数',
+                            type: 'line',
+                            data: this.collectData,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
                                 ]
                             },
-                            markLine : {
-                                data : [
-                                    {type : 'average', name: '平均值'}
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
                                 ]
                             }
                         }
@@ -188,53 +188,53 @@
             },
             renting(){
                 var option = {
-                    title : {
+                    title: {
                         text: '每月租房套数',
                         //subtext: '纯属虚构'
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'axis'
                     },
                     toolbox: {
-                        show : true,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: true},
-                            magicType : {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: true},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
                         }
                     },
-                    calculable : true,
-                    xAxis : [
+                    calculable: true,
+                    xAxis: [
                         {
-                            type : 'category',
-                            boundaryGap : false,
-                            data : this.x
+                            type: 'category',
+                            boundaryGap: false,
+                            data: this.x
                         }
                     ],
-                    yAxis : [
+                    yAxis: [
                         {
-                            type : 'value',
-                            axisLabel : {
+                            type: 'value',
+                            axisLabel: {
                                 formatter: '{value}套'
                             }
                         }
                     ],
-                    series : [
+                    series: [
                         {
-                            name:'收房套数',
-                            type:'line',
-                            data:this.rentingData,
-                            markPoint : {
-                                data : [
-                                    {type : 'max', name: '最大值'},
-                                    {type : 'min', name: '最小值'}
+                            name: '收房套数',
+                            type: 'line',
+                            data: this.rentingData,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
                                 ]
                             },
-                            markLine : {
-                                data : [
-                                    {type : 'average', name: '平均值'}
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
                                 ]
                             }
                         }
@@ -244,53 +244,53 @@
             },
             goal(){
                 var option = {
-                    title : {
+                    title: {
                         text: '每月目标业绩',
                         //subtext: '纯属虚构'
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'axis'
                     },
                     toolbox: {
-                        show : true,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: true},
-                            magicType : {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: true},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
                         }
                     },
-                    calculable : true,
-                    xAxis : [
+                    calculable: true,
+                    xAxis: [
                         {
-                            type : 'category',
-                            boundaryGap : false,
-                            data : this.x
+                            type: 'category',
+                            boundaryGap: false,
+                            data: this.x
                         }
                     ],
-                    yAxis : [
+                    yAxis: [
                         {
-                            type : 'value',
-                            axisLabel : {
+                            type: 'value',
+                            axisLabel: {
                                 formatter: '{value}套'
                             }
                         }
                     ],
-                    series : [
+                    series: [
                         {
-                            name:'收房套数',
-                            type:'line',
-                            data:this.goalData,
-                            markPoint : {
-                                data : [
-                                    {type : 'max', name: '最大值'},
-                                    {type : 'min', name: '最小值'}
+                            name: '收房套数',
+                            type: 'line',
+                            data: this.goalData,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
                                 ]
                             },
-                            markLine : {
-                                data : [
-                                    {type : 'average', name: '平均值'}
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
                                 ]
                             }
                         }
@@ -300,53 +300,53 @@
             },
             finish(){
                 var option = {
-                    title : {
+                    title: {
                         text: '每月完成的业绩',
                         //subtext: '纯属虚构'
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'axis'
                     },
                     toolbox: {
-                        show : true,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: true},
-                            magicType : {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: true},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
                         }
                     },
-                    calculable : true,
-                    xAxis : [
+                    calculable: true,
+                    xAxis: [
                         {
-                            type : 'category',
-                            boundaryGap : false,
-                            data : this.x
+                            type: 'category',
+                            boundaryGap: false,
+                            data: this.x
                         }
                     ],
-                    yAxis : [
+                    yAxis: [
                         {
-                            type : 'value',
-                            axisLabel : {
+                            type: 'value',
+                            axisLabel: {
                                 formatter: '{value}套'
                             }
                         }
                     ],
-                    series : [
+                    series: [
                         {
-                            name:'收房套数',
-                            type:'line',
-                            data:this.finishData,
-                            markPoint : {
-                                data : [
-                                    {type : 'max', name: '最大值'},
-                                    {type : 'min', name: '最小值'}
+                            name: '收房套数',
+                            type: 'line',
+                            data: this.finishData,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
                                 ]
                             },
-                            markLine : {
-                                data : [
-                                    {type : 'average', name: '平均值'}
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
                                 ]
                             }
                         }
@@ -358,7 +358,7 @@
                 // 过渡---------------------
 //                console.log(this.myChart.length);
                 var that = this;
-                for (let i = 0 ; i < this.myChart.length ; i++){
+                for (let i = 0; i < this.myChart.length; i++) {
                     (function () {
                         that.myChart[i].showLoading({
                             text: '正在努力的读取数据中...',    //loading话术
@@ -370,7 +370,7 @@
 
                 this.$http.get('json/chartData.json').then((res) => {
 //                    console.log(res.data);
-                    for (let i = 0 ; i < that.myChart.length ; i++){
+                    for (let i = 0; i < that.myChart.length; i++) {
                         (function () {
                             that.myChart[i].hideLoading();
                         })(i)

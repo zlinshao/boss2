@@ -14,35 +14,35 @@
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
-                                    <div class="row">
-                                        <b  class="col-sm-2 col-xs-5" >标题：</b>
-                                        <div class="col-sm-4 col-xs-6">
-                                            年会
-                                        </div>
-                                        <b  class="col-sm-2 col-xs-5" >选择部门：</b>
-                                        <div class="col-sm-4 col-xs-6">
-                                            行政部
-                                        </div>
+                                <div class="row">
+                                    <b class="col-sm-2 col-xs-5">标题：</b>
+                                    <div class="col-sm-4 col-xs-6">
+                                        年会
                                     </div>
-                                    <div class="row">
-                                        <b  class="col-sm-2 col-xs-5" >发布时间：</b>
-                                        <div class="col-sm-4 col-xs-6">
-                                            2017-07-07
-                                        </div>
-                                        <b  class="col-sm-2 col-xs-5" >发布人：</b>
-                                        <div class="col-sm-4 col-xs-6">
-                                            王梦媛
-                                        </div>
+                                    <b class="col-sm-2 col-xs-5">选择部门：</b>
+                                    <div class="col-sm-4 col-xs-6">
+                                        行政部
                                     </div>
-                                    <hr>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolor error id labore minima repellendus vitae. Aliquam amet autem corporis dignissimos facere iste, nulla placeat quaerat sapiente veniam vero voluptate.
-                                    </p>
+                                </div>
+                                <div class="row">
+                                    <b class="col-sm-2 col-xs-5">发布时间：</b>
+                                    <div class="col-sm-4 col-xs-6">
+                                        2017-07-07
+                                    </div>
+                                    <b class="col-sm-2 col-xs-5">发布人：</b>
+                                    <div class="col-sm-4 col-xs-6">
+                                        王梦媛
+                                    </div>
+                                </div>
+                                <hr>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolor error id labore minima repellendus vitae. Aliquam amet autem corporis dignissimos facere iste, nulla placeat quaerat sapiente veniam vero voluptate.
+                                </p>
                             </div>
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">收到</button>
+                        <button type="button" @click="receive" class="btn btn-success" data-dismiss="modal">收到</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -52,17 +52,23 @@
 
 <script>
     export default {
-        components: {},
         data(){
-            return{
-            }
+            return {}
         },
+        methods: {
+            receive (){
+                this.$http.post('message/system/index/pages/' + val).then((res) => {
+                    console.log(res.data);
+                });
+                this.$emit('receive');
+            }
+        }
     }
 
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.row{
-    padding-bottom: 10px;
-}
+    .row {
+        padding-bottom: 10px;
+    }
 </style>

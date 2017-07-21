@@ -1,9 +1,9 @@
 <template>
     <div>
         <!--<ol class="breadcrumb">-->
-            <!--<li><a href="#">Home</a></li>-->
-            <!--<li><a href="#">Library</a></li>-->
-            <!--<li class="active">Data</li>-->
+        <!--<li><a href="#">Home</a></li>-->
+        <!--<li><a href="#">Library</a></li>-->
+        <!--<li class="active">Data</li>-->
         <!--</ol>-->
         <section id="main-content" style="margin-top:0;">
             <section class="wrapper">
@@ -14,8 +14,8 @@
                                 <h3>我的消息</h3>
                             </div>
                         </div>
-                        <ul class="inbox-nav inbox-divider">
-                            <li @click="System">
+                        <ul class="inbox-nav inbox-divider" style="padding: 20px 0 20px 20px;">
+                            <li @click="System(1)">
                                 <a href="#">
                                     <i class="fa fa-volume-up"></i> 系统公告
                                 </a>
@@ -58,186 +58,34 @@
                         <div class="inbox-body panel table table-responsive">
                             <!--系统公告-->
                             <table class="table table-striped table-advance table-hover" v-if="isSystem">
-                                <thead class="text-center"ead>
-                                    <tr>
-                                        <th class="text-center">发布时间</th>
-                                        <th class="text-center">发布人</th>
-                                        <th class="text-center">标题</th>
-                                        <th class="text-center">主要内容</th>
-                                        <th class="text-center">阅读时间</th>
-                                        <th class="text-center">收藏</th>
-                                    </tr>
+                                <thead class="text-center">
+                                <tr>
+                                    <th class="text-center">发布时间</th>
+                                    <th class="text-center">发布人</th>
+                                    <th class="text-center">标题</th>
+                                    <th class="text-center">主要内容</th>
+                                    <th class="text-center">阅读时间</th>
+                                    <th class="text-center">收藏</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center"  @click.stop="isCollect">
-                                            <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
-                                            <i class=" fa fa-heart-o"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
-                                            <i class=" fa fa-heart-o"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
-                                            <i class=" fa fa-heart-o"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
-                                            <i class=" fa fa-heart-o"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="unread" @click="announceDetail">
-                                        <td class="text-center" >2017/07/07</td>
-                                        <td class="text-center">张三丰</td>
-                                        <td class="text-center">《年会》</td>
-                                        <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                        <td class="text-center">2017/07/09</td>
-                                        <td class="text-center">
-                                            <i class=" fa fa-heart" style="color: #e4393c"></i>
-                                        </td>
-                                    </tr>
+                                <tr class="unread" @click="announceDetail" v-for="a in systems">
+                                    <td class="text-center">{{a.message.create_time}}</td>
+                                    <td class="text-center">{{a.message.release_name}}</td>
+                                    <td class="text-center">{{a.message.data.title}}</td>
+                                    <td class="text-center">{{a.message.data.content}}</td>
+                                    <td class="text-center">{{a.read_time}}</td>
+                                    <td class="text-center" @click.stop="isCollect">
+                                        <i class=" fa fa-heart" v-if="a.favourite_status === '已收藏'"
+                                           style="color: #e4393c"></i>
+                                        <i class="fa fa-heart-o" v-if="a.favourite_status === '未收藏'"></i>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <!--审批提醒-->
                             <table class="table table-striped table-advance table-hover" v-if="isExamine">
-                                <thead class="text-center"ead>
+                                <thead class="text-center">
                                 <tr>
                                     <th class="text-center">申请时间</th>
                                     <th class="text-center">申请人</th>
@@ -250,7 +98,7 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">2017/07/07</td>
                                     <td class="text-center">张三丰</td>
                                     <td class="text-center">《年会》</td>
                                     <td class="text-center">请大家今天9:30在创意中央总部集合</td>
@@ -265,9 +113,10 @@
                                 </tr>
                                 </tbody>
                             </table>
+
                             <!--代办提醒-->
                             <table class="table table-striped table-advance table-hover" v-if="isSubstitute">
-                                <thead class="text-center"ead>
+                                <thead class="text-center">
                                 <tr>
                                     <th class="text-center">提醒时间</th>
                                     <th class="text-center">提醒人</th>
@@ -277,19 +126,20 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">2017/07/07</td>
                                     <td class="text-center">张三丰</td>
                                     <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                    <td class="text-center"  @click.stop="isCollect">
+                                    <td class="text-center" @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+
                             <!--BOSS小秘书-->
                             <table class="table table-striped table-advance table-hover" v-if="isSecretary">
-                                <thead class="text-center"ead>
+                                <thead class="text-center">
                                 <tr>
                                     <th class="text-center">时间</th>
                                     <th class="text-center">发信人</th>
@@ -300,35 +150,36 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">2017/07/07</td>
                                     <td class="text-center">张三丰</td>
                                     <td class="text-center">合同</td>
                                     <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                    <td class="text-center"  @click.stop="isCollect">
+                                    <td class="text-center" @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+
                             <!--收藏-->
                             <table class="table table-striped table-advance table-hover" v-if="isMessage">
-                                <thead class="text-center"ead>
-                                    <tr>
-                                        <th class="text-center">收藏时间时间</th>
-                                        <th class="text-center">相关对象</th>
-                                        <th class="text-center">类别</th>
-                                        <th class="text-center">内容</th>
-                                        <th class="text-center">收藏</th>
-                                    </tr>
+                                <thead class="text-center">
+                                <tr>
+                                    <th class="text-center">收藏时间时间</th>
+                                    <th class="text-center">相关对象</th>
+                                    <th class="text-center">类别</th>
+                                    <th class="text-center">内容</th>
+                                    <th class="text-center">收藏</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="unread" @click="announceDetail">
-                                    <td class="text-center" >2017/07/07</td>
+                                    <td class="text-center">2017/07/07</td>
                                     <td class="text-center">张三丰</td>
                                     <td class="text-center">合同</td>
                                     <td class="text-center">请大家今天9:30在创意中央总部集合</td>
-                                    <td class="text-center"  @click.stop="isCollect">
+                                    <td class="text-center" @click.stop="isCollect">
                                         <i class=" fa fa-heart" v-if="false" style="color: #e4393c"></i>
                                         <i class=" fa fa-heart-o"></i>
                                     </td>
@@ -341,87 +192,151 @@
                 <!--mail inbox end-->
             </section>
         </section>
-        <AnnouncementAdd></AnnouncementAdd>
-        <AnnouncementDetail></AnnouncementDetail>
+
+        <!--分页-->
+        <Page @pag="page_info" :pg="paging" :beforePage="beforePage"></Page>
+
+        <!--增加公告-->
+        <AnnouncementAdd @success_system="System"></AnnouncementAdd>
+
+        <!--公告详情-->
+        <AnnouncementDetail @receive="page_info"></AnnouncementDetail>
     </div>
 </template>
 <script>
+    import Page from '../common/page.vue';
     import AnnouncementAdd from './announcementAdd.vue'
     import AnnouncementDetail from './announcemeDetail.vue'
     export default{
-        components:{
+        components: {
             AnnouncementAdd,
             AnnouncementDetail,
+            Page
         },
         data(){
-            return{
-                isSystem:true,
-                isExamine:false,
-                isSubstitute:false,
-                isSecretary:false,
-                isMessage:false,
-                message:'',
-                fa:'fa',
-                font:''
+            return {
+                systems: [],                 //系统公告
+                substitute: [],             //代办提醒
+                secretary: [],              //BOSS小秘书
+                isSystem: true,
+                isExamine: false,
+                isSubstitute: false,
+                isSecretary: false,
+                isMessage: false,
+                message: '',
+                fa: 'fa',
+                font: '',
+
+                beforePage: 1,          //初始化分页
+                paging: ''              //总页数
             }
         },
         mounted(){
-           this.System();
+            this.System(1);
         },
-        methods:{
+        methods: {
+//            分页
+            page_info (val){
+//                系统公告
+                if (this.isSystem === true) {
+                    this.System(val);
+                }
+//                审批提醒
+                if (this.isExamine === true) {
+                    this.Examine()
+                }
+//                代办提醒
+                if (this.isSubstitute === true) {
+                    this.Substitute()
+                }
+//                BOSS小秘书
+                if (this.isSecretary === true) {
+                    this.Secretary()
+                }
+//                收藏
+                if (this.isMessage === true) {
+                    this.Message()
+                }
+            },
             addAnnouncement(){
                 $('#announcementAdd').modal('show');
             },
             announceDetail(){
                 $('#announceDetail').modal('show');
             },
-            System(){
+//            系统公告
+            System(val){
+                this.$http.post('message/system/index/pages/' + val).then((res) => {
+                    this.systems = res.data.data.list;
+                    this.paging = res.data.data.pages;
+                });
+                this.beforePage = val;
                 this.isSystem = true;
-                this.isExamine =false;
-                this.isSubstitute=false;
-                this.isSecretary=false;
-                this.isMessage=false;
-                this.message='系统公告';
-                this.font='fa-volume-up';
+                this.isExamine = false;
+                this.isSubstitute = false;
+                this.isSecretary = false;
+                this.isMessage = false;
+                this.message = '系统公告';
+                this.font = 'fa-volume-up';
             },
-            Examine(){
+//             审批提醒
+            Examine(val){
+                this.$http.post('message/approval/index/pages/' + val).then((res) => {
+                    this.systems = res.data.data.list;
+                    this.paging = res.data.data.pages;
+                });
                 this.isSystem = false;
-                this.isExamine =true;
-                this.isSubstitute=false;
-                this.isSecretary=false;
-                this.isMessage=false;
-                this.message='审批提醒';
-                this.font='fa-user';
+                this.isExamine = true;
+                this.isSubstitute = false;
+                this.isSecretary = false;
+                this.isMessage = false;
+                this.message = '审批提醒';
+                this.font = 'fa-user';
             },
-            Substitute(){
+
+//            代办提醒
+            Substitute(val){
+                this.$http.post('message/remind/index/pages/' + val).then((res) => {
+                    this.substitute = res.data.data.list;
+                    this.paging = res.data.data.pages;
+                });
+                this.beforePage = val;
                 this.isSystem = false;
-                this.isExamine =false;
-                this.isSubstitute=true;
-                this.isSecretary=false;
-                this.isMessage=false;
-                this.message='代办提醒';
-                this.font='fa-bell';
+                this.isExamine = false;
+                this.isSubstitute = true;
+                this.isSecretary = false;
+                this.isMessage = false;
+                this.message = '代办提醒';
+                this.font = 'fa-bell';
             },
-            Secretary(){
+
+//            BOSS小秘书
+            Secretary(val){
+                this.$http.post('message/secretary/index/pages/' + val).then((res) => {
+                    this.secretary = res.data.data.list;
+                    this.paging = res.data.data.pages;
+                });
+                this.beforePage = val;
                 this.isSystem = false;
-                this.isExamine =false;
-                this.isSubstitute=false;
-                this.isSecretary=true;
-                this.isMessage=false;
-                this.message='BOSS小秘书';
-                this.font='fa-github';
+                this.isExamine = false;
+                this.isSubstitute = false;
+                this.isSecretary = true;
+                this.isMessage = false;
+                this.message = 'BOSS小秘书';
+                this.font = 'fa-github';
             },
-            Message(){
+//            收藏
+            Message(val){
                 this.isSystem = false;
-                this.isExamine =false;
-                this.isSubstitute=false;
-                this.isSecretary=false;
-                this.isMessage=true;
-                this.message='收藏';
-                this.font='fa-heart';
+                this.isExamine = false;
+                this.isSubstitute = false;
+                this.isSecretary = false;
+                this.isMessage = true;
+                this.message = '收藏';
+                this.font = 'fa-heart';
             },
             isCollect(){
-                alert(1);
+
             }
         }
     }
@@ -429,17 +344,21 @@
 
 <style scoped>
     #main-content {
-        margin-left:0;
+        margin-left: 0;
     }
+
     .wrapper {
         margin-top: 0;
     }
+
     .user-head .user-name {
-         text-align: left;
+        text-align: left;
     }
+
     ul.inbox-nav li a {
         line-height: 60px;
     }
+
     ul.inbox-nav li {
         line-height: 60px;
     }

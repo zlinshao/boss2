@@ -15,22 +15,24 @@
                             <div class="panel-body">
                                 <form class="form-horizontal tasi-form">
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >标题</label>
+                                        <label class="col-sm-2 control-label col-lg-2">标题</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="标题">
+                                            <input type="text" class="form-control" v-model="titles" placeholder="标题">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >选择部门</label>
+                                        <label class="col-sm-2 control-label col-lg-2">选择部门</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="选择部门" readonly @click="selectDep">
+                                            <input type="text" class="form-control" placeholder="选择部门"
+                                                   v-model="departmentName" readonly @click="selectDep">
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label col-sm-2">内容</label>
                                         <div class="col-sm-10 ">
-                                            <textarea class="form-control" name="editor1" rows="6"></textarea>
+                                            <textarea class="form-control" name="editor1" v-model="contents"
+                                                      rows="6"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -39,28 +41,77 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">添加</button>
+                        <button type="button" class="btn btn-primary" @click="add_info">添加</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <DepartmentSelect :configure="configure"></DepartmentSelect>
+
+        <Status :state='info'></Status>
+
+        <DepartmentSelect :configure="configure" @Staff="selectedDpm"></DepartmentSelect>
     </div>
 </template>
 
 <script>
     import DepartmentSelect from '../common/organization/selectStaff.vue';
+    import Status from '../common/status.vue';
     export default {
-        components: { DepartmentSelect },
+        components: { DepartmentSelect, Status },
         data(){
-            return{
-                configure:[],
+            return {
+                configure: [],
+                titles: '',             //标题
+                contents: '',           //公告内容
+                departmentName: [],     //部门名称
+                departmentId: [],       //部门ID
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
             }
         },
-        methods:{
+        methods: {
             selectDep(){
                 $('#selectCustom').modal('show');
-                this.configure={type:'department',class:'selectType'};
+                this.configure = {type: 'department', class: 'selectType'};
+            },
+            selectedDpm(val){
+                for (let i = 0; i < val.department.length; i++) {
+                    console.log(val.department[i]);
+                    this.departmentName.push(val.department[i].name);
+                    this.departmentId.push(val.department[i].id);
+                }
+            },
+            add_info (){
+                this.$http.post('message/system/write', {
+                    department_id: this.departmentId,
+                    title: this.titles,
+                    content: this.contents
+                }).then((res) => {
+                    console.log(res.data);
+                    if (res.data.code === '100004') {
+                        $('#announcementAdd').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.$emit('success_system');
+                    }else{
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
             }
         }
     }

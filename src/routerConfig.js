@@ -1,4 +1,5 @@
 import Power from "./compoments/power/power.vue";                       //权限管理
+import Index from "./index.vue";                       //权限管理
 import User from "./compoments/user/user.vue";                          //用户管理
 import Role from "./compoments/role/role.vue";                          //角色
 // import Village from "./compoments/village/village.vue";
@@ -51,6 +52,15 @@ import Country from './compoments/common/country.vue'           //国家
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 
 export default[
+    {
+        path: '/',             //重定向主页
+        redirect: '/index',
+    },
+    {
+        path: '/index',             //主页
+        name: 'index',
+        component: Index
+    },
     {
         path: '/power',             //权限管理
         name: 'Power',

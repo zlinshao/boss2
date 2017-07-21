@@ -33,12 +33,7 @@
                                     <div class="row" v-if="isAdvanced">
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
-                                            <input @click="remindData" type="text"
-                                                   class="form-control form_datetime" placeholder="日期">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input @click="remindData" type="text"
-                                                   class="form-control form_datetime" placeholder="时间">
+                                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                                         </div>
                                     </div>
                                 </form>
@@ -55,32 +50,45 @@
     </div>
 </template>
 <script>
+    import DatePicker from '../datePicker.vue'
     export default{
+        components: {
+            DatePicker
+        },
         data(){
-          return{
-              isAdvanced:false,
-              remindTime:''
-          }
+            return {
+                isAdvanced: false,
+                remindTime: '',
+                dateConfigure: [
+                    {
+                        range: false,        // 是否选择范围
+                        needHour : true    // 是否需要选择小时
+                    }
+                ]
+            }
         },
-        updated(){
-            this.remindData();
-        },
-        methods:{
+//        updated(){
+//            this.remindData();
+//        },
+        methods: {
             Advanced(){
-                this.isAdvanced=!this.isAdvanced;
+                this.isAdvanced = !this.isAdvanced;
             },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    this.remindTime = ev.target.value;
-                }.bind(this));
-            },
+//            remindData (){
+//                $('.form_datetime').datetimepicker({
+//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+////                    clearBtn: true,                     //清除按钮
+//                }).on('changeDate', function (ev) {
+//                    this.remindTime = ev.target.value;
+//                }.bind(this));
+//            },
+            getDate(data){
+                console.log(data)
+            }
         }
     }
 </script>
