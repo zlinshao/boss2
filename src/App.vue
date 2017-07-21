@@ -12,15 +12,6 @@
             <!--loading-->
             <loading v-show="loading"></loading>
 
-
-            <!--<button id="custom_service" type="button"
-                    class="btn btn-default"
-                    data-toggle="tooltip"
-                    data-placement="left"
-                    title="陆宣羽(15851899908)蔡云杰(13327823182)">
-
-                <i class="fa fa-phone"></i>
-            </button>-->
             <div id="custom_service" @mouseenter="show" @mouseleave="hide">
                 <img src="../src/assets/img/u1032.png" alt="">
                 <ul>
