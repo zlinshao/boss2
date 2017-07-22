@@ -240,7 +240,7 @@
                     clearBtn: true,                     //清除按钮
 //                    endDate: new Date(),
                     pickerPosition: this.dateConfigure[0].position
-                }).on('changeDate', function (ev) {
+                }).on('changeDate', function (ev){
                     this.date = ev.target.value;
                     this.$emit('sendDate',ev.target.value);
 //                    console.log(this.startDataTime);
