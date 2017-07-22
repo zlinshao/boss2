@@ -142,13 +142,13 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props : ['dateConfigure'],
+        props : ['dateConfigure','currentDate'],
         data(){
             return {
                 dateRange : '',
                 isPC : true,
                 from : '',
-               to: '',
+                to: '',
                 date : '',
                 range : '',
                 hour : '',
@@ -184,8 +184,6 @@
 //            console.log(this.dateConfigure[0]);
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
-
-
 //            console.log(this.hour);
 
 //            this.ifNeedHour();
