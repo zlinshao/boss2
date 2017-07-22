@@ -84,7 +84,6 @@
             },
             selectedDpm(val){
                 for (let i = 0; i < val.department.length; i++) {
-                    console.log(val.department[i]);
                     this.departmentName.push(val.department[i].name);
                     this.departmentId.push(val.department[i].id);
                 }
@@ -95,7 +94,6 @@
                     title: this.titles,
                     content: this.contents
                 }).then((res) => {
-                    console.log(res.data);
                     if (res.data.code === '100004') {
                         $('#announcementAdd').modal('hide');
                         //成功信息 ***

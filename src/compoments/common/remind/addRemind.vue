@@ -34,7 +34,8 @@
                                     <div class="row" v-if="isAdvanced">
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                                            <input @click="remind_time" type="text" placeholder="选择时间" v-model="remindTime" class="form-control remind_datetime">
+                                            <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
                                         </div>
                                     </div>
                                 </form>
@@ -82,8 +83,22 @@
                 }
             }
         },
-
+        updated (){
+            this.remind_time ();
+        },
         methods: {
+            remind_time (){
+                $('.remind_datetime').datetimepicker({
+                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd hh:00',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    this.remindTime = ev.target.value;
+                }.bind(this));
+            },
             revise (){
                 this.remindTime = '';         //提醒时间
                 this.remind_info = '';        //提醒内容

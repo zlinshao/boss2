@@ -20,24 +20,24 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>南京</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>苏州</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                        </tr>
+                                        <!--<tr>-->
+                                            <!--<td>南京</td>-->
+                                            <!--<td>{{main_bulletin.nanjin.client}}</td>-->
+                                            <!--<td>{{main_bulletin.nanjin.house}}</td>-->
+                                            <!--<td>{{main_bulletin.nanjin.log}}</td>-->
+                                            <!--<td>{{main_bulletin.nanjin.vacancy}}</td>-->
+                                            <!--<td>{{main_bulletin.nanjin.received}}</td>-->
+                                            <!--<td>{{main_bulletin.nanjin.rent}}</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td>苏州</td>-->
+                                            <!--<td>{{main_bulletin.suzhou.client}}</td>-->
+                                            <!--<td>{{main_bulletin.suzhou.house}}</td>-->
+                                            <!--<td>{{main_bulletin.suzhou.log}}</td>-->
+                                            <!--<td>{{main_bulletin.suzhou.vacancy}}</td>-->
+                                            <!--<td>{{main_bulletin.suzhou.received}}</td>-->
+                                            <!--<td>{{main_bulletin.suzhou.rent}}</td>-->
+                                        <!--</tr>-->
                                         </tbody>
                                     </table>
                                 </section>
@@ -51,16 +51,16 @@
                             本月寿星
                         </header>
                         <div class="row product-list" style="margin-top: 16px;">
-                            <div class="col-xs-6 col-sm-3 col-lg-2" v-for="a in 10">
+                            <div class="col-xs-6 col-sm-3 col-lg-2" v-for="birth in main_birthday">
                                 <section class="panel">
                                     <div class="pro-img-box padding15" data-toggle="tooltip" data-placement="bottom"
-                                         title="苏州二区—区长">
+                                         :title="birth.position">
                                         <img src="./lADPACOG812Jq3XNAoDNAn4_638_640.jpg"
                                              style="border-radius: 50%;"/>
                                     </div>
                                     <div class="panel-body text-center padding15">
-                                        <h5>杨乐乐</h5>
-                                        <h5>2017-12-12</h5>
+                                        <h5>{{birth.name}}</h5>
+                                        <h5>{{birth.birthday}}</h5>
                                     </div>
                                 </section>
                             </div>
@@ -115,14 +115,14 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(a,index) in 10">
+                                        <tr v-for="(ran,index) in main_ranking">
                                             <td style="min-width: 60px;">{{index + 1}}</td>
-                                            <td style="min-width: 80px;">欧阳琳少</td>
-                                            <td style="min-width: 110px;">南京西区一组</td>
+                                            <td style="min-width: 80px;">{{ran.name}}</td>
+                                            <td style="min-width: 110px;">{{ran.department}}</td>
                                             <td style="min-width: 110px;">
-                                                10000万
-                                                <span class="text-danger"><i class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success"><i class="fa  fa-arrow-down"></i></span>
+                                                {{ran.money}}
+                                                <span class="text-danger" v-if="ran.rank_id === 1"><i class="fa fa-arrow-up"></i></span>
+                                                <span class="text-success" v-if="ran.rank_id === 2"><i class="fa  fa-arrow-down"></i></span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -170,10 +170,15 @@
     export default {
         data (){
             return {
+                select_list: [],                //字典
+                main_bulletin: {},              //简报
+                main_birthday: [],              //寿星
+                main_ranking: [],               //龙虎榜
+                main_customer: [],              //图表
                 myChart: [],
-                check_inData: [],              //入住
-                collect_rentsData: [],         //收租
-                customData: [],                //客户来源
+                check_inData: [],               //入住
+                collect_rentsData: [],          //收租
+                customData: [],                 //客户来源
             }
         },
         mounted (){
@@ -192,8 +197,17 @@
         },
         methods: {
             home_index (){
-                this.$http.post('home/index/index').then((res) => {
-                    console.log(res.data);
+//                字典
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.select_list = res.data;
+
+                    this.$http.post('home/index/index').then((res) => {
+                        console.log(res.data.data);
+                        this.main_bulletin = res.data.data.bulletin;         //简报
+                        this.main_birthday = res.data.data.birthday;         //寿星
+                        this.main_ranking = res.data.data.ranking;           //龙虎榜
+                        this.main_customer = res.data.data.customer;         //charts
+                    });
                 });
             },
             aaaa (){
@@ -205,7 +219,7 @@
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告']
+                        data: ['已收', '空置']
                     },
                     series: [
                         {
@@ -222,7 +236,7 @@
                                     show: true,
                                     textStyle: {
                                         fontSize: '20',
-                                        fontWeight: 'bold'
+                                        fontWeight: 'bold',
                                     }
                                 }
                             },
@@ -232,10 +246,8 @@
                                 }
                             },
                             data: [
-                                {value: 335, name: '直接访问'},
-                                {value: 310, name: '邮件营销'},
-                                {value: 234, name: '联盟广告'},
-                                {value: 135, name: '视频广告'},
+                                {value: 335, name: '已收'},
+                                {value: 310, name: '空置'},
                             ]
                         }
                     ]
@@ -251,7 +263,7 @@
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告']
+                        data: ['收房', '租房']
                     },
                     series: [
                         {
@@ -278,10 +290,8 @@
                                 }
                             },
                             data: [
-                                {value: 335, name: '直接访问'},
-                                {value: 310, name: '邮件营销'},
-                                {value: 234, name: '联盟广告'},
-                                {value: 135, name: '视频广告'},
+                                {value: 335, name: '收房'},
+                                {value: 310, name: '租房'},
                             ]
                         }
                     ]
@@ -297,7 +307,7 @@
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告']
+                        data: ['网络', '客户推荐', '偶遇', '中介']
                     },
                     series: [
                         {
@@ -324,10 +334,10 @@
                                 }
                             },
                             data: [
-                                {value: 335, name: '直接访问'},
-                                {value: 310, name: '邮件营销'},
-                                {value: 234, name: '联盟广告'},
-                                {value: 135, name: '视频广告'},
+                                {value: 335, name: '网络'},
+                                {value: 310, name: '客户推荐'},
+                                {value: 234, name: '偶遇'},
+                                {value: 135, name: '中介'},
                             ]
                         }
                     ]
