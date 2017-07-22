@@ -184,7 +184,6 @@
 //            console.log(this.dateConfigure[0]);
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
-
 //            console.log(this.hour);
 
 //            this.ifNeedHour();
