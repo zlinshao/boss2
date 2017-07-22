@@ -39,8 +39,8 @@
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
                                 <div><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
                                 <div><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
-                                <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}</span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}</span></div>
+                                <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a data-toggle="modal" data-target="#change">变化</a></span></div>
+                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a>变化</a></span></div>
                                 <div><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
                                 <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                             </div>
@@ -68,54 +68,32 @@
 
         <!--编辑-->
         <EditModal :id="id" @save="getDetails(id)"></EditModal>
+
+
+        <div class="modal fade bs-example-modal-sm" id="change" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">{{changeModal.title}}</h4>
+                    </div>
+                    <div class="modal-body clearFix">
+                        <div class="col-sm-12 clearFix">
+                            <span class="col-sm-5">第一年</span>
+                            <span class="col-sm-7">阿萨斯</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
-<style scoped>
-    .head .panel-body>div span{
-        /*display: inline-block;*/
-        font-weight: bold;
-    }
-    .head .panel-body>div span+span{
-        margin-left: 12px;
-    }
-    .head .panel-body>div span.status{
-        color: white;
-        font-weight: normal;
-        font-size: 12px;
-    }
 
-    h4 {
-        border-bottom: 1px solid #aaaaaa;
-        padding: 0 30px 8px;
-    }
-
-    h4 > a {
-        margin-left: 10px;
-    }
-
-    .client_info > div > div > div > div {
-        margin-bottom: 20px;
-    }
-
-    .client_info > div > div > div span.text-primary {
-        display: inline-block;
-        padding-right: 20px;
-        text-align: right;
-        min-width: 100px;
-    }
-
-    .yellow {
-        background-color: #F9E175;
-    }
-
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
-    }
-</style>
 <script>
     import Confirm from '../common/confirm.vue'
     import Status from '../common/status.vue'
@@ -142,6 +120,11 @@
                     //失败信息 ***
                     error: ''
                 },
+
+                changeModal : {
+                    title : '',
+                    data : []
+                }
             }
         },
         mounted (){
@@ -242,3 +225,60 @@
         }
     }
 </script>
+
+<style scoped>
+    .head .panel-body>div span{
+        /*display: inline-block;*/
+        font-weight: bold;
+    }
+    .head .panel-body>div span+span{
+        margin-left: 12px;
+    }
+    .head .panel-body>div span.status{
+        color: white;
+        font-weight: normal;
+        font-size: 12px;
+    }
+
+    header h4 {
+        border-bottom: 1px solid #aaaaaa;
+        padding: 0 30px 8px;
+    }
+
+    header h4 > a {
+        margin-left: 10px;
+    }
+
+    .client_info > div > div > div > div {
+        margin-bottom: 20px;
+    }
+
+    .client_info > div > div > div span.text-primary {
+        display: inline-block;
+        padding-right: 20px;
+        text-align: right;
+        min-width: 100px;
+    }
+
+    .client_info > div > div > div span a{
+        margin-left: 12px;
+        font-size: 8px;
+    }
+
+    .yellow {
+        background-color: #F9E175;
+    }
+
+    .orange {
+        background-color: #FCB322;
+    }
+
+    .green {
+        background-color: #83E96D;
+    }
+
+    #change .modal-body>div span:nth-child(1){
+        text-align: right;
+        color: #59ace2;
+    }
+</style>
