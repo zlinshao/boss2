@@ -255,7 +255,7 @@
 
         <!--增加系统公告-->
 
-        <AnnouncementAdd></AnnouncementAdd>
+        <AnnouncementAdd @success_system="System(1)"></AnnouncementAdd>
 
         <AnnouncementDetail @receive="System(beforePage)" :msg="info_details"></AnnouncementDetail>
     </div>

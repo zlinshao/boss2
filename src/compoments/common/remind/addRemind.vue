@@ -93,7 +93,6 @@
         mounted (){
             this.$http.get('message/message/dict', {
             }).then((res) => {
-                console.log(res.data.time);
                 this.remind_select = res.data.time;
             });
         },
