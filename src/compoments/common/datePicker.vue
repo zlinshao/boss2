@@ -185,7 +185,7 @@
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
 //            console.log(this.hour);
-
+            this.setDate();
 //            this.ifNeedHour();
 
         },
@@ -200,17 +200,7 @@
             },
             currentDate(val){
                 console.log(val);
-                if (this.currentDate.length>0){
-                    if (this.currentDate.length==1){
-                        this.date = this.currentDate[0];
-                    } else {
-                        if (this.IsPC()){
-                            this.dateRange = val.currentDate[0]+"至"+val.currentDate[1];
-                        } else {
-                            this.mobilePickerDate = val.currentDate[0]+"至"+val.currentDate[1];
-                        }
-                    }
-                }
+                this.setDate();
             },
 
             date(val){
@@ -490,6 +480,19 @@
                 console.log("this.yearDates--"+this.yearDates);         //167
                 console.log("this.lastYearDays--"+this.lastYearDays);   //366*/
 
+            },
+            setDate(){
+                if (this.currentDate.length>0){
+                    if (this.currentDate.length==1){
+                        this.date = this.currentDate[0];
+                    } else {
+                        if (this.IsPC()){
+                            this.dateRange = val.currentDate[0]+"至"+val.currentDate[1];
+                        } else {
+                            this.mobilePickerDate = val.currentDate[0]+"至"+val.currentDate[1];
+                        }
+                    }
+                }
             }
         }
     }
