@@ -162,7 +162,6 @@
                     </header>
                     <div class="panel-body" >
                         <div class="tab-content" v-for="item in contractList">
-
                             <!--基本信息-->
                             <div id="base" class="tab-pane active">
                                 <div class="baseInfo">
@@ -352,31 +351,31 @@
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.album.house_pic">
+                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.house_pic">
                                                     <img :src="img.small" @click="showLargePic('house_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">水卡照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.album.water_card_pic">
+                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.water_card_pic">
                                                     <img :src="img.small" @click="showLargePic('water_card_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">电卡卡照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.album.elec_card_pic">
+                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                                     <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">燃气卡照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.album.gas_card_pic">
+                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                                     <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">产权证照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.album.property_pic">
+                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.property_pic">
                                                     <img :src="img.small" @click="showLargePic('property_pic',index)">
                                                 </span>
                                             </div>
@@ -390,7 +389,7 @@
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">证件照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.id_pic">
+                                        <span class="col-lg-10" v-for="(img,index) in item.customer_id.album.id_pic">
                                              <img :src="img.small" @click="showLargePic('id_pic',index)">
                                         </span>
                                     </div>
@@ -459,7 +458,7 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <ContractEit></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"></ContractEit>
         <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
     </div>
@@ -493,7 +492,9 @@
                 contractList:[],
                 dictionary:[],
                 largePic: [],
-                srcs: {}
+                srcs: {},
+                contractId:'' ,
+                contractEitId:'',
             }
         },
         mounted(){
@@ -505,7 +506,6 @@
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
                     this.contractDetail();
-                    console.log(this.dictionary);
                 });
             },
             contractDetail(){
@@ -527,6 +527,7 @@
                 $('#contractInfo').modal('show');
             },
             editContract(){
+                this.contractEitId = 1;
                 $('#contractEdit').modal('show');
             },
             renewContract(){
