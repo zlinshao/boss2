@@ -127,7 +127,7 @@
 //            deep : true,
             datas (val){
 //                alert(val);
-                console.log(val);
+//                console.log(val);
                 this.setData(val);
             },
         },

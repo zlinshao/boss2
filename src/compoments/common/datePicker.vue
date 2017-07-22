@@ -1,8 +1,8 @@
 <template>
-    <div class="datePickerContainer form-group">
+    <div class="datePickerContainer form-group" style="padding-left: 15px; padding-right: 15px;">
         <div v-if="range">
             <div class="input-group" v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="form-control" readonly>
+                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="reservation form-control" readonly>
             </div>
 
             <div class="input-group mobileTimePicker" v-show="!isPC">
@@ -142,13 +142,13 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props : ['dateConfigure'],
+        props : ['dateConfigure','currentDate'],
         data(){
             return {
                 dateRange : '',
                 isPC : true,
                 from : '',
-               to: '',
+                to: '',
                 date : '',
                 range : '',
                 hour : '',
@@ -185,7 +185,6 @@
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
 
-
 //            console.log(this.hour);
 
 //            this.ifNeedHour();
@@ -193,15 +192,41 @@
         },
         watch : {
             dateConfigure(val){
-//                console.log(val[0]);
+                console.log(val[0]);
                 this.range = val[0].range;
                 this.hour = val[0].needHour;
-                console.log(this.hour);
+//                console.log(val[0].currentDate);
+//                console.log(this.hour);
 //                this.ifNeedHour();
+            },
+            currentDate(val){
+                console.log(val);
+                if (this.currentDate.length>0){
+                    if (this.currentDate.length==1){
+                        this.date = this.currentDate[0];
+                    } else {
+                        if (this.IsPC()){
+                            this.dateRange = val.currentDate[0]+"至"+val.currentDate[1];
+                        } else {
+                            this.mobilePickerDate = val.currentDate[0]+"至"+val.currentDate[1];
+                        }
+                    }
+                }
+            },
+
+            date(val){
+//                console.log(val)
+//                document.getElementsByClassName('form_datetime').value = val;
+//                document.getElementsByClassName('form_datetimeNeedHour').value = val;
+//                $('.form_datetime').val(val);
+//                $('.form_datetimeNeedHour').val(val);
             }
         },
         updated (){
-            this.remindData()
+            this.remindData();
+        },
+        mounted (){
+
         },
         methods: {
             remindData (){
@@ -239,7 +264,7 @@
                 let _this = this;
                 this.getDates();
                 //时间插件
-                $('#reservation').daterangepicker({
+                $('.reservation').daterangepicker({
                     format: 'YYYY-MM-DD',
                     showDropdowns: true,
                     autoApply: true,
