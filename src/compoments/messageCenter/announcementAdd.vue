@@ -84,8 +84,10 @@
             },
             selectedDpm(val){
                 for (let i = 0; i < val.department.length; i++) {
-                    this.departmentName.push(val.department[i].name);
-                    this.departmentId.push(val.department[i].id);
+                    if(this.departmentId.indexOf(val.department[i].id) === -1){
+                        this.departmentName.push(val.department[i].name);
+                        this.departmentId.push(val.department[i].id);
+                    }
                 }
             },
             add_info (){
