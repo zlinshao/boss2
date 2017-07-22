@@ -11,26 +11,16 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control">
-                                <option value="">房屋类型</option>
-                                <option>{{}}</option>
+                            <select class="form-control" @change="search">
+                                <option value="">合同状态</option>
+                                <option v-for="(value,key) in dictionary.collect_passed" :value="key">{{value}}</option>
                             </select>
                         </label>
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control">
-                                <option value="">房屋类型</option>
-                                <option>{{}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control">
-                                <option value="">房屋类型</option>
-                                <option>{{}}</option>
-                            </select>
+                            <input type="text" readonly class="form-control" placeholder="点击选择部门"
+                                   @click="selectDpm" v-model="departmentName">
                         </label>
                     </div>
                     <div class="pro-sort">
@@ -40,7 +30,7 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入房屋地址" >
+                            <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="contractSearchInfo.keywords">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" >搜索</button>
                             </span>
@@ -48,23 +38,18 @@
                     </div>
                     <div class="pro-sort" style="margin-left: 10px;margin-top: 15px">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" v-model="contractSearchInfo.become_due" @click="search">
                             快到期合同
                         </label>
                     </div>
                     <div class="pro-sort"  style="margin-left: 10px;margin-top: 15px">
                         <span>排序方式：</span>
                         <label>
-                            <input type="radio" name="sort">默认排序
+                            <input type="radio" name="sort" @click="isNewest(0)">默认排序
                         </label>
                         <label>
-                            <input type="radio" name="sort">最新发布
+                            <input type="radio" name="sort" @click="isNewest(1)">最新发布
                         </label>
-                    </div>
-                    <div class="pull-right pro-sort">
-                        <a @click="addContract" class="btn btn-success"><i
-                                class="fa fa-plus-square"></i>&nbsp;新增合同
-                        </a>
                     </div>
                 </div>
                 <!--选中-->
@@ -77,6 +62,9 @@
                         <li>
                             <a href="">删除</a>
                         </li>
+                        <li>
+                            <a href="">置顶</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -85,7 +73,7 @@
         <div>
             <section class="panel table table-responsive">
                 <table class="table table-striped table-advance table-hover">
-                    <thead>
+                    <thead class="text-center">
                     <tr>
                         <th class="text-center">
                             <!--<input type="checkbox">-->
@@ -105,92 +93,96 @@
                         <th class="text-center">操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr class="text-center">
+                    <tbody class="text-center">
+                    <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @change="rules(1 , $event)"></td>
-                        <td>LJS081740</td>
-                        <td>2017-05-18<br>10:22:48</td>
-                        <td>李彬彬</td>
-                        <td>戴辉</td>
-                        <td>金马郦城4-328</td>
-                        <td>18865652235</td>
-                        <td>2018-06-05</td>
-                        <td>2017-06-05</td>
-                        <td>充公</td>
+                        <td>{{item.contract_num}}</td>
+                        <td>{{item.create_time}}</td>
+                        <td>{{item.drawer}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.detailed_address}}</td>
+                        <td>{{item.mobile}}</td>
+                        <td>{{item.end_date}}</td>
+                        <td>{{item.complete_date[0]}}</td>
+                        <td>{{dictionary.villa_status[item.status]}}</td>
                         <td>未回访</td>
                         <td>
-                            <span :class="contractStatus">待审核</span>
+                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.collect_passed[item.passed]}}</span>
+                            <span class="label label-warning" v-if="item.passed === 2">{{dictionary.collect_passed[item.passed]}}</span>
                         </td>
                         <td>
                             <router-link to="/contractDetail">更多</router-link>
                         </td>
                         <td class="icon">
-                            <i class="fa fa-lock" v-if="isLock"></i>
-                            <i class="fa fa-unlock" v-else="isLock"></i>
-                            <i class="fa fa-thumb-tack"></i>
+                            <i class="fa fa-lock" v-if="item.status !== 1"></i>
+                            <i class="fa fa-unlock" v-if="item.status === 1"></i>
+                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
 
                     </tr>
-                    <tr class="text-center">
-                        <td><input type="checkbox" @change="rules(2 , $event)"></td>
-                        <td>LJS081740</td>
-                        <td>2017-05-18<br>10:22:48</td>
-                        <td>李彬彬</td>
-                        <td>戴辉</td>
-                        <td>金马郦城4-328</td>
-                        <td>18865652235</td>
-                        <td>2018-06-05</td>
-                        <td>2017-06-05</td>
-                        <td>充公</td>
-                        <td>未回访</td>
-                        <td>
-                            <span :class="contractStatus">待审核</span>
+                    <tr v-if="isShow">
+                        <td colspan="10" class="text-center text-muted">
+                            <h4>暂无数据....</h4>
                         </td>
-                        <td>
-                            <a href="">更多</a>
-                        </td>
-                        <td class="icon">
-                            <i class="fa fa-lock" v-if="isLock"></i>
-                            <i class="fa fa-unlock" v-else="isLock"></i>
-                            <i class="fa fa-thumb-tack"></i>
-                        </td>
-
                     </tr>
-
                     </tbody>
                 </table>
             </section>
         </div>
         <!--//组件-->
-        <contractAdd></contractAdd>
+        <Page :pg="pages" @pag="getPage" :beforePage="contractSearchInfo.page"></Page>
+        <Status :state='info'></Status>
+        <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
     </div>
 </template>
 <script>
-    import contractAdd from  './contractAdd.vue'
+    import Page from '../common/page.vue'
+    import Staff from '../common/organization/selectStaff.vue'
+    import Status from '../common/status.vue';                          //提示信息
     import DatePicker from '../common/datePicker.vue'
     export default{
-        components: { contractAdd , DatePicker},
+        components: {DatePicker , Page , Staff, Status},
         data(){
             return {
                 pitch : [],      // 选中id
-                contractStatus : {
-                    'cStatus' : true ,
-                    'yellow' : false,
-                    'gray' : true,
-                    'green' : false
-                },           // 合同状态样式
-                isLock : true,      // 是否锁定
                 start_time:"",
                 end_time:'',
                 dateConfigure : [{
                     range : true, // 是否选择范围
                     needHour : false // 是否需要选择小时
                 }],
+                departmentName:'',
+                contractSearchList:[],
+                contractSearchInfo:{
+                    passed : '',
+                    page : '',
+                    department_id : '',
+                    start : '',
+                    end:'',
+                    keywords : '',
+                    //快到期合同
+                    become_due:false,
+                    //最新发布
+                    newest : false,
+                },
+                dictionary:[],
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
+                configure:[],
+                pages:'',
+                isShow :false,
             }
         },
         updated (){
-////            时间选择
-//            this.remindData();
+
         },
         mounted(){
             this.getDictionary();
@@ -200,13 +192,46 @@
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
                     console.log(this.dictionary)
+                    this.search();
                 });
             },
             search(){
-
+                this.contractSearchInfo.page = 1;
+                this.searchContract();
+            },
+            searchContract(){
+              this.$http.post('core/collect/contractlist ',this.contractSearchInfo).then((res) =>{
+                  if(res.data.code === '70010'){
+                      this.contractSearchList = res.data.data.list;
+                      console.log(this.contractSearchList)
+                      this.pages = res.data.data.pages;
+                      this.isShow = false;
+                  }else {
+                      this.contractSearchList = [];
+                      his.pages = 1;
+                      this.isShow = true;
+                  }
+              })
+            },
+            selectDpm(){ //选择部门
+                $('#selectCustom').modal('show');
+                this.configure={length:1,class:'department',id:[9],name:'市场部'};
+            },
+            dpmSeleted(val){
+                if(val.department.length){
+                    this.departmentName=val.department[0].name;
+                    this.contractSearchInfo.department_id=val.department[0].id;
+                    this.search();
+                }
             },
             getDate(val){
-                console.log(val)
+                this.contractSearchInfo.start=val.split( 'to')[0]
+                this.contractSearchInfo.end=val.split( 'to')[1]
+                this.search();
+            },
+            getPage(val){
+                this.contractSearchInfo.page = val;
+                this.searchContract();
             },
             rules(id , ev){   //多选框选中
                 if (ev.target.checked){
@@ -218,11 +243,13 @@
                     }
                 }
             },
-            addContract(){  //新增合同订单
-                $('.rem_div').remove();
-                $('#contractAdd').modal({backdrop: 'static',});
-                $('#contractAdd').modal('show')
-            },
+            isNewest(val){
+                if(val){
+                    this.contractSearchInfo.newest = true;
+                }else {
+                    this.contractSearchInfo.newest = false;
+                }
+            }
         }
     }
 </script>
@@ -271,24 +298,5 @@
     }
     .icon i+i{
         margin-left: 8px;
-    }
-    .cStatus{
-        display: inline-block;
-        width: 60px;
-        padding: 8px 0;
-        color: white;
-        border-radius: 5px;
-    }
-    .yellow{
-        background-color: #F9E175;
-    }
-    .gray{
-        background-color: #CCCCCC;
-    }
-    .green{
-        background-color: #83E96D;
-    }
-    .form-group {
-        margin-bottom: 11px !important;
     }
 </style>

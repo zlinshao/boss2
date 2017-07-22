@@ -62,6 +62,7 @@
 <style scoped>
     #reservation{
         width: 250px;
+        border-radius: 4px;
     }
     /*input.form_datetimeNeedHour, input.form_datetime{
         margin-bottom: -6px;

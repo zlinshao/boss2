@@ -18,9 +18,41 @@
                                     <h3 style="margin-top: -15px">基本信息</h3>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="customer_name"
-                                                   readonly placeholder="业主姓名" @click="selectClient">
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" v-model="relative_customer[0]"
+                                                   readonly placeholder="业主姓名" @click="selectClient(0)">
+                                        </div>
+                                        <div class="col-sm-2 flexbox">
+                                            <i class="fa fa-plus-circle" @click="addMore"></i>
+                                            <i class="fa fa-minus-circle" @click="reduceMore"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="more>=2">
+                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" v-model="relative_customer[1]"
+                                                   readonly placeholder="业主姓名" @click="selectClient(1)">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="more>=3">
+                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" v-model="relative_customer[2]"
+                                                   readonly placeholder="业主姓名" @click="selectClient(2)">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="more>=4">
+                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" v-model="relative_customer[3]"
+                                                   readonly placeholder="业主姓名" @click="selectClient(3)">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="more>=5">
+                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" v-model="relative_customer[4]"
+                                                   readonly placeholder="业主姓名" @click="selectClient(4)">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -31,41 +63,53 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
-                                        <div class="col-lg-4 col-sm-9" style="margin-bottom: 18px">
-                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="vac_start_time" @sendDate="getDate"></DatePicker>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input @click="remindData" readonly placeholder="空置期开始时间" v-model="contractEdit.vac_start_date"
+                                                   class="form-control form_datetime">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
-                                        <div class="col-lg-4 col-sm-9" style="margin-bottom: 18px">
-                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="vac_end_time"></DatePicker>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input type="text" class="form-control" v-model="contractEdit.vac_end_date"
+                                                   readonly placeholder="空置期结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
-                                        <div class="col-lg-4 col-sm-9" style=" margin-bottom: 18px">
-                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="start_time"></DatePicker>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input type="text" class="form-control" v-model="contractEdit.start_date"
+                                                   readonly placeholder="合同开始时间">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
-                                        <div class="col-lg-4 col-sm-9" style=" margin-bottom: 18px">
-                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="end_time"></DatePicker>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input type="text" class="form-control" v-model="contractEdit.end_date"
+                                                   readonly placeholder="合同结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期</label>
-                                        <label class="col-sm-1 control-label col-lg-1" >每</label>
-                                        <div class="col-lg-4">
-                                            <select  class="form-control">
-                                                <option value="">请选择</option>
-                                            </select>
+                                        <!--<label class="col-sm-1 control-label col-lg-1" >每</label>-->
+                                        <!--<div class="col-lg-4">-->
+                                            <!--<select  class="form-control">-->
+                                                <!--<option value="">请选择</option>-->
+                                            <!--</select>-->
+                                        <!--</div>-->
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="contractEdit.pay_date"
+                                                   placeholder="请输入打房租日期">
                                         </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" placeholder="">
-                                        </div>
-                                        <label class="col-sm-1 control-label col-lg-1" >号</label>
+                                        <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >备注</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" placeholder="备注">
+                                            <input type="text" class="form-control" placeholder="请输入备注信息" v-model="contractEdit.remarks">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间</label>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input @click="remindData" readonly placeholder="资料补齐时间"
+                                                   v-model="contractEdit.complete_date" class="form-control form_datetime">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -137,7 +181,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">编辑{{vac_start_time}}</button>
+                        <button type="button" class="btn btn-primary" @click="editContract">编辑</button>
                     </div>
                 </div>
                 </div>
@@ -145,19 +189,19 @@
         </div>
         <!--选择客户-->
         <SelectClient @clientAdd="receiveClient"> </SelectClient>
+        <Status :state='info'></Status>
     </div>
 </template>
 <script>
-    import DatePicker from '../common/datePicker.vue'
     import SelectClient from '../common/selectClient.vue'
-    import SelectHouse from  '../common/selectHouse.vue'
     import upLoad from '../common/upload.vue'
+    import Status from '../common/status.vue'
     export default{
         props:['contractEitId','dictionary'],
         components:{
             SelectClient,
             upLoad,
-            DatePicker
+            Status
         },
         data(){
             return {
@@ -196,8 +240,10 @@
                     cus_idPhoto : [],     //押金收条照片
                 },
                 customer_name:'',
+                relative_customer : [],
                 contractEdit : {
-                    customer_id:'',         //客户id
+                    id:'',
+                    relative_customer_id:[],//客户id
                     contract_num:'',        //合同编号
                     vac_start_date:'',      //空置期开始日期
                     vac_end_date:'',        //空置期结束日期
@@ -205,6 +251,7 @@
                     end_date:'',            //合同结束日期
                     pay_date:'',            //打房租日期
                     complete_date:'',       //资料补齐时间
+                    remarks:'',             //备注信息
                     bank_pic:[],            //银行卡照片
                     contract_pic:[],        //合同照片
                     water_card_pic:[],      //水卡照片
@@ -215,19 +262,31 @@
                     receipt_pic:[],         //押金收条
                 },
                 staff:'',
-                dateConfigure: [{range:false,needHour:false,position:'top-left'}],
+                dateConfigureVac: [{range:false,needHour:false, }],
+                dateConfigureComplete: [{range:false,needHour:false, }],
                 dateType:'',
                 myDictionary:[],
                 myContractEitId:'',
-                vac_start_time:['2017-02-02'],
-                vac_end_time:[],
-                start_time:[],
-                end_time:[],
-
+                checkCollectId : '',
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
+                more:1,
+                flag:'',
             }
         },
         mounted(){
 
+        },
+        updated(){
+            this.remindData ();
         },
         watch : {
             dictionary(val){
@@ -236,6 +295,13 @@
             contractEitId(val){
                 this.myContractEitId = val;
                 this.gitContractInfo();
+            },
+            'contractEdit.vac_start_date' : {
+                deep:true,
+                handler(val,oldVal){
+                    console.log(val)
+                    this.completeDate(val);
+                }
             }
         },
         methods : {
@@ -243,17 +309,25 @@
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/collect/readcontract/id/' +this.myContractEitId).then((res)=>{
                         let contractList =res.data.data;
+                        console.log(contractList)
+                        this.contractEdit.id = contractList.id;
+                        if(contractList.relative_customer !== undefined){
+                            this.more = contractList.relative_customer.length;
+                            for(let i=0;i<contractList.relative_customer.length;i++){
+                                this.relative_customer.push(contractList.relative_customer[i].name);
+                                this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
+                            }
+                        }
                         this.contractEdit.contract_num = contractList.contract_num;
                         this.contractEdit.vac_start_date = contractList.vac_start_date;
                         this.contractEdit.vac_end_date = contractList.vac_end_date;
-                        this.contractEdit.vac_start_date = contractList.start_date;
+                        this.contractEdit.start_date = contractList.start_date;
                         this.contractEdit.end_date = contractList.end_date;
+                        this.contractEdit.complete_date = contractList.complete_date[0];
 
-//                        this.vac_start_time.push(contractList.vac_start_date);
-//                        console.log(this.vac_start_time)
-//                        this.start_time = contractList.start_date;
-//                        this.start_time = contractList.start_date;
-//                        this.end_time = contractList.end_date;
+                        this.checkCollectId = contractList.checkin_collect_id.id;
+                        this.contractEdit.pay_date = contractList.pay_date;
+                        this.contractEdit.remarks = contractList.remarks;
 
 
                         if(!Array.isArray(contractList.ablum)){
@@ -300,27 +374,48 @@
                                 this.contractEdit.gas_card_pic.push(i);
                             }
                         }
-
                         this.staff = contractList.staff;
-
                     })
                 }
 
             },
-            getDate(val){
-                console.log(val)
-            },
-            getDate1(val){
-                console.log(val)
-            },
-            selectClient(){         //选择业主姓名
+            selectClient(val){         //选择业主姓名
+                this.flag = val;
                 $('#selectClient').modal('show');
             },
             receiveClient(val){     //接收业主id
-                this.contractEdit.customer_id = val.id;
-                this.customer_name = val.name;
+                if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) == -1){
+                    this.contractEdit.relative_customer_id .push(val.id);
+                    this.relative_customer.push(val.name);
+                }else if(this.more === this.relative_customer.length){
+                    this.contractEdit.relative_customer_id.splice(this.flag,1);
+                    this.relative_customer.splice(this.flag,1,val.name);
+                }
             },
-
+            completeDate(val){  //计算空置期结束 合同开始以及结束时间
+                this.$http.post('core/collect/contractDate',{"vac_start_date":val,  "checkin_collect_id":this.checkCollectId}).then(
+                    (res) => {
+                        this.contractEdit.vac_end_date = res.data.vac_end_date;
+                        this.contractEdit.start_date = res.data.start_date;
+                        this.contractEdit.end_date = res.data.end_date;
+                    }
+                )
+            },
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                }).on('changeDate', ev => {
+                    if (ev.target.placeholder === '空置期开始时间'){
+                        this.contractEdit.vac_start_date = ev.target.value;
+                    } else {
+                        this.contractEdit.complete_date = ev.target.value;
+                    }
+                });
+            },
             //获取图片id
             bankPicId(val){         //获取成功上传银行卡 id 数组
                 this.contractEdit.bank_pic = val;
@@ -393,6 +488,36 @@
                     this.contractEdit.receipt_pic.splice(receipt, 1);
                 }
             },
+            editContract(){
+                this.$http.post('core/collect/updatecontract',this.contractEdit).then((res) => {
+                     if(res.data.code === "70010"){
+                         $('#contractEdit').modal('hide');
+                         this.info.success = res.data.msg;
+                         //显示成功弹窗 ***
+                         this.info.state_success = true;
+                     }else {
+                         this.info.error = res.data.msg;
+                         //显示成功弹窗 ***
+                         this.info.state_error = true;
+                     }
+
+                })
+            },
+            addMore(){
+                if(this.more < 5 && this.more === this.relative_customer.length){
+                    this.more++;
+                }
+            },
+            reduceMore(){
+                if(this.more>1){
+                    if(this.more === this.relative_customer.length ){
+                        this.relative_customer.length--;
+                        this.contractEdit.relative_customer_id.length--;
+                    }
+                    this.more--;
+                }
+
+            },
         }
     }
 </script>
@@ -413,5 +538,18 @@
         min-height: 1px;
         padding-right: 0px;
         padding-left: 15px;
+    }
+    .flexbox i{
+        line-height: 34px;
+        font-size: 20px;
+        color: #ddd;
+        /*text-align: left;*/
+        cursor: pointer;
+    }
+    .flexbox i+i{
+        margin-left: 5px;
+    }
+    .flexbox i:hover{
+        color: #999;
     }
 </style>
