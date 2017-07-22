@@ -10,13 +10,13 @@
             <div class="panel-body">
                 <div v-if="msg!=''">
                     <span>录入时间</span>
-                    <span>2017/07/23</span>
+                    <span>{{msg.deal_time}}</span>
                     <span :class="{'status':true,'btn':true,'yellow':msg.status===1,'orange':msg.status===2,'green':msg.status===3}">{{dict.checkin_status[msg.status]}}</span>
                     <div class="pull-right">
                         <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
-                        <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(2)">通过</button>
                         <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
                         <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
+                        <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(2)">通过</button>
                     </div>
                 </div>
             </div>
@@ -39,8 +39,8 @@
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
                                 <div><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
                                 <div><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
-                                <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a data-toggle="modal" data-target="#change">变化</a></span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a>变化</a></span></div>
+                                <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a v-show="msg.pay_type.length>1" @click="showChange(1)">变化</a></span></div>
+                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
                                 <div><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
                                 <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                             </div>
@@ -79,9 +79,9 @@
                         <h4 class="modal-title">{{changeModal.title}}</h4>
                     </div>
                     <div class="modal-body clearFix">
-                        <div class="col-sm-12 clearFix">
-                            <span class="col-sm-5">第一年</span>
-                            <span class="col-sm-7">阿萨斯</span>
+                        <div class="col-sm-12 clearFix" v-for="(item,index) in changeModal.data">
+                            <span class="col-sm-5">第{{index+1}}年</span>
+                            <span class="col-sm-7">{{item}}</span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -222,6 +222,21 @@
 
 
             },
+            showChange(num){
+                console.log(num)
+                if (num == 1){
+                    // 付款方式
+                    this.changeModal.title = '付款方式';
+                    this.changeModal.data = this.msg.pay_type;
+
+                } else {
+                    // 价格
+                    this.changeModal.title = '月单价';
+                    this.changeModal.data = this.msg.price;
+                }
+
+                $('#change').modal('show');
+            }
         }
     }
 </script>
@@ -278,7 +293,10 @@
     }
 
     #change .modal-body>div span:nth-child(1){
-        text-align: right;
+        /*text-align: right;*/
         color: #59ace2;
+    }
+    #change .modal-body>div{
+        line-height: 30px;
     }
 </style>

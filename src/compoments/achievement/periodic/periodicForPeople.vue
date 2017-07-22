@@ -18,7 +18,7 @@
                         </select>
                     </div>-->
                     <div class="padd">
-                        <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                     </div>
 
 <!--
@@ -115,9 +115,11 @@
                 dateConfigure : [
                     {
                         range : true,
-                        needHour : true
+                        needHour : true,
+                        position : 'top-right',
                     }
-                ]
+                ],
+                currentDate : [],
             }
         },
         mounted (){
