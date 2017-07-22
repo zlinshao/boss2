@@ -10,7 +10,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">编辑合同{{contractEdit.contract_pic}}</h4>
+                        <h4 class="modal-title">编辑合同</h4>
                     </div>
                     <div class="modal-body">
                             <div class="panel-body">
@@ -30,25 +30,24 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >空置期日期</label>
-                                        <div class="col-md-10" style="padding-left: 30px;margin-bottom: 18px">
-                                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                                        <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
+                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px;margin-bottom: 18px">
+                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="vac_start_time" @sendDate="getDate"></DatePicker>
+                                        </div>
+                                        <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
+                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px;margin-bottom: 18px">
+                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="vac_end_time"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >合同日期</label>
-                                        <div class="col-md-10" style="padding-left: 30px; margin-bottom: 18px">
-                                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate1"></DatePicker>
+                                        <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
+                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px; margin-bottom: 18px">
+                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="start_time"></DatePicker>
                                         </div>
-                                        <!--<div class="col-md-4">-->
-                                            <!--<input @click="remindData" type="text" class="form-control form_datetime"-->
-                                                   <!--v-model="contractEdit.start_date"  value="" placeholder="合同起始日期">-->
-                                        <!--</div>-->
-                                        <!--<label class="col-sm-2 control-label col-lg-2" >合同结束日期</label>-->
-                                        <!--<div class="col-md-4">-->
-                                            <!--<input @click="remindData" type="text" class="form-control form_datetime"-->
-                                                   <!--v-model="contractEdit.end_date" placeholder="合同结束日期">-->
-                                        <!--</div>-->
+                                        <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
+                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px; margin-bottom: 18px">
+                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="end_time"></DatePicker>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期</label>
@@ -138,7 +137,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">编辑</button>
+                        <button type="button" class="btn btn-primary">编辑{{vac_start_time}}</button>
                     </div>
                 </div>
                 </div>
@@ -215,10 +214,14 @@
                     receipt_pic:[],         //押金收条
                 },
                 staff:'',
-                dateConfigure: [{range:true,needHour:false,position:'top-left'}],
+                dateConfigure: [{range:false,needHour:false,position:'top-left'}],
                 dateType:'',
                 myDictionary:[],
                 myContractEitId:'',
+                vac_start_time:['2017-02-02'],
+                vac_end_time:[],
+                start_time:[],
+                end_time:[],
 
             }
         },
@@ -242,8 +245,16 @@
                         this.contractEdit.contract_num = contractList.contract_num;
                         this.contractEdit.vac_start_date = contractList.vac_start_date;
                         this.contractEdit.vac_end_date = contractList.vac_end_date;
-                        this.contractEdit.start_date = contractList.start_date;
+                        this.contractEdit.vac_start_date = contractList.start_date;
                         this.contractEdit.end_date = contractList.end_date;
+
+//                        this.vac_start_time.push(contractList.vac_start_date);
+//                        console.log(this.vac_start_time)
+//                        this.start_time = contractList.start_date;
+//                        this.start_time = contractList.start_date;
+//                        this.end_time = contractList.end_date;
+
+
                         if(!Array.isArray(contractList.ablum)){
                             this.bankPic.cus_idPhotos = contractList.album.bank_pic;                    //修改图片ID
                             for (let i in this.bankPic.cus_idPhotos) {
