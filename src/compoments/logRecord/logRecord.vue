@@ -119,7 +119,7 @@
                     staff_id : '',
                     page:1
                 },
-                configure:'',
+                configure:[],
                 searchList:[],
                 dictionary:[],
                 user_name:'',

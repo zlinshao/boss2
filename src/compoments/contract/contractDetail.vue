@@ -226,7 +226,12 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>资料补齐日期：</span>
-                                                <span>{{item.complete_date}}</span>
+                                                <span>
+                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
+                                                </span>
+                                                <span style="color: #e8403f">
+                                                    {{item.complete_date[2]}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>备注：</span>
@@ -352,31 +357,31 @@
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋照片</span>
                                                 <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.house_pic">
-                                                    <img :src="img.small" @click="showLargePic('house_pic',index)">
+                                                    <img :src="img.small" @click="showLargeVillaPic('house_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">水卡照片</span>
                                                 <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.water_card_pic">
-                                                    <img :src="img.small" @click="showLargePic('water_card_pic',index)">
+                                                    <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">电卡卡照片</span>
                                                 <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.elec_card_pic">
-                                                    <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
+                                                    <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">燃气卡照片</span>
                                                 <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.gas_card_pic">
-                                                    <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
+                                                    <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">产权证照片</span>
                                                 <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.property_pic">
-                                                    <img :src="img.small" @click="showLargePic('property_pic',index)">
+                                                    <img :src="img.small" @click="showLargeVillaPic('property_pic',index)">
                                                 </span>
                                             </div>
                                         </div>
@@ -390,21 +395,19 @@
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">证件照片</span>
                                         <span class="col-lg-10" v-for="(img,index) in item.customer_id.album.id_pic">
-                                             <img :src="img.small" @click="showLargePic('id_pic',index)">
+                                             <img :src="img.small" @click="showLargeIdPic('id_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">押金收条</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.receipt_pic">
+                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">银行卡照片</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.bank_pic">
+                                            <img :src="img.small" @click="showLargePic('bank_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
@@ -415,37 +418,32 @@
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">水费照片</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.water_card_pic">
+                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">电费照片</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.elec_card_pic">
+                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">燃气照片</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">燃气费照片</span>
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.gas_card_pic">
+                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">交接单</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">委托书照片</span>
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.proxy_pic">
+                                            <img :src="img.small" @click="showLargePic('proxy_pic',index)">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">委托书</span>
-                                        <span class="col-lg-10">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">交接单照片</span>
+                                        <span class="col-lg-10" v-for="(img,index) in item.album.handover_pic">
+                                            <img :src="img.small" @click="showLargePic('handover_pic',index)">
                                         </span>
                                     </div>
                                 </div>
@@ -541,6 +539,23 @@
                 }];
                 $('#largePic').modal('show');
             },
+            showLargeIdPic(name, index){
+                this.srcs = this.contractList[0].customer_id.album[name];
+                this.largePic = [{
+                    src: this.srcs,
+                    i: index
+                }];
+                $('#largePic').modal('show');
+            },
+            showLargeVillaPic(name, index){
+                this.srcs = this.contractList[0].villa_id.album[name];
+                this.largePic = [{
+                    src: this.srcs,
+                    i: index
+                }];
+                $('#largePic').modal('show');
+            },
+
         }
     }
 </script>
