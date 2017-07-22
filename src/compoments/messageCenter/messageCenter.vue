@@ -71,18 +71,21 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" v-for="sys in systems" @click="announceDetail(
+                                    sys.message.type,
                                     sys.message.data.title,
                                     sys.message.department_name,
                                     sys.message.create_time,
                                     sys.message.release_name,
                                     sys.id,
                                     sys.message.data.content)">
-                                    <td class="text-center">{{sys.message.create_time}}</td>
-                                    <td class="text-center">{{sys.message.release_name}}</td>
-                                    <td class="text-center">{{sys.message.data.title}}</td>
-                                    <td class="text-center">{{sys.message.data.content}}</td>
-                                    <td class="text-center">{{sys.read_time}}</td>
-                                    <td class="text-center" style="min-width: 60px;">
+                                    <td class="text-center width180">{{sys.message.create_time}}</td>
+                                    <td class="text-center width80">{{sys.message.release_name}}</td>
+                                    <td class="text-center width180">{{sys.message.data.title}}</td>
+                                    <td class="text-center more_info">
+                                        {{sys.message.data.content}}
+                                    </td>
+                                    <td class="text-center width80">{{sys.read_time}}</td>
+                                    <td class="text-center width60">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -111,12 +114,12 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" v-for="sys in Examines">
-                                    <td class="text-center">{{sys.message.create_time}}</td>
-                                    <td class="text-center">{{sys.message.release_name}}</td>
-                                    <td class="text-center">{{sys.message.data.category}}</td>
-                                    <td class="text-center">{{sys.message.data.content}}</td>
-                                    <td class="text-center">{{sys.receive_name}}</td>
-                                    <td class="text-center">
+                                    <td class="text-center width180">{{sys.message.create_time}}</td>
+                                    <td class="text-center width80">{{sys.message.release_name}}</td>
+                                    <td class="text-center width80">{{sys.message.data.category}}</td>
+                                    <td class="text-center width180">{{sys.message.data.content}}</td>
+                                    <td class="text-center width80">{{sys.receive_name}}</td>
+                                    <td class="text-center width60">
                                         <span v-if="sys.message.data.approval_type === '已通过'"
                                               class="label label-success">{{sys.message.data.approval_type}}</span>
                                         <span v-if="sys.message.data.approval_type === '待审核' ||
@@ -142,7 +145,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <!--代办提醒-->
+                            <!--待办提醒-->
                             <table class="table table-striped table-advance table-hover" v-if="isSubstitute">
                                 <thead class="text-center">
                                 <tr>
@@ -154,10 +157,13 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" v-for="sys in Substitutes">
-                                    <td class="text-center">{{sys.message.create_time}}</td>
-                                    <td class="text-center">{{sys.message.release_name}}</td>
-                                    <td class="text-center">{{sys.message.data.content}}</td>
-                                    <td class="text-center">
+                                    <td class="text-center width180">{{sys.remind_time}}</td>
+                                    <td class="text-center width80">{{sys.data.object}}</td>
+                                    <td class="text-center" :class="{ more_info: isActive !== sys.id }"
+                                        @click="more_content(sys.id)">
+                                        {{sys.data.content}}
+                                    </td>
+                                    <td class="text-center width60">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -184,11 +190,14 @@
                                 </thead>
                                 <tbody>
                                 <tr class="unread" v-for="sys in Secretarys">
-                                    <td class="text-center">{{sys.message.create_time}}</td>
-                                    <td class="text-center">{{sys.message.data.send_name}}</td>
-                                    <td class="text-center">{{sys.message.type}}</td>
-                                    <td class="text-center">{{sys.message.data.content}}</td>
-                                    <td class="text-center" style="min-width: 60px;">
+                                    <td class="text-center width180">{{sys.message.create_time}}</td>
+                                    <td class="text-center width80">{{sys.message.data.send_name}}</td>
+                                    <td class="text-center width90">{{sys.message.type}}</td>
+                                    <td class="text-center" :class="{ more_info: isActive !== sys.id }"
+                                        @click="more_content(sys.id)">
+                                        {{sys.message.data.content}}
+                                    </td>
+                                    <td class="text-center width60">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -214,12 +223,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" @click="announceDetail(sys)" v-for="sys in Messages">
-                                    <td class="text-center">{{sys.create_time}}</td>
-                                    <td class="text-center">{{sys.release_name}}</td>
-                                    <td class="text-center">{{sys.type}}</td>
-                                    <td class="text-center">{{sys.content}}</td>
-                                    <td class="text-center" style="min-width: 60px;">
+                                <tr class="unread" v-for="sys in Messages">
+                                    <td class="text-center width180">{{sys.create_time}}</td>
+                                    <td class="text-center width80">{{sys.release_name}}</td>
+                                    <td class="text-center width90">{{sys.type}}</td>
+                                    <td class="text-center" :class="{ more_info: isActive !== sys.id }"
+                                        @click="more_content(sys.id)">
+                                        {{sys.content}}
+                                    </td>
+                                    <td class="text-center width60">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -266,6 +278,7 @@
         },
         data(){
             return {
+                isActive: 1,
                 act: '',
                 beforePage: 1,
                 paging: '',                 //总页数
@@ -304,6 +317,11 @@
             }
         },
         methods: {
+//            详细内容
+            more_content (val){
+                this.isActive = val;
+            },
+//            阅读
             receive (val){
                 this.$http.post('message/message/read_mess', {
                     id: val,
@@ -356,14 +374,16 @@
             addAnnouncement(){
                 $('#announcementAdd').modal('show');
             },
-            announceDetail(val1, val2, val3, val4, val5, val6){
-                this.info_details.get_title = val1;
-                this.info_details.get_department_name = val2;
-                this.info_details.get_create_time = val3;
-                this.info_details.get_release_name = val4;
-                this.info_details.get_id = val5;
-                this.info_details.get_content = val6;
-                $('#announceDetail').modal('show');
+            announceDetail(val7, val1, val2, val3, val4, val5, val6){
+                if (val7 === '系统公告') {
+                    this.info_details.get_title = val1;
+                    this.info_details.get_department_name = val2;
+                    this.info_details.get_create_time = val3;
+                    this.info_details.get_release_name = val4;
+                    this.info_details.get_id = val5;
+                    this.info_details.get_content = val6;
+                    $('#announceDetail').modal('show');
+                }
             },
 
 //            系统公告
@@ -399,8 +419,9 @@
 //            代办提醒
             Substitute(val){
                 this.$http.post('message/remind/index/pages/' + val).then((res) => {
-                    this.Substitutes = res.data.data.list;
+                    this.Substitutes = res.data.data.data;
                     this.paging = res.data.data.pages;
+                    console.log(res.data.data)
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -408,7 +429,7 @@
                 this.isSubstitute = true;
                 this.isSecretary = false;
                 this.isMessage = false;
-                this.message = '代办提醒';
+                this.message = '待办提醒';
                 this.font = 'fa-bell';
             },
 //            BOSS小秘书
@@ -463,6 +484,30 @@
 <style scoped>
     #main-content {
         margin-left: 0;
+    }
+
+    .more_info {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 200px;
+        cursor: pointer
+    }
+
+    .width60 {
+        min-width: 60px;
+    }
+
+    .width80 {
+        min-width: 80px;
+    }
+
+    .width90 {
+        min-width: 90px;
+    }
+
+    .width180 {
+        min-width: 180px;
     }
 
     .wrapper {

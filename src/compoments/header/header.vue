@@ -298,6 +298,7 @@
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
                             <li><a @click="addRemind"><i class="fa fa-plus"></i>增加提醒</a></li>
+                            <li><a @click="lookRemind"><i class="fa fa-eye"></i>查看提醒</a></li>
                             <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
                             <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
                             <li v-show="!isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
@@ -786,18 +787,18 @@
 
         <Status :state='info'></Status>
         <!-- Right Slidebar end -->
-        <!--<LookRemind></LookRemind>-->
+        <LookRemind></LookRemind>
         <!--增加提醒-->
         <AddRemind></AddRemind>
     </div>
 </template>
 
 <script>
-    //    import LookRemind from '../common/remind/checkRemind.vue';
+        import LookRemind from '../common/remind/checkRemind.vue';
     import AddRemind from  '../common/remind/addRemind.vue'
     import Status from '../common/status.vue';
     export default {
-        components: {AddRemind, Status},
+        components: {AddRemind, Status,LookRemind},
         props: ['Name', 'Card'],
         data(){
             return {
