@@ -27,7 +27,7 @@
                             </li>
                             <li @click="Substitute(1)"><!--:class="{active: act === 'remind_mess'}"-->
                                 <a href="#">
-                                    <i class="fa fa-bell"></i>代办提醒
+                                    <i class="fa fa-bell"></i>待办提醒
                                 </a>
                             </li>
                             <li @click="Secretary(1)"><!--:class="{active: act === 'secre_mess'}"-->
@@ -70,13 +70,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in systems" @click="announceDetail(sys)">
+                                <tr class="unread" v-for="sys in systems" @click="announceDetail(
+                                    sys.message.data.title,
+                                    sys.message.department_name,
+                                    sys.message.create_time,
+                                    sys.message.release_name,
+                                    sys.id,
+                                    sys.message.data.content)">
                                     <td class="text-center">{{sys.message.create_time}}</td>
                                     <td class="text-center">{{sys.message.release_name}}</td>
                                     <td class="text-center">{{sys.message.data.title}}</td>
                                     <td class="text-center">{{sys.message.data.content}}</td>
                                     <td class="text-center">{{sys.read_time}}</td>
-                                    <td class="text-center">
+                                    <td class="text-center" style="min-width: 60px;">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -111,9 +117,15 @@
                                     <td class="text-center">{{sys.message.data.content}}</td>
                                     <td class="text-center">{{sys.receive_name}}</td>
                                     <td class="text-center">
-                                        <span class="label label-success ">{{sys.message.data.approval_type}}</span>
+                                        <span v-if="sys.message.data.approval_type === '已通过'"
+                                              class="label label-success">{{sys.message.data.approval_type}}</span>
+                                        <span v-if="sys.message.data.approval_type === '待审核' ||
+                                         sys.message.data.approval_type === '未审核'"
+                                              class="label label-danger">{{sys.message.data.approval_type}}</span>
+                                        <span v-if="sys.message.data.approval_type === '已驳回'"
+                                              class="label label-warning">{{sys.message.data.approval_type}}</span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center" style="min-width: 60px;">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -176,7 +188,7 @@
                                     <td class="text-center">{{sys.message.data.send_name}}</td>
                                     <td class="text-center">{{sys.message.type}}</td>
                                     <td class="text-center">{{sys.message.data.content}}</td>
-                                    <td class="text-center">
+                                    <td class="text-center" style="min-width: 60px;">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
@@ -207,12 +219,13 @@
                                     <td class="text-center">{{sys.release_name}}</td>
                                     <td class="text-center">{{sys.type}}</td>
                                     <td class="text-center">{{sys.content}}</td>
-                                    <td class="text-center" @click.stop="isCollect(sys.mess_id)">
+                                    <td class="text-center" style="min-width: 60px;">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
-                                        <i class="fa fa-heart" style="color: #e4393c"></i>
+                                        <i class="fa fa-heart" style="color: #e4393c"
+                                           @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -256,7 +269,14 @@
                 act: '',
                 beforePage: 1,
                 paging: '',                 //总页数
-                info_details: {},           //信息详情
+                info_details: {             //信息详情
+                    get_title: '',
+                    get_department_name: '',
+                    get_create_time: '',
+                    get_release_name: '',
+                    get_content: '',
+                    get_id: '',
+                },
                 systems: [],                //公告信息
                 Examines: [],               //审批提醒
                 Substitutes: [],            //代办提醒
@@ -336,8 +356,13 @@
             addAnnouncement(){
                 $('#announcementAdd').modal('show');
             },
-            announceDetail(val){
-                this.info_details = val;
+            announceDetail(val1, val2, val3, val4, val5, val6){
+                this.info_details.get_title = val1;
+                this.info_details.get_department_name = val2;
+                this.info_details.get_create_time = val3;
+                this.info_details.get_release_name = val4;
+                this.info_details.get_id = val5;
+                this.info_details.get_content = val6;
                 $('#announceDetail').modal('show');
             },
 
@@ -346,9 +371,6 @@
                 this.$http.post('message/system/index/pages/' + val).then((res) => {
                     this.systems = res.data.data.list;
                     this.paging = res.data.data.pages;
-                    for (let i = 0; i < res.data.data.list.length; i++) {
-                        this.info_details = res.data.data.list[0];
-                    }
                 });
                 this.beforePage = val;
                 this.isSystem = true;
