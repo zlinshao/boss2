@@ -18,7 +18,7 @@
                             </button>
                         </div>
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
 
@@ -179,12 +179,14 @@
                 },
                 configure: [],
 
-                dateConfigure: [
+                dateConfigure : [
                     {
-                        range: true,
-                        needHour: true
+                        range : true,
+                        needHour : true,
+                        position : 'top-right',
                     }
-                ]
+                ],
+                currentDate : [],
 //                idArray:{departmentId:[],staffId:[]},
             }
         },

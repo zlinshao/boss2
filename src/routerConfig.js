@@ -56,6 +56,7 @@ import ReportedCollect from './compoments/reported/reportedCollect.vue'    //收
 import ReopetedCollectDetail from './compoments/reported/collectDetail.vue'// 收房报备详情
 
 import ReportedRenting from './compoments/reported/reportedRenting.vue'    //租房报备
+import ReopetedRentDetail from './compoments/reported/rentDetail.vue'// 租房报备详情
 
 
 
@@ -335,5 +336,10 @@ export default[
         path: '/reopetedCollectDetail',
         name: 'ReopetedCollectDetail',
         component: ReopetedCollectDetail
+    },
+    {
+        path: '/reopetedRentDetail',
+        name: 'ReopetedRentDetail',
+        component: ReopetedRentDetail
     }
 ]

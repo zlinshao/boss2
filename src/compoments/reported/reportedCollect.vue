@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col-md-12">
                 <section class="panel table table-responsive">
-                    <table class="table table-striped table-advance">
+                    <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
                             <th></th>
@@ -175,7 +175,7 @@
 
                 dict : {},
                 paging : '',
-                myData : '',
+                myData : [],
                 page : 1,
                 info: {
                     //成功状态 ***
@@ -320,6 +320,8 @@
                                 setTimeout(() => {
                                     this.info.state_success = false;
                                 }, 2000);
+
+                                this.search();
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***
@@ -331,7 +333,7 @@
                             }
                         }
                     );
-                this.search();
+
             },
             oper(){
                 // 编辑
@@ -410,5 +412,9 @@
 
     .table-responsive {
         overflow: visible;
+    }
+
+    .table-hover > tbody > tr.lightYellow {
+        background-color: #fffcd9;
     }
 </style>

@@ -479,14 +479,17 @@
 
             },
             setDate(){
-                if (this.currentDate.length>0){
+
+//                console.log(this.currentDate!=undefined)
+
+                if (this.currentDate!=undefined){
                     if (this.currentDate.length==1){
                         this.date = this.currentDate[0];
-                    } else {
+                    } else if (this.currentDate.length==2){
                         if (this.IsPC()){
-                            this.dateRange = val.currentDate[0]+"至"+val.currentDate[1];
+                            this.dateRange = this.currentDate[0]+"至"+this.currentDate[1];
                         } else {
-                            this.mobilePickerDate = val.currentDate[0]+"至"+val.currentDate[1];
+                            this.mobilePickerDate = this.currentDate[0]+"至"+this.currentDate[1];
                         }
                     }
                 }

@@ -23,7 +23,7 @@
                             </label>
                         </div>-->
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
@@ -160,12 +160,14 @@
                     error: ''
                 },
                 configure: [],
-                dateConfigure: [
+                dateConfigure : [
                     {
-                        range: true,
-                        needHour: true
+                        range : true,
+                        needHour : true,
+                        position : 'top-right',
                     }
-                ]
+                ],
+                currentDate : [],
             }
         },
         created (){
