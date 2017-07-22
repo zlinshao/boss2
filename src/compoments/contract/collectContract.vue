@@ -208,21 +208,6 @@
             getDate(val){
                 console.log(val)
             },
-//            remindData (){
-//                $('.form_datetime').datetimepicker({
-//                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
-//                    language: 'zh-CN',
-//                    format: 'yyyy-mm-dd',
-//                    todayBtn: 1,
-//                    autoclose: 1,
-//                }).on('changeDate', ev => {
-//                    if (ev.target.placeholder === '开始时间'){
-//                        this.start_time = ev.target.value;
-//                    } else {
-//                        this.end_time = ev.target.value;
-//                    }
-//                });
-//            },
             rules(id , ev){   //多选框选中
                 if (ev.target.checked){
                     this.pitch.push(id);

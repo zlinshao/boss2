@@ -210,12 +210,12 @@
                                         <span style="color:#fff;font-size:16px;" v-if="isDepartment"> {{department}}</span>
                                     </h4>
                                 </div>
-                                <div class="col-lg-3 col-md-12" style="visibility: hidden">
+                                <div class="col-lg-3 col-md-12">
                                     <label style="margin-top: 8px;margin-right: 8px;">
-                                        <input type="checkbox" class="pull-left" >本月过生日员工
+                                        <input type="checkbox" class="pull-left" @click="selectBirthday">本月过生日员工
                                     </label>
                                     <label style="margin-top: 8px;">
-                                        <input type="checkbox" class="pull-left" >未交保险的员工
+                                        <input type="checkbox" class="pull-left" @click="selectInsurance">未交保险的员工
                                     </label>
                                 </div>
 
@@ -395,6 +395,8 @@
                 editDpm:[],
                 firstName:'',
                 addDpm:'', //新建下级部门
+                isBirthday:false,
+                isInsurance:false,
             }
         },
         mounted(){
@@ -669,13 +671,13 @@
                 if(this.type !== 6){
                     this.page=1
                 };
-                if (this.keywords !== '') {
-                    this.isThird=false;
-                    this.isSecond=false;
-                    this.isFirst=false;
-                    this.isFour=false;
-                    this.isDepartment=false;
-                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+this.page).then((res) => {
+                this.isThird=false;
+                this.isSecond=false;
+                this.isFirst=false;
+                this.isFour=false;
+                this.isDepartment=false;
+                if(this.keywords !== ''){
+                    this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+this.page + '/insurance/' + this.isInsurance +'/birthday/' + this.isBirthday).then((res) => {
                         this.type = 6;
                         if (res.data.code === '90020') {
                             this.userList=res.data.data.list;
@@ -687,8 +689,8 @@
                             this.pages=1;
                         }
                     })
-                }else{
-                    this.$http.get('manager/user/searchUser/page/' +this.page ).then((res) => {
+                }else {
+                    this.$http.get('manager/user/searchUser/page/'+this.page + '/insurance/' + this.isInsurance +'/birthday/' + this.isBirthday).then((res) => {
                         this.type = 6;
                         if (res.data.code === '90020') {
                             this.userList=res.data.data.list;
@@ -701,6 +703,7 @@
                         }
                     })
                 }
+
             },
             //组织enter默认事件
             stopEvent(e){
@@ -993,7 +996,15 @@
                     $('.Previous').attr({"disabled":true});
                 }
 
-            }
+            },
+            selectBirthday(){
+                this.isBirthday = !this.isBirthday;
+                this.search();
+            },
+            selectInsurance(){
+                this.isInsurance = !this.isInsurance;
+                this.search();
+            },
         }
     }
 </script>

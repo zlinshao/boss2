@@ -2,10 +2,9 @@
     <div class="datePickerContainer form-group">
         <div v-if="range">
             <div class="input-group" v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="form-control" readonly>
+                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="form-control reservation" readonly>
             </div>
-
-            <div class="input-group mobileTimePicker" v-show="!isPC">
+            <div class="input-group mobileTimePicker" v-show="!isPC" >
                 <input type="text" class="form-control" placeholder="选择日期" v-model="mobilePickerDate" @click="showToggle" readonly >
                 <div class="mobileTime" v-show="showPicker">
                     <ul>
@@ -61,7 +60,7 @@
 </template>
 <style scoped>
     #reservation{
-        width: 250px;
+        width: 300px;
     }
     /*input.form_datetimeNeedHour, input.form_datetime{
         margin-bottom: -6px;
@@ -136,6 +135,9 @@
         background: #08c;
         border: 1px solid #08c;
         color: #fff;
+    }
+    .input-group .form-control{
+        border-radius: 4px;
     }
 
 </style>
@@ -234,7 +236,7 @@
                 let _this = this;
                 this.getDates();
                 //时间插件
-                $('#reservation').daterangepicker({
+                $('.reservation').daterangepicker({
                     format: 'YYYY-MM-DD',
                     showDropdowns: true,
                     autoApply: true,
