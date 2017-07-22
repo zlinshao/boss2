@@ -23,8 +23,9 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-sm-2">提醒时间</label>
                                         <div class="col-sm-4 ">
-                                            <select class="form-control">
+                                            <select class="form-control" v-model="remindTimes">
                                                 <option value="">请选择时间</option>
+                                                <option v-for="(a, index) in remind_select" :value="index">{{a}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-4 ">
@@ -34,7 +35,8 @@
                                     <div class="row" v-if="isAdvanced">
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
-                                            <input @click="remind_time" type="text" placeholder="选择时间" v-model="remindTime" class="form-control remind_datetime">
+                                            <input @click="remind_time" type="text" placeholder="选择时间"
+                                                   v-model="remindTime" class="form-control remind_datetime">
                                             <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
                                         </div>
                                     </div>
@@ -53,17 +55,19 @@
     </div>
 </template>
 <script>
-    import DatePicker from '../datePicker.vue'
+    //    import DatePicker from '../datePicker.vue'
     import Status from '../status.vue';
     export default{
         components: {
-            DatePicker, Status
+            Status
         },
         data(){
             return {
                 isAdvanced: false,
+                remindTimes: '',        //提醒时间
                 remindTime: '',         //提醒时间
                 remind_info: '',        //提醒内容
+                remind_select: [],      //提醒小时
                 dateConfigure: [
                     {
                         range: false,               // 是否选择范围
@@ -84,9 +88,19 @@
             }
         },
         updated (){
-            this.remind_time ();
+            this.remind_time();
+        },
+        mounted (){
+            this.$http.get('message/message/dict', {
+            }).then((res) => {
+                console.log(res.data.time);
+                this.remind_select = res.data.time;
+            });
         },
         methods: {
+            times (val){
+                this.remindTimes = val;
+            },
             remind_time (){
                 $('.remind_datetime').datetimepicker({
                     minView: "day",                     //选择日期后，不会再跳转去选择时分秒
@@ -113,7 +127,8 @@
             add_notice (){
                 this.$http.post('message/remind/write', {
                     content: this.remind_info,
-                    remind_time: this.remindTime
+                    remind_time: this.remindTimes,
+                    remind_times: this.remindTime
                 }).then((res) => {
                     if (res.data.code === '100018') {
                         $('#addRemind').modal('hide');
