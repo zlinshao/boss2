@@ -11,7 +11,7 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" @change="search">
+                            <select class="form-control" @change="search" v-model="contractSearchInfo.passed">
                                 <option value="">合同状态</option>
                                 <option v-for="(value,key) in dictionary.collect_passed" :value="key">{{value}}</option>
                             </select>
@@ -56,14 +56,14 @@
                 <div class="panel-body" v-if="pitch.length>0" style="padding: 0;">
                     <ul>
                         <li>已选中&nbsp;{{pitch.length}}&nbsp;项</li>
-                        <li>
-                            <a href="">标记</a>
+                        <li  class="operate">
+                            <i class="fa fa-star"> 标记</i>
                         </li>
-                        <li>
-                            <a href="">删除</a>
+                        <li  class="operate">
+                            <i class="fa fa-times-circle"> 删除</i>
                         </li>
-                        <li>
-                            <a href="">置顶</a>
+                        <li  class="operate">
+                            <i class="fa fa-arrow-up"> 置顶</i>
                         </li>
                     </ul>
                 </div>
@@ -111,7 +111,7 @@
                             <span class="label label-warning" v-if="item.passed === 2">{{dictionary.collect_passed[item.passed]}}</span>
                         </td>
                         <td>
-                            <router-link to="/contractDetail">更多</router-link>
+                            <router-link :to="{path:'/contractDetail',query: {ContractId: item.id}}">更多</router-link>
                         </td>
                         <td class="icon">
                             <i class="fa fa-lock" v-if="item.status !== 1"></i>
@@ -208,7 +208,7 @@
                       this.isShow = false;
                   }else {
                       this.contractSearchList = [];
-                      his.pages = 1;
+                      this.pages = 1;
                       this.isShow = true;
                   }
               })
@@ -298,5 +298,8 @@
     }
     .icon i+i{
         margin-left: 8px;
+    }
+    .operate{
+        cursor: pointer;
     }
 </style>

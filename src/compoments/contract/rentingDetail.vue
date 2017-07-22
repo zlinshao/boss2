@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li class="active">合同详情</li>
+            <li class="active">租房合同详情</li>
         </ol>
 
         <div class="title clearFix">
@@ -10,11 +10,11 @@
                 <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">首页</router-link>
                 <h4>
                     合同编号&emsp;
-                    LJS081740
+                    <!--{{contractList[0].contract_num}}-->
                 </h4>
-                <span :class="contractStatus">待审核</span>
+                <span class="label label-warning">待审核</span>
             </div>
-            <div class="pull-right">
+            <div class="pull-right dropdown">
                 <span @click="changeLock">
                     <i class="fa fa-lock" v-if="isLock"></i>
                     <i class="fa fa-unlock" v-else="isLock"></i>
@@ -27,17 +27,8 @@
                 <button class="btn btn-default more" @click="showUl" v-if="isCollect">
                     更多
                     <ul v-show="show">
-                        <li>编辑</li>
-                        <li>续约</li>
-                    </ul>
-                </button>
-                <button class="btn btn-default more" @click="showUl" v-else="isCollect">
-                    更多
-                    <ul v-show="show">
-                        <li>编辑</li>
-                        <li>续租</li>
-                        <li>转租</li>
-                        <li>调租</li>
+                        <li @click="editContract">编辑</li>
+                        <li @click="renewContract">续约</li>
                     </ul>
                 </button>
             </div>
@@ -49,21 +40,21 @@
             <!--应付款/打款/合同信息-->
             <div class="col-md-3">
                 <!--应付款-->
-                <section v-if="isCollect" class="panel roll">
+                <section class="panel roll">
                     <header class="panel-heading">
                         应付款
                     </header>
                     <div class="panel-body table-responsive">
                         <table class="table">
                             <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <td>当月应付</td>
                                 <td>付款进度</td>
                                 <td>本次打款时间</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr class="text-center">
                                 <td>2000</td>
                                 <td>
                                     <div class="progress progress-striped active">
@@ -77,40 +68,11 @@
                         </table>
                     </div>
                 </section>
-                <!--应收款-->
-                <section v-else="isCollect" class="panel roll">
-                    <header class="panel-heading">
-                        应收款
-                    </header>
-                    <div class="panel-body table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <td>当月应收</td>
-                                <td>收款进度/td>
-                                <td>本次收款时间</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>2000</td>
-                                <td>
-                                    <div class="progress progress-striped active">
-                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar" style="width: 90%;">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>2017-07-05</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
                 <!--打款-->
-                <section v-if="isCollect" class="panel roll pay">
+                <section class="panel roll pay">
                     <header class="panel-heading">
                         打款
-                        <a class="pull-right">更多</a>
+                        <a class="pull-right" @click="transferDetail">更多</a>
                     </header>
                     <div class="panel-body table-responsive">
                         <div class="total">
@@ -121,53 +83,19 @@
                         </div>
                         <table class="table">
                             <thead>
-                            <tr class="lightGray">
+                            <tr class="lightGray text-center">
                                 <td>打款时间</td>
                                 <td>打款金额</td>
                                 <td>打款人</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr class="text-center">
                                 <td>2017-06-23</td>
                                 <td>2000</td>
                                 <td>哈哈</td>
                             </tr>
-                            <tr>
-                                <td>2017-06-23</td>
-                                <td>2000</td>
-                                <td>哈哈</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <!--收款-->
-                <section v-else="isCollect" class="panel roll pay">
-                    <header class="panel-heading">
-                        收款
-                        <a class="pull-right">更多</a>
-                    </header>
-                    <div class="panel-body table-responsive">
-                        <div class="total">
-                            合计:123456
-                            未收款:123456
-                        </div>
-                        <table class="table">
-                            <thead>
-                            <tr class="lightGray">
-                                <td>收款时间</td>
-                                <td>收款金额</td>
-                                <td>收款人</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>2017-06-23</td>
-                                <td>2000</td>
-                                <td>哈哈</td>
-                            </tr>
-                            <tr>
+                            <tr class="text-center">
                                 <td>2017-06-23</td>
                                 <td>2000</td>
                                 <td>哈哈</td>
@@ -180,7 +108,7 @@
                 <section class="panel roll contract">
                     <header class="panel-heading">
                         合同信息
-                        <a class="pull-right">更多</a>
+                        <a class="pull-right" @click="contractInfo">更多</a>
                     </header>
                     <div class="panel-body table-responsive">
                         <table class="table contract_info">
@@ -232,162 +160,90 @@
 
                         </ul>
                     </header>
-                    <div class="panel-body">
-                        <div class="tab-content">
-
+                    <div class="panel-body" >
+                        <div class="tab-content" v-for="item in contractList">
                             <!--基本信息-->
                             <div id="base" class="tab-pane active">
                                 <div class="baseInfo">
                                     <header>基本信息</header>
-                                    <div class="infoContainer clearFix" v-if="isCollect">
+                                    <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>合同编号<sup>*</sup></span>
-                                                <span>LJS081740</span>
+                                                <span>合同编号：<sup>*</sup></span>
+                                                <span>{{item.contract_num}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>空置期(天)<sup>*</sup></span>
-                                                <span>40</span>
+                                                <span>空置期(天)：<sup>*</sup></span>
+                                                <!--<span>{{item.checkin_collect_id.vacancy}} 天</span>-->
                                             </div>
                                             <div class="infoList">
-                                                <span>空置期起始日期</span>
-                                                <span>2017-05-18</span>
+                                                <span>空置期起始日期：</span>
+                                                <span>{{item.vac_start_date}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>空置期结束日期</span>
-                                                <span>2017-05-18</span>
+                                                <span>空置期结束日期：</span>
+                                                <span>{{item.vac_end_date}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>合同起始日期</span>
-                                                <span>2017-05-18</span>
+                                                <span>合同起始日期：</span>
+                                                <span>{{item.start_date}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>合同结束日期</span>
-                                                <span>2017-05-18</span>
+                                                <span>合同结束日期：</span>
+                                                <span>{{item.end_date}}</span>
                                             </div>
                                         </div>
+                                        <!--<div class="col-lg-4">-->
+                                            <!--<div class="infoList">-->
+                                                <!--<span>年限：<sup>*</sup></span>-->
+                                                <!--<span>{{item.checkin_collect_id.years}}年</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="infoList">-->
+                                                <!--<span>付款方式：</span>-->
+                                                <!--<span>{{}}</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="infoList">-->
+                                                <!--<span>月单价：<sup>*</sup></span>-->
+                                                <!--<span>{{item.checkin_collect_id.price}}</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="infoList">-->
+                                                <!--<span>开户行：</span>-->
+                                                <!--<span>{{}}</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="infoList">-->
+                                                <!--<span>银行卡号：</span>-->
+                                                <!--<span>{{item.checkin_collect_id.account}}</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="infoList">-->
+                                                <!--<span>收条编号：<sup>*</sup></span>-->
+                                                <!--<span>{{}}</span>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="col-lg-4">
+                                            <!--<div class="infoList">-->
+                                                <!--<span>中介费用：</span>-->
+                                                <!--<span>{{item.checkin_collect_id.cost_medi}}</span>-->
+                                            <!--</div>-->
                                             <div class="infoList">
-                                                <span>年限<sup>*</sup></span>
-                                                <span>5</span>
+                                                <span>资料补齐日期：</span>
+                                                <span>
+                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
+                                                </span>
+                                                <span style="color: #e8403f">
+                                                    {{item.complete_date[2]}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>付款方式</span>
-                                                <span>季付</span>
+                                                <span>备注：</span>
+                                                <span>{{item.remarks}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>月单价<sup>*</sup></span>
-                                                <span>2000</span>
+                                                <span>开单人：</span>
+                                                <span>{{item.staff}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>开户行</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>银行卡号</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>收条编号<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>中介费用</span>
-                                                <span>0</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>资料补齐日期</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>备注</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>开单人</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>审核人</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="infoContainer clearFix" v-else="isCollect">
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>合同编号<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>年限<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>合同起始日期</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>合同结束日期</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>付款类型<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>月单价<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>应收<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>已收</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>付款方式</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>未收</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>租房状态</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>收条编号<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>中介费用</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>资料补齐日期</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>备注</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>开单人</span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>审核人</span>
-                                                <span>LJS081740</span>
+                                                <span>审核人：</span>
+                                                <span>{{}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -397,32 +253,36 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主信息<sup>*</sup></span>
+                                                <span>业主信息：<sup>*</sup></span>
                                                 <span>LJS081740</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>尊称<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>国籍<sup>*</sup></span>
-                                                <span>LJS081740</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>手机号码<sup>*</sup></span>
-                                                <span>LJS081740</span>
+                                                <span>尊称：<sup>*</sup></span>
+                                                <span>{{item.customer_id.name}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>证件类型<sup>*</sup></span>
-                                                <span>LJS081740</span>
+                                                <span>国籍：<sup>*</sup></span>
+                                                <span>
+                                                    {{dictionary.nationality[item.customer_id.nationality]}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>身份证号<sup>*</sup></span>
-                                                <span>LJS081740</span>
+                                                <span>手机号码：<sup>*</sup></span>
+                                                <span>{{item.customer_id.mobile}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>证件类型：<sup>*</sup></span>.
+                                                <span>
+                                                    {{dictionary.credentials[item.customer_id.id_type]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>身份证号：<sup>*</sup></span>
+                                                <span>{{item.customer_id.id_num}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -435,85 +295,98 @@
                                     <div class="infoContainer">
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">房屋地址</span>
-                                                <span class="col-lg-8">苏园路6号3-201</span>
+                                                <span class="col-lg-4">房屋地址：</span>
+                                                <span class="col-lg-8">{{item.villa_id.address}}</span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">房型</span>
-                                                <span class="col-lg-8">三室一厅一卫</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">面积</span>
-                                                <span class="col-lg-8">120m<sup>2</sup></span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">房屋类型</span>
-                                                <span class="col-lg-8">住宅</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">楼层</span>
-                                                <span class="col-lg-8">5/11</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">楼层建筑</span>
-                                                <span class="col-lg-8">多层</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">房屋照片</span>
+                                                <span class="col-lg-4">房型：</span>
                                                 <span class="col-lg-8">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                    {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
                                                 </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">面积：</span>
+                                                <span class="col-lg-8">
+                                                    {{item.villa_id.area}}㎡
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">房屋类型：</span>
+                                                <span class="col-lg-8">
+                                                    {{dictionary.house_type[item.villa_id.house_type]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">楼层：</span>
+                                                <span class="col-lg-8">
+                                                    {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">楼层建筑：</span>
+                                                <span class="col-lg-8">
+                                                    {{dictionary.floor_type[item.villa_id.floor_type]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">所属小区：</span>
+                                                <span class="col-lg-8">{{item.villa_id.village_name}}</span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">房屋特色：</span>
+                                                <span class="col-lg-8">
+                                                    {{dictionary.house_feature[item.villa_id.house_feature]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">水费卡号：</span>
+                                                <span class="col-lg-8">
+                                                    {{item.villa_id.water_card_num}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">电费卡号：</span>
+                                                <span class="col-lg-8">{{item.villa_id.elec_card_num}}</span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-4">燃气卡号：</span>
+                                                <span class="col-lg-8">{{item.villa_id.gas_card_num}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">所属小区</span>
-                                                <span class="col-lg-8">积善公寓</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">房屋特色</span>
-                                                <span class="col-lg-8">地铁沿线</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">水费卡号</span>
-                                                <span class="col-lg-8">025333131</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">电费卡号</span>
-                                                <span class="col-lg-8">025333131</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">燃气卡号</span>
-                                                <span class="col-lg-8">025333131</span>
-                                            </div>
-                                            <div class="infoList clearFix">
-                                                <span class="col-lg-4">水卡照片</span>
-                                                <span class="col-lg-8">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                <span class="col-lg-2">房屋照片</span>
+                                                <span class="col-lg-10">
+                                                    <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.house_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">水卡照片</span>
-                                                <span class="col-lg-8">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                <span class="col-lg-2">水卡照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.water_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">水卡照片</span>
-                                                <span class="col-lg-8">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                <span class="col-lg-2">电卡卡照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">水卡照片</span>
-                                                <span class="col-lg-8">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                                    <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                                <span class="col-lg-2">燃气卡照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.gas_card_pic">
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
+                                                <span class="col-lg-2">产权证照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.property_pic">
                                                 </span>
                                             </div>
                                         </div>
@@ -525,66 +398,66 @@
                             <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">证件照片</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">证件照片</span>
+                                        <span class="col-lg-10">
+                                             <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
+                                                  v-for="(img,index) in item.customer_id.album.id_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">押金收条</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">押金收条</span>
+                                        <span class="col-lg-10" >
+                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)"
+                                                 v-for="(img,index) in item.album.receipt_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">银行卡照片</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">银行卡照片</span>
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('bank_pic',index)"
+                                                 v-for="(img,index) in item.album.bank_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">合同照片<sup>*</sup></span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">合同照片<sup>*</sup></span>
+                                        <span class="col-lg-10">
+                                             <img :src="img.small" @click="showLargePic('contract_pic',index)"
+                                                  v-for="(img,index) in item.album.contract_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">水费照片</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">水费照片</span>
+                                        <span class="col-lg-10" >
+                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)"
+                                                 v-for="(img,index) in item.album.water_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">电费照片</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">电费照片</span>
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)"
+                                                 v-for="(img,index) in item.album.elec_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">燃气照片</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">燃气费照片</span>
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)"
+                                                 v-for="(img,index) in item.album.gas_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">交接单</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">委托书照片</span>
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('proxy_pic',index)"
+                                                 v-for="(img,index) in item.album.proxy_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-4">委托书</span>
-                                        <span class="col-lg-8">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
-                                            <img src="../../../src/assets/img/sm-img-1.jpg" alt="">
+                                        <span class="col-lg-2">交接单照片</span>
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('handover_pic',index)"
+                                                 v-for="(img,index) in item.album.handover_pic">
                                         </span>
                                     </div>
                                 </div>
@@ -594,32 +467,102 @@
                 </section>
             </div>
         </div>
+        <!--components-->
+        <Transfer></Transfer>
+        <Contract></Contract>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"></ContractEit>
+        <ContractRenew></ContractRenew>
+        <PicModal :largePic="largePic"></PicModal>
     </div>
 </template>
 <script>
+    import Transfer from './transferDetail.vue'
+    import Contract from  './contractInfo.vue'
+    import ContractEit from './contractEdit.vue'
+    import ContractRenew from './contractRenew.vue'
+    import PicModal from  '../common/largePic.vue'
     export default{
+        components: {
+            Transfer,
+            Contract,
+            ContractEit,
+            ContractRenew,
+            PicModal,
+        },
         data(){
             return {
                 isLock : true, // 是否锁定
-                contractStatus : { //审核状态背景色
-                    'cStatus' : true ,
-                    'yellow' : true,
-                    'gray' : false,
-                    'green' : false
-                },           // 合同状态样式
                 show : false,        // 是否显示更多
                 isPass : true,      // 是否通过
                 isCollect : true,   // 租房或收房
+                contractList:[],
+                dictionary:[],
+                largePic: [],
+                srcs: {},
+                contractEitId:'',
             }
         },
-        components: {},
+        mounted(){
+            this.contractEitId = this.$route.query.ContractId;
+            this.getDictionary();
+        },
+
         methods : {
+            getDictionary(){
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.dictionary=res.data;
+                    this.contractDetail();
+                });
+            },
+            contractDetail(){
+                this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
+                    this.contractList.push(res.data.data);
+                    console.log(this.contractList)
+                })
+            },
             showUl(){           // 点击更多
                 this.show = !this.show;
             },
             changeLock(){       // 点击锁定
                 this.isLock = !this.isLock;
-            }
+            },
+            transferDetail(){
+                $('#transferDetail').modal('show');
+            },
+            contractInfo(){
+                $('#contractInfo').modal('show');
+            },
+            editContract(){
+                $('#contractEdit').modal('show');
+            },
+            renewContract(){
+                $('#contractRenew').modal('show');
+            },
+            showLargePic(name, index){
+                this.srcs = this.contractList[0].album[name];
+                this.largePic = [{
+                    src: this.srcs,
+                    i: index
+                }];
+                $('#largePic').modal('show');
+            },
+            showLargeIdPic(name, index){
+                this.srcs = this.contractList[0].customer_id.album[name];
+                this.largePic = [{
+                    src: this.srcs,
+                    i: index
+                }];
+                $('#largePic').modal('show');
+            },
+            showLargeVillaPic(name, index){
+                this.srcs = this.contractList[0].villa_id.album[name];
+                this.largePic = [{
+                    src: this.srcs,
+                    i: index
+                }];
+                $('#largePic').modal('show');
+            },
+
         }
     }
 </script>
@@ -681,10 +624,10 @@
     }
     .cStatus{
         display: inline-block;
-        width: 80px;
+        width: 60px;
         padding: 8px 0;
         color: white;
-        border-radius: 20px;
+        border-radius: 5px;
         text-align: center;
         margin-left: 10px;
     }
@@ -719,7 +662,6 @@
         margin-top: 20px;
     }
     .infoContainer{
-        width: 90%;
         margin: auto;
     }
     .infoContainer .infoList{
@@ -738,11 +680,10 @@
         width: 60px;
         margin-top: 5px;
     }
-    .infoContainer img:nth-of-type(even){
+    .infoContainer img{
         margin-left: 5px;
     }
     #contract .infoContainer{
-        width: 50%;
         margin: auto;
     }
     #house .infoContainer .infoList sup{
@@ -750,6 +691,6 @@
         font-size: 10px;
     }
     .nav-tabs>li {
-         margin-bottom: 0;
+        margin-bottom: 0;
     }
 </style>

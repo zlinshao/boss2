@@ -67,7 +67,7 @@
                                             <input @click="remindData" readonly placeholder="空置期开始时间" v-model="contractEdit.vac_start_date"
                                                    class="form-control form_datetime">
                                         </div>
-                                        <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >空置期结束日期{{contractEdit.vac_end_date}}</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.vac_end_date"
                                                    readonly placeholder="空置期结束时间">
@@ -299,8 +299,9 @@
             'contractEdit.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    console.log(val)
-                    this.completeDate(val);
+                    if(val !== oldVal){
+                        this.completeDate(val);
+                    }
                 }
             }
         },
@@ -321,6 +322,8 @@
                         this.contractEdit.contract_num = contractList.contract_num;
                         this.contractEdit.vac_start_date = contractList.vac_start_date;
                         this.contractEdit.vac_end_date = contractList.vac_end_date;
+                        console.log(contractList.vac_end_date)
+                        console.log(this.contractEdit.vac_end_date)
                         this.contractEdit.start_date = contractList.start_date;
                         this.contractEdit.end_date = contractList.end_date;
                         this.contractEdit.complete_date = contractList.complete_date[0];

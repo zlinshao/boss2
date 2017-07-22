@@ -10,9 +10,9 @@
                 <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">首页</router-link>
                 <h4>
                     合同编号&emsp;
-                    LJS081740
+                    {{contractList[0].contract_num}}
                 </h4>
-                <span :class="contractStatus">待审核</span>
+                <span class="label label-warning">待审核</span>
             </div>
             <div class="pull-right dropdown">
                 <span @click="changeLock">
@@ -355,33 +355,38 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">房屋照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.house_pic">
-                                                    <img :src="img.small" @click="showLargeVillaPic('house_pic',index)">
+                                                <span class="col-lg-2">房屋照片</span>
+                                                <span class="col-lg-10">
+                                                    <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.house_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">水卡照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.water_card_pic">
-                                                    <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)">
+                                                <span class="col-lg-2">水卡照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.water_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">电卡卡照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.elec_card_pic">
-                                                    <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)">
+                                                <span class="col-lg-2">电卡卡照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">燃气卡照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.gas_card_pic">
-                                                    <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)">
+                                                <span class="col-lg-2">燃气卡照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-4">产权证照片</span>
-                                                <span class="col-lg-10" v-for="(img,index) in item.villa_id.album.property_pic">
-                                                    <img :src="img.small" @click="showLargeVillaPic('property_pic',index)">
+                                                <span class="col-lg-2">产权证照片</span>
+                                                <span class="col-lg-10" >
+                                                    <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
+                                                         v-for="(img,index) in item.villa_id.album.property_pic">
                                                 </span>
                                             </div>
                                         </div>
@@ -393,57 +398,45 @@
                             <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">证件照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.customer_id.album.id_pic">
-                                             <img :src="img.small" @click="showLargeIdPic('id_pic',index)">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
-                                        <span class="col-lg-2">押金收条</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.receipt_pic">
-                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
-                                        <span class="col-lg-2">银行卡照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.bank_pic">
-                                            <img :src="img.small" @click="showLargePic('bank_pic',index)">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
                                         <span class="col-lg-2">合同照片<sup>*</sup></span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.contract_pic">
-                                             <img :src="img.small" @click="showLargePic('contract_pic',index)">
+                                        <span class="col-lg-10">
+                                             <img :src="img.small" @click="showLargePic('contract_pic',index)"
+                                                  v-for="(img,index) in item.album.contract_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">水费照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.water_card_pic">
-                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)">
+                                        <span class="col-lg-10" >
+                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)"
+                                                 v-for="(img,index) in item.album.water_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">电费照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.elec_card_pic">
-                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)"
+                                                 v-for="(img,index) in item.album.elec_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">燃气费照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.gas_card_pic">
-                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
-                                        <span class="col-lg-2">委托书照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.proxy_pic">
-                                            <img :src="img.small" @click="showLargePic('proxy_pic',index)">
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)"
+                                                 v-for="(img,index) in item.album.gas_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">交接单照片</span>
-                                        <span class="col-lg-10" v-for="(img,index) in item.album.handover_pic">
-                                            <img :src="img.small" @click="showLargePic('handover_pic',index)">
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('handover_pic',index)"
+                                                 v-for="(img,index) in item.album.handover_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-2">押金收条</span>
+                                        <span class="col-lg-10" >
+                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)"
+                                                 v-for="(img,index) in item.album.receipt_pic">
                                         </span>
                                     </div>
                                 </div>
@@ -478,12 +471,6 @@
         data(){
             return {
                 isLock : true, // 是否锁定
-                contractStatus : { //审核状态背景色
-                    'cStatus' : true ,
-                    'yellow' : true,
-                    'gray' : false,
-                    'green' : false
-                },           // 合同状态样式
                 show : false,        // 是否显示更多
                 isPass : true,      // 是否通过
                 isCollect : true,   // 租房或收房
@@ -491,11 +478,11 @@
                 dictionary:[],
                 largePic: [],
                 srcs: {},
-                contractId:'' ,
                 contractEitId:'',
             }
         },
         mounted(){
+            this.contractEitId = this.$route.query.ContractId;
             this.getDictionary();
         },
 
@@ -507,7 +494,7 @@
                 });
             },
             contractDetail(){
-                this.$http.get('core/collect/readcontract/id/1').then((res)=>{
+                this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList.push(res.data.data);
                     console.log(this.contractList)
                 })
@@ -525,7 +512,6 @@
                 $('#contractInfo').modal('show');
             },
             editContract(){
-                this.contractEitId = 1;
                 $('#contractEdit').modal('show');
             },
             renewContract(){
@@ -673,7 +659,7 @@
         width: 60px;
         margin-top: 5px;
     }
-    .infoContainer img:nth-of-type(even){
+    .infoContainer img{
         margin-left: 5px;
     }
     #contract .infoContainer{
