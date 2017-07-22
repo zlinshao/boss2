@@ -31,21 +31,21 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
-                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px;margin-bottom: 18px">
+                                        <div class="col-lg-4 col-sm-9" style="margin-bottom: 18px">
                                             <DatePicker :dateConfigure="dateConfigure" :currentDate="vac_start_time" @sendDate="getDate"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
-                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px;margin-bottom: 18px">
+                                        <div class="col-lg-4 col-sm-9" style="margin-bottom: 18px">
                                             <DatePicker :dateConfigure="dateConfigure" :currentDate="vac_end_time"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
-                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px; margin-bottom: 18px">
+                                        <div class="col-lg-4 col-sm-9" style="margin-bottom: 18px">
                                             <DatePicker :dateConfigure="dateConfigure" :currentDate="start_time"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
-                                        <div class="col-lg-4 col-sm-9" style="padding-left: 30px; margin-bottom: 18px">
+                                        <div class="col-lg-4 col-sm-9" style="margin-bottom: 18px">
                                             <DatePicker :dateConfigure="dateConfigure" :currentDate="end_time"></DatePicker>
                                         </div>
                                     </div>
