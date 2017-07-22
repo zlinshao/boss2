@@ -17,7 +17,7 @@
                             </select>
                         </div>-->
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
 
@@ -52,16 +52,16 @@
                             <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;作废</a></h5>
                         </li>
                         <li v-show="statusId==1">
-                            <h5><a><i class="fa fa-send-o"></i>&nbsp;提交</a></h5>
+                            <h5 @click="changeStatus(1)"><a><i class="fa fa-send-o"></i>&nbsp;提交</a></h5>
                         </li>
                         <li v-show="statusId==2">
-                            <h5><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
+                            <h5 @click="changeStatus(2)"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
                         </li>
                         <li v-show="statusId==2">
-                            <h5><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
+                            <h5 @click="changeStatus(3)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
                         </li>
                         <li v-show="statusId==3">
-                            <h5><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
+                            <h5 @click="changeStatus(4)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -80,10 +80,10 @@
                             <th class="text-center">签约人</th>
                             <th class="text-center">所属部门</th>
                             <th class="text-center">负责人</th>
-                            <th class="text-center">签约日期</th>
+                            <th class="text-center">待签约日期</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">房型</th>
-                            <th class="text-center">收月单价</th>
+                            <th class="text-center">月单价</th>
                             <th class="text-center">收房年限</th>
                             <th class="text-center">付款方式</th>
                             <th class="text-center">空置期</th>
@@ -104,7 +104,7 @@
                             <td>{{item.deal_time}}</td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>
-                            <td>{{item.price[0]}}</td>
+                            <td>{{item.price[0]}}<a v-show="item.price.length>1">变化</a></td>
                             <!--<td class="dropdown">
                                 <button class="btn btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">{{item.price[0]}}
@@ -114,18 +114,18 @@
                                 </ul>
                             </td>-->
                             <td>{{item.years}}</td>
-                            <td>{{dict.pay_type[item.pay_type[0]]}}</td>
+                            <td>{{dict.pay_type[item.pay_type[0]]}}<a v-show="item.pay_type.length>1">变化</a></td>
                             <td>{{item.vacancy}}</td>
                             <td>{{item.cost_deposit}}</td>
                             <td>{{item.cost_medi}}</td>
                             <td>
                                 <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'dropdown-toggle':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}"
+                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{dict.checkin_status[item.status]}}
                                 </button>
                             </td>
-                            <td><router-link to="/reopetedCollectDetail"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td><router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="16">暂无数据...</td>
@@ -139,10 +139,10 @@
 
         <!--modal-->
         <!--新增-->
-        <AddModal></AddModal>
+        <AddModal @save="search"></AddModal>
 
         <!--编辑-->
-        <EditModal></EditModal>
+        <EditModal :id="curOperId" @save="search"></EditModal>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -171,6 +171,8 @@
                 operId : 0,
                 statusId : 0,
 
+                curOperId : 0,
+
                 dict : {},
                 paging : '',
                 myData : '',
@@ -185,12 +187,16 @@
                     //失败信息 ***
                     error: ''
                 },
+
                 dateConfigure : [
                     {
                         range : true,
-                        needHour : true
+                        needHour : true,
+                        position : 'top-right',
                     }
                 ],
+                currentDate : [],
+
                 params : {
                     range : '',
                     search : ''
@@ -199,12 +205,12 @@
                 confirmMsg: {
                     id: '',
                     msg: '',
-                    status: ''         // 1:通过审核，2:撤销审核，3:退单
+                    status: ''
                 },
             }
         },
         mounted (){
-            this.$http.get('http://test.v2.api.boss.lejias.cn/revenue/glee_collect/dict')
+            this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
                     (res) => {
@@ -246,6 +252,7 @@
 
             search(){
 //                console.log(this.params);
+                this.operId = 0;
                 this.page = 1;
                 this.filter();
             },
@@ -285,12 +292,72 @@
             },
             getConfirm(){
                 // 提示信息
+                let num = this.confirmMsg.status;
+                console.log(num)
+                let url;
+                if (num==1){
+//                    this.confirmMsg.msg = '确定提交报备信息吗？';
+                    url = 'checkin/collect/pending/'+this.operId;
+                } else if (num==2){
+//                    this.confirmMsg.msg = '确定通过审核吗？';
+                    url = 'checkin/collect/pass/'+this.operId;
+                } else if (num==3){
+//                    this.confirmMsg.msg = '确定驳回吗？';
+                    url = 'checkin/collect/stash/'+this.operId;
+                } else if (num==4){
+//                    this.confirmMsg.msg = '确定驳回吗？';
+                    url = 'checkin/collect/pending/'+this.operId;
+                }
+                this.$http.get(url)
+                    .then(
+                        (res) => {
+//                            console.log(res);
+                            if (res.data.code==18210){
+                                this.info.success = '操作成功';
+                                //显示失败弹窗 ***
+                                this.info.state_success = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_success = false;
+                                }, 2000);
+                            } else {
+                                this.info.error = '操作失败';
+                                //显示失败弹窗 ***
+                                this.info.state_error = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_error = false;
+                                }, 2000);
+                            }
+                        }
+                    );
+                this.search();
             },
             oper(){
                 // 编辑
-                if (this.statusId == 1){
-                    // 不可编辑
+                this.curOperId = this.operId;
+                $('#edit').modal('show');
+            },
+
+            changeStatus(num){
+                // 修改状态
+
+
+                this.confirmMsg.id = this.operId;
+                this.confirmMsg.status= num;
+//                console.log(this.confirmMsg.status);
+
+                if (num==1){
+                    this.confirmMsg.msg = '确定提交报备信息吗？';
+                } else if (num==2){
+                    this.confirmMsg.msg = '确定通过审核吗？';
+                } else if (num==3){
+                    this.confirmMsg.msg = '确定驳回吗？';
+                } else if (num==4){
+                    this.confirmMsg.msg = '确定驳回吗？';
                 }
+                $('#confirm').modal('show');
+
             }
         }
     }
@@ -324,6 +391,10 @@
         /*color: white;*/
     }
 
+    td a{
+        margin-left: 5px;
+        font-size: 8px;
+    }
     .yellow {
         background-color: #F9E175;
     }
