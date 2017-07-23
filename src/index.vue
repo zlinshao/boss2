@@ -20,24 +20,24 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr>-->
-                                            <!--<td>南京</td>-->
-                                            <!--<td>{{main_bulletin.nanjin.client}}</td>-->
-                                            <!--<td>{{main_bulletin.nanjin.house}}</td>-->
-                                            <!--<td>{{main_bulletin.nanjin.log}}</td>-->
-                                            <!--<td>{{main_bulletin.nanjin.vacancy}}</td>-->
-                                            <!--<td>{{main_bulletin.nanjin.received}}</td>-->
-                                            <!--<td>{{main_bulletin.nanjin.rent}}</td>-->
-                                        <!--</tr>-->
-                                        <!--<tr>-->
-                                            <!--<td>苏州</td>-->
-                                            <!--<td>{{main_bulletin.suzhou.client}}</td>-->
-                                            <!--<td>{{main_bulletin.suzhou.house}}</td>-->
-                                            <!--<td>{{main_bulletin.suzhou.log}}</td>-->
-                                            <!--<td>{{main_bulletin.suzhou.vacancy}}</td>-->
-                                            <!--<td>{{main_bulletin.suzhou.received}}</td>-->
-                                            <!--<td>{{main_bulletin.suzhou.rent}}</td>-->
-                                        <!--</tr>-->
+                                        <tr>
+                                            <td>南京</td>
+                                            <td>{{bulletin_nanjin.client}}</td>
+                                            <td>{{bulletin_nanjin.house}}</td>
+                                            <td>{{bulletin_nanjin.log}}</td>
+                                            <td>{{bulletin_nanjin.vacancy}}</td>
+                                            <td>{{bulletin_nanjin.received}}</td>
+                                            <td>{{bulletin_nanjin.rent}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>苏州</td>
+                                            <td>{{bulletin_suzhou.client}}</td>
+                                            <td>{{bulletin_suzhou.house}}</td>
+                                            <td>{{bulletin_suzhou.log}}</td>
+                                            <td>{{bulletin_suzhou.vacancy}}</td>
+                                            <td>{{bulletin_suzhou.received}}</td>
+                                            <td>{{bulletin_suzhou.rent}}</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </section>
@@ -73,6 +73,7 @@
                         <section class="panel">
                             <div class="panel-body text-center">
                                 <!--入住-->
+                                <h3>入住率</h3>
                                 <div id="check_in" style="height: 310px;"></div>
                             </div>
                         </section>
@@ -81,6 +82,7 @@
                         <section class="panel">
                             <div class="panel-body text-center">
                                 <!--收租-->
+                                <h3>收房比例</h3>
                                 <div id="collect_rents" style="height: 310px;"></div>
                             </div>
                         </section>
@@ -89,6 +91,7 @@
                         <section class="panel">
                             <div class="panel-body text-center">
                                 <!--客户来源-->
+                                <h3>客户来源</h3>
                                 <div id="custom" style="height: 310px;"></div>
                             </div>
                         </section>
@@ -171,7 +174,8 @@
         data (){
             return {
                 select_list: [],                //字典
-                main_bulletin: {},              //简报
+                bulletin_nanjin: {},            //南京
+                bulletin_suzhou: {},            //苏州
                 main_birthday: [],              //寿星
                 main_ranking: [],               //龙虎榜
                 main_customer: [],              //图表
@@ -202,11 +206,11 @@
                     this.select_list = res.data;
 
                     this.$http.post('home/index/index').then((res) => {
-                        console.log(res.data.data);
-                        this.main_bulletin = res.data.data.bulletin;         //简报
-                        this.main_birthday = res.data.data.birthday;         //寿星
-                        this.main_ranking = res.data.data.ranking;           //龙虎榜
-                        this.main_customer = res.data.data.customer;         //charts
+                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报
+                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报
+                        this.main_birthday = res.data.data.birthday;                    //寿星
+                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
+                        this.main_customer = res.data.data.customer;                    //charts
                     });
                 });
             },

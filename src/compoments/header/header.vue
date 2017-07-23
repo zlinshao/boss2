@@ -233,7 +233,7 @@
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="font-size: 20px;">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-warning" style="top: -4px;">{{new_info.count}}</span>
+                                <span class="badge bg-warning" style="top: -8px;right: -20px;">{{new_info.count}}</span>
                             </a>
                             <ul class="dropdown-menu extended notification roll"
                                 style="top: 30px;left: -88px;">
@@ -247,8 +247,6 @@
                                                 class="fa fa-volume-up"></i></span>
                                         您有&nbsp;<span class="text-danger">{{new_info.sys_mess}}</span>&nbsp;条系统公告未读
                                     </router-link>
-                                    <!--{{info.message.data.object}}-->
-                                    <!--<span class="small italic">{{info.message.create_time}}</span>-->
                                 </li>
                                 <li>
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'appr_mess'}}">
@@ -256,8 +254,6 @@
                                                 class="fa fa-volume-up"></i></span>
                                         您有&nbsp;<span class="text-danger">{{new_info.appr_mess}}</span>&nbsp;条审批提醒未读
                                     </router-link>
-                                    <!--{{info.message.data.object}}-->
-                                    <!--<span class="small italic">{{info.message.create_time}}</span>-->
                                 </li>
                                 <li>
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'remind_mess'}}">
@@ -265,8 +261,6 @@
                                                 class="fa fa-volume-up"></i></span>
                                         您有&nbsp;<span class="text-danger">{{new_info.remind_mess}}</span>&nbsp;条待办提醒未读
                                     </router-link>
-                                    <!--{{info.message.data.object}}-->
-                                    <!--<span class="small italic">{{info.message.create_time}}</span>-->
                                 </li>
                                 <li>
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'secre_mess'}}">
@@ -277,9 +271,6 @@
                                     <!--{{info.message.data.object}}-->
                                     <!--<span class="small italic">{{info.message.create_time}}</span>-->
                                 </li>
-                                <!--<li>-->
-                                <!--<a href="#">See all notifications</a>-->
-                                <!--</li>-->
                             </ul>
                         </li>
                     </ul>
@@ -786,26 +777,29 @@
         </div>
 
         <Status :state='info'></Status>
-        <!-- Right Slidebar end -->
-        <LookRemind></LookRemind>
+
+        <!-- 查看提醒-->
+        <LookRemind @delete_rem="lookRemind" :msg="remind_info"></LookRemind>
+
         <!--增加提醒-->
         <AddRemind></AddRemind>
     </div>
 </template>
 
 <script>
-        import LookRemind from '../common/remind/checkRemind.vue';
+    import LookRemind from '../common/remind/checkRemind.vue';
     import AddRemind from  '../common/remind/addRemind.vue'
     import Status from '../common/status.vue';
     export default {
-        components: {AddRemind, Status,LookRemind},
+        components: {AddRemind, Status, LookRemind},
         props: ['Name', 'Card'],
         data(){
             return {
+                remind_info: [],            //查看提醒
                 isActive: 0,
-                new_info: {},       //未读信息
+                new_info: {},               //未读信息
                 lock_status: true,
-                lockScreen: '',     //锁屏
+                lockScreen: '',             //锁屏
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -831,6 +825,18 @@
         mounted(){
             this.isPc = this.IsPC();
             this.new_infos();
+            setInterval(function () {
+                $.ajax({
+                    type: 'POST',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    url: globalConfig.server + 'message/message/self_mess',
+                    success: (data) => {
+                        this.new_info = data.data;
+                    }
+                })
+            }.bind(this), 60000);
         },
         methods: {
 //            新消息提醒
@@ -860,12 +866,24 @@
             clearCookie(){
 
             },
+//            查看提醒
             lookRemind(){
-                $('#checkRemind').modal('show');
+                $('#checkRemind').modal({
+                    backdrop: 'static',         //空白处不消失
+                });
+                this.$http.post('message/remind/index', {
+                    not_remind: '1'
+                }).then((res) => {
+                    this.remind_info = res.data.data.data;
+                });
             },
+//            增加提醒
             addRemind(){
-                $('#addRemind').modal('show');
+                $('#addRemind').modal({
+                    backdrop: 'static',         //空白处不消失
+                });
             },
+//            修改锁屏密码
             lock_state (){
                 $('#lock_screen').modal({
                     backdrop: 'static',         //空白处不消失

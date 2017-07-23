@@ -84,7 +84,7 @@
                                     <td class="text-center more_info">
                                         {{sys.message.data.content}}
                                     </td>
-                                    <td class="text-center width80">{{sys.read_time}}</td>
+                                    <td class="text-center width180">{{sys.read_time}}</td>
                                     <td class="text-center width60">
                                         <i class="fa fa-folder" @click.stop="receive(sys.id)"
                                            v-if="sys.read_time === '未读'"></i>
@@ -249,12 +249,13 @@
             </section>
         </section>
 
-        <Page @pag="system_page" :pg="paging" :beforePage="beforePage"></Page>
+        <div class="col-xs-12">
+            <Page @pag="system_page" :pg="paging" :beforePage="beforePage"></Page>
+        </div>
 
         <Status :state='info'></Status>
 
         <!--增加系统公告-->
-
         <AnnouncementAdd @success_system="System(1)"></AnnouncementAdd>
 
         <AnnouncementDetail @receive="System(beforePage)" :msg="info_details"></AnnouncementDetail>
@@ -368,11 +369,19 @@
                 }
 
                 if (this.isMessage === true) {
-                    this.Message(val);
+                    if (this.Messages.length === 1) {
+                        this.Message(val - 1);
+                    } else {
+                        this.Message(val);
+                    }
+
                 }
             },
             addAnnouncement(){
-                $('#announcementAdd').modal('show');
+                $('#announcementAdd').modal({
+                    backdrop: 'static',         //空白处不消失
+                });
+
             },
             announceDetail(val7, val1, val2, val3, val4, val5, val6){
                 if (val7 === '系统公告') {
@@ -382,7 +391,9 @@
                     this.info_details.get_release_name = val4;
                     this.info_details.get_id = val5;
                     this.info_details.get_content = val6;
-                    $('#announceDetail').modal('show');
+                    $('#announceDetail').modal({
+                        backdrop: 'static',         //空白处不消失
+                    });
                 }
             },
 
@@ -421,7 +432,6 @@
                 this.$http.post('message/remind/index/pages/' + val).then((res) => {
                     this.Substitutes = res.data.data.data;
                     this.paging = res.data.data.pages;
-                    console.log(res.data.data)
                 });
                 this.beforePage = val;
                 this.isSystem = false;

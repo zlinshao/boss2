@@ -25,7 +25,8 @@
                                         <div class="col-sm-4 ">
                                             <select class="form-control" v-model="remindTimes">
                                                 <option value="">请选择时间</option>
-                                                <option v-for="(a, index) in remind_select" :value="index">{{a}}</option>
+                                                <option v-for="(a, index) in remind_select" :value="index">{{a}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-4 ">
@@ -36,7 +37,7 @@
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
                                             <input @click="remind_time" type="text" placeholder="选择时间"
-                                                   v-model="remindTime" class="form-control remind_datetime">
+                                                   v-model="remindTime" class="form-control remind_datetime" readonly>
                                             <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
                                         </div>
                                     </div>
@@ -91,8 +92,7 @@
             this.remind_time();
         },
         mounted (){
-            this.$http.get('message/message/dict', {
-            }).then((res) => {
+            this.$http.get('message/message/dict', {}).then((res) => {
                 this.remind_select = res.data.time;
             });
         },
@@ -123,6 +123,7 @@
             getDate (val){
                 this.remindTime = val;
             },
+//            增加提示信息
             add_notice (){
                 this.$http.post('message/remind/write', {
                     content: this.remind_info,
@@ -131,6 +132,7 @@
                 }).then((res) => {
                     if (res.data.code === '100018') {
                         $('#addRemind').modal('hide');
+                        this.$emit('add_seccess')
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
