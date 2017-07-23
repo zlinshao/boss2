@@ -10,18 +10,23 @@
                 <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">首页</router-link>
                 <h4>
                     合同编号&emsp;
-                    <!--{{contractList[0].contract_num}}-->
+                    {{contract_num}}
                 </h4>
                 <span class="label label-warning">待审核</span>
             </div>
-            <div class="pull-right dropdown">
+            <div class="pull-right dropdown"  v-for="item in contractList">
                 <span @click="changeLock">
                     <i class="fa fa-lock" v-if="isLock"></i>
                     <i class="fa fa-unlock" v-else="isLock"></i>
                 </span>
                 <button class="btn btn-primary">对比</button>
                 <button class="btn btn-primary">通知</button>
-                <button class="btn btn-primary">回访</button>
+                <button class="btn btn-warning" @click="returnVisit" v-if="item.reviewed ===2">
+                    {{dictionary.reviewed[item.reviewed]}}
+                </button>
+                <button class="btn btn-primary" disabled v-if="item.reviewed ===1">
+                    {{dictionary.reviewed[item.reviewed]}}
+                </button>
                 <button class="btn btn-primary" v-if="isPass">通过</button>
                 <button class="btn btn-primary" v-else="isPass">驳回</button>
                 <button class="btn btn-default more" @click="showUl" v-if="isCollect">
@@ -173,16 +178,8 @@
                                                 <span>{{item.contract_num}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>空置期(天)：<sup>*</sup></span>
-                                                <!--<span>{{item.checkin_collect_id.vacancy}} 天</span>-->
-                                            </div>
-                                            <div class="infoList">
-                                                <span>空置期起始日期：</span>
-                                                <span>{{item.vac_start_date}}</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>空置期结束日期：</span>
-                                                <span>{{item.vac_end_date}}</span>
+                                                <span>年限(月)：<sup>*</sup></span>
+                                                <span>{{item.checkin_rent_id.months}} 月</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>合同起始日期：</span>
@@ -192,38 +189,54 @@
                                                 <span>合同结束日期：</span>
                                                 <span>{{item.end_date}}</span>
                                             </div>
+                                            <div class="infoList">
+                                                <span>付款类型：</span>
+                                                <span>押 {{item.checkin_rent_id.bet}} 付 {{item.checkin_rent_id.pay}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>月单价：</span>
+                                                <span>{{item.checkin_rent_id.price}} 元</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>应收：</span>
+                                                <span>{{item.checkin_rent_id.received_amount}}</span>
+                                            </div>
                                         </div>
-                                        <!--<div class="col-lg-4">-->
-                                            <!--<div class="infoList">-->
-                                                <!--<span>年限：<sup>*</sup></span>-->
-                                                <!--<span>{{item.checkin_collect_id.years}}年</span>-->
-                                            <!--</div>-->
-                                            <!--<div class="infoList">-->
-                                                <!--<span>付款方式：</span>-->
-                                                <!--<span>{{}}</span>-->
-                                            <!--</div>-->
-                                            <!--<div class="infoList">-->
-                                                <!--<span>月单价：<sup>*</sup></span>-->
-                                                <!--<span>{{item.checkin_collect_id.price}}</span>-->
-                                            <!--</div>-->
-                                            <!--<div class="infoList">-->
-                                                <!--<span>开户行：</span>-->
-                                                <!--<span>{{}}</span>-->
-                                            <!--</div>-->
-                                            <!--<div class="infoList">-->
-                                                <!--<span>银行卡号：</span>-->
-                                                <!--<span>{{item.checkin_collect_id.account}}</span>-->
-                                            <!--</div>-->
-                                            <!--<div class="infoList">-->
-                                                <!--<span>收条编号：<sup>*</sup></span>-->
-                                                <!--<span>{{}}</span>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
                                         <div class="col-lg-4">
-                                            <!--<div class="infoList">-->
-                                                <!--<span>中介费用：</span>-->
-                                                <!--<span>{{item.checkin_collect_id.cost_medi}}</span>-->
-                                            <!--</div>-->
+                                            <div class="infoList">
+                                                <span>已收 （定金）：<sup>*</sup></span>
+                                                <span></span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>付款方式 （现金）：</span>
+                                                <span>{{}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>付款方式 （支付宝）：<sup>*</sup></span>
+                                                <span>{{}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>未收：</span>
+                                                <span>{{}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>租房状态：</span>
+                                                <span>{{dictionary.rent_type[item.checkin_rent_id.rent_type]}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>收条编号：<sup>*</sup></span>
+                                                <span>{{}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>中介名：<sup>*</sup></span>
+                                                <span>{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>中介费用：</span>
+                                                <span>{{item.checkin_rent_id.cost_medi}}</span>
+                                            </div>
                                             <div class="infoList">
                                                 <span>资料补齐日期：</span>
                                                 <span>
@@ -317,6 +330,14 @@
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
+                                                <span class="col-lg-4">配套设施：</span>
+                                                <span class="col-lg-8">
+                                                    <span  v-for="list in item.villa_id.facility">
+                                                        {{dictionary.facility[list]}}&nbsp;&nbsp;
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="infoList clearFix">
                                                 <span class="col-lg-4">楼层：</span>
                                                 <span class="col-lg-8">
                                                     {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
@@ -355,36 +376,36 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-2">房屋照片</span>
-                                                <span class="col-lg-10">
+                                                <span class="col-lg-3">房屋照片</span>
+                                                <span class="col-lg-9">
                                                     <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.house_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-2">水卡照片</span>
-                                                <span class="col-lg-10" >
+                                                <span class="col-lg-3">水卡照片</span>
+                                                <span class="col-lg-9" >
                                                     <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.water_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-2">电卡卡照片</span>
-                                                <span class="col-lg-10" >
+                                                <span class="col-lg-3">电卡卡照片</span>
+                                                <span class="col-lg-9" >
                                                     <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-2">燃气卡照片</span>
-                                                <span class="col-lg-10" >
+                                                <span class="col-lg-3">燃气卡照片</span>
+                                                <span class="col-lg-9" >
                                                     <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
-                                                <span class="col-lg-2">产权证照片</span>
-                                                <span class="col-lg-10" >
+                                                <span class="col-lg-3">产权证照片</span>
+                                                <span class="col-lg-9" >
                                                     <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.property_pic">
                                                 </span>
@@ -397,27 +418,7 @@
                             <!--合同附件-->
                             <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
-                                    <div class="infoList clearFix">
-                                        <span class="col-lg-2">证件照片</span>
-                                        <span class="col-lg-10">
-                                             <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
-                                                  v-for="(img,index) in item.customer_id.album.id_pic">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
-                                        <span class="col-lg-2">押金收条</span>
-                                        <span class="col-lg-10" >
-                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)"
-                                                 v-for="(img,index) in item.album.receipt_pic">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
-                                        <span class="col-lg-2">银行卡照片</span>
-                                        <span class="col-lg-10">
-                                            <img :src="img.small" @click="showLargePic('bank_pic',index)"
-                                                 v-for="(img,index) in item.album.bank_pic">
-                                        </span>
-                                    </div>
+
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">合同照片<sup>*</sup></span>
                                         <span class="col-lg-10">
@@ -447,10 +448,17 @@
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">委托书照片</span>
-                                        <span class="col-lg-10">
-                                            <img :src="img.small" @click="showLargePic('proxy_pic',index)"
-                                                 v-for="(img,index) in item.album.proxy_pic">
+                                        <span class="col-lg-2">押金收条</span>
+                                        <span class="col-lg-10" >
+                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)"
+                                                 v-for="(img,index) in item.album.receipt_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-2">转账凭证</span>
+                                        <span class="col-lg-10" >
+                                            <img :src="img.small" @click="showLargePic('payment_pic',index)"
+                                                 v-for="(img,index) in item.album.payment_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
@@ -470,15 +478,17 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"  @EditStatus="editSuccess"></ContractEit>
         <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
+        <Status :state='info'></Status>
     </div>
 </template>
 <script>
+    import Status from  '../common/status.vue'
     import Transfer from './transferDetail.vue'
     import Contract from  './contractInfo.vue'
-    import ContractEit from './contractEdit.vue'
+    import ContractEit from './rentingEdit.vue'
     import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
     export default{
@@ -488,6 +498,7 @@
             ContractEit,
             ContractRenew,
             PicModal,
+            Status
         },
         data(){
             return {
@@ -500,6 +511,17 @@
                 largePic: [],
                 srcs: {},
                 contractEitId:'',
+                contract_num:'',
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted(){
@@ -511,13 +533,16 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+                    console.log(this.dictionary);
                     this.contractDetail();
                 });
             },
             contractDetail(){
                 this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
+                    this.contractList = [];
                     this.contractList.push(res.data.data);
                     console.log(this.contractList)
+                    this.contract_num = res.data.data.contract_num;
                 })
             },
             showUl(){           // 点击更多
@@ -533,7 +558,8 @@
                 $('#contractInfo').modal('show');
             },
             editContract(){
-                $('#contractEdit').modal('show');
+                $('.rem_div').remove();
+                $('#rentingEdit').modal('show');
             },
             renewContract(){
                 $('#contractRenew').modal('show');
@@ -562,6 +588,24 @@
                 }];
                 $('#largePic').modal('show');
             },
+            editSuccess(val){
+                if(val === 'success') this.contractDetail();
+            },
+            returnVisit(){
+                this.$http.get('core/rent/review/id/' + this.contractEitId).then((res) => {
+                    if(res.data.code === '70030'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+
+                });
+            }
 
         }
     }
