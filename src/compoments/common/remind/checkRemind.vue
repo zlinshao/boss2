@@ -31,8 +31,9 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" v-if="false" @click="all_delete">删除</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                        <!--<button type="button" class="btn btn-primary" @click="all_delete">删除</button>-->
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
