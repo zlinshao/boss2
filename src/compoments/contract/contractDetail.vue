@@ -10,18 +10,23 @@
                 <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">首页</router-link>
                 <h4>
                     合同编号&emsp;
-                    {{contractList[0].contract_num}}
+                    {{contract_num}}
                 </h4>
                 <span class="label label-warning">待审核</span>
             </div>
-            <div class="pull-right dropdown">
+            <div class="pull-right dropdown" v-for="item in contractList">
                 <span @click="changeLock">
                     <i class="fa fa-lock" v-if="isLock"></i>
                     <i class="fa fa-unlock" v-else="isLock"></i>
                 </span>
                 <button class="btn btn-primary">对比</button>
                 <button class="btn btn-primary">通知</button>
-                <button class="btn btn-primary">回访</button>
+                <button class="btn btn-warning" @click="returnVisit" v-if="item.reviewed ===2">
+                    {{dictionary.reviewed[item.reviewed]}}
+                </button>
+                <button class="btn btn-primary" disabled v-if="item.reviewed ===1">
+                    {{dictionary.reviewed[item.reviewed]}}
+                </button>
                 <button class="btn btn-primary" v-if="isPass">通过</button>
                 <button class="btn btn-primary" v-else="isPass">驳回</button>
                 <button class="btn btn-default more" @click="showUl" v-if="isCollect">
@@ -449,15 +454,17 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
         <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
+        <Status :state='info'></Status>
     </div>
 </template>
 <script>
+    import Status from  '../common/status.vue'
     import Transfer from './transferDetail.vue'
     import Contract from  './contractInfo.vue'
-    import ContractEit from './contractEdit.vue'
+    import ContractEit from './collectEdit.vue'
     import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
     export default{
@@ -467,6 +474,7 @@
             ContractEit,
             ContractRenew,
             PicModal,
+            Status
         },
         data(){
             return {
@@ -479,6 +487,17 @@
                 largePic: [],
                 srcs: {},
                 contractEitId:'',
+                contract_num:'',
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted(){
@@ -490,13 +509,15 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+                    console.log(this.dictionary)
                     this.contractDetail();
                 });
             },
             contractDetail(){
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
+                    this.contractList = [];
                     this.contractList.push(res.data.data);
-                    console.log(this.contractList)
+                    this.contract_num = res.data.data.contract_num
                 })
             },
             showUl(){           // 点击更多
@@ -541,6 +562,24 @@
                 }];
                 $('#largePic').modal('show');
             },
+            editSuccess(val){
+                if(val === 'success') this.contractDetail();
+            },
+            returnVisit(){
+                this.$http.get('core/collect/review/id/' + this.contractEitId).then((res) => {
+                    if(res.data.code === '70030'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+
+                });
+            }
 
         }
     }

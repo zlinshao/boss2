@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade full-width-modal-right" id="contractEdit" tabindex="-1" role="dialog" data-backdrop="static"
+        <div class="modal fade full-width-modal-right" id="rentingEdit" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -17,8 +17,8 @@
                                 <form class="form-horizontal tasi-form">
                                     <h3 style="margin-top: -15px">基本信息</h3>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
-                                        <div class="col-sm-8">
+                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[0]"
                                                    readonly placeholder="业主姓名" @click="selectClient(0)">
                                         </div>
@@ -28,49 +28,37 @@
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=2">
-                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
-                                        <div class="col-sm-8">
+                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[1]"
                                                    readonly placeholder="业主姓名" @click="selectClient(1)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=3">
-                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
-                                        <div class="col-sm-8">
+                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[2]"
                                                    readonly placeholder="业主姓名" @click="selectClient(2)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=4">
-                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
-                                        <div class="col-sm-8">
+                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[3]"
                                                    readonly placeholder="业主姓名" @click="selectClient(3)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=5">
-                                        <label class="col-sm-2 control-label col-lg-2" >附属房东</label>
-                                        <div class="col-sm-8">
+                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[4]"
                                                    readonly placeholder="业主姓名" @click="selectClient(4)">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >合同编号</label>
-                                        <div class="col-lg-10">
+                                        <label class="col-sm-3 control-label col-lg-2" >合同编号</label>
+                                        <div class="col-sm-9 col-lg-10">
                                             <input type="text" class="form-control" v-model="contractEdit.contract_num" placeholder="合同编号">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input @click="remindData" readonly placeholder="空置期开始时间" v-model="contractEdit.vac_start_date"
-                                                   class="form-control form_datetime">
-                                        </div>
-                                        <label class="col-sm-3 control-label col-lg-2" >空置期结束日期{{contractEdit.vac_end_date}}</label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input type="text" class="form-control" v-model="contractEdit.vac_end_date"
-                                                   readonly placeholder="空置期结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -86,22 +74,8 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >打房租日期</label>
-                                        <!--<label class="col-sm-1 control-label col-lg-1" >每</label>-->
-                                        <!--<div class="col-lg-4">-->
-                                            <!--<select  class="form-control">-->
-                                                <!--<option value="">请选择</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.pay_date"
-                                                   placeholder="请输入打房租日期">
-                                        </div>
-                                        <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >备注</label>
-                                        <div class="col-md-10">
+                                        <label class="col-sm-3 control-label col-lg-2" >备注</label>
+                                        <div class="col-md-9 col-lg-10">
                                             <input type="text" class="form-control" placeholder="请输入备注信息" v-model="contractEdit.remarks">
                                         </div>
                                     </div>
@@ -113,20 +87,13 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >开单人</label>
-                                        <div class="col-lg-10">
+                                        <label class="col-sm-3 control-label col-lg-2" >开单人</label>
+                                        <div class="col-sm-9 col-lg-10">
                                             <input type="text" class="form-control" v-model="staff" disabled placeholder="开单人">
                                         </div>
                                     </div>
                                     <hr>
                                     <h3>合同附件</h3>
-                                    <div class="row">
-                                        <label class="col-lg-2 control-label">银行卡照片</label>
-                                        <div class="col-lg-10">
-                                            <up-load @photo="bankPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'bankPic'" :idPhotos="bankPic"></up-load>
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">合同</label>
                                         <div class="col-lg-10">
@@ -156,24 +123,17 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">交接单照片</label>
+                                        <label class="col-lg-2 control-label">转账凭证</label>
+                                        <div class="col-lg-10">
+                                            <up-load @photo="paymentPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'paymentPic'" :idPhotos="paymentPic"></up-load>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label">交接单</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="handoverPicId" @delete="picDelete" @complete="complete"
                                                      :result="'handoverPic'" :idPhotos="handoverPic"></up-load>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-lg-2 control-label">委托书照片</label>
-                                        <div class="col-lg-10">
-                                            <up-load @photo="proxyPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'proxyPic'" :idPhotos="proxyPic"></up-load>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-lg-2 control-label">押金收条</label>
-                                        <div class="col-lg-10">
-                                            <up-load @photo="receiptPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
                                         </div>
                                     </div>
                                 </form>
@@ -206,10 +166,6 @@
         data(){
             return {
                 complete_ok:'ok',
-                bankPic : {
-                    cus_idPhotos : {},    //银行卡照片id
-                    cus_idPhoto : [],     //银行卡照片
-                },
                 contractPic : {
                     cus_idPhotos : {},    //合同图片ID
                     cus_idPhoto : [],     //合同照片
@@ -226,17 +182,12 @@
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                proxyPic : {
-                    cus_idPhotos : {},    //委托书图片ID
-                    cus_idPhoto : [],     //围殴托书照片
-
-                },
-                handoverPic : {
+                paymentPic : {
                     cus_idPhotos : {},    //交接单图片ID
                     cus_idPhoto : [],     //交接单照片
                 },
-                receiptPic : {
-                    cus_idPhotos : {},    //押金收条ID
+                handoverPic : {
+                    cus_idPhotos : {},    //j交接单
                     cus_idPhoto : [],     //押金收条照片
                 },
                 customer_name:'',
@@ -245,21 +196,16 @@
                     id:'',
                     relative_customer_id:[],//客户id
                     contract_num:'',        //合同编号
-                    vac_start_date:'',      //空置期开始日期
-                    vac_end_date:'',        //空置期结束日期
                     start_date:'',          //合同开始日期
                     end_date:'',            //合同结束日期
-                    pay_date:'',            //打房租日期
                     complete_date:'',       //资料补齐时间
                     remarks:'',             //备注信息
-                    bank_pic:[],            //银行卡照片
                     contract_pic:[],        //合同照片
                     water_card_pic:[],      //水卡照片
                     elec_card_pic:[],       //电卡照片
                     gas_card_pic:[],        //燃气卡卡照片
-                    proxy_pic:[],           //委托书照片
+                    payment_pic:[],         //转账凭证
                     handover_pic:[],        //交接单照片
-                    receipt_pic:[],         //押金收条
                 },
                 staff:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -267,7 +213,6 @@
                 dateType:'',
                 myDictionary:[],
                 myContractEitId:'',
-                checkCollectId : '',
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -296,22 +241,22 @@
                 this.myContractEitId = val;
                 this.gitContractInfo();
             },
-            'contractEdit.vac_start_date' : {
-                deep:true,
-                handler(val,oldVal){
-                    if(val !== oldVal){
-                        this.completeDate(val);
-                    }
-                }
-            }
+//            'contractEdit.vac_start_date' : {
+//                deep:true,
+//                handler(val,oldVal){
+//                    if(val !== oldVal){
+//                        this.completeDate(val);
+//                    }
+//                }
+//            }
         },
         methods : {
             gitContractInfo(){
                 if(this.myContractEitId !== ''){
-                    this.$http.get('core/collect/readcontract/id/' +this.myContractEitId).then((res)=>{
+                    this.$http.get('core/rent/readcontract/id/' +this.myContractEitId).then((res)=>{
                         let contractList =res.data.data;
                         console.log(contractList)
-                        this.contractEdit.id = contractList.id;
+                        this.contractEdit.id = contractList.id; //合同id
                         if(contractList.relative_customer !== undefined){
                             this.more = contractList.relative_customer.length;
                             for(let i=0;i<contractList.relative_customer.length;i++){
@@ -319,48 +264,29 @@
                                 this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
                             }
                         }
-                        this.contractEdit.contract_num = contractList.contract_num;
-                        this.contractEdit.vac_start_date = contractList.vac_start_date;
-                        this.contractEdit.vac_end_date = contractList.vac_end_date;
-                        console.log(contractList.vac_end_date)
-                        console.log(this.contractEdit.vac_end_date)
-                        this.contractEdit.start_date = contractList.start_date;
-                        this.contractEdit.end_date = contractList.end_date;
-                        this.contractEdit.complete_date = contractList.complete_date[0];
+                        this.contractEdit.contract_num = contractList.contract_num; //合同编号
+                        this.contractEdit.start_date = contractList.start_date;     //合同开始时间
+                        this.contractEdit.end_date = contractList.end_date;         //合同结束时间
+                        this.contractEdit.complete_date = contractList.complete_date[0];    //
 
-                        this.checkCollectId = contractList.checkin_collect_id.id;
-                        this.contractEdit.pay_date = contractList.pay_date;
                         this.contractEdit.remarks = contractList.remarks;
 
-
                         if(!Array.isArray(contractList.ablum)){
-                            this.bankPic.cus_idPhotos = contractList.album.bank_pic;                    //修改图片ID
-                            for (let i in this.bankPic.cus_idPhotos) {
-                                this.bankPic.cus_idPhoto.push(i);
-                                this.contractEdit.bank_pic.push(i);
-                            }
                             this.contractPic.cus_idPhotos = contractList.album.contract_pic;                    //修改图片ID
                             for (let i in this.contractPic.cus_idPhotos) {
                                 this.contractPic.cus_idPhoto.push(i);
                                 this.contractEdit.contract_pic.push(i);
-                            }
-                            this.proxyPic.cus_idPhotos = contractList.album.proxy_pic;                    //修改图片ID
-                            for (let i in this.proxyPic.cus_idPhotos) {
-                                this.proxyPic.cus_idPhoto.push(i);
-                                this.contractEdit.proxy_pic.push(i);
                             }
                             this.handoverPic.cus_idPhotos = contractList.album.handover_pic;                    //修改图片ID
                             for (let i in this.handoverPic.cus_idPhotos) {
                                 this.handoverPic.cus_idPhoto.push(i);
                                 this.contractEdit.handover_pic.push(i);
                             }
-                            this.receiptPic.cus_idPhotos = contractList.album.receipt_pic;                    //修改图片ID
-                            for (let i in this.receiptPic.cus_idPhotos) {
-                                this.receiptPic.cus_idPhoto.push(i);
-                                this.contractEdit.receipt_pic.push(i);
+                            this.paymentPic.cus_idPhotos = contractList.album.payment_pic;                    //修改图片ID
+                            for (let i in this.paymentPic.cus_idPhotos) {
+                                this.paymentPic.cus_idPhoto.push(i);
+                                this.contractEdit.payment_pic.push(i);
                             }
-                        }
-                        if(!Array.isArray(contractList.villa_id.ablum)){
                             this.waterPic.cus_idPhotos = contractList.album.water_card_pic;                    //修改图片ID
                             for (let i in this.waterPic.cus_idPhotos) {
                                 this.waterPic.cus_idPhoto.push(i);
@@ -395,15 +321,6 @@
                     this.relative_customer.splice(this.flag,1,val.name);
                 }
             },
-            completeDate(val){  //计算空置期结束 合同开始以及结束时间
-                this.$http.post('core/collect/contractDate',{"vac_start_date":val,  "checkin_collect_id":this.checkCollectId}).then(
-                    (res) => {
-                        this.contractEdit.vac_end_date = res.data.vac_end_date;
-                        this.contractEdit.start_date = res.data.start_date;
-                        this.contractEdit.end_date = res.data.end_date;
-                    }
-                )
-            },
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",   //选择日期后，不会再跳转去选择时分秒
@@ -420,9 +337,6 @@
                 });
             },
             //获取图片id
-            bankPicId(val){         //获取成功上传银行卡 id 数组
-                this.contractEdit.bank_pic = val;
-            },
             contractPicId(val){     //获取成功上传合同 id 数组
                 this.contractEdit.contract_pic = val;
             },
@@ -435,14 +349,11 @@
             gasPicId(val){          //获取成功上传燃气卡 id 数组
                 this.contractEdit.gas_card_pic = val;
             },
-            proxyPicId(val){        //获取成功上传委托书卡 id 数组
-                this.contractEdit.proxy_pic = val;
-            },
             handoverPicId(val){     //获取成功上传交接单 id 数组
                 this.contractEdit.handover_pic = val;
             },
-            receiptPicId(val){      //获取成功上传押金收条 id 数组
-                this.contractEdit.receipt_pic = val;
+            paymentPicId(val){      //获取成功上传转账凭证 id 数组
+                this.contractEdit.payment_pic = val;
             },
             //图片上传完成
             complete(val){          //监控上传进度
@@ -450,11 +361,6 @@
             },
             //删除照片ID
             picDelete (val){
-                let bank = this.bankPic.cus_idPhoto.indexOf(val);
-                if (bank > -1) {
-                    this.bankPic.cus_idPhoto.splice(bank, 1);
-                    this.contractEdit.bank_pic.splice(bank, 1);
-                }
                 let contract = this.contractPic.cus_idPhoto.indexOf(val);
                 if (contract > -1) {
                     this.contractPic.cus_idPhoto.splice(contract, 1);
@@ -475,36 +381,43 @@
                     this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.contractEdit.gas_card_pic.splice(gas, 1);
                 }
-                let proxy = this.proxyPic.cus_idPhoto.indexOf(val);
-                if (proxy > -1) {
-                    this.proxy.cus_idPhoto.splice(proxy, 1);
-                    this.contractEdit.proxy_pic.splice(proxy, 1);
-                }
                 let handover = this.handoverPic.cus_idPhoto.indexOf(val);
                 if (handover > -1) {
                     this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractEdit.handover_pic.splice(handover, 1);
                 }
-                let receipt = this.receiptPic.cus_idPhoto.indexOf(val);
-                if (receipt > -1) {
-                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
-                    this.contractEdit.receipt_pic.splice(receipt, 1);
+                let payment = this.paymentPic.cus_idPhoto.indexOf(val);
+                if (payment > -1) {
+                    this.paymentPic.cus_idPhoto.splice(payment, 1);
+                    this.contractEdit.payment_pic.splice(payment, 1);
                 }
             },
             editContract(){
-                this.$http.post('core/collect/updatecontract',this.contractEdit).then((res) => {
-                     if(res.data.code === "70010"){
-                         $('#contractEdit').modal('hide');
-                         this.info.success = res.data.msg;
-                         //显示成功弹窗 ***
-                         this.info.state_success = true;
-                     }else {
-                         this.info.error = res.data.msg;
-                         //显示成功弹窗 ***
-                         this.info.state_error = true;
-                     }
+                this.$http.defaults.withCredentials = true;
+                if (this.complete_ok === 'ok') {
+                    this.$http.get('api/picture/poll').then((res) => {
+                        this.$http.post('core/rent/updatecontract',this.contractEdit).then((res) => {
+                            if(res.data.code === "70010"){
+                                this.$emit('EditStatus','success');
+                                $('#rentingEdit').modal('hide');
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
 
-                })
+                            }else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+
+                        })
+                    });
+
+                } else {
+                    this.info.error = '图片正在上传';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }
             },
             addMore(){
                 if(this.more < 5 && this.more === this.relative_customer.length){

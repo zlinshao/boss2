@@ -121,7 +121,7 @@
 
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="10" class="text-center text-muted">
+                        <td colspan="14" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
@@ -201,7 +201,7 @@
             },
             searchContract(){
                 this.$http.post('core/rent/contractlist ',this.contractSearchInfo).then((res) =>{
-                    if(res.data.code === '70010'){
+                    if(res.data.code === '80010'){
                         this.contractSearchList = res.data.data.list;
                         console.log(this.contractSearchList)
                         this.pages = res.data.data.pages;
