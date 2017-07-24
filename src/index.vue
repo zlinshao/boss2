@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel roll" style="height: 394px;overflow: auto;">
+                <section class="panel" style="height: 394px;">
                     <header class="panel-heading">
                         公告
                     </header>
