@@ -19,12 +19,12 @@
                     <i class="fa fa-lock" v-if="isLock"></i>
                     <i class="fa fa-unlock" v-else="isLock"></i>
                 </span>
-                <button class="btn btn-primary">对比</button>
+                <button class="btn btn-primary" @click="compareContract">对比</button>
                 <button class="btn btn-primary">通知</button>
-                <button class="btn btn-warning" @click="returnVisit" v-if="item.reviewed ===2">
+                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" disabled v-if="item.reviewed ===1">
+                <button class="btn btn-warning" disabled v-if="item.reviewed ===1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
                 <button class="btn btn-primary" v-if="isPass">通过</button>
@@ -205,7 +205,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式：</span>
-                                                <span>{{}}</span>
+                                                <span>{{dictionary.pay_type[item.checkin_collect_id.pay_type[0]]}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价：<sup>*</sup></span>
@@ -213,7 +213,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>开户行：</span>
-                                                <span>{{}}</span>
+                                                <span>{{item.checkin_collect_id.bank}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>银行卡号：</span>
@@ -458,6 +458,7 @@
         <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
+        <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>
     </div>
 </template>
 <script>
@@ -467,6 +468,7 @@
     import ContractEit from './collectEdit.vue'
     import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
+    import Comparison from  './contractCompare.vue'
     export default{
         components: {
             Transfer,
@@ -474,7 +476,8 @@
             ContractEit,
             ContractRenew,
             PicModal,
-            Status
+            Status,
+            Comparison
         },
         data(){
             return {
@@ -498,6 +501,8 @@
                     //失败信息 ***
                     error: ''
                 },
+                isCompared:false,
+                villaId : '',
             }
         },
         mounted(){
@@ -517,6 +522,7 @@
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
+                    console.log(this.contractList)
                     this.contract_num = res.data.data.contract_num
                 })
             },
@@ -565,7 +571,7 @@
             editSuccess(val){
                 if(val === 'success') this.contractDetail();
             },
-            returnVisit(){
+            returnVisit(){  // 回访状态
                 this.$http.get('core/collect/review/id/' + this.contractEitId).then((res) => {
                     if(res.data.code === '70030'){
                         this.info.success = res.data.msg;
@@ -579,6 +585,14 @@
                     }
 
                 });
+            },
+            compareContract(){
+                this.isCompared = true;
+                this.villaId = this.contractList[0].villa_id.id;
+                $('#collectVsRenting').modal('show');
+            },
+            haveCompared(){
+                this.isCompared = false;
             }
 
         }

@@ -309,7 +309,6 @@
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/collect/readcontract/id/' +this.myContractEitId).then((res)=>{
                         let contractList =res.data.data;
-                        console.log(contractList)
                         this.contractEdit.id = contractList.id;
                         if(contractList.relative_customer !== undefined){
                             this.more = contractList.relative_customer.length;
@@ -321,8 +320,7 @@
                         this.contractEdit.contract_num = contractList.contract_num;
                         this.contractEdit.vac_start_date = contractList.vac_start_date;
                         this.contractEdit.vac_end_date = contractList.vac_end_date;
-                        console.log(contractList.vac_end_date)
-                        console.log(this.contractEdit.vac_end_date)
+
                         this.contractEdit.start_date = contractList.start_date;
                         this.contractEdit.end_date = contractList.end_date;
                         this.contractEdit.complete_date = contractList.complete_date[0];
@@ -330,7 +328,7 @@
                         this.checkCollectId = contractList.checkin_collect_id.id;
                         this.contractEdit.pay_date = contractList.pay_date;
                         this.contractEdit.remarks = contractList.remarks;
-
+                        this.staff = contractList.staff;
 
                         if(!Array.isArray(contractList.ablum)){
                             this.bankPic.cus_idPhotos = contractList.album.bank_pic;                    //修改图片ID
@@ -374,7 +372,6 @@
                                 this.contractEdit.gas_card_pic.push(i);
                             }
                         }
-                        this.staff = contractList.staff;
                     })
                 }
 

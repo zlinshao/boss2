@@ -19,7 +19,7 @@
                     <i class="fa fa-lock" v-if="isLock"></i>
                     <i class="fa fa-unlock" v-else="isLock"></i>
                 </span>
-                <button class="btn btn-primary">对比</button>
+                <button class="btn btn-primary" @click="compareContract">对比</button>
                 <button class="btn btn-primary">通知</button>
                 <button class="btn btn-warning" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
@@ -205,7 +205,7 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>已收 （定金）：<sup>*</sup></span>
-                                                <span></span>
+                                                <span>{{item.checkin_rent_id.price * item.checkin_rent_id.bet}} 元</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式 （现金）：</span>
@@ -482,6 +482,7 @@
         <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
+        <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared"  @Compared="haveCompared"></Comparison>
     </div>
 </template>
 <script>
@@ -491,6 +492,7 @@
     import ContractEit from './rentingEdit.vue'
     import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
+    import Comparison from  './contractCompare.vue'
     export default{
         components: {
             Transfer,
@@ -498,7 +500,8 @@
             ContractEit,
             ContractRenew,
             PicModal,
-            Status
+            Status,
+            Comparison
         },
         data(){
             return {
@@ -522,6 +525,8 @@
                     //失败信息 ***
                     error: ''
                 },
+                isCompared:false,
+                villaId : ''
             }
         },
         mounted(){
@@ -605,6 +610,14 @@
                     }
 
                 });
+            },
+            compareContract(){
+                this.isCompared = true;
+                this.villaId = this.contractList[0].villa_id.id;
+                $('#collectVsRenting').modal('show')
+            },
+            haveCompared(){
+                this.isCompared = false;
             }
 
         }
