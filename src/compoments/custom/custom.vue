@@ -61,7 +61,7 @@
                         <button class="btn btn-success" type="button" @click="collectList">重置</button>
                     </div>
                     <div class="pull-right" style="margin-bottom: 3px; margin-left: 14px;">
-                        <a href="#customModel" class="btn btn-success"
+                        <a class="btn btn-success"
                            @click="customers_new('new')">
                             <i class="fa fa-plus-square"></i>&nbsp;增加客户
                         </a>
@@ -85,23 +85,23 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('daily')"><i
+                            <h5><a @click="add_state('daily')"><i
                                     class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('inter')"><i
+                            <h5><a @click="remind_id"><i
                                     class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i
+                            <h5><a @click="add_state('pool')"><i
                                     class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
+                            <h5><a @click="distribution_"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
                             </h5>
                         </li>
                         <li>
-                            <h5><a href="#customModel" @click="customers_rev('rev')"><i class="fa fa-pencil"></i>&nbsp;编辑</a>
+                            <h5><a @click="customers_rev('rev')"><i class="fa fa-pencil"></i>&nbsp;编辑</a>
                             </h5>
                         </li>
                         <li>
@@ -120,11 +120,11 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#remindDaily" @click="add_state('pool')"><i
+                            <h5><a @click="add_state('pool')"><i
                                     class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
+                            <h5><a @click="distribution_"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
                             </h5>
                         </li>
                     </ul>
@@ -219,21 +219,24 @@
         <!--分页-->
         <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
 
-        <!--提醒-->
-        <Status :state='info'></Status>
+        <!--增加提醒-->
+        <AddRemind :remindId="pitch"></AddRemind>
+
+        <Status :state="info"></Status>
 
     </div>
 </template>
 
 <script>
     import Page from '.././common/page.vue'                             //分页
-    import Status from '../common/status.vue';                          //提示信息
+    import AddRemind from  './addremind.vue'                            //增加提醒
     import newAdd from './new_add.vue'                                  //新增/修改客户
+    import Status from '../common/status.vue'                           //提示信息
     import remindDaily from './remindDaily.vue'                         //修改客户
     import Distribution from '../common/distribution.vue'               //分配
 
     export default {
-        components: {Page, Distribution, newAdd, remindDaily, Status},
+        components: {Page, Distribution, newAdd, remindDaily, AddRemind,Status},
         data (){
             return {
                 Trid: '',                   //三天内未成交
@@ -423,9 +426,23 @@
                 }
             },
 
-//            增加日志/增加提醒/放入客户池
+//            增加日志/放入客户池
             add_state (val){
                 this.bool = val;
+                $('#remindDaily').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+//            分配
+            distribution_ (){
+                $('#distribution').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+            remind_id (){
+                $('#addRemind1').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
             },
 //            新增客户
             customers_new (val){
