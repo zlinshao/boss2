@@ -224,7 +224,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="panel-body table-responsive">
+                                <div class="panel-body table-responsive roll">
                                     <table class="table contract_info">
                                         <tbody>
                                         <tr>

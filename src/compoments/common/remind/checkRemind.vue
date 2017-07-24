@@ -10,7 +10,7 @@
                         <h5 class="modal-title">提醒内容</h5>
                     </div>
                     <div class="modal-body">
-                        <section class="panel">
+                        <section class="panel roll" style="overflow: auto;max-height: 400px;">
                             <div class="panel-body">
                                 <div v-for="info in remind_info">
                                     <div class="row">
@@ -18,12 +18,12 @@
                                             <i class="fa fa-times-circle"
                                                @click="delete_remind(info.mess_id)"></i>
                                         </h5>
-                                        <h5 class="col-sm-2">提醒内容:</h5>
+                                        <h5 class="col-sm-2 text-primary">提醒内容:</h5>
                                         <h5 class="col-sm-7">{{info.data.content}}&nbsp; &nbsp;</h5>
                                     </div>
                                     <div class="row">
                                         <h5 class="col-sm-2 "></h5>
-                                        <h5 class="col-sm-2">提醒时间:</h5>
+                                        <h5 class="col-sm-2 text-primary">提醒时间:</h5>
                                         <h5 class="col-sm-7">{{info.remind_time}}&nbsp; &nbsp;</h5>
                                     </div>
                                 </div>
@@ -81,5 +81,31 @@
     .fa-times-circle {
         font-size: 20px;
         cursor: pointer;
+    }
+
+    .modal-body {
+        padding: 0;
+    }
+
+    .panel-body > div + div {
+        border-top: 1px solid #dddddd;
+    }
+
+    .roll::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .roll::-webkit-scrollbar-button {
+        background-color: #ffff;
+    }
+
+    .roll::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+
+    .roll::-webkit-scrollbar-thumb {
+        background: rgba(121, 121, 121, .2);
+        border-radius: 10px;
     }
 </style>

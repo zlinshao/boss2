@@ -268,7 +268,7 @@
                         let width = image.width;
                         if(width <1000){//如果图片的宽度小于1000 则使用原宽度
                             _this.options.resizeWidth = width;
-                            console.log(_this.options.resizeWidth)
+                            // console.log(_this.options.resizeWidth)
                         };
                         //*************源码所有********
                         if ((_this.options.resizeWidth || _this.options.resizeHeight) && file.type.match(/image.*/)) {

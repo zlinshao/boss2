@@ -6,7 +6,7 @@
                 <div data-original-title="" data-placement="right" class="fa fa-bars tooltips"></div>
             </div>
             <!--logo start-->
-            <a class="logo">B<span>OSS</span></a>
+            <router-link to="/index" class="logo">B<span>OSS</span></router-link>
             <!--logo end-->
             <!--<div class="nav notify-row" id="top_menu">-->
             <!--&lt;!&ndash;  notification start &ndash;&gt;-->
@@ -1052,20 +1052,4 @@
         max-width: 100%;
     }
 
-    .roll::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .roll::-webkit-scrollbar-button {
-        background-color: #ffff;
-    }
-
-    .roll::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-
-    .roll::-webkit-scrollbar-thumb {
-        background: rgba(121, 121, 121, .2);
-        border-radius: 10px;
-    }
 </style>
