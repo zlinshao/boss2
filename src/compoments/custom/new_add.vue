@@ -6,7 +6,7 @@
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
-                    <div class="modal-content">
+                    <div class="modal-content roll">
 
                         <!--新增客户-->
                         <div v-if="btn_state" class="modal-header">
@@ -483,6 +483,7 @@
                 }).then((res) => {
                     if (res.data.code === '70010') {
                         $('#customModel').modal('hide');            //成功关闭模态框
+                        $('.rem_div').remove();
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***

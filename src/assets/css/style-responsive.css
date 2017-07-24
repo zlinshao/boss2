@@ -719,3 +719,21 @@ a {
     border: 1px solid #E2E2E4;
     border-radius: 6px;
 }
+
+.roll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.roll::-webkit-scrollbar-button {
+    background-color: #ffff;
+}
+
+.roll::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.roll::-webkit-scrollbar-thumb {
+    background: rgba(121, 121, 121, .2);
+    border-radius: 10px;
+}

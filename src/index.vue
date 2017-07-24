@@ -6,7 +6,7 @@
                     <div class="panel-body" style="padding-bottom: 0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <section class="panel table-responsive">
+                                <section class="panel table-responsive roll">
                                     <table class="top table table-advance table-hover">
                                         <thead>
                                         <tr>
@@ -46,7 +46,7 @@
                     </div>
                 </section>
                 <section class="panel">
-                    <div class="panel-body roll" style="height: 354px;overflow: auto;">
+                    <div class="panel-body roll" style="height: 345px;overflow: auto;">
                         <header class="panel-heading">
                             本月寿星
                         </header>
@@ -55,7 +55,9 @@
                                 <section class="panel">
                                     <div class="pro-img-box padding15" data-toggle="tooltip" data-placement="bottom"
                                          :title="birth.position">
-                                        <img src="./lADPACOG812Jq3XNAoDNAn4_638_640.jpg"
+                                        <img :src="birth.avatar" v-if="birth.avatar !== ''"
+                                             style="border-radius: 50%;"/>
+                                        <img src="./assets/img/head.png" v-if="birth.avatar === ''"
                                              style="border-radius: 50%;"/>
                                     </div>
                                     <div class="panel-body text-center padding15">
@@ -107,7 +109,7 @@
                     <div class="panel-body" style="padding-top: 0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <section class="panel table-responsive">
+                                <section class="panel table-responsive roll">
                                     <table class="table table-advance table-hover">
                                         <thead>
                                         <tr>
@@ -124,8 +126,58 @@
                                             <td style="min-width: 110px;">{{ran.department}}</td>
                                             <td style="min-width: 110px;">
                                                 {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i class="fa  fa-arrow-down"></i></span>
+                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
+                                                        class="fa fa-arrow-up"></i></span>
+                                                <span class="text-success" v-if="ran.rank_id === 2"><i
+                                                        class="fa  fa-arrow-down"></i></span>
+                                            </td>
+                                        </tr>
+                                        <tr v-for="(ran,index) in main_ranking">
+                                            <td style="min-width: 60px;">{{index + 1}}</td>
+                                            <td style="min-width: 80px;">{{ran.name}}</td>
+                                            <td style="min-width: 110px;">{{ran.department}}</td>
+                                            <td style="min-width: 110px;">
+                                                {{ran.money}}
+                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
+                                                        class="fa fa-arrow-up"></i></span>
+                                                <span class="text-success" v-if="ran.rank_id === 2"><i
+                                                        class="fa  fa-arrow-down"></i></span>
+                                            </td>
+                                        </tr>
+                                        <tr v-for="(ran,index) in main_ranking">
+                                            <td style="min-width: 60px;">{{index + 1}}</td>
+                                            <td style="min-width: 80px;">{{ran.name}}</td>
+                                            <td style="min-width: 110px;">{{ran.department}}</td>
+                                            <td style="min-width: 110px;">
+                                                {{ran.money}}
+                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
+                                                        class="fa fa-arrow-up"></i></span>
+                                                <span class="text-success" v-if="ran.rank_id === 2"><i
+                                                        class="fa  fa-arrow-down"></i></span>
+                                            </td>
+                                        </tr>
+                                        <tr v-for="(ran,index) in main_ranking">
+                                            <td style="min-width: 60px;">{{index + 1}}</td>
+                                            <td style="min-width: 80px;">{{ran.name}}</td>
+                                            <td style="min-width: 110px;">{{ran.department}}</td>
+                                            <td style="min-width: 110px;">
+                                                {{ran.money}}
+                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
+                                                        class="fa fa-arrow-up"></i></span>
+                                                <span class="text-success" v-if="ran.rank_id === 2"><i
+                                                        class="fa  fa-arrow-down"></i></span>
+                                            </td>
+                                        </tr>
+                                        <tr v-for="(ran,index) in main_ranking">
+                                            <td style="min-width: 60px;">{{index + 1}}</td>
+                                            <td style="min-width: 80px;">{{ran.name}}</td>
+                                            <td style="min-width: 110px;">{{ran.department}}</td>
+                                            <td style="min-width: 110px;">
+                                                {{ran.money}}
+                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
+                                                        class="fa fa-arrow-up"></i></span>
+                                                <span class="text-success" v-if="ran.rank_id === 2"><i
+                                                        class="fa  fa-arrow-down"></i></span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -135,14 +187,14 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel roll" style="height: 340px;overflow: auto;">
+                <section class="panel roll" style="height: 394px;overflow: auto;">
                     <header class="panel-heading">
                         公告
                     </header>
                     <div class="panel-body" style="padding-top: 0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <section class="panel table-responsive">
+                                <section class="panel table-responsive roll">
                                     <table class="table table-advance table-hover">
                                         <thead>
                                         <tr>
@@ -151,10 +203,12 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(a,index) in 10">
-                                            <td style="min-width: 60px;">2017-07-07</td>
-                                            <td style="min-width: 80px;">
-                                                <router-link to=""> 《国庆放假》</router-link>
+                                        <tr v-for="(mess, index) in main_message">
+                                            <td style="min-width: 100px;">{{mess.create_time}}</td>
+                                            <td style="width: 100px;" class="more_info">
+                                                <router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">
+                                                    {{mess.data.title}}
+                                                </router-link>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -173,11 +227,19 @@
     export default {
         data (){
             return {
+                screenWidth: document.body.clientWidth,      // 页面宽度
+//
+//                meet_with: '',                  //偶遇
+//                network: '',                    //网络
+//                recommend: '',                  //客户推荐
+//                meet_with: '',                  //偶遇
+
                 select_list: [],                //字典
                 bulletin_nanjin: {},            //南京
                 bulletin_suzhou: {},            //苏州
                 main_birthday: [],              //寿星
                 main_ranking: [],               //龙虎榜
+                main_message: [],               //公告
                 main_customer: [],              //图表
                 myChart: [],
                 check_inData: [],               //入住
@@ -186,18 +248,43 @@
             }
         },
         mounted (){
-            this.home_index ();
             this.myChart[0] = this.$echarts.init(document.getElementById('check_in'));
             this.myChart[1] = this.$echarts.init(document.getElementById('collect_rents'));
             this.myChart[2] = this.$echarts.init(document.getElementById('custom'));
-            this.aaaa();
-            this.bbbb();
-            this.cccc();
+
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth;
+                    this.screenWidth = window.screenWidth;
+                })()
+            }
         },
         updated (){
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
             })
+        },
+        watch: {
+            screenWidth (val) {
+                if (!this.timer) {
+                    this.screenWidth = val;
+                    this.timer = true;
+//                    let that = this;
+                    setTimeout(() => {
+                        // that.screenWidth = that.$store.state.canvasWidth
+//                        console.log(that.screenWidth);
+                        for (let i = 0; i < this.myChart.length; i++) {
+                            (() => {
+                                this.myChart[i].resize();
+                            })(i)
+                        }
+                        this.timer = false;
+                    }, 200)
+                }
+            }
+        },
+        created (){
+            this.home_index();
         },
         methods: {
             home_index (){
@@ -210,11 +297,18 @@
                         this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报
                         this.main_birthday = res.data.data.birthday;                    //寿星
                         this.main_ranking = res.data.data.ranking;                      //龙虎榜
-                        this.main_customer = res.data.data.customer;                    //charts
+                        this.main_message = res.data.data.message;                      //公告
+                        this.check_inData = res.data.data.uprate;                       //入住率
+                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
+                        this.main_customer = res.data.data.customer;                    //客户来源
+
+                        this.check();
+                        this.collect();
+                        this.customer();
                     });
                 });
             },
-            aaaa (){
+            check (){
                 let option = {
                     tooltip: {
                         trigger: 'item',
@@ -250,15 +344,15 @@
                                 }
                             },
                             data: [
-                                {value: 335, name: '已收'},
-                                {value: 310, name: '空置'},
+                                {value: this.check_inData.rent, name: '已收'},
+                                {value: this.check_inData.vacancy, name: '空置'},
                             ]
                         }
                     ]
                 };
                 this.myChart[0].setOption(option);
             },
-            bbbb (){
+            collect (){
                 let option = {
                     tooltip: {
                         trigger: 'item',
@@ -294,15 +388,15 @@
                                 }
                             },
                             data: [
-                                {value: 335, name: '收房'},
-                                {value: 310, name: '租房'},
+                                {value: this.collect_rentsData.rent, name: '收房'},
+                                {value: this.collect_rentsData.received, name: '租房'},
                             ]
                         }
                     ]
                 };
                 this.myChart[1].setOption(option);
             },
-            cccc (){
+            customer (){
                 let option = {
                     tooltip: {
                         trigger: 'item',
@@ -338,15 +432,26 @@
                                 }
                             },
                             data: [
-                                {value: 335, name: '网络'},
-                                {value: 310, name: '客户推荐'},
-                                {value: 234, name: '偶遇'},
-                                {value: 135, name: '中介'},
+                                {value: this.main_customer.wl, name: '网络'},
+                                {value: this.main_customer.khtj, name: '客户推荐'},
+                                {value: this.main_customer.oy, name: '偶遇'},
+                                {value: this.main_customer.zj, name: '中介'},
                             ]
                         }
                     ]
                 };
                 this.myChart[2].setOption(option);
+            },
+            getData(){
+                // 过渡---------------------
+//
+                for (let i = 0; i < this.myChart.length; i++) {
+                    (() => {
+                        this.myChart[i].showLoading({
+                            text: '正在努力的读取数据中...',    //loading话术
+                        });
+                    })(i)
+                }
             }
         }
     }
@@ -357,6 +462,13 @@
     .panel > div > div {
         width: 100%;
         margin: auto;
+    }
+
+    .more_info {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer
     }
 
     .top.table > tbody > tr > td {
@@ -373,6 +485,7 @@
 
     .roll::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
     }
 
     .roll::-webkit-scrollbar-button {

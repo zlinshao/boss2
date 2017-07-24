@@ -135,7 +135,7 @@
         <!--客户列表-->
         <div class="row">
             <div class="col-md-12">
-                <section class="panel table-responsive">
+                <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
@@ -429,7 +429,6 @@
             },
 //            新增客户
             customers_new (val){
-                $('.rem_div').remove();
                 this.revise_state = val;
                 $('#customModel').modal({
                     backdrop: 'static',         //空白处模态框不消失

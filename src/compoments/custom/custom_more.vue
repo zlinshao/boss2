@@ -28,7 +28,7 @@
                 </header>
                 <div class="panel-body table-responsive client_info" v-for="info in cus_info">
                     <div class="col-md-12">
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="padding: 0">
                             <div><span class="text-primary">客户姓名：</span><span>{{info.name}}</span></div>
                             <div><span class="text-primary">尊称：</span>
                                 <span>{{select_list.gender[info.gender]}}</span>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div v-if="open_on" class="col-md-12">
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="padding: 0">
                             <div><span
                                     class="text-primary">婚姻状况：</span><span>{{select_list.marriage_status[info.marriage_status]}}</span>
                             </div>
@@ -100,7 +100,7 @@
         <div class="row">
             <!--合同信息-->
             <div class="col-md-3">
-                <section class="panel roll">
+                <section class="panel roll" style="height: 500px;overflow: auto;">
                     <header class="panel-heading">
                         <i class="fa fa-file-text"></i>&nbsp;合同信息
                     </header>
@@ -151,7 +151,7 @@
             </div>
             <!--沟通日志/房屋信息-->
             <div class="col-md-9">
-                <section class="panel roll">
+                <section class="panel roll" style="height: 500px;overflow: auto;">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -457,11 +457,6 @@
         color: #FF6C60;
     }
 
-    .roll {
-        height: 500px;
-        overflow: auto;
-    }
-
     .progress.progress-striped.active {
         margin-bottom: 0;
         height: 10px;
@@ -476,20 +471,4 @@
         padding-top: 13px;
     }
 
-    .roll::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .roll::-webkit-scrollbar-button {
-        background-color: #ffff;
-    }
-
-    .roll::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-
-    .roll::-webkit-scrollbar-thumb {
-        background: rgba(121,121,121,.2);
-        border-radius: 10px;
-    }
 </style>

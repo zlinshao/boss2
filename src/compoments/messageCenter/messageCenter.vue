@@ -56,7 +56,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="inbox-body panel table table-responsive">
+                        <div class="inbox-body panel table table-responsive roll">
                             <!--系统公告-->
                             <table class="table table-striped table-advance table-hover" v-if="isSystem">
                                 <thead class="text-center">

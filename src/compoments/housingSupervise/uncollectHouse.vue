@@ -98,7 +98,7 @@
         <!--客户列表-->
         <div class="row">
             <div class="col-md-12">
-                <section class="panel table-responsive">
+                <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
