@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade" id="addRemind">
+        <div class="modal fade" id="addRemind1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -46,8 +46,8 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="revise">{{remindId}}取消</button>
-                        <button type="button" class="btn btn-primary" @click="add_notice">添加</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="revise">取消</button>
+                        <button type="button" class="btn btn-primary" @click="add_cus">添加</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -57,7 +57,7 @@
 </template>
 <script>
     //    import DatePicker from '../datePicker.vue'
-    import Status from '../status.vue';
+    import Status from '../common/status.vue';
     export default{
         components: {
             Status
@@ -116,9 +116,9 @@
                 }.bind(this));
             },
             revise (){
-                this.remindTime = '';         //提醒时间
-                this.remindTimes = '';        //提醒时间
-                this.remind_info = '';        //提醒内容
+                this.remindTime = '';           //提醒时间
+                this.remindTimes = '';          //提醒时间
+                this.remind_info = '';          //提醒内容
             },
             Advanced(){
                 this.isAdvanced = !this.isAdvanced;
@@ -127,15 +127,16 @@
             getDate (val){
                 this.remindTime = val;
             },
-//            增加个人提示信息
-            add_notice (){
+//            增加客户提示信息
+            add_cus (){
                 this.$http.post('message/remind/write', {
+                    object: String(this.remindId),
                     content: this.remind_info,
                     remind_time: this.remindTimes,
                     remind_times: this.remindTime
                 }).then((res) => {
                     if (res.data.code === '100018') {
-                        $('#addRemind').modal('hide');
+                        $('#addRemind1').modal('hide');
                         this.$emit('add_seccess');
                         //成功信息 ***
                         this.info.success = res.data.msg;
@@ -154,7 +155,7 @@
                         this.info.state_error = true;
                     }
                 });
-            },
+            }
         }
     }
 </script>

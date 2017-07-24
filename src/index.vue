@@ -46,19 +46,19 @@
                     </div>
                 </section>
                 <section class="panel">
-                    <div class="panel-body roll" style="height: 345px;overflow: auto;">
+                    <div class="panel-body roll" style="height: 362px;overflow: auto;">
                         <header class="panel-heading">
                             本月寿星
                         </header>
                         <div class="row product-list" style="margin-top: 16px;">
                             <div class="col-xs-6 col-sm-3 col-lg-2" v-for="birth in main_birthday">
                                 <section class="panel">
-                                    <div class="pro-img-box padding15" data-toggle="tooltip" data-placement="bottom"
+                                    <div class="pro-img-box margin10" data-toggle="tooltip" data-placement="bottom"
                                          :title="birth.position">
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
                                              style="border-radius: 50%;"/>
                                         <img src="./assets/img/head.png" v-if="birth.avatar === ''"
-                                             style="border-radius: 50%;"/>
+                                             style="border-radius: 50%;" />
                                     </div>
                                     <div class="panel-body text-center padding15">
                                         <h5>{{birth.name}}</h5>
@@ -269,7 +269,7 @@
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data: ['已收', '空置']
+                        data: ['已租', '空置']
                     },
                     series: [
                         {
@@ -296,7 +296,7 @@
                                 }
                             },
                             data: [
-                                {value: this.check_inData.rent, name: '已收'},
+                                {value: this.check_inData.rent, name: '已租'},
                                 {value: this.check_inData.vacancy, name: '空置'},
                             ]
                         }
@@ -340,8 +340,8 @@
                                 }
                             },
                             data: [
-                                {value: this.collect_rentsData.rent, name: '收房'},
-                                {value: this.collect_rentsData.received, name: '租房'},
+                                {value: this.collect_rentsData.received, name: '收房'},
+                                {value: this.collect_rentsData.rent, name: '租房'},
                             ]
                         }
                     ]
@@ -429,6 +429,11 @@
 
     .padding15 {
         padding: 0 15px;
+    }
+    .margin10 {
+        width: 70px;
+        height: 70px;
+        margin: 10px auto 0;
     }
 
     tr td, tr th {

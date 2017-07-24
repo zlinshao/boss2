@@ -12,10 +12,10 @@
                     </div>
 
                     <!--增加提醒-->
-                    <div v-if="inter_state" class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">增加提醒</h4>
-                    </div>
+                    <!--<div v-if="inter_state" class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+                        <!--<h4 class="modal-title">增加提醒</h4>-->
+                    <!--</div>-->
 
                     <!--放入客户池-->
                     <div v-if="pool" class="modal-header">
@@ -52,44 +52,44 @@
                     </div>
 
                     <!--新增提醒-->
-                    <div v-if="inter_state" class="modal-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">提醒内容</label>
-                                <div class="col-lg-10">
-                                    <textarea class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">提醒时间</label>
-                                <div class="col-lg-10">
-                                    <div class="form-group street">
-                                        <div class="col-sm-3">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="control-label" @click="senior"><a
-                                                    class=" text-primary">高级选项+</a></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group" v-if="senior_a">
-                                <label class="col-lg-2 col-sm-2 control-label">提醒时间</label>
-                                <div class="col-lg-10">
-                                    <div class="form-group street">
-                                        <div class="col-sm-6">
-                                            <input @click="remindData" type="text"
-                                                   class="form-control form_datetime" id="addtime"
-                                                   name="addtime" value="" placeholder="请选择时间" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <!--<div v-if="inter_state" class="modal-body">-->
+                        <!--<form class="form-horizontal" role="form">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-lg-2 col-sm-2 control-label">提醒内容</label>-->
+                                <!--<div class="col-lg-10">-->
+                                    <!--<textarea class="form-control"></textarea>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-lg-2 col-sm-2 control-label">提醒时间</label>-->
+                                <!--<div class="col-lg-10">-->
+                                    <!--<div class="form-group street">-->
+                                        <!--<div class="col-sm-3">-->
+                                            <!--<select class="form-control">-->
+                                                <!--<option value="1">1</option>-->
+                                            <!--</select>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-sm-3">-->
+                                            <!--<label class="control-label" @click="senior"><a-->
+                                                    <!--class=" text-primary">高级选项+</a></label>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group" v-if="senior_a">-->
+                                <!--<label class="col-lg-2 col-sm-2 control-label">提醒时间</label>-->
+                                <!--<div class="col-lg-10">-->
+                                    <!--<div class="form-group street">-->
+                                        <!--<div class="col-sm-6">-->
+                                            <!--<input @click="remindData" type="text"-->
+                                                   <!--class="form-control form_datetime" id="addtime"-->
+                                                   <!--name="addtime" value="" placeholder="请选择时间" readonly>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button" @click="follow_up_take">取消
                         </button>
@@ -116,13 +116,13 @@
                 daily_state: false,         //增加日志
                 follow_w: '1',              //沟通日志类型
                 follow_up: '',              //沟通日志内容
-//                resetting: true,            //沟通日志内容
+//                resetting: true,          //沟通日志内容
 
-                inter_state: false,         //提醒内容
+//                inter_state: false,       //提醒内容
 
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
-                dataTime: '',               //提醒时间
+//                dataTime: '',             //提醒时间
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -165,8 +165,8 @@
                         remarks: this.follow_up,
                         customer_id: String(this.msg),
                     }).then((res) => {
-                        $('#remindDaily').modal('hide');
                         if (res.data.code === '70090') {
+                            $('#remindDaily').modal('hide');
                             //成功信息 ***
                             this.info.success = res.data.msg;
                             //关闭失败弹窗 ***
@@ -222,23 +222,23 @@
             state(val) {
                 if (val === 'daily') {
                     this.daily_state = true;      //增加日志
-                    this.inter_state = false;     //提醒内容
+//                    this.inter_state = false;     //提醒内容
                     this.pool = false;            //放入客户池
 
                 }
-                if (val === 'inter') {
-                    this.inter_state = true;        //提醒内容
-                    this.daily_state = false;       //增加日志
-                    this.pool = false;              //放入客户池
-                }
+//                if (val === 'inter') {
+//                    this.inter_state = true;        //提醒内容
+//                    this.daily_state = false;       //增加日志
+//                    this.pool = false;              //放入客户池
+//                }
                 if (val === 'pool') {
                     this.pool = true;               //放入客户池
                     this.daily_state = false;       //增加日志
-                    this.inter_state = false;       //提醒内容
+//                    this.inter_state = false;       //提醒内容
                 }
                 if (val === 'distribute') {
                     this.daily_state = false;       //增加日志
-                    this.inter_state = false;       //提醒内容
+//                    this.inter_state = false;       //提醒内容
                     this.pool = false;              //放入客户池
                 }
             }
