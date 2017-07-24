@@ -390,7 +390,7 @@
                         <ul class="sub">
                             <li class="sub-menu">
                                 <a href="javascript:;">
-                                    <span>喜报录入</span>
+                                    <span>喜报管理</span>
                                 </a>
                                 <ul class="sub">
                                     <li :class="{'active': isActive == 14}" @click='pitch_on(14)'>
@@ -514,7 +514,7 @@
                         <ul class="sub">
                             <li>
                                 <router-link to="/account">
-                                    <span>账号管理</span>
+                                    <span>账户管理</span>
                                 </router-link>
                             </li>
                             <li class="sub-menu">
@@ -530,11 +530,11 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            <!--<li>
                                 <router-link to="/jurisdiction">
                                     <span>权限管理</span>
                                 </router-link>
-                            </li>
+                            </li>-->
                             <li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>收支流水</span>
@@ -553,21 +553,21 @@
                                     <span>待处理项</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <!--<li>
                                 <router-link to="/generalOperation">
                                     <span>总账操作</span>
                                 </router-link>
-                            </li>
+                            </li>-->
                             <li>
                                 <router-link to="/generalRecord">
                                     <span>总账操作记录</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <!--<li>
                                 <router-link to="/chart">
                                     <span>可视报表</span>
                                 </router-link>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                     <li class="sub-menu">

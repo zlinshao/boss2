@@ -136,6 +136,15 @@
                 setTimeout(this.getMap,1000)
             }
         },
+        watch : {
+            deep : true,
+            'params.date_range':{
+                handler(curVal,oldVal){
+//                    console.log('now===='+curVal)
+//                    console.log('old===='+oldVal)
+                }
+            }
+        },
         methods: {
             getCheckInList(){
                 this.$http.post('amap/signin/index')
@@ -188,6 +197,10 @@
             getDate(data){
                 // 时间
                 console.log(data);
+//                alert(1)
+//                if (data!=this.params.date_range){
+//                    alert(1)
+//                }
                 this.params.date_range = data;
                 this.search();
             },

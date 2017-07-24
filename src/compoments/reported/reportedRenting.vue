@@ -63,7 +63,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <section class="panel table table-responsive">
+                <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
@@ -234,7 +234,7 @@
             },
             search(){
 //                console.log(this.params);
-                this.operId = 0;
+//                this.operId = 0;
                 this.page = 1;
                 this.filter();
             },
@@ -256,6 +256,7 @@
                 $('#edit').modal('show');
             },
             filter(){
+                this.operId = 0;
                 // 筛选
 //                this.myData = [];
                 this.$http.get('checkin/rent?page='+this.page,{
@@ -329,7 +330,8 @@
                                     this.info.state_success = false;
                                 }, 2000);
 
-                                this.search();
+
+                                this.filter();
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***
@@ -371,5 +373,7 @@
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
     }
-
+    tr td a i{
+        font-size: 18px;
+    }
 </style>
