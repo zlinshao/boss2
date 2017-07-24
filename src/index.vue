@@ -143,7 +143,7 @@
                     <header class="panel-heading">
                         公告
                     </header>
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding-top: 0;">
                         <div class="row">
                             <div class="col-md-12">
                                 <section class="panel table-responsive roll">
