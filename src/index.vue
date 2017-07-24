@@ -46,7 +46,7 @@
                     </div>
                 </section>
                 <section class="panel">
-                    <div class="panel-body roll" style="height: 362px;overflow: auto;">
+                    <div class="panel-body roll" style="height: 345px;overflow: auto;">
                         <header class="panel-heading">
                             本月寿星
                         </header>
