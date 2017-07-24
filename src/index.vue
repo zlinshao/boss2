@@ -132,54 +132,6 @@
                                                         class="fa  fa-arrow-down"></i></span>
                                             </td>
                                         </tr>
-                                        <tr v-for="(ran,index) in main_ranking">
-                                            <td style="min-width: 60px;">{{index + 1}}</td>
-                                            <td style="min-width: 80px;">{{ran.name}}</td>
-                                            <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 110px;">
-                                                {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
-                                                        class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i
-                                                        class="fa  fa-arrow-down"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr v-for="(ran,index) in main_ranking">
-                                            <td style="min-width: 60px;">{{index + 1}}</td>
-                                            <td style="min-width: 80px;">{{ran.name}}</td>
-                                            <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 110px;">
-                                                {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
-                                                        class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i
-                                                        class="fa  fa-arrow-down"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr v-for="(ran,index) in main_ranking">
-                                            <td style="min-width: 60px;">{{index + 1}}</td>
-                                            <td style="min-width: 80px;">{{ran.name}}</td>
-                                            <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 110px;">
-                                                {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
-                                                        class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i
-                                                        class="fa  fa-arrow-down"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr v-for="(ran,index) in main_ranking">
-                                            <td style="min-width: 60px;">{{index + 1}}</td>
-                                            <td style="min-width: 80px;">{{ran.name}}</td>
-                                            <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 110px;">
-                                                {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
-                                                        class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i
-                                                        class="fa  fa-arrow-down"></i></span>
-                                            </td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </section>
