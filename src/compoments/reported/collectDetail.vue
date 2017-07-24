@@ -10,9 +10,10 @@
             <div class="panel-body">
                 <div v-if="msg!=''">
                     <span>录入时间</span>
-                    <span>{{msg.deal_time}}</span>
+                    <span>{{msg.create_time}}</span>
                     <span :class="{'status':true,'btn':true,'yellow':msg.status===1,'orange':msg.status===2,'green':msg.status===3}">{{dict.checkin_status[msg.status]}}</span>
                     <div class="pull-right">
+                        <button class="btn btn-primary" @click="addRentReported">租房报备</button>
                         <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
                         <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
                         <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
@@ -27,7 +28,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;收房报备信息
-                        <a class="pull-right" data-toggle="modal" data-target="#edit">编辑</a>
+                        <a class="pull-right" data-toggle="modal" data-target="#edit" v-show="msg.status==1">编辑</a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -45,11 +46,11 @@
                                 <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                             </div>
                             <div class="col-md-8">
-                                <div><span class="text-primary">汇款方式：</span><span>{{dict.pay_type[msg.pay_type]}}</span></div>
+                                <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.payment]}}</span></div>
                                 <div><span class="text-primary">开户行：</span><span>{{dict.bank[msg.bank]}}</span></div>
                                 <div><span class="text-primary">汇款账户：</span><span>{{msg.account}}</span></div>
                                 <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
-                                <div><span class="text-primary">备注：</span><span>{{msg.remark}}</span></div>
+                                <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
                                 <div><span class="text-primary">签约人：</span><span>{{msg.staff.real_name}}</span></div>
                                 <div><span class="text-primary">负责人：</span><span>{{msg.leader.real_name}}</span></div>
                                 <div><span class="text-primary">所属部门：</span><span>{{msg.department.name}}</span></div>
@@ -68,6 +69,9 @@
 
         <!--编辑-->
         <EditModal :id="id" @save="getDetails(id)"></EditModal>
+
+        <!--新增-->
+        <AddModal :collectMsg="collectMsg"></AddModal>
 
 
         <div class="modal fade bs-example-modal-sm" id="change" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -97,9 +101,11 @@
 <script>
     import Confirm from '../common/confirm.vue'
     import Status from '../common/status.vue'
+
+    import AddModal from './rentingAdd.vue'
     import EditModal from './collectEdit.vue'
     export default{
-        components: {Confirm,Status,EditModal},
+        components: {Confirm,Status,EditModal,AddModal},
         data(){
             return {
                 msg: '',
@@ -110,6 +116,15 @@
                     status: ''
                 },
                 id : 0,
+
+                collectMsg : [
+                    {
+                        id : '',
+                        house_id : '',
+                        house : {}
+                    }
+                ],
+
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -131,6 +146,7 @@
             let id = this.$route.query.collectId;
             console.log(id);
             this.id = id;
+//            this.collectMsg.id = id;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
@@ -149,6 +165,8 @@
                         (res) => {
 //                        console.log(res.data.data);
                             this.msg = res.data.data
+//                            this.collectMsg.house_id = res.data.data.house_id;
+//                            this.collectMsg.house = res.data.data.house;
 //                            console.log(this.msg)
                         }
                     );
@@ -236,6 +254,16 @@
                 }
 
                 $('#change').modal('show');
+            },
+            addRentReported(){
+                this.collectMsg = [
+                    {
+                        id : this.id,
+                        house_id : this.msg.house_id,
+                        house : this.msg.house
+                    }
+                ];
+                $('#add').modal('show');
             }
         }
     }

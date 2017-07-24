@@ -51,9 +51,16 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">租房状态</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="formData.rent_type">
                                             <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">租房年限</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" v-model="formData.months">
                                     </div>
                                 </div>
 
@@ -63,17 +70,17 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-2 control-label">押</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control">
+                                                <select class="form-control" v-model="formData.bet">
+                                                    <option value="0">0</option>
                                                     <option value="1">1</option>
+                                                    <option value="2">2</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-2 control-label">付</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control">
-                                                    <option value="1">1</option>
-                                                </select>
+                                                <input type="number" class="form-control" v-model="formData.pay">
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +89,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">月单价</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control">
+                                        <input type="number" class="form-control" v-model="formData.price">
                                     </div>
                                 </div>
 
@@ -90,14 +97,14 @@
                                     <label class="col-sm-2 control-label">已收科目</label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="formData.received_type">
+                                                <option :value="value" v-for="(key,value) in dict.subject">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-8">
                                             <label class="col-sm-4 control-label">已收金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="formData.received_amount">
                                             </div>
                                         </div>
                                     </div>
@@ -108,184 +115,178 @@
                                     <label class="col-sm-2 control-label">付款方式</label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[0].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[0].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2 icon">
-                                            <i class="fa fa-plus-circle"></i>
-                                            <i class="fa fa-minus-circle"></i>
+                                            <i @click="addMorePayWay" class="fa fa-plus-circle"></i>
+                                            <i @click="minusMorePayWay" class="fa fa-minus-circle"></i>
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="form-group">
+                                <div v-show="more_pay_way>=2" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[1].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[1].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-show="more_pay_way>=3" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[2].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[2].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-show="more_pay_way>=4" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[3].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[3].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-show="more_pay_way>=5" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[4].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[4].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-show="more_pay_way>=6" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[5].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[5].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-show="more_pay_way>=7" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[6].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[6].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-show="more_pay_way>=8" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                <option value="1">1</option>
+                                            <select class="form-control" v-model="payments[7].payment_id">
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control">
+                                                <input type="number" class="form-control" v-model="payments[7].money">
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                        </div>
+                                        <div class="col-sm-2"></div>
                                     </div>
-                                </div>-->
+                                </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">尾款补齐时间</label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
-                                               class="form-control form_datetime">
+                                               class="form-control form_datetime" v-model="formData.complete_date">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">凭证截图</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control">
+                                        <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"  placeholder="凭证截图"
+                                                 :result="'certificatePic'" :idPhotos="certificatePic"></up-load>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">中介费</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control">
+                                        <input type="number" class="form-control" v-model="formData.cost_medi">
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-sm-2 control-label">收款方式</label>
                                     <div class="col-sm-10">
                                         <select class="form-control">
                                             <option value="">sass</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">收款账户</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="formData.account_id">
                                             <option value="">sass</option>
                                         </select>
                                     </div>
@@ -295,7 +296,7 @@
                                     <label class="col-sm-2 control-label">待签约日期</label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
-                                               class="form-control form_datetime">
+                                               class="form-control form_datetime" v-model="formData.deal_time">
                                     </div>
                                 </div>
 
@@ -312,8 +313,8 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary">保存为草稿</button>
-                                <button type="button" class="btn btn-warning">保存并提交</button>
+                                <button type="button" class="btn btn-primary" @click="cus_confirm(1)">保存为草稿</button>
+                                <button type="button" class="btn btn-warning" @click="cus_confirm(2)">保存并提交</button>
                             </div>
                         </div>
                     </div>
@@ -335,14 +336,57 @@
     import STAFF from  '../common/organization/selectStaff.vue'
     import SelectHouse from '../common/selectHouse.vue'
     import Status from '../common/status.vue';
+    import upLoad from '../common/upload.vue'
     // 选择客户
     import SelectClient from '../common/selectClient.vue'
     export default{
-        components: {STAFF,SelectHouse,Status,SelectClient},
+        props : ['collectMsg'],
+        components: {STAFF,SelectHouse,Status,SelectClient,upLoad},
         data(){
             return {
+                certificatePic : {
+                    cus_idPhotos : {},    //修改图片ID
+                    cus_idPhoto : [],     //证件照片
+                },
+                complete_ok: '',                        //图片上传完成
+
                 dict : {},
                 configure: [],
+
+                payments : [
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    }
+                ],
 
                 chooseResult : {
                     staff_name : '',
@@ -352,12 +396,30 @@
                     customer_name : ''
                 },
                 formData : {
+                    collect_id : '',
+
                     staff_id : '',
                     department_id : '',
                     leader_id : '',
                     house_id : '',
                     customer_id : '',
 
+                    rent_type : 1,
+//                    rent_relation_id : '',
+                    months : '',
+                    pay : '',
+                    bet : 0,
+                    price : '',
+                    cost_medi : '',
+//                    is_medi
+                    cost_deposit : '',
+                    payment : [],
+                    deal_time : '',
+                    receipt_pic : [],
+                    received_type : 1,
+                    received_amount : '',
+                    account_id : 1,
+                    complete_date : '',
                     remark : '',
                 },
                 info: {
@@ -371,13 +433,27 @@
                     error: ''
                 },
 
-
                 more_pay_way : 1,       // 付款方式
             }
         },
         updated (){
-            this.remindData();
 //            时间选择
+            this.remindData();
+
+        },
+        watch : {
+            collectMsg(val){
+//                console.log(val[0])
+//                if (this.collectMsg!=undefined){
+//                    console.log(val[0]);
+//                    console.log(val[0].id);
+//                    console.log(val[0].house_id);
+//                    console.log(val[0].house.detailed_address);
+                this.formData.collect_id = val[0].id;
+                this.formData.house_id = val[0].house_id;
+                this.chooseResult.house_name = val[0].house.detailed_address;
+//                }
+            }
         },
         mounted (){
             this.$http.get('revenue/glee_collect/dict')
@@ -397,13 +473,46 @@
                     }
                 );
 
+
+
         },
         methods: {
             closeModal(){
                 // 清空
-                this.pay_typeChange = false;
-                this.one_type = '1';
-                this.more_type = [];
+                this.payments = [
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    },
+                    {
+                        payment_id:1,
+                        money : ''
+                    }
+                ];
 
                 this.chooseResult.staff_name = '';
                 this.chooseResult.house_name = '';
@@ -416,6 +525,21 @@
 //                this.formData.leader_id = '';
                 this.formData.house_id = '';
                 this.formData.customer_id = '';
+                this.formData.rent_type = 1;
+//                this.formData.rent_relation_id = '';
+                this.formData.months = '';
+                this.formData.pay = '';
+                this.formData.bet = 0;
+                this.formData.price = '';
+                this.formData.cost_medi = '';
+                this.formData.cost_deposit = '';
+                this.formData.payment = [];
+                this.formData.deal_time = '';
+                this.formData.receipt_pic = [];
+                this.formData.received_type = 1;
+                this.formData.received_amount = '';
+                this.formData.account_id = 1;
+                this.formData.complete_date = '';
 
                 this.formData.remark = '';
 
@@ -457,18 +581,110 @@
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
                     pickerPosition: "top-left",
-                    endDate: new Date(),
+//                    endDate: new Date(),
 //                    todayHighlight : true
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
                     if (ev.target.placeholder === '补齐时间') {
-//                        this.params.from = ev.target.value;
-                    } else if (ev.target.placeholder === '签约日期') {
-//                        this.params.to = ev.target.value;
+                        this.formData.complete_date = ev.target.value;
+                    } else if (ev.target.placeholder === '待签约日期') {
+                        this.formData.deal_time = ev.target.value;
                     }
 //                    console.log(this.startDataTime);
                 }.bind(this));
+            },
+
+            // 付款方式
+            addMorePayWay(){
+                // 增加付款方式
+                if (this.more_pay_way==7){
+                    return;
+                } else {
+                    this.more_pay_way++;
+                }
+            },
+            minusMorePayWay(){
+                // 减少付款方式
+                if (this.more_pay_way==1){
+                    return;
+                } else {
+                    this.formData.payment[this.more_pay_way-1] = {
+                        payment_id:1,
+                        money : ''
+                    };
+                    this.more_pay_way--;
+                }
+            },
+
+            // 图片上传
+            certificatePicId(data){
+                // 获取图片
+                this.certificatePic.cus_idPhoto = data;
+            },
+            picDelete(data){
+                // 删除图片
+                let index = this.certificatePic.cus_idPhoto.indexOf(data);
+                if (index > -1) {
+                    this.certificatePic.cus_idPhoto.splice(index, 1);
+                }
+            },
+            complete(data){
+                this.complete_ok = data;
+            },
+            cus_confirm(num){
+                // 提交时调用
+                this.$http.defaults.withCredentials = true;
+                if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0 || res.data.data === null) {
+                            this.save(num);
+                        }
+                    });
+                }
+                else {
+                    this.info.error = '图片正在上传';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }
+            },
+
+            save(num){
+                console.log(this.certificatePic);
+//                console.log(num);
+                this.formData.receipt_pic = this.certificatePic.cus_idPhoto;
+                this.formData.payment = this.payments.slice(0,this.more_pay_way);
+
+//                console.log(this.formData.payment);
+                console.log(this.formData);
+                this.formData['status'] = num;
+                this.$http.post('checkin/rent',this.formData)
+                    .then(
+                        (res) => {
+                            console.log(res);
+                            if (res.data.code==18110){
+                                // 成功
+                                this.info.success = '新增报备成功';
+                                //显示失败弹窗 ***
+                                this.info.state_success = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_success = false;
+                                }, 2000);
+                                this.closeModal();
+                                this.$emit('save');
+                            } else {
+                                // 失败
+                                this.info.error = '新增报备失败';
+                                //显示失败弹窗 ***
+                                this.info.state_error = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_error = false;
+                                }, 2000);
+                            }
+                        }
+                    )
             }
         }
     }
@@ -489,6 +705,6 @@
         margin-left: 5px;
     }
     .col-sm-2.icon i:hover{
-
+        color: #999;
     }
 </style>

@@ -171,7 +171,6 @@
     import Page from '../common/page.vue'
     import Status from '../common/status.vue';
 
-
     export default{
         data(){
             return {
@@ -224,12 +223,12 @@
 
             },
             accountList(){
-                this.$http.get('json/account.json').then((res) => {
+                /*this.$http.get('json/account.json').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     this.cont.myData = res.data.data.accountList;
 //                    console.log(res.data);
                     this.paging = res.data.data.pages;
-                })
+                })*/
             },
             search(){
 

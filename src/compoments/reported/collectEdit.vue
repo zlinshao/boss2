@@ -93,7 +93,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">是否中介</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" v-model="formData.is_medi" @change="medi">
@@ -101,12 +101,12 @@
                                         <option value="2">否</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">中介费</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" v-model="formData.cost_medi" :readonly="formData.is_medi==2" >
+                                    <input type="number" class="form-control" v-model="formData.cost_medi">
                                 </div>
                             </div>
 
@@ -235,7 +235,7 @@
                     price : [],
                     vacancy : '',
                     cost_medi : '',
-                    is_medi : 1,
+//                    is_medi : 1,
                     cost_deposit : '',
                     deal_time : '',
                     payment : 1,
@@ -328,7 +328,7 @@
                                 this.formData.price = val.price;
                                 this.formData.vacancy = val.vacancy;
                                 this.formData.cost_medi = val.cost_medi;
-                                this.formData.is_medi = val.is_medi;
+//                                this.formData.is_medi = val.is_medi;
                                 this.formData.cost_deposit = val.cost_deposit;
                                 this.formData.deal_time = val.deal_time;
                                 this.currentDate.push(val.deal_time);
@@ -367,7 +367,7 @@
                 this.formData.price = [];
                 this.formData.vacancy = '';
                 this.formData.cost_medi = '';
-                this.formData.is_medi = 1;
+//                this.formData.is_medi = 1;
                 this.formData.cost_deposit = '';
                 this.formData.deal_time = '';
                 this.formData.payment = 1;
@@ -447,7 +447,8 @@
                                 setTimeout(() => {
                                     this.info.state_success = false;
                                 }, 2000);
-//                                this.closeModal();
+//                                this.closeModal()
+                                $('#edit').modal('hide');
                                 this.$emit('save');
                             } else {
                                 // 失败
@@ -461,16 +462,15 @@
                             }
                         }
                     );
-
             },
-            medi(){
+            /*medi(){
                 // 是否中介
                 if (this.formData.is_medi==2){
                     // 否
                     this.formData.cost_medi = 0;
                 }
 //                console.log(this.formData.cost_medi)
-            }
+            }*/
         }
     }
 </script>

@@ -739,7 +739,10 @@
             this.container.find('.ranges li').removeClass('active');
             var customRange = true;
             var i = 0;
+            // console.log('adhaskjdh'+this.startDate);
+            // console.log(this.startDate==NaN)
             for (var range in this.ranges) {
+                // console.log(this.ranges[range][0])
                 if (this.timePicker) {
                     if (this.startDate.isSame(this.ranges[range][0]) && this.endDate.isSame(this.ranges[range][1])) {
                         customRange = false;

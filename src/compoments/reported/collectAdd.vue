@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-sm-2 control-label">是否中介</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.is_medi" @change="medi">
@@ -102,12 +102,12 @@
                                             <option value="2">否</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">中介费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.cost_medi" :readonly="formData.is_medi==2" >
+                                        <input type="number" class="form-control" v-model="formData.cost_medi" >
                                     </div>
                                 </div>
 
@@ -185,6 +185,7 @@
     import SelectClient from '../common/selectClient.vue'
 
     export default{
+        props : ['rentMsg'],
         components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},
         data(){
             return {
@@ -215,6 +216,8 @@
                     customer_name : ''
                 },
                 formData : {
+                    rent_id : '',
+
                     staff_id : '',
                     department_id : '',
                     leader_id : '',
@@ -225,7 +228,7 @@
                     price : [],
                     vacancy : '',
                     cost_medi : '',
-                    is_medi : 1,
+//                    is_medi : 1,
                     cost_deposit : '',
                     deal_time : '',
                     payment : 1,
@@ -287,6 +290,19 @@
                 } else {
                     this.formData.pay_type.push(this.one_type);
                 }
+            },
+
+            rentMsg(val){
+//                console.log(val[0])
+//                if (this.collectMsg!=undefined){
+//                    console.log(val[0]);
+//                    console.log(val[0].id);
+//                    console.log(val[0].house_id);
+//                    console.log(val[0].house.detailed_address);
+                this.formData.rent_id = val[0].id;
+                this.formData.house_id = val[0].house_id;
+                this.chooseResult.house_name = val[0].house.detailed_address;
+//                }
             }
         },
         methods: {
@@ -312,7 +328,7 @@
                 this.formData.price = [];
                 this.formData.vacancy = '';
                 this.formData.cost_medi = '';
-                this.formData.is_medi = 1;
+//                this.formData.is_medi = 1;
                 this.formData.cost_deposit = '';
                 this.formData.deal_time = '';
                 this.formData.payment = 1;
@@ -409,14 +425,6 @@
                         }
                     )
             },
-            medi(){
-                // 是否中介
-                if (this.formData.is_medi==2){
-                    // 否
-                    this.formData.cost_medi = 0;
-                }
-//                console.log(this.formData.cost_medi)
-            }
 
         }
     }

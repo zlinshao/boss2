@@ -256,7 +256,7 @@
                     showDropdowns: true,
                     autoApply: true,
                     separator : '至',
-
+//                    maxDate : moment(), //最大时间
                     ranges : {
                         '清空': [null, null],
                         //'最近1小时': [moment().subtract('hours',1), moment()],
