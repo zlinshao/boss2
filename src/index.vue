@@ -143,7 +143,7 @@
                     <header class="panel-heading">
                         公告
                     </header>
-                    <div class="panel-body" style="padding-top: 0;">
+                    <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <section class="panel table-responsive roll">
@@ -156,8 +156,8 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(mess, index) in main_message">
-                                            <td style="min-width: 100px;">{{mess.create_time}}</td>
-                                            <td style="width: 100px;" class="more_info">
+                                            <td style="min-width: 160px;">{{mess.create_time}}</td>
+                                            <td style="min-width: 100px;" class="more_info">
                                                 <router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">
                                                     {{mess.data.title}}
                                                 </router-link>
