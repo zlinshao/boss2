@@ -46,7 +46,7 @@
                     </div>
                 </section>
                 <section class="panel">
-                    <div class="panel-body roll" style="height: 362px;overflow: auto;">
+                    <div class="panel-body roll" style="height: 337px;overflow: auto;">
                         <header class="panel-heading">
                             本月寿星
                         </header>
@@ -116,7 +116,7 @@
                                             <th>排名</th>
                                             <th>姓名</th>
                                             <th>部门</th>
-                                            <th>当月业绩升降</th>
+                                            <!--<th>当月业绩升降</th>-->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -124,13 +124,13 @@
                                             <td style="min-width: 60px;">{{index + 1}}</td>
                                             <td style="min-width: 80px;">{{ran.name}}</td>
                                             <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 110px;">
-                                                {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
-                                                        class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i
-                                                        class="fa  fa-arrow-down"></i></span>
-                                            </td>
+                                            <!--<td style="min-width: 110px;">-->
+                                                <!--{{ran.money}}-->
+                                                <!--<span class="text-danger" v-if="ran.rank_id === 1"><i-->
+                                                        <!--class="fa fa-arrow-up"></i></span>-->
+                                                <!--<span class="text-success" v-if="ran.rank_id === 2"><i-->
+                                                        <!--class="fa  fa-arrow-down"></i></span>-->
+                                            <!--</td>-->
                                         </tr>
                                         </tbody>
                                     </table>

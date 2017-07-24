@@ -158,7 +158,7 @@
                                 <tbody>
                                 <tr class="unread" v-for="sys in Substitutes">
                                     <td class="text-center width180">{{sys.remind_time}}</td>
-                                    <td class="text-center width80">{{sys.data.object}}</td>
+                                    <td class="text-center width80">{{sys.send_name}}</td>
                                     <td class="text-center" :class="{ more_info: isActive !== sys.id }"
                                         @click="more_content(sys.id)">
                                         {{sys.data.content}}
