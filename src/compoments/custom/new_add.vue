@@ -7,16 +7,15 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
                     <div class="modal-content roll">
-
                         <!--新增客户-->
                         <div v-if="btn_state" class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="remove_s">×</button>
                             <h4 class="modal-title">新增客户</h4>
                         </div>
 
                         <!--修改客户-->
                         <div v-if="!btn_state" class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="remove_s">×</button>
                             <h4 class="modal-title">修改客户</h4>
                         </div>
 

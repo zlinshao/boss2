@@ -7,7 +7,7 @@
                 <div class="modal-content">
                     <!--新增日志-->
                     <div v-if="daily_state" class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @clcik="follow_up_take">×</button>
                         <h4 class="modal-title">增加日志</h4>
                     </div>
 
