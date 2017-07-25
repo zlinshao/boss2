@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="src/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="src/assets/gritter/css/jquery.gritter.css">
     <link rel="stylesheet" href="src/assets/css/style.css">
     <link rel="stylesheet" href="src/assets/css/style-responsive.css">
     <style>
@@ -34,6 +35,7 @@
     <script src="src/assets/bootstrap/js/bootstrap.js"></script>
     <script src="http://g.alicdn.com/dingding/dinglogin/0.0.2/ddLogin.js"></script>
     <script src="src/boss.config.js"></script>
+    <script src="src/assets/gritter/js/jquery.gritter.js"></script>
     <script>
         window.onload = function () {
             if (navigator.userAgent.indexOf('Edge') != -1 || ( navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1 )) {
@@ -94,6 +96,18 @@
 <script>
     let url = window.location.href;
     let url_index = url.split("login")[0];
+
+    function remind(m, s) {
+        $.gritter.add({
+            title: '提醒',
+            text: m,
+            sticky: false,
+            time: s,
+            speed: 1000,
+            position: 'bottom-right',
+            class_name: 'gritter-success'
+        });
+    }
     //    登陆
     $('#computer_PC').click(function () {
         $(this).css('display', 'none');
@@ -120,6 +134,7 @@
             url: globalConfig.server + 'auth/login/sms?phone=' + phone,
             success: function (data) {
                 if (data.code === '80000') {
+                    remind(data.msg, 1000);
                     $('#code').css('display', 'block');
                     $('.identifying_code').attr('disabled', true);
                     let time = 60;
@@ -135,9 +150,11 @@
                         }
                     }, 1000);
                 } else if (data.code === '80005') {
+                    remind(JSON.parse(data.msg).body, 1000);
+                    console.log(JSON.parse(data.msg).body);
                     $('#code').css('display', 'block');
                     $('.identifying_code').attr('disabled', true);
-                    let time = 60;
+                    let time = JSON.parse(data.msg).extra;
                     setInterval(function () {
                         if (time > 0) {
                             time--;
@@ -149,8 +166,8 @@
                             }
                         }
                     }, 1000);
-                }else{
-
+                } else {
+                    remind(data.msg, 1000);
                 }
             }
         })
