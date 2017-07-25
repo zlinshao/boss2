@@ -140,6 +140,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
+                        {{gasPic.cus_idPhoto}}{{contractEdit.gas_card_pic}}
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
@@ -241,14 +242,6 @@
                 this.myContractEitId = val;
                 this.gitContractInfo();
             },
-//            'contractEdit.vac_start_date' : {
-//                deep:true,
-//                handler(val,oldVal){
-//                    if(val !== oldVal){
-//                        this.completeDate(val);
-//                    }
-//                }
-//            }
         },
         methods : {
             gitContractInfo(){
@@ -361,34 +354,35 @@
             },
             //删除照片ID
             picDelete (val){
-                let contract = this.contractPic.cus_idPhoto.indexOf(val);
+                console.log(val)
+                let contract = this.contractEdit.contract_pic.indexOf(val);
                 if (contract > -1) {
-                    this.contractPic.cus_idPhoto.splice(contract, 1);
+//                    this.contractPic.cus_idPhoto.splice(contract, 1);
                     this.contractEdit.contract_pic.splice(contract, 1);
                 }
-                let water = this.waterPic.cus_idPhoto.indexOf(val);
+                let water = this.contractEdit.water_card_pic.indexOf(val);
                 if (water > -1) {
-                    this.waterPic.cus_idPhoto.splice(water, 1);
+//                    this.waterPic.cus_idPhoto.splice(water, 1);
                     this.contractEdit.water_card_pic.splice(water, 1);
                 }
-                let ele = this.elePic.cus_idPhoto.indexOf(val);
+                let ele = this.contractEdit.elec_card_pic.indexOf(val);
                 if (ele > -1) {
-                    this.elePic.cus_idPhoto.splice(ele, 1);
+//                    this.elePic.cus_idPhoto.splice(ele, 1);
                     this.contractEdit.elec_card_pic.splice(ele, 1);
                 }
-                let gas = this.gasPic.cus_idPhoto.indexOf(val);
+                let gas = this.contractEdit.gas_card_pic.indexOf(val);
                 if (gas > -1) {
-                    this.gasPic.cus_idPhoto.splice(gas, 1);
+//                    this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.contractEdit.gas_card_pic.splice(gas, 1);
                 }
-                let handover = this.handoverPic.cus_idPhoto.indexOf(val);
+                let handover = this.contractEdit.handover_pic.indexOf(val);
                 if (handover > -1) {
-                    this.handoverPic.cus_idPhoto.splice(handover, 1);
+//                    this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractEdit.handover_pic.splice(handover, 1);
                 }
-                let payment = this.paymentPic.cus_idPhoto.indexOf(val);
+                let payment = this.contractEdit.payment_pic.indexOf(val);
                 if (payment > -1) {
-                    this.paymentPic.cus_idPhoto.splice(payment, 1);
+//                    this.paymentPic.cus_idPhoto.splice(payment, 1);
                     this.contractEdit.payment_pic.splice(payment, 1);
                 }
             },
@@ -397,7 +391,7 @@
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
                         this.$http.post('core/rent/updatecontract',this.contractEdit).then((res) => {
-                            if(res.data.code === "70010"){
+                            if(res.data.code === "80010"){
                                 this.$emit('EditStatus','success');
                                 $('#rentingEdit').modal('hide');
                                 this.info.success = res.data.msg;
