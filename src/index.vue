@@ -46,7 +46,7 @@
                     </div>
                 </section>
                 <section class="panel">
-                    <div class="panel-body roll" style="height: 345px;overflow: auto;">
+                    <div class="panel-body roll" style="height: 336px;overflow: auto;">
                         <header class="panel-heading">
                             本月寿星
                         </header>
@@ -58,7 +58,7 @@
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
                                              style="border-radius: 50%;"/>
                                         <img src="./assets/img/head.png" v-if="birth.avatar === ''"
-                                             style="border-radius: 50%;" />
+                                             style="border-radius: 50%;"/>
                                     </div>
                                     <div class="panel-body text-center padding15">
                                         <h5>{{birth.name}}</h5>
@@ -108,7 +108,7 @@
                     </header>
                     <div class="panel-body" style="padding-top: 0;">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="padding: 0;">
                                 <section class="panel table-responsive roll">
                                     <table class="table table-advance table-hover">
                                         <thead>
@@ -127,9 +127,9 @@
                                             <td style="min-width: 100px;">
                                                 {{ran.money}}
                                                 <!--<span class="text-danger" v-if="ran.rank_id === 1"><i-->
-                                                        <!--class="fa fa-arrow-up"></i></span>-->
+                                                <!--class="fa fa-arrow-up"></i></span>-->
                                                 <!--<span class="text-success" v-if="ran.rank_id === 2"><i-->
-                                                        <!--class="fa  fa-arrow-down"></i></span>-->
+                                                <!--class="fa  fa-arrow-down"></i></span>-->
                                             </td>
                                         </tr>
                                         </tbody>
@@ -430,6 +430,7 @@
     .padding15 {
         padding: 0 15px;
     }
+
     .margin10 {
         width: 70px;
         height: 70px;
