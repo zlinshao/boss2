@@ -126,10 +126,10 @@
                                             <td style="min-width: 110px;">{{ran.department}}</td>
                                             <td style="min-width: 110px;">
                                                 {{ran.money}}
-                                                <span class="text-danger" v-if="ran.rank_id === 1"><i
-                                                        class="fa fa-arrow-up"></i></span>
-                                                <span class="text-success" v-if="ran.rank_id === 2"><i
-                                                        class="fa  fa-arrow-down"></i></span>
+                                                <!--<span class="text-danger" v-if="ran.rank_id === 1"><i-->
+                                                        <!--class="fa fa-arrow-up"></i></span>-->
+                                                <!--<span class="text-success" v-if="ran.rank_id === 2"><i-->
+                                                        <!--class="fa  fa-arrow-down"></i></span>-->
                                             </td>
                                         </tr>
                                         </tbody>

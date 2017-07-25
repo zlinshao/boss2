@@ -89,7 +89,6 @@
             },
             distribution_ok (){
                 this.$http.post('core/customer_pool/allotCustomer', {
-
                     customer_id: this.pitches,                   //客户id
                     staff_id: String(this.salesman_id)           //员工id
 
