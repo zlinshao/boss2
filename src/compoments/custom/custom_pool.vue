@@ -63,7 +63,7 @@
                         </label>
                     </div>
                     <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="collectList">重置</button>
+                        <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
                     </div>
 
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
@@ -161,7 +161,7 @@
         </div>
 
         <!--分配-->
-        <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
+        <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
         <!--提示信息-->
         <Status :state='info'></Status>
         <!--分页-->
@@ -206,51 +206,51 @@
             }
         },
         created (){
-            this.collectList();
+            this.collectList(1);
         },
         methods: {
-            //            select搜索
+//            select搜索
             search_c (){
-                this.search_pool();
-                this.beforePage = 1
+                this.search_pool(1);
             },
 //            分配成功更新列表
-            pitch_dele (){
-                this.pitch=[];
-                this.$http.post('core/customer_pool/customerpool').then((res) => {
-                    if (res.data.code === '70040') {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
-                        this.isShow = false;
-                    } else {
-                        this.custom_list = [];
-                        this.isShow = true;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-
-                });
-            },
+//            pitch_dele (){
+//                this.$http.post('core/customer_pool/customerpool').then((res) => {
+//                    if (res.data.code === '70040') {
+//                        this.custom_list = res.data.data.list;
+//                        this.paging = res.data.data.pages;
+//                        this.isShow = false;
+//                    } else {
+//                        this.custom_list = [];
+//                        this.isShow = true;
+//                        //失败信息 ***
+//                        this.info.error = res.data.msg;
+//                        //显示失败弹窗 ***
+//                        this.info.state_error = true;
+//                    }
+//
+//                });
+//            },
 //            客户列表
-            collectList (){
+            collectList (val){
                 this.sea_status = '';             //客户状态
                 this.sea_intention = '';          //客户意向
                 this.sea_id = '';                 //客户身份
                 this.sea_source = '';             //客户来源
                 this.sea_belong = '';             //客户所属
                 this.sea_type = '';               //个人/中介
-                this.beforePage = 1;
+                this.beforePage = val;
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
 //                    列表
-                    this.$http.post('core/customer_pool/customerpool').then((res) => {
+                    this.$http.post('core/customer_pool/customerpool/page/' + val).then((res) => {
                         if (res.data.code === '70040') {
                             this.custom_list = res.data.data.list;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
+                            this.pitch=[];
+                            this.cus_name = [];
                         } else {
                             this.custom_list = [];
                             this.isShow = true;

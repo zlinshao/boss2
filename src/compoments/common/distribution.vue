@@ -53,7 +53,7 @@
     import Status from '../common/status.vue';                          //提示信息
     export default {
         components: {SelectStaff, Status},
-        props: ['pitches', 'msg'],
+        props: ['pit', 'msg'],
         data (){
             return {
                 configure: [],
@@ -89,19 +89,20 @@
             },
             distribution_ok (){
                 this.$http.post('core/customer_pool/allotCustomer', {
-                    customer_id: this.pitches,                   //客户id
+                    customer_id: this.pit,                   //客户id
                     staff_id: String(this.salesman_id)           //员工id
 
                 }).then((res) => {
                     if (res.data.code === '70070') {
                         $('#distribution').modal('hide');
-                        this.$emit('pitches');
+                        this.$emit('distribution',1);
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
+                        this.salesman = [];
                     }else{
                         //关闭成功信息(可选)
                         this.info.state_success = false;

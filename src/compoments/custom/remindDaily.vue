@@ -188,7 +188,7 @@
                 }
             },
             follow_up_take (){
-//                取消跟进
+//            取消跟进
                 if (this.daily_state === true) {
                     this.follow_up = '';
                     this.follow_w = '1';
@@ -197,21 +197,21 @@
 //            跟进方式
             follow_way_s (val){
                 this.follow_w = val.target.value;
-                this.$emit('pitches')
+                this.$emit('pitches',1)
             },
 //            时间选择
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd hh:00',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    this.dataTime = ev.target.value;
-                }.bind(this));
-            },
+//            remindData (){
+//                $('.form_datetime').datetimepicker({
+//                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd hh:00',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+////                    clearBtn: true,                     //清除按钮
+//                }).on('changeDate', function (ev) {
+//                    this.dataTime = ev.target.value;
+//                }.bind(this));
+//            },
 
 //            高级选项
             senior (){

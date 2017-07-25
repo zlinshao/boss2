@@ -58,7 +58,7 @@
                         </label>
                     </div>
                     <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="collectList">重置</button>
+                        <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
                     </div>
                     <div class="pull-right" style="margin-bottom: 3px; margin-left: 14px;">
                         <a class="btn btn-success"
@@ -140,7 +140,7 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            <th class="text-center"></th>
+                            <!--<th class="text-center"></th>-->
                             <th class="text-center">客户名称</th>
                             <th class="text-center">尊称</th>
                             <th class="text-center">手机号</th>
@@ -163,7 +163,7 @@
                                        :checked="pitch.indexOf(list.id) > -1"
                                        @click="rules(list.id, $event, list.name)">
                             </td>
-                            <td><a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a></td>
+                            <!--<td><a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a></td>-->
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
                             <td class="text-center">{{list.mobile}}</td>
@@ -208,13 +208,13 @@
         </div>
 
         <!--增加日志/增加提醒/放入客户池-->
-        <remindDaily @pitches="pitch_dele" :state="bool" :msg="pitch"></remindDaily>
+        <remindDaily @pitches="collectList" :state="bool" :msg="pitch"></remindDaily>
 
         <!--客户 新增/修改-->
         <new-add @cus_list="succ" :msg="revise_state" :revise="revise_cus" :selects="select_list"></new-add>
 
         <!--分配-->
-        <Distribution @pitches="pitch_dele" :pitches="pitch" :msg="cus_name"></Distribution>
+        <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
         <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
@@ -280,8 +280,8 @@
         methods: {
 //            select搜索
             search_c (){
-                this.sea_cus();
-                this.beforePage = 1
+                this.sea_cus(1);
+//                this.beforePage = 1
             },
 //            三天内未成交
             trid(val) {
@@ -316,22 +316,19 @@
                 }
             },
 //            分配成功更新列表
-            pitch_dele (){
-                this.pitch = [];
-                this.cus_name = [];
-//                列表
-                this.$http.post('core/customer/customerList').then((res) => {
-                    this.custom_list = res.data.data.list;
-                    this.paging = res.data.data.pages;
-                });
-            },
+//            pitch_dele (){
+//                this.pitch = [];
+//                this.cus_name = [];
+////                列表
+//                this.$http.post('core/customer/customerList/page/1').then((res) => {
+//                    this.custom_list = res.data.data.list;
+//                    this.paging = res.data.data.pages;
+//                });
+//            },
 //            新增客户展示列表
             succ (val){
                 if (val.code === '70010') {
-                    this.$http.post('core/customer/customerList').then((res) => {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
-                    });
+                    this.collectList (1)
                 }
             },
 //            客户列表
