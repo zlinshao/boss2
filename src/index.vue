@@ -116,15 +116,15 @@
                                             <th>排名</th>
                                             <th>姓名</th>
                                             <th>部门</th>
-                                            <th>当月业绩升降</th>
+                                            <th>当月业绩</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(ran,index) in main_ranking">
+                                        <tr v-for="(ran, index) in main_ranking">
                                             <td style="min-width: 60px;">{{index + 1}}</td>
                                             <td style="min-width: 80px;">{{ran.name}}</td>
                                             <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 110px;">
+                                            <td style="min-width: 100px;">
                                                 {{ran.money}}
                                                 <!--<span class="text-danger" v-if="ran.rank_id === 1"><i-->
                                                         <!--class="fa fa-arrow-up"></i></span>-->
