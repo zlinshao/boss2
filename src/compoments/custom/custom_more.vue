@@ -155,7 +155,8 @@
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-pencil-square-o"></i>&nbsp;沟通日志</a>
+                                <a data-toggle="tab" href="#home" aria-expanded="true"><i
+                                        class="fa fa-pencil-square-o"></i>&nbsp;沟通日志</a>
                             </li>
                             <li class="">
                                 <a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-home"></i>&nbsp;房屋信息</a>
@@ -262,7 +263,8 @@
         </div>
 
         <!--客户编辑-->
-        <New_add @cus_list="succ" :msg="revise_state" :revise="revise_info" :selects="select_list"></New_add>
+        <New_add @cancel="cancel" @cus_list="succ" :msg="revise_state" :revise="revise_info"
+                 :selects="select_list"></New_add>
 
         <!--查看大图-->
         <PicModal :largePic="largePic"></PicModal>
@@ -311,6 +313,9 @@
             this.detailed_info(this.cus_Id);
         },
         methods: {
+            cancel (){
+                this.detailed_info(this.cus_Id);
+            },
             detailed_info (val){
                 this.card = [];
                 this.cus_info = [];

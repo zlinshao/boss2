@@ -246,7 +246,7 @@
                             </button>
 
                             <button v-if="!btn_state" class="btn btn-warning" type="button"
-                                    @click="cus_confirm('updateCustomer')"> 修改
+                                    @click="cus_confirm('updateCustomer')">修改
                             </button>
                         </div>
                     </div>
@@ -420,6 +420,7 @@
 //            删除图片
             remove_s (){
                 $('.rem_div').remove();
+                this.$emit('cancel');
             },
 //            照片ID
             idNumber (val){

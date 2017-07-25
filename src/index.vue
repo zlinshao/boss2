@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel" style="height: 394px;">
+                <section class="panel" style="height: 396px;">
                     <header class="panel-heading">
                         公告
                     </header>
