@@ -13,7 +13,7 @@
                         <label>
                             <select class="form-control" @change="search" v-model="contractSearchInfo.passed">
                                 <option value="">合同状态</option>
-                                <option v-for="(value,key) in dictionary.collect_passed" :value="key">{{value}}</option>
+                                <option v-for="(value,key) in dictionary.passed" :value="key">{{value}}</option>
                             </select>
                         </label>
                     </div>
@@ -116,8 +116,8 @@
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
-                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.collect_passed[item.passed]}}</span>
-                            <span class="label label-warning" v-if="item.passed === 2">{{dictionary.collect_passed[item.passed]}}</span>
+                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-warning" v-if="item.passed === 2">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
                             <router-link :to="{path:'/contractDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>

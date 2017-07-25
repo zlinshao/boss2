@@ -576,7 +576,7 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    this.passDictionary = res.data.collect_passed;
+                    this.passDictionary = res.data.passed;
                     console.log(this.dictionary)
                     this.contractDetail();
                 });
@@ -660,7 +660,7 @@
             },
             inform(){   //通知
                 this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
-                    if(res.data.code === '70030'){
+                    if(res.data.code === '70040'){
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
