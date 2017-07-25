@@ -220,7 +220,7 @@
         <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
 
         <!--增加提醒-->
-        <AddRemind :remindId="pitch"></AddRemind>
+        <AddRemind :remindId="pitch" @cus_seccess="collectList"></AddRemind>
 
         <Status :state="info"></Status>
 
@@ -236,7 +236,7 @@
     import Distribution from '../common/distribution.vue'               //分配
 
     export default {
-        components: {Page, Distribution, newAdd, remindDaily, AddRemind,Status},
+        components: {Page, Distribution, newAdd, remindDaily, AddRemind, Status},
         data (){
             return {
                 Trid: '',                   //三天内未成交
@@ -275,7 +275,7 @@
             }
         },
         created (){
-            this.collectList();
+            this.collectList(1);
         },
         methods: {
 //            select搜索
@@ -318,6 +318,7 @@
 //            分配成功更新列表
             pitch_dele (){
                 this.pitch = [];
+                this.cus_name = [];
 //                列表
                 this.$http.post('core/customer/customerList').then((res) => {
                     this.custom_list = res.data.data.list;
@@ -334,23 +335,25 @@
                 }
             },
 //            客户列表
-            collectList (){
+            collectList (val){
                 this.sea_status = '';
                 this.sea_intention = '';
                 this.sea_id = '';
                 this.sea_source = '';
                 this.sea_type = '';
                 this.sea_info = '';
-                this.beforePage = 1;
+                this.beforePage = val;
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
 //                列表
-                    this.$http.post('core/customer/customerList').then((res) => {
+                    this.$http.post('core/customer/customerList/page/' + val).then((res) => {
                         if (res.data.code === '70030') {
                             this.custom_list = res.data.data.list;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
+                            this.pitch = [];
+                            this.cus_name = [];
                         } else {
                             this.custom_list = [];
                             this.isShow = true;
@@ -478,6 +481,7 @@
                         this.custom_list = res.data.data.list;
                         this.paging = res.data.data.pages;
                         this.pitch = [];
+                        this.cus_name = [];
                     });
                 });
             },
