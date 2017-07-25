@@ -159,7 +159,7 @@
                                 <tr class="unread" v-for="sys in Substitutes">
                                     <td class="text-center width180">{{sys.remind_time}}</td>
                                     <td class="text-center width80">{{sys.send_name}}</td>
-                                    <td class="text-center" :class="{ more_info: isActive !== sys.id }"
+                                    <td class="text-center" :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id  }"
                                         @click="more_content(sys.id)">
                                         {{sys.data.content}}
                                     </td>
@@ -193,7 +193,7 @@
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.data.send_name}}</td>
                                     <td class="text-center width90">{{sys.message.type}}</td>
-                                    <td class="text-center" :class="{ more_info: isActive !== sys.id }"
+                                    <td class="text-center" :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id  }"
                                         @click="more_content(sys.id)">
                                         {{sys.message.data.content}}
                                     </td>
@@ -227,7 +227,8 @@
                                     <td class="text-center width180">{{sys.create_time}}</td>
                                     <td class="text-center width80">{{sys.release_name}}</td>
                                     <td class="text-center width90">{{sys.type}}</td>
-                                    <td class="text-center" :class="{ more_info: isActive !== sys.id }"
+                                    <td class="text-center"
+                                        :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id }"
                                         @click="more_content(sys.id)">
                                         {{sys.content}}
                                     </td>
@@ -492,15 +493,23 @@
 </script>
 
 <style scoped>
+
+    @media screen and (max-width: 767px) {
+        .table.table-responsive > .table > tbody > tr > td.phone {
+            max-width: 466px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+    }
+
     #main-content {
         margin-left: 0;
     }
-
     .more_info {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        max-width: 200px;
+        max-width: 300px;
         cursor: pointer
     }
 
