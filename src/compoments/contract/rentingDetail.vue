@@ -20,7 +20,7 @@
                     <i class="fa fa-unlock" v-else="isLock"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
-                <button class="btn btn-primary">通知</button>
+                <button class="btn btn-primary" @click="inform">通知</button>
                 <button class="btn btn-warning" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
@@ -539,7 +539,7 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    this.passDictionary = res.data.collect_passed;
+                    this.passDictionary = res.data.passed;
                     console.log(this.dictionary);
                     this.contractDetail();
                 });
@@ -621,6 +621,20 @@
             },
             haveCompared(){
                 this.isCompared = false;
+            },
+            inform(){   //通知
+                this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
+                    if(res.data.code === '70040'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
             }
 
         }
