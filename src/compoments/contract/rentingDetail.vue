@@ -7,7 +7,7 @@
 
         <div class="title clearFix">
             <div class="contractNum">
-                <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">首页</router-link>
+                <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">返回</router-link>
                 <h4>
                     合同编号&emsp;
                     {{contract_num}}
@@ -199,33 +199,41 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>应收：</span>
-                                                <span>{{item.checkin_rent_id.received_amount}}</span>
+                                                <span>{{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>已收 （定金）：<sup>*</sup></span>
-                                                <span>{{item.checkin_rent_id.price * item.checkin_rent_id.bet}} 元</span>
+                                                <span>{{item.checkin_rent_id.received_amount}} 元</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>付款方式 （银行卡）：</span>
+                                                <span>{{item.checkin_rent_id.payment[1].money}} 元</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式 （现金）：</span>
-                                                <span>{{}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式 （支付宝）：<sup>*</sup></span>
-                                                <span>{{}}</span>
+                                                <span></span>
                                             </div>
                                             <div class="infoList">
                                                 <span>未收：</span>
-                                                <span>{{}}</span>
+                                                <span>{{item.checkin_rent_id.amount_remaining}} 元</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>租房状态：</span>
                                                 <span>{{dictionary.rent_type[item.checkin_rent_id.rent_type]}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>收条编号：<sup>*</sup></span>
-                                                <span>{{}}</span>
+                                                <span>资料补齐日期：</span>
+                                                <span>
+                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
+                                                </span>
+                                                <span style="color: #e8403f">
+                                                    {{item.complete_date[2]}}
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -238,15 +246,6 @@
                                                 <span>{{item.checkin_rent_id.cost_medi}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>资料补齐日期：</span>
-                                                <span>
-                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
-                                                </span>
-                                                <span style="color: #e8403f">
-                                                    {{item.complete_date[2]}}
-                                                </span>
-                                            </div>
-                                            <div class="infoList">
                                                 <span>备注：</span>
                                                 <span>{{item.remarks}}</span>
                                             </div>
@@ -256,7 +255,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>审核人：</span>
-                                                <span>{{}}</span>
+                                                <span>{{item.checker}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -266,12 +265,12 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主信息：<sup>*</sup></span>
-                                                <span>LJS081740</span>
+                                                <span>业主姓名：<sup>*</sup></span>
+                                                <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>尊称：<sup>*</sup></span>
-                                                <span>{{item.customer_id.name}}</span>
+                                                <span>{{dictionary.gender[item.customer_id.gender]}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">

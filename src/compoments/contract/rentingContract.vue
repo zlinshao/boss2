@@ -8,7 +8,7 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body">
-                <div v-if="pitch.length === 0">
+                <div v-if="contractSeleted === 0">
                     <div class="pro-sort">
                         <label>
                             <select class="form-control" @change="search" v-model="contractSearchInfo.passed">
@@ -17,11 +17,14 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pro-sort">
-                        <label>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;">
+                        <div class="input-group">
                             <input type="text" readonly class="form-control" placeholder="点击选择部门"
                                    @click="selectDpm" v-model="departmentName">
-                        </label>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="reset">清空</button>
+                            </span>
+                        </div>
                     </div>
                     <div class="pro-sort">
                         <label>
@@ -30,9 +33,10 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="contractSearchInfo.keywords">
+                            <input type="text" class="form-control" @keyup="search" placeholder="请输入房屋地址"
+                                   v-model="contractSearchInfo.keywords">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" type="button" >搜索</button>
+                                <button class="btn btn-success" type="button" @click="search">搜索</button>
                             </span>
                         </div>
                     </div>
@@ -53,17 +57,19 @@
                     </div>
                 </div>
                 <!--选中-->
-                <div class="panel-body" v-if="pitch.length>0" style="padding: 0;">
+                <div class="panel-body" v-if="contractSeleted > 0" style="padding: 0;">
                     <ul>
-                        <li>已选中&nbsp;{{pitch.length}}&nbsp;项</li>
+                        <li>已选中&nbsp; 1 &nbsp;项</li>
                         <li  class="operate">
-                            <i class="fa fa-star"> 标记</i>
+                            <i class="fa fa-star"  v-if="mark == 1" @click="marked"> 标记</i>
+                            <i class="fa fa-star"  v-if="mark == 2" @click="marked"> 取消标记</i>
                         </li>
                         <li  class="operate">
-                            <i class="fa fa-times-circle"> 删除</i>
+                            <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li  class="operate">
-                            <i class="fa fa-arrow-up"> 置顶</i>
+                            <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick">置顶</i>&nbsp;
+                            <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick">取消置顶</i>&nbsp;
                         </li>
                     </ul>
                 </div>
@@ -78,6 +84,7 @@
                         <th class="text-center">
                             <!--<input type="checkbox">-->
                         </th>
+                        <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
                         <th class="text-center">上传时间</th>
                         <th class="text-center">开单人</th>
@@ -90,12 +97,14 @@
                         <th class="text-center">回访情况</th>
                         <th class="text-center">资料状态</th>
                         <th class="text-center">更多</th>
-                        <th class="text-center">操作</th>
+                        <th class="text-center"></th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList">
-                        <td><input type="checkbox" @change="rules(1 , $event)"></td>
+                        <td><input type="checkbox" @click="picked(item,$event)"
+                                   :value="item.id" :checked="contractSeleted===item.id"></td>
+                        <td><i class="fa fa-star" v-if="item.mark === 1"></i></td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.drawer}}</td>
@@ -104,24 +113,24 @@
                         <td>{{item.mobile}}</td>
                         <td>{{item.end_date}}</td>
                         <td>{{item.complete_date[0]}}</td>
-                        <td>{{dictionary.villa_status[item.status]}}</td>
-                        <td>未回访</td>
+                        <td>{{item.complete_date[2]}}</td>
+                        <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
                             <span class="label label-success" v-if="item.passed === 1">{{dictionary.collect_passed[item.passed]}}</span>
                             <span class="label label-warning" v-if="item.passed === 2">{{dictionary.collect_passed[item.passed]}}</span>
                         </td>
                         <td>
-                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id}}">更多</router-link>
+                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>
+                            <a class="fa fa-lock" v-if="item.status !== 1" title="解锁" @click="deblocking(item.house_id)"></a>
+                            <a class="fa fa-unlock" v-if="item.status === 1" title="锁定"></a>
                         </td>
-                        <td class="icon">
-                            <i class="fa fa-lock" v-if="item.status !== 1"></i>
-                            <i class="fa fa-unlock" v-if="item.status === 1"></i>
+                        <td>
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
 
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="14" class="text-center text-muted">
+                        <td colspan="15" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
@@ -144,7 +153,6 @@
         components: {DatePicker , Page , Staff, Status},
         data(){
             return {
-                pitch : [],      // 选中id
                 start_time:"",
                 end_time:'',
                 dateConfigure : [{
@@ -179,6 +187,9 @@
                 configure:[],
                 pages:'',
                 isShow :false,
+                contractSeleted:0,
+                top:'',
+                mark:'',
             }
         },
         updated (){
@@ -191,7 +202,6 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    console.log(this.dictionary)
                     this.search();
                 });
             },
@@ -203,7 +213,6 @@
                 this.$http.post('core/rent/contractlist ',this.contractSearchInfo).then((res) =>{
                     if(res.data.code === '80010'){
                         this.contractSearchList = res.data.data.list;
-                        console.log(this.contractSearchList)
                         this.pages = res.data.data.pages;
                         this.isShow = false;
                     }else {
@@ -233,22 +242,72 @@
                 this.contractSearchInfo.page = val;
                 this.searchContract();
             },
-            rules(id , ev){   //多选框选中
-                if (ev.target.checked){
-                    this.pitch.push(id);
-                }else {
-                    let index = this.pitch.indexOf(id);
-                    if (index > -1) {
-                        this.pitch.splice(index, 1);
-                    }
-                }
-            },
             isNewest(val){
                 if(val){
                     this.contractSearchInfo.newest = true;
                 }else {
                     this.contractSearchInfo.newest = false;
                 }
+                this.searchContract();
+            },
+            reset(){    //清空
+                this.contractSearchInfo.department_id = '';
+                this.departmentName = '';
+                this.searchContract();
+            },
+            picked (item,e){  //复选框单选并保存选中的id
+                if(e.target.checked===true){
+                    this.contractSeleted = item.id;
+                    item.top === 2? this.top = 1:this.top = 2;
+                    item.mark === 2? this.mark = 1:this.mark = 2;
+                }else {
+                    this.contractSeleted = 0;
+                }
+            },
+            stick(){  //top
+                this.$http.get('core/rent/stick/id/' + this.contractSeleted +'/top/' +this.top).then((res) => {
+                    if(res.data.code === '80090'){
+                        this.search();
+                        this.contractSeleted = 0;
+                        this.info.success =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            marked(){
+                this.$http.get('core/rent/mark/id/' + this.contractSeleted +'/mark/' +this.mark).then((res) => {
+                    if(res.data.code === '80090'){
+                        this.search();
+                        this.contractSeleted = 0;
+                        this.info.success =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            deleteContract(){
+                this.$http.get('core/rent/delete/id/' + this.contractSeleted).then((res) => {
+                    if(res.data.code === '80030'){
+                        this.search();
+                        this.contractSeleted = 0;
+                        this.info.success =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             }
         }
     }

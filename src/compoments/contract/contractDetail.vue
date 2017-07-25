@@ -2,17 +2,17 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li class="active">合同详情</li>
+            <li class="active">收房合同详情</li>
         </ol>
 
         <div class="title clearFix">
             <div class="contractNum">
-                <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">首页</router-link>
+                <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">返回</router-link>
                 <h4>
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
-                <span class="label label-warning">待审核</span>
+                <span class="label label-warning">{{dictionary.collect_passed[contractList[0].passed]}}</span>
             </div>
             <div class="pull-right dropdown" v-for="item in contractList">
                 <span @click="changeLock">
@@ -20,7 +20,8 @@
                     <i class="fa fa-unlock" v-else="isLock"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
-                <button class="btn btn-primary">通知</button>
+                <!--<router-link :to="{path:'/compareContract',query: {ContractId: contractList[0].villa_id.id}}" tag="button" class="btn btn-primary">对比</router-link>-->
+                <button class="btn btn-primary" @click="inform">通知</button>
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
@@ -209,7 +210,9 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价：<sup>*</sup></span>
-                                                <span>{{item.checkin_collect_id.price}}</span>
+                                                <span v-for="(price,index) in item.checkin_collect_id.price">
+                                                    第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>开户行：</span>
@@ -220,15 +223,11 @@
                                                 <span>{{item.checkin_collect_id.account}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>收条编号：<sup>*</sup></span>
-                                                <span>{{}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
                                                 <span>中介费用：</span>
                                                 <span>{{item.checkin_collect_id.cost_medi}}</span>
                                             </div>
+                                        </div>
+                                        <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>资料补齐日期：</span>
                                                 <span>
@@ -248,7 +247,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>审核人：</span>
-                                                <span>{{}}</span>
+                                                <span>{{item.checker}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -258,12 +257,12 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主信息：<sup>*</sup></span>
-                                                <span>LJS081740</span>
+                                                <span>业主姓名：<sup>*</sup></span>
+                                                <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>尊称：<sup>*</sup></span>
-                                                <span>{{item.customer_id.name}}</span>
+                                                <span>{{dictionary.gender[item.customer_id.gender]}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -403,6 +402,20 @@
                             <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
+                                        <span class="col-lg-2">证件照片<sup>*</sup></span>
+                                        <span class="col-lg-10">
+                                             <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
+                                                  v-for="(img,index) in item.album.id_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-2">银行卡<sup>*</sup></span>
+                                        <span class="col-lg-10">
+                                             <img :src="img.small" @click="showLargeIdPic('bank_pic',index)"
+                                                  v-for="(img,index) in item.album.bank_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
                                         <span class="col-lg-2">合同照片<sup>*</sup></span>
                                         <span class="col-lg-10">
                                              <img :src="img.small" @click="showLargePic('contract_pic',index)"
@@ -435,6 +448,13 @@
                                         <span class="col-lg-10">
                                             <img :src="img.small" @click="showLargePic('handover_pic',index)"
                                                  v-for="(img,index) in item.album.handover_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-2">委托书</span>
+                                        <span class="col-lg-10">
+                                            <img :src="img.small" @click="showLargePic('proxy_pic',index)"
+                                                 v-for="(img,index) in item.album.proxy_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
@@ -593,6 +613,20 @@
             },
             haveCompared(){
                 this.isCompared = false;
+            },
+            inform(){   //通知
+                this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
+                    if(res.data.code === '70030'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
             }
 
         }

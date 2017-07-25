@@ -62,10 +62,6 @@
                                             <span>{{item.checkin_collect_id.account}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>收条编号：<sup>*</sup></span>
-                                            <span>{{}}</span>
-                                        </div>
-                                        <div class="infoList">
                                             <span>中介费用：</span>
                                             <span>{{item.checkin_collect_id.cost_medi}}</span>
                                         </div>
@@ -88,16 +84,16 @@
                                         </div>
                                         <div class="infoList">
                                             <span>审核人：</span>
-                                            <span>{{}}</span>
+                                            <span>{{item.checker}}</span>
                                         </div>
                                         <h4>业主信息</h4>
                                         <div class="infoList">
-                                            <span>业主信息：<sup>*</sup></span>
-                                            <span>LJS081740</span>
+                                            <span>业主姓名：<sup>*</sup></span>
+                                            <span>{{item.customer_id.name}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>尊称：<sup>*</sup></span>
-                                            <span>{{item.customer_id.name}}</span>
+                                            <span>{{dictionary.gender[item.customer_id.gender]}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>国籍：<sup>*</sup></span>
@@ -182,73 +178,97 @@
                                         <div class="infoList">
                                             <span>房屋照片</span>
                                             <span>
-                                                <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
+                                                <img :src="img.small"
                                                          v-for="(img,index) in item.villa_id.album.house_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>水卡照片</span>
                                             <span >
-                                                <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
+                                                <img :src="img.small"
                                                          v-for="(img,index) in item.villa_id.album.water_card_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>电卡卡照片</span>
                                             <span >
-                                                <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
+                                                <img :src="img.small"
                                                          v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>燃气卡照片</span>
                                             <span >
-                                                <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
+                                                <img :src="img.small"
                                                          v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>产权证照片</span>
                                             <span >
-                                                <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
+                                                <img :src="img.small"
                                                          v-for="(img,index) in item.villa_id.album.property_pic">
                                             </span>
                                         </div>
                                         <h4>附件照片</h4>
                                         <div class="infoList">
-                                            <span>房屋照片</span>
+                                            <span>证件照片<sup>*</sup></span>
                                             <span>
-                                                    <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.house_pic">
-                                                </span>
+                                             <img :src="img.small"
+                                                  v-for="(img,index) in item.album.id_pic">
+                                        </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>水卡照片</span>
-                                            <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.water_card_pic">
-                                                </span>
+                                            <span>银行卡<sup>*</sup></span>
+                                            <span>
+                                             <img :src="img.small"
+                                                  v-for="(img,index) in item.album.bank_pic">
+                                        </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>电卡卡照片</span>
-                                            <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.elec_card_pic">
-                                                </span>
+                                            <span>合同照片<sup>*</sup></span>
+                                            <span>
+                                             <img :src="img.small"
+                                                  v-for="(img,index) in item.album.contract_pic">
+                                        </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>燃气卡照片</span>
+                                            <span>水费照片</span>
                                             <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.gas_card_pic">
-                                                </span>
+                                            <img :src="img.small"
+                                                 v-for="(img,index) in item.album.water_card_pic">
+                                        </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>产权证照片</span>
+                                            <span>电费照片</span>
+                                            <span>
+                                            <img :src="img.small"
+                                                 v-for="(img,index) in item.album.elec_card_pic">
+                                        </span>
+                                        </div>
+                                        <div class="infoList">
+                                            <span>燃气费照片</span>
+                                            <span>
+                                            <img :src="img.small" v-for="(img,index) in item.album.gas_card_pic">
+                                        </span>
+                                        </div>
+                                        <div class="infoList">
+                                            <span>交接单照片</span>
+                                            <span>
+                                            <img :src="img.small" v-for="(img,index) in item.album.handover_pic">
+                                        </span>
+                                        </div>
+                                        <div class="infoList">
+                                            <span>委托书</span>
+                                            <span>
+                                            <img :src="img.small" v-for="(img,index) in item.album.proxy_pic">
+                                        </span>
+                                        </div>
+                                        <div class="infoList">
+                                            <span>押金收条</span>
                                             <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.property_pic">
-                                                </span>
+                                            <img :src="img.small" v-for="(img,index) in item.album.receipt_pic">
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
@@ -282,39 +302,30 @@
                                         </div>
                                         <div class="infoList">
                                             <span>应收：</span>
-                                            <span>{{item.checkin_rent_id.received_amount}}</span>
+                                            <span>{{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元</span>
                                         </div>
                                         <div class="infoList">
                                             <span>已收 （定金）：<sup>*</sup></span>
-                                            <span></span>
+                                            <span>{{item.checkin_rent_id.received_amount}} 元</span>
+                                        </div>
+                                        <div class="infoList">
+                                            <span>付款方式 （银行卡）：</span>
+                                            <span>{{item.checkin_rent_id.payment[1].money}} 元</span>
                                         </div>
                                         <div class="infoList">
                                             <span>付款方式 （现金）：</span>
-                                            <span>{{}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>付款方式 （支付宝）：<sup>*</sup></span>
-                                            <span>{{}}</span>
+                                            <span></span>
                                         </div>
                                         <div class="infoList">
                                             <span>未收：</span>
-                                            <span>{{}}</span>
+                                            <span>{{item.checkin_rent_id.amount_remaining}} 元</span>
                                         </div>
                                         <div class="infoList">
                                             <span>租房状态：</span>
                                             <span>{{dictionary.rent_type[item.checkin_rent_id.rent_type]}}</span>
-                                        </div>
-                                        <div class="infoList">
-                                            <span>收条编号：<sup>*</sup></span>
-                                            <span>{{}}</span>
-                                        </div>
-                                        <div class="infoList">
-                                            <span>中介名：<sup>*</sup></span>
-                                            <span>{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
-                                        </div>
-                                        <div class="infoList">
-                                            <span>中介费用：</span>
-                                            <span>{{item.checkin_rent_id.cost_medi}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>资料补齐日期：</span>
@@ -335,16 +346,16 @@
                                         </div>
                                         <div class="infoList">
                                             <span>审核人：</span>
-                                            <span>{{}}</span>
+                                            <span>{{item.checker}}</span>
                                         </div>
                                         <h4>业主信息</h4>
                                         <div class="infoList">
-                                            <span>业主信息：<sup>*</sup></span>
-                                            <span>LJS081740</span>
+                                            <span>业主姓名：<sup>*</sup></span>
+                                            <span>{{item.customer_id.name}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>尊称：<sup>*</sup></span>
-                                            <span>{{item.customer_id.name}}</span>
+                                            <span>{{dictionary.gender[item.customer_id.gender]}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>国籍：<sup>*</sup></span>
@@ -392,22 +403,22 @@
                                         <div class="infoList">
                                             <span>配套设施：</span>
                                             <span>
-                                                    <span  v-for="list in item.villa_id.facility">
-                                                        {{dictionary.facility[list]}}&nbsp;&nbsp;
-                                                    </span>
+                                                <span  v-for="list in item.villa_id.facility">
+                                                    {{dictionary.facility[list]}}&nbsp;&nbsp;
                                                 </span>
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>楼层：</span>
                                             <span>
-                                                    {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
-                                                </span>
+                                                {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>楼层建筑：</span>
                                             <span>
-                                                    {{dictionary.floor_type[item.villa_id.floor_type]}}
-                                                </span>
+                                                {{dictionary.floor_type[item.villa_id.floor_type]}}
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>所属小区：</span>
@@ -416,14 +427,14 @@
                                         <div class="infoList">
                                             <span>房屋特色：</span>
                                             <span>
-                                                    {{dictionary.house_feature[item.villa_id.house_feature]}}
-                                                </span>
+                                                {{dictionary.house_feature[item.villa_id.house_feature]}}
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>水费卡号：</span>
                                             <span>
-                                                    {{item.villa_id.water_card_num}}
-                                                </span>
+                                                {{item.villa_id.water_card_num}}
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>电费卡号：</span>
@@ -437,85 +448,78 @@
                                         <div class="infoList">
                                             <span>房屋照片</span>
                                             <span>
-                                                    <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.house_pic">
-                                                </span>
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.house_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>水卡照片</span>
                                             <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.water_card_pic">
-                                                </span>
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.water_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>电卡卡照片</span>
                                             <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.elec_card_pic">
-                                                </span>
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.elec_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>燃气卡照片</span>
                                             <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.gas_card_pic">
-                                                </span>
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.gas_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>产权证照片</span>
                                             <span >
-                                                    <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
-                                                         v-for="(img,index) in item.villa_id.album.property_pic">
-                                                </span>
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.property_pic">
+                                            </span>
                                         </div>
                                         <h4>合同附件</h4>
                                         <div class="infoList">
                                             <span>合同照片<sup>*</sup></span>
                                             <span>
-                                             <img :src="img.small" @click="showLargePic('contract_pic',index)"
-                                                  v-for="(img,index) in item.album.contract_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.contract_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>水费照片</span>
                                             <span >
-                                            <img :src="img.small" @click="showLargePic('water_card_pic',index)"
-                                                 v-for="(img,index) in item.album.water_card_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.water_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>电费照片</span>
                                             <span>
-                                            <img :src="img.small" @click="showLargePic('elec_card_pic',index)"
+                                            <img :src="img.small"
                                                  v-for="(img,index) in item.album.elec_card_pic">
                                         </span>
                                         </div>
                                         <div class="infoList">
                                             <span>燃气费照片</span>
                                             <span>
-                                            <img :src="img.small" @click="showLargePic('gas_card_pic',index)"
+                                            <img :src="img.small"
                                                  v-for="(img,index) in item.album.gas_card_pic">
                                         </span>
                                         </div>
                                         <div class="infoList">
                                             <span>押金收条</span>
                                             <span >
-                                            <img :src="img.small" @click="showLargePic('receipt_pic',index)"
+                                            <img :src="img.small"
                                                  v-for="(img,index) in item.album.receipt_pic">
                                         </span>
                                         </div>
                                         <div class="infoList">
                                             <span>转账凭证</span>
                                             <span >
-                                            <img :src="img.small" @click="showLargePic('payment_pic',index)"
+                                            <img :src="img.small"
                                                  v-for="(img,index) in item.album.payment_pic">
                                         </span>
                                         </div>
                                         <div class="infoList">
                                             <span>交接单照片</span>
                                             <span>
-                                            <img :src="img.small" @click="showLargePic('handover_pic',index)"
+                                            <img :src="img.small"
                                                  v-for="(img,index) in item.album.handover_pic">
                                         </span>
                                         </div>
@@ -531,13 +535,15 @@
             </div>
         </div>
         <Status :state='info'></Status>
+        <PicModal :largePic="largePic"></PicModal>
     </div>
 </template>
 <script>
     import Status from '../common/status.vue'
+    import PicModal from  '../common/largePic.vue'
     export default{
         props:['villaId','dictionary','isCompared',],
-        components:{Status},
+        components:{Status,PicModal},
         data(){
             return{
                 myVillaId:'',
@@ -555,6 +561,8 @@
                     error: ''
                 },
                 myIsCompared:false,
+                largePic: [],   //查看大图
+                srcs: {},
             }
         },
         watch:{
@@ -575,6 +583,7 @@
                     if(res.data.code === '70020'){
                         this.rentContractList = [];
                         this.rentContractList.push(res.data.data);
+                        console.log(this.rentContractList)
                     }else {
                         this.rentContractList = [];
                         this.info.error = res.data.msg;
@@ -596,7 +605,8 @@
             },
             close(){
                 this.$emit('Compared','yes')
-            }
+            },
+
         }
     }
 </script>
@@ -613,7 +623,7 @@
         margin: 15px;
         border-bottom: 1px solid #eeeeee;
     }
-    .infoList span:first-child{
+    .infoList>span:first-child{
         color: #59ace2;
     }
     h4{

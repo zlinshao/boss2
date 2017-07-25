@@ -64,10 +64,15 @@
                 </div>
             </div>
         </div>
+        <Status :state='info'></Status>
     </div>
 </template>
 <script>
+    import Status from './status.vue'
     export default{
+        components:{
+            Status
+        },
         data(){
             return {
                 keywords:'',
@@ -77,6 +82,16 @@
                 person_medium:[],
                 selectClients:[],
                 isShow:false,
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted(){
@@ -110,9 +125,17 @@
                 this.selectClients=item;
             },
             clientAdd(){
-                this.$emit('clientAdd',this.selectClients);
-                $('#selectClient').modal('hide');
-                this.customerList=[];
+                console.log(this.selectClients)
+                if(this.selectClients.length === 0){
+                    this.info.error = '请先选择客户';
+                    this.info.state_error = true;
+                }else {
+                    this.$emit('clientAdd',this.selectClients);
+                    $('#selectClient').modal('hide');
+                    this.customerList=[];
+                    this.selectClients=[];
+                }
+
             }
         }
     }

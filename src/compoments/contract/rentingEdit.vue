@@ -141,7 +141,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" @click="editContract">编辑</button>
+                        <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
                 </div>

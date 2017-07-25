@@ -69,19 +69,19 @@
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.vac_end_date"
-                                                   readonly placeholder="空置期结束时间">
+                                                   disabled placeholder="空置期结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.start_date"
-                                                   readonly placeholder="合同开始时间">
+                                                   disabled placeholder="合同开始时间">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.end_date"
-                                                   readonly placeholder="合同结束时间">
+                                                   disabled placeholder="合同结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -180,7 +180,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" @click="editContract">编辑</button>
+                        <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
                 </div>
@@ -496,7 +496,7 @@
                         this.$http.post('core/collect/updatecontract',this.contractEdit).then((res) => {
                             if(res.data.code === "60010"){
                                 this.$emit('EditStatus','success');
-                                $('#collectEdit').modal('hide');
+                                $('#contractEdit').modal('hide');
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
