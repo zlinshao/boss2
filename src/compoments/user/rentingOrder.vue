@@ -215,7 +215,7 @@
                     this.keywords='';
                     this.orderLIstSearch();
                 }else if(this.configureType==='distribution'){
-                    if(this.configureType==='select'){
+                    if(val.department.length){
                         this.distributeDpm=val.department[0].id;
                         this.$http.post('manager/move_rent_order/moveorder',
                             {
