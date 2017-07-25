@@ -76,6 +76,10 @@
     .prev{
         left: 0;
     }
+    .modal{
+        z-index: 999999999;
+    }
+
 
 </style>
 <script>

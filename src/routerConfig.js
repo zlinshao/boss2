@@ -31,6 +31,8 @@ import RentingContract from "./compoments/contract/rentingContract.vue";        
 import ContractDetail from './compoments/contract/contractDetail.vue'           // 收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
 
+import CompareContract from './compoments/contract/compareContract.vue'
+
 // 账本
 import Account from './compoments/finance/account.vue'                          // 账号管理
 import Subject from './compoments/finance/subject/subject.vue'                          // 科目管理
@@ -341,5 +343,10 @@ export default[
         path: '/reopetedRentDetail',
         name: 'ReopetedRentDetail',
         component: ReopetedRentDetail
-    }
+    },
+    {
+        path: '/compareContract',
+        name: 'CompareContract',
+        component: CompareContract
+    },
 ]
