@@ -51,7 +51,9 @@
                                         </div>
                                         <div class="infoList">
                                             <span>月单价：<sup>*</sup></span>
-                                            <span>{{item.checkin_collect_id.price}}</span>
+                                            <span v-for="(price,index) in item.checkin_collect_id.price">
+                                                第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>开户行：</span>
@@ -68,11 +70,11 @@
                                         <div class="infoList">
                                             <span>资料补齐日期：</span>
                                             <span>
-                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
-                                                </span>
+                                                {{item.complete_date[0]}}&nbsp;&nbsp;
+                                            </span>
                                             <span style="color: #e8403f">
-                                                    {{item.complete_date[2]}}
-                                                </span>
+                                                {{item.complete_date[2]}}
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>备注：</span>
@@ -123,32 +125,32 @@
                                         <div class="infoList ">
                                             <span >房型：</span>
                                             <span>
-                                                    {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
-                                                </span>
+                                                {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
+                                            </span>
                                         </div>
                                         <div class="infoList ">
                                             <span >面积：</span>
                                             <span>
-                                                    {{item.villa_id.area}}㎡
-                                                </span>
+                                                {{item.villa_id.area}}㎡
+                                            </span>
                                         </div>
                                         <div class="infoList ">
                                             <span >房屋类型：</span>
                                             <span>
-                                                    {{dictionary.house_type[item.villa_id.house_type]}}
-                                                </span>
+                                                {{dictionary.house_type[item.villa_id.house_type]}}
+                                            </span>
                                         </div>
                                         <div class="infoList ">
                                             <span >楼层：</span>
                                             <span>
-                                                    {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
-                                                </span>
+                                                {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
+                                            </span>
                                         </div>
                                         <div class="infoList ">
                                             <span >楼层建筑：</span>
                                             <span>
-                                                    {{dictionary.floor_type[item.villa_id.floor_type]}}
-                                                </span>
+                                                {{dictionary.floor_type[item.villa_id.floor_type]}}
+                                            </span>
                                         </div>
                                         <div class="infoList ">
                                             <span >所属小区：</span>
@@ -157,14 +159,14 @@
                                         <div class="infoList ">
                                             <span >房屋特色：</span>
                                             <span>
-                                                    {{dictionary.house_feature[item.villa_id.house_feature]}}
-                                                </span>
+                                                {{dictionary.house_feature[item.villa_id.house_feature]}}
+                                            </span>
                                         </div>
                                         <div class="infoList ">
                                             <span >水费卡号：</span>
                                             <span>
-                                                    {{item.villa_id.water_card_num}}
-                                                </span>
+                                                {{item.villa_id.water_card_num}}
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span >电费卡号：</span>
@@ -178,97 +180,87 @@
                                         <div class="infoList">
                                             <span>房屋照片</span>
                                             <span>
-                                                <img :src="img.small"
-                                                         v-for="(img,index) in item.villa_id.album.house_pic">
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.house_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>水卡照片</span>
                                             <span >
-                                                <img :src="img.small"
-                                                         v-for="(img,index) in item.villa_id.album.water_card_pic">
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.water_card_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>电卡卡照片</span>
                                             <span >
-                                                <img :src="img.small"
-                                                         v-for="(img,index) in item.villa_id.album.elec_card_pic">
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>燃气卡照片</span>
                                             <span >
-                                                <img :src="img.small"
-                                                         v-for="(img,index) in item.villa_id.album.gas_card_pic">
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                             </span>
                                         </div>
                                         <div class="infoList">
                                             <span>产权证照片</span>
                                             <span >
-                                                <img :src="img.small"
-                                                         v-for="(img,index) in item.villa_id.album.property_pic">
+                                                <img :src="img.small" v-for="(img,index) in item.villa_id.album.property_pic">
                                             </span>
                                         </div>
                                         <h4>附件照片</h4>
                                         <div class="infoList">
                                             <span>证件照片<sup>*</sup></span>
                                             <span>
-                                             <img :src="img.small"
-                                                  v-for="(img,index) in item.album.id_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.id_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>银行卡<sup>*</sup></span>
                                             <span>
-                                             <img :src="img.small"
-                                                  v-for="(img,index) in item.album.bank_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.bank_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>合同照片<sup>*</sup></span>
                                             <span>
-                                             <img :src="img.small"
-                                                  v-for="(img,index) in item.album.contract_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.contract_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>水费照片</span>
                                             <span >
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.water_card_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.water_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>电费照片</span>
                                             <span>
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.elec_card_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.elec_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>燃气费照片</span>
                                             <span>
-                                            <img :src="img.small" v-for="(img,index) in item.album.gas_card_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.gas_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>交接单照片</span>
                                             <span>
-                                            <img :src="img.small" v-for="(img,index) in item.album.handover_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.handover_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>委托书</span>
                                             <span>
-                                            <img :src="img.small" v-for="(img,index) in item.album.proxy_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.proxy_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>押金收条</span>
                                             <span >
-                                            <img :src="img.small" v-for="(img,index) in item.album.receipt_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.receipt_pic">
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -359,9 +351,7 @@
                                         </div>
                                         <div class="infoList">
                                             <span>国籍：<sup>*</sup></span>
-                                            <span>
-                                                    {{dictionary.nationality[item.customer_id.nationality]}}
-                                                </span>
+                                            <span>{{dictionary.nationality[item.customer_id.nationality]}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>手机号码：<sup>*</sup></span>
@@ -369,9 +359,7 @@
                                         </div>
                                         <div class="infoList">
                                             <span>证件类型：<sup>*</sup></span>.
-                                            <span>
-                                                    {{dictionary.credentials[item.customer_id.id_type]}}
-                                                </span>
+                                            <span>{{dictionary.credentials[item.customer_id.id_type]}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>身份证号：<sup>*</sup></span>
@@ -385,20 +373,16 @@
                                         <div class="infoList">
                                             <span>房型：</span>
                                             <span>
-                                                    {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
-                                                </span>
+                                                {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>面积：</span>
-                                            <span>
-                                                    {{item.villa_id.area}}㎡
-                                                </span>
+                                            <span>{{item.villa_id.area}}㎡</span>
                                         </div>
                                         <div class="infoList">
                                             <span>房屋类型：</span>
-                                            <span>
-                                                    {{dictionary.house_type[item.villa_id.house_type]}}
-                                                </span>
+                                            <span>{{dictionary.house_type[item.villa_id.house_type]}}</span>
                                         </div>
                                         <div class="infoList">
                                             <span>配套设施：</span>
@@ -491,37 +475,32 @@
                                         <div class="infoList">
                                             <span>电费照片</span>
                                             <span>
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.elec_card_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.elec_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>燃气费照片</span>
                                             <span>
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.gas_card_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.gas_card_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>押金收条</span>
                                             <span >
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.receipt_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.receipt_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>转账凭证</span>
                                             <span >
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.payment_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.payment_pic">
+                                            </span>
                                         </div>
                                         <div class="infoList">
                                             <span>交接单照片</span>
                                             <span>
-                                            <img :src="img.small"
-                                                 v-for="(img,index) in item.album.handover_pic">
-                                        </span>
+                                                <img :src="img.small" v-for="(img,index) in item.album.handover_pic">
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

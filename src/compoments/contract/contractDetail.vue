@@ -291,6 +291,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="ownerInfo" v-if="item.relative_customer_id.length > 0"
+                                     v-for="relative in item.relative_customer">
+                                    <header>附属房东信息</header>
+                                    <div class="infoContainer clearFix">
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>业主姓名：<sup>*</sup></span>
+                                                <span>{{relative.name}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>尊称：<sup>*</sup></span>
+                                                <span>{{dictionary.gender[relative.gender]}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>国籍：<sup>*</sup></span>
+                                                <span>
+                                                    {{dictionary.nationality[relative.nationality]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>手机号码：<sup>*</sup></span>
+                                                <span>{{relative.mobile}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoList">
+                                                <span>证件类型：<sup>*</sup></span>.
+                                                <span>
+                                                    {{dictionary.credentials[relative.id_type]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>身份证号：<sup>*</sup></span>
+                                                <span>{{relative.id_num}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!--房屋信息-->
