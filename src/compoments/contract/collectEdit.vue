@@ -64,7 +64,8 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="remindData" readonly placeholder="空置期开始时间" v-model="contractEdit.vac_start_date"                                                 @blur="completeDate"  class="form-control form_datetime">
+                                            <input @click="remindData" readonly placeholder="空置期开始时间"
+                                                   v-model="contractEdit.vac_start_date" class="form-control form_datetime">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
@@ -295,14 +296,14 @@
                 this.myContractEitId = val;
                 this.gitContractInfo();
             },
-//            'contractEdit.vac_start_date' : {
-//                deep:true,
-//                handler(val,oldVal){
-//                    if(val !== oldVal){
-//                        this.completeDate(val);
-//                    }
-//                }
-//            }
+            'contractEdit.vac_start_date' : {
+                deep:true,
+                handler(val,oldVal){
+                    if(val !== oldVal){
+                        this.completeDate(val);
+                    }
+                }
+            }
         },
         methods : {
             gitContractInfo(){
