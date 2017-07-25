@@ -276,9 +276,9 @@
                     </ul>
                 </div>
                 <ul class="nav pull-right top-menu">
-                    <li>
-                        <input type="text" class="form-control search" placeholder="">
-                    </li>
+                    <!--<li>-->
+                        <!--<input type="text" class="form-control search" placeholder="">-->
+                    <!--</li>-->
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
