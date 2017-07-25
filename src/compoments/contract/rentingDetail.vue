@@ -12,7 +12,7 @@
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
-                <span class="label label-warning">待审核</span>
+                <span class="label label-warning">{{passDictionary[contract_pass]}}</span>
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
                 <span @click="changeLock">
@@ -525,7 +525,9 @@
                     error: ''
                 },
                 isCompared:false,
-                villaId : ''
+                villaId : '',
+                contract_pass:'',
+                passDictionary:[],
             }
         },
         mounted(){
@@ -537,6 +539,7 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+                    this.passDictionary = res.data.collect_passed;
                     console.log(this.dictionary);
                     this.contractDetail();
                 });
@@ -547,6 +550,7 @@
                     this.contractList.push(res.data.data);
                     console.log(this.contractList)
                     this.contract_num = res.data.data.contract_num;
+                    this.contract_pass = res.data.data.passed
                 })
             },
             showUl(){           // 点击更多

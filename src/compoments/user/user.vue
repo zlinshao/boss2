@@ -1062,15 +1062,21 @@
         color: #666;
     }
     .btn-default:hover{
-        background-color: #b0b5b9;
-        border-color: #b0b5b9;
+        background-color: #dedede;
+        border-color: #dedede;
         color: #fff;
     }
+    .dropdown-menu{
+        padding: 0;
+    }
     dropdown-menu li:hover{
-        background-color: #b0b5b9;
+        background-color: #dedede;
     }
     .btn-lg {
         border-radius:0;
+    }
+    .inbox-divider>li div>ul>li>a{
+        border-radius: 0px;
     }
     .department{
         background: #e5e8ef;
