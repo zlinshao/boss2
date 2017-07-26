@@ -120,7 +120,7 @@
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
                             <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
-                            <span class="label label-warning" v-if="item.passed === 2">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
                             <router-link :to="{path:'/contractDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>

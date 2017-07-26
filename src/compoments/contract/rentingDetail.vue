@@ -27,14 +27,13 @@
                 <button class="btn btn-primary" disabled v-if="item.reviewed ===1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" v-if="isPass">通过</button>
-                <button class="btn btn-primary" v-else="isPass">驳回</button>
-                <button class="btn btn-default more" @click="showUl" v-if="isCollect">
-                    更多
-                    <ul v-show="show">
-                        <li @click="editContract">编辑</li>
-                        <li @click="renewContract">续约</li>
-                    </ul>
+                <button class="btn btn-primary" @click="passContract">{{passDictionary[contract_pass]}}</button>
+                <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
+                <button class="btn btn-primary" @click="editContract">
+                    编辑
+                </button>
+                <button class="btn btn-primary" @click="renewContract">
+                    续约
                 </button>
             </div>
         </div>
@@ -504,9 +503,6 @@
         },
         data(){
             return {
-                show : false,        // 是否显示更多
-                isPass : true,      // 是否通过
-                isCollect : true,   // 租房或收房
                 contractList:[],
                 dictionary:[],
                 largePic: [],
@@ -551,9 +547,6 @@
                     this.contract_num = res.data.data.contract_num;
                     this.contract_pass = res.data.data.passed
                 })
-            },
-            showUl(){           // 点击更多
-                this.show = !this.show;
             },
             transferDetail(){
                 $('#transferDetail').modal('show');
@@ -631,6 +624,34 @@
                         this.info.state_error = true;
                     }
                 });
+            },
+            passContract(){ //合同通过
+                this.$http.get('core/contract_check/checkContract/id/' + this.contractEitId + '/type/rent').then((res) =>{
+                    if(res.data.code === '60010'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            overrule(){ //合同驳回
+                this.$http.get('core/contract_check/reject/id/' + this.contractEitId + '/type/rent').then((res) =>{
+                    if(res.data.code === '60010'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             }
 
         }
