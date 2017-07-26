@@ -337,4 +337,7 @@
     #change .modal-body>div{
         line-height: 30px;
     }
+    #add{
+        z-index: 1044;
+    }
 </style>

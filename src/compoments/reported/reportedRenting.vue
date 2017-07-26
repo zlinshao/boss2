@@ -38,9 +38,9 @@
                         <!--<li>
                             <a v-if="statusId!=0">{{statusName}}</a>
                         </li>-->
-                        <li v-show="statusId==1">
+                        <!--<li v-show="statusId==1">
                             <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
-                        </li>
+                        </li>-->
                         <li>
                             <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;作废</a></h5>
                         </li>
@@ -89,9 +89,9 @@
                             <td>
                                 <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
-                            <td>{{item.staff.real_name}}</td>
+                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
                             <td>{{item.department.name}}</td>
-                            <td>{{item.leader.real_name}}</td>
+                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
                             <td>{{dict.rent_type[item.rent_type]}}</td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>{{item.price}}</td>
@@ -353,7 +353,7 @@
 <style scoped>
     div.padd {
         display: inline-block;
-        padding: 0 15px 0 0;
+        /*padding: 0 15px 0 0;*/
     }
     input[type=checkbox]{
         width: 17px;

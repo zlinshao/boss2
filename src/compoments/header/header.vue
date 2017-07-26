@@ -517,7 +517,13 @@
                                     <span>账户管理</span>
                                 </router-link>
                             </li>
-                            <li class="sub-menu">
+
+                            <li>
+                                <router-link to="/subject">
+                                    <span>科目管理</span>
+                                </router-link>
+                            </li>
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>科目管理</span>
                                 </a>
@@ -529,13 +535,13 @@
                                         <router-link to="/classify">归类</router-link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <!--<li>
                                 <router-link to="/jurisdiction">
                                     <span>权限管理</span>
                                 </router-link>
                             </li>-->
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>收支流水</span>
                                 </a>
@@ -547,6 +553,23 @@
                                         <router-link to="/payFlow">应付</router-link>
                                     </li>
                                 </ul>
+                            </li>-->
+
+                            <li>
+                                <router-link to="/collectPayment">
+                                    <span>应收款项</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/payPayment">
+                                    <span>应付款项</span>
+                                </router-link>
+                            </li>
+
+                            <li>
+                                <router-link to="/incomeFlow">
+                                    <span>收支流水</span>
+                                </router-link>
                             </li>
                             <li>
                                 <router-link to="/pendingItem">

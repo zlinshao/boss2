@@ -2,120 +2,104 @@
     <div>
         <ol class="breadcrumb">
             <li>财务账本</li>
-            <li>收支流水</li>
-            <li class="active">应收</li>
+            <li>应收款项</li>
         </ol>
-        <div class="clearFix">
-            <div class="panel col-lg-12">
-                <form class="form-inline" v-show="operId==0" role="form">
-                    <div class="dropdown form-group">
-                        <select name="" class="form-control">
-                            <option value="">玄武</option>
-                            <option value="1">栖霞</option>
-                        </select>
-                    </div>
 
-                    <div class="form-group datetime">
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
-                        </label>
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
-                        </label>
-                    </div>
 
-                    <div class="input-group bootstrap-timepicker">
-                        <label class="sr-only" for="search_info">搜索</label>
-                        <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="">
-                        <span class="input-group-btn">
+        <section class="panel">
+            <div class="panel-body">
+                <div>
+                    <form class="form-inline clearFix" role="form">
+                        <div class="input-group">
+                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
+                        </div>
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="">
+                            <span class="input-group-btn">
                             <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
                         </span>
+                        </div>
+                        <div class="form-group pull-right">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增应收款项
+                            </a>
+                        </div>
+                    </form>
+                    <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
+                        <h4>部门</h4>
+                        <span class="tag" v-for="item in filtrate.departmentList">
+                        <span >{{item.name}}&nbsp;&nbsp;</span>
+                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
+                    </span>
                     </div>
-                    <div class="form-group pull-right">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
-                            <i class="fa fa-plus-square"></i>&nbsp;新增应收
-                        </a>
+                    <div class="tagsinput " v-show="filtrate.staffList.length!=0">
+                        <h4>员工</h4>
+                        <span class="tag" v-for="item in filtrate.staffList">
+                        <span >{{item.name}}&nbsp;&nbsp;</span>
+                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
+                    </span>
                     </div>
-                </form>
-
-                <div class="choosed" v-show="operId!=0">
-                    <ul class="clearFix">
-                        <li><a>已选中&nbsp;1&nbsp;项</a></li>
-                        <li>
-                            <a @click="oper">编辑</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
 
-        <!--<div style="clear: both"></div>-->
-        <div class="panel tips">
-            <ul class="clearFix">
-                <li>
-                    应收款项:
-                    <span>{{tips.receivables}}</span>
-                </li>
-                <li>
-                    实收款项:
-                    <span>{{tips.payables}}</span>
-                </li>
-                <li>
-                    剩余款项
-                    <span>{{tips.remainingFunds}}</span>
-                </li>
-            </ul>
-        </div>
 
         <!--表格-->
-        <div class="col-lg-12">
-            <section class="panel table table-responsive">
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-center">开单人</th>
-                        <th class="text-center">片区</th>
-                        <th class="text-center">房屋地址</th>
-                        <th class="text-center">收入科目</th>
-                        <th class="text-center">收款账户</th>
-                        <th class="text-center">收款时间</th>
-                        <th class="text-center">应收款项</th>
-                        <th class="text-center">实收款项</th>
-                        <th class="text-center">剩余款项</th>
-                        <th class="text-center">补齐时间</th>
-                        <th class="text-center">租房价格</th>
-                        <th class="text-center">付款方式</th>
-                        <th class="text-center">经手人</th>
-                        <th class="text-center">状态</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <router-link tag="tr" :key="item.id" :to="{path:'collectRent' , query:{address:item.address}}" class="text-center" v-for="item in cont.myData">
-                        <td>
-                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click.stop="changeIndex($event,item.id)">
-                        </td>
-                        <td>{{item.people}}</td>
-                        <td>{{item.region.name}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.subject.name}}</td>
-                        <td>{{item.account}}</td>
-                        <td>{{item.receiptTime}}</td>
-                        <td>{{item.receivables}}</td>
-                        <td>{{item.payables}}</td>
-                        <td>{{item.remainingFunds}}</td>
-                        <td>{{item.fillTime}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.payWay.name}}</td>
-                        <td>{{item.byHand}}</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-success">入账</button>
-                        </td>
-                    </router-link>
-                    </tbody>
-                </table>
-            </section>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel table table-responsive">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">开单人</th>
+                            <th class="text-center">片区</th>
+                            <th class="text-center">房屋地址</th>
+                            <th class="text-center">收入科目</th>
+                            <th class="text-center">收款账户</th>
+                            <th class="text-center">收款时间</th>
+                            <th class="text-center">应收款项</th>
+                            <th class="text-center">实收款项</th>
+                            <th class="text-center">剩余款项</th>
+                            <th class="text-center">补齐时间</th>
+                            <th class="text-center">租房价格</th>
+                            <th class="text-center">付款方式</th>
+                            <th class="text-center">经手人</th>
+                            <th class="text-center">状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <router-link tag="tr" :key="item.id" :to="{path:'collectRent' , query:{address:item.address}}" class="text-center" v-for="item in cont.myData">
+                            <td>
+                                <input type="checkbox" :value="item.id" :checked="operId===item.id" @click.stop="changeIndex($event,item.id)">
+                            </td>
+                            <td>{{item.people}}</td>
+                            <td>{{item.region.name}}</td>
+                            <td>{{item.address}}</td>
+                            <td>{{item.subject.name}}</td>
+                            <td>{{item.account}}</td>
+                            <td>{{item.receiptTime}}</td>
+                            <td>{{item.receivables}}</td>
+                            <td>{{item.payables}}</td>
+                            <td>{{item.remainingFunds}}</td>
+                            <td>{{item.fillTime}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.payWay.name}}</td>
+                            <td>{{item.byHand}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-success">入账</button>
+                            </td>
+                        </router-link>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
 
 
@@ -136,7 +120,7 @@
                         <div class="form-group">
                             <label for="villageName" class="col-sm-3 control-label">租房地址:</label>
                             <div class="col-sm-8 input-group">
-                                <input title="请点击选择" type="text" class="form-control" id="villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                <input title="请点击选择" type="text" class="form-control" id="villageName" readonly>
                                 <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                             </div>
                         </div>
@@ -276,15 +260,25 @@
 
         <Page :pg="paging" @pag="getPage"></Page>
 
-
-        <ChooseAddress @getChildData="getAddress"></ChooseAddress>
         <!--提示信息-->
         <Status :state='info'></Status>
+
+
+        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
     </div>
 </template>
 <style scoped>
-    .pull-right{
-        padding-top: 5px;
+    div.padd {
+        display: inline-block;
+        /*padding: 0 15px 0 0;*/
+    }
+    .tagsinput {
+        border: none;
+    }
+
+    .tagsinput h4 {
+        display: inline-block;
+        margin: 0;
     }
     .tips{
         line-height: 30px;
@@ -313,17 +307,7 @@
     tbody tr{
         cursor: pointer;
     }
-    .choosed{
-        /*padding-bottom: 10px;*/
-    }
-    .choosed ul li{
-        float: left;
-    }
-    .choosed ul li+li:before{
-        content: '|';
-        display: inline-block;
-        margin: 0 10px;
-    }
+
     tbody tr input[type=checkbox]{
         width: 17px;
         height: 17px;
@@ -331,11 +315,14 @@
 </style>
 <script>
     import Page from '../../common/page.vue'
-    import ChooseAddress from '../../common/chooseAddress.vue'
     import Status from '../../common/status.vue';
+
+    import STAFF from  '../../common/organization/selectStaff.vue'
+    import DatePicker from '../../common/datePicker.vue'
 
 
     export default{
+        components: {Page,Status,DatePicker,STAFF},
         data(){
             return {
                 operId : 0,
@@ -344,9 +331,13 @@
 
                 title : '',
                 isAdd : true,
-                modal : {
 
-                },
+                dateConfigure : [
+                    {
+                        range : true,
+                        needHour : true
+                    }
+                ],
 
                 cont: {
                     myData: [],      //列表数据
@@ -367,7 +358,13 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+
+                configure : {},
+                filtrate : {
+                    departmentList:[],
+                    staffList:[]
+                },
             }
         },
         updated (){
@@ -377,7 +374,6 @@
         created () {
             this.collectFlowList();
         },
-        components: {Page,ChooseAddress,Status},
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
@@ -395,14 +391,69 @@
                 this.isAdd = true;
             },
             collectFlowList(){
-                this.$http.get('json/itemFlow.json').then((res) => {
+                /*this.$http.get('json/itemFlow.json').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     this.cont.myData = res.data.data.collectFlowList;
                     this.tips = res.data.data.collectTips;
 //                    console.log(res.data);
                     this.paging = res.data.data.pages;
-                })
+                })*/
             },
+
+            select(){
+                this.configure = {type: 'all', class: 'selectType'};
+                $('#selectCustom').modal('show');
+//                this.configure={id:[],class:'department'};
+//                this.configure={length:2,class:'amount'};
+            },
+            selectDateSend(val){
+//                console.log(val);
+                for (let j = 0; j < val.department.length; j++) {
+                    if ($.inArray(val.department[j].id, this.params.department_id) === -1) {
+                        this.filtrate.departmentList.push(val.department[j]);
+                        this.params.department_id.push(val.department[j].id)
+                    } else {
+                        this.info.error = '成员已经存在';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_error = false;
+                        }, 2000);
+                    }
+
+                }
+                for (let i = 0; i < val.staff.length; i++) {
+                    if ($.inArray(val.staff[i].id, this.params.staff_id) === -1) {
+                        this.filtrate.staffList.push(val.staff[i]);
+                        this.params.staff_id.push(val.staff[i].id)
+                    } else {
+                        this.info.error = '成员已经存在';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_error = false;
+                        }, 2000);
+                    }
+
+                }
+                this.search();
+//                this.filtrate.departmentList = val.department;
+//                this.filtrate.staffList = val.staff;
+
+            },
+            deleteStaff(item){
+                this.filtrate.staffList = this.filtrate.staffList.filter((x) => x !== item);
+                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id);
+                this.search();
+            },
+            deleteDepartment(item){
+                this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
+                this.params.department_id = this.params.department_id.filter((x) => x != item.id);
+                this.search();
+            },
+
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -424,11 +475,13 @@
                 }.bind(this));
             },
             getPage(data){
-
+                this.page = data;
             },
-            getAddress(data){
-
+            getDate(data){
+                // 时间
+                console.log(data);
             },
+
             oper(){
                 console.log(this.operId);
                 this.title = '修改应收';

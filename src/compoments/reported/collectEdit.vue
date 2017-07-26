@@ -113,7 +113,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">签约日期</label>
                                 <div class="col-sm-10">
-                                    <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
+                                           class="form-control form_datetime" v-model="formData.deal_time">
+                                    <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
                                 </div>
                             </div>
 
@@ -276,6 +278,9 @@
 
             this.formData.pay_type.push(this.one_type);
         },
+        updated (){
+            this.remindData();
+        },
         watch : {
             one_type(curVal,oldVal){
                 if (curVal!=oldVal){
@@ -378,17 +383,22 @@
 
                 $('#edit').modal('hide');
             },
+
             selectStaff(){
                 // 选择签约人
                 this.configure = {length: 1, class: 'amount'};
                 $('#selectCustom').modal('show');
+//                alert(1)
             },
             selectDateSend(data){
                 // 选择人
 //                console.log(data.staff[0].id)
+//                alert(2)
+                console.log(data);
                 this.formData.staff_id = data.staff[0].id;
                 this.chooseResult.staff_name = data.staff[0].name;
             },
+
             getHouse(data){
                 // 选择房屋
 //                console.log(data);
@@ -463,14 +473,25 @@
                         }
                     );
             },
-            /*medi(){
-                // 是否中介
-                if (this.formData.is_medi==2){
-                    // 否
-                    this.formData.cost_medi = 0;
-                }
-//                console.log(this.formData.cost_medi)
-            }*/
+
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition: "top-left",
+//                    endDate: new Date(),
+//                    todayHighlight : true
+                }).on('changeDate', function (ev) {
+//                    console.log($(ev.target).attr('placeholder'));
+//                    console.log(ev.target.placeholder);
+                    this.formData.deal_time = ev.target.value;
+//                    console.log(this.startDataTime);
+                }.bind(this));
+            },
         }
     }
 </script>

@@ -36,10 +36,11 @@ import Account from './compoments/finance/account.vue'                          
 import Subject from './compoments/finance/subject/subject.vue'                          // 科目管理
 import Classify from './compoments/finance/subject/classify.vue'                          // 科目管理
 import Jurisdiction from './compoments/finance/jurisdiction.vue'                          // 科目管理
-import CollectFlow from './compoments/finance/incomeFlow/collect.vue'           // 收支流水
-import PayFlow from './compoments/finance/incomeFlow/pay.vue'                    // 收支流水
-import PayingRent from './compoments/finance/incomeFlow/payingRent.vue'         // 收支流水
-import CollectRent from './compoments/finance/incomeFlow/collectRent.vue'         // 收支流水
+import CollectPayment from './compoments/finance/payment/collect.vue'           // 应收款项
+import PayPayment from './compoments/finance/payment/pay.vue'                    // 应付款项
+import IncomeFlow from './compoments/finance/incomeFlow.vue'                    // 收支流水
+import PayingRent from './compoments/finance/payment/payingRent.vue'         // 收支流水
+import CollectRent from './compoments/finance/payment/collectRent.vue'         // 收支流水
 import PendingItem from './compoments/finance/pendingItem.vue'                  // 待处理项
 import GeneralOperation from './compoments/finance/generalOperation.vue'        // 总账操作
 import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
@@ -248,14 +249,18 @@ export default[
         component: Jurisdiction
     },
     {
-        path: '/collectFlow',
-        name: 'CollectFlow',
-        component: CollectFlow
+        path: '/collectPayment',
+        name: 'CollectPayment',
+        component: CollectPayment
     },
     {
-        path: '/payFlow',
-        name: 'PayFlow',
-        component: PayFlow
+        path: '/payPayment',
+        name: 'PayPayment',
+        component: PayPayment
+    },{
+        path: '/incomeFlow',
+        name: 'IncomeFlow',
+        component: IncomeFlow
     },
     {
         path: '/payingRent',

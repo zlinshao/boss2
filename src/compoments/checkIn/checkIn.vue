@@ -9,7 +9,7 @@
                     <!--<div class="input-group bootstrap-timepicker" style="margin: 0 15px 0 0;">
                         <button class="btn btn-primary" type="button" @click="select">筛选员工</button>
                     </div>-->
-                    <div class="input-group bootstrap-timepicker" style="margin: 0 15px 0 0;">
+                    <div class="input-group">
                         <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
                     </div>
                     <div class="padd">
@@ -67,7 +67,7 @@
                     </div>
 
 
-                    <div class="page pull-right" v-show="paging!=''">
+                    <div class="page pull-right" v-show="paging!=1">
                         <button class="btn btn-white" :disabled="page==1" @click="prev">上一页</button>
                         <button class="btn btn-white" :disabled="page==paging" @click="next">下一页</button>
                     </div>
@@ -94,7 +94,7 @@
         components: {DatePicker,STAFF,Status},
         data(){
             return {
-                paging : '',
+                paging : 1,
                 page : 1,
 
                 isPc : true,
@@ -347,7 +347,7 @@
 <style scoped>
     div.padd {
         display: inline-block;
-        padding: 0 15px 0 0;
+        /*padding: 0 15px 0 0;*/
     }
     select{
         margin-bottom: 0;
