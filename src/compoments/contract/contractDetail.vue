@@ -445,13 +445,13 @@
                                         <span class="col-lg-2">证件照片<sup>*</sup></span>
                                         <span class="col-lg-10">
                                              <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
-                                                  v-for="(img,index) in item.album.id_pic">
+                                                  v-for="(img,index) in item.customer_id.album.id_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">银行卡<sup>*</sup></span>
                                         <span class="col-lg-10">
-                                             <img :src="img.small" @click="showLargeIdPic('bank_pic',index)"
+                                             <img :src="img.small" @click="showLargePic('bank_pic',index)"
                                                   v-for="(img,index) in item.album.bank_pic">
                                         </span>
                                     </div>

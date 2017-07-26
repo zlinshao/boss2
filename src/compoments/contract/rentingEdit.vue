@@ -140,7 +140,6 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        {{gasPic.cus_idPhoto}}{{contractEdit.gas_card_pic}}
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>

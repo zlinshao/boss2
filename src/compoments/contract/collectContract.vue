@@ -71,6 +71,9 @@
                             <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick">置顶</i>&nbsp;
                             <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick">取消置顶</i>&nbsp;
                         </li>
+                        <li  class="operate"  v-if="status == 1" >
+                            <i class="fa fa fa-lock" @click="deblocking">解锁</i>&nbsp;
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -83,6 +86,7 @@
                     <tr>
                         <th class="text-center">
                             <!--<input type="checkbox">-->
+                            {{houseId}}
                         </th>
                         <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
@@ -121,10 +125,14 @@
                         </td>
                         <td>
                             <router-link :to="{path:'/contractDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>
-                            <a class="fa fa-lock" v-if="item.status !== 1" title="解锁" @click="deblocking(item.house_id)"></a>
-                            <a class="fa fa-unlock" v-if="item.status === 1" title="锁定"></a>
+
                         </td>
-                        <td> <i class="fa fa-thumb-tack" v-if="item.top === 1"></i></td>
+                        <td>
+                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
+                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
+
+                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
+                        </td>
 
                     </tr>
                     <tr v-if="isShow">
@@ -140,15 +148,17 @@
         <Page :pg="pages" @pag="getPage" :beforePage="contractSearchInfo.page"></Page>
         <Status :state='info'></Status>
         <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 <script>
+    import Confirm from '../common/confirm.vue'
     import Page from '../common/page.vue'
     import Staff from '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue';                          //提示信息
     import DatePicker from '../common/datePicker.vue'
     export default{
-        components: {DatePicker , Page , Staff, Status},
+        components: {DatePicker , Page , Staff, Status,Confirm},
         data(){
             return {
                 start_time:"",
@@ -186,8 +196,11 @@
                 pages:'',
                 isShow :false,
                 contractSeleted:0,
+                houseId:'',
                 top:'',
                 mark:'',
+                status:'',
+                confirmMsg:[],
             }
         },
         updated (){
@@ -256,10 +269,13 @@
             picked (item,e){  //复选框单选并保存选中的id
                 if(e.target.checked===true){
                     this.contractSeleted = item.id;
+                    this.houseId = item.house_id;
                     item.top === 2? this.top = 1:this.top = 2;
                     item.mark === 2? this.mark = 1:this.mark = 2;
+                    item.status !==1? this.status = 1:this.status = 2;
                 }else {
                     this.contractSeleted = 0;
+                    this.houseId = '';
                 }
             },
             stick(){  //top
@@ -293,6 +309,11 @@
                 })
             },
             deleteContract(){
+                this.confirmMsg = {msg:'您确定删除吗'};
+                $('#confirm').modal('show');
+
+            },
+            getConfirm(){
                 this.$http.get('core/collect/delete/id/' + this.contractSeleted).then((res) => {
                     if(res.data.code === '70030'){
                         this.search();
@@ -307,11 +328,12 @@
                     }
                 })
             },
-            deblocking(id){  //解锁
-                this.$http.get('core/collect/unVillalock/house_id/' + id).then((res) => {
+            deblocking(){  //解锁
+                this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
                     if(res.data.code === '70010'){
                         this.search();
                         this.contractSeleted = 0;
+                        this.houseId = '';
                         this.info.success =res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
