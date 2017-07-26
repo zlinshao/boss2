@@ -31,12 +31,24 @@
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
-                <button class="btn btn-primary" @click="editContract" :disabled = " contract_pass >2 ">
-                    编辑
-                </button>
-                <button class="btn btn-primary" @click="renewContract">
-                    续约
-                </button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        更多
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <button class="btn btn-white btn-block" @click="editContract" :disabled = " contract_pass > 2 ">
+                                编辑
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="renewContract">
+                                续约
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -752,16 +764,6 @@
         text-align: center;
         margin-left: 10px;
     }
-    .yellow{
-        background-color: #F9E175;
-    }
-    .gray{
-        background-color: #CCCCCC;
-    }
-    .green{
-        background-color: #83E96D;
-    }
-
     .row{
         margin-top: 20px;
     }
@@ -813,5 +815,24 @@
     }
     .nav-tabs>li {
         margin-bottom: 0;
+    }
+    .btn-white {
+        background-color: #fff;
+        border-color: #fff;
+        color: #666;
+    }
+    .btn-white:hover{
+        border-radius: 0;
+        background-color: #dedede;
+        border-color: #dedede;
+        color: #fff;
+    }
+    .dropdown-menu{
+        padding: 0;
+        border-radius: 0px;
+        min-width: 112px;
+    }
+    dropdown-menu li:hover{
+        background-color: #dedede;
     }
 </style>

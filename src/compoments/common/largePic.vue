@@ -19,7 +19,7 @@
                                     </a>
                                 </div>
                                 <div @click="rotateRight" title="顺时针旋转"><i class="fa fa-rotate-right"></i></div>
-                                <div @click="next" title="下一站"><i class="fa fa-long-arrow-right"></i></div>
+                                <div @click="next" title="下一张"><i class="fa fa-long-arrow-right"></i></div>
                             </div>
                         </div>
                     </div>
@@ -188,7 +188,6 @@
             },
             next(){
                 this.rotateBack();
-
                 this.currentIndex = this.idArr.indexOf(this.index);
 //                console.log(this.idArr.indexOf(this.index));
 

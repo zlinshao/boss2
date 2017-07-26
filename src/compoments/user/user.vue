@@ -278,8 +278,7 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-right" style="padding: 0;margin:0">
                                                 <li @click="edit(item.id)">
-                                                    <button type="button"
-                                                            class="btn btn-default btn-lg btn-block">编辑</button>
+                                                    <button type="button" class="btn btn-default btn-lg btn-block">编辑</button>
                                                 </li>
                                                 <li role="separator" class="divider" style="margin: 0"></li>
                                                 <li @click="startAccount(item.id)">

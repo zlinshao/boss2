@@ -25,19 +25,37 @@
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" disabled v-if="item.reviewed ===1">
+                <button class="btn btn-warning" disabled v-if="item.reviewed ===1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-warning" @click="passContract" :disabled = " contract_pass===5 || contract_pass===1">
+                <button class="btn btn-primary" @click="passContract" :disabled = " contract_pass===5 || contract_pass===1">
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
-                <button class="btn btn-primary" @click="editContract" :disabled = " contract_pass > 2 ">
-                    编辑
-                </button>
-                <button class="btn btn-primary" @click="renewContract">
-                    续约
-                </button>
+                <!--<button class="btn btn-primary" @click="editContract" :disabled = " contract_pass > 2 ">-->
+                    <!--编辑-->
+                <!--</button>-->
+                <!--<button class="btn btn-primary" @click="renewContract">-->
+                    <!--续约-->
+                <!--</button>-->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        更多
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <button class="btn btn-white btn-block" @click="editContract" :disabled = " contract_pass > 2 ">
+                                编辑
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="renewContract">
+                                续约
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -156,15 +174,25 @@
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a data-toggle="tab" href="#base" aria-expanded="true">基本信息</a>
+                                <a data-toggle="tab" href="#base" aria-expanded="true">
+                                    <i class="fa fa-book"></i>基本信息
+                                </a>
                             </li>
                             <li class="">
-                                <a data-toggle="tab" href="#house" aria-expanded="false">房屋信息</a>
+                                <a data-toggle="tab" href="#house" aria-expanded="false">
+                                    <i class="fa fa-home"></i>房屋信息
+                                </a>
                             </li>
                             <li class="">
-                                <a data-toggle="tab" href="#contract" aria-expanded="false">合同附件</a>
+                                <a data-toggle="tab" href="#contract" aria-expanded="false">
+                                    <i class="fa  fa-paperclip"></i>合同附件
+                                </a>
                             </li>
-
+                            <li class="">
+                                <a data-toggle="tab" href="#home" aria-expanded="true">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;回访记录
+                                </a>
+                            </li>
                         </ul>
                     </header>
                     <div class="panel-body" >
@@ -507,6 +535,33 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!--回访记录-->
+                            <div id="home" class="tab-pane active">
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
+                                    <div class="col-sm-10" style="padding-left: 0;">
+                                        <div class="col-sm-4">
+                                            <select class="form-control">
+                                                <option  v-for="(item,index) in dictionary.follow_way">{{item}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-2 control-label"
+                                           style="margin-top: 16px;">增加回访记录</label>
+                                    <div class="col-sm-10" style="margin-bottom: 16px;">
+                                        <textarea class="form-control" style="margin-bottom: 16px;" v-model="returnRecorde"></textarea>
+                                        <div class="pull-right">
+                                            <button class="btn btn-default" >取消
+                                            </button>
+                                            <button class="btn btn-primary">确定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--跟进记录-->
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -569,6 +624,7 @@
                 passDictionary:[],
                 confirmMsg:[],  //提示信息
                 msgFlag:'',
+                returnRecorde:'',//回访记录
             }
         },
         mounted(){
@@ -786,16 +842,6 @@
         text-align: center;
         margin-left: 10px;
     }
-    .yellow{
-        background-color: #F9E175;
-    }
-    .gray{
-        background-color: #CCCCCC;
-    }
-    .green{
-        background-color: #83E96D;
-    }
-
     .row{
         margin-top: 20px;
     }
@@ -848,4 +894,25 @@
     .nav-tabs>li {
          margin-bottom: 0;
     }
+    .btn-white {
+        background-color: #fff;
+        border-color: #fff;
+        color: #666;
+    }
+    .btn-white:hover{
+        border-radius: 0;
+        background-color: #dedede;
+        border-color: #dedede;
+        color: #fff;
+    }
+    .dropdown-menu{
+        padding: 0;
+        border-radius: 0px;
+        min-width: 112px;
+    }
+    dropdown-menu li:hover{
+        background-color: #dedede;
+    }
+
+
 </style>

@@ -489,11 +489,6 @@
                                     <span>租房合同</span>
                                 </router-link>
                             </li>
-                            <li>
-                                <a href="">
-                                    <span>打印合同</span>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -596,22 +591,16 @@
                         </ul>
                     </li>
                     <li class="sub-menu">
-                        <a href="javascript:;">
+                        <router-link to='/messageCenter'>
                             <i class="fa fa-bell-o"></i>
                             <span>消息中心</span>
-                        </a>
-                        <ul class="sub">
-                            <li>
-                                <router-link to='/messageCenter'>消息中心</router-link>
-                            </li>
-                        </ul>
+                        </router-link>
                     </li>
                     <li class="sub-menu">
                         <router-link to="/checkIn">
                             <i class="fa fa-map-marker"></i>
                             <span>定位签到</span>
                         </router-link>
-
                     </li>
                 </ul>
                 <!-- sidebar menu end-->
@@ -1006,10 +995,6 @@
                 //解析定位结果
                 function onComplete(data) {
                     console.log(data);
-//                    alert('成功');
-//                    _this.mapMsg.location = [];
-//                    _this.mapMsg.location.push(data.position.getLng());
-//                    _this.mapMsg.location.push(data.position.getLat());
                     _this.mapMsg.location = data.position.getLng() + ',' + data.position.getLat();
                     _this.mapMsg.province = data.addressComponent.province;
                     _this.mapMsg.city = data.addressComponent.city;
@@ -1024,9 +1009,6 @@
                         .then(
                             (res) => {
                                 if (res.data.code == 20020) {
-                                    // 成功
-//                                    $('#checkIn').modal('hide');
-//                                    _this.info.success = res.data.msg;
                                     _this.info.success = '签到成功';
                                     //关闭失败弹窗 ***
                                     _this.info.state_error = false;
@@ -1047,7 +1029,6 @@
                 function onError(data) {
                     alert('定位失败');
                     alert(data);
-                    console.log(data);
                 }
             },
             IsPC(){
@@ -1075,5 +1056,7 @@
     .modal-body textarea {
         max-width: 100%;
     }
-
+    .sub-menu i{
+        width: 21px;
+    }
 </style>

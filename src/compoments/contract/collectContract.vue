@@ -68,8 +68,8 @@
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li  class="operate">
-                            <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick"> 置顶</i>&nbsp;
-                            <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick"> 取消置顶</i>&nbsp;
+                            <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick"> 置顶</i>
+                            <i class="fa fa-times-circle"  v-if="top == 2" @click="stick"> 取消置顶</i>&nbsp;
                         </li>
                         <li  class="operate"  v-if="status !== 1" >
                             <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
@@ -394,5 +394,8 @@
     }
     .operate{
         cursor: pointer;
+    }
+    .operate:hover{
+        color: #0E90D2;
     }
 </style>
