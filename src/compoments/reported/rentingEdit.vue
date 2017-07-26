@@ -60,7 +60,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">租房年限</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="formData.months">
+                                        <input type="number" class="form-control" v-model="formData.months">
                                     </div>
                                 </div>
 
@@ -595,12 +595,14 @@
             },
             selectDateSend(data){
                 // 选择人
+                alert(2)
 //                console.log(data.staff[0].id)
                 this.formData.staff_id = data.staff[0].id;
                 this.chooseResult.staff_name = data.staff[0].name;
             },
             getHouse(data){
                 // 选择房屋
+                alert(data)
 //                console.log(data);
                 this.formData.house_id = data.id;
                 this.chooseResult.house_name = data.address;
@@ -748,5 +750,8 @@
     }
     .col-sm-2.icon i:hover{
         color: #999;
+    }
+    #edit{
+        z-index: 1044;
     }
 </style>

@@ -327,4 +327,5 @@
     #change .modal-body>div{
         line-height: 30px;
     }
+
 </style>

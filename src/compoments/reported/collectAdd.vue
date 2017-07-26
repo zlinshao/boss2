@@ -440,4 +440,7 @@
         margin-right: 8px;
         vertical-align: bottom;
     }
+    #add{
+        z-index: 1044;
+    }
 </style>

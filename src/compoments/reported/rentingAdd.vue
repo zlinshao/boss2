@@ -707,4 +707,7 @@
     .col-sm-2.icon i:hover{
         color: #999;
     }
+    #add{
+        z-index: 1044;
+    }
 </style>

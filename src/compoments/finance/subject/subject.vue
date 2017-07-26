@@ -3,167 +3,164 @@
         <ol class="breadcrumb">
             <li>财务账本</li>
             <li>科目管理</li>
-            <li class="active">科目</li>
         </ol>
 
-        <div class="panel col-lg-12 clearFix">
-            <form class="form-inline clearFix" v-show="operId==0" role="form">
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">所有归属</option>
-                        <option value="1">栖霞</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">所有类型</option>
-                        <option value="1">栖霞</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">所有归类</option>
-                        <option value="1">栖霞</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group">
-                    <select name="" class="form-control">
-                        <option value="">所有科目</option>
-                        <option value="1">栖霞</option>
-                    </select>
-                </div>
-                <div class="input-group bootstrap-timepicker">
-                    <label class="sr-only" for="search_info">搜索</label>
-                    <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="">
-                    <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
-                        </span>
+        <section class="panel">
+            <div class="panel-body">
+                <div v-show="operId==0">
+                    <form class="form-inline clearFix" role="form">
+                        <div class="input-group">
+                            <select name="" class="form-control" v-model="params.belong" @change="search">
+                                <option value="">所有归属</option>
+                                <option :value="value" v-for="(key,value) in dict.subject_root">{{key}}</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <select name="" class="form-control" v-model="params.er_type" @change="search">
+                                <option value="">所有类型</option>
+                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="科目名称"  @keydown.enter.prevent="search" v-model="params.search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+
+                        <div class="form-group pull-right">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增科目
+                            </a>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="form-group pull-right">
-                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
-                        <i class="fa fa-plus-square"></i>&nbsp;新增科目
-                    </a>
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li>
+                            <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
+                        </li>
+                        <li>
+                            <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
+                        </li>
+                    </ul>
                 </div>
-            </form>
-
-            <div class="choosed" v-show="operId!=0">
-                <ul class="clearFix">
-                    <li><a>已选中&nbsp;1&nbsp;项</a></li>
-                    <li>
-                        <a @click="oper">编辑</a>
-                    </li>
-                </ul>
             </div>
-        </div>
+        </section>
 
 
         <!--表格-->
-        <div class="col-lg-12">
-            <section class="panel table table-responsive">
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-center">归属</th>
-                        <th class="text-center">归类</th>
-                        <th class="text-center">名称</th>
-                        <th class="text-center">类型</th>
-                        <th class="text-center">备注</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="text-center" v-for="item in cont.myData">
-                        <td>
-                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
-                        </td>
-                        <td>{{item.ascription.name}}</td>
-                        <td>{{item.classify.name}}</td>
-                        <td>{{item.subjectName}}</td>
-                        <td>{{item.type.name}}</td>
-                        <td>{{item.remark}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel table table-responsive roll">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">归属</th>
+                            <th class="text-center">科目</th>
+                            <th class="text-center">类型</th>
+                            <th class="text-center">备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr :class="{'lightYellow' : operId===item.id , 'text-center' : true}" v-for="item in myData">
+                            <td>
+                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id)">
+                            </td>
+                            <td>{{item.root_id==0?'':dict.subject_root[item.root_id]}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{dict.er_type[item.er_type]}}</td>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="5">暂无数据...</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
+
         <!--modal-->
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="clearForm"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
-                    </div>
-
-                    <div class="modal-body clearFix">
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">归属:</label>
-                            <div class="col-sm-8">
-                                <div class="dropdown">
-                                    <select name="" class="form-control">
-                                        <option value="1">乐伽</option>
-                                        <option value="2">乐品</option>
-                                    </select>
+        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" role="dialog" data-backdrop="static"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >×</button>
+                            <h4 class="modal-title">{{title}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">归属</label>
+                                    <div class="col-sm-8">
+                                        <div class="dropdown">
+                                            <select name="" class="form-control">
+                                                <option value="1">乐伽</option>
+                                                <option value="2">乐品</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">归类:</label>
-                            <div class="col-sm-8">
-                                <div class="dropdown">
-                                    <select name="" class="form-control">
-                                        <option value="1">啊啊</option>
-                                        <option value="2">查查</option>
-                                    </select>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">科目</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">科目:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">类型:</label>
-                            <div class="col-sm-8">
-                                <div class="dropdown">
-                                    <select name="" class="form-control">
-                                        <option value="1">收入</option>
-                                        <option value="2">支出</option>
-                                    </select>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">科目</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control"/>
+                                        <!--<datalist id="cars">
+                                            <option value="BMW">
+                                            <option value="Ford">
+                                            <option value="Volvo">
+                                        </datalist>-->
+                                    </div>
                                 </div>
-                            </div>
 
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">类型</label>
+                                    <div class="col-sm-8">
+                                        <div class="dropdown">
+                                            <select name="" class="form-control">
+                                                <option value="1">收入</option>
+                                                <option value="2">支出</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">备注</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">备注:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" v-show="isAdd">保存</button>
+                            <button type="button" class="btn btn-primary" v-show="!isAdd">修改</button>
                         </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" v-show="isAdd">保存</button>
-                        <button type="button" class="btn btn-primary" v-show="!isAdd">修改</button>
-                        <button type="button" class="btn btn-primary" v-show="!isAdd" data-toggle="modal" data-target="#delete">删除</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <Delete :msg="cont" @yes="getData"></Delete>
+        <!--<Delete :msg="cont" @yes="getData"></Delete>-->
 
         <Page :pg="paging" @pag="getPage"></Page>
 
@@ -172,49 +169,45 @@
     </div>
 </template>
 <style scoped>
-    label{
-        line-height: 34px;
-    }
-    .choosed{
-        /*padding-bottom: 10px;*/
-    }
-    .choosed ul li{
-        float: left;
-    }
-    .choosed ul li+li:before{
-        content: '|';
-        display: inline-block;
-        margin: 0 10px;
-    }
     tbody tr input[type=checkbox]{
         width: 17px;
         height: 17px;
     }
+    .table-hover > tbody > tr.lightYellow {
+        background-color: #fffcd9;
+    }
 </style>
 <script>
-    import Delete from '../../common/delete.vue'
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
 
     export default{
+        components: {Page,Status},
         data(){
             return {
+                dict : {},
+
+                isShow : false,
+
                 operId : 0,
                 paging : '',
                 page : '',
 
                 title : '',
                 isAdd : true,       // 是否新增
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
+
+                myData: [],      //列表数据
+
+                params : {
+                    belong : '',
+                    er_type : '',
+                    search : ''
                 },
-                pramas : {
-                    ascription : 1,        // 归属
-                    classify : 1,          // 归类
-                    subject : '',           // 科目
-                    type : 1,              // 类型
-                    remark : ''             // 备注
+
+                formData : {
+                    belong : '',
+                    er_type : '',
+
                 },
                 info:{
                     //成功状态 ***
@@ -228,10 +221,17 @@
                 }
             }
         },
-        created (){
-            this.subjectList();
+        mounted (){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.subjectList();
+                    }
+                );
+
         },
-        components: {Delete,Page,Status},
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
@@ -245,11 +245,17 @@
 
             },
             subjectList(){
-                this.$http.get('json/subject.json').then((res) => {
-//                    this.collectList = res.data.data.gleeFulCollect;
-                    this.cont.myData = res.data.data.subjectList;
+                this.$http.get('account/subject').then((res) => {
 //                    console.log(res.data);
-                    this.paging = res.data.data.pages;
+                    if (res.data.code==18300){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                    }
+
+//                    this.paging = res.data.data.pages;
                 })
             },
             addNew(){
@@ -257,12 +263,16 @@
                 this.title = '新增科目';
                 this.isAdd = true;
             },
-            operation(id,index){
+            oper(){
                 // 编辑
                 this.title = '编辑科目';
                 this.isAdd = false;
-                console.log(id);
-                this.cont.nowIndex = index;
+                console.log(this.operId);
+                this.$http.get('account/subject/'+this.operId)
+                    .then(
+                        console.log
+                    )
+                $('#myModal').modal('show');
             },
             getData(data){
                 // 确认删除
@@ -280,21 +290,33 @@
 
                 $('#myModal').modal('hide');
             },
-            getPage(){
-
+            getPage(data){
+                this.page = data;
             },
-            oper(){
-                console.log(this.operId);
-                this.title = '编辑科目';
-                this.isAdd = false;
-                // 先请求
-
-//                请求成功打开模态框
-                $('#myModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
-
+            search(){
+//                console.log(this.params);
+                this.page = 1;
+//                this.params['page'] = 1;
+                this.operId = 0;
+                this.filter();
+            },
+            filter(){
+                this.$http.get('account/subject?page='+this.page,{
+                    params : this.params
+                })
+                    .then(
+                        (res) => {
+                            if (res.data.code==18300){
+                                this.myData = res.data.data.data;
+                                this.paging = res.data.data.pages;
+                                this.isShow = false;
+                            } else {
+                                this.myData = [];
+                                this.paging = 1;
+                                this.isShow = true;
+                            }
+                        }
+                    )
             }
         }
     }
