@@ -2,11 +2,13 @@
     <div class="datePickerContainer form-group" style="padding-left: 15px; padding-right: 15px;">
         <div v-if="range">
             <div class="input-group" v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期" v-model="dateRange" class="reservation form-control" readonly>
+                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
+                       v-model="dateRange" class="reservation form-control" readonly>
             </div>
 
             <div class="input-group mobileTimePicker" v-show="!isPC">
-                <input type="text" class="form-control" placeholder="选择日期" v-model="mobilePickerDate" @click="showToggle" readonly >
+                <input type="text" class="form-control" placeholder="选择日期" v-model="mobilePickerDate"
+                       @click="showToggle" readonly>
                 <div class="mobileTime" v-show="showPicker">
                     <ul>
                         <li @click="selectDay(0)">清空</li>
@@ -38,20 +40,22 @@
                     </div>
                 </div>
             </div>
-    <!--
-            <div class="input-group" v-show="!isPC">
-                <input type="date" class="form-control" @change="sendDate" v-model="to">
-            </div>-->
+            <!--
+                    <div class="input-group" v-show="!isPC">
+                        <input type="date" class="form-control" @change="sendDate" v-model="to">
+                    </div>-->
         </div>
         <div class="datePickerContainer" v-else="range">
             <div class="input-group" v-show="hour">
                 <label>
-                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date" class="form-control form_datetimeNeedHour">
+                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date"
+                           class="form-control" :class="dateId">
                 </label>
             </div>
             <div class="input-group" v-show="!hour">
                 <label>
-                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择日期" v-model="date" class="form-control form_datetime">
+                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择日期" v-model="date"
+                           class="form-control" :class="dateId">
                 </label>
             </div>
         </div>
@@ -60,23 +64,26 @@
     </div>
 </template>
 <style scoped>
-    #reservation{
+    #reservation {
         width: 250px;
         border-radius: 4px;
     }
+
     /*input.form_datetimeNeedHour, input.form_datetime{
         margin-bottom: -6px;
     }*/
-    .datePickerContainer{
+    .datePickerContainer {
         padding-top: 0;
         display: inline-block;
     }
-    .mobileTimePicker{
+
+    .mobileTimePicker {
         width: 250px;
         position: relative;
         /*padding-left: 13px;*/
     }
-    .mobileTime{
+
+    .mobileTime {
         padding: 12px;
         position: absolute;
         width: 200px;
@@ -88,7 +95,8 @@
         border: 1px solid #ddd;
         box-shadow: 1px 1px 2px #ddd;
     }
-    .mobileTime:before{
+
+    .mobileTime:before {
         position: absolute;
         top: -7px;
         left: 9px;
@@ -99,7 +107,8 @@
         /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
         content: '';
     }
-    .mobileTime:after{
+
+    .mobileTime:after {
         position: absolute;
         top: -6px;
         left: 10px;
@@ -109,11 +118,13 @@
         border-left: 6px solid transparent;
         content: '';
     }
-    .mobileTime ul{
+
+    .mobileTime ul {
         margin: 0;
         padding: 0;
     }
-    .mobileTime ul li{
+
+    .mobileTime ul li {
         font-size: 13px;
         background: #f5f5f5;
         border: 1px solid #f5f5f5;
@@ -125,15 +136,18 @@
         border-radius: 5px;
         cursor: pointer;
     }
-    .control-label{
+
+    .control-label {
         padding-left: 12px;
         /*margin-top: 8px;*/
     }
-    div.btns{
+
+    div.btns {
         /*text-align: right;*/
         margin-top: 10px;
     }
-    .mobileTime ul li.active{
+
+    .mobileTime ul li.active {
         background: #08c;
         border: 1px solid #08c;
         color: #fff;
@@ -143,28 +157,29 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props : ['dateConfigure','currentDate'],
+        props: ['dateConfigure', 'currentDate'],
         data(){
             return {
-                dateRange : '',
-                isPC : true,
-                from : '',
+                dateId: '',
+                dateRange: '',
+                isPC: true,
+                from: '',
                 to: '',
-                date : '',
-                range : '',
-                hour : '',
-                isCustom : false,
-                showPicker : false,
-                mobilePickerDate : '',
+                date: '',
+                range: '',
+                hour: '',
+                isCustom: false,
+                showPicker: false,
+                mobilePickerDate: '',
 
-                monthDates : '',        // 距离月初多少天
-                quarterlyDates : '',    // 距离本季度初多少天
-                yearDates : '',         // 距离1月1号多少天
-                lastMonthDays : '',     // 上月天数
-                lastYearDays : '',      // 去年天数
-                lastQuarterlyDays : '', // 上季度天数
+                monthDates: '',        // 距离月初多少天
+                quarterlyDates: '',    // 距离本季度初多少天
+                yearDates: '',         // 距离1月1号多少天
+                lastMonthDays: '',     // 上月天数
+                lastYearDays: '',      // 去年天数
+                lastQuarterlyDays: '', // 上季度天数
 
-                isActive : '',
+                isActive: '',
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -185,12 +200,13 @@
 //            console.log(this.dateConfigure[0]);
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
+            this.dateId = this.dateConfigure[0].date_id;
 //            console.log(this.hour);
             this.setDate();
 //            this.ifNeedHour();
 
         },
-        watch : {
+        watch: {
             dateConfigure(val){
                 console.log(val[0]);
                 this.range = val[0].range;
@@ -217,10 +233,10 @@
         },
         methods: {
             remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                $('.' + this.dateId).datetimepicker({
+                    minView: this.hour?'day':'month',                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
+                    format: this.hour?'yyyy-mm-dd hh:00':'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
@@ -228,11 +244,11 @@
                     pickerPosition: this.dateConfigure[0].position
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
-                    this.$emit('sendDate',ev.target.value);
+                    this.$emit('sendDate', ev.target.value);
 //                    console.log(this.startDataTime);
                 }.bind(this));
 
-                $('.form_datetimeNeedHour').datetimepicker({
+                /*$('.' + this.dateId).datetimepicker({
                     minView: "hour",                     //选择日期后，再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd hh:00',
@@ -241,11 +257,11 @@
                     clearBtn: true,                     //清除按钮
 //                    endDate: new Date(),
                     pickerPosition: this.dateConfigure[0].position
-                }).on('changeDate', function (ev){
+                }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
-                    this.$emit('sendDate',ev.target.value);
+                    this.$emit('sendDate', ev.target.value);
 //                    console.log(this.startDataTime);
-                }.bind(this));
+                }.bind(this));*/
             },
             datePicker(){
                 let _this = this;
@@ -255,50 +271,50 @@
                     format: 'YYYY-MM-DD',
                     showDropdowns: true,
                     autoApply: true,
-                    separator : '至',
+                    separator: '至',
 //                    maxDate : moment(), //最大时间
-                    ranges : {
+                    ranges: {
                         '清空': [null, null],
                         //'最近1小时': [moment().subtract('hours',1), moment()],
                         '今天': [moment().startOf('day'), moment()],
                         '昨天': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
                         '最近7天': [moment().subtract('days', 6), moment()],
                         '最近30天': [moment().subtract('days', 29), moment()],
-                        '上月': [moment().subtract('days', this.lastMonthDays+this.monthDates), moment().subtract('days', this.monthDates+1)],
+                        '上月': [moment().subtract('days', this.lastMonthDays + this.monthDates), moment().subtract('days', this.monthDates + 1)],
                         '本月': [moment().subtract('days', this.monthDates), moment()],
-                        '上季度': [moment().subtract('days', this.lastQuarterlyDays+this.quarterlyDates), moment().subtract('days', this.quarterlyDates+1)],
+                        '上季度': [moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates), moment().subtract('days', this.quarterlyDates + 1)],
                         '本季度': [moment().subtract('days', this.quarterlyDates), moment()],
-                        '上一年': [moment().subtract('days', this.lastYearDays+this.yearDates), moment().subtract('days', this.yearDates+1)],
+                        '上一年': [moment().subtract('days', this.lastYearDays + this.yearDates), moment().subtract('days', this.yearDates + 1)],
                         '本年': [moment().subtract('days', this.yearDates), moment()],
                     },
-                    locale : {
-                        applyLabel : '确定',
-                        cancelLabel : '取消',
-                        fromLabel : '起始时间',
-                        toLabel : '结束时间',
-                        customRangeLabel : '自定义',
-                        daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-                        monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
-                            '七月', '八月', '九月', '十月', '十一月', '十二月' ],
-                        firstDay : 1
+                    locale: {
+                        applyLabel: '确定',
+                        cancelLabel: '取消',
+                        fromLabel: '起始时间',
+                        toLabel: '结束时间',
+                        customRangeLabel: '自定义',
+                        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+                            '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                        firstDay: 1
                     },
                     linkedCalendars: false,
                     autoUpdateInput: false,
 
 //                    "startDate": "07/11/2017",
 //                    "endDate": "07/17/2017"
-                }, function(start, end, label) {
+                }, function (start, end, label) {
 //                    console.log('start-------'+start.format('YYYY-MM-DD'));
 //                    console.log('end-------'+end);
 //                    console.log('label-------'+label);
-                    if(start.format('YYYY-MM-DD')=='Invalid date'){
+                    if (start.format('YYYY-MM-DD') == 'Invalid date') {
 //                        alert(1)
                         _this.dateRange = '';
                         $('#reservation').val('');
-                        _this.$emit('sendDate','');
+                        _this.$emit('sendDate', '');
                     } else {
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
-                        _this.$emit('sendDate',start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
+                        _this.$emit('sendDate', start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
                     }
 
 //                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
@@ -309,86 +325,89 @@
                 let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
                 let flag = true;
                 for (let v = 0; v < Agents.length; v++) {
-                    if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = false;
+                        break;
+                    }
                 }
                 return flag;
             },
             sendDate(){
 //                alert(this.from+'&&'+this.to);
-                this.$emit('sendDate',this.from+'to'+this.to);
+                this.$emit('sendDate', this.from + 'to' + this.to);
             },
             selectDay(num){
                 this.getDates();
                 let date;
                 let from;
                 let to;
-                if (num == 11){
+                if (num == 11) {
                     this.isCustom = true;
 //                    return;
                 } else {
                     this.isActive = num;
 //                console.log(this.isActive);
-                    if (num == 0){
+                    if (num == 0) {
                         date = '';
                     } else {
                         this.isCustom = false;
-                        if (num == 1){
+                        if (num == 1) {
                             // 今天
 //                        console.log(moment().startOf('day').format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
                             from = moment().startOf('day').format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().startOf('day').format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
-                        } else if (num == 2){
+                            date = moment().startOf('day').format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 2) {
                             // 昨天
 //                        console.log(moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"to"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD'));
-                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"至"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
-                        } else if (num == 3){
+                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD') + "至" + moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
+                        } else if (num == 3) {
                             // 近7天
 //                        console.log(moment().subtract('days', 6).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
                             from = moment().subtract('days', 6).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', 6).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
-                        } else if (num == 4){
+                            date = moment().subtract('days', 6).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 4) {
                             // 近一个月
 //                        console.log(moment().subtract('days', 29).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
                             from = moment().subtract('days', 29).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', 29).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
-                        } else if (num == 5){
+                            date = moment().subtract('days', 29).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 5) {
                             // 上月
-                            from = moment().subtract('days', this.lastMonthDays+this.monthDates).format('YYYY-MM-DD');
-                            to = moment().subtract('days', this.monthDates+1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastMonthDays+this.monthDates).format('YYYY-MM-DD')+"至"+moment().subtract('days', this.monthDates+1).format('YYYY-MM-DD');
-                        } else if (num == 6){
+                            from = moment().subtract('days', this.lastMonthDays + this.monthDates).format('YYYY-MM-DD');
+                            to = moment().subtract('days', this.monthDates + 1).format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.lastMonthDays + this.monthDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.monthDates + 1).format('YYYY-MM-DD');
+                        } else if (num == 6) {
                             // 本月
                             from = moment().subtract('days', this.monthDates).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.monthDates).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
-                        } else if (num == 7){
+                            date = moment().subtract('days', this.monthDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 7) {
                             // 上季度
-                            from = moment().subtract('days', this.lastQuarterlyDays+this.quarterlyDates).format('YYYY-MM-DD');
-                            to = moment().subtract('days', this.quarterlyDates+1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastQuarterlyDays+this.quarterlyDates).format('YYYY-MM-DD')+"to"+moment().subtract('days', this.quarterlyDates+1).format('YYYY-MM-DD');
-                        } else if (num == 8){
+                            from = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD');
+                            to = moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD') + "to" + moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
+                        } else if (num == 8) {
                             // 本季度
                             from = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
-                        } else if (num == 9){
+                            date = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 9) {
                             // 上一年
-                            from = moment().subtract('days', this.lastYearDays+this.yearDates).format('YYYY-MM-DD');
-                            to = moment().subtract('days', this.yearDates+1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastYearDays+this.yearDates).format('YYYY-MM-DD')+"至"+moment().subtract('days', this.yearDates+1).format('YYYY-MM-DD');
-                        } else if (num == 10){
+                            from = moment().subtract('days', this.lastYearDays + this.yearDates).format('YYYY-MM-DD');
+                            to = moment().subtract('days', this.yearDates + 1).format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.lastYearDays + this.yearDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.yearDates + 1).format('YYYY-MM-DD');
+                        } else if (num == 10) {
                             // 本年
                             from = moment().subtract('days', this.yearDates).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD')+"至"+moment().format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         }
                     }
                     this.mobilePickerDate = date;
                     this.showPicker = false;
-                    this.$emit('sendDate',from+"to"+to);
+                    this.$emit('sendDate', from + "to" + to);
                 }
 
 
@@ -399,24 +418,24 @@
                 let endTime = new Date(Date.parse(this.to));
 //                console.log(startTime>=endTime)
 //                console.log(CompareDate(this.from,this.to))
-                if (this.from == '' || this.to == ''){
+                if (this.from == '' || this.to == '') {
                     this.info.error = '请选择日期';
                     //关闭失败弹窗 ***
                     this.info.state_error = true;
                     //显示成功弹窗 ***
                     this.info.state_success = false;
-                } else if(startTime>endTime){
+                } else if (startTime > endTime) {
                     this.info.error = '请选择正确的起止时间';
                     //关闭失败弹窗 ***
                     this.info.state_error = true;
                     //显示成功弹窗 ***
                     this.info.state_success = false;
                 } else {
-                    this.mobilePickerDate = this.from+'至'+this.to;
+                    this.mobilePickerDate = this.from + '至' + this.to;
                     this.showPicker = false;
                     this.from = '';
                     this.to = '';
-                    this.$emit('sendDate',this.from+'to'+this.to);
+                    this.$emit('sendDate', this.from + 'to' + this.to);
                 }
             },
             showToggle(){
@@ -431,66 +450,66 @@
             getDates(){
                 let currentDate = new Date();
                 let year = currentDate.getFullYear();
-                let month = currentDate.getMonth()+1;
+                let month = currentDate.getMonth() + 1;
                 let day = currentDate.getDate();
 
 //                console.log('year:'+year+'month:'+month+'day:'+day);
 
                 let lastQuarterlyEnd;  // 上季度初
                 let thisQuarterlyStart;  // 上季度末
-                if (month<=3){
-                    lastQuarterlyEnd = moment([year-1,10,1]);
-                    thisQuarterlyStart = moment([year,1,1]);
-                } else if(month>3&&month<=6) {
-                    lastQuarterlyEnd = moment([year,1,1]);
-                    thisQuarterlyStart = moment([year,4,1]);
-                } else if(month>6&&month<=9){
-                    lastQuarterlyEnd = moment([year,4,1]);
-                    thisQuarterlyStart = moment([year,7,1]);
-                } else if(month>9&&month<=12){
-                    lastQuarterlyEnd = moment([year,7,1]);
-                    thisQuarterlyStart = moment([year,10,1]);
+                if (month <= 3) {
+                    lastQuarterlyEnd = moment([year - 1, 10, 1]);
+                    thisQuarterlyStart = moment([year, 1, 1]);
+                } else if (month > 3 && month <= 6) {
+                    lastQuarterlyEnd = moment([year, 1, 1]);
+                    thisQuarterlyStart = moment([year, 4, 1]);
+                } else if (month > 6 && month <= 9) {
+                    lastQuarterlyEnd = moment([year, 4, 1]);
+                    thisQuarterlyStart = moment([year, 7, 1]);
+                } else if (month > 9 && month <= 12) {
+                    lastQuarterlyEnd = moment([year, 7, 1]);
+                    thisQuarterlyStart = moment([year, 10, 1]);
                 }
 
 //                let thisQuarterlyStart = moment([year,])
 
-                let thisDay = moment([year,month,day]);
+                let thisDay = moment([year, month, day]);
 
-                let lastMonth = moment([year,month-1,1]);
-                let thisMonth = moment([year,month,1]);
+                let lastMonth = moment([year, month - 1, 1]);
+                let thisMonth = moment([year, month, 1]);
 
-                let lastYear = moment([year-1,1,1]);
-                let thisYear = moment([year,1,1]);
+                let lastYear = moment([year - 1, 1, 1]);
+                let thisYear = moment([year, 1, 1]);
 
-                this.monthDates = thisDay.diff(thisMonth,'days');
-                this.lastMonthDays = thisMonth.diff(lastMonth,'days')-1;
-                
-                this.quarterlyDates = thisDay.diff(thisQuarterlyStart,'days');
-                this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd,'days')-1;
+                this.monthDates = thisDay.diff(thisMonth, 'days');
+                this.lastMonthDays = thisMonth.diff(lastMonth, 'days') - 1;
 
-                this.yearDates = thisDay.diff(thisYear,'days');
-                this.lastYearDays = thisYear.diff(lastYear,'days');
+                this.quarterlyDates = thisDay.diff(thisQuarterlyStart, 'days');
+                this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd, 'days') - 1;
+
+                this.yearDates = thisDay.diff(thisYear, 'days');
+                this.lastYearDays = thisYear.diff(lastYear, 'days');
 
                 /*console.log("this.monthDates--"+this.monthDates);       //17
-                console.log("this.lastMonthDays--"+this.lastMonthDays); //30
-                console.log("this.quarterlyDates--"+this.quarterlyDates);//167
-                console.log("this.lastQuarterlyDays--"+this.lastQuarterlyDays);//89
-                console.log("this.yearDates--"+this.yearDates);         //167
-                console.log("this.lastYearDays--"+this.lastYearDays);   //366*/
+                 console.log("this.lastMonthDays--"+this.lastMonthDays); //30
+                 console.log("this.quarterlyDates--"+this.quarterlyDates);//167
+                 console.log("this.lastQuarterlyDays--"+this.lastQuarterlyDays);//89
+                 console.log("this.yearDates--"+this.yearDates);         //167
+                 console.log("this.lastYearDays--"+this.lastYearDays);   //366*/
 
             },
             setDate(){
 
 //                console.log(this.currentDate!=undefined)
 
-                if (this.currentDate!=undefined){
-                    if (this.currentDate.length==1){
+                if (this.currentDate != undefined) {
+                    if (this.currentDate.length == 1) {
                         this.date = this.currentDate[0];
-                    } else if (this.currentDate.length==2){
-                        if (this.IsPC()){
-                            this.dateRange = this.currentDate[0]+"至"+this.currentDate[1];
+                    } else if (this.currentDate.length == 2) {
+                        if (this.IsPC()) {
+                            this.dateRange = this.currentDate[0] + "至" + this.currentDate[1];
                         } else {
-                            this.mobilePickerDate = this.currentDate[0]+"至"+this.currentDate[1];
+                            this.mobilePickerDate = this.currentDate[0] + "至" + this.currentDate[1];
                         }
                     }
                 }

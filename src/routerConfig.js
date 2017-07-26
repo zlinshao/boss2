@@ -69,7 +69,7 @@ import UserDetail from './compoments/user/userDetail.vue'           //用户详�
 export default[
     {
         path: '/',             //重定向主页
-        redirect: '/index',
+        redirect: '/user',
     },
     {
         path: '/index',             //主页

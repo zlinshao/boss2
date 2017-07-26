@@ -10,13 +10,22 @@
                                     <table class="top table table-advance table-hover">
                                         <thead>
                                         <tr>
-                                            <th>简报</th>
-                                            <th>新增客户</th>
-                                            <th>新增房屋</th>
-                                            <th>新增沟通日志</th>
-                                            <th>空置房屋</th>
-                                            <th>已收房屋</th>
-                                            <th>已租房屋</th>
+                                            <th class="bor0">简报</th>
+                                            <th class="bor0">新增客户</th>
+                                            <th class="bor0">新增房屋</th>
+                                            <th class="bor0">新增沟通日志</th>
+                                            <th class="bor0">空置房屋</th>
+                                            <th class="bor0">已收房屋</th>
+                                            <th class="bor0">已租房屋</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="top0"></th>
+                                            <th class="top0">100</th>
+                                            <th class="top0">100</th>
+                                            <th class="top0">100</th>
+                                            <th class="top0">100</th>
+                                            <th class="top0">100</th>
+                                            <th class="top0">100</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -46,13 +55,15 @@
                     </div>
                 </section>
                 <section class="panel">
-                    <div class="panel-body roll" style="height: 336px;overflow: auto;">
+                    <div class="panel-body">
                         <header class="panel-heading">
                             本月寿星
+                            <router-link v-if="main_birthday.length > 6" to="/user" class="pull-right">更多&gt;&gt;
+                            </router-link>
                         </header>
                         <div class="row product-list" style="margin-top: 16px;">
-                            <div class="col-xs-6 col-sm-3 col-lg-2" v-for="birth in main_birthday">
-                                <section class="panel">
+                            <div class="col-xs-6 col-sm-3 col-lg-2" v-for="(birth,index) in main_birthday">
+                                <section class="panel" v-show="index < 6">
                                     <div class="pro-img-box margin10" data-toggle="tooltip" data-placement="bottom"
                                          :title="birth.position">
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
@@ -139,7 +150,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel" style="height: 396px;">
+                <section class="panel" style="height: 347px;">
                     <header class="panel-heading">
                         公告
                     </header>
@@ -155,7 +166,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(mess, index) in main_message">
+                                        <tr v-for="(mess, index) in main_message" v-show="index < 6">
                                             <td style="min-width: 160px;">{{mess.create_time}}</td>
                                             <td style="min-width: 100px;" class="more_info">
                                                 <router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">
@@ -411,6 +422,15 @@
 
 
 <style scoped>
+    .bor0 {
+        border: 0;
+    }
+
+    .top0 {
+        font-weight: normal;
+        border-top: 0;
+    }
+
     .panel > div > div {
         width: 100%;
         margin: auto;

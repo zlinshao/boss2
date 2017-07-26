@@ -56,11 +56,11 @@
     </div>
 </template>
 <script>
-    //    import DatePicker from '../datePicker.vue'
+    import DatePicker from '../datePicker.vue'
     import Status from '../status.vue';
     export default{
         components: {
-            Status
+            Status, DatePicker
         },
         props: ['remindId'],
 
@@ -71,13 +71,13 @@
                 remindTime: '',         //提醒时间
                 remind_info: '',        //提醒内容
                 remind_select: [],      //提醒小时
-                dateConfigure: [
-                    {
-                        range: false,               // 是否选择范围
-                        needHour: true,             // 是否需要选择小时
-                        position: 'bottom-left'     // 在上面显示
-                    }
-                ],
+//                dateConfigure: [
+//                    {
+//                        range: false,               // 是否选择范围
+//                        needHour: true,             // 是否需要选择小时
+//                        position: 'bottom-left'     // 在上面显示
+//                    }
+//                ],
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -90,6 +90,7 @@
                 }
             }
         },
+
         updated (){
             this.remind_time();
         },
@@ -99,10 +100,13 @@
                 this.remind_select = res.data.time;
             });
         },
+
         methods: {
             times (val){
                 this.remindTimes = val;
             },
+
+//            选择时间
             remind_time (){
                 $('.remind_datetime').datetimepicker({
                     minView: "day",                     //选择日期后，不会再跳转去选择时分秒
@@ -115,6 +119,7 @@
                     this.remindTime = ev.target.value;
                 }.bind(this));
             },
+//            取消
             revise (){
                 this.remindTime = '';         //提醒时间
                 this.remindTimes = '';        //提醒时间
@@ -123,10 +128,10 @@
             Advanced(){
                 this.isAdvanced = !this.isAdvanced;
             },
-
-            getDate (val){
-                this.remindTime = val;
-            },
+//            日期组件
+//            getDate (val){
+//                this.remindTime = val;
+//            },
 //            增加个人提示信息
             add_notice (){
                 this.$http.post('message/remind/write', {
