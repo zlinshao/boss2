@@ -85,7 +85,7 @@
                     <thead class="text-center">
                     <tr>
                         <th class="text-center">
-                            <!--<input type="checkbox">-->{{status}}
+                            <!--<input type="checkbox">-->
                         </th>
                         <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
