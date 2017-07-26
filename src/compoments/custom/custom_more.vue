@@ -16,8 +16,8 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a href="#customModel" @click="customers_rev('rev')">编辑</a></li>
-                                <li><a>增加提醒</a></li>
+                                <li><a @click="customers_rev('rev')">编辑</a></li>
+                                <li @click="lookRemind"><a>增加提醒</a></li>
                                 <!--<li class="divider"></li>-->
                             </ul>
                         </div>
@@ -80,7 +80,7 @@
                             </div>
                             <div><span class="text-primary">证件号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">证件照片：</span>
-                                <a href="#largePic" v-for="(pic,index) in photos"
+                                <a v-for="(pic,index) in photos"
                                    style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
                                     <img :src="pic.small">
                                 </a>
@@ -268,7 +268,8 @@
 
         <!--查看大图-->
         <PicModal :largePic="largePic"></PicModal>
-
+        <!--查看提醒-->
+        <LookRemind @delete_rem="lookRemind" :msg="remind_info"></LookRemind>
         <!--提醒-->
         <Status :state='info'></Status>
     </div>
@@ -276,12 +277,14 @@
 
 <script>
     import New_add from './new_add.vue'
+    import LookRemind from '../common/remind/checkRemind.vue';
     import Status from '../common/status.vue';
     import PicModal from '../common/largePic.vue'       //查看大图
     export default {
-        components: {New_add, PicModal, Status},
+        components: {New_add, PicModal, Status, LookRemind},
         data (){
             return {
+                remind_info: [],
                 revise_state: '',           //修改
                 cus_progress: '',           //进度
                 progress: '20',             //进度
@@ -313,9 +316,22 @@
             this.detailed_info(this.cus_Id);
         },
         methods: {
+//            查看提醒
+            lookRemind(){
+                $('#checkRemind').modal({
+                    backdrop: 'static',         //空白处不消失
+                });
+                this.$http.post('message/remind/index', {
+                    not_remind: '1'
+                }).then((res) => {
+                    this.remind_info = res.data.data.data;
+                });
+            },
+//            取消
             cancel (){
                 this.detailed_info(this.cus_Id);
             },
+//            详情
             detailed_info (val){
                 this.card = [];
                 this.cus_info = [];

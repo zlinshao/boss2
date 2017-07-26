@@ -496,6 +496,7 @@
 
     @media screen and (max-width: 767px) {
         .table.table-responsive > .table > tbody > tr > td.phone {
+            min-width: 360px;
             max-width: 466px;
             white-space: normal;
             word-wrap: break-word;
