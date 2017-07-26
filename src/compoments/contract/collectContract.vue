@@ -68,11 +68,11 @@
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li  class="operate">
-                            <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick">置顶</i>&nbsp;
-                            <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick">取消置顶</i>&nbsp;
+                            <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick"> 置顶</i>&nbsp;
+                            <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick"> 取消置顶</i>&nbsp;
                         </li>
-                        <li  class="operate"  v-if="status == 1" >
-                            <i class="fa fa fa-lock" @click="deblocking">解锁</i>&nbsp;
+                        <li  class="operate"  v-if="status !== 1" >
+                            <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
                     </ul>
                 </div>
@@ -86,7 +86,6 @@
                     <tr>
                         <th class="text-center">
                             <!--<input type="checkbox">-->
-                            {{houseId}}
                         </th>
                         <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
@@ -272,7 +271,7 @@
                     this.houseId = item.house_id;
                     item.top === 2? this.top = 1:this.top = 2;
                     item.mark === 2? this.mark = 1:this.mark = 2;
-                    item.status !==1? this.status = 1:this.status = 2;
+                    item.status !==1? this.status = 2:this.status = 1;
                 }else {
                     this.contractSeleted = 0;
                     this.houseId = '';

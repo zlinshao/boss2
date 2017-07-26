@@ -71,7 +71,7 @@
                             <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick">置顶</i>&nbsp;
                             <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick">取消置顶</i>&nbsp;
                         </li>
-                        <li  class="operate"  v-if="status == 1" >
+                        <li  class="operate"  v-if="status !== 1" >
                             <i class="fa fa fa-lock" @click="deblocking">解锁</i>&nbsp;
                         </li>
                     </ul>
@@ -85,7 +85,7 @@
                     <thead class="text-center">
                     <tr>
                         <th class="text-center">
-                            <!--<input type="checkbox">-->
+                            <!--<input type="checkbox">-->{{status}}
                         </th>
                         <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
@@ -119,8 +119,8 @@
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
-                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
-                            <span class="label label-warning" v-if="item.passed === 2">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-success" v-if="item.status === 1">{{dictionary.passed[item.status]}}</span>
+                            <span class="label label-warning" v-if="item.status === 2">{{dictionary.passed[item.status]}}</span>
                         </td>
                         <td>
                             <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>
@@ -270,7 +270,8 @@
                     this.houseId = item.house_id;
                     item.top === 2? this.top = 1:this.top = 2;
                     item.mark === 2? this.mark = 1:this.mark = 2;
-                    item.status !==1? this.status = 1:this.status = 2;
+                    console.log(item.status)
+                    item.status !==1? this.status = 2:this.status = 1;
                 }else {
                     this.contractSeleted = 0;
                     this.houseId = '';
