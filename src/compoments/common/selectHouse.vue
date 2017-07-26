@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade " id="selectHouse">
+        <div class="modal fade selectHouse" id="selectHouse">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -102,7 +102,7 @@
             ensure(){
                 this.$emit('House',this.houseAddress);
                 this.houseList=[];
-                $('#selectHouse').modal('hide');
+                $('.selectHouse').modal('hide');
             },
             chooseItem(ev,item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');

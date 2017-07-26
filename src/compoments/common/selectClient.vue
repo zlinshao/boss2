@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade " id="selectClient">
+        <div class="modal fade selectClient" id="selectClient">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -131,7 +131,7 @@
                     this.info.state_error = true;
                 }else {
                     this.$emit('clientAdd',this.selectClients);
-                    $('#selectClient').modal('hide');
+                    $('.selectClient').modal('hide');
                     this.customerList=[];
                     this.selectClients=[];
                 }

@@ -36,14 +36,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">房屋地址</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectHouse" readonly v-model="chooseResult.house_name">
+                                    <input type="text" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly v-model="chooseResult.customer_name">
+                                    <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
                                 </div>
                             </div>
 
@@ -387,7 +387,7 @@
             selectStaff(){
                 // 选择签约人
                 this.configure = {length: 1, class: 'amount'};
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(1)').modal('show');
 //                alert(1)
             },
             selectDateSend(data){
@@ -399,6 +399,9 @@
                 this.chooseResult.staff_name = data.staff[0].name;
             },
 
+            selectHouse(){
+                $('.selectHouse:eq(1)').modal('show');
+            },
             getHouse(data){
                 // 选择房屋
 //                console.log(data);
@@ -406,6 +409,16 @@
                 this.chooseResult.house_name = data.address;
             },
 
+            selectClient(){
+                $('.selectClient:eq(1)').modal('show');
+            },
+            getClient(data){
+                // 选择客户
+//                console.log(data);
+                this.formData.customer_id = data.id;
+                this.chooseResult.customer_name = data.name;
+
+            },
             getFlexData(data){
                 console.log(data)
                 this.formData.price = data;
@@ -415,13 +428,7 @@
 //                console.log(data);
                 this.formData.deal_time = data;
             },
-            getClient(data){
-                // 选择客户
-//                console.log(data);
-                this.formData.customer_id = data.id;
-                this.chooseResult.customer_name = data.name;
 
-            },
 
             changePayType(ev){
                 this.formData.pay_type = [];
