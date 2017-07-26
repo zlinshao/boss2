@@ -12,12 +12,12 @@
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
-                <span class="label label-warning">{{passDictionary[contract_pass]}}</span>
+                <span class="label label-primary">{{passDictionary[contract_pass]}}</span>
             </div>
             <div class="pull-right dropdown" v-for="item in contractList">
                 <span>
-                    <i class="fa fa-lock" v-if="item.status !==1"></i>
-                    <i class="fa fa-unlock"  v-if="item.status ===1"></i>
+                    <i class="fa fa-lock" v-if="item.villa_id.status !==1"></i>
+                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
                 <!--<router-link :to="{path:'/compareContract',query: {ContractId: contractList[0].villa_id.id}}" tag="button" class="btn btn-primary">对比</router-link>-->
@@ -28,14 +28,13 @@
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" v-if="isPass">通过</button>
-                <button class="btn btn-primary" v-else="isPass">驳回</button>
-                <button class="btn btn-default more" @click="showUl" v-if="isCollect">
-                    更多
-                    <ul v-show="show">
-                        <li @click="editContract">编辑</li>
-                        <li @click="renewContract">续约</li>
-                    </ul>
+                <button class="btn btn-primary" @click="passContract">{{passDictionary[contract_pass]}}</button>
+                <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
+                <button class="btn btn-primary" @click="editContract">
+                    编辑
+                </button>
+                <button class="btn btn-primary" @click="renewContract">
+                    续约
                 </button>
             </div>
         </div>
@@ -542,8 +541,6 @@
         data(){
             return {
                 show : false,        // 是否显示更多
-                isPass : true,      // 是否通过
-                isCollect : true,   // 租房或收房
                 contractList:[],
                 dictionary:[],
                 largePic: [],
@@ -588,9 +585,6 @@
                     this.contract_num = res.data.data.contract_num
                     this.contract_pass = res.data.data.passed
                 })
-            },
-            showUl(){           // 点击更多
-                this.show = !this.show;
             },
             transferDetail(){
                 $('#transferDetail').modal('show');
@@ -667,6 +661,34 @@
                         this.info.state_error = true;
                     }
                 });
+            },
+            passContract(){ //合同通过
+                this.$http.get('core/contract_check/checkContract/id/' + this.contractEitId + '/type/collect').then((res) =>{
+                    if(res.data.code === '60010'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            overrule(){ //合同驳回
+                this.$http.get('core/contract_check/reject/id/' + this.contractEitId + '/type/collect').then((res) =>{
+                    if(res.data.code === '60010'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             }
 
         }
@@ -694,10 +716,6 @@
         /*line-height: 60px;*/
     }
 
-    button.more{
-        position: relative;
-        z-index: 1000;
-    }
     .pull-right{
         user-select: none;
     }

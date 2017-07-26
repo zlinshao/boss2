@@ -12,8 +12,8 @@
                     </div>
                     <div class="modal-body scoll">
                             <div class="row">
-                                <div class="col-lg-7" >
-                                    <div class="box" @click="inputFocus">
+                                <div class="col-lg-7 col-sm-7" >
+                                    <div class="box" @click="inputFocus" id="borderBlue">
                                         <div id="tagsinput_tagsinput" class="tagsinput " style="border: none">
                                             <span class="tag" v-for="item in member" v-if="member!=''">
                                                 <span >{{item.name}}&nbsp;&nbsp;</span>
@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-5 col-sm-5">
                                     <div class="box">
                                         <div class="boxHead">组织架构</div>
                                         <div style="margin-left: 10px">
@@ -614,7 +614,7 @@
             },
             inputFocus(){   //点击选人框，input触发focus事件
                 $('#inputFocus').focus();
-            }
+            },
         },
     }
 </script>
@@ -649,6 +649,9 @@
         border:1px solid #ccc;
         border-radius: 5px;
         background: #ffffff;
+    }
+    #borderBlue:hover{
+        border:1px solid #52B9D5;
     }
     .boxHead{
         text-align: center;

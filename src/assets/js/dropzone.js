@@ -143,7 +143,7 @@
             resizeWidth: 1000,
             resizeHeight: null,
             resizeMimeType: null,
-            resizeQuality: 0.8,
+            resizeQuality: 1,
             resizeMethod: 'contain',
             filesizeBase: 1000,
             maxFiles: null,

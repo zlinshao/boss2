@@ -12,12 +12,12 @@
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
-                <span class="label label-warning">{{passDictionary[contract_pass]}}</span>
+                <span class="label label-primary">{{passDictionary[contract_pass]}}</span>
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
-                <span @click="changeLock">
-                    <i class="fa fa-lock" v-if="isLock"></i>
-                    <i class="fa fa-unlock" v-else="isLock"></i>
+                <span>
+                    <i class="fa fa-lock" v-if="item.villa_id.status !==1"></i>
+                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
                 <button class="btn btn-primary" @click="inform">通知</button>
@@ -504,7 +504,6 @@
         },
         data(){
             return {
-                isLock : true, // 是否锁定
                 show : false,        // 是否显示更多
                 isPass : true,      // 是否通过
                 isCollect : true,   // 租房或收房
@@ -555,9 +554,6 @@
             },
             showUl(){           // 点击更多
                 this.show = !this.show;
-            },
-            changeLock(){       // 点击锁定
-                this.isLock = !this.isLock;
             },
             transferDetail(){
                 $('#transferDetail').modal('show');

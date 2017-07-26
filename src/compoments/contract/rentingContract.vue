@@ -119,8 +119,8 @@
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
-                            <span class="label label-success" v-if="item.status === 1">{{dictionary.passed[item.status]}}</span>
-                            <span class="label label-warning" v-if="item.status === 2">{{dictionary.passed[item.status]}}</span>
+                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
                             <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>

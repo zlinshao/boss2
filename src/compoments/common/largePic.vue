@@ -203,8 +203,7 @@
             rotateBack(){
                 this.current = 0;
                 document.getElementById('img').style.transform = 'rotate('+(-this.current)+'deg)';
-            }
-
+            },
         }
     }
 </script>
