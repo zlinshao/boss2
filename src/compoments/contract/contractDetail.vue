@@ -25,12 +25,14 @@
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-warning" disabled v-if="item.reviewed ===1">
+                <button class="btn btn-primary" disabled v-if="item.reviewed ===1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" @click="passContract">{{passDictionary[contract_pass]}}</button>
+                <button class="btn btn-warning" @click="passContract" :disabled = " contract_pass===5 || contract_pass===1">
+                    {{dictionary.passed_submit[contract_pass]}}
+                </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
-                <button class="btn btn-primary" @click="editContract">
+                <button class="btn btn-primary" @click="editContract" :disabled = " contract_pass > 2 ">
                     编辑
                 </button>
                 <button class="btn btn-primary" @click="renewContract">
@@ -518,6 +520,8 @@
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>
+
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 <script>
@@ -528,6 +532,7 @@
     import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
     import Comparison from  './contractCompare.vue'
+    import Confirm from '../common/confirm.vue'
     export default{
         components: {
             Transfer,
@@ -536,7 +541,8 @@
             ContractRenew,
             PicModal,
             Status,
-            Comparison
+            Comparison,
+            Confirm
         },
         data(){
             return {
@@ -561,6 +567,8 @@
                 villaId : '',
                 contract_pass:'',
                 passDictionary:[],
+                confirmMsg:[],  //提示信息
+                msgFlag:'',
             }
         },
         mounted(){
@@ -625,21 +633,6 @@
             editSuccess(val){
                 if(val === 'success') this.contractDetail();
             },
-            returnVisit(){  // 回访状态
-                this.$http.get('core/collect/review/id/' + this.contractEitId).then((res) => {
-                    if(res.data.code === '70030'){
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        this.contractDetail();
-                    }else {
-                        this.info.error = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-
-                });
-            },
             compareContract(){
                 this.isCompared = true;
                 this.villaId = this.contractList[0].villa_id.id;
@@ -648,47 +641,85 @@
             haveCompared(){
                 this.isCompared = false;
             },
+            returnVisit(){  // 回访状态
+                this.confirmMsg = {msg:'您确定回访吗'};
+                this.msgFlag = 'returnVisit';
+                $('#confirm').modal('show');
+            },
             inform(){   //通知
-                this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
-                    if(res.data.code === '70040'){
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        this.contractDetail();
-                    }else {
-                        this.info.error = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                });
+                this.confirmMsg = {msg:'您确定通知吗'};
+                this.msgFlag = 'inform';
+                $('#confirm').modal('show');
             },
             passContract(){ //合同通过
-                this.$http.get('core/contract_check/checkContract/id/' + this.contractEitId + '/type/collect').then((res) =>{
-                    if(res.data.code === '60010'){
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        this.contractDetail();
-                    }else {
-                        this.info.error = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
+                if(this.contract_pass >2){
+                    this.confirmMsg = {msg:'您确定通过吗'};
+                }else if(this.contract_pass === 2){
+                    this.confirmMsg = {msg:'您确定提交吗'};
+                }
+                this.msgFlag = 'pass';
+                $('#confirm').modal('show');
             },
             overrule(){ //合同驳回
-                this.$http.get('core/contract_check/reject/id/' + this.contractEitId + '/type/collect').then((res) =>{
-                    if(res.data.code === '60010'){
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        this.contractDetail();
-                    }else {
-                        this.info.error = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
+                this.confirmMsg = {msg:'您确定驳回吗'};
+                this.msgFlag = 'overrule';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                if(this.msgFlag === 'pass'){   //通过
+                    this.$http.get('core/contract_check/checkContract/id/' + this.contractEitId + '/type/collect').then((res) =>{
+                        if(res.data.code === '60010'){
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.contractDetail();
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }else if(this.msgFlag === 'overrule'){
+                    this.$http.get('core/contract_check/reject/id/' + this.contractEitId + '/type/collect').then((res) =>{
+                        if(res.data.code === '60010'){
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.contractDetail();
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }else if(this.msgFlag === 'inform'){
+                    this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
+                        if(res.data.code === '70040'){
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.contractDetail();
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    });
+                }else if(this.msgFlag === 'returnVisit'){
+                    this.$http.get('core/collect/review/id/' + this.contractEitId).then((res) => {
+                        if(res.data.code === '70030'){
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.contractDetail();
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+
+                    });
+                }
             }
 
         }
