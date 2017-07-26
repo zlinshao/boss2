@@ -243,7 +243,7 @@
 <style scoped>
     @media (min-width : 1024px) {
         tbody>tr>td:last-child{
-            max-width: 300px;
+            max-width: 340px;
         }
     }
     @media (min-width : 768px) {
