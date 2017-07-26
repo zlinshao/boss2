@@ -13,14 +13,14 @@
                     <div class="modal-body scoll">
                             <div class="row">
                                 <div class="col-lg-7" >
-                                    <div class="box">
+                                    <div class="box" @click="inputFocus">
                                         <div id="tagsinput_tagsinput" class="tagsinput " style="border: none">
                                             <span class="tag" v-for="item in member" v-if="member!=''">
                                                 <span >{{item.name}}&nbsp;&nbsp;</span>
                                                 <a class="tagsinput-remove-link" @click="deleteName(item)"></a>
                                             </span>
                                             <input v-model="keywords" @keyup="search" @keydown.8="backSpace" style="width: 65px"
-                                            placeholder="搜索"       @keydown.down="changeDown" @keydown.up="changeUp" @keydown.13='keydownAdd'>
+                                            placeholder="搜索"   id="inputFocus"    @keydown.down="changeDown" @keydown.up="changeUp" @keydown.13='keydownAdd'>
                                         </div>
                                         <div class="searchList box-body scoll" id="d1" style="max-height: 348px">
                                             <ul>
@@ -611,6 +611,9 @@
                 this.myConfigure={};
                 this.noDepartment=false;
                 this.noStaff=false;
+            },
+            inputFocus(){   //点击选人框，input触发focus事件
+                $('#inputFocus').focus();
             }
         },
     }
