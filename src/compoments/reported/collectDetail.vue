@@ -67,11 +67,13 @@
         <Status :state='info'></Status>
 
 
+        <!--新增-->
+        <AddModal :collectMsg="collectMsg"></AddModal>
+
         <!--编辑-->
         <EditModal :id="id" @save="getDetails(id)"></EditModal>
 
-        <!--新增-->
-        <AddModal :collectMsg="collectMsg"></AddModal>
+
 
 
         <div class="modal fade bs-example-modal-sm" id="change" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

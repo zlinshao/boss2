@@ -84,6 +84,9 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
+        <!--新增收房报备-->
+        <AddModal :rentMsg="rentMsg"></AddModal>
+
         <!--编辑-->
         <EditModal :id="id" @save="getDetails(id)"></EditModal>
 
@@ -110,8 +113,7 @@
                 </div>
             </div>
         </div>
-        <!--新增收房报备-->
-        <AddModal :rentMsg="rentMsg"></AddModal>
+
     </div>
 </template>
 

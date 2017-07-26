@@ -35,16 +35,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">客户姓名</label>
+                                    <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">房屋地址</label>
+                                    <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" data-toggle="modal" data-target="#selectHouse" readonly v-model="chooseResult.house_name">
+                                        <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
                                     </div>
                                 </div>
 
@@ -319,7 +319,7 @@
             </div>
         </div>
 
-        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <STAFF :configure="configure" @Staff="selectDateSendEdit"></STAFF>
 
         <SelectHouse @House="getHouse"></SelectHouse>
         <!--提示信息-->
@@ -591,14 +591,18 @@
             selectStaff(){
                 // 选择签约人
                 this.configure = {length: 1, class: 'amount'};
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(1)').modal('show');
             },
-            selectDateSend(data){
+            selectDateSendEdit(data){
                 // 选择人
-                alert(2)
+//                alert(2)
 //                console.log(data.staff[0].id)
                 this.formData.staff_id = data.staff[0].id;
                 this.chooseResult.staff_name = data.staff[0].name;
+            },
+
+            selectHouse(){
+                $('.selectHouse:eq(1)').modal('show');
             },
             getHouse(data){
                 // 选择房屋
@@ -606,6 +610,10 @@
 //                console.log(data);
                 this.formData.house_id = data.id;
                 this.chooseResult.house_name = data.address;
+            },
+
+            selectClient(){
+                $('.selectClient:eq(1)').modal('show');
             },
             getClient(data){
                 // 选择客户

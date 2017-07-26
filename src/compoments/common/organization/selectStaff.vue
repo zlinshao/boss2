@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade " id="selectCustom" data-backdrop="static" >
+        <div class="modal fade selectCustom" id="selectCustom" data-backdrop="static" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -577,7 +577,7 @@
             //选择成员并发回父组件
             selectUser(){
                 this.$emit('Staff',this.organize);
-                $('#selectCustom').modal('hide');
+                $('.selectCustom').modal('hide');
                 this.organize={
                     department:[
 
