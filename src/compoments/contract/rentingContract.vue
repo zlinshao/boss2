@@ -318,6 +318,7 @@
                         this.search();
                         this.contractSeleted = 0;
                         this.info.success =res.data.msg;
+
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                     }else {
