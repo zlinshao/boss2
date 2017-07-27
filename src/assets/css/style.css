@@ -5964,7 +5964,11 @@ a.guest-on i {
     display: table-cell;
     vertical-align: middle;
 }
-
+@media (max-width: 767px) {
+    div.modal-dialog{
+        width: 100%;
+    }
+}
 
 /*-----*/
 

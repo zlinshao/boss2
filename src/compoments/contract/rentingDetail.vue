@@ -510,14 +510,14 @@
     import AddModal from '../reported/rentingAdd.vue'
     export default{
         components: {
-            Transfer,
-            Contract,
-            ContractEit,
-            AddModal,
-            PicModal,
-            Status,
-            Comparison,
-            Confirm
+            Transfer,   //转账
+            Contract,   //合同信息
+            ContractEit,//合同编辑
+            PicModal,   //图片放大
+            Status,     //状态提醒
+            Comparison, //对比
+            Confirm,    //confirmMsg
+            AddModal    //合同续约
         },
         data(){
             return {
