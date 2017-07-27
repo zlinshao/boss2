@@ -491,7 +491,7 @@
         <Transfer></Transfer>
         <Contract></Contract>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"  @EditStatus="editSuccess"></ContractEit>
-        <ContractRenew></ContractRenew>
+        <AddModal :rentContactId="contractEitId"></AddModal>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared"  @Compared="haveCompared"></Comparison>
@@ -504,16 +504,16 @@
     import Transfer from './transferDetail.vue'
     import Contract from  './contractInfo.vue'
     import ContractEit from './rentingEdit.vue'
-    import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
     import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
+    import AddModal from '../reported/rentingAdd.vue'
     export default{
         components: {
             Transfer,
             Contract,
             ContractEit,
-            ContractRenew,
+            AddModal,
             PicModal,
             Status,
             Comparison,
@@ -579,7 +579,7 @@
                 $('#rentingEdit').modal('show');
             },
             renewContract(){
-                $('#contractRenew').modal('show');
+                $('#add').modal('show');
             },
             showLargePic(name, index){
                 this.srcs = this.contractList[0].album[name];

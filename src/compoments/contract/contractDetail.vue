@@ -593,12 +593,13 @@
         <Transfer></Transfer>
         <Contract></Contract>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
-        <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+
+        <AddModal :collectContactId="contractEitId"></AddModal>
     </div>
 </template>
 <script>
@@ -606,20 +607,21 @@
     import Transfer from './transferDetail.vue'
     import Contract from  './contractInfo.vue'
     import ContractEit from './collectEdit.vue'
-    import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
     import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
+
+    import AddModal from '../reported/collectAdd.vue'
     export default{
         components: {
             Transfer,
             Contract,
             ContractEit,
-            ContractRenew,
             PicModal,
             Status,
             Comparison,
-            Confirm
+            Confirm,
+            AddModal
         },
         name:'shoplist',
         data(){
@@ -685,7 +687,7 @@
                 $('#contractEdit').modal('show');
             },
             renewContract(){
-                $('#contractRenew').modal('show');
+                $('#add').modal('show');
             },
             showLargePic(name, index){
                 this.srcs = this.contractList[0].album[name];
