@@ -301,7 +301,7 @@
                     cus_idPhotos: {},                   //修改图片ID
                     cus_idPhoto: [],                    //证件照片
                 },
-                complete_ok: '',                        //图片上传完成
+                complete_ok: 'ok',                        //图片上传完成
 
                 cus_marriage: '1',                  //婚姻状况
                 cus_qq: '',                         //qq号
@@ -440,7 +440,7 @@
 //            确定新增/修改
             cus_confirm (url){
                 this.$http.defaults.withCredentials = true;
-                if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
+                if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
                         if (res.data.data === 0 || res.data.data === null) {
                             this.succeed(url);
