@@ -542,13 +542,13 @@
                             </li>-->
 
                             <li>
-                                <router-link to="/collectPayment">
-                                    <span>应收款项</span>
+                                <router-link to="/payPayment">
+                                    <span>应付款项</span>
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/payPayment">
-                                    <span>应付款项</span>
+                                <router-link to="/collectPayment">
+                                    <span>应收款项</span>
                                 </router-link>
                             </li>
 
@@ -557,21 +557,21 @@
                                     <span>收支流水</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <!--<li>
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
                                 </router-link>
-                            </li>
+                            </li>-->
                             <!--<li>
                                 <router-link to="/generalOperation">
                                     <span>总账操作</span>
                                 </router-link>
                             </li>-->
-                            <li>
+                            <!--<li>
                                 <router-link to="/generalRecord">
                                     <span>总账操作记录</span>
                                 </router-link>
-                            </li>
+                            </li>-->
                             <!--<li>
                                 <router-link to="/chart">
                                     <span>可视报表</span>

@@ -376,4 +376,9 @@
     tr td a i{
         font-size: 18px;
     }
+    tbody tr td button{
+        color: white;
+        /*font-weight: bold;*/
+    }
+
 </style>

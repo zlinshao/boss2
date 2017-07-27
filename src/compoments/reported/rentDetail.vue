@@ -35,7 +35,7 @@
                     <div>
                         <div class="col-md-12" v-if="msg!=''">
                             <div class="col-md-4">
-                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer.name}}</span></div>
+                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
                                 <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
                                 <div><span class="text-primary">租房类型：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
@@ -70,7 +70,7 @@
                                 <div><span class="text-primary">收款账户：</span><span>颠三倒</span></div>
                                 <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
-                                <div><span class="text-primary">签约人：</span><span>{{msg.staff.real_name}}</span></div>
+                                <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
                                 <div><span class="text-primary">负责人：</span><span>{{msg.leader.real_name}}</span></div>
                                 <div><span class="text-primary">所属部门：</span><span>{{msg.department.name}}</span></div>
                             </div>
@@ -162,7 +162,7 @@
         mounted (){
             let id = this.$route.query.rentId;
             console.log(id);
-            this.id = id;
+//            this.id = id;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
@@ -180,6 +180,9 @@
 //                        console.log(res.data.data);
                             this.msg = res.data.data;
                             this.srcs = this.msg.album.receipt_pic;
+                            if (res.data.data.status==1){
+                                this.id = id;
+                            }
 //                            console.log(this.msg)
                         }
                     );

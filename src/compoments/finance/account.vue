@@ -163,7 +163,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="formData.remark">
+                                        <textarea class="form-control" v-model="formData.remark"></textarea>
+                                        <!--<input type="text" class="form-control" v-model="formData.remark">-->
                                     </div>
                                 </div>
                             </form>
@@ -192,6 +193,9 @@
     tbody tr input[type=checkbox]{
         width: 17px;
         height: 17px;
+    }
+    textarea{
+        max-width: 100%;
     }
 </style>
 <script>
@@ -397,7 +401,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
                                 this.clearForm();
-                                this.accountList();
+                                this.search();
                             } else {
                                 // 失败
                                 this.info.error = res.data.data.msg;
