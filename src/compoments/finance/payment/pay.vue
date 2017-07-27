@@ -8,7 +8,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div>
+                <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
                             <!--<label style="font-weight: bold;display: inline-block">查 询</label>-->
@@ -19,9 +19,12 @@
                             </span>
                         </div>
 
-                        <!--<div class="input-group">
-                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
-                        </div>-->
+                        <div class="input-group">
+                            <select class="form-control">
+                                <option value="">待入账</option>
+                            </select>
+                        </div>
+
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
@@ -33,12 +36,24 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
-                        <div class="form-group pull-right">
+                        <!--<div class="form-group pull-right">
                             <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
-                                <i class="fa fa-plus-square"></i>&nbsp;新增应收款项
+                                <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
                             </a>
-                        </div>
+                        </div>-->
                     </form>
+                </div>
+
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li>
+                            <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
+                        </li>
+                        <li>
+                            <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a></h5>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -86,9 +101,15 @@
                         <tbody>
                         <tr>
                             <td>
-                                <input type="checkbox">
+                                <input type="checkbox" :checked="operId===1" @click="changeIndex($event,1)">
                             </td>
-                            <td><a><i title="查看详情" class=" fa fa-eye"></i></a></td>
+                            <td><router-link :to="{path:'/payPaymentDetail',query: {collectId: 1}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" :checked="operId===2" @click="changeIndex($event,2)">
+                            </td>
+                            <td><router-link :to="{path:'/payPaymentDetail',query: {collectId: 2}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
                         </tr>
                         </tbody>
                     </table>
@@ -96,25 +117,95 @@
             </div>
         </div>
 
-
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <!--新增-->
+        <div class="modal fade full-width-modal-right" id="addPay" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addModalLabel">{{title}}</h4>
+                        <h4 class="modal-title">新增应付款项</h4>
                     </div>
                     <div class="modal-body clearFix">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">付款时间</label>
+                                <div class="col-sm-10">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
+                                           class="form-control form_datetime">
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">房屋地址</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectHouse" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客户姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">签约人</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">支出科目</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control">
+                                        <option value="">押金</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应付金额</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">累计实付</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">付款人员</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+
+
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary" v-if="isAdd">保存</button>
-                        <button type="button" class="btn btn-primary" v-else="isAdd">修改</button>
+                        <button type="button" class="btn btn-primary">保存</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--应付入账-->
+
         <Page :pg="paging" @pag="getPage"></Page>
 
 
@@ -122,7 +213,11 @@
         <Status :state='info'></Status>
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <SelectHouse @House="getHouse"></SelectHouse>
+        <SelectClient @clientAdd="getClient"></SelectClient>
 
+        <!--应付入账-->
+        <ShouldPay :id="operId"></ShouldPay>
     </div>
 </template>
 
@@ -133,14 +228,22 @@
     import STAFF from  '../../common/organization/selectStaff.vue'
     import DatePicker from '../../common/datePicker.vue'
 
+    import SelectHouse from '../../common/selectHouse.vue'
+    import SelectClient from '../../common/selectClient.vue'
+
+    import ShouldPay from './paymentShouldPay.vue'
+
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF},
+        components: {Page,Status,FlexBox,DatePicker,STAFF,SelectHouse,SelectClient,ShouldPay},
 
         data(){
             return {
                 operId : 0,
+
                 paging : '',
                 page : 1,                  // 当前页数
+
+                myData: [],      //列表数据
 
                 dateConfigure : [
                     {
@@ -158,22 +261,13 @@
                 title : '',
                 isAdd : true,
                 moreYears : 1,
-                modal : {
-                    village : {
-                        villageName : ''
-                    }
-                },
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
-                },
+
+
 
                 selected : [],
                 params : {
                     department_id : [],
                     staff_id : [],
-                    startDataTime : '',
-                    finishDataTime : ''
                 },
                 tips : {},
                 info:{
@@ -211,14 +305,6 @@
 
 
             },
-            addNew(){
-                this.title = '新增应付款项';
-                this.isAdd = true;
-            },
-            operation(id,index){
-                this.title = '修改应付';
-                this.isAdd = false;
-            },
 
             payFlowList(){
                 /*this.$http.get('json/itemFlow.json').then((res) => {
@@ -237,34 +323,18 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
-                });
-                $('.form-inline .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '开始时间'){
-                        this.params.startDataTime = ev.target.value;
+                }).on('changeDate', function (ev) {
+                    if (ev.target.placeholder == '付款时间'){
+
                     } else {
-                        this.params.finishDataTime = ev.target.value;
+
                     }
-//                    console.log(this.startDataTime);
+//                    console.log(ev.target.value);
+//                    console.log(ev.target.placeholder);
                 }.bind(this));
             },
             getPage(data){
                 this.page = data;
-            },
-
-            oper(){
-                console.log(this.operId);
-                this.title = '编辑应付款项';
-                this.isAdd = false;
-                // 先请求
-
-//                请求成功打开模态框
-                $('#myModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
-
             },
 
             select(){
@@ -300,14 +370,24 @@
                 console.log(data);
 
             },
+
+            getHouse(data){},
+            getClient(data){}
         }
     }
 </script>
 
 <style scoped>
+    .datePickerContainer{
+        margin-bottom: 0;
+    }
+    @media (max-width: 798px) {
+        .datePickerContainer{
+            margin-top:3px;
+        }
+    }
     div.padd {
         display: inline-block;
-        /*padding: 0 15px 0 0;*/
     }
     .tips{
         line-height: 30px;
@@ -345,10 +425,6 @@
     div.input-group{
         padding: 0 15px;
     }
-    label{
-        line-height: 34px;
-    }
-
     tbody tr{
         cursor: pointer;
     }
@@ -359,5 +435,8 @@
     }
     tr td a i{
         font-size: 18px;
+    }
+    textarea{
+        max-width: 100%;
     }
 </style>

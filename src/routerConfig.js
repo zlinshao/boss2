@@ -41,8 +41,8 @@ import Jurisdiction from './compoments/finance/jurisdiction.vue'                
 import CollectPayment from './compoments/finance/payment/collect.vue'           // 应收款项
 import PayPayment from './compoments/finance/payment/pay.vue'                    // 应付款项
 import IncomeFlow from './compoments/finance/incomeFlow.vue'                    // 收支流水
-import PayingRent from './compoments/finance/payment/payingRent.vue'         // 收支流水
-import CollectRent from './compoments/finance/payment/collectRent.vue'         // 收支流水
+import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'         // 收支流水
+import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'         // 收支流水
 import PendingItem from './compoments/finance/pendingItem.vue'                  // 待处理项
 import GeneralOperation from './compoments/finance/generalOperation.vue'        // 总账操作
 import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
@@ -265,14 +265,14 @@ export default[
         component: IncomeFlow
     },
     {
-        path: '/payingRent',
-        name: 'PayingRent',
-        component: PayingRent
+        path: '/payPaymentDetail',
+        name: 'PayPaymentDetail',
+        component: PayPaymentDetail
     },
     {
-        path: '/collectRent',
-        name: 'CollectRent',
-        component: CollectRent
+        path: '/collectPaymentDetail',
+        name: 'CollectPaymentDetail',
+        component: CollectPaymentDetail
     },
     {
         path: '/pendingItem',
