@@ -68,7 +68,7 @@
             return {
                 isAdvanced: false,
                 remindTimes: '',        //提醒时间
-                remindTime: '',         //提醒时间
+                remindTime: '',         //提醒时间 高级
                 remind_info: '',        //提醒内容
                 remind_select: [],      //提醒小时
                 dateConfigure: [
@@ -116,9 +116,10 @@
                 }.bind(this));
             },
             revise (){
-                this.remindTime = '';           //提醒时间
+                this.remindTime = '';           //提醒时间 高级
                 this.remindTimes = '';          //提醒时间
                 this.remind_info = '';          //提醒内容
+                this.isAdvanced = false;
             },
             Advanced(){
                 this.isAdvanced = !this.isAdvanced;
