@@ -268,8 +268,10 @@
 
         <!--查看大图-->
         <PicModal :largePic="largePic"></PicModal>
+
         <!--查看提醒-->
         <LookRemind @delete_rem="lookRemind" :msg="remind_info"></LookRemind>
+
         <!--提醒-->
         <Status :state='info'></Status>
     </div>
@@ -287,7 +289,7 @@
                 remind_info: [],
                 revise_state: '',           //修改
                 cus_progress: '',           //进度
-                progress: '20',             //进度
+                progress: '20',             //进度合同
                 open_on: false,             //展示收起
                 follow_up: '',              //跟进记录
                 cus_Id: '',                 //客户ID

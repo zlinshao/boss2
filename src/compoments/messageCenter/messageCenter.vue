@@ -14,7 +14,7 @@
                                 <h3>我的消息</h3>
                             </div>
                         </div>
-                        <ul class="inbox-nav inbox-divider">
+                        <ul class="inbox-nav inbox-divider" style="border-bottom: 0;">
                             <li @click="System(1)"><!--:class="{active: act === 'sys_mess'}"-->
                                 <a href="#">
                                     <i class="fa fa-volume-up"></i>系统公告
@@ -86,7 +86,7 @@
                                     </td>
                                     <td class="text-center width180">{{sys.read_time}}</td>
                                     <td class="text-center width60">
-                                        <i class="fa fa-folder" @click.stop="receive(sys.id)"
+                                        <i class="fa fa-folder"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
@@ -113,7 +113,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Examines">
+                                <tr class="unread" v-for="sys in Examines" @click="receive(sys.id)">
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.release_name}}</td>
                                     <td class="text-center width80">{{sys.message.data.category}}</td>
@@ -129,7 +129,7 @@
                                               class="label label-warning">{{sys.message.data.approval_type}}</span>
                                     </td>
                                     <td class="text-center" style="min-width: 60px;">
-                                        <i class="fa fa-folder" @click.stop="receive(sys.id)"
+                                        <i class="fa fa-folder"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
@@ -138,7 +138,6 @@
                                            style="color: #e4393c"></i>
                                         <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"
                                            @click.stop="isCollect(sys.mess_id)"></i>
-
 
                                         <!--<i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"></i>-->
                                     </td>
@@ -156,15 +155,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Substitutes">
+                                <tr class="unread" v-for="sys in Substitutes" @click="receive(sys.id)">
                                     <td class="text-center width180">{{sys.remind_time}}</td>
                                     <td class="text-center width80">{{sys.send_name}}</td>
-                                    <td class="text-center" :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id  }"
+                                    <td class="text-center"
+                                        :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id  }"
                                         @click="more_content(sys.id)">
                                         {{sys.data.content}}
                                     </td>
                                     <td class="text-center width60">
-                                        <i class="fa fa-folder" @click.stop="receive(sys.id)"
+                                        <i class="fa fa-folder"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
@@ -189,16 +189,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Secretarys">
+                                <tr class="unread" v-for="sys in Secretarys" @click="receive(sys.id)">
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.data.send_name}}</td>
                                     <td class="text-center width90">{{sys.message.type}}</td>
-                                    <td class="text-center" :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id  }"
+                                    <td class="text-center"
+                                        :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id  }"
                                         @click="more_content(sys.id)">
                                         {{sys.message.data.content}}
                                     </td>
                                     <td class="text-center width60">
-                                        <i class="fa fa-folder" @click.stop="receive(sys.id)"
+                                        <i class="fa fa-folder"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
@@ -223,7 +224,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Messages">
+                                <tr class="unread" v-for="sys in Messages" @click="receive(sys.id)">
                                     <td class="text-center width180">{{sys.create_time}}</td>
                                     <td class="text-center width80">{{sys.release_name}}</td>
                                     <td class="text-center width90">{{sys.type}}</td>
@@ -233,7 +234,7 @@
                                         {{sys.content}}
                                     </td>
                                     <td class="text-center width60">
-                                        <i class="fa fa-folder" @click.stop="receive(sys.id)"
+                                        <i class="fa fa-folder"
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
@@ -506,6 +507,7 @@
     #main-content {
         margin-left: 0;
     }
+
     .more_info {
         overflow: hidden;
         text-overflow: ellipsis;

@@ -68,7 +68,7 @@
             return {
                 isAdvanced: false,
                 remindTimes: '',        //提醒时间
-                remindTime: '',         //提醒时间
+                remindTime: '',         //提醒时间 高级
                 remind_info: '',        //提醒内容
                 remind_select: [],      //提醒小时
 //                dateConfigure: [
@@ -120,11 +120,12 @@
                 }.bind(this));
             },
 //            取消
-            revise (){
-                this.remindTime = '';         //提醒时间
-                this.remindTimes = '';        //提醒时间
-                this.remind_info = '';        //提醒内容
-            },
+    revise (){
+        this.remindTimes = '';        //提醒时间
+        this.remindTime = '';         //提醒时间 高级
+        this.remind_info = '';        //提醒内容
+        this.isAdvanced = false;
+    },
             Advanced(){
                 this.isAdvanced = !this.isAdvanced;
             },
@@ -149,8 +150,8 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
 
-                        this.remindTime = '';         //提醒时间
                         this.remindTimes = '';        //提醒时间
+                        this.remindTime = '';         //提醒时间 高级
                         this.remind_info = '';        //提醒内容
                     } else {
                         //失败信息 ***
