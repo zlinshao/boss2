@@ -224,7 +224,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Messages" @click="receive(sys.id)">
+                                <tr class="unread" v-for="sys in Messages" @click="receive(sys.read.id)">
                                     <td class="text-center width180">{{sys.create_time}}</td>
                                     <td class="text-center width80">{{sys.release_name}}</td>
                                     <td class="text-center width90">{{sys.type}}</td>
@@ -235,8 +235,8 @@
                                     </td>
                                     <td class="text-center width60">
                                         <i class="fa fa-folder"
-                                           v-if="sys.read_time === '未读'"></i>
-                                        <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
+                                           v-if="sys.read.read_time === '未读'"></i>
+                                        <i class="fa fa-folder-open-o" v-if="sys.read.read_time != '未读'"></i>
 
                                         <i class="fa fa-heart" style="color: #e4393c"
                                            @click.stop="isCollect(sys.mess_id)"></i>
