@@ -11,18 +11,27 @@
                 <div>
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
+                            <!--<label style="font-weight: bold;display: inline-block">查 询</label>-->
+                            <input type="text" class="form-control" placeholder="点击选择部门/员工"
+                                   v-model="selected" @click='select' readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            </span>
                         </div>
+
+                        <!--<div class="input-group">
+                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
+                        </div>-->
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="">
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="search">
                             <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
-                        </span>
+                                <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                            </span>
                         </div>
                         <div class="form-group pull-right">
                             <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
@@ -30,37 +39,23 @@
                             </a>
                         </div>
                     </form>
-                    <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
-                        <h4>部门</h4>
-                        <span class="tag" v-for="item in filtrate.departmentList">
-                        <span >{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
-                    </span>
-                    </div>
-                    <div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                        <h4>员工</h4>
-                        <span class="tag" v-for="item in filtrate.staffList">
-                        <span >{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
-                    </span>
-                    </div>
                 </div>
             </div>
         </section>
 
         <div class="panel tips">
             <ul class="clearFix">
-                <li>
-                    应付款项:
-                    <span>{{tips.payables}}</span>
+                <li class="col-md-4">
+                    应付金额(元) <br>
+                    <span class="red">1212</span>
                 </li>
-                <li>
-                    实付款项:
-                    <span>{{tips.payments}}</span>
+                <li class="col-md-4">
+                    实付金额(元) <br>
+                    <span class="red">313</span>
                 </li>
-                <li>
-                    剩余款项
-                    <span>{{tips.remainingFunds}}</span>
+                <li class="col-md-4">
+                    剩余款项(元) <br>
+                    <span class="yellow">343</span>
                 </li>
             </ul>
         </div>
@@ -73,48 +68,28 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">开单人</th>
-                            <th class="text-center">片区</th>
-                            <th class="text-center">房屋地址</th>
-                            <th class="text-center">支出科目</th>
-                            <th class="text-center">汇款账户</th>
-                            <th class="text-center">应付款项</th>
-                            <th class="text-center">实付款项</th>
-                            <th class="text-center">剩余款项</th>
                             <th class="text-center">付款时间</th>
-                            <th class="text-center">补齐时间</th>
+                            <th class="text-center">签约人</th>
+                            <th class="text-center">房屋地址</th>
                             <th class="text-center">付款方式</th>
-                            <th class="text-center">空置期</th>
-                            <th class="text-center">收房价格</th>
-                            <th class="text-center">年限</th>
-                            <th class="text-center">经手人</th>
+                            <th class="text-center">月单价</th>
+                            <th class="text-center">支出科目</th>
+                            <th class="text-center">应付金额</th>
+                            <th class="text-center">实付金额</th>
+                            <th class="text-center">剩余款项</th>
+                            <th class="text-center">补齐时间</th>
                             <th class="text-center">状态</th>
+                            <th class="text-center">详情</th>
+
                         </tr>
                         </thead>
                         <tbody>
-                        <router-link tag="tr" :key="item.id" :to="{path:'payingRent' , query:{address:item.address}}" class="text-center" v-for="(item,index) in cont.myData">
+                        <tr>
                             <td>
-                                <input type="checkbox" :value="item.id" :checked="operId===item.id" @click.stop="changeIndex($event,item.id)">
+                                <input type="checkbox">
                             </td>
-                            <td>{{item.people}}</td>
-                            <td>{{item.region.name}}</td>
-                            <td>{{item.address}}</td>
-                            <td>{{item.expenditureAccount}}</td>
-                            <td>{{item.account}}</td>
-                            <td>{{item.receivables}}</td>
-                            <td>{{item.payables}}</td>
-                            <td>{{item.remainingFunds}}</td>
-                            <td>{{item.payTime}}</td>
-                            <td>{{item.fillTime}}</td>
-                            <td>{{item.payWay.name}}</td>
-                            <td>{{item.vacancyTime}}</td>
-                            <td>{{item.collectPrice}}</td>
-                            <td>{{item.years}}</td>
-                            <td>{{item.byHand}}</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-success">入账</button>
-                            </td>
-                        </router-link>
+                            <td><a><i title="查看详情" class=" fa fa-eye"></i></a></td>
+                        </tr>
                         </tbody>
                     </table>
                 </section>
@@ -130,240 +105,10 @@
                         <h4 class="modal-title" id="addModalLabel">{{title}}</h4>
                     </div>
                     <div class="modal-body clearFix">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">开单人:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">片区:</label>
-                            <div class="col-sm-8">
-                                <div class="dropdown">
-                                    <select name="type" class="form-control">
-                                        <option value="">啊啊</option>
-                                        <option value="1">搜索</option>
-                                        <option value="1">得到</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="villageName" class="col-sm-3 control-label">租房地址:</label>
-                            <div class="col-sm-8 input-group">
-                                <input title="请点击选择" type="text" class="form-control" id="villageName" readonly  data-toggle="modal" data-target="#myModal1">
-                                <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">栋:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">室:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">支出科目:</label>
-                            <div class="col-sm-8">
-                                <div class="dropdown">
-                                    <select name="type" class="form-control">
-                                        <option value="">调房</option>
-                                        <option value="1">转租</option>
-                                        <option value="1">退房</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">付款方式:</label>
-                            <div class="col-sm-8">
-                                <div class="dropdown">
-                                    <select name="type" class="form-control">
-                                        <option value="">调房</option>
-                                        <option value="1">转租</option>
-                                        <option value="1">退房</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">应付款项:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">实付款项:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">付款时间:</label>
-                            <div class="col-sm-8">
-                                <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间" class="form-control form_datetime">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">剩余款项:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">补齐时间:</label>
-                            <div class="col-sm-8">
-                                <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间" class="form-control form_datetime">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">汇款账户:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">空置期:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <!--<div class="form-group">
-                            <label class="col-sm-3 control-label">收房价格:</label>
-                            <div class="form-group col-sm-8">
-                                <label class="col-sm-3 control-label">第一年:</label>
-                                <div class="col-sm-7">
-                                    <input type="number" min="0" class="form-control">
-                                </div>
-                                <div class="col-sm-2">
-                                    <i class="fa fa-plus-circle" @click="addMoreYears"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group" v-show="moreYears>=2">
-                            <label class="col-sm-3 control-label"></label>
-                            <div class="form-group col-sm-8">
-                                <label class="col-sm-3 control-label">第二年:</label>
-                                <div class="col-sm-7">
-                                    <input type="number" min="0" class="form-control">
-                                </div>
-                                <div class="col-sm-2">
-                                    <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group"  v-show="moreYears>=3">
-                            <label class="col-sm-3 control-label"></label>
-                            <div class="form-group col-sm-8">
-                                <label class="col-sm-3 control-label">第三年:</label>
-                                <div class="col-sm-7">
-                                    <input type="number" min="0" class="form-control">
-                                </div>
-                                <div class="col-sm-2">
-                                    <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group"  v-show="moreYears>=4">
-                            <label class="col-sm-3 control-label"></label>
-                            <div class="form-group col-sm-8">
-                                <label class="col-sm-3 control-label">第四年:</label>
-                                <div class="col-sm-7">
-                                    <input type="number" min="0" class="form-control">
-                                </div>
-                                <div class="col-sm-2">
-                                    <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group"  v-show="moreYears==5">
-                            <label class="col-sm-3 control-label"></label>
-                            <div class="form-group col-sm-8">
-                                <label class="col-sm-3 control-label">第五年:</label>
-                                <div class="col-sm-7">
-                                    <input type="number" min="0" class="form-control">
-                                </div>
-                                <div class="col-sm-2">
-                                    <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>
-                                </div>
-                            </div>
-                        </div>-->
-                        <FlexBox :flexData="flexData"></FlexBox>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">年限:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">经手人:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">合同开始日期:</label>
-                            <div class="col-sm-8">
-                                <input @click="remindData" type="text" name="addtime" value="" placeholder="合同开始日期" class="form-control form_datetime">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">合同结束日期:</label>
-                            <div class="col-sm-8">
-                                <input @click="remindData" type="text" name="addtime" value="" placeholder="合同结束日期" class="form-control form_datetime">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">合同编号:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">房东姓名:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">联系方式:</label>
-                            <div class="col-sm-8">
-                                <input type="tel" class="form-control">
-                            </div>
-                        </div>
 
                     </div>
                     <div class="modal-footer">
-                        <!--<button type="button" class="btn btn-default">取消</button>-->
+                        <button type="button" class="btn btn-default">取消</button>
                         <button type="button" class="btn btn-primary" v-if="isAdd">保存</button>
                         <button type="button" class="btn btn-primary" v-else="isAdd">修改</button>
                     </div>
@@ -380,45 +125,7 @@
 
     </div>
 </template>
-<style scoped>
-    div.padd {
-        display: inline-block;
-        /*padding: 0 15px 0 0;*/
-    }
-    .tips{
-        line-height: 30px;
-        padding-left: 12px;
-        padding-bottom: 5px;
-        font-size: 15px;
-        /*margin-top: 20px;*/
-    }
-    .tips ul li{
-        float: left;
-    }
-    .tips ul li+li{
-        margin-left: 30px;
-    }
-    .tips ul li span{
-        font-size: 18px;
-        color: #FF6C60;
-        font-weight: bold;
-    }
-    div.input-group{
-        padding: 0 15px;
-    }
-    label{
-        line-height: 34px;
-    }
 
-    tbody tr{
-        cursor: pointer;
-    }
-
-    tbody tr input[type=checkbox]{
-        width: 17px;
-        height: 17px;
-    }
-</style>
 <script>
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
@@ -460,7 +167,11 @@
                     myData: [],      //列表数据
                     nowIndex: '',      //删除索引
                 },
+
+                selected : [],
                 params : {
+                    department_id : [],
+                    staff_id : [],
                     startDataTime : '',
                     finishDataTime : ''
                 },
@@ -501,13 +212,14 @@
 
             },
             addNew(){
-                this.title = '新增应付';
+                this.title = '新增应付款项';
                 this.isAdd = true;
             },
             operation(id,index){
                 this.title = '修改应付';
                 this.isAdd = false;
             },
+
             payFlowList(){
                 /*this.$http.get('json/itemFlow.json').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
@@ -537,30 +249,13 @@
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
-            getPage(){
+            getPage(data){
+                this.page = data;
+            },
 
-            },
-            getAddress(data){
-                this.modal.village = data;
-                console.log(this.modal.village);
-            },
-            addMoreYears(){
-                if (this.moreYears === 5){
-                    return;
-                }else {
-                    this.moreYears++;
-                }
-            },
-            reduceMoreYears(){
-                if (this.moreYears === 1){
-                    return;
-                }else {
-                    this.moreYears--;
-                }
-            },
             oper(){
                 console.log(this.operId);
-                this.title = '编辑应付';
+                this.title = '编辑应付款项';
                 this.isAdd = false;
                 // 先请求
 
@@ -580,53 +275,26 @@
             },
             selectDateSend(val){
 //                console.log(val);
-                for (let j = 0; j < val.department.length; j++) {
-                    if ($.inArray(val.department[j].id, this.params.department_id) === -1) {
-                        this.filtrate.departmentList.push(val.department[j]);
-                        this.params.department_id.push(val.department[j].id)
-                    } else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
-
+                for(let i=0;i<val.department.length;i++){
+                    this.selected.push(val.department[i].name);
+                    this.params.department_id.push(val.department[i].id)
                 }
-                for (let i = 0; i < val.staff.length; i++) {
-                    if ($.inArray(val.staff[i].id, this.params.staff_id) === -1) {
-                        this.filtrate.staffList.push(val.staff[i]);
-                        this.params.staff_id.push(val.staff[i].id)
-                    } else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
-
+                for(let j=0;j<val.staff.length;j++){
+                    this.selected.push(val.staff[j].name);
+                    this.params.staff_id.push(val.staff[j].id)
                 }
-                this.search();
-//                this.filtrate.departmentList = val.department;
-//                this.filtrate.staffList = val.staff;
-
+//                this.search();
             },
-            deleteStaff(item){
-                this.filtrate.staffList = this.filtrate.staffList.filter((x) => x !== item);
-                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id);
-                this.search();
-            },
-            deleteDepartment(item){
-                this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
-                this.params.department_id = this.params.department_id.filter((x) => x != item.id);
+            clearSelect(){
+                this.params.department_id = [];
+                this.params.staff_id = [];
+                this.selected = [];
                 this.search();
             },
 
-
+            search(){
+                console.log(this.params)
+            },
             getDate(data){
                 // 时间
                 console.log(data);
@@ -635,3 +303,61 @@
         }
     }
 </script>
+
+<style scoped>
+    div.padd {
+        display: inline-block;
+        /*padding: 0 15px 0 0;*/
+    }
+    .tips{
+        line-height: 30px;
+        /*padding-left: 12px;*/
+        padding-bottom: 5px;
+        font-size: 15px;
+        /*margin-top: 20px;*/
+        /*width: 100%;*/
+    }
+    .tips ul{
+        margin: 0;
+        padding: 12px 0;
+    }
+    .tips ul li{
+        /*float: left;*/
+        padding: 0 50px;
+        box-sizing: border-box;
+    }
+    .tips ul li+li{
+        /*margin-left: 30px;*/
+        border-left: 1px solid #ddd;
+
+    }
+    .tips ul li span{
+        font-size: 18px;
+        padding-left: 8px;
+        /*font-weight: bold;*/
+    }
+    .tips ul li span.red{
+        color: #FF6666;
+    }
+    .tips ul li span.yellow{
+        color: #FF9A02;
+    }
+    div.input-group{
+        padding: 0 15px;
+    }
+    label{
+        line-height: 34px;
+    }
+
+    tbody tr{
+        cursor: pointer;
+    }
+
+    tbody tr input[type=checkbox]{
+        width: 17px;
+        height: 17px;
+    }
+    tr td a i{
+        font-size: 18px;
+    }
+</style>

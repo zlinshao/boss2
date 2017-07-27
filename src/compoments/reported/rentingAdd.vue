@@ -283,14 +283,14 @@
                                     </div>
                                 </div>-->
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-sm-2 control-label">收款账户</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.account_id">
-                                            <option value="">sass</option>
+                                            <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">待签约日期</label>
@@ -340,7 +340,7 @@
     // 选择客户
     import SelectClient from '../common/selectClient.vue'
     export default{
-        props : ['collectMsg'],
+        props : ['collectMsg','rentContactId'],
         components: {STAFF,SelectHouse,Status,SelectClient,upLoad},
         data(){
             return {
@@ -396,6 +396,7 @@
                     customer_name : ''
                 },
                 formData : {
+                    previous_contract_id : '',   // 租房合同id
                     collect_id : '',
 
                     staff_id : '',
@@ -418,7 +419,7 @@
                     receipt_pic : [],
                     received_type : 1,
                     received_amount : '',
-                    account_id : 1,
+//                    account_id : 1,
                     complete_date : '',
                     remark : '',
                 },
@@ -453,6 +454,26 @@
                 this.formData.house_id = val[0].house_id;
                 this.chooseResult.house_name = val[0].house.detailed_address;
 //                }
+            },
+
+            // 合同
+            rentContactId(val){
+//                console.log(val)
+                this.formData.previous_contract_id = val;
+                this.$http.get('core/rent/readcontract/id/'+val)
+                    .then(
+                        (res) =>{
+                            console.log(res.data.data);
+                            let result = res.data.data;
+                            this.formData.staff_id = result.staff_id;
+                            this.formData.house_id = result.villa_id.id;
+                            this.formData.customer_id = result.customer_id.id;
+                            this.chooseResult.staff_name = result.staff;
+                            this.chooseResult.house_name = result.customer_id.id;
+                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+
+                        }
+                    )
             }
         },
         mounted (){
@@ -538,7 +559,7 @@
                 this.formData.receipt_pic = [];
                 this.formData.received_type = 1;
                 this.formData.received_amount = '';
-                this.formData.account_id = 1;
+//                this.formData.account_id = 1;
                 this.formData.complete_date = '';
 
                 this.formData.remark = '';
@@ -555,8 +576,10 @@
             selectDateSendAdd(data){
                 // 选择人
 //                console.log(data.staff[0].id)
-                this.formData.staff_id = data.staff[0].id;
-                this.chooseResult.staff_name = data.staff[0].name;
+                if (data.staff.length!=0){
+                    this.formData.staff_id = data.staff[0].id;
+                    this.chooseResult.staff_name = data.staff[0].name;
+                }
             },
 
             selectHouse(){

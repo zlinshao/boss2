@@ -283,14 +283,14 @@
                                     </div>
                                 </div>-->
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-sm-2 control-label">收款账户</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.account_id">
-                                            <option value="">sass</option>
+                                            <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">待签约日期</label>
@@ -413,7 +413,7 @@
                     receipt_pic : [],
                     received_type : 1,
                     received_amount : '',
-                    account_id : 1,
+//                    account_id : 1,
                     complete_date : '',
                     remark : '',
                 },
@@ -502,7 +502,7 @@
                                 this.formData.receipt_pic = val.receipt_pic;
                                 this.formData.received_type = val.received_type;
                                 this.formData.received_amount = val.received_amount;
-                                this.formData.account_id = val.account_id;
+//                                this.formData.account_id = val.account_id;
                                 this.formData.complete_date = val.complete_date;
 
                                 this.formData.remark = val.remark;
@@ -578,7 +578,7 @@
                 this.formData.receipt_pic = [];
                 this.formData.received_type = 1;
                 this.formData.received_amount = '';
-                this.formData.account_id = 1;
+//                this.formData.account_id = 1;
                 this.formData.complete_date = '';
 
                 this.formData.remark = '';
@@ -597,8 +597,10 @@
                 // 选择人
 //                alert(2)
 //                console.log(data.staff[0].id)
-                this.formData.staff_id = data.staff[0].id;
-                this.chooseResult.staff_name = data.staff[0].name;
+                if (data.staff.length!=0){
+                    this.formData.staff_id = data.staff[0].id;
+                    this.chooseResult.staff_name = data.staff[0].name;
+                }
             },
 
             selectHouse(){

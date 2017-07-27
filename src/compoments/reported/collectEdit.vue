@@ -394,9 +394,11 @@
                 // 选择人
 //                console.log(data.staff[0].id)
 //                alert(2)
-                console.log(data);
-                this.formData.staff_id = data.staff[0].id;
-                this.chooseResult.staff_name = data.staff[0].name;
+//                console.log(data);
+                if (data.staff.length!=0){
+                    this.formData.staff_id = data.staff[0].id;
+                    this.chooseResult.staff_name = data.staff[0].name;
+                }
             },
 
             selectHouse(){

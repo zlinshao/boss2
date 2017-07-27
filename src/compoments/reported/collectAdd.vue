@@ -112,9 +112,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">签约日期</label>
+                                    <label class="col-sm-2 control-label">待签约日期</label>
                                     <div class="col-sm-10">
-                                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                                        <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
+                                               class="form-control form_datetime" v-model="formData.deal_time">
+                                        <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
                                     </div>
                                 </div>
 
@@ -185,7 +187,7 @@
     import SelectClient from '../common/selectClient.vue'
 
     export default{
-        props : ['rentMsg'],
+        props : ['rentMsg','collectContactId'],
         components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},
         data(){
             return {
@@ -216,7 +218,8 @@
                     customer_name : ''
                 },
                 formData : {
-                    rent_id : '',
+                    previous_contract_id : '',   // 收房合同id
+                    rent_id : '',       // 租房报备id
 
                     staff_id : '',
                     department_id : '',
@@ -303,7 +306,31 @@
                 this.formData.house_id = val[0].house_id;
                 this.chooseResult.house_name = val[0].house.detailed_address;
 //                }
+            },
+
+            // 合同
+            collectContactId(val){
+//                console.log(val)
+                this.formData.previous_contract_id = val;
+                this.$http.get('core/collect/readcontract/id/'+val)
+                    .then(
+                        (res) =>{
+                            console.log(res.data.data);
+                            let result = res.data.data;
+                            this.formData.staff_id = result.staff_id;
+                            this.formData.house_id = result.villa_id.id;
+                            this.formData.customer_id = result.customer_id.id;
+                            this.chooseResult.staff_name = result.staff;
+                            this.chooseResult.house_name = result.customer_id.id;
+                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+
+                        }
+                    )
             }
+        },
+        updated (){
+//            时间选择
+            this.remindData();
         },
         methods: {
             closeModal(){
@@ -339,6 +366,23 @@
 
                 $('#add').modal('hide');
             },
+
+            remindData (){
+                $('.form_datetime').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition: "top-left",
+//                    endDate: new Date(),
+//                    todayHighlight : true
+                }).on('changeDate', function (ev) {
+                  this.formData.deal_time = ev.target.value;
+                }.bind(this));
+            },
+
             selectStaff(){
                 // 选择签约人
                 this.configure = {length: 1, class: 'amount'};
@@ -346,9 +390,12 @@
             },
             selectDateSendAdd(data){
                 // 选择人
-                console.log(data)
-                this.formData.staff_id = data.staff[0].id;
-                this.chooseResult.staff_name = data.staff[0].name;
+//                console.log(data)
+                if (data.staff.length!=0){
+                    this.formData.staff_id = data.staff[0].id;
+                    this.chooseResult.staff_name = data.staff[0].name;
+                }
+
             },
 
             selectHouse(){
@@ -405,7 +452,7 @@
                 // 新增
 //                console.log(this.formData);
                 this.formData['status'] = num;
-//                console.log(this.formData);
+                console.log(this.formData);
                 this.$http.post('checkin/collect',this.formData)
                     .then(
                         (res) => {
