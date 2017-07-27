@@ -87,7 +87,7 @@
             search(){
                 if(this.keywords!==''){
                     this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
-                        if(res.data.code === '60010'){
+                        if(res.data.code === '20010'){
                             this.houseList=res.data.data;
                             this.keywords='';
                             this.isShow = false;

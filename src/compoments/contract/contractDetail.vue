@@ -539,9 +539,9 @@
                             <!--回访记录-->
                             <div id="home" class="tab-pane active">
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
+                                    <label class="col-sm-2 col-sm-2">跟进方式</label>
                                     <div class="col-sm-10" style="padding-left: 0;">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4" style="margin-left: -16px">
                                             <select class="form-control">
                                                 <option  v-for="(item,index) in dictionary.follow_way">{{item}}</option>
                                             </select>
@@ -549,16 +549,38 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label"
-                                           style="margin-top: 16px;">增加回访记录</label>
-                                    <div class="col-sm-10" style="margin-bottom: 16px;">
-                                        <textarea class="form-control" style="margin-bottom: 16px;" v-model="returnRecorde"></textarea>
-                                        <div class="pull-right">
-                                            <button class="btn btn-default" >取消
-                                            </button>
-                                            <button class="btn btn-primary">确定</button>
-                                        </div>
+                                    <label class="col-sm-2 col-sm-2">增加回访记录</label>
+                                    <div style="margin-bottom: 16px; display: inline-block ">
+                                        <textarea class="form-control" v-model="returnRecorde" cols="120"></textarea>
                                     </div>
+                                </div>
+                                <div class="form-group inputdata">
+                                    <label class="col-sm-2 col-sm-2 control-label"
+                                           style="margin-top: 22px;">满意度</label>
+                                    <p class="all">
+                                        <input type="radio" name="b" value="0"  v-model="inputdata"/>
+                                        <span>★</span>
+                                        <input type="radio" name="b" value="1" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input type="radio" name="b" value="2" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input type="radio" name="b" value="3" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input type="radio" name="b" value="4" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input type="radio" name="b" value="5" v-model="inputdata" />
+                                        <span>★</span>
+                                    </p>
+                                    <span v-if="inputdata === '5'">非常好</span>
+                                    <span v-if="inputdata === '4'">好</span>
+                                    <span v-if="inputdata === '3'">一般</span>
+                                    <span v-if="inputdata === '2'">差</span>
+                                    <span v-if="inputdata === '1'">非常差</span>
+                                </div>
+                                <div class="pull-right">
+                                    <button class="btn btn-default" >取消
+                                    </button>
+                                    <button class="btn btn-primary">确定</button>
                                 </div>
                                 <!--跟进记录-->
                             </div>
@@ -599,6 +621,7 @@
             Comparison,
             Confirm
         },
+        name:'shoplist',
         data(){
             return {
                 show : false,        // 是否显示更多
@@ -625,13 +648,15 @@
                 confirmMsg:[],  //提示信息
                 msgFlag:'',
                 returnRecorde:'',//回访记录
+                inputdata:0
             }
         },
         mounted(){
             this.contractEitId = this.$route.query.ContractId;
             this.getDictionary();
         },
-
+        watch: {
+        },
         methods : {
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
@@ -913,6 +938,26 @@
     dropdown-menu li:hover{
         background-color: #dedede;
     }
-
+    .inputdata{
+        position: relative;
+    }
+    .inputdata>span{
+        display: inline-block;
+        font-size: 16px;
+        position:absolute;
+        bottom:22px;
+        margin-left: 15px;
+        color: #ccc;
+    }
+    .all{display:inline-block}
+    .all>input{opacity:0;position:absolute; bottom:5px;width:3em;height:3em;margin:0;}
+    .all>input:nth-of-type(1),
+    .all>span:nth-of-type(1){display:none;}
+    .all>span{font-size:3em;color:gold;
+        -webkit-transition:color .2s;
+        transition:color .2s;
+    }
+    .all>input:checked~span{color:#ccc;}
+    .all>input:checked+span{color:gold;}
 
 </style>

@@ -205,7 +205,7 @@
                     <aside class="lg-side">
                         <div class="inbox-head">
                             <div class="row">
-                                <div class="col-lg-4 col-md-12">
+                                <div class="col-lg-3 col-md-12">
                                     <h4 style="color: #0f0f0f">部门
                                         <span style="color:#fff;font-size:16px;" v-if="isDepartment"> {{department}}</span>
                                     </h4>
@@ -219,11 +219,12 @@
                                     </label>
                                 </div>
 
-                                <div class="col-lg-3 col-md-12">
+                                <div class="col-lg-3">
                                     <input placeholder="搜索企业联系人" class="sr-input"
                                            style="margin-bottom: 0px"     @keyup="search" v-model="keywords" >
                                     <button type="button" class="btn sr-btn"><i class="fa fa-search"></i></button>
                                 </div>
+
                                 <div class="col-lg-2 col-md-12 clickBt pull-right">
                                     <!--<button class="btn btn-primary">提醒</button>-->
                                     <button class="btn btn-primary" @click="addUser">添加员工</button>
