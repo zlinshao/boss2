@@ -28,10 +28,9 @@ import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";       
 import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";          //未收房源更多
 import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
-import ContractDetail from './compoments/contract/contractDetail.vue'           // 收房合同详情
+import ContractDetail from './compoments/contract/collectDetail.vue'           // 收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
 
-import CompareContract from './compoments/contract/compareContract.vue'
 
 // 账本
 import Account from './compoments/finance/account.vue'                          // 账号管理
@@ -349,9 +348,5 @@ export default[
         name: 'ReopetedRentDetail',
         component: ReopetedRentDetail
     },
-    {
-        path: '/compareContract',
-        name: 'CompareContract',
-        component: CompareContract
-    },
+
 ]

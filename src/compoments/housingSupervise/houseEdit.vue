@@ -613,37 +613,4 @@
         margin-bottom: 10px;
     }
 
-    .search_info {
-        position: absolute;
-        padding: 0;
-        top: 34px;
-        left: 98px;
-        height: 230px;
-        overflow: auto;
-        background: #ffffff;
-        border: 1px solid #517397;
-        z-index: 1;
-        border-radius: 3px;
-    }
-
-    @media screen and (max-width: 767px) {
-        .search_info {
-            width: 94%;
-            top: 59px;
-            left: 4px;
-        }
-    }
-
-    .search_info > li {
-        padding: 10px 16px;
-    }
-
-    .search_info span {
-        padding: 0 6px;
-    }
-
-    .search_info > li:hover {
-
-        background: #CCCCCC;
-    }
 </style>

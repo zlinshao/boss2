@@ -20,7 +20,6 @@
                     <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
-                <!--<router-link :to="{path:'/compareContract',query: {ContractId: contractList[0].villa_id.id}}" tag="button" class="btn btn-primary">对比</router-link>-->
                 <button class="btn btn-primary" @click="inform">通知</button>
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
@@ -189,7 +188,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a data-toggle="tab" href="#home" aria-expanded="true">
+                                <a data-toggle="tab" href="#home" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;回访记录
                                 </a>
                             </li>
@@ -537,13 +536,13 @@
                             </div>
 
                             <!--回访记录-->
-                            <div id="home" class="tab-pane active">
+                            <div id="home" class="tab-pane">
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2">跟进方式</label>
                                     <div class="col-sm-10" style="padding-left: 0;">
                                         <div class="col-sm-4" style="margin-left: -16px">
-                                            <select class="form-control">
-                                                <option  v-for="(item,index) in dictionary.follow_way">{{item}}</option>
+                                            <select class="form-control" v-model="followWay">
+                                                <option :value="index" v-for="(item,index) in dictionary.follow_way">{{item}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -551,12 +550,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2">增加回访记录</label>
                                     <div style="margin-bottom: 16px; display: inline-block ">
-                                        <textarea class="form-control" v-model="returnRecorde" cols="120"></textarea>
+                                        <textarea class="form-control" v-model="returnRecorde" cols="100"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group inputdata">
                                     <label class="col-sm-2 col-sm-2 control-label"
-                                           style="margin-top: 22px;">满意度</label>
+                                           style="margin-top: 20px;">满意度</label>
                                     <p class="all">
                                         <input type="radio" name="b" value="0"  v-model="inputdata"/>
                                         <span>★</span>
@@ -614,22 +613,21 @@
     import AddModal from '../reported/collectAdd.vue'
     export default{
         components: {
-            Transfer,
-            Contract,
-            ContractEit,
-            PicModal,
-            Status,
-            Comparison,
-            Confirm,
-            AddModal
+            Transfer,   //转账
+            Contract,   //合同信息
+            ContractEit,//合同编辑
+            PicModal,   //图片放大
+            Status,     //状态提醒
+            Comparison, //对比
+            Confirm,    //confirmMsg
+            AddModal    //合同续约
         },
-        name:'shoplist',
         data(){
             return {
                 show : false,        // 是否显示更多
-                contractList:[],
-                dictionary:[],
-                largePic: [],
+                contractList:[],    //详情列表
+                dictionary:[],      //所有字典集合
+                largePic: [],   //合同放大
                 srcs: {},
                 contractEitId:'',
                 contract_num:'',
@@ -646,21 +644,20 @@
                 isCompared:false,
                 villaId : '',
                 contract_pass:'',
-                passDictionary:[],
+                passDictionary:[],//通过字典
                 confirmMsg:[],  //提示信息
-                msgFlag:'',
+                msgFlag:'',     //提示信息分类
+                followWay:'',   //跟进方式
                 returnRecorde:'',//回访记录
-                inputdata:0
+                inputdata: 0,    //五星好评
             }
         },
         mounted(){
-            this.contractEitId = this.$route.query.ContractId;
-            this.getDictionary();
-        },
-        watch: {
+            this.contractEitId = this.$route.query.ContractId;  //路由接受合同id
+            this.getDictionary();   //初始化请求页面信息
         },
         methods : {
-            getDictionary(){
+            getDictionary(){    //请求字典 以及 合同详情信息
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
                     this.passDictionary = res.data.passed;
@@ -668,7 +665,7 @@
                     this.contractDetail();
                 });
             },
-            contractDetail(){
+            contractDetail(){   //合同详情
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
@@ -686,10 +683,10 @@
             editContract(){
                 $('#contractEdit').modal('show');
             },
-            renewContract(){
+            renewContract(){    //续约合同
                 $('#add').modal('show');
             },
-            showLargePic(name, index){
+            showLargePic(name, index){  //图片放大
                 this.srcs = this.contractList[0].album[name];
                 this.largePic = [{
                     src: this.srcs,
@@ -713,15 +710,15 @@
                 }];
                 $('#largePic').modal('show');
             },
-            editSuccess(val){
+            editSuccess(val){   //成功编辑之后重新请求合同详情
                 if(val === 'success') this.contractDetail();
             },
-            compareContract(){
+            compareContract(){  //合同对比
                 this.isCompared = true;
                 this.villaId = this.contractList[0].villa_id.id;
                 $('#collectVsRenting').modal('show');
             },
-            haveCompared(){
+            haveCompared(){     //对比成功之后把 isCompared 置为false
                 this.isCompared = false;
             },
             returnVisit(){  // 回访状态
@@ -729,7 +726,7 @@
                 this.msgFlag = 'returnVisit';
                 $('#confirm').modal('show');
             },
-            inform(){   //通知
+            inform() {   //通知
                 this.confirmMsg = {msg:'您确定通知吗'};
                 this.msgFlag = 'inform';
                 $('#confirm').modal('show');
