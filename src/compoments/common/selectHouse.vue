@@ -59,10 +59,15 @@
                 </div>
             </div>
         </div>
+        <Status :state='info'></Status>
     </div>
 </template>
 <script>
+    import Status from './status.vue'
     export default{
+        components:{
+            Status
+        },
         data(){
             return {
                 keywords:'',
@@ -73,6 +78,16 @@
                     address:''
                 },
                 isShow:false,
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted(){
@@ -99,16 +114,22 @@
                     })
                 }
             },
-            ensure(){
-                this.$emit('House',this.houseAddress);
-                this.houseList=[];
-                $('.selectHouse').modal('hide');
-            },
             chooseItem(ev,item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
                 this.houseAddress.id=item.id;
                 this.houseAddress.address=item.amap_json.villageName;
-            }
+            },
+            ensure(){
+
+                if(this.houseAddress.id === ''){
+                    this.info.error = '请先选择客户';
+                    this.info.state_error = true;
+                }else {
+                    this.$emit('House',this.houseAddress);
+                    $('.selectHouse').modal('hide');
+                    this.houseList=[];
+                }
+            },
         }
     }
 </script>

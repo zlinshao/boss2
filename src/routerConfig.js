@@ -30,7 +30,7 @@ import CollectContract from "./compoments/contract/collectContract.vue";        
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
 import ContractDetail from './compoments/contract/collectDetail.vue'           // 收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
-
+import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //c查看备忘录
 
 // 账本
 import Account from './compoments/finance/account.vue'                          // 账号管理
@@ -347,6 +347,11 @@ export default[
         path: '/reopetedRentDetail',
         name: 'ReopetedRentDetail',
         component: ReopetedRentDetail
+    },
+    {
+        path: '/memorandum',
+        name: 'Memorandum',
+        component: Memorandum
     },
 
 ]
