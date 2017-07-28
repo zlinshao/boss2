@@ -408,11 +408,6 @@
         background-color: #83E96D;
     }
 
-
-    .table-responsive {
-        overflow: visible;
-    }
-
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
     }
