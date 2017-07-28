@@ -7,7 +7,7 @@
                     <aside class="sm-side">
                         <div class="user-head">
                             <div class="user-name" style="font-size: 16px;line-height: 60px;">
-                                组织架构
+                                组织架构{{keywords}}
                             </div>
                         </div>
 
@@ -682,7 +682,7 @@
                 this.isFirst=false;
                 this.isFour=false;
                 this.isDepartment=false;
-                if(this.keywords === ''){
+                if(this.keywords !== ''){
                     this.$http.get('manager/user/searchUser/keywords/' + decodeURI(this.keywords)+'/page/'+this.page + '/insurance/' + this.isInsurance +'/birthday/' + this.isBirthday).then((res) => {
                         this.type = 6;
                         if (res.data.code === '90020') {
