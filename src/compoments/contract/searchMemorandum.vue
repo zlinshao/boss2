@@ -93,7 +93,7 @@
                             <td class="text-center">{{item.complete_date[2]}}</td>
                             <td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>
                             <td class="text-center">{{item.content}}</td>
-                            <td>
+                            <td class="text-center">
                                 <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
                                 <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
                             </td>
@@ -279,7 +279,6 @@
     }
     .panel-body ul{
         margin: 0;
-        padding: 0;
         font-size: 14px;
         line-height: 50px;
         padding-left: 20px;
