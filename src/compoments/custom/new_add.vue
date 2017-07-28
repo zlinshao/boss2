@@ -9,13 +9,17 @@
                     <div class="modal-content roll">
                         <!--新增客户-->
                         <div v-if="btn_state" class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="remove_s">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                    @click="remove_s">×
+                            </button>
                             <h4 class="modal-title">新增客户</h4>
                         </div>
 
                         <!--修改客户-->
                         <div v-if="!btn_state" class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="remove_s">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                    @click="remove_s">×
+                            </button>
                             <h4 class="modal-title">修改客户</h4>
                         </div>
 
@@ -33,6 +37,10 @@
                                             <input type="radio" name="status" value="2"
                                                    class="pull-left" v-model="cus_status">租客
                                         </label>
+                                        <label>
+                                            <input type="radio" name="status" value="3"
+                                                   class="pull-left" v-model="cus_status">业主(代理人)
+                                        </label>
                                     </div>
                                 </div>
                                 <hr>
@@ -47,7 +55,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户姓名&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
-                                        <input type="text" v-model="cus_name" class="form-control"
+                                        <input type="text" v-model="cus_name" class="form-control" @blur="proving"
                                                placeholder="起输入客户姓名">
                                     </div>
                                 </div>
@@ -77,10 +85,13 @@
                                 </div>
                                 <!--手机号-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">手机号</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">手机号&nbsp;<span
+                                            class="text-danger">*</span></label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="cus_phone"
-                                               placeholder="请输入手机号" maxlength="11">
+                                        <input type="text" class="form-control" v-model="cus_phone" @blur="proving"
+                                               placeholder="请输入手机号" maxlength="11" style="margin-bottom: 0;">
+                                        <router-link to="" class="text-danger"><i class="fa fa-delete"></i>该客户已存在，点击申请客户共享
+                                        </router-link>
                                     </div>
                                 </div>
                                 <!--进度-->
@@ -271,6 +282,7 @@
         props: ['msg', 'revise', 'selects'],
         data (){
             return {
+                agent: '',                          //代理人
                 all_count: [],                      //获取国家
                 btn_state: false,                   //新增/修改
                 select_c: {},                       //字典
@@ -370,7 +382,7 @@
                 this.cus_name = val.name;                                               //客户姓名
                 this.cus_gender = val.gender;                                           //性别
                 this.cus_progress = val.follow;                                         //进度
-                if(val.nationality){
+                if (val.nationality) {
                     this.cus_nationality = val.nationality;                                 //国籍ID
                     this.cus_nationality_name = this.all_count[val.nationality].zh_name;    //国籍
                 }
@@ -410,7 +422,17 @@
                 }
             });
         },
+
         methods: {
+//            验证客户
+            proving (){
+//                this.$http.post('index/country/index', {
+//                    name: this.cus_name,
+//                    phone: this.cus_phone
+//                }).then((res) => {
+//
+//                });
+            },
 //            国家
             nation (val){
                 this.cus_nationality = val.id;

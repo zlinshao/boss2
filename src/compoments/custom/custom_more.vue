@@ -16,8 +16,9 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a @click="customers_rev('rev')">编辑</a></li>
+                                <li @click="customers_rev('rev')"><a>编辑</a></li>
                                 <li @click="lookRemind"><a>增加提醒</a></li>
+                                <li @click="sharing"><a>共享客户</a></li>
                                 <!--<li class="divider"></li>-->
                             </ul>
                         </div>
@@ -105,28 +106,29 @@
                         <i class="fa fa-file-text"></i>&nbsp;合同信息
                     </header>
                     <!--合同信息-->
-                    <div class="panel-body table-responsive">
+                    <div class="panel-body table-responsive roll">
                         <table class="table contract_info">
                             <tbody>
                             <tr>
                                 <td><a><i class="fa fa-bookmark"></i></a></td>
-                                <td>2017-07-20</td>
-                                <td>14:00</td>
+                                <td colspan="2" style="min-width: 200px;">2017-07-20&nbsp;至&nbsp;2017-07-20</td>
                             </tr>
                             <tr>
                                 <td><a><i class="fa fa-bookmark-o"></i></a></td>
                                 <td>合同编号</td>
-                                <td>合同编号</td>
+                                <td>
+                                    <router-link class="text-primary" to="">LJ0000000</router-link>
+                                </td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>房屋地址</td>
-                                <td>合同编号</td>
+                                <td>积善公寓0-000</td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>负责人</td>
-                                <td>合同编号</td>
+                                <td>林琪巧月</td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -137,7 +139,7 @@
                                             <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
                                                  aria-valuenow="45" role="progressbar" class="progress-bar"
                                                  :style="{ width: progress + '%'}">
-                                                <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
+                                                <span data-v-2f43a2b3="" class="sr-only">{{progress}}% Complete</span>
                                             </div>
                                         </div>
                                     </a>
@@ -278,19 +280,20 @@
 </template>
 
 <script>
-    import New_add from './new_add.vue'
-    import LookRemind from '../common/remind/checkRemind.vue';
-    import Status from '../common/status.vue';
-    import PicModal from '../common/largePic.vue'       //查看大图
+    import New_add from './new_add.vue'                         //客户修改
+    import LookRemind from '../common/remind/checkRemind.vue';  //查看提醒
+    import Status from '../common/status.vue';                  //提示信息
+    import PicModal from '../common/largePic.vue'               //查看大图
     export default {
         components: {New_add, PicModal, Status, LookRemind},
         data (){
             return {
-                remind_info: [],
-                revise_state: '',           //修改
-                cus_progress: '',           //进度
+                look_remind: '',            //是否有提醒
+                remind_info: [],            //查看提醒
+                revise_state: '',           //修改客户
+                cus_progress: '',           //进度详情
                 progress: '20',             //进度合同
-                open_on: false,             //展示收起
+                open_on: false,             //展示/收起
                 follow_up: '',              //跟进记录
                 cus_Id: '',                 //客户ID
                 cus_info: [],               //客户信息
@@ -359,15 +362,27 @@
                 });
             },
             succ (){
+//                修改成功
                 $('.rem_div').remove();
                 this.detailed_info(this.cus_Id);
             },
+//            客户编辑
             customers_rev (val){
                 this.revise_state = val;
                 $('#customModel').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
+//            共享客户
+            sharing (){
+                console.log('申请共享');
+//                this.$http.post('',{
+//
+//                }).then((res) => {
+//                    console.log(res.data);
+//                });
+            },
+//            查看大图
             showLargePic(num){
                 this.largePic = [{
                     src: this.photos,

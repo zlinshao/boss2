@@ -279,6 +279,7 @@
                         this.paging = res.data.data.pages;
                         this.isShow = false;
                     } else {
+                        this.paging = '';
                         this.custom_list = [];
                         this.isShow = true;
                         //失败信息 ***
