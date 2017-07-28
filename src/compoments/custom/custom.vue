@@ -328,7 +328,7 @@
 //            新增客户展示列表
             succ (val){
                 if (val.code === '70010') {
-                    this.collectList (1)
+                    this.collectList(1)
                 }
             },
 //            客户列表
@@ -388,6 +388,7 @@
                         this.paging = res.data.data.pages;
                         this.isShow = false;
                     } else {
+                        this.paging = '';
                         this.custom_list = [];
                         this.isShow = true;
                         //失败信息 ***
