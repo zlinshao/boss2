@@ -17,7 +17,7 @@
                             </select>
                         </div>-->
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
 
@@ -26,9 +26,9 @@
                             <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址"
                                    v-model="params.search" @keydown.enter.prevent="search">
                             <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click="search"><i
-                                    class="fa fa-search"></i></button>
-                        </span>
+                                <button class="btn btn-success" id="search" type="button" @click="search"><i
+                                        class="fa fa-search"></i></button>
+                            </span>
                         </div>
 
                         <div class="input-group pull-right">
@@ -96,7 +96,7 @@
                                 <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
-                            <td>{{item.department.name}}</td>
+                            <td>{{item.department==undefined?'':item.department.name}}</td>
                             <td>{{item.leader.real_name}}</td>
                             <td>{{item.deal_time}}</td>
                             <td>{{item.house.detailed_address}}</td>

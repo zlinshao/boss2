@@ -354,6 +354,8 @@
                     this.reset();
                 } else {
                     this.showChooseSubject = !this.showChooseSubject;
+                    this.curSuperior_id = 0;
+                    this.Superior_name = '';
                     if (this.showChooseSubject){
                         this.$http.get('account/subject/next/'+this.curSuperior_id).then((res)=>{
                             if (res.data.code==18300){
@@ -373,7 +375,7 @@
                     if (res.data.code==18300){
                         // 成功
                         this.subjectData = res.data.data;
-                        console.log(this.subjectData)
+//                        console.log(this.subjectData)
                     }
                 })
             },
