@@ -276,6 +276,8 @@
 
         <!--提醒-->
         <Status :state='info'></Status>
+
+        <Sharing :msg="cus_Id"></Sharing>
     </div>
 </template>
 
@@ -284,8 +286,9 @@
     import LookRemind from '../common/remind/checkRemind.vue';  //查看提醒
     import Status from '../common/status.vue';                  //提示信息
     import PicModal from '../common/largePic.vue'               //查看大图
+    import Sharing from './sharing.vue'                         //查看大图
     export default {
-        components: {New_add, PicModal, Status, LookRemind},
+        components: {New_add, PicModal, Status, LookRemind, Sharing},
         data (){
             return {
                 look_remind: '',            //是否有提醒
@@ -375,12 +378,9 @@
             },
 //            共享客户
             sharing (){
-                console.log('申请共享');
-//                this.$http.post('',{
-//
-//                }).then((res) => {
-//                    console.log(res.data);
-//                });
+                $('#sharing').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
             },
 //            查看大图
             showLargePic(num){

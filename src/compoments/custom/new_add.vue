@@ -10,7 +10,7 @@
                         <!--新增客户-->
                         <div v-if="btn_state" class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                                    @click="remove_s">×
+                                    @click="revise_cancel">×
                             </button>
                             <h4 class="modal-title">新增客户</h4>
                         </div>
@@ -55,7 +55,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户姓名&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
-                                        <input type="text" v-model="cus_name" class="form-control" @blur="proving"
+                                        <input type="text" v-model="cus_name" class="form-control"
                                                placeholder="起输入客户姓名">
                                     </div>
                                 </div>
@@ -88,10 +88,9 @@
                                     <label class="col-lg-2 col-sm-2 control-label">手机号&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="cus_phone" @blur="proving"
+                                        <input type="text" class="form-control" v-model="cus_phone"
                                                placeholder="请输入手机号" maxlength="11" style="margin-bottom: 0;">
-                                        <router-link to="" class="text-danger"><i class="fa fa-delete"></i>该客户已存在，点击申请客户共享
-                                        </router-link>
+                                        <a class="text-danger" @click="proving(exist_id)"><i class="fa fa-delete"></i>{{cus_exist}}</a>
                                     </div>
                                 </div>
                                 <!--进度-->
@@ -249,8 +248,10 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button" @click="remove_s">取消
-                            </button>
+                            <button data-dismiss="modal" v-if="btn_state" class="btn btn-default" type="button" @click="revise_cancel">取消</button>
+
+                            <button data-dismiss="modal" v-if="!btn_state" class="btn btn-default" type="button" @click="remove_s">取消</button>
+
                             <button v-if="btn_state" class="btn btn-success" type="button"
                                     @click="cus_confirm('saveCustomer')"> 确定
                             </button>
@@ -282,6 +283,8 @@
         props: ['msg', 'revise', 'selects'],
         data (){
             return {
+                exist_id: '',                       //客户已存在ID
+                cus_exist: '',                      //客户已存在
                 agent: '',                          //代理人
                 all_count: [],                      //获取国家
                 btn_state: false,                   //新增/修改
@@ -339,37 +342,6 @@
             msg(val) {
                 if (val === 'new') {
                     this.btn_state = true;                    //新增
-//                    业主租客
-                    this.photos.cus_idPhotos = {};            //修改图片ID
-                    this.cus_id = '';                         //修改ID
-                    this.cus_status = '';                     //业主/租客
-//                基本信息
-                    this.cus_name = '';                       //客户姓名
-                    this.cus_gender = '';                     //性别
-                    this.cus_progress = '0';                  //进度
-                    this.cus_nationality = '';                //国籍ID
-                    this.cus_nationality_name = '';           //国籍
-                    this.cus_phone = '';                      //手机号
-                    this.cus_status_quo = '1';                //客户状态
-                    this.cus_intention = '1';                 //客户意向
-                    this.cus_source = '1';                    //客户来源
-//                    中介
-                    this.cus_intermediate = '1';              //个人/中介
-                    this.cus_intermediate_name = '';          //中介名
-                    this.cus_intermediate_phone = '';         //联系方式
-//                    地址
-                    this.village.villageId = '';                      //高德ID
-                    this.village.villageAddress = '';                 //小区地址
-                    this.village.villageName = '';                    //小区名称
-//                    附加信息
-                    this.cus_credentials_state = '1';         //证件类型
-                    this.cus_idNumber = '';                   //证件号
-                    this.photos.cus_idPhoto = [];             //证件照片
-                    this.cus_marriage = '1';                  //婚姻状况
-                    this.cus_qq = '';                         //qq号
-                    this.cus_email = '';                      //邮箱
-                    this.cus_nature = '1';                    //性格
-                    this.cus_remarks = '';                    //备注
                 }
                 if (val === 'rev') {
                     this.btn_state = false;                    //修改
@@ -424,14 +396,58 @@
         },
 
         methods: {
-//            验证客户
-            proving (){
-//                this.$http.post('index/country/index', {
-//                    name: this.cus_name,
-//                    phone: this.cus_phone
-//                }).then((res) => {
-//
-//                });
+//            清除
+            cus_cancel (){
+                this.photos.cus_idPhotos = {};            //修改图片ID
+                this.cus_id = '';                         //修改ID
+                this.cus_status = '';                     //业主/租客
+//                基本信息
+                this.cus_name = '';                       //客户姓名
+                this.cus_gender = '';                     //性别
+                this.cus_progress = '0';                  //进度
+                this.cus_nationality = '';                //国籍ID
+                this.cus_nationality_name = '';           //国籍
+                this.cus_phone = '';                      //手机号
+                this.cus_status_quo = '1';                //客户状态
+                this.cus_intention = '1';                 //客户意向
+                this.cus_source = '1';                    //客户来源
+//                    中介
+                this.cus_intermediate = '1';              //个人/中介
+                this.cus_intermediate_name = '';          //中介名
+                this.cus_intermediate_phone = '';         //联系方式
+//                    地址
+                this.village.villageId = '';                      //高德ID
+                this.village.villageAddress = '';                 //小区地址
+                this.village.villageName = '';                    //小区名称
+//                    附加信息
+                this.cus_credentials_state = '1';         //证件类型
+                this.cus_idNumber = '';                   //证件号
+                this.photos.cus_idPhoto = [];             //证件照片
+                this.cus_marriage = '1';                  //婚姻状况
+                this.cus_qq = '';                         //qq号
+                this.cus_email = '';                      //邮箱
+                this.cus_nature = '1';                    //性格
+                this.cus_remarks = '';                    //备注
+            },
+//            共享客户请求
+            proving (val){
+                this.$http.get('core/customer/sharecustomer/id/' + val, {}).then((res) => {
+                    console.log(res.data);
+                    if (res.data.code === '70060') {
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //关闭成功信息(可选)
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
             },
 //            国家
             nation (val){
@@ -439,6 +455,10 @@
                 this.cus_nationality_name = val.zh_name;
             },
 //            删除图片
+            revise_cancel (){
+                $('.rem_div').remove();
+                this.cus_cancel();
+            },
             remove_s (){
                 $('.rem_div').remove();
                 this.$emit('cancel');
@@ -504,7 +524,8 @@
                     remarks: this.cus_remarks,                  //备注
                 }).then((res) => {
                     if (res.data.code === '70010') {
-                        $('#customModel').modal('hide');            //成功关闭模态框
+                        this.cus_cancel();
+                        $('#customModel').modal('hide');        //成功关闭模态框
                         $('.rem_div').remove();
                         //成功信息 ***
                         this.info.success = res.data.msg;
@@ -513,9 +534,19 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
 
-                        this.$emit('cus_list', res.data);           // 更新客户列表
+                        this.$emit('cus_list', res.data);       // 更新客户列表
 
-                    } else {
+                    } else if (res.data.code === '70090') {
+                        this.cus_exist = res.data.msg;
+                        this.exist_id = res.data.data;
+                        //关闭成功信息(可选)
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                    else {
                         //关闭成功信息(可选)
                         this.info.state_success = false;
                         //失败信息 ***
