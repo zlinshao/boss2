@@ -80,10 +80,9 @@
                             <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
                         <li  class="operate">
-                            <i class="fa fa-plus-square"> 新增回访记录</i>&nbsp;
-                        </li>
-                        <li  class="operate">
-                            <i class="fa fa-eye"> 查看回访记录</i>&nbsp;
+                            <!--<i class="fa fa-eye"> 查看回访记录</i>&nbsp;-->
+                            <router-link tag="i" class="fa fa-eye" :to="{path:'/contractDetail',
+                                query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录</router-link>
                         </li>
                     </ul>
                 </div>
@@ -134,7 +133,7 @@
                             <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
-                            <router-link :to="{path:'/contractDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>
+                            <router-link :to="{path:'/contractDetail',query: {ContractId: item.id,flag:'detail'}}" class=" fa fa-eye" title="合同详情"></router-link>
 
                         </td>
                         <td>
