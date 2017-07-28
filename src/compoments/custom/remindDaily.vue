@@ -10,13 +10,6 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @clcik="follow_up_take">×</button>
                         <h4 class="modal-title">增加日志</h4>
                     </div>
-
-                    <!--增加提醒-->
-                    <!--<div v-if="inter_state" class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                        <!--<h4 class="modal-title">增加提醒</h4>-->
-                    <!--</div>-->
-
                     <!--放入客户池-->
                     <div v-if="pool" class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -51,45 +44,6 @@
                         </form>
                     </div>
 
-                    <!--新增提醒-->
-                    <!--<div v-if="inter_state" class="modal-body">-->
-                        <!--<form class="form-horizontal" role="form">-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-lg-2 col-sm-2 control-label">提醒内容</label>-->
-                                <!--<div class="col-lg-10">-->
-                                    <!--<textarea class="form-control"></textarea>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-lg-2 col-sm-2 control-label">提醒时间</label>-->
-                                <!--<div class="col-lg-10">-->
-                                    <!--<div class="form-group street">-->
-                                        <!--<div class="col-sm-3">-->
-                                            <!--<select class="form-control">-->
-                                                <!--<option value="1">1</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-sm-3">-->
-                                            <!--<label class="control-label" @click="senior"><a-->
-                                                    <!--class=" text-primary">高级选项+</a></label>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="form-group" v-if="senior_a">-->
-                                <!--<label class="col-lg-2 col-sm-2 control-label">提醒时间</label>-->
-                                <!--<div class="col-lg-10">-->
-                                    <!--<div class="form-group street">-->
-                                        <!--<div class="col-sm-6">-->
-                                            <!--<input @click="remindData" type="text"-->
-                                                   <!--class="form-control form_datetime" id="addtime"-->
-                                                   <!--name="addtime" value="" placeholder="请选择时间" readonly>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</form>-->
-                    <!--</div>-->
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button" @click="follow_up_take">取消
                         </button>
@@ -116,9 +70,6 @@
                 daily_state: false,         //增加日志
                 follow_w: '1',              //沟通日志类型
                 follow_up: '',              //沟通日志内容
-//                resetting: true,          //沟通日志内容
-
-//                inter_state: false,       //提醒内容
 
                 pool: false,                //放入客户池
                 senior_a: false,            //高级选项
@@ -199,19 +150,6 @@
                 this.follow_w = val.target.value;
                 this.$emit('pitches',1)
             },
-//            时间选择
-//            remindData (){
-//                $('.form_datetime').datetimepicker({
-//                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
-//                    language: 'zh-CN',
-//                    format: 'yyyy-mm-dd hh:00',
-//                    todayBtn: 1,
-//                    autoclose: 1,
-////                    clearBtn: true,                     //清除按钮
-//                }).on('changeDate', function (ev) {
-//                    this.dataTime = ev.target.value;
-//                }.bind(this));
-//            },
 
 //            高级选项
             senior (){
@@ -242,10 +180,6 @@
                     this.pool = false;              //放入客户池
                 }
             }
-//                myResult(val){
-//                    //xxcanghai 小小沧海 博客园
-//                    this.$emit("on-result-change", val);//③组件内对myResult变更后向外部发送事件通知
-//                }
         },
 
     }
