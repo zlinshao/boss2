@@ -355,6 +355,7 @@
                 if(val.department.length){
                     this.departmentName=val.department[0].name;
                     this.departmentId=val.department[0].id;
+                    this.search();
                 }
             },
             //选中的checkout框
@@ -364,11 +365,6 @@
                     top === 2? this.top = 1:this.top = 2;
                 }else {
                     this.houseSeleted = 0;
-//                    for(let i=0;i<this.houseSeleted.length;i++){
-//                        if(id===this.houseSeleted[i]){
-//                            this.houseSeleted.splice(i,1)
-//                        }
-//                    }
                 }
             },
             // 置顶
