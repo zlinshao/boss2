@@ -315,18 +315,18 @@
 
                 this.$http.post('core/villa/receivedvillalist',
                     {
-                        "house_type" : this.house_type,//房屋类型
-                        'rooms':this.rooms,     //房型
-                        'decoration':this.decoration,//装修
-                        'reference':this.reference, //参考价格
-                        'house_feature':this.house_feature,//房屋特色
-                        'area':this.area,    //面积
-                        'status':this.villa_status,//房屋状态
-                        'belong':this.belong,    //房屋所属
-                        'our_group':this.our_group,
-                        'keywords':this.keywords,
-                        'department_id':this.departmentId,  //部门id
-                        'page':this.page,   //页码
+                        house_type   : this.house_type,//房屋类型
+                        rooms : this.rooms,     //房型
+                        decoration : this.decoration,//装修
+                        reference : this.reference, //参考价格
+                        house_feature : this.house_feature,//房屋特色
+                        area : this.area,    //面积
+                        status : this.villa_status,//房屋状态
+                        belong : this.belong,    //房屋所属
+                        our_group : this.our_group,
+                        keywords : this.keywords,
+                        department_id : this.departmentId,  //部门id
+                        page : this.page,   //页码
                     }
                 ).then((res) => {
                     if(res.data.code==='80030'){
