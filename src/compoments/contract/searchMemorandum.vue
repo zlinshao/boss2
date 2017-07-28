@@ -214,9 +214,9 @@
                 this.getList();
             },
             staffSeleted(val){
-                if(val.staff.length){
-                    this.searchRequirement.department_id=val.staff[0].id;
-                    this.user_name=val.staff[0].name;
+                if(val.department.length){
+                    this.searchRequirement.department_id=val.department[0].id;
+                    this.user_name=val.department[0].name;
                     this.search();
                 }
 

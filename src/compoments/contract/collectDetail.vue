@@ -597,9 +597,17 @@
                                                 <!--<span class="text-primary">跟进方式：</span>-->
                                                 <!--<span>{{select_list.follow_way[daily.follow_way]}}</span>-->
                                                 <!--</div>-->
-                                                <div><span class="text-primary">跟进人：</span><span>{{record.staff_id}}</span>
+                                                <div>
+                                                    <span class="text-primary">跟进人：</span><span>{{record.staff_id}}</span>
                                                 </div>
-                                                <div><span class="text-primary">跟进记录：</span><span>{{record.content}}</span>
+                                                <div>
+                                                    <span class="text-primary">跟进记录：</span><span>{{record.content}}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-primary">满意度：</span>
+                                                    <span v-for="length in record.evaluate">
+                                                        <i class="fa fa-star" style="color: gold"></i>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
