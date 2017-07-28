@@ -131,7 +131,7 @@
                         <div class="form-group">
                             <label for="villageName" class="col-sm-3 control-label">租房地址:</label>
                             <div class="col-sm-8 input-group">
-                                <input title="请点击选择" type="text" class="form-control" id="villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                <input title="请点击选择" type="text" class="form-control" readonly  data-toggle="modal" data-target="#myModal1">
                                 <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                             </div>
                         </div>
@@ -437,12 +437,12 @@
 
             },
             pendingItemList(){
-                this.$http.get('json/pendingItem.json').then((res) => {
+                /*this.$http.get('json/pendingItem.json').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     this.cont.myData = res.data.data.pendingItemList;
 //                    console.log(res.data);
                     this.paging = res.data.data.pages;
-                })
+                })*/
             },
             remindData (){
                 var that = this;

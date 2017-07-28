@@ -79,20 +79,21 @@
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
                             <div class="form-group" v-for="(item,index) in moreTime">
-                                <label class="col-sm-4 control-label">第{{index+1}}次付款时间{{showOper[index]}}</label>
-                                <div class="col-sm-8" v-if="showOper[index]">
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" v-model="moreTime[index]">
+                                <label class="col-sm-3 control-label">第{{index+1}}次付款时间</label>
+                                <div class="col-sm-9" v-if="showOper[index]">
+                                    <div class="col-sm-7">
+                                        <input @click="remindData" type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-5">
                                         <button type="button" class="btn btn-sm btn-success" @click="operTime(index)">确定</button>
+                                        <button type="button" class="btn btn-sm btn-primary" @click="cancel(index)">取消</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-8" v-else="showOper[index]">
                                     <div class="col-sm-6">
                                         <span>{{item}}</span>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-5">
                                         <span @click="changeShow(index)"><a>编辑</a></span>
                                     </div>
                                 </div>
@@ -212,9 +213,29 @@
         data(){
             return {
                 id : '',
+                currentIndex : -1,
 
                 showOper: [],
 
+                times : [
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                    '2017/09/12',
+                ],
                 moreTime : [
                     '2017/09/12',
                     '2017/09/12',
@@ -247,19 +268,19 @@
             }
         },
         updated (){
-//            this.remindData();
+            this.remindData();
         },
         mounted (){
             this.id = this.$route.query.collectId;
             for (let i = 0 ; i<this.moreTime.length ; i++){
                 this.showOper.push(false);
             }
+//            this.times = this.moreTime;
 //            console.log(this.moreTime)
-            console.log(this.showOper)
+//            console.log(this.showOper)
         },
         methods : {
             oper(){
-                this.remindData();
                 $('#edit').modal('show');
             },
 
@@ -271,14 +292,27 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
+//                    pickerPosition : 'top-left'
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '付款时间'){
-
+                        // 编辑中的付款时间
                     } else {
-
+                        this.moreTime.splice(this.currentIndex,1,ev.target.value);
                     }
 //                    console.log(ev.target.value);
 //                    console.log(ev.target.placeholder);
+                }.bind(this));
+                $('.form_datetime2').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+                    pickerPosition : 'top-left'
+                }).on('changeDate', function (ev) {
+                    this.moreTime.splice(this.currentIndex,1,ev.target.value);
+//                    console.log(ev.target.value);
                 }.bind(this));
             },
 
@@ -286,13 +320,27 @@
             getClient(data){},
 
             changeShow(index){
-                console.log(index);
+//                console.log(this.currentIndex);
+                if (this.currentIndex==-1){
+                    this.currentIndex = index;
 //                this.showOper[index] = true;
-                this.showOper.splice(index,1,true)
-                console.log(this.showOper)
+                    this.showOper.splice(index,1,true);
+//                    console.log(this.showOper)
+                }
+//                console.log(this.currentIndex);
+
             },
             operTime(index){
-                this.showOper.splice(index,1,false)
+                this.currentIndex = -1;
+                this.showOper.splice(index,1,false);
+//                console.log(this.moreTime);
+                this.times.splice(index,1,this.moreTime[index]);
+            },
+            cancel(index){
+                this.currentIndex = -1;
+                this.showOper.splice(index,1,false);
+                this.moreTime.splice(index,1,this.times[index]);
+//                console.log(this.moreTime);
             }
         }
     }
