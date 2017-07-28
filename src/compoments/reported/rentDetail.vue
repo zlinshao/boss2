@@ -192,7 +192,7 @@
                 // 修改状态
 
 
-                this.confirmMsg.id = this.operId;
+                this.confirmMsg.id = this.$route.query.rentId;
                 this.confirmMsg.status= num;
 //                console.log(this.confirmMsg.status);
 
@@ -213,18 +213,19 @@
                 let num = this.confirmMsg.status;
 //                console.log(num)
                 let url;
+                let id = this.$route.query.rentId;
                 if (num==1){
 //                    this.confirmMsg.msg = '确定提交报备信息吗？';
-                    url = 'checkin/rent/pending/'+this.id;
+                    url = 'checkin/rent/pending/'+id;
                 } else if (num==2){
 //                    this.confirmMsg.msg = '确定通过审核吗？';
-                    url = 'checkin/rent/pass/'+this.id;
+                    url = 'checkin/rent/pass/'+id;
                 } else if (num==3){
 //                    this.confirmMsg.msg = '确定驳回吗？';
-                    url = 'checkin/rent/stash/'+this.id;
+                    url = 'checkin/rent/stash/'+id;
                 } else if (num==4){
 //                    this.confirmMsg.msg = '确定驳回吗？';
-                    url = 'checkin/rent/pending/'+this.id;
+                    url = 'checkin/rent/pending/'+id;
                 }
                 this.$http.get(url)
                     .then(
@@ -239,7 +240,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
 
-                                this.getDetails(this.id);
+                                this.getDetails(id);
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***
