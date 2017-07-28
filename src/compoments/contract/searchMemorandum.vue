@@ -18,8 +18,8 @@
                         <input type="text" class="form-control" id="search_info" placeholder="请点击选择所属部门" readonly
                                v-model="user_name"  @click="selete">
                         <span class="input-group-btn">
-                            <button class="btn btn-success " id="search" type="button" @click="search">
-                                <i class="fa fa-search"></i>
+                            <button class="btn btn-warning " id="search" type="button" @click="reset">
+                                清空
                             </button>
                         </span>
                     </div>
@@ -32,9 +32,9 @@
                             </button>
                         </span>
                     </div>
-                    <div class="input-group reset" >
-                        <button class="btn btn-success" type="button" @click="reset">重置</button>
-                    </div>
+                    <!--<div class="input-group reset" >-->
+                        <!--<button class="btn btn-success" type="button" @click="reset">重置</button>-->
+                    <!--</div>-->
                 </div>
             </div>
             <!--选中-->
@@ -84,16 +84,19 @@
                                        :value="item.id" :checked="contractSeleted===item.id">
                             </td>
                             <td class="text-center">{{item.contract_num}}</td>
-                            <td class="text-center">上传时间</td>
-                            <td class="text-center">开单人</td>
+                            <td class="text-center">{{item.create_time}}</td>
+                            <td class="text-center">{{item.staff}}</td>
                             <td class="text-center">{{item.name}}</td>
                             <td class="text-center">{{item.address}}</td>
-                            <td class="text-center">手机号码</td>
-                            <td class="text-center">资料补齐时间</td>
-                            <td class="text-center">过期情况</td>
-                            <td class="text-center">回访情况</td>
+                            <td class="text-center">{{item.mobile}}</td>
+                            <td class="text-center">{{item.complete_date[0]}}</td>
+                            <td class="text-center">{{item.complete_date[2]}}</td>
+                            <td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>
                             <td class="text-center">{{item.content}}</td>
-                            <td class="text-center">资料状态</td>
+                            <td>
+                                <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
+                                <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
+                            </td>
                         </tr>
                         <tr v-if="isShow">
                             <td colspan="12" class="text-center text-muted">
@@ -170,7 +173,7 @@
         },
         methods: {
             getDictionary(){
-              this.$http.get('log/log/dict').then((res)=>{
+              this.$http.get('core/customer/dict').then((res)=>{
                   this.dictionary=res.data;
                   this.search();
               })
@@ -183,8 +186,8 @@
                 this.currentPage=this.searchRequirement.page;
                 this.$http.post('core/memo/memolist',this.searchRequirement).then((res)=>{
                     if(res.data.code==='30030'){
-                        this.searchList=res.data.data;
-                        this.pages=res.data.pages;
+                        this.searchList=res.data.data.list;
+                        this.pages=res.data.data.pages;
                         this.isShow = false;
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
@@ -230,11 +233,8 @@
             },
             reset(){
                 this.user_name='';
-                this.searchRequirement.start_date='';
-                this.searchRequirement.end_date='';
                 this.searchRequirement.department_id='';
                 this.searchRequirement.page=1;
-                this.searchRequirement.keywords = '';
                 this.search();
             },
             deleteContract(){
