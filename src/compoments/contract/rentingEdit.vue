@@ -452,7 +452,6 @@
         line-height: 34px;
         font-size: 20px;
         color: #ddd;
-        /*text-align: left;*/
         cursor: pointer;
     }
     .flexbox i+i{

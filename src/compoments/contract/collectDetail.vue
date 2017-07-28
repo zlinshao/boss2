@@ -192,6 +192,11 @@
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;回访记录
                                 </a>
                             </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#memorandum" aria-expanded="false">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;新增备忘录
+                                </a>
+                            </li>
                         </ul>
                     </header>
                     <div class="panel-body" >
@@ -550,7 +555,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2">增加回访记录</label>
                                     <div style="margin-bottom: 16px; display: inline-block ">
-                                        <textarea class="form-control" v-model="returnRecorde" cols="100"></textarea>
+                                        <textarea class="form-control" v-model="returnRecorde" cols="80" ></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group inputdata">
@@ -577,9 +582,21 @@
                                     <span v-if="inputdata === '1'">非常差</span>
                                 </div>
                                 <div class="pull-right">
-                                    <button class="btn btn-default" >取消
-                                    </button>
-                                    <button class="btn btn-primary">确定</button>
+                                    <button class="btn btn-primary">新增</button>
+                                </div>
+                                <!--跟进记录-->
+                            </div>
+
+                            <!--回访记录-->
+                            <div id="memorandum" class="tab-pane">
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-2">添加备忘录</label>
+                                    <div style="margin-bottom: 16px; display: inline-block ">
+                                        <textarea class="form-control" v-model="memorandum" cols="80" rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <button class="btn btn-primary" @click="addMemorandum">新增</button>
                                 </div>
                                 <!--跟进记录-->
                             </div>
@@ -650,6 +667,7 @@
                 followWay:'',   //跟进方式
                 returnRecorde:'',//回访记录
                 inputdata: 0,    //五星好评
+                memorandum:'',   //备忘录
             }
         },
         mounted(){
@@ -800,7 +818,25 @@
 
                     });
                 }
-            }
+            },
+            addMemorandum(){
+                this.$http.post('core/memo/savememo',{
+                        content:this.memorandum,
+                        contract_id:this.contractEitId,
+                        type:'collect' ,
+                }).then((res)=>{
+                    if(res.data.code === '30010'){
+                        this.memorandum = '';
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
 
         }
     }

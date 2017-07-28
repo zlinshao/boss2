@@ -55,6 +55,11 @@
                             <input type="radio" name="sort" @click="isNewest(1)">最新发布
                         </label>
                     </div>
+                    <div class="pull-right pro-sort" style="margin: 8px">
+                        <router-link :to="{path:'/memorandum',query: {flag: 'rent'}}" class="btn btn-primary">
+                            <i class="fa fa-eye"></i>&nbsp;查看备忘录
+                        </router-link>
+                    </div>
                 </div>
                 <!--选中-->
                 <div class="panel-body" v-if="contractSeleted > 0" style="padding: 0;">
@@ -73,6 +78,12 @@
                         </li>
                         <li  class="operate"  v-if="status !== 1" >
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
+                        </li>
+                        <li  class="operate">
+                            <i class="fa fa-plus-square"> 新增回访记录</i>&nbsp;
+                        </li>
+                        <li  class="operate">
+                            <i class="fa fa-eye"> 查看回访记录</i>&nbsp;
                         </li>
                     </ul>
                 </div>

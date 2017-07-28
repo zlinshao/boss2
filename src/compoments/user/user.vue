@@ -291,6 +291,7 @@
                                                     <button type="button" class="btn btn-default btn-lg btn-block"
                                                             :disabled="item.status==3">禁用账号</button>
                                                 </li>
+                                                <li role="separator" class="divider" style="margin: 0"></li>
                                                 <li @click="deleteAccount(item.id)">
                                                     <button type="button" class="btn btn-default btn-lg btn-block">
                                                         删除账号
