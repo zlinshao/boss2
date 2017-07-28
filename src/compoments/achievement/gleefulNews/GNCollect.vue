@@ -9,16 +9,17 @@
         <section class="panel clearFix">
             <div class="panel-body">
                 <div>
-
                     <form class="form-inline clearFix" role="form">
                         <!--<Cascade @change="getCascadeData"></Cascade>-->
-                        <div class="input-group clearFix">
-                            <button class="btn btn-primary " type="button" @click="select" style="margin-right: 15px;">
-                                筛选部门及员工
-                            </button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="点击选择部门/员工"
+                                   v-model="selected" @click='select' readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            </span>
                         </div>
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
 
@@ -33,27 +34,10 @@
                         </div>
 
                     </form>
-
-
-                    <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
-                        <h4>部门</h4>
-                        <span class="tag" v-for="item in filtrate.departmentList">
-                        <span>{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
-                    </span>
-                    </div>
-                    <div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                        <h4>员工</h4>
-                        <span class="tag" v-for="item in filtrate.staffList">
-                        <span>{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
-                    </span>
-                    </div>
                 </div>
 
             </div>
         </section>
-
 
         <!--表格-->
         <div class="row">
@@ -94,7 +78,7 @@
                             <td>{{item.years}}</td>
                             <td>{{dict.pay_type[item.pay_type]}}</td>
                             <td>{{item.vac_sum_days}}</td>
-                            <td>{{dict.is_medi[item.is_medi]}}</td>
+                            <td>{{item.is_medi==1?'中介':'个人'}}</td>
 
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -107,9 +91,6 @@
                 </section>
             </div>
         </div>
-
-
-
 
         <!--分页-->
         <Page :pg="paging" @pag="getData"></Page>
@@ -130,7 +111,6 @@
 <script>
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
-    import FlexBox from '../../common/flexBox.vue'
     import DatePicker from '../../common/datePicker.vue'
     //    import ChooseAddress from '../../common/chooseAddress.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
@@ -138,7 +118,7 @@
     //    import Select from '../../common/organization/selectStaff.vue'
 
     export default{
-        components: {Page, Status, FlexBox, STAFF, DatePicker},
+        components: {Page, Status , STAFF, DatePicker},
         data(){
             return {
                 isShow: false,
@@ -169,10 +149,8 @@
                     error: ''
                 },
                 datas: [],
-                flexData: {
-                    name: '收房价格',
-                    maxLength: 10,
-                },
+
+                selected : [],
                 filtrate: {
                     departmentList: [],
                     staffList: []
@@ -186,7 +164,6 @@
                         position : 'top-right',
                     }
                 ],
-                currentDate : [],
 //                idArray:{departmentId:[],staffId:[]},
             }
         },
@@ -203,10 +180,6 @@
                 );
 
         },
-        updated (){
-
-        },
-
         methods: {
             gnCollectList (){
                 this.$http.get('glee/collect').then((res) => {
@@ -225,26 +198,26 @@
                 })
             },
             search(){
-//                console.log(this.params);
+                this.page = 1;
+                console.log(this.params);
+                this.filter();
+            },
+            filter(){
                 this.$http.get('glee/collect?page=' + this.page, {
                     params: this.params
                 })
                     .then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-//                        console.log(res)
-                        if (res.data.code == 18204) {
-                            this.cont.myData = [];
-                            this.isShow = true;
-                            this.paging = '';
-                        } else {
+                        console.log(res);
+                        if (res.data.code == 18210) {
+
                             this.isShow = false;
-                            if (res.data.data.page !== this.paging) {
-                                this.paging = res.data.data.page;
-                                this.page = 1;
-                            }
-//                            console.log(res.data);
                             this.cont.myData = res.data.data.data;
                             this.paging = res.data.data.page;
+                        } else {
+                            this.cont.myData = [];
+                            this.isShow = true;
+                            this.paging = 1;
                         }
                     });
             },
@@ -253,13 +226,9 @@
                 // 页数
 //                console.log(data);
                 this.page = data;
-                this.search();
+                this.filter();
             },
 
-            getFlexData(data){
-//                console.log(data);
-                this.formData.price = data;
-            },
             select(){
                 this.configure = {type: 'all', class: 'selectType'};
                 $('#selectCustom').modal('show');
@@ -268,51 +237,23 @@
             },
             selectDateSend(val){
 //                console.log(val);
-                for (let j = 0; j < val.department.length; j++) {
-                    if ($.inArray(val.department[j].id, this.params.department_id) === -1) {
-                        this.filtrate.departmentList.push(val.department[j]);
-                        this.params.department_id.push(val.department[j].id)
-                    } else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
-
+                for(let i=0;i<val.department.length;i++){
+                    this.selected.push(val.department[i].name);
+                    this.params.department_id.push(val.department[i].id)
                 }
-                for (let i = 0; i < val.staff.length; i++) {
-                    if ($.inArray(val.staff[i].id, this.params.staff_id) === -1) {
-                        this.filtrate.staffList.push(val.staff[i]);
-                        this.params.staff_id.push(val.staff[i].id)
-                    } else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
-
+                for(let j=0;j<val.staff.length;j++){
+                    this.selected.push(val.staff[j].name);
+                    this.params.staff_id.push(val.staff[j].id)
                 }
                 this.search();
-//                this.filtrate.departmentList = val.department;
-//                this.filtrate.staffList = val.staff;
+            },
+            clearSelect(){
+                this.params.department_id = [];
+                this.params.staff_id = [];
+                this.selected = [];
+                this.search();
+            },
 
-            },
-            deleteStaff(item){
-                this.filtrate.staffList = this.filtrate.staffList.filter((x) => x !== item);
-                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id);
-                this.search();
-            },
-            deleteDepartment(item){
-                this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
-                this.params.department_id = this.params.department_id.filter((x) => x != item.id);
-                this.search();
-            },
             getDate(data){
                 // 获取时间
                 console.log(data);
@@ -340,7 +281,7 @@
 
     div.padd {
         display: inline-block;
-        padding: 0 15px 0 0;
+        /*padding: 0 15px 0 0;*/
     }
 
     label {
