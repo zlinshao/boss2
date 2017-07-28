@@ -122,7 +122,7 @@
             ensure(){
 
                 if(this.houseAddress.id === ''){
-                    this.info.error = '请先选择客户';
+                    this.info.error = '请先选择房屋';
                     this.info.state_error = true;
                 }else {
                     this.$emit('House',this.houseAddress);

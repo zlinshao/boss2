@@ -5,7 +5,7 @@
             <li class="active">待处理项</li>
         </ol>
         <section class="panel">
-            <div class="panel-body col-lg-12">
+            <div class="panel-body">
                 <div v-show="operId==0">
                     <form class="form-inline" v-show="operId==0" role="form">
                         <div class="dropdown input-group">

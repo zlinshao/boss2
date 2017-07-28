@@ -9,10 +9,12 @@
             <div class="panel-body">
                 <div>
                     <form class="form-inline clearFix" role="form">
-                        <div class="input-group clearFix">
-                            <button class="btn btn-primary" type="button" @click="select" style="margin-right: 15px;">
-                                筛选部门及员工
-                            </button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="点击选择部门/员工"
+                                   v-model="selected" @click='select' readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            </span>
                         </div>
                         <!--<div class="form-group datetime">
                             <label>
@@ -23,7 +25,7 @@
                             </label>
                         </div>-->
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
@@ -36,20 +38,6 @@
                         </div>
 
                     </form>
-                    <div class="tagsinput " v-show="filtrate.departmentList.length!=0">
-                        <h4>部门</h4>
-                        <span class="tag" v-for="item in filtrate.departmentList">
-                        <span>{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
-                    </span>
-                    </div>
-                    <div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                        <h4>员工</h4>
-                        <span class="tag" v-for="item in filtrate.staffList">
-                        <span>{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
-                    </span>
-                    </div>
                 </div>
 
             </div>
@@ -92,7 +80,7 @@
                             <td>{{dict.subject[item.received_type]}}</td>
                             <td>{{item.price_received}}</td>
                             <td>{{item.complete_date}}</td>
-                            <td>{{dict.is_medi[item.is_medi]}}</td>
+                            <td>{{item.is_medi==1?'中介':'个人'}}</td>
 
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -130,7 +118,7 @@
             return {
                 isShow: false,
 //                rentingtList : [],
-                paging: '',
+                paging: 1,
                 page: 1,
                 dict: {},
 
@@ -145,6 +133,8 @@
                     date_range : '',
                     search: ''
                 },
+
+                selected : [],
                 filtrate: {
                     departmentList: [],
                     staffList: []
@@ -167,7 +157,6 @@
                         position : 'top-right',
                     }
                 ],
-                currentDate : [],
             }
         },
         created (){
@@ -178,13 +167,9 @@
 //                        console.log(this.dict);
 //                        alert(1);
                         this.gnRentingList();
-
                     }
                 );
 
-        },
-        updated (){
-//            时间选择
         },
         methods: {
             gnRentingList (){
@@ -196,33 +181,36 @@
                         this.isShow = false;
                     } else {
                         this.isShow = true;
-                        this.paging = '';
+                        this.paging = 1;
                     }
 
                 })
             },
 
             search(){
+
+                this.page = 1;
                 console.log(this.params);
+                this.filter();
+
+            },
+
+            filter(){
                 this.$http.get('glee/rent?page=' + this.page, {
                     params: this.params
                 })
                     .then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
 //                        console.log(res)
-                        if (res.data.code != 18110) {
-                            this.cont.myData = [];
-                            this.isShow = true;
-                            this.paging = '';
-                        } else {
+                        if (res.data.code == 18110) {
                             this.isShow = false;
-                            if (res.data.data.page !== this.paging) {
-                                this.paging = res.data.data.page;
-                                this.page = 1;
-                            }
 //                            console.log(res.data);
                             this.cont.myData = res.data.data.data;
-                            this.paging = res.data.data.page;
+                            this.paging = 1;
+                        } else {
+                            this.cont.myData = [];
+                            this.isShow = true;
+                            this.paging = 1;
                         }
                     });
             },
@@ -230,6 +218,7 @@
                 // 页数
 //                console.log(data);
                 this.page = data;
+                this.filter();
             },
 
             select(){
@@ -240,49 +229,20 @@
             },
             selectDateSend(val){
 //                console.log(val);
-                for (let j = 0; j < val.department.length; j++) {
-                    if ($.inArray(val.department[j].id, this.params.department_id) === -1) {
-                        this.filtrate.departmentList.push(val.department[j]);
-                        this.params.department_id.push(val.department[j].id)
-                    } else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
-
+                for(let i=0;i<val.department.length;i++){
+                    this.selected.push(val.department[i].name);
+                    this.params.department_id.push(val.department[i].id)
                 }
-                for (let i = 0; i < val.staff.length; i++) {
-                    if ($.inArray(val.staff[i].id, this.params.staff_id) === -1) {
-                        this.filtrate.staffList.push(val.staff[i]);
-                        this.params.staff_id.push(val.staff[i].id)
-                    } else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
-
+                for(let j=0;j<val.staff.length;j++){
+                    this.selected.push(val.staff[j].name);
+                    this.params.staff_id.push(val.staff[j].id)
                 }
                 this.search();
-//                this.filtrate.departmentList = val.department;
-//                this.filtrate.staffList = val.staff;
-
             },
-            deleteStaff(item){
-                this.filtrate.staffList = this.filtrate.staffList.filter((x) => x !== item);
-                this.params.staff_id = this.params.staff_id.filter((x) => x != item.id);
-                this.search();
-            },
-            deleteDepartment(item){
-                this.filtrate.departmentList = this.filtrate.departmentList.filter((x) => x !== item);
-                this.params.department_id = this.params.department_id.filter((x) => x != item.id);
+            clearSelect(){
+                this.params.department_id = [];
+                this.params.staff_id = [];
+                this.selected = [];
                 this.search();
             },
 

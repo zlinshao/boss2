@@ -135,7 +135,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close"  @click="clearForm" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">新增应付款项</h4>
                     </div>
                     <div class="modal-body clearFix">
@@ -210,8 +210,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" @click="clearForm">取消</button>
+                        <button type="button" class="btn btn-primary" @click="save">保存</button>
                     </div>
                 </div>
             </div>
@@ -439,6 +439,13 @@
                     this.tips.paid_sum = 0.00;
                     this.tips.balance_sum = 0.00;
                 }
+
+            },
+
+            clearForm(){
+
+            },
+            save(){
 
             }
         }
