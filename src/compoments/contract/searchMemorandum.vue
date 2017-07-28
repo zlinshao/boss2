@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>合同管理</li>
             <li >收房合同</li>
-            <li class="active">合同备忘录</li>
+            <li class="active">备忘录</li>
         </ol>
 
         <section class="panel">
@@ -162,7 +162,6 @@
             }
         },
         mounted(){
-            console.log(this.$route.query.flag)
             this.searchRequirement.type = this.$route.query.flag;
             this.getDictionary();
         },

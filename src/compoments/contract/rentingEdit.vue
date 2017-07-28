@@ -65,12 +65,12 @@
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.start_date"
-                                                   readonly placeholder="合同开始时间">
+                                                   disabled placeholder="合同开始时间">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.end_date"
-                                                   readonly placeholder="合同结束时间">
+                                                   disabled placeholder="合同结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
