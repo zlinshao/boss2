@@ -5,7 +5,7 @@
             <li>
                 <router-link to="/payPayment">应付款项</router-link>
             </li>
-            <li class="active">打房租日期</li>
+            <li class="active">应付款项详情</li>
         </ol>
 
         <section class="panel head">
@@ -56,8 +56,9 @@
                                 <div><span class="text-primary">剩余款项：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">补齐时间：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">备注：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>
+                                <!--待入账的没有-->
+                                <div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">历史打款记录：</span><span>sdfdsf</span></div>
                             </div>
                         </div>
@@ -271,7 +272,7 @@
             this.remindData();
         },
         mounted (){
-            this.id = this.$route.query.collectId;
+            this.id = this.$route.query.payId;
             for (let i = 0 ; i<this.moreTime.length ; i++){
                 this.showOper.push(false);
             }

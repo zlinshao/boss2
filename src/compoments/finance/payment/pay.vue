@@ -20,8 +20,9 @@
                         </div>
 
                         <div class="input-group">
-                            <select class="form-control">
-                                <option value="">待入账</option>
+                            <select class="form-control" v-model="params.status" @change="search">
+                                <option value="">全部</option>
+                                <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}</option>
                             </select>
                         </div>
 
@@ -31,7 +32,7 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search" @keydown.enter.prevent="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                             </span>
@@ -50,7 +51,7 @@
                         <li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>
-                        <li>
+                        <li v-show="statusId!=3">
                             <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a></h5>
                         </li>
                     </ul>
@@ -62,15 +63,15 @@
             <ul class="clearFix">
                 <li class="col-md-4">
                     应付金额(元) <br>
-                    <span class="red">1212</span>
+                    <span class="red">{{tips.payable_sum}}</span>
                 </li>
                 <li class="col-md-4">
                     实付金额(元) <br>
-                    <span class="red">313</span>
+                    <span class="red">{{tips.paid_sum}}</span>
                 </li>
                 <li class="col-md-4">
                     剩余款项(元) <br>
-                    <span class="yellow">343</span>
+                    <span class="yellow">{{tips.balance_sum}}</span>
                 </li>
             </ul>
         </div>
@@ -99,17 +100,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="operId===1" @click="changeIndex($event,1)">
+                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
                             </td>
-                            <td><router-link :to="{path:'/payPaymentDetail',query: {collectId: 1}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td>{{item.pay_date}}</td>
+                            <td>{{item.description.staff_name}}</td>
+                            <td>{{item.description.address}}</td>
+                            <td>{{dict.pay_type[item.description.pay_type]}}</td>
+                            <td>{{item.description.price}}</td>
+                            <td>{{dict.account_subject[item.subject_id]}}</td>
+                            <td>{{item.amount_payable}}</td>
+                            <td>{{item.amount_paid}}</td>
+                            <td>{{item.balance}}</td>
+                            <td>{{item.complete_date}}</td>
+                            <td>
+                                <button :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                    {{dict.account_should_status[item.status]}}
+                                </button>
+                            </td>
+                            <td><router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" :checked="operId===2" @click="changeIndex($event,2)">
-                            </td>
-                            <td><router-link :to="{path:'/payPaymentDetail',query: {collectId: 2}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="13">暂无数据...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -239,12 +252,13 @@
         data(){
             return {
                 operId : 0,
-
+                statusId:0,
                 paging : '',
                 page : 1,                  // 当前页数
 
+                dict : {},
                 myData: [],      //列表数据
-
+                isShow :false,
                 dateConfigure : [
                     {
                         range : true,
@@ -260,16 +274,20 @@
 
                 title : '',
                 isAdd : true,
-                moreYears : 1,
-
-
 
                 selected : [],
                 params : {
                     department_id : [],
                     staff_id : [],
+                    status : '',
+                    range : '',
+                    search : ''
                 },
-                tips : {},
+                tips : {
+                    payable_sum: 0.00,          // 应付总额
+                    paid_sum: 0.00,                 // 已付总额
+                    balance_sum: 0.00,          // 欠额总额
+                },
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -279,10 +297,6 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                },
-                flexData : {
-                    name : '收房价格',
-                    maxLength : 5
                 }
             }
         },
@@ -290,30 +304,46 @@
             this.remindData();
             //            时间选择
         },
-        created () {
-            this.payFlowList();
+        mounted (){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.payFlowList();
+                    }
+                );
+
         },
         methods : {
-            changeIndex(ev,id){
+            changeIndex(ev,id,status){
 //                console.log("一开始"+this.operId);
                 if (ev.currentTarget.checked){
                     this.operId = id;
+                    this.statusId = status;
 //                    console.log(this.operId);
                 }else {
                     this.operId = 0;
+                    this.statusId = 0;
                 }
 
 
             },
 
             payFlowList(){
-                /*this.$http.get('json/itemFlow.json').then((res) => {
+                this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-                    this.cont.myData = res.data.data.payFlowList;
-                    this.tips = res.data.data.payTips;
 //                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                })*/
+                    if (res.data.code==18400){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.setTips(res.data.data,true);
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.setTips({},false);
+                    }
+                })
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -353,7 +383,7 @@
                     this.selected.push(val.staff[j].name);
                     this.params.staff_id.push(val.staff[j].id)
                 }
-//                this.search();
+                this.search();
             },
             clearSelect(){
                 this.params.department_id = [];
@@ -363,16 +393,54 @@
             },
 
             search(){
-                console.log(this.params)
+//                console.log(this.params);
+                this.page = 1;
+                this.filter();
+            },
+            filter(){
+                this.operId = 0;
+                this.$http.get('account/payable?page='+this.page,{
+                    params : this.params
+                }).then(
+                    (res) =>{
+                        if (res.data.code == 18400){
+                            // 成功
+                            this.paging = res.data.data.pages;
+                            this.myData = res.data.data.data;
+                            this.setTips(res.data.data,true);
+                            this.isShow = false;
+                        } else {
+                            this.isShow = true;
+                            this.myData = [];
+                            this.paging = 0;
+                            this.page = 1;
+                            this.setTips({},false);
+                        }
+                    }
+                )
             },
             getDate(data){
                 // 时间
-                console.log(data);
-
+//                console.log(data);
+                this.params.range = data;
+                this.search();
             },
 
             getHouse(data){},
-            getClient(data){}
+            getClient(data){},
+
+            setTips(val,bool){
+                if (bool){
+                    this.tips.payable_sum = val.payable_sum;
+                    this.tips.paid_sum = val.paid_sum;
+                    this.tips.balance_sum = val.balance_sum;
+                } else {
+                    this.tips.payable_sum = 0.00;
+                    this.tips.paid_sum = 0.00;
+                    this.tips.balance_sum = 0.00;
+                }
+
+            }
         }
     }
 </script>
@@ -422,12 +490,6 @@
     .tips ul li span.yellow{
         color: #FF9A02;
     }
-    div.input-group{
-        padding: 0 15px;
-    }
-    tbody tr{
-        cursor: pointer;
-    }
 
     tbody tr input[type=checkbox]{
         width: 17px;
@@ -438,5 +500,21 @@
     }
     textarea{
         max-width: 100%;
+    }
+
+    tbody tr td .status{
+        color: white;
+        /*font-weight: bold;*/
+    }
+    .status.yellow {
+        background-color: #FFCC00;
+    }
+
+    .status.red {
+        background-color: #FF9999;
+    }
+
+    .status.green {
+        background-color: #83E96D;
     }
 </style>

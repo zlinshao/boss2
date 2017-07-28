@@ -88,7 +88,7 @@
                             <td>
                                 <input type="checkbox">
                             </td>
-                            <td><a><i title="查看详情" class=" fa fa-eye"></i></a></td>
+                            <td><router-link :to="{path:'/CollectPaymentDetail',query: {collectId: 1}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
                         </tr>
                         </tbody>
                     </table>
@@ -139,8 +139,12 @@
         data(){
             return {
                 operId : 0,
+                statusId:0,
                 paging : '',
                 page : 1,                  // 当前页数
+
+                dict : {},
+                myData: [],      //列表数据
 
                 dateConfigure : [
                     {
@@ -157,23 +161,14 @@
 
                 title : '',
                 isAdd : true,
-                moreYears : 1,
-                modal : {
-                    village : {
-                        villageName : ''
-                    }
-                },
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
-                },
 
                 selected : [],
                 params : {
                     department_id : [],
                     staff_id : [],
-                    startDataTime : '',
-                    finishDataTime : ''
+                    status : '',
+                    range : '',
+                    search : ''
                 },
                 tips : {},
                 info:{
@@ -185,19 +180,24 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                },
-                flexData : {
-                    name : '收房价格',
-                    maxLength : 5
                 }
+
             }
         },
         updated (){
             this.remindData();
             //            时间选择
         },
-        created () {
-            this.payFlowList();
+        mounted (){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.payFlowList();
+                    }
+                );
+
         },
         methods : {
             changeIndex(ev,id){
@@ -221,13 +221,17 @@
             },
 
             payFlowList(){
-                /*this.$http.get('json/itemFlow.json').then((res) => {
-                 //                    this.collectList = res.data.data.gleeFulCollect;
-                 this.cont.myData = res.data.data.payFlowList;
-                 this.tips = res.data.data.payTips;
-                 //                    console.log(res.data);
-                 this.paging = res.data.data.pages;
-                 })*/
+                /*this.$http.get('account/payable').then((res) => {
+//                    this.collectList = res.data.data.gleeFulCollect;
+//                    console.log(res.data);
+                    if (res.data.code==18400){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                    }
+                })*/
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -293,12 +297,35 @@
             },
 
             search(){
-                console.log(this.params)
+                console.log(this.params);
+                this.page = 1;
+                this.filter();
             },
             getDate(data){
                 // 时间
                 console.log(data);
 
+            },
+
+            filter(){
+                this.operId = 0;
+                /*this.$http.get('account/payable?page='+this.page,{
+                    params : this.params
+                }).then(
+                    (res) =>{
+                        if (res.data.code == 18400){
+                            // 成功
+                            this.paging = res.data.data.pages;
+                            this.myData = res.data.data.data;
+                            this.isShow = false;
+                        } else {
+                            this.isShow = true;
+                            this.myData = [];
+                            this.paging = 0;
+                            this.page = 1;
+                        }
+                    }
+                )*/
             },
         }
     }

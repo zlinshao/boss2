@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right" id="payFor" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="collectFor" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

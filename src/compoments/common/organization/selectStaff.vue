@@ -595,7 +595,7 @@
                 this.noStaff=false;
             },
             closeModal(){
-                $('#selectCustom').modal('hide');
+                $('.selectCustom').modal('hide');
                 //关闭模态框，清空之前为保存的已选部门和员工
                 this.organize={
                     department:[

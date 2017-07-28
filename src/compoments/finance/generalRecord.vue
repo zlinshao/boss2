@@ -37,11 +37,11 @@
                     </form>
                 </div>
 
-                <div class="choosed" v-show="operId!=0">
-                    <ul class="clearFix">
-                        <li><a>已选中&nbsp;1&nbsp;项</a></li>
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
-                            <a @click="oper">编辑</a>
+                            <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -88,62 +88,63 @@
                     </div>
 
                     <div class="modal-body clearFix">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转账日期:</label>
-                            <div class="col-sm-8">
-                                <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime" v-model="modal.date">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转账日期:</label>
+                                <div class="col-sm-8">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转出账户:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.outAccount">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转出账户:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转入账户:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.inAccount">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转入账户:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转账人员:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.people">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转账人员:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转出账户余额:</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" v-model="modal.outRemain">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转出账户余额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转入账户余额:</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" v-model="modal.inRemain">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转入账户余额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转账金额:</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" v-model="modal.amount">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转账金额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">备注:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.remark">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">备注:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
 
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default">取消</button>
                         <button type="button" class="btn btn-primary" v-show="isAdd">保存</button>
                         <button type="button" class="btn btn-primary" v-show="!isAdd">修改</button>
-                        <button type="button" class="btn btn-primary" v-show="!isAdd" data-toggle="modal" data-target="#delete">删除</button>
                     </div>
                 </div>
             </div>
