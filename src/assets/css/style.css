@@ -361,6 +361,11 @@ ul.sidebar-menu li a.active i {
     padding: 15px;
     width: 100%;
 }
+@media (max-width: 767px){
+    .wrapper{
+        padding: 0;
+    }
+}
 
 a.logo {
     font-size: 21px;
@@ -5964,7 +5969,11 @@ a.guest-on i {
     display: table-cell;
     vertical-align: middle;
 }
-
+@media (max-width: 767px) {
+    div.modal-dialog{
+        width: 100%;
+    }
+}
 
 /*-----*/
 

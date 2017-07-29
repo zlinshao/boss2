@@ -164,7 +164,7 @@
                 this.$http.get('checkin/collect/'+id)
                     .then(
                         (res) => {
-//                        console.log(res.data.data);
+                        console.log(res.data.data);
                             this.msg = res.data.data;
                             if (res.data.data.status==1){
                                 this.id = id;
@@ -177,7 +177,7 @@
             },
             changeStatus(num){
                 // 修改状态
-                this.confirmMsg.id = this.operId;
+                this.confirmMsg.id = this.$route.query.collectId;
                 this.confirmMsg.status= num;
                 if (num==1){
                     this.confirmMsg.msg = '确定提交报备信息吗？';
@@ -196,24 +196,25 @@
                 // 提示信息
                 let num = this.confirmMsg.status;
                 let url;
+                let id = this.$route.query.collectId;
                 if (num==1){
 //                    this.confirmMsg.msg = '确定提交报备信息吗？';
-                    url = 'checkin/collect/pending/'+this.id;
+                    url = 'checkin/collect/pending/'+id;
                 } else if (num==2){
 //                    this.confirmMsg.msg = '确定通过审核吗？';
-                    url = 'checkin/collect/pass/'+this.id;
+                    url = 'checkin/collect/pass/'+id;
                 } else if (num==3){
 //                    this.confirmMsg.msg = '确定驳回吗？';
-                    url = 'checkin/collect/stash/'+this.id;
+                    url = 'checkin/collect/stash/'+id;
                 } else if (num==4){
 //                    this.confirmMsg.msg = '确定驳回吗？';
-                    url = 'checkin/collect/pending/'+this.id;
+                    url = 'checkin/collect/pending/'+id;
                 }
 
                 this.$http.get(url)
                     .then(
                         (res) => {
-                            console.log(res);
+//                            console.log(res);
                             if (res.data.code==18210){
                                 this.info.success = '操作成功';
                                 //显示失败弹窗 ***
@@ -229,7 +230,7 @@
                                 } else if (res.data.msg=='报备转为待提交状态'){
                                     this.msg.status = 1;
                                 }*/
-                                this.getDetails(this.id);
+                                this.getDetails(id);
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***

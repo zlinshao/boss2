@@ -65,12 +65,12 @@
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.start_date"
-                                                   readonly placeholder="合同开始时间">
+                                                   disabled placeholder="合同开始时间">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.end_date"
-                                                   readonly placeholder="合同结束时间">
+                                                   disabled placeholder="合同结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -250,10 +250,12 @@
                         console.log(contractList)
                         this.contractEdit.id = contractList.id; //合同id
                         if(contractList.relative_customer !== undefined){
-                            this.more = contractList.relative_customer.length;
-                            for(let i=0;i<contractList.relative_customer.length;i++){
-                                this.relative_customer.push(contractList.relative_customer[i].name);
-                                this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
+                            if(contractList.relative_customer.name !== undefined){
+                                this.more = contractList.relative_customer.length;
+                                for(let i=0;i<contractList.relative_customer.length;i++){
+                                    this.relative_customer.push(contractList.relative_customer[i].name);
+                                    this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
+                                }
                             }
                         }
                         this.contractEdit.contract_num = contractList.contract_num; //合同编号
@@ -437,11 +439,11 @@
         width: 17px;
         height: 17px;
     }
-    @media (max-width: 767px) {
-        div.modal-dialog{
-            width: 100%;
-        }
-    }
+    /*@media (max-width: 767px) {*/
+        /*div.modal-dialog{*/
+            /*width: 100%;*/
+        /*}*/
+    /*}*/
     .col-lg-2{
         position: relative;
         min-height: 1px;
@@ -452,7 +454,6 @@
         line-height: 34px;
         font-size: 20px;
         color: #ddd;
-        /*text-align: left;*/
         cursor: pointer;
     }
     .flexbox i+i{

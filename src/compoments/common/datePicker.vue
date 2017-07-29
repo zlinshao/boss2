@@ -1,5 +1,5 @@
 <template>
-    <div class="datePickerContainer form-group" style="padding-left: 15px; padding-right: 15px;">
+    <div class="datePickerContainer form-group">
         <div v-if="range">
             <div class="input-group" v-show="isPC">
                 <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
@@ -45,7 +45,7 @@
                         <input type="date" class="form-control" @change="sendDate" v-model="to">
                     </div>-->
         </div>
-        <div class="datePickerContainer" v-else="range">
+        <div class="datePickerContainer" v-else="range" style="padding-left: 15px; padding-right: 15px;">
             <div class="input-group" v-show="hour">
                 <label>
                     <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date"

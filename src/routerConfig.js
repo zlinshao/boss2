@@ -28,10 +28,9 @@ import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";       
 import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";          //未收房源更多
 import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
-import ContractDetail from './compoments/contract/contractDetail.vue'           // 收房合同详情
+import ContractDetail from './compoments/contract/collectDetail.vue'           // 收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
-
-import CompareContract from './compoments/contract/compareContract.vue'
+import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //c查看备忘录
 
 // 账本
 import Account from './compoments/finance/account.vue'                          // 账号管理
@@ -41,8 +40,8 @@ import Jurisdiction from './compoments/finance/jurisdiction.vue'                
 import CollectPayment from './compoments/finance/payment/collect.vue'           // 应收款项
 import PayPayment from './compoments/finance/payment/pay.vue'                    // 应付款项
 import IncomeFlow from './compoments/finance/incomeFlow.vue'                    // 收支流水
-import PayingRent from './compoments/finance/payment/payingRent.vue'         // 收支流水
-import CollectRent from './compoments/finance/payment/collectRent.vue'         // 收支流水
+import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'         // 收支流水
+import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'         // 收支流水
 import PendingItem from './compoments/finance/pendingItem.vue'                  // 待处理项
 import GeneralOperation from './compoments/finance/generalOperation.vue'        // 总账操作
 import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
@@ -265,14 +264,14 @@ export default[
         component: IncomeFlow
     },
     {
-        path: '/payingRent',
-        name: 'PayingRent',
-        component: PayingRent
+        path: '/payPaymentDetail',
+        name: 'PayPaymentDetail',
+        component: PayPaymentDetail
     },
     {
-        path: '/collectRent',
-        name: 'CollectRent',
-        component: CollectRent
+        path: '/collectPaymentDetail',
+        name: 'CollectPaymentDetail',
+        component: CollectPaymentDetail
     },
     {
         path: '/pendingItem',
@@ -350,8 +349,9 @@ export default[
         component: ReopetedRentDetail
     },
     {
-        path: '/compareContract',
-        name: 'CompareContract',
-        component: CompareContract
+        path: '/memorandum',
+        name: 'Memorandum',
+        component: Memorandum
     },
+
 ]

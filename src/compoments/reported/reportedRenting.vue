@@ -90,7 +90,7 @@
                                 <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
-                            <td>{{item.department.name}}</td>
+                            <td>{{item.department==undefined?'':item.department.name}}</td>
                             <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
                             <td>{{dict.rent_type[item.rent_type]}}</td>
                             <td>{{item.house.detailed_address}}</td>

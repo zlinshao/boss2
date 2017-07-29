@@ -17,7 +17,12 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;">
+                    <div class="pro-sort">
+                        <label>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </label>
+                    </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-left: -5px">
                         <div class="input-group">
                             <input type="text" readonly class="form-control" placeholder="点击选择部门"
                                    @click="selectDpm" v-model="departmentName">
@@ -25,11 +30,6 @@
                                 <button class="btn btn-warning" type="button" @click="reset">清空</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
-                        </label>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
                         <div class="input-group">
@@ -55,6 +55,11 @@
                             <input type="radio" name="sort" @click="isNewest(1)">最新发布
                         </label>
                     </div>
+                    <div class="pull-right pro-sort" style="margin: 8px">
+                        <router-link :to="{path:'/memorandum',query: {flag: 'rent'}}" class="btn btn-primary">
+                            <i class="fa fa-eye"></i>&nbsp;查看备忘录
+                        </router-link>
+                    </div>
                 </div>
                 <!--选中-->
                 <div class="panel-body" v-if="contractSeleted > 0" style="padding: 0;">
@@ -73,6 +78,10 @@
                         </li>
                         <li  class="operate"  v-if="status !== 1" >
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
+                        </li>
+                        <li  class="operate">
+                            <router-link tag="i" class="fa fa-eye" :to="{path:'/contractDetail',
+                                query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录</router-link>
                         </li>
                     </ul>
                 </div>
@@ -123,7 +132,8 @@
                             <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
-                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id}}" class=" fa fa-eye" title="合同详情"></router-link>
+                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id,flag:'detail'}}"
+                                         class=" fa fa-eye" title="合同详情"></router-link>
 
                         </td>
                         <td>

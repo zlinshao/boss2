@@ -263,7 +263,7 @@
                 .then(
                     (res) => {
                         let val = res.data;
-//                        console.log(val);
+                        console.log(val);
                         this.chooseResult.leader_name = val.leader_name;
                         this.chooseResult.department_name = val.department_name;
                         this.formData.leader_id = val.leader_id;
@@ -312,20 +312,7 @@
             collectContactId(val){
 //                console.log(val)
                 this.formData.previous_contract_id = val;
-                this.$http.get('core/collect/readcontract/id/'+val)
-                    .then(
-                        (res) =>{
-                            console.log(res.data.data);
-                            let result = res.data.data;
-                            this.formData.staff_id = result.staff_id;
-                            this.formData.house_id = result.villa_id.id;
-                            this.formData.customer_id = result.customer_id.id;
-                            this.chooseResult.staff_name = result.staff;
-                            this.chooseResult.house_name = result.customer_id.id;
-                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
-
-                        }
-                    )
+                this.getContract();
             }
         },
         updated (){
@@ -350,6 +337,7 @@
 //                this.formData.leader_id = '';
                 this.formData.house_id = '';
                 this.formData.customer_id = '';
+
                 this.formData.years = '';
                 this.formData.pay_type = [];
                 this.formData.price = [];
@@ -365,6 +353,7 @@
 
 
                 $('#add').modal('hide');
+                this.getContract();
             },
 
             remindData (){
@@ -480,6 +469,23 @@
                         }
                     )
             },
+
+            getContract(){
+                this.$http.get('core/collect/readcontract/id/'+this.formData.previous_contract_id)
+                    .then(
+                        (res) =>{
+//                            console.log(res.data.data);
+                            let result = res.data.data;
+                            this.formData.staff_id = result.staff_id;
+                            this.formData.house_id = result.villa_id.id;
+                            this.formData.customer_id = result.customer_id.id;
+                            this.chooseResult.staff_name = result.staff;
+                            this.chooseResult.house_name = result.customer_id.id;
+                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+
+                        }
+                    )
+            }
 
         }
     }

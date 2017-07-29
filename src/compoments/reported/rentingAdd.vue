@@ -348,7 +348,7 @@
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                complete_ok: '',                        //图片上传完成
+                complete_ok: 'ok',                        //图片上传完成
 
                 dict : {},
                 configure: [],
@@ -460,20 +460,8 @@
             rentContactId(val){
 //                console.log(val)
                 this.formData.previous_contract_id = val;
-                this.$http.get('core/rent/readcontract/id/'+val)
-                    .then(
-                        (res) =>{
-                            console.log(res.data.data);
-                            let result = res.data.data;
-                            this.formData.staff_id = result.staff_id;
-                            this.formData.house_id = result.villa_id.id;
-                            this.formData.customer_id = result.customer_id.id;
-                            this.chooseResult.staff_name = result.staff;
-                            this.chooseResult.house_name = result.customer_id.id;
-                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+                this.getContract();
 
-                        }
-                    )
             }
         },
         mounted (){
@@ -566,6 +554,7 @@
 
 
                 $('#add').modal('hide');
+                this.getContract();
             },
 
             selectStaff(){
@@ -666,7 +655,7 @@
             cus_confirm(num){
                 // 提交时调用
                 this.$http.defaults.withCredentials = true;
-                if (this.complete_ok === 'ok' || this.photos.cus_idPhoto.length === 0) {
+                if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
                         if (res.data.data === 0 || res.data.data === null) {
                             this.save(num);
@@ -681,9 +670,9 @@
             },
 
             save(num){
-                console.log(this.certificatePic);
-//                console.log(num);
+                console.log(num);
                 this.formData.receipt_pic = this.certificatePic.cus_idPhoto;
+                console.log(this.certificatePic);
                 this.formData.payment = this.payments.slice(0,this.more_pay_way);
 
 //                console.log(this.formData.payment);
@@ -714,6 +703,23 @@
                                     this.info.state_error = false;
                                 }, 2000);
                             }
+                        }
+                    )
+            },
+
+            getContract(){
+                this.$http.get('core/rent/readcontract/id/'+this.formData.previous_contract_id)
+                    .then(
+                        (res) =>{
+                            console.log(res.data.data);
+                            let result = res.data.data;
+                            this.formData.staff_id = result.staff_id;
+                            this.formData.house_id = result.villa_id.id;
+                            this.formData.customer_id = result.customer_id.id;
+                            this.chooseResult.staff_name = result.staff;
+                            this.chooseResult.house_name = result.customer_id.id;
+                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+
                         }
                     )
             }

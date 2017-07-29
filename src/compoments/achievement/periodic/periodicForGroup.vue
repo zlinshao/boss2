@@ -9,8 +9,12 @@
         <section class="panel">
             <div class="panel-body">
                 <form class="form-inline clearFix" role="form">
-                    <div class="input-group bootstrap-timepicker" style="margin: 0 15px 0 0;">
-                        <button class="btn btn-primary" type="button" @click="select">筛选部门</button>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="点击选择部门/员工"
+                               v-model="selected" @click='select' readonly>
+                        <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            </span>
                     </div>
 
                     <div class="padd">
@@ -27,20 +31,6 @@
                         <button type="button" class="btn btn-success">搜索</button>
                     </div>
                 </form>
-                <div class="tagsinput" v-show="filtrate.departmentList.length!=0">
-                    <h4>部门</h4>
-                    <span class="tag" v-for="item in filtrate.departmentList">
-                        <span >{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteDepartment(item)"></a>
-                    </span>
-                </div>
-                <!--<div class="tagsinput " v-show="filtrate.staffList.length!=0">
-                    <h4>员工</h4>
-                    <span class="tag" v-for="item in filtrate.staffList">
-                        <span >{{item.name}}&nbsp;&nbsp;</span>
-                        <a class="tagsinput-remove-link" @click="deleteStaff(item)"></a>
-                    </span>
-                </div>-->
             </div>
         </section>
 
@@ -156,7 +146,7 @@
     }
     div.padd {
         display: inline-block;
-        padding: 0 15px 0 0;
+        /*padding: 0 15px 0 0;*/
     }
 </style>
 <script>
@@ -189,6 +179,8 @@
                     //失败信息 ***
                     error: ''
                 },
+
+                selected : [],
                 filtrate : {
                     departmentList:[],
                     staffList:[]
@@ -211,37 +203,6 @@
                 ],
                 currentDate : [],
             }
-        },
-        /*watch : {
-            'params.month':{
-                handler(val,oldVal){
-                    console.log(val);
-                    let that = this;
-                    this.$http.get('periodic/range?month='+val)
-                        .then(
-                            (res) => {
-//                                console.log(that.params.month)
-                                that.dict = res.data.data;
-                                that.params.periodic = 1
-//                                console.log(that.dict)
-//                                console.log(res.data.data)
-                            }
-                        )
-//                    console.log(oldVal)
-                }
-            }
-        },*/
-        mounted (){
-//            alert(1)
-            /*this.$http.get('periodic/range')
-                .then(
-                    (res) => {
-                        this.dict = res.data.data;
-                        this.perGroupList();
-                    }
-
-                );*/
-
         },
 
         methods : {
@@ -303,46 +264,15 @@
 //                this.configure={length:2,class:'amount'};
             },
             selectDateSend(val){
-//                console.log(this.configure);
-//                console.log(this.selectConfigure)
                 console.log(val);
-/*
-                    // all
-//                    alert('all');
-                    this.receive(val);
-                    console.log(val)
-                    this.filtrate.departmentList = val.department;
 
-                    // 选择的是部门
-//                    alert('部门');
-                    this.params.department_id.push(val.department);*/
-                this.filtrate.departmentList = val.department;
-
-                for(let j=0;j<val.department.length;j++){
-                    if($.inArray(val.department[j].id,this.params.department_id)===-1){
-                        this.params.department_id.push(val.department[j].id)
-                    }else {
-                        this.info.error = '成员已经存在';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        },2000);
-                    }
-
+                for(let i=0;i<val.department.length;i++){
+                    this.selected.push(val.department[i].name);
+                    this.params.department_id.push(val.department[i].id)
                 }
-
                 this.search();
 //
 
-            },
-            deleteDepartment(item){
-//                console.log(item)
-                this.filtrate.departmentList=this.filtrate.departmentList.filter((x)=>x!==item);
-//                console.log(this.params.department_id)
-                this.params.department_id=this.params.department_id.filter((x)=>x!=item.id);
-                this.search();
             },
             showGroupDetail(id,city,department,marshal){
                 console.log(id);
@@ -376,7 +306,12 @@
                 console.log(data);
                 this.date_range = data;
                 this.search();
-            }
+            },
+            clearSelect(){
+                this.params.department_id = [];
+                this.selected = [];
+                this.search();
+            },
         }
     }
 </script>

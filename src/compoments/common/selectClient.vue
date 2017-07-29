@@ -125,7 +125,6 @@
                 this.selectClients=item;
             },
             clientAdd(){
-                console.log(this.selectClients)
                 if(this.selectClients.length === 0){
                     this.info.error = '请先选择客户';
                     this.info.state_error = true;

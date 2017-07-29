@@ -7,7 +7,6 @@
 
         <div class="title clearFix">
             <div class="contractNum">
-                <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">返回</router-link>
                 <h4>
                     合同编号&emsp;
                     {{contract_num}}
@@ -20,7 +19,6 @@
                     <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
-                <!--<router-link :to="{path:'/compareContract',query: {ContractId: contractList[0].villa_id.id}}" tag="button" class="btn btn-primary">对比</router-link>-->
                 <button class="btn btn-primary" @click="inform">通知</button>
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}
@@ -173,7 +171,7 @@
                 <section class="panel roll">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
-                            <li class="active">
+                            <li :class="{active:tabActive === 'detail'}">
                                 <a data-toggle="tab" href="#base" aria-expanded="true">
                                     <i class="fa fa-book"></i>基本信息
                                 </a>
@@ -188,9 +186,14 @@
                                     <i class="fa  fa-paperclip"></i>合同附件
                                 </a>
                             </li>
+                            <li :class="{active:tabActive === 'review'}">
+                                <a data-toggle="tab" href="#review" aria-expanded="false">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;回访日志
+                                </a>
+                            </li>
                             <li class="">
-                                <a data-toggle="tab" href="#home" aria-expanded="true">
-                                    <i class="fa fa-pencil-square-o"></i>&nbsp;回访记录
+                                <a data-toggle="tab" href="#memorandum" aria-expanded="false">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;新增备忘录
                                 </a>
                             </li>
                         </ul>
@@ -198,7 +201,7 @@
                     <div class="panel-body" >
                         <div class="tab-content" v-for="item in contractList">
                             <!--基本信息-->
-                            <div id="base" class="tab-pane active">
+                            <div id="base" class="tab-pane " :class="{active:tabActive === 'detail'}">
                                 <div class="baseInfo">
                                     <header>基本信息</header>
                                     <div class="infoContainer clearFix">
@@ -320,7 +323,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ownerInfo" v-if="item.relative_customer_id.length > 0"
+                                <div class="ownerInfo" v-if="item.relative_customer_id !== undefined"
                                      v-for="relative in item.relative_customer">
                                     <header>附属房东信息</header>
                                     <div class="infoContainer clearFix">
@@ -468,7 +471,7 @@
                             </div>
 
                             <!--合同附件-->
-                            <div id="contract" class="tab-pane">
+                            <div id="contract" class="tab-pane ">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
                                         <span class="col-lg-2">证件照片<sup>*</sup></span>
@@ -537,52 +540,93 @@
                             </div>
 
                             <!--回访记录-->
-                            <div id="home" class="tab-pane active">
-                                <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2">跟进方式</label>
-                                    <div class="col-sm-10" style="padding-left: 0;">
-                                        <div class="col-sm-4" style="margin-left: -16px">
-                                            <select class="form-control">
-                                                <option  v-for="(item,index) in dictionary.follow_way">{{item}}</option>
-                                            </select>
+                            <div id="review" class="tab-pane" :class="{active:tabActive === 'review'}">
+                                <div>
+                                    <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 col-sm-2">跟进方式</label>-->
+                                    <!--<div class="col-sm-10" style="padding-left: 0;">-->
+                                    <!--<div class="col-sm-4" style="margin-left: -16px">-->
+                                    <!--<select class="form-control" v-model="followWay">-->
+                                    <!--<option :value="index" v-for="(item,index) in dictionary.follow_way">{{item}}</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2">增加回访日志</label>
+                                        <div style="margin-bottom: 16px; display: inline-block ">
+                                            <textarea class="form-control" v-model="returnRecorde" cols="80" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group inputdata">
+                                        <label class="col-sm-2 col-sm-2 control-label"
+                                               style="margin-top: 13px;">满意度</label>
+                                        <p class="all">
+                                            <input type="radio" name="b" value=""  v-model="inputdata"/>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <input type="radio" name="b" value="1" v-model="inputdata" />
+                                            <span><i class="fa fa-star"></i></span>
+                                            <input type="radio" name="b" value="2" v-model="inputdata" />
+                                            <span><i class="fa fa-star"></i></span>
+                                            <input type="radio" name="b" value="3" v-model="inputdata" />
+                                            <span><i class="fa fa-star"></i></span>
+                                            <input type="radio" name="b" value="4" v-model="inputdata" />
+                                            <span><i class="fa fa-star"></i></span>
+                                            <input type="radio" name="b" value="5" v-model="inputdata" />
+                                            <span><i class="fa fa-star"></i></span>
+                                        </p>
+                                        <span v-if="inputdata === '5'">非常好</span>
+                                        <span v-if="inputdata === '4'">好</span>
+                                        <span v-if="inputdata === '3'">一般</span>
+                                        <span v-if="inputdata === '2'">差</span>
+                                        <span v-if="inputdata === '1'">非常差</span>
+                                    </div>
+                                    <div style="height: 36px">
+                                        <button class="btn btn-primary pull-right" @click = 'addReturnRecord' >新增</button>
+                                    </div>
+                                </div>
+
+                                <!--跟进记录-->
+                                <div style="margin-top: 20px">
+                                    <div class="panel" v-for="record in item.review_log"
+                                             style="margin-bottom: 0;padding-bottom: 0;">
+                                        <div class="panel-body">
+                                            <div class="panel-body table-responsive cheek cheek1">
+                                                <div><span>{{record.create_time}}</span></div>
+                                                <!--<div>-->
+                                                <!--<span class="text-primary">跟进方式：</span>-->
+                                                <!--<span>{{select_list.follow_way[daily.follow_way]}}</span>-->
+                                                <!--</div>-->
+                                                <div>
+                                                    <span class="text-primary">跟进人：</span><span>{{record.staff_id}}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-primary">跟进记录：</span><span>{{record.content}}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-primary">满意度：</span>
+                                                    <span v-for="length in record.evaluate">
+                                                        <i class="fa fa-star" style="color: gold"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!--添加备忘录-->
+                            <div id="memorandum" class="tab-pane">
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2">增加回访记录</label>
+                                    <label class="col-sm-2 col-sm-2">添加备忘录</label>
                                     <div style="margin-bottom: 16px; display: inline-block ">
-                                        <textarea class="form-control" v-model="returnRecorde" cols="120"></textarea>
+                                        <textarea class="form-control" v-model="memorandum" cols="80" rows="5"></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group inputdata">
-                                    <label class="col-sm-2 col-sm-2 control-label"
-                                           style="margin-top: 22px;">满意度</label>
-                                    <p class="all">
-                                        <input type="radio" name="b" value="0"  v-model="inputdata"/>
-                                        <span>★</span>
-                                        <input type="radio" name="b" value="1" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input type="radio" name="b" value="2" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input type="radio" name="b" value="3" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input type="radio" name="b" value="4" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input type="radio" name="b" value="5" v-model="inputdata" />
-                                        <span>★</span>
-                                    </p>
-                                    <span v-if="inputdata === '5'">非常好</span>
-                                    <span v-if="inputdata === '4'">好</span>
-                                    <span v-if="inputdata === '3'">一般</span>
-                                    <span v-if="inputdata === '2'">差</span>
-                                    <span v-if="inputdata === '1'">非常差</span>
-                                </div>
                                 <div class="pull-right">
-                                    <button class="btn btn-default" >取消
-                                    </button>
-                                    <button class="btn btn-primary">确定</button>
+                                    <button class="btn btn-primary" @click="addMemorandum">新增</button>
                                 </div>
-                                <!--跟进记录-->
+
                             </div>
                         </div>
                     </div>
@@ -593,12 +637,13 @@
         <Transfer></Transfer>
         <Contract></Contract>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
-        <ContractRenew></ContractRenew>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+
+        <AddModal :collectContactId="contractEitId"></AddModal>
     </div>
 </template>
 <script>
@@ -606,28 +651,28 @@
     import Transfer from './transferDetail.vue'
     import Contract from  './contractInfo.vue'
     import ContractEit from './collectEdit.vue'
-    import ContractRenew from './contractRenew.vue'
     import PicModal from  '../common/largePic.vue'
     import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
+
+    import AddModal from '../reported/collectAdd.vue'
     export default{
         components: {
-            Transfer,
-            Contract,
-            ContractEit,
-            ContractRenew,
-            PicModal,
-            Status,
-            Comparison,
-            Confirm
+            Transfer,   //转账
+            Contract,   //合同信息
+            ContractEit,//合同编辑
+            PicModal,   //图片放大
+            Status,     //状态提醒
+            Comparison, //对比
+            Confirm,    //confirmMsg
+            AddModal    //合同续约
         },
-        name:'shoplist',
         data(){
             return {
                 show : false,        // 是否显示更多
-                contractList:[],
-                dictionary:[],
-                largePic: [],
+                contractList:[],    //详情列表
+                dictionary:[],      //所有字典集合
+                largePic: [],   //合同放大
                 srcs: {},
                 contractEitId:'',
                 contract_num:'',
@@ -644,21 +689,25 @@
                 isCompared:false,
                 villaId : '',
                 contract_pass:'',
-                passDictionary:[],
+                passDictionary:[],//通过字典
                 confirmMsg:[],  //提示信息
-                msgFlag:'',
+                msgFlag:'',     //提示信息分类
+//                followWay:'',   //跟进方式
                 returnRecorde:'',//回访记录
-                inputdata:0
+                inputdata: '',    //五星好评
+                memorandum:'',   //备忘录
+                tabActive:'',
+
             }
         },
         mounted(){
-            this.contractEitId = this.$route.query.ContractId;
-            this.getDictionary();
-        },
-        watch: {
+            this.contractEitId = this.$route.query.ContractId;  //路由接受合同id
+            this.tabActive = this.$route.query.flag;
+
+            this.getDictionary();   //初始化请求页面信息
         },
         methods : {
-            getDictionary(){
+            getDictionary(){    //请求字典 以及 合同详情信息
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
                     this.passDictionary = res.data.passed;
@@ -666,7 +715,7 @@
                     this.contractDetail();
                 });
             },
-            contractDetail(){
+            contractDetail(){   //合同详情
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
@@ -684,10 +733,10 @@
             editContract(){
                 $('#contractEdit').modal('show');
             },
-            renewContract(){
-                $('#contractRenew').modal('show');
+            renewContract(){    //续约合同
+                $('#add').modal('show');
             },
-            showLargePic(name, index){
+            showLargePic(name, index){  //图片放大
                 this.srcs = this.contractList[0].album[name];
                 this.largePic = [{
                     src: this.srcs,
@@ -711,15 +760,15 @@
                 }];
                 $('#largePic').modal('show');
             },
-            editSuccess(val){
+            editSuccess(val){   //成功编辑之后重新请求合同详情
                 if(val === 'success') this.contractDetail();
             },
-            compareContract(){
+            compareContract(){  //合同对比
                 this.isCompared = true;
                 this.villaId = this.contractList[0].villa_id.id;
                 $('#collectVsRenting').modal('show');
             },
-            haveCompared(){
+            haveCompared(){     //对比成功之后把 isCompared 置为false
                 this.isCompared = false;
             },
             returnVisit(){  // 回访状态
@@ -727,7 +776,7 @@
                 this.msgFlag = 'returnVisit';
                 $('#confirm').modal('show');
             },
-            inform(){   //通知
+            inform() {   //通知
                 this.confirmMsg = {msg:'您确定通知吗'};
                 this.msgFlag = 'inform';
                 $('#confirm').modal('show');
@@ -801,8 +850,46 @@
 
                     });
                 }
+            },
+            addMemorandum(){
+                this.$http.post('core/memo/savememo',{
+                        content:this.memorandum,
+                        contract_id:this.contractEitId,
+                        type:'collect' ,
+                }).then((res)=>{
+                    if(res.data.code === '30010'){
+                        this.memorandum = '';
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            addReturnRecord(){
+                this.$http.post('core/review_log/savereview',{
+                    content:this.returnRecorde,
+                    contract_id:this.contractEitId,
+                    type:'collect' ,
+                    evaluate : this.inputdata,
+                }).then((res)=>{
+                    if(res.data.code === '40010'){
+                        this.returnRecorde = '';
+                        this.inputdata = '';
+                        this.contractDetail();
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             }
-
         }
     }
 </script>
@@ -945,19 +1032,45 @@
         display: inline-block;
         font-size: 16px;
         position:absolute;
-        bottom:22px;
+        bottom:18px;
         margin-left: 15px;
         color: #ccc;
     }
+    @media (max-width: 767px) {
+        .inputdata>span{
+            display: none;
+        }
+    }
     .all{display:inline-block}
-    .all>input{opacity:0;position:absolute; bottom:5px;width:3em;height:3em;margin:0;}
+    .all>input{opacity:0;position:absolute; bottom:5px;width:30px;height:30px;margin:0;}
     .all>input:nth-of-type(1),
     .all>span:nth-of-type(1){display:none;}
-    .all>span{font-size:3em;color:gold;
+    .all>span{font-size:30px;color:gold;
         -webkit-transition:color .2s;
         transition:color .2s;
     }
     .all>input:checked~span{color:#ccc;}
     .all>input:checked+span{color:gold;}
+
+    /*跟进记录*/
+    .cheek {
+        border: 1px solid #AAAAAA;
+        border-radius: 6px;
+    }
+
+    .cheek > div {
+        margin-bottom: 10px;
+    }
+
+    .client_info > div > div > div {
+        margin-bottom: 20px;
+    }
+
+    .client_info > div > div > div span.text-primary, .cheek1 > div > span:first-child {
+        display: inline-block;
+        padding-right: 20px;
+        text-align: right;
+        min-width: 100px;
+    }
 
 </style>

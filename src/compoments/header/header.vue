@@ -557,21 +557,22 @@
                                     <span>收支流水</span>
                                 </router-link>
                             </li>
-                            <!--<li>
+                            <li>
+                                <router-link to="/generalRecord">
+                                    <span>转账操作记录</span>
+                                </router-link>
+                            </li>
+                            <li>
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
                                 </router-link>
-                            </li>-->
+                            </li>
                             <!--<li>
                                 <router-link to="/generalOperation">
                                     <span>总账操作</span>
                                 </router-link>
                             </li>-->
-                            <!--<li>
-                                <router-link to="/generalRecord">
-                                    <span>总账操作记录</span>
-                                </router-link>
-                            </li>-->
+
                             <!--<li>
                                 <router-link to="/chart">
                                     <span>可视报表</span>
@@ -1027,8 +1028,9 @@
                 }
 
                 function onError(data) {
-                    alert('定位失败');
-                    alert(data);
+//                    alert('定位失败');
+//                    alert(data);
+//                    console.log(data);
                 }
             },
             IsPC(){

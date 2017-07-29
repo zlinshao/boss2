@@ -57,7 +57,7 @@
                     </div>
 
 
-                    <div class="page pull-right" v-show="paging!=1">
+                    <div class="page pull-right" v-show="paging>1">
                         <button class="btn btn-white" :disabled="page==1" @click="prev">上一页</button>
                         <button class="btn btn-white" :disabled="page==paging" @click="next">下一页</button>
                     </div>
@@ -128,8 +128,8 @@
             deep : true,
             'params.date_range':{
                 handler(curVal,oldVal){
-//                    console.log('now===='+curVal)
-//                    console.log('old===='+oldVal)
+                    console.log('now===='+curVal)
+                    console.log('old===='+oldVal)
                 }
             }
         },
@@ -165,7 +165,7 @@
                                 if (res.data.data.data.length==0){
                                     this.noData = true;
                                     this.myData = [];
-                                    this.paging = '';
+                                    this.paging = 1;
                                     this.page = 1
                                 }
                                 if (this.isPc){
@@ -175,7 +175,7 @@
                             } else {
                                 this.noData = true;
                                 this.myData = [];
-                                this.paging = '';
+                                this.paging = 1;
                                 this.page = 1
                             }
                         }

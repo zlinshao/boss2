@@ -2,81 +2,79 @@
     <div>
         <ol class="breadcrumb">
             <li>财务账本</li>
-            <li class="active">总账操作记录</li>
+            <li class="active">转账操作记录</li>
         </ol>
 
-        <div class="clearFix">
-            <div class="panel col-lg-12">
-                <form class="form-inline" v-show="operId==0" role="form">
-                    <div class="form-group datetime">
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
-                        </label>
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="结束时间" class="form-control form_datetime">
-                        </label>
-                    </div>
-                    <div class="input-group bootstrap-timepicker">
-                        <label class="sr-only" for="search_info">搜索</label>
-                        <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
+        <section class="panel">
+            <div class="panel-body">
+                <div v-show="operId==0">
+                    <form class="form-inline" role="form">
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </div>
 
-                    <div class="form-group pull-right">
-                        <a class="btn btn-success" @click="addNew" data-toggle="modal" data-target="#myModal">
-                            <i class="fa fa-plus-square"></i>&nbsp;新增转账记录
-                        </a>
-                    </div>
+                        <div class="input-group clearFix">
+                            <select class="form-control">
+                                <option value="">hdjs</option>
+                            </select>
+                        </div>
 
-                </form>
-                <div class="choosed" v-show="operId!=0">
-                    <ul class="clearFix">
-                        <li><a>已选中&nbsp;1&nbsp;项</a></li>
+                        <div class="input-group clearFix">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址" @keydown.enter.prevent="search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" id="search" type="button" @click="search"><i
+                                        class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+
+                        <div class="form-group pull-right">
+                            <a class="btn btn-success" @click="addNew" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增转账记录
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
-                            <a @click="oper">编辑</a>
+                            <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
 
         <!--表格-->
-        <div class="col-lg-12">
-            <section class="panel table table-responsive">
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-center">转账日期</th>
-                        <th class="text-center">转出账户</th>
-                        <th class="text-center">账户余额</th>
-                        <th class="text-center">转入账户</th>
-                        <th class="text-center">账户余额</th>
-                        <th class="text-center">转账金额</th>
-                        <th class="text-center">转账人员</th>
-                        <th class="text-center">备注</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="text-center" v-for="item in cont.myData">
-                        <td>
-                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
-                        </td>
-                        <td>{{item.date}}</td>
-                        <td>{{item.outOfAccount}}</td>
-                        <td>{{item.outAccountBalance}}</td>
-                        <td>{{item.turnInAccount}}</td>
-                        <td>{{item.turnInAccountBalance}}</td>
-                        <td>{{item.transferamount}}</td>
-                        <td>{{item.people}}</td>
-                        <td>{{item.remark}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel table table-responsive roll">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">转账日期</th>
+                            <th class="text-center">转出账户</th>
+                            <th class="text-center">账户余额</th>
+                            <th class="text-center">转入账户</th>
+                            <th class="text-center">账户余额</th>
+                            <th class="text-center">转账金额</th>
+                            <th class="text-center">转账人员</th>
+                            <th class="text-center">备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-center">
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
 
 
@@ -90,67 +88,67 @@
                     </div>
 
                     <div class="modal-body clearFix">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转账日期:</label>
-                            <div class="col-sm-8">
-                                <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime" v-model="modal.date">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转账日期:</label>
+                                <div class="col-sm-8">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转出账户:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.outAccount">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转出账户:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转入账户:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.inAccount">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转入账户:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转账人员:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.people">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转账人员:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转出账户余额:</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" v-model="modal.outRemain">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转出账户余额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转入账户余额:</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" v-model="modal.inRemain">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转入账户余额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">转账金额:</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" v-model="modal.amount">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">转账金额:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">备注:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" v-model="modal.remark">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">备注:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
 
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default">取消</button>
                         <button type="button" class="btn btn-primary" v-show="isAdd">保存</button>
                         <button type="button" class="btn btn-primary" v-show="!isAdd">修改</button>
-                        <button type="button" class="btn btn-primary" v-show="!isAdd" data-toggle="modal" data-target="#delete">删除</button>
                     </div>
                 </div>
             </div>
         </div>
-        <Delete :msg="cont" @yes="getData"></Delete>
 
 
         <Page :pg="paging" @pag="getPage"></Page>
@@ -160,19 +158,9 @@
     </div>
 </template>
 <style scoped>
-    label{
-        line-height: 34px;
-    }
-    .choosed{
-        padding-bottom: 10px;
-    }
-    .choosed ul li{
-        float: left;
-    }
-    .choosed ul li+li:before{
-        content: '|';
+    div.padd {
         display: inline-block;
-        margin: 0 10px;
+        /*padding: 0 15px 0 0;*/
     }
     tbody tr input[type=checkbox]{
         width: 17px;
@@ -180,11 +168,12 @@
     }
 </style>
 <script>
-    import Delete from '../common/delete.vue'
     import Page from '../common/page.vue'
     import Status from '../common/status.vue';
+    import DatePicker from '../common/datePicker.vue'
 
     export default{
+        components: {Page,Status,DatePicker},
         data(){
             return {
                 operId : 0,
@@ -194,10 +183,13 @@
                 title : '',
                 isAdd : true,
 
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
-                },
+                dateConfigure : [
+                    {
+                        range : true,
+                        needHour : true,
+                        position : 'top-right',
+                    }
+                ],
                 params : {
                     startDataTime : '',
                     finishDataTime : ''
@@ -231,7 +223,6 @@
         created (){
             this.generalRecordList();
         },
-        components: {Delete,Page,Status},
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
@@ -245,12 +236,12 @@
 
             },
             generalRecordList(){
-                this.$http.get('json/generalRecord.json').then((res) => {
+                /*this.$http.get('json/generalRecord.json').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     this.cont.myData = res.data.data.generalRecordList;
 //                    console.log(res.data);
                     this.paging = res.data.data.pages;
-                })
+                })*/
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -276,9 +267,6 @@
             getPage(data){
                 this.page = data;
             },
-            getData(data){
-                // 删除
-            },
             clearForm(){
                 $('#myModal').modal('hide');
             },
@@ -297,6 +285,11 @@
 //                失败弹出错误信息
                 /*this.info.state_error = true;
                  this.info.error = '您没有编辑权限';*/
+
+            },
+
+            search(){},
+            getDate(data){
 
             }
         }

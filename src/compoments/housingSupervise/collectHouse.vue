@@ -7,11 +7,7 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
-                <div v-if="houseSeleted===0" class="row">
-                    <div class="col-lg-12">
-                        <div class="pro-sort">
-                            <h5 style="font-weight: bold">房屋属性：</h5>
-                        </div>
+                <div v-if="houseSeleted===0">
                         <div class="pro-sort">
                             <label>
                                 <select class="form-control" v-model="house_type" @change="search">
@@ -76,12 +72,6 @@
                                 </select>
                             </label>
                         </div>
-                    </div>
-
-                    <div class="col-lg-12" >
-                        <div class="pro-sort">
-                            <h5 style="font-weight: bold">部门属性：</h5>
-                        </div>
                         <div class="pro-sort">
                             <label>
                                 <input type="text" readonly class="form-control" placeholder="点击选择部门"
@@ -93,12 +83,6 @@
                                 <input type="checkbox" class="pull-left" v-model="our_group" @click="search">显示本组房屋
                             </label>
                         </div>
-
-                    </div>
-                    <div class="col-lg-12" >
-                        <div class="pro-sort">
-                            <h5 style="font-weight: bold">&nbsp;&nbsp;&nbsp;关键字：</h5>
-                        </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
@@ -107,11 +91,9 @@
                                  </span>
                             </div>
                         </div>
-                        <div class="pro-sort" style="">
+                        <div class="pro-sort pull-right">
                             <button class="btn btn-success" type="button" @click="reset">重置</button>
                         </div>
-
-                    </div>
 
                 </div>
 
@@ -315,18 +297,18 @@
 
                 this.$http.post('core/villa/receivedvillalist',
                     {
-                        "house_type" : this.house_type,//房屋类型
-                        'rooms':this.rooms,     //房型
-                        'decoration':this.decoration,//装修
-                        'reference':this.reference, //参考价格
-                        'house_feature':this.house_feature,//房屋特色
-                        'area':this.area,    //面积
-                        'status':this.villa_status,//房屋状态
-                        'belong':this.belong,    //房屋所属
-                        'our_group':this.our_group,
-                        'keywords':this.keywords,
-                        'department_id':this.departmentId,  //部门id
-                        'page':this.page,   //页码
+                        house_type   : this.house_type,//房屋类型
+                        rooms : this.rooms,     //房型
+                        decoration : this.decoration,//装修
+                        reference : this.reference, //参考价格
+                        house_feature : this.house_feature,//房屋特色
+                        area : this.area,    //面积
+                        status : this.villa_status,//房屋状态
+                        belong : this.belong,    //房屋所属
+                        our_group : this.our_group,
+                        keywords : this.keywords,
+                        department_id : this.departmentId,  //部门id
+                        page : this.page,   //页码
                     }
                 ).then((res) => {
                     if(res.data.code==='80030'){
@@ -355,6 +337,7 @@
                 if(val.department.length){
                     this.departmentName=val.department[0].name;
                     this.departmentId=val.department[0].id;
+                    this.search();
                 }
             },
             //选中的checkout框
@@ -364,11 +347,6 @@
                     top === 2? this.top = 1:this.top = 2;
                 }else {
                     this.houseSeleted = 0;
-//                    for(let i=0;i<this.houseSeleted.length;i++){
-//                        if(id===this.houseSeleted[i]){
-//                            this.houseSeleted.splice(i,1)
-//                        }
-//                    }
                 }
             },
             // 置顶
@@ -449,7 +427,9 @@
     .nav-tabs>li {
         margin-bottom: 0;
     }
-
+    input, select {
+         margin-bottom: 0px;
+    }
 
     .pro-sort {
         padding-right: 6px;

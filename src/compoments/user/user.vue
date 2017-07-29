@@ -7,7 +7,7 @@
                     <aside class="sm-side">
                         <div class="user-head">
                             <div class="user-name" style="font-size: 16px;line-height: 60px;">
-                                组织架构
+                                组织架构{{keywords}}
                             </div>
                         </div>
 
@@ -25,7 +25,7 @@
                             <ul class="inbox-nav inbox-divider">
                                 <!--部门-->
                                 <li v-for="(item,index) in branchList" :class="{'active':active1==index}"
-                                    @mouseover="changeClass(index)" v-if="type==1">
+                                    @mouseover="changeClass(index)" v-if="level==1">
                                     <a href="#">
                                         <button @click.stop="getSecond(item.id,item.name)"
                                                 class="fa fa-chevron-right btn btn-default btn-lg department"
@@ -47,7 +47,7 @@
                                 </li>
                                 <!--二级部门-->
                                 <li v-for="(item,index) in secondList" :class="{'active':active1==index}"
-                                    @mouseover="changeClass(index)" v-if="type==2">
+                                    @mouseover="changeClass(index)" v-if="level==2">
                                     <a href="#">
                                         <button @click.stop="getThird(item.id,item.name)"
                                                 class="fa fa-chevron-right btn btn-default btn-lg department"
@@ -79,7 +79,7 @@
                                 </li>
                                 <!--三级部门-->
                                 <li v-for="(item,index) in ThirdList" :class="{'active':active1==index}"
-                                    @mouseover="changeClass(index)" v-if="type==3">
+                                    @mouseover="changeClass(index)" v-if="level==3">
                                     <a href="#">
                                         <button @click.stop="getFour(item.id,item.name)"
                                                 class="fa fa-chevron-right btn btn-default btn-lg department"
@@ -110,7 +110,7 @@
                                 </li>
                                 <!--四级部门-->
                                 <li v-for="(item,index) in FourList" :class="{'active':active1==index}"
-                                    @mouseover="changeClass(index)" v-if="type==4">
+                                    @mouseover="changeClass(index)" v-if="level==4">
                                     <a href="#">
                                         <button @click.stop="getFive(item.id,item.name)"
                                                 class="fa fa-chevron-right btn btn-default btn-lg department"
@@ -142,7 +142,7 @@
                                 </li>
                                 <!--五级部门-->
                                 <li v-for="(item,index) in FiveList" :class="{'active':active1==index}"
-                                    @mouseover="changeClass(index)" v-if="type==5">
+                                    @mouseover="changeClass(index)" v-if="level==5">
                                     <a href="#">
                                         <button @click.stop="getSix(item.id,item.name)"
                                                 class="fa fa-chevron-right btn btn-default btn-lg department"
@@ -171,7 +171,7 @@
                                 </li>
                                 <!--六级部门-->
                                 <li v-for="(item,index) in FiveList" :class="{'active':active1==index}"
-                                    @mouseover="changeClass(index)" v-if="type==7">
+                                    @mouseover="changeClass(index)" v-if="level==7">
                                     <a href="#">
                                         <button class="fa fa-chevron-right btn btn-default btn-lg department"
                                                 @click.stop="getSix(item.id,item.name)"
@@ -232,7 +232,7 @@
                             </div>
 
                         </div>
-                        <div class="inbox-body panel table table-responsive">
+                        <div class="inbox-body panel table table-responsive roll">
 
                                 <table class="table table-striped table-advance table-hover">
                                     <thead  class="text-center">
@@ -291,6 +291,7 @@
                                                     <button type="button" class="btn btn-default btn-lg btn-block"
                                                             :disabled="item.status==3">禁用账号</button>
                                                 </li>
+                                                <li role="separator" class="divider" style="margin: 0"></li>
                                                 <li @click="deleteAccount(item.id)">
                                                     <button type="button" class="btn btn-default btn-lg btn-block">
                                                         删除账号
@@ -364,7 +365,8 @@
                 FourList:[],
                 FiveList:[],
                 SixList:[],
-                type: '',      //列表类型 1为部门 2为二级 3为三级
+                level: '',      //列表类型 1为部门 2为二级 3为三级
+                type:'',        //作为 标记 请求函数
                 keywords: '',   //搜索关键字
                 active1:'',
                 page:'1',
@@ -421,6 +423,7 @@
                     this.branchList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
+                    this.level = 1;
                     this.type = 1;
                     this.isFirst = false;
                     this.isSecond  = false;
@@ -438,12 +441,12 @@
                     this.secondList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
-                    if(res.data.data.department.length === 0){
-                        this.type = 1;
+                    if(res.data.data.department.length===0){
+                        this.level = 1;
                     }else {
-                        this.type = 2;
+                        this.level = 2;
                     }
-//                    this.page = Object.assign({},this.page,{id:id});
+                    this.type = 2;
                     this.id=id;
                     this.name=name;
                     console.log(this.page)
@@ -474,10 +477,11 @@
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
                     if(res.data.data.department.length==0){
-                        this.type = 2;
+                        this.level = 2;
                     }else {
-                        this.type = 3;
+                        this.level = 3;
                     }
+                    this.type = 3;
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -500,10 +504,11 @@
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
                     if(res.data.data.department.length==0){
-                        this.type = 3;
+                        this.level = 3;
                     }else {
-                        this.type = 4;
+                        this.level = 4;
                     }
+                    this.type = 4;
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -525,11 +530,12 @@
                     this.FiveList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
-                    if(res.data.data.department.length==0){
-                        this.type = 4;
+                    if(res.data.data.department.length===0){
+                        this.level = 4;
                     }else {
-                        this.type = 5;
+                        this.level = 5;
                     }
+                    this.type = 5;
                     this.id=id;
                     this.name=name;
                     this.isFirst = true;
@@ -548,11 +554,11 @@
                     this.SixList = res.data.data.department;
                     this.userList=res.data.data.user;
                     this.pages=res.data.data.pages;
-//                    if(res.data.data.department.length==0){
-//                        this.type = 5;
-//                    }else {
-//                        this.type = 7;
-//                    }
+                    if(res.data.data.department.length===0){
+                        this.level = 5;
+                    }else {
+                        this.level = 7;
+                    }
                     this.type=7;
                     this.id=id;
                     this.name=name;
@@ -577,17 +583,17 @@
                 let flag=val.flag;
                 let reId=val.reId;
                 let reName=val.reName;
-                if(flag==1){
+                if(flag===1){
                     this.getBranch();
-                }else if(flag==2){
+                }else if(flag===2){
                     this.getSecond(reId,reName);
-                }else if(flag==3){
+                }else if(flag===3){
                     this.getThird(reId,reName);
-                }else if(flag==4){
+                }else if(flag===4){
                     this.getFour(reId,reName);
-                }else if(flag==5){
+                }else if(flag===5){
                     this.getFive(reId,reName);
-                }else if(flag==7){
+                }else if(flag===7){
                     this.getSix(reId,reName);
                 }
             },
@@ -599,19 +605,19 @@
                 this.page=val.rePage;
                 this.keywords=val.keyword;
                 let reName=val.reName;
-                if(flag==1){
+                if(flag===1){
                     this.getBranch();
-                }else if(flag==2){
+                }else if(flag===2){
                     this.getSecond(reId,reName);
-                }else if(flag==3){
+                }else if(flag===3){
                     this.getThird(reId,reName);
-                }else if(flag==4){
+                }else if(flag===4){
                     this.getFour(reId,reName);
-                }else if(flag==5){
+                }else if(flag===5){
                     this.getFive(reId,reName);
-                }else if(flag==6){
+                }else if(flag===6){
                     this.searchStaff();
-                }else if(flag==7){
+                }else if(flag===7){
                     this.getSix(reId,reName);
                 }
             },
@@ -623,19 +629,19 @@
                 this.keywords=val.keyword;
                 let reName=val.reName;
                 console.log(this.page)
-                if(flag==1){
+                if(flag===1){
                     this.getBranch();
-                }else if(flag==2){
+                }else if(flag===2){
                     this.getSecond(reId,reName);
-                }else if(flag==3){
+                }else if(flag===3){
                     this.getThird(reId,reName);
-                }else if(flag==4){
+                }else if(flag===4){
                     this.getFour(reId,reName);
-                }else if(flag==5){
+                }else if(flag===5){
                     this.getFive(reId,reName);
-                }else if(flag==6){
+                }else if(flag===6){
                     this.searchStaff();
-                }else if(flag==7){
+                }else if(flag===7){
                     this.getSix(reId,reName);
                 }
             },
@@ -644,17 +650,17 @@
                 let flag=val.flag;
                 let reId=val.reId;
                 let reName=val.reName;
-                if(flag==1){
+                if(flag===1){
                     this.getBranch();
-                }else if(flag==2){
+                }else if(flag===2){
                     this.getSecond(reId,reName);
-                }else if(flag==3){
+                }else if(flag===3){
                     this.getThird(reId,reName);
-                }else if(flag==4){
+                }else if(flag===4){
                     this.getFour(reId,reName);
-                }else if(flag==5){
+                }else if(flag===5){
                     this.getFive(reId,reName);
-                }else if(flag==7){
+                }else if(flag===7){
                     this.getSix(reId,reName);
                 }
             },
@@ -707,7 +713,7 @@
             },
             //组织enter默认事件
             stopEvent(e){
-                if(e.key=='Enter'){
+                if(e.key==='Enter'){
                     e.preventDefault();
                 }
             },
@@ -1095,19 +1101,6 @@
     }
     .table-responsive {
         overflow: visible;
-    }
-    .table-responsive::-webkit-scrollbar {
-        width:8px;
-    }
-    .table-responsive::-webkit-scrollbar-button    {
-        background-color:#ffff;
-    }
-    .table-responsive::-webkit-scrollbar-track     {
-        background:#ffffff;
-    }
-    .table-responsive::-webkit-scrollbar-thumb{
-        background:#ccc;
-        border-radius:10px;
     }
     @media(max-width: 768px) {
         .table-responsive {

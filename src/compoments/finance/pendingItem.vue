@@ -4,50 +4,47 @@
             <li>财务账本</li>
             <li class="active">待处理项</li>
         </ol>
-        <div class="clearFix">
-            <div class="panel col-lg-12">
-                <form class="form-inline" v-show="operId==0" role="form">
-                    <div class="dropdown form-group">
-                        <select name="" class="form-control">
-                            <option value="">调房</option>
-                            <option value="1">转租</option>
-                            <option value="2">退组</option>
-                        </select>
-                    </div>
+        <section class="panel">
+            <div class="panel-body">
+                <div v-show="operId==0">
+                    <form class="form-inline" v-show="operId==0" role="form">
+                        <div class="dropdown input-group">
+                            <select name="" class="form-control">
+                                <option value="">全部</option>
+                                <option value="1">租房</option>
+                                <option value="2">收房</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group datetime">
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="入住时间" class="form-control form_datetime">
-                        </label>
-                        <label>
-                            <input @click="remindData" type="text" name="addtime" value="" placeholder="离开时间" class="form-control form_datetime">
-                        </label>
-                    </div>
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </div>
 
-                    <div class="input-group bootstrap-timepicker">
-                        <label class="sr-only" for="search_info">搜索</label>
-                        <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人"  @keydown.enter.prevent="">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                    <div class="form-group pull-right">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#addModal">
-                            <i class="fa fa-plus-square"></i>&nbsp;新增待处理项
-                        </a>
-                    </div>
-                </form>
+                        <div class="input-group">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人"  @keydown.enter.prevent="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                        <div class="form-group pull-right">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#addModal">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增待处理项
+                            </a>
+                        </div>
+                    </form>
+                </div>
 
-                <div class="choosed" v-show="operId!=0">
-                    <ul class="clearFix">
-                        <li><a>已选中&nbsp;1&nbsp;项</a></li>
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
-                            <a @click="oper">编辑</a>
+                            <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!--表格-->
         <div class="col-lg-12">
@@ -73,23 +70,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="text-center" v-for="item in cont.myData">
+                    <tr class="text-center">
                         <td>
-                            <input type="checkbox" :value="item.id" :checked="operId===item.id" @click.stop="changeIndex($event,item.id)">
+                            <input type="checkbox">
                         </td>
-                        <td>{{item.matterType.name}}</td>
-                        <td>{{item.people}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.tenantName}}</td>
-                        <td>{{item.checkInTime}}</td>
-                        <td>{{item.departureTime}}</td>
-                        <td>{{item.WaterFee}}</td>
-                        <td>{{item.electricFee}}</td>
-                        <td>{{item.gasFee}}</td>
-                        <td>{{item.propertyFee}}</td>
-                        <td>{{item.Subletting}}</td>
-                        <td>{{item.breachOfContract}}</td>
-                        <td>{{item.byHand}}</td>
                         <td>
                             <button type="button" class="btn btn-sm btn-success">待处理</button>
                         </td>
@@ -131,7 +115,7 @@
                         <div class="form-group">
                             <label for="villageName" class="col-sm-3 control-label">租房地址:</label>
                             <div class="col-sm-8 input-group">
-                                <input title="请点击选择" type="text" class="form-control" id="villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                <input title="请点击选择" type="text" class="form-control" readonly  data-toggle="modal" data-target="#myModal1">
                                 <div class="input-group-addon"><i class="fa fa-align-justify"></i></div>
                             </div>
                         </div>
@@ -343,32 +327,15 @@
 
         <Page :pg="paging" @pag="getPage"></Page>
 
-        <ChooseAddress @getChildData="getAddress"></ChooseAddress>
 
         <!--提示信息-->
         <Status :state='info'></Status>
     </div>
 </template>
 <style scoped>
-    .pull-right{
-        padding-top: 5px;
-    }
-    div.input-group{
-        padding: 0 15px;
-    }
-    label{
-        line-height: 34px;
-    }
-    .choosed{
-        padding-bottom: 10px;
-    }
-    .choosed ul li{
-        float: left;
-    }
-    .choosed ul li+li:before{
-        content: '|';
+    div.padd {
         display: inline-block;
-        margin: 0 10px;
+        /*padding: 0 15px 0 0;*/
     }
     tbody tr input[type=checkbox]{
         width: 17px;
@@ -378,32 +345,28 @@
 </style>
 <script>
     import Page from '../common/page.vue'
-    import ChooseAddress from '../common/chooseAddress.vue'
     import Status from '../common/status.vue';
+    import DatePicker from '../common/datePicker.vue'
 
     export default{
+        components: {Page,Status,DatePicker},
         data(){
             return {
                 operId : 0,
                 paging : '',
                 page : 1,                  // 当前页数
 
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
-                },
                 params : {
                     startDataTime : '',
                     finishDataTime : ''
                 },
-                add : {
-                    startDataTime : '',
-                    finishDataTime : ''
-                },
-                modify : {
-                    startDataTime : '',
-                    finishDataTime : ''
-                },
+                dateConfigure : [
+                    {
+                        range : true,
+                        needHour : true,
+                        position : 'top-right',
+                    }
+                ],
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -423,7 +386,6 @@
         created () {
             this.pendingItemList();
         },
-        components: {Page,ChooseAddress,Status},
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
@@ -437,12 +399,12 @@
 
             },
             pendingItemList(){
-                this.$http.get('json/pendingItem.json').then((res) => {
+                /*this.$http.get('json/pendingItem.json').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     this.cont.myData = res.data.data.pendingItemList;
 //                    console.log(res.data);
                     this.paging = res.data.data.pages;
-                })
+                })*/
             },
             remindData (){
                 var that = this;
@@ -457,39 +419,11 @@
                 $('.form-inline .form_datetime').on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '入住时间'){
-                        that.params.startDataTime = ev.target.value;
-                    } else {
-                        that.params.finishDataTime = ev.target.value;
-                    }
-//                    console.log(that.params.startDataTime);
                 });
-                $('#addModal .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '入住时间'){
-                        that.add.startDataTime = ev.target.value;
-                    } else {
-                        that.add.finishDataTime = ev.target.value;
-                    }
-                    console.log(that.add.startDataTime);
-                });
-                $('#operModal .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '入住时间'){
-                        that.modify.startDataTime = ev.target.value;
-                    } else {
-                        that.modify.finishDataTime = ev.target.value;
-                    }
-                    console.log(that.modify.startDataTime);
-                });
+
             },
             getPage(data){
                 this.page = data
-            },
-            getAddress(data){
-
             },
             oper(){
                 console.log(this.operId);
@@ -501,6 +435,9 @@
 //                失败弹出错误信息
                 /*this.info.state_error = true;
                  this.info.error = '您没有编辑权限';*/
+
+            },
+            getDate(data){
 
             }
         }

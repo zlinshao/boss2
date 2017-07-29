@@ -8,7 +8,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div>
+                <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
                             <!--<label style="font-weight: bold;display: inline-block">查 询</label>-->
@@ -19,26 +19,42 @@
                             </span>
                         </div>
 
-                        <!--<div class="input-group">
-                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
-                        </div>-->
+                        <div class="input-group">
+                            <select class="form-control" v-model="params.status" @change="search">
+                                <option value="">全部</option>
+                                <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}</option>
+                            </select>
+                        </div>
+
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search" @keydown.enter.prevent="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
-                        <div class="form-group pull-right">
+                        <!--<div class="form-group pull-right">
                             <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
-                                <i class="fa fa-plus-square"></i>&nbsp;新增应收款项
+                                <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
                             </a>
-                        </div>
+                        </div>-->
                     </form>
+                </div>
+
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li>
+                            <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
+                        </li>
+                        <li v-show="statusId!=3">
+                            <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a></h5>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -47,15 +63,15 @@
             <ul class="clearFix">
                 <li class="col-md-4">
                     应付金额(元) <br>
-                    <span class="red">1212</span>
+                    <span class="red">{{tips.payable_sum}}</span>
                 </li>
                 <li class="col-md-4">
                     实付金额(元) <br>
-                    <span class="red">313</span>
+                    <span class="red">{{tips.paid_sum}}</span>
                 </li>
                 <li class="col-md-4">
                     剩余款项(元) <br>
-                    <span class="yellow">343</span>
+                    <span class="yellow">{{tips.balance_sum}}</span>
                 </li>
             </ul>
         </div>
@@ -84,11 +100,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox">
+                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
                             </td>
-                            <td><a><i title="查看详情" class=" fa fa-eye"></i></a></td>
+                            <td>{{item.pay_date}}</td>
+                            <td>{{item.description.staff_name}}</td>
+                            <td>{{item.description.address}}</td>
+                            <td>{{dict.pay_type[item.description.pay_type]}}</td>
+                            <td>{{item.description.price}}</td>
+                            <td>{{dict.account_subject[item.subject_id]}}</td>
+                            <td>{{item.amount_payable}}</td>
+                            <td>{{item.amount_paid}}</td>
+                            <td>{{item.balance}}</td>
+                            <td>{{item.complete_date}}</td>
+                            <td>
+                                <button :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                    {{dict.account_should_status[item.status]}}
+                                </button>
+                            </td>
+                            <td><router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="13">暂无数据...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -96,25 +130,95 @@
             </div>
         </div>
 
-
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <!--新增-->
+        <div class="modal fade full-width-modal-right" id="addPay" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addModalLabel">{{title}}</h4>
+                        <button type="button" class="close"  @click="clearForm" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">新增应付款项</h4>
                     </div>
                     <div class="modal-body clearFix">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">付款时间</label>
+                                <div class="col-sm-10">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
+                                           class="form-control form_datetime">
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">房屋地址</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectHouse" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客户姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">签约人</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">支出科目</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control">
+                                        <option value="">押金</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应付金额</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">累计实付</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">付款人员</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+
+
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary" v-if="isAdd">保存</button>
-                        <button type="button" class="btn btn-primary" v-else="isAdd">修改</button>
+                        <button type="button" class="btn btn-default" @click="clearForm">取消</button>
+                        <button type="button" class="btn btn-primary" @click="save">保存</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--应付入账-->
+
         <Page :pg="paging" @pag="getPage"></Page>
 
 
@@ -122,7 +226,11 @@
         <Status :state='info'></Status>
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <SelectHouse @House="getHouse"></SelectHouse>
+        <SelectClient @clientAdd="getClient"></SelectClient>
 
+        <!--应付入账-->
+        <ShouldPay :id="operId"></ShouldPay>
     </div>
 </template>
 
@@ -133,15 +241,24 @@
     import STAFF from  '../../common/organization/selectStaff.vue'
     import DatePicker from '../../common/datePicker.vue'
 
+    import SelectHouse from '../../common/selectHouse.vue'
+    import SelectClient from '../../common/selectClient.vue'
+
+    import ShouldPay from './paymentShouldPay.vue'
+
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF},
+        components: {Page,Status,FlexBox,DatePicker,STAFF,SelectHouse,SelectClient,ShouldPay},
 
         data(){
             return {
                 operId : 0,
+                statusId:0,
                 paging : '',
                 page : 1,                  // 当前页数
 
+                dict : {},
+                myData: [],      //列表数据
+                isShow :false,
                 dateConfigure : [
                     {
                         range : true,
@@ -157,25 +274,20 @@
 
                 title : '',
                 isAdd : true,
-                moreYears : 1,
-                modal : {
-                    village : {
-                        villageName : ''
-                    }
-                },
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
-                },
 
                 selected : [],
                 params : {
                     department_id : [],
                     staff_id : [],
-                    startDataTime : '',
-                    finishDataTime : ''
+                    status : '',
+                    range : '',
+                    search : ''
                 },
-                tips : {},
+                tips : {
+                    payable_sum: 0.00,          // 应付总额
+                    paid_sum: 0.00,                 // 已付总额
+                    balance_sum: 0.00,          // 欠额总额
+                },
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -185,10 +297,6 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                },
-                flexData : {
-                    name : '收房价格',
-                    maxLength : 5
                 }
             }
         },
@@ -196,38 +304,46 @@
             this.remindData();
             //            时间选择
         },
-        created () {
-            this.payFlowList();
+        mounted (){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.payFlowList();
+                    }
+                );
+
         },
         methods : {
-            changeIndex(ev,id){
+            changeIndex(ev,id,status){
 //                console.log("一开始"+this.operId);
                 if (ev.currentTarget.checked){
                     this.operId = id;
+                    this.statusId = status;
 //                    console.log(this.operId);
                 }else {
                     this.operId = 0;
+                    this.statusId = 0;
                 }
 
 
             },
-            addNew(){
-                this.title = '新增应付款项';
-                this.isAdd = true;
-            },
-            operation(id,index){
-                this.title = '修改应付';
-                this.isAdd = false;
-            },
 
             payFlowList(){
-                /*this.$http.get('json/itemFlow.json').then((res) => {
+                this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-                    this.cont.myData = res.data.data.payFlowList;
-                    this.tips = res.data.data.payTips;
 //                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                })*/
+                    if (res.data.code==18400){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.setTips(res.data.data,true);
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.setTips({},false);
+                    }
+                })
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -237,34 +353,18 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
-                });
-                $('.form-inline .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '开始时间'){
-                        this.params.startDataTime = ev.target.value;
+                }).on('changeDate', function (ev) {
+                    if (ev.target.placeholder == '付款时间'){
+
                     } else {
-                        this.params.finishDataTime = ev.target.value;
+
                     }
-//                    console.log(this.startDataTime);
+//                    console.log(ev.target.value);
+//                    console.log(ev.target.placeholder);
                 }.bind(this));
             },
             getPage(data){
                 this.page = data;
-            },
-
-            oper(){
-                console.log(this.operId);
-                this.title = '编辑应付款项';
-                this.isAdd = false;
-                // 先请求
-
-//                请求成功打开模态框
-                $('#myModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
-
             },
 
             select(){
@@ -283,7 +383,7 @@
                     this.selected.push(val.staff[j].name);
                     this.params.staff_id.push(val.staff[j].id)
                 }
-//                this.search();
+                this.search();
             },
             clearSelect(){
                 this.params.department_id = [];
@@ -293,21 +393,76 @@
             },
 
             search(){
-                console.log(this.params)
+//                console.log(this.params);
+                this.page = 1;
+                this.filter();
+            },
+            filter(){
+                this.operId = 0;
+                this.$http.get('account/payable?page='+this.page,{
+                    params : this.params
+                }).then(
+                    (res) =>{
+                        if (res.data.code == 18400){
+                            // 成功
+                            this.paging = res.data.data.pages;
+                            this.myData = res.data.data.data;
+                            this.setTips(res.data.data,true);
+                            this.isShow = false;
+                        } else {
+                            this.isShow = true;
+                            this.myData = [];
+                            this.paging = 0;
+                            this.page = 1;
+                            this.setTips({},false);
+                        }
+                    }
+                )
             },
             getDate(data){
                 // 时间
-                console.log(data);
+//                console.log(data);
+                this.params.range = data;
+                this.search();
+            },
+
+            getHouse(data){},
+            getClient(data){},
+
+            setTips(val,bool){
+                if (bool){
+                    this.tips.payable_sum = val.payable_sum;
+                    this.tips.paid_sum = val.paid_sum;
+                    this.tips.balance_sum = val.balance_sum;
+                } else {
+                    this.tips.payable_sum = 0.00;
+                    this.tips.paid_sum = 0.00;
+                    this.tips.balance_sum = 0.00;
+                }
 
             },
+
+            clearForm(){
+
+            },
+            save(){
+
+            }
         }
     }
 </script>
 
 <style scoped>
+    .datePickerContainer{
+        margin-bottom: 0;
+    }
+    @media (max-width: 798px) {
+        .datePickerContainer{
+            margin-top:3px;
+        }
+    }
     div.padd {
         display: inline-block;
-        /*padding: 0 15px 0 0;*/
     }
     .tips{
         line-height: 30px;
@@ -342,16 +497,6 @@
     .tips ul li span.yellow{
         color: #FF9A02;
     }
-    div.input-group{
-        padding: 0 15px;
-    }
-    label{
-        line-height: 34px;
-    }
-
-    tbody tr{
-        cursor: pointer;
-    }
 
     tbody tr input[type=checkbox]{
         width: 17px;
@@ -359,5 +504,24 @@
     }
     tr td a i{
         font-size: 18px;
+    }
+    textarea{
+        max-width: 100%;
+    }
+
+    tbody tr td .status{
+        color: white;
+        /*font-weight: bold;*/
+    }
+    .status.yellow {
+        background-color: #FFCC00;
+    }
+
+    .status.red {
+        background-color: #FF9999;
+    }
+
+    .status.green {
+        background-color: #83E96D;
     }
 </style>

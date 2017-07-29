@@ -24,7 +24,6 @@
 
 <script>
     export default {
-//        props: ['msg'],
         methods: {
             deleteMsg () {
                     this.$emit('IsSure','yes');
