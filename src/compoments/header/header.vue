@@ -277,7 +277,7 @@
                 </div>
                 <ul class="nav pull-right top-menu">
                     <!--<li>-->
-                        <!--<input type="text" class="form-control search" placeholder="">-->
+                    <!--<input type="text" class="form-control search" placeholder="">-->
                     <!--</li>-->
                     <!-- user login dropdown start-->
                     <li class="dropdown">
@@ -579,7 +579,6 @@
                     <!--<span>小区管理</span>-->
                     <!--</router-link>-->
                     <!--</li>-->
-
 
 
                     <li class="sub-menu">
@@ -890,7 +889,11 @@
                 this.$http.post('message/remind/index', {
                     not_remind: '1'
                 }).then((res) => {
-                    this.remind_info = res.data.data.data;
+                    if (res.data.code === '100020') {
+                        this.remind_info = res.data.data.data;
+                    } else {
+                        this.remind_info = [];
+                    }
                 });
             },
 //            增加提醒
@@ -1060,7 +1063,8 @@
     .modal-body textarea {
         max-width: 100%;
     }
-    .sub-menu i{
+
+    .sub-menu i {
         width: 21px;
     }
 </style>
