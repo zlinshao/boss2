@@ -267,7 +267,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" v-show="is_medi==2">
                                     <label class="col-sm-2 control-label">中介费</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.cost_medi">
@@ -392,6 +392,8 @@
                     leader_name : '',
                     customer_name : ''
                 },
+
+                is_medi : 1,        // 是否中介 1否2是
                 formData : {
                     staff_id : '',
                     department_id : '',
@@ -461,7 +463,7 @@
                     this.$http.get('checkin/rent/'+val)
                         .then(
                             (res) => {
-//                                console.log(res.data.data);
+                                console.log(res.data.data);
                                 let val = res.data.data;
                                 if (val.staff!=null){
                                     this.chooseResult.staff_name=val.staff.real_name;
@@ -516,6 +518,9 @@
                                 this.formData.complete_date = val.complete_date;
 
                                 this.formData.remark = val.remark;
+                                if (val.customer!=null){
+                                    this.is_medi = val.customer.person_medium;
+                                }
 
                                 this.complete_ok = 'ok';
 
@@ -632,6 +637,10 @@
 //                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
+                this.is_medi = data.person_medium;
+                if (this.id_medi==1){
+                    this.formData.cost_medi = '';
+                }
 
             },
 
