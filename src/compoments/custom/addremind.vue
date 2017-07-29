@@ -138,7 +138,7 @@
                 }).then((res) => {
                     if (res.data.code === '100018') {
                         $('#addRemind1').modal('hide');
-                        this.$emit('cus_seccess',1);
+                        this.$emit('cus_seccess');
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***

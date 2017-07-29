@@ -62,11 +62,7 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
-                    </div>
-
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px;">
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="sea_info" @keyup.enter="search_pool(1)"
                                    placeholder="客户名/手机号">
@@ -74,6 +70,9 @@
                             <button class="btn btn-success" type="button" @click="search_pool(1)">搜索</button>
                         </span>
                         </div>
+                    </div>
+                    <div class="pro-sort">
+                        <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
                     </div>
                 </div>
 
