@@ -212,7 +212,9 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>空置期(天)：<sup>*</sup></span>
-                                                <span>{{item.checkin_collect_id.vacancy}} 天</span>
+                                                <span v-if="item.checkin_collect_id !== null">
+                                                    {{item.checkin_collect_id.vacancy}} 天
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>空置期起始日期：</span>
@@ -234,29 +236,34 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>年限：<sup>*</sup></span>
-                                                <span>{{item.checkin_collect_id.years}}年</span>
+                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.years}}年</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式：</span>
-                                                <span>{{dictionary.pay_type[item.checkin_collect_id.pay_type[0]]}}</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>月单价：<sup>*</sup></span>
-                                                <span v-for="(price,index) in item.checkin_collect_id.price">
-                                                    第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                                <span v-if="item.checkin_collect_id !== null">
+                                                    {{dictionary.pay_type[item.checkin_collect_id.pay_type[0]]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
+                                                <span>月单价：<sup>*</sup></span>
+                                                <span v-if="item.checkin_collect_id !== null">
+                                                  <span v-for="(price,index) in item.checkin_collect_id.price">
+                                                    第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                                </span>
+                                                </span>
+
+                                            </div>
+                                            <div class="infoList">
                                                 <span>开户行：</span>
-                                                <span>{{item.checkin_collect_id.bank}}</span>
+                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.bank}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>银行卡号：</span>
-                                                <span>{{item.checkin_collect_id.account}}</span>
+                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.account}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span>{{item.checkin_collect_id.cost_medi}}</span>
+                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.cost_medi}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -325,40 +332,42 @@
                                 </div>
                                 <div class="ownerInfo" v-if="item.relative_customer_id !== undefined"
                                      v-for="relative in item.relative_customer">
-                                    <header>附属房东信息</header>
-                                    <div class="infoContainer clearFix">
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>业主姓名：<sup>*</sup></span>
-                                                <span>{{relative.name}}</span>
+                                    <div v-if="item.relative_customer_id.name !== undefined">
+                                        <header>附属房东信息</header>
+                                        <div class="infoContainer clearFix">
+                                            <div class="col-lg-4">
+                                                <div class="infoList">
+                                                    <span>业主姓名：<sup>*</sup></span>
+                                                    <span>{{relative.name}}</span>
+                                                </div>
+                                                <div class="infoList">
+                                                    <span>尊称：<sup>*</sup></span>
+                                                    <span>{{dictionary.gender[relative.gender]}}</span>
+                                                </div>
                                             </div>
-                                            <div class="infoList">
-                                                <span>尊称：<sup>*</sup></span>
-                                                <span>{{dictionary.gender[relative.gender]}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>国籍：<sup>*</sup></span>
-                                                <span>
+                                            <div class="col-lg-4">
+                                                <div class="infoList">
+                                                    <span>国籍：<sup>*</sup></span>
+                                                    <span>
                                                     {{dictionary.nationality[relative.nationality]}}
                                                 </span>
+                                                </div>
+                                                <div class="infoList">
+                                                    <span>手机号码：<sup>*</sup></span>
+                                                    <span>{{relative.mobile}}</span>
+                                                </div>
                                             </div>
-                                            <div class="infoList">
-                                                <span>手机号码：<sup>*</sup></span>
-                                                <span>{{relative.mobile}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="infoList">
-                                                <span>证件类型：<sup>*</sup></span>.
-                                                <span>
+                                            <div class="col-lg-4">
+                                                <div class="infoList">
+                                                    <span>证件类型：<sup>*</sup></span>.
+                                                    <span>
                                                     {{dictionary.credentials[relative.id_type]}}
                                                 </span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>身份证号：<sup>*</sup></span>
-                                                <span>{{relative.id_num}}</span>
+                                                </div>
+                                                <div class="infoList">
+                                                    <span>身份证号：<sup>*</sup></span>
+                                                    <span>{{relative.id_num}}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
