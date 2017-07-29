@@ -117,8 +117,7 @@
                             <td>{{item.cost_medi}}</td>
                             <td>
                                 <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
                                 </button>
                             </td>
