@@ -255,7 +255,7 @@
                                     <label class="col-sm-2 control-label">尾款补齐时间</label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
-                                               class="form-control form_datetime" v-model="formData.complete_date">
+                                               class="form-control form_datetime" readonly v-model="formData.complete_date">
                                     </div>
                                 </div>
 

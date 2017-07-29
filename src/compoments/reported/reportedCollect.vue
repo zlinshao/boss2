@@ -97,7 +97,7 @@
                             </td>
                             <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
                             <td>{{item.department==undefined?'':item.department.name}}</td>
-                            <td>{{item.leader.real_name}}</td>
+                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
                             <td>{{item.deal_time}}</td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>

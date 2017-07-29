@@ -52,8 +52,8 @@
                                 <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
                                 <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
-                                <div><span class="text-primary">负责人：</span><span>{{msg.leader.real_name}}</span></div>
-                                <div><span class="text-primary">所属部门：</span><span>{{msg.department.name}}</span></div>
+                                <div><span class="text-primary">负责人：</span><span>{{msg.leader==undefined?'':msg.leader.real_name}}</span></div>
+                                <div><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
                             </div>
                         </div>
                     </div>
