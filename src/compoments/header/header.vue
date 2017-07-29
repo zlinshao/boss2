@@ -330,10 +330,10 @@
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 3}" @click='pitch_on(3)'>
-                                <router-link to='/okCollect'>已收房源</router-link>
+                                <router-link to='/okCollect'>公司房源</router-link>
                             </li>
                             <li :class="{'active': isActive == 4}" @click='pitch_on(4)'>
-                                <router-link to='/noCollect'>未收房源</router-link>
+                                <router-link to='/noCollect'>待收房源</router-link>
                             </li>
                         </ul>
                     </li>

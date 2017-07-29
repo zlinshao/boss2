@@ -17,7 +17,7 @@
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li @click="customers_rev('rev')"><a>编辑</a></li>
-                                <li @click="lookRemind"><a>增加提醒</a></li>
+                                <li @click="remind_id"><a>增加提醒</a></li>
                                 <li @click="sharing"><a>共享客户</a></li>
                                 <!--<li class="divider"></li>-->
                             </ul>
@@ -274,21 +274,26 @@
         <!--查看提醒-->
         <LookRemind @delete_rem="lookRemind" :msg="remind_info"></LookRemind>
 
-        <!--提醒-->
+        <!--提醒消息-->
         <Status :state='info'></Status>
 
+        <!--共享客户-->
         <Sharing :msg="cus_Id"></Sharing>
+
+        <!--增加提醒-->
+        <AddRemind :remindId="cus_Id" @cus_seccess="cancel"></AddRemind>
     </div>
 </template>
 
 <script>
     import New_add from './new_add.vue'                         //客户修改
+    import AddRemind from  './addremind.vue'                    //增加提醒
     import LookRemind from '../common/remind/checkRemind.vue';  //查看提醒
     import Status from '../common/status.vue';                  //提示信息
     import PicModal from '../common/largePic.vue'               //查看大图
     import Sharing from './sharing.vue'                         //共享客户
     export default {
-        components: {New_add, PicModal, Status, LookRemind, Sharing},
+        components: {New_add, PicModal, Status, LookRemind, Sharing, AddRemind},
         data (){
             return {
                 look_remind: '',            //是否有提醒
@@ -362,6 +367,12 @@
                             this.daily_record = res.data.data;
                         }
                     });
+                });
+            },
+//            增加提醒
+            remind_id (){
+                $('#addRemind1').modal({
+                    backdrop: 'static',         //空白处模态框不消失
                 });
             },
             succ (){

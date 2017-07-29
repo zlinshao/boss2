@@ -29,10 +29,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="con in all_count">
+                                        <tr v-for="con in all_count" @click="select_count(con)">
                                             <td>
-                                                <input class="pull-left" type="radio" @click="select_count(con)"
-                                                       name="nation">
+                                                <input class="pull-left" type="radio" name="nation" :checked="isIndex === con.id">
                                             </td>
                                             <td>{{con.zh_name}}</td>
                                             <td>{{con.en_name}}</td>
@@ -57,16 +56,27 @@
                 </div>
             </div>
         </div>
+
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Status from '../common/status.vue';
     export default {
+        components: {Status},
         data (){
             return {
+                isIndex: '',
                 counts: '',         //关键字搜索
                 all_count: [],      //国家列表
-                nations: {}         //发送数据
+                nations: {},        //发送数据
+                info:{
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    error: ''
+                }
             }
         },
         mounted (){
@@ -86,13 +96,22 @@
 //            获取id
             select_count (val){
                 this.nations = val;
+                this.isIndex = val.id;
             },
 //            保存
             conservation (){
                 if (JSON.stringify(this.nations) != "{}") {
                     this.$emit('nation', this.nations);
                     $('#myModal').modal('hide');
-                    this.nations = {}
+                    this.counts = '';
+                    this.nations = {};
+                    this.isIndex = '';
+                    this.country();
+                }else{
+                    //失败信息 ***
+                    this.info.error = '请选择国家';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
                 }
 
             },

@@ -88,7 +88,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">手机号&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="cus_phone"
+                                        <input type="number" class="form-control" v-model="cus_phone"
                                                placeholder="请输入手机号" maxlength="11" style="margin-bottom: 0;">
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 col-sm-2 control-label">联系方式</label>
                                         <div class="col-lg-10">
-                                            <input type="text" v-model="cus_intermediate_phone" class="form-control"
+                                            <input type="number" v-model="cus_intermediate_phone" class="form-control"
                                                    placeholder="联系方式" maxlength="11">
                                         </div>
                                     </div>
@@ -548,7 +548,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
 
-                        this.$emit('cus_list', res.data);       // 更新客户列表
+                        this.$emit('cus_list');       // 更新客户列表
 
                     } else if (res.data.code === '70090') {
                         this.cus_exist = res.data.msg;

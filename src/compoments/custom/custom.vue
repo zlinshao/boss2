@@ -54,8 +54,17 @@
                     </div>
                     <div class="pro-sort" style="height: 39px;">
                         <label style="margin-top: 8px;">
-                            <input type="checkbox" class="pull-left" @click="trid($event)">三天内未成交
+                            <input type="checkbox" class="pull-left" @click="trid($event,1)">三天内未成交
                         </label>
+                    </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus(1)"
+                                   placeholder="客户名/手机号">
+                            <span class="input-group-btn">
+                            <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
+                        </span>
+                        </div>
                     </div>
                     <div class="pro-sort">
                         <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
@@ -65,15 +74,6 @@
                            @click="customers_new('new')">
                             <i class="fa fa-plus-square"></i>&nbsp;增加客户
                         </a>
-                    </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 pull-right" style="padding: 0;">
-                        <div class="input-group">
-                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus(1)"
-                                   placeholder="客户名/手机号">
-                            <span class="input-group-btn">
-                            <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
-                        </span>
-                        </div>
                     </div>
                 </div>
 
@@ -220,9 +220,11 @@
         <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
 
         <!--增加提醒-->
-        <AddRemind :remindId="pitch" @cus_seccess="collectList"></AddRemind>
+        <AddRemind :remindId="pitch" @cus_seccess="succ"></AddRemind>
 
         <Status :state="info"></Status>
+
+        <Loading v-if="wait === 1"></Loading>
 
     </div>
 </template>
@@ -234,11 +236,13 @@
     import Status from '../common/status.vue'                           //提示信息
     import remindDaily from './remindDaily.vue'                         //修改客户
     import Distribution from '../common/distribution.vue'               //分配
+    import Loading from '../loading/Loading.vue'                        //Loading
 
     export default {
-        components: {Page, Distribution, newAdd, remindDaily, AddRemind, Status},
+        components: {Page, Distribution, newAdd, remindDaily, AddRemind, Status, Loading},
         data (){
             return {
+                wait: 1,
                 Trid: '',                   //三天内未成交
                 top: '',                    //置顶/取消置顶
                 sea_info: '',               //客户名/手机号搜索
@@ -274,7 +278,7 @@
                 isShow: false,
             }
         },
-        created (){
+        mounted (){
             this.collectList(1);
         },
         methods: {
@@ -284,15 +288,25 @@
 //                this.beforePage = 1
             },
 //            三天内未成交
-            trid(val) {
+            trid(val, pag) {
                 this.Trid = val.target.checked;
                 if (val.target.checked === true) {
                     this.$http.post('core/customer/customerList', {
                         unsettled: true
                     }).then((res) => {
-                        this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
-                        this.beforePage = 1;
+                        if (res.data.code === '70031') {
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            this.paging = '';
+                            this.custom_list = [];
+                            this.isShow = true;
+                        } else {
+                            this.custom_list = res.data.data.list;
+                            this.paging = res.data.data.pages;
+                            this.beforePage = pag;
+                        }
                     });
                 }
                 if (val.target.checked === false) {
@@ -302,7 +316,7 @@
                         if (res.data.code === '70030') {
                             this.custom_list = res.data.data.list;
                             this.paging = res.data.data.pages;
-                            this.beforePage = 1;
+                            this.beforePage = pag;
                             this.isShow = false;
                         } else {
                             this.custom_list = [];
@@ -325,14 +339,14 @@
 //                    this.paging = res.data.data.pages;
 //                });
 //            },
+
 //            新增客户展示列表
-            succ (val){
-                if (val.code === '70010') {
-                    this.collectList(1)
-                }
+            succ (){
+                this.collectList(1);
             },
 //            客户列表
             collectList (val){
+                this.wait = 1;
                 this.sea_status = '';
                 this.sea_intention = '';
                 this.sea_id = '';
@@ -343,6 +357,7 @@
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
+                    this.wait = 2;
 //                列表
                     this.$http.post('core/customer/customerList/page/' + val).then((res) => {
                         if (res.data.code === '70030') {
@@ -440,6 +455,7 @@
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
+//            增加提醒
             remind_id (){
                 $('#addRemind1').modal({
                     backdrop: 'static',         //空白处模态框不消失
@@ -450,8 +466,8 @@
                 this.revise_state = val;
                 $('#customModel').modal({
                     backdrop: 'static',         //空白处模态框不消失
-//                    keyboard: false           //成功动态打开模态框
                 });
+
             },
 //            修改客户
             customers_rev (val){
