@@ -87,7 +87,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">月单价</label>
+                                    <label class="col-sm-2 control-label">出租月单价</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.price">
                                     </div>

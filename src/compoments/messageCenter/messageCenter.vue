@@ -97,6 +97,11 @@
                                            @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
+                                <tr v-show="isSystem_s">
+                                    <td colspan="6" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <!--审批提醒-->
@@ -142,6 +147,11 @@
                                         <!--<i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"></i>-->
                                     </td>
                                 </tr>
+                                <tr v-show="Examines_s">
+                                    <td colspan="7" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <!--待办提醒-->
@@ -173,6 +183,11 @@
                                            style="color: #e4393c"></i>
                                         <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"
                                            @click.stop="isCollect(sys.mess_id)"></i>
+                                    </td>
+                                </tr>
+                                <tr v-show="Substitutes_s">
+                                    <td colspan="4" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -210,6 +225,11 @@
                                            @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
+                                <tr v-show="Secretarys_s">
+                                    <td colspan="5" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <!--收藏-->
@@ -240,6 +260,11 @@
 
                                         <i class="fa fa-heart" style="color: #e4393c"
                                            @click.stop="isCollect(sys.mess_id)"></i>
+                                    </td>
+                                </tr>
+                                <tr v-show="Messages_s">
+                                    <td colspan="5" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -299,11 +324,16 @@
                 Secretarys: [],             //BOSS小秘书
                 Messages: [],               //收藏
 
-                isSystem: true,
-                isExamine: false,
-                isSubstitute: false,
-                isSecretary: false,
-                isMessage: false,
+                isSystem: true,             //系统公告
+                isSystem_s: false,          //系统公告暂无数据
+                isExamine: false,           //审批提醒
+                Examines_s: false,          //审批提醒暂无数据
+                isSubstitute: false,        //待办提醒
+                Substitutes_s: false,       //待办提醒暂无数据
+                isSecretary: false,         //BOSS小秘书
+                Secretarys_s: false,        //BOSS小秘书暂无数据
+                isMessage: false,           //收藏
+                Messages_s: false,          //收藏暂无数据
                 message: '',
                 fa: 'fa',
                 font: '',
@@ -402,8 +432,13 @@
 //            系统公告
             System(val){
                 this.$http.post('message/system/index/pages/' + val).then((res) => {
-                    this.systems = res.data.data.list;
-                    this.paging = res.data.data.pages;
+                    if(res.data.code === '100000'){
+                        this.systems = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                        this.isSystem_s = false;
+                    }else{
+                        this.isSystem_s = true;
+                    }
                 });
                 this.beforePage = val;
                 this.isSystem = true;
@@ -417,8 +452,14 @@
 //            审批提醒
             Examine(val){
                 this.$http.post('message/approval/index/pages/' + val).then((res) => {
-                    this.Examines = res.data.data.list;
-                    this.paging = res.data.data.pages;
+                    if(res.data.code === '100070'){
+                        this.Examines = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                        this.Examines_s = false;
+                    }else{
+                        this.Examines_s = true;
+                    }
+
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -429,11 +470,17 @@
                 this.message = '审批提醒';
                 this.font = 'fa-user';
             },
-//            代办提醒
+//            待办提醒
             Substitute(val){
                 this.$http.post('message/remind/index/pages/' + val).then((res) => {
-                    this.Substitutes = res.data.data.data;
-                    this.paging = res.data.data.pages;
+                    if(res.data.code === '100020'){
+                        this.Substitutes = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.Substitutes_s = false;
+                    }else{
+                        this.Substitutes_s = true;
+                    }
+
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -447,8 +494,14 @@
 //            BOSS小秘书
             Secretary(val){
                 this.$http.post('message/secretary/index/pages/' + val).then((res) => {
-                    this.Secretarys = res.data.data.list;
-                    this.paging = res.data.data.pages;
+                    if(res.data.code === '100030'){
+                        this.Secretarys = res.data.data.list;
+                        this.paging = res.data.data.pages;
+                        this.Secretarys_s = false;
+                    }else{
+                        this.Secretarys_s = true;
+                    }
+
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -462,8 +515,15 @@
 //            收藏
             Message(val){
                 this.$http.post('message/favourite/index/pages/' + val).then((res) => {
-                    this.Messages = res.data.data.data;
-                    this.paging = res.data.data.count;
+                    if(res.data.code === '100040'){
+                        this.Messages = res.data.data.data;
+                        this.paging = res.data.data.count;
+                        this.Messages_s = false;
+                    }else{
+                        this.Messages_s = true;
+                        this.Messages = [];
+                    }
+
                 });
                 this.beforePage = val;
                 this.isSystem = false;

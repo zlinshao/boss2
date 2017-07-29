@@ -1,7 +1,7 @@
 <template>
     <div class="flexBox">
         <div class="form-group">
-            <label class="col-sm-2 control-label">收月单价</label>
+            <label class="col-sm-2 control-label">收房月单价</label>
             <div class="form-group col-sm-8">
                 <label class="col-sm-3 control-label">第一年</label>
                 <div class="col-sm-6">
@@ -156,12 +156,14 @@
                 this.$emit('sendData',this.data.slice(0,this.moreYears))
             },
             setData(val){
+                console.log(val);
+                this.data = ['','','','','','','','','',''];
                 if (val.length===0){
                     this.moreYears = 1;
+                    return
                 } else {
                     let that = this;
                     this.moreYears = val.length;
-                    this.data = ['','','','','','','','','',''];
                     for (let i = 0;i<val.length ; i++){
                         (function (i) {
                             that.data[i] = val[i];

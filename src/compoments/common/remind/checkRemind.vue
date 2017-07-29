@@ -28,12 +28,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel-body" v-show="remind_info.length === 0">
+                                暂无更多提醒
+                            </div>
                         </section>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
-                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-                        <!--<button type="button" class="btn btn-primary" @click="all_delete">删除</button>-->
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -63,16 +64,8 @@
                     mess_id: val
                 }).then((res) => {
                     this.$emit('delete_rem');
-//                    console.log(res.data.code)
                 });
             },
-//            rem (){
-//                this.$http.post('message/remind/index', {
-//                    not_remind: '1'
-//                }).then((res) => {
-//                    this.remind_info = res.data.data.data;
-//                });
-//            }
         }
     }
 </script>
