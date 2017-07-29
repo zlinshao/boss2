@@ -312,10 +312,12 @@
                         let contractList =res.data.data;
                         this.contractEdit.id = contractList.id;
                         if(contractList.relative_customer !== undefined){
-                            this.more = contractList.relative_customer.length;
-                            for(let i=0;i<contractList.relative_customer.length;i++){
-                                this.relative_customer.push(contractList.relative_customer[i].name);
-                                this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
+                            if(contractList.relative_customer.name !== undefined){
+                                this.more = contractList.relative_customer.length;
+                                for(let i=0;i<contractList.relative_customer.length;i++){
+                                    this.relative_customer.push(contractList.relative_customer[i].name);
+                                    this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
+                                }
                             }
                         }
                         this.contractEdit.contract_num = contractList.contract_num;

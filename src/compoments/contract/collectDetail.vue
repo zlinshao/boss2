@@ -323,7 +323,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ownerInfo" v-if="item.relative_customer_id.length > 0"
+                                <div class="ownerInfo" v-if="item.relative_customer_id !== undefined"
                                      v-for="relative in item.relative_customer">
                                     <header>附属房东信息</header>
                                     <div class="infoContainer clearFix">

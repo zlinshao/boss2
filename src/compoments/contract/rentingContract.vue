@@ -17,7 +17,12 @@
                             </select>
                         </label>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;">
+                    <div class="pro-sort">
+                        <label>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </label>
+                    </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-left: -5px">
                         <div class="input-group">
                             <input type="text" readonly class="form-control" placeholder="点击选择部门"
                                    @click="selectDpm" v-model="departmentName">
@@ -25,11 +30,6 @@
                                 <button class="btn btn-warning" type="button" @click="reset">清空</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
-                        </label>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
                         <div class="input-group">

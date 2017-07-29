@@ -7,11 +7,7 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
-                <div v-if="houseSeleted===0" class="row">
-                    <div class="col-lg-12">
-                        <div class="pro-sort">
-                            <h5 style="font-weight: bold">房屋属性：</h5>
-                        </div>
+                <div v-if="houseSeleted===0">
                         <div class="pro-sort">
                             <label>
                                 <select class="form-control" v-model="house_type" @change="search">
@@ -76,12 +72,6 @@
                                 </select>
                             </label>
                         </div>
-                    </div>
-
-                    <div class="col-lg-12" >
-                        <div class="pro-sort">
-                            <h5 style="font-weight: bold">部门属性：</h5>
-                        </div>
                         <div class="pro-sort">
                             <label>
                                 <input type="text" readonly class="form-control" placeholder="点击选择部门"
@@ -93,12 +83,6 @@
                                 <input type="checkbox" class="pull-left" v-model="our_group" @click="search">显示本组房屋
                             </label>
                         </div>
-
-                    </div>
-                    <div class="col-lg-12" >
-                        <div class="pro-sort">
-                            <h5 style="font-weight: bold">&nbsp;&nbsp;&nbsp;关键字：</h5>
-                        </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
@@ -107,11 +91,9 @@
                                  </span>
                             </div>
                         </div>
-                        <div class="pro-sort" style="">
+                        <div class="pro-sort pull-right">
                             <button class="btn btn-success" type="button" @click="reset">重置</button>
                         </div>
-
-                    </div>
 
                 </div>
 
@@ -445,7 +427,9 @@
     .nav-tabs>li {
         margin-bottom: 0;
     }
-
+    input, select {
+         margin-bottom: 0px;
+    }
 
     .pro-sort {
         padding-right: 6px;
