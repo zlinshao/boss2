@@ -16,24 +16,24 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">房屋地址</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control" @click="selectClient" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">签约人</label>
+                                <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control">
                                 </div>
                             </div>
 
@@ -129,16 +129,18 @@
                 </div>
             </div>
         </div>
+
+        <SelectClient @clientAdd="getClient"></SelectClient>
     </div>
 </template>
 <style scoped>
 
 </style>
 <script>
-
+    import SelectClient from '../../common/selectClient.vue'
     export default{
         props : ['id'],
-        components: {},
+        components: {SelectClient},
         data(){
             return {
                 msg : {},
@@ -171,6 +173,14 @@
 //                    console.log(ev.target.placeholder);
                 }.bind(this));
             },
+            // 选择客户
+            selectClient(){
+                $('.selectClient:eq(1)').modal('show');
+            },
+            //获得客户
+            getClient(){
+
+            }
         }
     }
 </script>

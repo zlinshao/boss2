@@ -311,15 +311,24 @@
                     this.$http.get('checkin/collect/'+val)
                         .then(
                             (res) => {
-//                                console.log(res.data.data);
+                                console.log(res.data.data);
                                 let val = res.data.data;
-                                this.chooseResult.staff_name=val.staff.real_name;
-                                this.chooseResult.department_name=val.department.name;
-                                this.chooseResult.leader_name=val.leader.real_name;
-                                this.chooseResult.customer_name=val.customer.name;
-                                this.chooseResult.house_name=val.house.detailed_address;
-
-
+//                                console.log(val.staff);
+                                if (val.staff!=null){
+                                    this.chooseResult.staff_name=val.staff.real_name;
+                                }
+                                if (val.department!=null){
+                                    this.chooseResult.department_name=val.department.name;
+                                }
+                                if (val.leader!=null){
+                                    this.chooseResult.leader_name=val.leader.real_name;
+                                }
+                                if (val.customer!=null){
+                                    this.chooseResult.customer_name=val.customer.name;
+                                }
+                                if (val.house!=null){
+                                    this.chooseResult.house_name=val.house.detailed_address;
+                                }
                                 this.pay_typeChange = val.pay_type.length>1;
                                 this.more_type = val.pay_type;
 

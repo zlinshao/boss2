@@ -405,7 +405,7 @@
                                     </li>
                                 </ul>
                             </li>-->
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>业务员工资</span>
                                 </a>
@@ -417,7 +417,7 @@
                                         <router-link to="/drumstick">鸡腿包</router-link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>周期表</span>
@@ -431,7 +431,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>每单工资</span>
                                 </a>
@@ -443,8 +443,8 @@
                                         <router-link to="/wARenting">租房</router-link>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="sub-menu">
+                            </li>-->
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>中介费申请</span>
                                 </a>
@@ -456,7 +456,7 @@
                                         <router-link to="/aFARenting">租房</router-link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -479,12 +479,12 @@
                             <span>合同管理</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
                                 <router-link to="/collectContract">
                                     <span>收房合同</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 23}" @click='pitch_on(23)'>
                                 <router-link to="/rentingContract">
                                     <span>租房合同</span>
                                 </router-link>
@@ -498,13 +498,13 @@
                             <span>财务账本</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
                                 <router-link to="/account">
                                     <span>账户管理</span>
                                 </router-link>
                             </li>
 
-                            <li>
+                            <li :class="{'active': isActive == 25}" @click='pitch_on(25)'>
                                 <router-link to="/subject">
                                     <span>科目管理</span>
                                 </router-link>
@@ -541,28 +541,28 @@
                                 </ul>
                             </li>-->
 
-                            <li>
+                            <li :class="{'active': isActive == 26}" @click='pitch_on(26)'>
                                 <router-link to="/payPayment">
                                     <span>应付款项</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 27}" @click='pitch_on(27)'>
                                 <router-link to="/collectPayment">
                                     <span>应收款项</span>
                                 </router-link>
                             </li>
 
-                            <li>
+                            <li :class="{'active': isActive == 28}" @click='pitch_on(28)'>
                                 <router-link to="/incomeFlow">
                                     <span>收支流水</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 29}" @click='pitch_on(29)'>
                                 <router-link to="/generalRecord">
                                     <span>转账操作记录</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 30}" @click='pitch_on(30)'>
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
                                 </router-link>
@@ -586,18 +586,18 @@
                             <span>日志管理</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 31}" @click='pitch_on(31)'>
                                 <router-link to='/logRecord'>操作记录</router-link>
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
+                    <li :class="{'active': isActive == 32}" @click='pitch_on(32)'>
                         <router-link to='/messageCenter'>
                             <i class="fa fa-bell-o"></i>
                             <span>消息中心</span>
                         </router-link>
                     </li>
-                    <li class="sub-menu">
+                    <li :class="{'active': isActive == 33}" @click='pitch_on(33)'>
                         <router-link to="/checkIn">
                             <i class="fa fa-map-marker"></i>
                             <span>定位签到</span>

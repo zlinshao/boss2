@@ -12,27 +12,41 @@
                             <div class="chooseBody">
                                 <div class="headFrom col-lg-12 clearFix">
                                     <form class="form-inline clearFix" role="form" method="get">
-                                        <div class="dropdown form-group">
+                                        <div class="input-group">
                                             <select name="" class="form-control" v-model="chooseCity" @change="search">
                                                 <!--<option value="" selected>所有城市</option>-->
                                                 <option value="南京市">南京市</option>
                                                 <option value="苏州市">苏州市</option>
                                             </select>
                                         </div>
-                                        <div class="input-group bootstrap-timepicker">
+                                        <div class="input-group">
                                             <label class="sr-only">搜索</label>
                                             <input type="text" class="form-control" placeholder="" @keyup="searchVillage" @keydown.enter.prevent="" v-model="searchInfo">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-success" type="button" @click="search">立即搜索</button>
                                             </span>
                                         </div>
-
+                                        <div class="input-group" v-show="isShow">
+                                            <a class="noData" @mouseenter="showContact = true" @mouseleave="showContact = false">
+                                                没有找到相应小区?
+                                                <div class="contact" v-show="showContact">
+                                                    请联系: <br>
+                                                    陆宣羽：15851899908 <br>
+                                                    <a href="tel:15851899908">电话</a>
+                                                    <a href="sms:15851899908">发短信</a>
+                                                    <br>
+                                                    蔡云杰:13327823182 <br>
+                                                    <a href="tel:15851899908">电话</a>
+                                                    <a href="sms:15851899908">发短信</a>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </form>
                                 </div>
 
                                 <!--表格-->
                                 <div class="col-lg-12">
-                                    <section class="panel table table-responsive">
+                                    <section class="panel table table-responsive roll">
                                         <table class="table table-advance table-hover">
                                             <thead>
                                             <tr>
@@ -49,7 +63,7 @@
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.district}}</td>
                                             </tr>
-                                            <tr class="text-center" v-show="villages.length===0">
+                                            <tr class="text-center" v-show="isShow">
                                                 <td colspan="3">暂无数据...</td>
                                             </tr>
 
@@ -104,7 +118,45 @@
     .text{
         width: 10%;
     }
+    .noData{
+        position: relative;
+    }
+    .noData .contact{
+        color: black;
+        position: absolute;
+        top: 25px;
+        left: 0;
+        z-index: 10;
+        background: white;
+        padding: 3px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        line-height: 25px;
+        width: 150%;
+    }
 
+    .contact:before {
+        position: absolute;
+        top: -7px;
+        left: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+        border-left: 7px solid transparent;
+        /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
+        content: '';
+    }
+
+    .contact:after {
+        position: absolute;
+        top: -6px;
+        left: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #fff;
+        border-left: 6px solid transparent;
+        content: '';
+    }
 
 </style>
 <script>
@@ -116,6 +168,9 @@
 
         data(){
             return {
+                isShow : false,
+                showContact : false,
+
                 searchInfo : '',
                 chooseCity : '',
                 villages : [],
@@ -163,7 +218,16 @@
                 this.$http.defaults.headers = {};
                 this.$http.get(addr+'&keywords='+this.searchInfo+'&city='+this.chooseCity)
                     .then(
-                        res => this.villages = res.data.tips
+                        (res) => {
+                            if (res.data.tips.length!=0){
+                                this.villages = res.data.tips;
+                                this.isShow = false;
+                            } else {
+                                this.villages = [];
+                                this.isShow = true;
+                            }
+
+                        }
                     );
                 this.$http.defaults.withCredentials = true;
 //                this.$http.defaults.headers.common['Env'] = globalConfig.env;
