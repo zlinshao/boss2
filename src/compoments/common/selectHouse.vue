@@ -77,7 +77,7 @@
                     id:'',
                     address:''
                 },
-                isShow:false,
+                isShow:true,
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -140,5 +140,8 @@
     }
     div.table.table-responsive table tr td:first-child {
         width: 80px ;
+    }
+    label{
+        margin-top: 5px;
     }
 </style>
