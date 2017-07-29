@@ -14,42 +14,42 @@
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">签约人 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">签约人<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control" readonly @click="selectStaff" v-model="chooseResult.staff_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">所属部门 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">所属部门<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" disabled v-model="chooseResult.department_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">负责人 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">负责人<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" disabled v-model="chooseResult.leader_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">房屋地址 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">房屋地址<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">客户姓名 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">租房状态 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">租房状态<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.rent_type">
                                             <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}</option>
@@ -58,14 +58,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">租房年限 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">租房年限<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.months">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">付款类型 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">付款类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-6 padding_0">
                                             <label class="col-sm-2 control-label padding_0">押</label>
@@ -87,14 +87,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">出租月单价 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">出租月单价<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.price">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">已收科目 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="formData.received_type">
@@ -102,7 +102,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-8">
-                                            <label class="col-sm-4 control-label">已收金额 <sup class="required">*</sup></label>
+                                            <label class="col-sm-4 control-label">已收金额<sup class="required">*</sup></label>
                                             <div class="col-sm-8">
                                                 <input type="number" class="form-control" v-model="formData.received_amount">
                                             </div>
@@ -112,7 +112,7 @@
 
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">付款方式 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">付款方式<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[0].payment_id">
@@ -252,7 +252,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">尾款补齐时间 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">尾款补齐时间<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
                                                class="form-control form_datetime" readonly v-model="formData.complete_date">
@@ -260,15 +260,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">凭证截图 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">凭证截图<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"  placeholder="凭证截图"
                                                  :result="'certificatePic'" :idPhotos="certificatePic"></up-load>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group" v-show="is_medi==2">
-                                    <label class="col-sm-2 control-label">中介费 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.cost_medi">
                                     </div>
@@ -293,7 +293,7 @@
                                 </div>-->
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">待签约日期 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">待签约日期<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
                                                class="form-control form_datetime" readonly v-model="formData.deal_time">
