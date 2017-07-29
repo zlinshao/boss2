@@ -110,14 +110,14 @@
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">账户名称 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">账户名称<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">账户类型 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">账户类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.cate">
                                             <option :value="value" v-for="(key,value) in dict.account_cate">{{key}}</option>
@@ -126,14 +126,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">账号 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">账号<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.account_num">
                                     </div>
                                 </div>
 
                                 <div class="form-group" v-show="formData.cate==1">
-                                    <label class="col-sm-2 control-label">开户银行 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">开户银行<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.bank">
                                             <option :value="value" v-for="(key,value) in dict.bank">{{key}}</option>
@@ -142,14 +142,14 @@
                                 </div>
 
                                 <div class="form-group" v-show="formData.cate==1">
-                                    <label class="col-sm-2 control-label">支行 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">支行<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.sub_bank">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">初始金额 <sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">初始金额<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.amount_base" :readonly="!isAdd">
                                     </div>

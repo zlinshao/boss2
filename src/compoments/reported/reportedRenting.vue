@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="input-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增租房报备
+                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增未收先租房报备
                             </a>
                         </div>
                     </form>
