@@ -278,37 +278,25 @@
                     if(this.myConfigure.class==='amount'){
                         if(this.member.length>this.myConfigure.length){
                             this.member.splice(this.myConfigure.length,1);
-                            this.info.success = '选择超过限制';
+                            this.info.error = '选择超过限制';
                             //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
+                            this.info.state_error = true;
                         }
                     }else if(this.myConfigure.class==='onlyOneDpm'){
                         this.isChecked();
                         if(this.member.length>this.myConfigure.length){
                             this.member.splice(this.myConfigure.length,1);
-                            this.info.success = '选择超过限制';
+                            this.info.error = '选择超过限制';
                             //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
+                            this.info.state_error = true;
                         }
                     }else if(this.myConfigure.class==='department' && this.myConfigure.length!==''){
                         this.isChecked();
                         if(this.member.length>this.myConfigure.length){
                             this.member.splice(this.myConfigure.length,1);
-                            this.info.success = '选择超过限制';
+                            this.info.error = '选择超过限制';
                             //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            },2000);
+                            this.info.state_error = true;
                         }
                     }
 
@@ -415,13 +403,10 @@
                         }
                     }
                 }else { //如果只选部门则提示信息
-                    this.info.success = '您只能选择部门';
+                    this.info.error = '您只能选择部门';
                     //显示成功弹窗 ***
-                    this.info.state_success = true;
-                    //一秒自动关闭成功信息弹窗 ***
-                    setTimeout(() => {
-                        this.info.state_success = false;
-                    },2000);
+                    this.info.state_error = true;
+
                 }
 
             },
@@ -500,13 +485,9 @@
                     }
                     this.hovName='';
                 }else{
-                    this.info.success = '您只能选择部门';
+                    this.info.error = '您只能选择部门';
                     //显示成功弹窗 ***
-                    this.info.state_success = true;
-                    //一秒自动关闭成功信息弹窗 ***
-                    setTimeout(() => {
-                        this.info.state_success = false;
-                    },2000);
+                    this.info.state_error = true;
                 }
             },
             //回车删除事件
@@ -576,23 +557,29 @@
             },
             //选择成员并发回父组件
             selectUser(){
-                this.$emit('Staff',this.organize);
-                $('.selectCustom').modal('hide');
-                this.organize={
-                    department:[
+                if(this.organize.department.length === 0 && this.organize.staff.length === 0){
+                    this.info.error = '请先选择成员';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }else {
+                    this.$emit('Staff',this.organize);
+                    $('.selectCustom').modal('hide');
+                    this.organize={
+                        department:[
 
-                    ],
+                        ],
                         staff:[
 
-                    ]
-                };
-                //点击确定清空相应数组
-                this.member=[];
-                this.checkboxModel=[];
-                this.checkIndex=[];
-                this.myConfigure={};
-                this.noDepartment=false;
-                this.noStaff=false;
+                        ]
+                    };
+                    //点击确定清空相应数组
+                    this.member=[];
+                    this.checkboxModel=[];
+                    this.checkIndex=[];
+                    this.myConfigure={};
+                    this.noDepartment=false;
+                    this.noStaff=false;
+                }
             },
             closeModal(){
                 $('.selectCustom').modal('hide');

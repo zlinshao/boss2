@@ -75,202 +75,205 @@
 
         <!--内容区-->
         <div class="row">
+            <div>
             <!--合同信息-->
-            <div class="col-md-3">
-                <section class="panel roll box">
-                    <header class="panel-heading tab-bg-dark-navy-blue ">
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-file-text"></i>&nbsp;收房合同</a>
-                            </li>
-                            <li class="">
-                                <a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-file-text"></i>&nbsp;租房合同</a>
-                            </li>
+            <!--<div class="col-md-3">-->
+                <!--<section class="panel roll box">-->
+                    <!--<header class="panel-heading tab-bg-dark-navy-blue ">-->
+                        <!--<ul class="nav nav-tabs">-->
+                            <!--<li class="active">-->
+                                <!--<a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-file-text"></i>&nbsp;收房合同</a>-->
+                            <!--</li>-->
+                            <!--<li class="">-->
+                                <!--<a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-file-text"></i>&nbsp;租房合同</a>-->
+                            <!--</li>-->
 
-                        </ul>
-                    </header>
-                    <div class="panel-body">
-                        <div class="tab-content">
+                        <!--</ul>-->
+                    <!--</header>-->
+                    <!--<div class="panel-body">-->
+                        <!--<div class="tab-content">-->
 
-                            <!--收房合同-->
-                            <div id="home" class="tab-pane active">
-                                <div class="panel-body table-responsive">
-                                    <table class="table contract_info">
-                                        <tbody>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark"></i></a></td>
-                                            <td>2017-07-20</td>
-                                            <td>14:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                            <td>合同编号</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>房屋地址</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>负责人</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>合同时间</td>
-                                            <td class="paddingTop">
-                                                <a data-v-2f43a2b3="" href="#">
-                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                             :style="{ width: progress + '%'}">
-                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="panel-body table-responsive">
-                                    <table class="table contract_info">
-                                        <tbody>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark"></i></a></td>
-                                            <td>2017-07-20</td>
-                                            <td>14:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                            <td>合同编号</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>房屋地址</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>负责人</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>合同时间</td>
-                                            <td class="paddingTop">
-                                                <a data-v-2f43a2b3="" href="#">
-                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                             :style="{ width: progress + '%'}">
-                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <!--&lt;!&ndash;收房合同&ndash;&gt;-->
+                            <!--<div id="home" class="tab-pane active">-->
+                                <!--<div class="panel-body table-responsive">-->
+                                    <!--<table class="table contract_info">-->
+                                        <!--<tbody>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                                            <!--<td>2017-07-20</td>-->
+                                            <!--<td>14:00</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
+                                            <!--<td>合同编号</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>房屋地址</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>负责人</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>合同时间</td>-->
+                                            <!--<td class="paddingTop">-->
+                                                <!--<a data-v-2f43a2b3="" href="#">-->
+                                                    <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
+                                                        <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+                                                             <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
+                                                             <!--:style="{ width: progress + '%'}">-->
+                                                            <!--<span data-v-2f43a2b3="" class="sr-only">45% Complete</span>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</a>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                                <!--<div class="panel-body table-responsive">-->
+                                    <!--<table class="table contract_info">-->
+                                        <!--<tbody>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                                            <!--<td>2017-07-20</td>-->
+                                            <!--<td>14:00</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
+                                            <!--<td>合同编号</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>房屋地址</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>负责人</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>合同时间</td>-->
+                                            <!--<td class="paddingTop">-->
+                                                <!--<a data-v-2f43a2b3="" href="#">-->
+                                                    <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
+                                                        <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+                                                             <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
+                                                             <!--:style="{ width: progress + '%'}">-->
+                                                            <!--<span data-v-2f43a2b3="" class="sr-only">45% Complete</span>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</a>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
-                            <!--租房信息-->
-                            <div id="about" class="tab-pane">
-                                <div class="panel-body table-responsive">
-                                    <table class="table contract_info">
-                                        <tbody>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark"></i></a></td>
-                                            <td>2016-06-20</td>
-                                            <td>14:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                            <td>合同编号</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>房屋地址</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>负责人</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>合同时间</td>
-                                            <td class="paddingTop">
-                                                <a data-v-2f43a2b3="" href="#">
-                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                             :style="{ width: progress + '%'}">
-                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="panel-body table-responsive roll">
-                                    <table class="table contract_info">
-                                        <tbody>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark"></i></a></td>
-                                            <td>2017-07-20</td>
-                                            <td>14:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                            <td>合同编号</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>房屋地址</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>负责人</td>
-                                            <td>合同编号</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>合同时间</td>
-                                            <td class="paddingTop">
-                                                <a data-v-2f43a2b3="" href="#">
-                                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                             :style="{ width: progress + '%'}">
-                                                            <span data-v-2f43a2b3="" class="sr-only">45% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <!--&lt;!&ndash;租房信息&ndash;&gt;-->
+                            <!--<div id="about" class="tab-pane">-->
+                                <!--<div class="panel-body table-responsive">-->
+                                    <!--<table class="table contract_info">-->
+                                        <!--<tbody>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                                            <!--<td>2016-06-20</td>-->
+                                            <!--<td>14:00</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
+                                            <!--<td>合同编号</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>房屋地址</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>负责人</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>合同时间</td>-->
+                                            <!--<td class="paddingTop">-->
+                                                <!--<a data-v-2f43a2b3="" href="#">-->
+                                                    <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
+                                                        <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+                                                             <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
+                                                             <!--:style="{ width: progress + '%'}">-->
+                                                            <!--<span data-v-2f43a2b3="" class="sr-only">45% Complete</span>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</a>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                                <!--<div class="panel-body table-responsive roll">-->
+                                    <!--<table class="table contract_info">-->
+                                        <!--<tbody>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                                            <!--<td>2017-07-20</td>-->
+                                            <!--<td>14:00</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
+                                            <!--<td>合同编号</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>房屋地址</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>负责人</td>-->
+                                            <!--<td>合同编号</td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td>合同时间</td>-->
+                                            <!--<td class="paddingTop">-->
+                                                <!--<a data-v-2f43a2b3="" href="#">-->
+                                                    <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
+                                                        <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+                                                             <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
+                                                             <!--:style="{ width: progress + '%'}">-->
+                                                            <!--<span data-v-2f43a2b3="" class="sr-only">45% Complete</span>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</a>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
 
-                </section>
+                <!--</section>-->
+            <!--</div>-->
             </div>
+
             <!--沟通日志/房屋信息-->
-            <div class="col-md-9 box">
+            <div class="col-md-12 box">
                 <section class="panel roll box">
                     <div class="panel-body client_info">
                         <header>
