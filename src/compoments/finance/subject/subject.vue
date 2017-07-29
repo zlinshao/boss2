@@ -120,14 +120,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">科目名称</label>
+                                    <label class="col-sm-2 control-label">科目名称 <sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.title">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">类型</label>
+                                    <label class="col-sm-2 control-label">类型 <sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <div class="dropdown">
                                             <select name="" class="form-control" v-model="formData.er_type" :disabled="formData.superior_id==0">

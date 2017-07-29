@@ -250,7 +250,13 @@
                 if (num == 1){
                     // 付款方式
                     this.changeModal.title = '付款方式';
-                    this.changeModal.data = this.msg.pay_type;
+                    this.changeModal.data = [];
+                    for (let i = 0;i<this.msg.pay_type.length;i++){
+                        this.changeModal.data.push(this.dict.pay_type[this.msg.pay_type[i]]);
+                    }
+//                    console.log(this.msg.pay_type)
+//                    console.log(this.changeModal.data)
+//                    this.changeModal.data = this.msg.pay_type;
 
                 } else {
                     // 价格
