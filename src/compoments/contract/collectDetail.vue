@@ -247,11 +247,10 @@
                                             <div class="infoList">
                                                 <span>月单价：<sup>*</sup></span>
                                                 <span v-if="item.checkin_collect_id !== null">
-                                                  <span v-for="(price,index) in item.checkin_collect_id.price">
-                                                    第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                                    <span v-for="(price,index) in item.checkin_collect_id.price">
+                                                        第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                                    </span>
                                                 </span>
-                                                </span>
-
                                             </div>
                                             <div class="infoList">
                                                 <span>开户行：</span>
