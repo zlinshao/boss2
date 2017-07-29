@@ -110,6 +110,7 @@
 //                console.log(val[0]);
                 this.src = val[0].src;
                 this.index = val[0].i;
+                this.idArr = [];
 //                console.log(this.src[this.index].big)
                 for (let key in this.src){
 //                    console.log(key);
