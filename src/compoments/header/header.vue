@@ -483,10 +483,10 @@
                             <span>组长报备</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 34}" @click='pitch_on(34)'>
                                 <router-link to='/reportedCollect'>收房报备</router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 35}" @click='pitch_on(35)'>
                                 <router-link to='/reportedRenting'>租房报备</router-link>
                             </li>
                         </ul>

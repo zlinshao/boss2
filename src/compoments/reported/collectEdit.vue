@@ -114,12 +114,12 @@
                                 <label class="col-sm-2 control-label">签约日期</label>
                                 <div class="col-sm-10">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
-                                           class="form-control form_datetime" v-model="formData.deal_time">
+                                           class="form-control form_datetime" readonly v-model="formData.deal_time">
                                     <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">汇款方式</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" v-model="formData.payment">
@@ -142,7 +142,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" v-model="formData.account">
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">备注</label>
@@ -240,10 +240,10 @@
 //                    is_medi : 1,
                     cost_deposit : '',
                     deal_time : '',
-                    payment : 1,
-                    bank : 1,
+//                    payment : 1,
+//                    bank : 1,
                     remark : '',
-                    account : ''
+//                    account : ''
                 },
 
                 info: {
