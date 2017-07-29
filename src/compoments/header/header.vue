@@ -357,128 +357,6 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-sitemap"></i>
-                            <span>人资管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
-                                <router-link to='/user'>用户管理</router-link>
-                            </li>
-                            <li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>订单管理</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
-                                        <router-link to='/orderManage'>收房</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 23}" @click='pitch_on(23)'>
-                                        <router-link to="/rentingOrder">租房</router-link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
-                                <router-link to='/role'>角色管理</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 10}" @click='pitch_on(10)'>
-                                <router-link to='/power'>权限管理</router-link>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
-                    <!--<router-link to="/village">-->
-                    <!--<i class="fa fa-dashboard"></i>-->
-                    <!--<span>小区管理</span>-->
-                    <!--</router-link>-->
-                    <!--</li>-->
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>业绩管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>喜报管理</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 14}" @click='pitch_on(14)'>
-                                        <router-link to="/gNCollect">收房</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 15}" @click='pitch_on(15)'>
-                                        <router-link to="/gNRenting">租房</router-link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--<li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>公司业绩</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 16}" @click='pitch_on(16)'>
-                                        <router-link to="/cACollect">收房</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
-                                        <router-link to="/cARenting">租房</router-link>
-                                    </li>
-                                </ul>
-                            </li>-->
-                            <!--<li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>业务员工资</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 16}" @click='pitch_on(16)'>
-                                        <router-link to="/dream">梦想包</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
-                                        <router-link to="/drumstick">鸡腿包</router-link>
-                                    </li>
-                                </ul>
-                            </li>-->
-                            <li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>周期表</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
-                                        <router-link to="/periodicForGroup">小组</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
-                                        <router-link to="/periodicForPeople">个人</router-link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--<li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>每单工资</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 20}" @click='pitch_on(20)'>
-                                        <router-link to="/wACollect">收房</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 21}" @click='pitch_on(21)'>
-                                        <router-link to="/wARenting">租房</router-link>
-                                    </li>
-                                </ul>
-                            </li>-->
-                            <!--<li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>中介费申请</span>
-                                </a>
-                                <ul class="sub">
-                                    <li>
-                                        <router-link to="/aFACollect">收房</router-link>
-                                    </li>
-                                    <li>
-                                        <router-link to="/aFARenting">租房</router-link>
-                                    </li>
-                                </ul>
-                            </li>-->
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
                             <i class="fa fa-envelope"></i>
                             <span>组长报备</span>
                         </a>
@@ -491,25 +369,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-file-text"></i>
-                            <span>合同管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
-                                <router-link to="/collectContract">
-                                    <span>收房合同</span>
-                                </router-link>
-                            </li>
-                            <li :class="{'active': isActive == 23}" @click='pitch_on(23)'>
-                                <router-link to="/rentingContract">
-                                    <span>租房合同</span>
-                                </router-link>
-                            </li>
-                        </ul>
-                    </li>
-
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -598,6 +457,131 @@
                             </li>-->
                         </ul>
                     </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-bar-chart-o"></i>
+                            <span>业绩管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>喜报管理</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 14}" @click='pitch_on(14)'>
+                                        <router-link to="/gNCollect">收房</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 15}" @click='pitch_on(15)'>
+                                        <router-link to="/gNRenting">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--<li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>公司业绩</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 16}" @click='pitch_on(16)'>
+                                        <router-link to="/cACollect">收房</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
+                                        <router-link to="/cARenting">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>-->
+                            <!--<li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>业务员工资</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 16}" @click='pitch_on(16)'>
+                                        <router-link to="/dream">梦想包</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 17}" @click='pitch_on(17)'>
+                                        <router-link to="/drumstick">鸡腿包</router-link>
+                                    </li>
+                                </ul>
+                            </li>-->
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>周期表</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
+                                        <router-link to="/periodicForGroup">小组</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
+                                        <router-link to="/periodicForPeople">个人</router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--<li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>每单工资</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 20}" @click='pitch_on(20)'>
+                                        <router-link to="/wACollect">收房</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 21}" @click='pitch_on(21)'>
+                                        <router-link to="/wARenting">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>-->
+                            <!--<li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>中介费申请</span>
+                                </a>
+                                <ul class="sub">
+                                    <li>
+                                        <router-link to="/aFACollect">收房</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/aFARenting">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>-->
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-sitemap"></i>
+                            <span>人资管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
+                                <router-link to='/user'>用户管理</router-link>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>订单管理</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
+                                        <router-link to='/orderManage'>收房</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 23}" @click='pitch_on(23)'>
+                                        <router-link to="/rentingOrder">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
+                                <router-link to='/role'>角色管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 10}" @click='pitch_on(10)'>
+                                <router-link to='/power'>权限管理</router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
+                    <!--<router-link to="/village">-->
+                    <!--<i class="fa fa-dashboard"></i>-->
+                    <!--<span>小区管理</span>-->
+                    <!--</router-link>-->
+                    <!--</li>-->
+
+
+
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-pencil-square-o"></i>

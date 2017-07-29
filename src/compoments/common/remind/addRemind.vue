@@ -30,10 +30,11 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4 ">
-                                            <a class="btn btn-white" v-if="remindTimes === ''" style="border: none" @click="Advanced">高级选项+</a>
+                                            <a class="btn btn-white" v-if="remindTimes === ''" style="border: none"
+                                               @click="Advanced">高级选项+</a>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="isAdvanced">
+                                    <div class="row" v-if="isAdvanced && remindTimes === ''">
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
                                             <input @click="remind_time" type="text" placeholder="选择时间"
@@ -120,12 +121,12 @@
                 }.bind(this));
             },
 //            取消
-    revise (){
-        this.remindTimes = '';        //提醒时间
-        this.remindTime = '';         //提醒时间 高级
-        this.remind_info = '';        //提醒内容
-        this.isAdvanced = false;
-    },
+            revise (){
+                this.remindTimes = '';        //提醒时间
+                this.remindTime = '';         //提醒时间 高级
+                this.remind_info = '';        //提醒内容
+                this.isAdvanced = false;
+            },
             Advanced(){
                 this.isAdvanced = !this.isAdvanced;
             },
@@ -135,6 +136,9 @@
 //            },
 //            增加个人提示信息
             add_notice (){
+                if (this.remindTimes !== '') {
+                    this.remindTime = '';
+                }
                 this.$http.post('message/remind/write', {
                     content: this.remind_info,
                     remind_time: this.remindTimes,
@@ -153,6 +157,7 @@
                         this.remindTimes = '';        //提醒时间
                         this.remindTime = '';         //提醒时间 高级
                         this.remind_info = '';        //提醒内容
+                        this.isAdvanced = false;
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
