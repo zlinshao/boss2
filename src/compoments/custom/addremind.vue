@@ -30,10 +30,11 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4 ">
-                                            <a class="btn btn-white" v-if="remindTimes === ''" style="border: none" @click="Advanced">高级选项+</a>
+                                            <a class="btn btn-white" v-if="remindTimes === ''" style="border: none"
+                                               @click="Advanced">高级选项+</a>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="isAdvanced">
+                                    <div class="row" v-if="isAdvanced && remindTimes === ''">
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
                                             <input @click="remind_time" type="text" placeholder="选择时间"
@@ -71,13 +72,13 @@
                 remindTime: '',         //提醒时间 高级
                 remind_info: '',        //提醒内容
                 remind_select: [],      //提醒小时
-                dateConfigure: [
-                    {
-                        range: false,               // 是否选择范围
-                        needHour: true,             // 是否需要选择小时
-                        position: 'bottom-left'     // 在上面显示
-                    }
-                ],
+//                dateConfigure: [
+//                    {
+//                        range: false,               // 是否选择范围
+//                        needHour: true,             // 是否需要选择小时
+//                        position: 'bottom-left'     // 在上面显示
+//                    }
+//                ],
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -105,13 +106,15 @@
             },
             remind_time (){
                 $('.remind_datetime').datetimepicker({
-                    minView: "day",                     //选择日期后，不会再跳转去选择时分秒
+                    minView: 'day',                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd hh:00',
                     todayBtn: 1,
                     autoclose: 1,
+                    pickerPosition: 'bottom-left',
                     clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
+                    $(window).on('mousewheel', $.proxy(this.place, this));
                     this.remindTime = ev.target.value;
                 }.bind(this));
             },
@@ -130,6 +133,9 @@
 //            },
 //            增加客户提示信息
             add_cus (){
+                if (this.remindTimes !== '') {
+                    this.remindTime = '';
+                }
                 this.$http.post('message/remind/write', {
                     object: String(this.remindId),
                     content: this.remind_info,
@@ -149,6 +155,7 @@
                         this.remindTime = '';         //提醒时间
                         this.remindTimes = '';        //提醒时间
                         this.remind_info = '';        //提醒内容
+                        this.isAdvanced = false;
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
