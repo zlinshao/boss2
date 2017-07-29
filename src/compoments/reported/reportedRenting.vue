@@ -107,7 +107,7 @@
                                     {{dict.checkin_status[item.status]}}
                                 </button>
                             </td>
-                            <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="16">暂无数据...</td>
@@ -376,9 +376,7 @@
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
     }
-    tr td a i{
-        font-size: 18px;
-    }
+
     tbody tr td button{
         color: white;
         /*font-weight: bold;*/

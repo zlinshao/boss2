@@ -63,7 +63,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
-                                        <label class="control-label"><input type="checkbox" @click="changePayType($event)">变化</label>
+                                        <label class="control-label"><input type="checkbox" :checked="pay_typeChange" @click="changePayType($event)">变化</label>
                                     </div>
                                 </div>
 
@@ -340,7 +340,7 @@
 
                 this.formData.years = '';
                 this.formData.pay_type = [];
-                this.formData.price = [];
+                this.formData.price.splice(0,this.formData.price.length);
                 this.formData.vacancy = '';
                 this.formData.cost_medi = '';
 //                this.formData.is_medi = 1;
