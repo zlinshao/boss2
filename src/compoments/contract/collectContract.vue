@@ -98,6 +98,8 @@
                             <!--<input type="checkbox">-->
                         </th>
                         <th class="text-center"></th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
                         <th class="text-center">上传时间</th>
                         <th class="text-center">开单人</th>
@@ -116,10 +118,14 @@
                     <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @click="picked(item,$event)"
                                    :value="item.id" :checked="contractSeleted===item.id"></td>
-                        <td class="text-left">
+                        <td class="text-left myIcon">
                             <i class="fa fa-star" v-if="item.mark === 1"></i>
+                        </td>
+                        <td class="text-left myIcon">
                             <i class="fa fa-lock" v-if="item.status !== 1" ></i>
                             <i class="fa fa-unlock" v-if="item.status === 1" ></i>
+                        </td>
+                        <td class="text-left myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
                         <td>{{item.contract_num}}</td>
@@ -145,7 +151,7 @@
                         </td>
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="15" class="text-center text-muted">
+                        <td colspan="16" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
@@ -420,5 +426,8 @@
     .label{
         display: inline-block;
         width: 78px;
+    }
+    .myIcon{
+        padding: 0;
     }
 </style>
