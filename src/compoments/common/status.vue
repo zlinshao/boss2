@@ -2,15 +2,9 @@
     <div>
         <div v-if="state.state_success" id="success"
              class="alert alert-block alert-success fade in pull-right text-center">
-            <button data-dismiss="alert" class="close close-sm" type="button">
-                <i class="fa fa-times"></i>
-            </button>
             <p>{{state.success}}</p>
         </div>
         <div id="err" v-if="state.state_error" class="alert alert-block alert-danger fade in pull-right text-center">
-            <button data-dismiss="alert" class="close close-sm" type="button">
-                <i class="fa fa-times"></i>
-            </button>
             <p>{{state.error}}</p>
         </div>
     </div>
