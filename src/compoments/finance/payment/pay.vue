@@ -85,10 +85,12 @@
                         <tr>
                             <th></th>
                             <th class="text-center">付款时间</th>
-                            <th class="text-center">签约人</th>
-                            <th class="text-center">房屋地址</th>
-                            <th class="text-center">付款方式</th>
-                            <th class="text-center">月单价</th>
+                            <th class="text-center">客户姓名</th>
+                            <th class="text-center">详情</th>
+                            <!--<th class="text-center">签约人</th>-->
+                            <!--<th class="text-center">房屋地址</th>-->
+                            <!--<th class="text-center">付款方式</th>-->
+                            <!--<th class="text-center">月单价</th>-->
                             <th class="text-center">支出科目</th>
                             <th class="text-center">应付金额</th>
                             <th class="text-center">实付金额</th>
@@ -105,10 +107,17 @@
                                 <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>{{item.description.staff_name}}</td>
+                            <td></td>
+                            <td>
+                                {{item.description.address}}/
+                                {{dict.pay_type[item.description.pay_type]}}/
+                                {{item.description.price}}/
+                                {{item.description.staff_name}}
+                            </td>
+                            <!--<td>{{item.description.staff_name}}</td>
                             <td>{{item.description.address}}</td>
                             <td>{{dict.pay_type[item.description.pay_type]}}</td>
-                            <td>{{item.description.price}}</td>
+                            <td>{{item.description.price}}</td>-->
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>{{item.amount_payable}}</td>
                             <td>{{item.amount_paid}}</td>
@@ -148,24 +157,24 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">房屋地址</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" data-toggle="modal" data-target="#selectHouse" readonly>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly>
+                                    <input type="text" class="form-control" @click="selectClient" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">签约人</label>
+                                <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control">
                                 </div>
                             </div>
 
@@ -181,7 +190,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应付金额</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="number" class="form-control">
                                 </div>
                             </div>
 
@@ -443,10 +452,15 @@
             },
 
             clearForm(){
-
+                $('#addPay').modal('hide');
             },
             save(){
 
+            },
+
+            // 选择客户
+            selectClient(){
+                $('.selectClient:eq(0)').modal('show');
             }
         }
     }

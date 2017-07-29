@@ -47,40 +47,42 @@
         </section>
 
         <!--表格-->
-        <div class="col-lg-12">
-            <section class="panel table table-responsive">
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-center">事项类型</th>
-                        <th class="text-center">开单人</th>
-                        <th class="text-center">房屋地址</th>
-                        <th class="text-center">租客姓名</th>
-                        <th class="text-center">入住时间</th>
-                        <th class="text-center">离开时间</th>
-                        <th class="text-center">水费</th>
-                        <th class="text-center">电费</th>
-                        <th class="text-center">燃气卡费</th>
-                        <th class="text-center">物业费</th>
-                        <th class="text-center">转租费用</th>
-                        <th class="text-center">违约金</th>
-                        <th class="text-center">经手人</th>
-                        <th class="text-center">状态</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="text-center">
-                        <td>
-                            <input type="checkbox">
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-success">待处理</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel table table-responsive roll">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">事项类型</th>
+                            <th class="text-center">开单人</th>
+                            <th class="text-center">房屋地址</th>
+                            <th class="text-center">租客姓名</th>
+                            <th class="text-center">入住时间</th>
+                            <th class="text-center">离开时间</th>
+                            <th class="text-center">水费</th>
+                            <th class="text-center">电费</th>
+                            <th class="text-center">燃气卡费</th>
+                            <th class="text-center">物业费</th>
+                            <th class="text-center">转租费用</th>
+                            <th class="text-center">违约金</th>
+                            <th class="text-center">经手人</th>
+                            <th class="text-center">状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-center">
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-success">待处理</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
 
         <!--新增模态框-->
