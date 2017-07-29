@@ -296,7 +296,7 @@
                                     <label class="col-sm-2 control-label">待签约日期</label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
-                                               class="form-control form_datetime" v-model="formData.deal_time">
+                                               class="form-control form_datetime" readonly v-model="formData.deal_time">
                                     </div>
                                 </div>
 
