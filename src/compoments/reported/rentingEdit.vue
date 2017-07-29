@@ -618,7 +618,7 @@
             },
             getHouse(data){
                 // 选择房屋
-                alert(data)
+//                alert(data)
 //                console.log(data);
                 this.formData.house_id = data.id;
                 this.chooseResult.house_name = data.address;
