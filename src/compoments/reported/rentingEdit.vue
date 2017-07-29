@@ -67,8 +67,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">付款类型</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-6">
-                                            <label class="col-sm-2 control-label">押</label>
+                                        <div class="col-sm-6 padding_0">
+                                            <label class="col-sm-2 control-label padding_0">押</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="formData.bet">
                                                     <option value="0">0</option>
@@ -78,7 +78,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label class="col-sm-2 control-label">付</label>
+                                            <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
                                                 <input type="number" class="form-control" v-model="formData.pay">
                                             </div>
@@ -96,7 +96,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">已收科目</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="formData.received_type">
                                                 <option :value="value" v-for="(key,value) in dict.received_type">{{key}}</option>
                                             </select>
@@ -114,7 +114,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">付款方式</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[0].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -134,7 +134,7 @@
                                 <div v-show="more_pay_way>=2" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[1].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -151,7 +151,7 @@
                                 <div v-show="more_pay_way>=3" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[2].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -168,7 +168,7 @@
                                 <div v-show="more_pay_way>=4" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[3].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -185,7 +185,7 @@
                                 <div v-show="more_pay_way>=5" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[4].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -202,7 +202,7 @@
                                 <div v-show="more_pay_way>=6" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[5].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -219,7 +219,7 @@
                                 <div v-show="more_pay_way>=7" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[6].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -236,7 +236,7 @@
                                 <div v-show="more_pay_way>=8" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[7].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -267,7 +267,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" v-show="is_medi==2">
                                     <label class="col-sm-2 control-label">中介费</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.cost_medi">
@@ -392,6 +392,8 @@
                     leader_name : '',
                     customer_name : ''
                 },
+
+                is_medi : 1,        // 是否中介 1否2是
                 formData : {
                     staff_id : '',
                     department_id : '',
@@ -461,7 +463,7 @@
                     this.$http.get('checkin/rent/'+val)
                         .then(
                             (res) => {
-//                                console.log(res.data.data);
+                                console.log(res.data.data);
                                 let val = res.data.data;
                                 if (val.staff!=null){
                                     this.chooseResult.staff_name=val.staff.real_name;
@@ -516,6 +518,9 @@
                                 this.formData.complete_date = val.complete_date;
 
                                 this.formData.remark = val.remark;
+                                if (val.customer!=null){
+                                    this.is_medi = val.customer.person_medium;
+                                }
 
                                 this.complete_ok = 'ok';
 
@@ -632,6 +637,10 @@
 //                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
+                this.is_medi = data.person_medium;
+                if (this.id_medi==1){
+                    this.formData.cost_medi = '';
+                }
 
             },
 

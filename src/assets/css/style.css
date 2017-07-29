@@ -6241,3 +6241,19 @@ header.blue-bg .search:focus {
 .amap-markers .amap-marker .amap-icon img{
     border-radius: 50%;
 }
+.form-group .padding_0{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+tbody tr td .yellow, span.status.yellow {
+    background-color: #F9E175;
+}
+
+tbody tr td .orange, span.status.orange {
+    background-color: #FCB322;
+}
+
+tbody tr td .green, span.status.green {
+    background-color: #78CD51;
+}

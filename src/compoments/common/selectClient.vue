@@ -110,13 +110,9 @@
                         ).then((res) => {
                         if(res.data.code === '70030'){
                             this.customerList=res.data.data.list;
-                            this.keywords='';
-                            this.media_person = '1'
                             this.isShow = false;
                         }else {
                             this.customerList=[];
-                            this.keywords='';
-                            this.media_person = '1',
                             this.isShow = true;
                         }
                     })
@@ -142,6 +138,8 @@
                     $('.selectClient').modal('hide');
                     this.customerList=[];
                     this.selectClients=[];
+                    this.keywords='';
+                    this.media_person = '1';
                 }
 
             }

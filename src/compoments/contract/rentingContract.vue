@@ -109,14 +109,18 @@
                         <th class="text-center">回访情况</th>
                         <th class="text-center">资料状态</th>
                         <th class="text-center">更多</th>
-                        <th class="text-center"></th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @click="picked(item,$event)"
                                    :value="item.id" :checked="contractSeleted===item.id"></td>
-                        <td><i class="fa fa-star" v-if="item.mark === 1"></i></td>
+                        <td class="text-left">
+                            <i class="fa fa-star" v-if="item.mark === 1"></i>
+                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
+                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
+                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
+                        </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.drawer}}</td>
@@ -136,15 +140,9 @@
                                 详情
                             </router-link>
                         </td>
-                        <td>
-                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
-                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
-                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
-                        </td>
-
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="15" class="text-center text-muted">
+                        <td colspan="14" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
@@ -418,7 +416,8 @@
         color: #0E90D2;
     }
     .label{
-        width: 78px;
         display: inline-block;
+        width: 78px;
+        padding:6px 8px;
     }
 </style>

@@ -110,14 +110,18 @@
                         <th class="text-center">回访情况</th>
                         <th class="text-center">资料状态</th>
                         <th class="text-center">更多</th>
-                        <th class="text-center"></th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @click="picked(item,$event)"
                                    :value="item.id" :checked="contractSeleted===item.id"></td>
-                        <td><i class="fa fa-star" v-if="item.mark === 1"></i></td>
+                        <td class="text-left">
+                            <i class="fa fa-star" v-if="item.mark === 1"></i>
+                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
+                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
+                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
+                        </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.drawer}}</td>
@@ -129,7 +133,9 @@
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
-                            <span class="label label-success" v-if="item.passed === 5">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-success" v-if="item.passed === 5">
+                                {{dictionary.passed[item.passed]}}
+                            </span>
                             <span class="label label-warning" v-if="item.passed !== 5">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
@@ -137,13 +143,6 @@
                                 详情
                             </router-link>
                         </td>
-                        <td>
-                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
-                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
-
-                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
-                        </td>
-
                     </tr>
                     <tr v-if="isShow">
                         <td colspan="15" class="text-center text-muted">
@@ -419,7 +418,7 @@
         color: #0E90D2;
     }
     .label{
-        width: 78px;
         display: inline-block;
+        width: 78px;
     }
 </style>

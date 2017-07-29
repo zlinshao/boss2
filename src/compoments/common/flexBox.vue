@@ -2,12 +2,12 @@
     <div class="flexBox">
         <div class="form-group">
             <label class="col-sm-2 control-label">收房月单价</label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第一年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 icons">
                     <i class="fa fa-plus-circle" @click="addMoreYears"></i>
                     <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>
                 </div>
@@ -16,7 +16,7 @@
 
         <div class="form-group" v-show="moreYears>=2">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第二年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control margin_0" v-model="data[1]" @blur="sendData">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=3">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第三年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[2]" @blur="sendData">
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=4">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第四年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[3]" @blur="sendData">
@@ -43,7 +43,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=5">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第五年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[4]" @blur="sendData">
@@ -52,7 +52,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=6">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第六年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[5]" @blur="sendData">
@@ -61,7 +61,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=7">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第七年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[6]" @blur="sendData">
@@ -70,7 +70,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=8">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第八年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[7]" @blur="sendData">
@@ -79,7 +79,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=9">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第九年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[8]" @blur="sendData">
@@ -88,7 +88,7 @@
         </div>
         <div class="form-group"  v-show="moreYears>=10">
             <label class="col-sm-2 control-label"></label>
-            <div class="form-group col-sm-8">
+            <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第十年</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" v-model="data[9]" @blur="sendData">
@@ -98,7 +98,9 @@
     </div>
 </template>
 <style scoped>
-
+    .icons{
+        user-select: none;
+    }
     .col-sm-3 i{
         line-height: 34px;
         font-size: 20px;

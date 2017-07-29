@@ -41,7 +41,7 @@
                                 <div><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
                                 <div><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
                                 <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a v-show="msg.pay_type.length>1" @click="showChange(1)">变化</a></span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
+                                <div><span class="text-primary">收房月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
                                 <div><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
                                 <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                             </div>
@@ -311,18 +311,6 @@
     .client_info > div > div > div span a{
         margin-left: 12px;
         font-size: 8px;
-    }
-
-    .yellow {
-        background-color: #F9E175;
-    }
-
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
     }
 
     #change .modal-body>div span:nth-child(1){

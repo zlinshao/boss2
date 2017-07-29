@@ -233,7 +233,7 @@
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="font-size: 20px;">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-warning" style="top: -8px;right: -20px;">{{new_info.count}}</span>
+                                <span class="badge bg-warning" style="top: -6px;right: -12px;">{{new_info.count}}</span>
                             </a>
                             <ul class="dropdown-menu extended notification roll"
                                 style="top: 30px;left: -88px;">
@@ -361,10 +361,10 @@
                             <span>组长报备</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 34}" @click='pitch_on(34)'>
                                 <router-link to='/reportedCollect'>收房报备</router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 35}" @click='pitch_on(35)'>
                                 <router-link to='/reportedRenting'>租房报备</router-link>
                             </li>
                         </ul>

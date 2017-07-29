@@ -104,11 +104,9 @@
                     this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
                         if(res.data.code === '20010'){
                             this.houseList=res.data.data;
-                            this.keywords='';
                             this.isShow = false;
                         }else {
                             this.houseList=[];
-                            this.keywords='';
                             this.isShow = true;
                         }
                     })
@@ -127,6 +125,7 @@
                     this.$emit('House',this.houseAddress);
                     $('.selectHouse').modal('hide');
                     this.houseList=[];
+                    this.keywords='';
                 }
             },
         }
