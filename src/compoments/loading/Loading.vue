@@ -19,7 +19,7 @@
 		position: fixed;
 		left: 0;
 		top:200px;
-		z-index: 1000;
+		z-index: 10000;
 		width:100%;
 		height:90px;
 	}
