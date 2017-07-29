@@ -357,9 +357,9 @@
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
-                    this.wait = 2;
 //                列表
                     this.$http.post('core/customer/customerList/page/' + val).then((res) => {
+                        this.wait = 2;
                         if (res.data.code === '70030') {
                             this.custom_list = res.data.data.list;
                             this.paging = res.data.data.pages;
