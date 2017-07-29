@@ -326,7 +326,7 @@
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-home"></i>
-                            <span>房屋管理</span>
+                            <span>房源管理</span>
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 3}" @click='pitch_on(3)'>
