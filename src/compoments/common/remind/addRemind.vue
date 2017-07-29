@@ -106,7 +106,18 @@
             times (val){
                 this.remindTimes = val;
             },
-
+            IsPC(){
+                let userAgentInfo = navigator.userAgent;
+                let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+                let flag = true;
+                for (let v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = false;
+                        break;
+                    }
+                }
+                return flag;
+            },
 //            选择时间
             remind_time (){
                 $('.remind_datetime').datetimepicker({
@@ -116,6 +127,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
+                    pickerPosition: this.IsPC()?'bottom-left':'top-right',
                 }).on('changeDate', function (ev) {
                     this.remindTime = ev.target.value;
                 }.bind(this));
