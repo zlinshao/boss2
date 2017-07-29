@@ -100,59 +100,59 @@
         <!--内容区-->
         <div class="row">
             <!--合同信息-->
-            <div class="col-md-3">
-                <section class="panel roll" style="height: 500px;overflow: auto;">
-                    <header class="panel-heading">
-                        <i class="fa fa-file-text"></i>&nbsp;合同信息
-                    </header>
-                    <!--合同信息-->
-                    <div class="panel-body table-responsive roll">
-                        <table class="table contract_info">
-                            <tbody>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark"></i></a></td>
-                                <td colspan="2" style="min-width: 200px;">2017-07-20&nbsp;至&nbsp;2017-07-20</td>
-                            </tr>
-                            <tr>
-                                <td><a><i class="fa fa-bookmark-o"></i></a></td>
-                                <td>合同编号</td>
-                                <td>
-                                    <router-link class="text-primary" to="">LJ0000000</router-link>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>房屋地址</td>
-                                <td>积善公寓0-000</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>负责人</td>
-                                <td>林琪巧月</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>合同时间</td>
-                                <td class="paddingTop">
-                                    <a data-v-2f43a2b3="" href="#">
-                                        <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                            <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                                 aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                 :style="{ width: progress + '%'}">
-                                                <span data-v-2f43a2b3="" class="sr-only">{{progress}}% Complete</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <!--<div class="col-md-3">-->
+                <!--<section class="panel roll" style="height: 500px;overflow: auto;">-->
+                    <!--<header class="panel-heading">-->
+                        <!--<i class="fa fa-file-text"></i>&nbsp;合同信息-->
+                    <!--</header>-->
+                    <!--&lt;!&ndash;合同信息&ndash;&gt;-->
+                    <!--<div class="panel-body table-responsive roll">-->
+                        <!--<table class="table contract_info">-->
+                            <!--<tbody>-->
+                            <!--<tr>-->
+                                <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                                <!--<td colspan="2" style="min-width: 200px;">2017-07-20&nbsp;至&nbsp;2017-07-20</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
+                                <!--<td>合同编号</td>-->
+                                <!--<td>-->
+                                    <!--<router-link class="text-primary" to="">LJ0000000</router-link>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td></td>-->
+                                <!--<td>房屋地址</td>-->
+                                <!--<td>积善公寓0-000</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td></td>-->
+                                <!--<td>负责人</td>-->
+                                <!--<td>林琪巧月</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td></td>-->
+                                <!--<td>合同时间</td>-->
+                                <!--<td class="paddingTop">-->
+                                    <!--<a data-v-2f43a2b3="" href="#">-->
+                                        <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
+                                            <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+                                                 <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
+                                                 <!--:style="{ width: progress + '%'}">-->
+                                                <!--<span data-v-2f43a2b3="" class="sr-only">{{progress}}% Complete</span>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
 
-                </section>
-            </div>
+                <!--</section>-->
+            <!--</div>-->
             <!--沟通日志/房屋信息-->
-            <div class="col-md-9">
+            <div class="col-xs-12">
                 <section class="panel roll" style="height: 500px;overflow: auto;">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
@@ -160,10 +160,9 @@
                                 <a data-toggle="tab" href="#home" aria-expanded="true"><i
                                         class="fa fa-pencil-square-o"></i>&nbsp;沟通日志</a>
                             </li>
-                            <li class="">
-                                <a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-home"></i>&nbsp;房屋信息</a>
-                            </li>
-
+                            <!--<li class="">-->
+                                <!--<a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-home"></i>&nbsp;房屋信息</a>-->
+                            <!--</li>-->
                         </ul>
                     </header>
                     <div class="panel-body">
@@ -203,7 +202,7 @@
                                     </div>
                                 </div>
                                 <!--跟进记录-->
-                                <section class="panel" v-for="daily in daily_record"
+                                <section class="panel col-md-6" v-for="daily in daily_record"
                                          style="margin-bottom: 0;padding-bottom: 0;">
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek cheek1">
@@ -223,41 +222,41 @@
                             </div>
 
                             <!--房屋信息-->
-                            <div id="about" class="tab-pane">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <section class="panel table-responsive">
-                                            <table class="table table-striped table-advance table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th class="text-center">房屋地址</th>
-                                                    <th class="text-center">房型</th>
-                                                    <th class="text-center">状态</th>
-                                                    <th class="text-center">负责人</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <router-link :to="{path:'/okCollect',query: {houseId: ''}}">
-                                                            积善公寓2-302
-                                                        </router-link>
-                                                    </td>
-                                                    <td class="text-center">三房一室一厅</td>
-                                                    <td class="text-center">已成交</td>
-                                                    <td class="text-center">负责人</td>
-                                                </tr>
-                                                <tr v-show="">
-                                                    <td colspan="12" class="text-center text-muted">
-                                                        <h4>暂无数据....</h4>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--<div id="about" class="tab-pane">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-md-12">-->
+                                        <!--<section class="panel table-responsive">-->
+                                            <!--<table class="table table-striped table-advance table-hover">-->
+                                                <!--<thead>-->
+                                                <!--<tr>-->
+                                                    <!--<th class="text-center">房屋地址</th>-->
+                                                    <!--<th class="text-center">房型</th>-->
+                                                    <!--<th class="text-center">状态</th>-->
+                                                    <!--<th class="text-center">负责人</th>-->
+                                                <!--</tr>-->
+                                                <!--</thead>-->
+                                                <!--<tbody>-->
+                                                <!--<tr>-->
+                                                    <!--<td class="text-center">-->
+                                                        <!--<router-link :to="{path:'/okCollect',query: {houseId: ''}}">-->
+                                                            <!--积善公寓2-302-->
+                                                        <!--</router-link>-->
+                                                    <!--</td>-->
+                                                    <!--<td class="text-center">三房一室一厅</td>-->
+                                                    <!--<td class="text-center">已成交</td>-->
+                                                    <!--<td class="text-center">负责人</td>-->
+                                                <!--</tr>-->
+                                                <!--<tr v-show="">-->
+                                                    <!--<td colspan="12" class="text-center text-muted">-->
+                                                        <!--<h4>暂无数据....</h4>-->
+                                                    <!--</td>-->
+                                                <!--</tr>-->
+                                                <!--</tbody>-->
+                                            <!--</table>-->
+                                        <!--</section>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </section>

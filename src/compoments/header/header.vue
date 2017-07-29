@@ -343,12 +343,12 @@
                             <span>合同管理</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
                                 <router-link to="/collectContract">
                                     <span>收房合同</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 25}" @click='pitch_on(25)'>
                                 <router-link to="/rentingContract">
                                     <span>租房合同</span>
                                 </router-link>
