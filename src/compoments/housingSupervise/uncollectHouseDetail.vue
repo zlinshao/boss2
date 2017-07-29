@@ -2,15 +2,15 @@
     <div>
         <ol class="breadcrumb">
             <li>房源管理</li>
-            <li>代收房源</li>
-            <li>代收房源详情</li>
+            <li>待收房源</li>
+            <li>待收房源详情</li>
         </ol>
         <section class="panel">
             <div class="panel-body" v-for="item in houseDetail">
                 <header>
                     <h4>
                         <i class="fa fa-home"></i>&nbsp;{{item.amap_json.villageName}}
-                        <a data-toggle="modal" class="pull-right" @click="editUncollect">编辑</a>
+                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editUncollect"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info"  >

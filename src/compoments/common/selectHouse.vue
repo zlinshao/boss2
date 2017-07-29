@@ -120,7 +120,6 @@
                 this.houseAddress.address=item.amap_json.villageName;
             },
             ensure(){
-
                 if(this.houseAddress.id === ''){
                     this.info.error = '请先选择房屋';
                     this.info.state_error = true;

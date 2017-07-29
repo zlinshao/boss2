@@ -128,8 +128,8 @@
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
-                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
-                            <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-success" v-if="item.passed === 5">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-warning" v-if="item.passed !== 5">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
                             <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id,flag:'detail'}}">
@@ -416,5 +416,9 @@
     }
     .operate:hover{
         color: #0E90D2;
+    }
+    .label{
+        width: 78px;
+        display: inline-block;
     }
 </style>
