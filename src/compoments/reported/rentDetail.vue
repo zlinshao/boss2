@@ -46,9 +46,10 @@
                                 <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
                                 <div><span class="text-primary">付款方式：</span>
                                     <span>
-                                        支付宝
+                                        <!--支付宝-->
+                                        {{dict.rent_payment[msg.payment[0].payment_id]}}
                                         &nbsp;
-                                        112
+                                        {{msg.payment[0].money}}
                                         <a v-show="msg.payment.length>1" data-toggle="modal" data-target="#change">变化</a>
                                     </span>
                                 </div>
@@ -102,8 +103,9 @@
                         <h4 class="modal-title">付款方式</h4>
                     </div>
                     <div class="modal-body clearFix">
+                        <!--dict.rent_payment[msg.payment[0].payment_id]-->
                         <div class="col-sm-12 clearFix" v-for="item in msg.payment">
-                            <span class="col-sm-5">{{item.payment_id}}</span>
+                            <span class="col-sm-5">{{dict.rent_payment[item.payment_id]}}</span>
                             <span class="col-sm-7">{{item.money}}元</span>
                         </div>
                     </div>

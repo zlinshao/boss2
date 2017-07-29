@@ -1,7 +1,7 @@
 <template>
     <div class="flexBox">
         <div class="form-group">
-            <label class="col-sm-2 control-label">收房月单价</label>
+            <label class="col-sm-2 control-label">收房月单价 <sup class="required">*</sup></label>
             <div class="col-sm-8 padding_0">
                 <label class="col-sm-3 control-label">第一年</label>
                 <div class="col-sm-6">
