@@ -1,8 +1,8 @@
 <template>
     <div>
         <ol class="breadcrumb">
-            <li>房屋管理</li>
-            <li>已收房源</li>
+            <li>房源管理</li>
+            <li>公司房源</li>
         </ol>
         <section class="panel">
             <!--未选中-->

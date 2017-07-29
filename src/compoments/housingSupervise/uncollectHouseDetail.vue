@@ -1,28 +1,28 @@
 <template>
     <div>
         <ol class="breadcrumb">
-            <li>房屋管理</li>
-            <li><router-link to="/noCollect">未收房源</router-link></li>
-            <li>未收房源详情</li>
+            <li>房源管理</li>
+            <li>代收房源</li>
+            <li>代收房源详情</li>
         </ol>
         <section class="panel">
-            <div class="panel-body">
+            <div class="panel-body" v-for="item in houseDetail">
                 <header>
                     <h4>
-                        <i class="fa fa-home"></i>&nbsp;未收房屋信息
+                        <i class="fa fa-home"></i>&nbsp;{{item.amap_json.villageName}}
                         <a data-toggle="modal" class="pull-right" @click="editUncollect">编辑</a>
                     </h4>
                 </header>
-                <div class="panel-body table-responsive client_info"  v-for="item in houseDetail">
+                <div class="panel-body table-responsive client_info"  >
                     <div>
                         <div class="col-md-4">
-                            <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span></div>
+                            <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageAddress}}</span></div>
                             <div>
                                 <span class="text-primary">房型：</span>
                                 <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
                             </div>
                             <div><span class="text-primary">面积：</span><span>{{item.area}}㎡</span></div>
-                            <div><span class="text-primary">面积：</span><span>{{item.reference}} 元</span></div>
+                            <div><span class="text-primary">参考价格：</span><span>{{item.reference}} 元</span></div>
                             <div><span class="text-primary">装修：</span><span>{{dictionary.decoration[item.decoration]}}</span></div>
                             <div>
                                 <span class="text-primary">个人/中介：</span>

@@ -61,113 +61,113 @@
         <div class="row">
 
             <!--应付款/打款/合同信息-->
-            <div class="col-md-3">
-                <!--应付款-->
-                <section class="panel roll">
-                    <header class="panel-heading">
-                        应付款
-                    </header>
-                    <div class="panel-body table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr class="text-center">
-                                <td>当月应付</td>
-                                <td>付款进度</td>
-                                <td>本次打款时间</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="text-center">
-                                <td>2000</td>
-                                <td>
-                                    <div class="progress progress-striped active">
-                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar" style="width: 50%;">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>2017-07-05</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <!--打款-->
-                <section class="panel roll pay">
-                    <header class="panel-heading">
-                        打款
-                        <a class="pull-right" @click="transferDetail">更多</a>
-                    </header>
-                    <div class="panel-body table-responsive">
-                        <div class="total">
-                            合计:123456
-                            未打款:123456
-                            <br>
-                            打款账号:12345678913246587
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr class="lightGray text-center">
-                                    <td>打款时间</td>
-                                    <td>打款金额</td>
-                                    <td>打款人</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="text-center">
-                                    <td>2017-06-23</td>
-                                    <td>2000</td>
-                                    <td>哈哈</td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>2017-06-23</td>
-                                    <td>2000</td>
-                                    <td>哈哈</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <!--合同信息-->
-                <section class="panel roll contract">
-                    <header class="panel-heading">
-                        合同信息
-                        <a class="pull-right" @click="contractInfo">更多</a>
-                    </header>
-                    <div class="panel-body table-responsive">
-                        <table class="table contract_info">
-                            <tbody>
-                                <tr>
-                                    <td><a><i class="fa fa-bookmark"></i></a></td>
-                                    <td colspan="2">2017-07-20&nbsp;至&nbsp;2017-05-16</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>合同编号</td>
-                                    <td>合同编号</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>房屋地址</td>
-                                    <td>合同编号合同编号</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>负责人</td>
-                                    <td>合同编号</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>结束原因</td>
-                                    <td>合约到期</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <!--<div class="col-md-3">-->
+                <!--&lt;!&ndash;应付款&ndash;&gt;-->
+                <!--<section class="panel roll">-->
+                    <!--<header class="panel-heading">-->
+                        <!--应付款-->
+                    <!--</header>-->
+                    <!--<div class="panel-body table-responsive">-->
+                        <!--<table class="table">-->
+                            <!--<thead>-->
+                            <!--<tr class="text-center">-->
+                                <!--<td>当月应付</td>-->
+                                <!--<td>付款进度</td>-->
+                                <!--<td>本次打款时间</td>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr class="text-center">-->
+                                <!--<td>2000</td>-->
+                                <!--<td>-->
+                                    <!--<div class="progress progress-striped active">-->
+                                        <!--<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar" style="width: 50%;">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                                <!--<td>2017-07-05</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</section>-->
+                <!--&lt;!&ndash;打款&ndash;&gt;-->
+                <!--<section class="panel roll pay">-->
+                    <!--<header class="panel-heading">-->
+                        <!--打款-->
+                        <!--<a class="pull-right" @click="transferDetail">更多</a>-->
+                    <!--</header>-->
+                    <!--<div class="panel-body table-responsive">-->
+                        <!--<div class="total">-->
+                            <!--合计:123456-->
+                            <!--未打款:123456-->
+                            <!--<br>-->
+                            <!--打款账号:12345678913246587-->
+                        <!--</div>-->
+                        <!--<table class="table">-->
+                            <!--<thead>-->
+                                <!--<tr class="lightGray text-center">-->
+                                    <!--<td>打款时间</td>-->
+                                    <!--<td>打款金额</td>-->
+                                    <!--<td>打款人</td>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+                                <!--<tbody>-->
+                                <!--<tr class="text-center">-->
+                                    <!--<td>2017-06-23</td>-->
+                                    <!--<td>2000</td>-->
+                                    <!--<td>哈哈</td>-->
+                                <!--</tr>-->
+                                <!--<tr class="text-center">-->
+                                    <!--<td>2017-06-23</td>-->
+                                    <!--<td>2000</td>-->
+                                    <!--<td>哈哈</td>-->
+                                <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</section>-->
+                <!--&lt;!&ndash;合同信息&ndash;&gt;-->
+                <!--<section class="panel roll contract">-->
+                    <!--<header class="panel-heading">-->
+                        <!--合同信息-->
+                        <!--<a class="pull-right" @click="contractInfo">更多</a>-->
+                    <!--</header>-->
+                    <!--<div class="panel-body table-responsive">-->
+                        <!--<table class="table contract_info">-->
+                            <!--<tbody>-->
+                                <!--<tr>-->
+                                    <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                                    <!--<td colspan="2">2017-07-20&nbsp;至&nbsp;2017-05-16</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td></td>-->
+                                    <!--<td>合同编号</td>-->
+                                    <!--<td>合同编号</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td></td>-->
+                                    <!--<td>房屋地址</td>-->
+                                    <!--<td>合同编号合同编号</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td></td>-->
+                                    <!--<td>负责人</td>-->
+                                    <!--<td>合同编号</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td></td>-->
+                                    <!--<td>结束原因</td>-->
+                                    <!--<td>合约到期</td>-->
+                                <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
 
-                </section>
-            </div>
+                <!--</section>-->
+            <!--</div>-->
             <!--基本信息/房屋信息/合同附件-->
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <section class="panel roll">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
@@ -474,64 +474,64 @@
                             <div id="contract" class="tab-pane ">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">证件照片<sup>*</sup></span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">证件照片<sup>*</sup></span>
+                                        <span class="col-lg-11">
                                              <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
                                                   v-for="(img,index) in item.customer_id.album.id_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">银行卡<sup>*</sup></span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">银行卡<sup>*</sup></span>
+                                        <span class="col-lg-11">
                                              <img :src="img.small" @click="showLargePic('bank_pic',index)"
                                                   v-for="(img,index) in item.album.bank_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">合同照片<sup>*</sup></span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">合同照片<sup>*</sup></span>
+                                        <span class="col-lg-11">
                                              <img :src="img.small" @click="showLargePic('contract_pic',index)"
                                                   v-for="(img,index) in item.album.contract_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">水费照片</span>
-                                        <span class="col-lg-10" >
+                                        <span class="col-lg-1">水费照片</span>
+                                        <span class="col-lg-11" >
                                             <img :src="img.small" @click="showLargePic('water_card_pic',index)"
                                                  v-for="(img,index) in item.album.water_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">电费照片</span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">电费照片</span>
+                                        <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('elec_card_pic',index)"
                                                  v-for="(img,index) in item.album.elec_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">燃气费照片</span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">燃气费照片</span>
+                                        <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('gas_card_pic',index)"
                                                  v-for="(img,index) in item.album.gas_card_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">交接单照片</span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">交接单照片</span>
+                                        <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('handover_pic',index)"
                                                  v-for="(img,index) in item.album.handover_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">委托书</span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-1">委托书</span>
+                                        <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('proxy_pic',index)"
                                                  v-for="(img,index) in item.album.proxy_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-2">押金收条</span>
-                                        <span class="col-lg-10" >
+                                        <span class="col-lg-1">押金收条</span>
+                                        <span class="col-lg-11" >
                                             <img :src="img.small" @click="showLargePic('receipt_pic',index)"
                                                  v-for="(img,index) in item.album.receipt_pic">
                                         </span>
@@ -553,14 +553,14 @@
                                     <!--</div>-->
                                     <!--</div>-->
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2">增加回访日志</label>
+                                        <label class="col-sm-1">增加回访日志</label>
                                         <div style="margin-bottom: 16px; display: inline-block ">
                                             <textarea class="form-control" v-model="returnRecorde" cols="80" rows="5"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group inputdata">
-                                        <label class="col-sm-2 col-sm-2 control-label"
-                                               style="margin-top: 13px;">满意度</label>
+                                        <label class="col-sm-1 control-label"
+                                               style="margin-top: 10px;">满意度</label>
                                         <p class="all">
                                             <input type="radio" name="b" value=""  v-model="inputdata"/>
                                             <span><i class="fa fa-star"></i></span>
@@ -587,9 +587,9 @@
                                 </div>
 
                                 <!--跟进记录-->
-                                <div style="margin-top: 20px">
-                                    <div class="panel" v-for="record in item.review_log"
-                                             style="margin-bottom: 0;padding-bottom: 0;">
+                                <div style="margin-top: 20px" class="row">
+                                    <div class="panel col-sm-6" v-for="record in item.review_log"
+                                             style="margin-bottom: 0;padding-bottom: 0;" >
                                         <div class="panel-body">
                                             <div class="panel-body table-responsive cheek cheek1">
                                                 <div><span>{{record.create_time}}</span></div>
@@ -618,7 +618,7 @@
                             <!--添加备忘录-->
                             <div id="memorandum" class="tab-pane">
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2">添加备忘录</label>
+                                    <label class="col-sm-1">添加备忘录</label>
                                     <div style="margin-bottom: 16px; display: inline-block ">
                                         <textarea class="form-control" v-model="memorandum" cols="80" rows="5"></textarea>
                                     </div>
@@ -1032,7 +1032,7 @@
         display: inline-block;
         font-size: 16px;
         position:absolute;
-        bottom:18px;
+        bottom:15px;
         margin-left: 15px;
         color: #ccc;
     }
@@ -1042,10 +1042,10 @@
         }
     }
     .all{display:inline-block}
-    .all>input{opacity:0;position:absolute; bottom:5px;width:30px;height:30px;margin:0;}
+    .all>input{opacity:0;position:absolute; bottom:5px;width:25px;height:25px;margin:0;}
     .all>input:nth-of-type(1),
     .all>span:nth-of-type(1){display:none;}
-    .all>span{font-size:30px;color:gold;
+    .all>span{font-size:25px;color:gold;
         -webkit-transition:color .2s;
         transition:color .2s;
     }

@@ -1,27 +1,24 @@
 <template>
     <div>
         <ol class="breadcrumb">
-            <li>房屋管理</li>
-            <li>
-                <router-link to="/okCollect">已收房源</router-link>
-            </li>
-            <li>已收房源详情</li>
+            <li>房源管理</li>
+            <li>公司房源</li>
+            <li>公司房源详情</li>
         </ol>
         <!--头部-->
         <section class="panel">
-            <div class="panel-body">
+            <div class="panel-body"  v-for="item in houseDetail">
                 <header>
                     <h4 class="row">
-
-                        <i class="fa fa-home"></i>&nbsp;已收房屋信息
+                        <i class="fa fa-home"></i>&nbsp;{{item.amap_json.villageName}}
                         <a data-toggle="modal" class="pull-right" @click="editcollect">编辑</a>
                     </h4>
                 </header>
-                <div class="panel-body table-responsive client_info" v-for="item in houseDetail">
+                <div class="panel-body table-responsive client_info">
                     <div>
                         <div class="col-md-12">
                             <div class="col-md-4">
-                                <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageName}}</span>
+                                <div><span class="text-primary">详细地址：</span><span>{{item.amap_json.villageAddress}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">房型：</span>
