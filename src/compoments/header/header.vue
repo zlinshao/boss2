@@ -1028,8 +1028,9 @@
                 }
 
                 function onError(data) {
-                    alert('定位失败');
-                    alert(data);
+//                    alert('定位失败');
+//                    alert(data);
+//                    console.log(data);
                 }
             },
             IsPC(){
