@@ -170,7 +170,7 @@
 
                             <!--沟通日志-->
                             <div id="home" class="tab-pane active">
-                                <div class="form-group">
+                                <div class="form-group clearFix">
                                     <label class="col-sm-2 col-sm-2 control-label">跟进方式</label>
                                     <div class="col-sm-10" style="padding-left: 0;">
                                         <div class="col-sm-4">
@@ -188,13 +188,13 @@
                                 <!--</select>-->
                                 <!--</div>-->
                                 <!--</div>-->
-                                <div class="form-group">
+                                <div class="form-group clearFix" style="margin-bottom: 0;">
                                     <label class="col-sm-2 col-sm-2 control-label"
                                            style="margin-top: 16px;">增加跟进记录</label>
-                                    <div class="col-sm-10" style="margin-bottom: 16px;">
+                                    <div class="col-sm-10">
                                         <textarea class="form-control" v-model="follow_up"
                                                   style="margin-bottom: 16px;"></textarea>
-                                        <div class="pull-right">
+                                        <div style="text-align: right">
                                             <button class="btn btn-default" @click="follow_up_take('resetting')">取消
                                             </button>
                                             <button class="btn btn-primary" @click="follow_up_take('ok')">确定</button>
@@ -203,7 +203,7 @@
                                 </div>
                                 <!--跟进记录-->
                                 <section class="panel col-md-6" v-for="daily in daily_record"
-                                         style="margin-bottom: 0;padding-bottom: 0;">
+                                         style="margin-bottom: 0;padding: 0;">
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek cheek1">
                                             <div><span>{{daily.create_time}}</span></div>
