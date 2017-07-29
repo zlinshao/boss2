@@ -132,9 +132,9 @@
                             <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
                         </td>
                         <td>
-                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id,flag:'detail'}}"
-                                         class=" fa fa-eye" title="合同详情"></router-link>
-
+                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id,flag:'detail'}}">
+                                详情
+                            </router-link>
                         </td>
                         <td>
                             <i class="fa fa-lock" v-if="item.status !== 1" ></i>
@@ -209,6 +209,7 @@
                 mark:'',
                 status:'',
                 confirmMsg:[],
+                msgFlag : '',
             }
         },
         updated (){
@@ -320,40 +321,47 @@
             deleteContract(){
                 this.confirmMsg = {msg:'您确定删除吗'};
                 $('#confirm').modal('show');
+                this.msgFlag = 'delete';
+
+            },
+            deblocking(){  //解锁
+                this.confirmMsg = {msg:'您确定解锁吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'lock';
 
             },
             getConfirm(){
-                this.$http.get('core/rent/delete/id/' + this.contractSeleted).then((res) => {
-                    if(res.data.code === '80030'){
-                        this.search();
-                        this.contractSeleted = 0;
-                        this.info.success =res.data.msg;
-
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else {
-                        this.info.error =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
+                if(this.msgFlag === 'delete'){
+                    this.$http.get('core/collect/delete/id/' + this.contractSeleted).then((res) => {
+                        if(res.data.code === '70030'){
+                            this.search();
+                            this.contractSeleted = 0;
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }else if(this.msgFlag === 'lock'){
+                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                        if(res.data.code === '70010'){
+                            this.search();
+                            this.contractSeleted = 0;
+                            this.houseId = '';
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }
             },
-            deblocking(){  //解锁
-                this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
-                    if(res.data.code === '70010'){
-                        this.search();
-                        this.contractSeleted = 0;
-                        this.houseId = '';
-                        this.info.success =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else {
-                        this.info.error =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
-            }
         }
     }
 </script>
