@@ -339,6 +339,24 @@
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
+                            <i class="fa fa-file-text"></i>
+                            <span>合同管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to="/collectContract">
+                                    <span>收房合同</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/rentingContract">
+                                    <span>租房合同</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
                             <i class="fa fa-sitemap"></i>
                             <span>人资管理</span>
                         </a>
@@ -470,24 +488,6 @@
                             </li>
                             <li>
                                 <router-link to='/reportedRenting'>租房报备</router-link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-file-text"></i>
-                            <span>合同管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li>
-                                <router-link to="/collectContract">
-                                    <span>收房合同</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/rentingContract">
-                                    <span>租房合同</span>
-                                </router-link>
                             </li>
                         </ul>
                     </li>
