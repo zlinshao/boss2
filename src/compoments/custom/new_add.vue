@@ -356,6 +356,7 @@
             msg(val) {
                 if (val === 'new') {
                     this.btn_state = true;                    //新增
+                    this.cus_cancel ();
                 }
                 if (val === 'rev') {
                     this.btn_state = false;                    //修改

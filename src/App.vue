@@ -12,17 +12,32 @@
             <!--loading-->
             <loading v-show="loading"></loading>
 
-            <div id="custom_service" @mouseenter="show" @mouseleave="hide">
-                <img src="../src/assets/img/u1032.png" alt="">
-                <ul>
+            <div class="btn-group dropup" id="custom_service">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-question-circle-o"></span>
+                    <span class="sr-only">咨询</span>
+                </button>
+                <ul class="dropdown-menu" style="left: -120px;">
                     <li data-toggle="modal" data-target="#contact">
-                        <i class="fa fa-phone"></i>咨询电话
+                        <a href="#"><i class="fa fa-phone"></i>咨询电话</a>
                     </li>
                     <li data-toggle="modal" data-target="#suggest">
-                        <i class="fa fa-edit"></i>建议反馈
+                        <a href="#"><i class="fa fa-edit"></i>建议反馈</a>
                     </li>
                 </ul>
             </div>
+            <!--<div id="custom_service" @mouseenter="show" @mouseleave="hide">-->
+                <!--&lt;!&ndash;<img src="../src/assets/img/u1032.png" alt="">&ndash;&gt;-->
+                <!--<i class="fa fa-phone"></i>-->
+                <!--<ul>-->
+                    <!--<li data-toggle="modal" data-target="#contact">-->
+                        <!--<i class="fa fa-phone"></i>咨询电话-->
+                    <!--</li>-->
+                    <!--<li data-toggle="modal" data-target="#suggest">-->
+                        <!--<i class="fa fa-edit"></i>建议反馈-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </section>
 
         <!--咨询电话-->
@@ -162,12 +177,12 @@
                     }
                 });
             },
-            show(){
-                $('#custom_service ul').show()
-            },
-            hide(){
-                $('#custom_service ul').hide()
-            },
+//            show(){
+//                $('#custom_service ul').show()
+//            },
+//            hide(){
+//                $('#custom_service ul').hide()
+//            },
             sendSuggest(){
 //                console.log(this.$route.name);
                 this.suggestMsg.feedback_url = this.$route.fullPath;
@@ -206,54 +221,75 @@
 </script>
 
 <style scoped>
-    #custom_service {
-
+    #custom_service{
         position: fixed;
         bottom: 10px;
         right: 10px;
-        font-size: 20px;
-        /*background: #00C1DE;*/
-        background-color: white;
         z-index: 100;
-        border: 0;
+    }
+    #custom_service > button{
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-    }
-
-    #custom_service img {
-        width: 50px;
-    }
-
-    #custom_service ul {
         background-color: white;
-        padding: 0 10px;
-        margin: 0;
-        position: absolute;
-        top: -86px;
-        right: 0;
-        border-radius: 5px;
-        border: 1px solid #000;
-        font-size: 16px;
-        display: none;
     }
-
-    #custom_service ul li {
-        padding: 10px 12px;
-        text-align: center;
-        width: 140px;
-        cursor: pointer;
-    }
-
-    #custom_service ul li:hover {
+    #custom_service > button > .fa-question-circle-o{
+        font-size: 47px;
+        margin-left: -13px;
+        margin-top: -10px;
         color: #000;
     }
+    /*#custom_service {*/
+        /*position: fixed;*/
+        /*bottom: 10px;*/
+        /*right: 10px;*/
+        /*font-size: 20px;*/
+        /*width: 50px;*/
+        /*height: 50px;*/
+        /*!*background: #00C1DE;*!*/
+        /*background-color: white;*/
+        /*z-index: 100;*/
+        /*border: 0;*/
+        /*border-radius: 50%;*/
+        /*text-align: center;*/
+    /*}*/
 
-    #custom_service ul li i {
-        margin-right: 12px;
-    }
+    /*#custom_service i{*/
+        /*line-height: 50px;*/
+        /*font-size: 30px;*/
+    /*}*/
 
-    #custom_service ul li + li {
-        border-top: 1px solid #ddd;
-    }
+    /*#custom_service ul {*/
+        /*background-color: white;*/
+        /*padding: 0 10px;*/
+        /*margin: 0;*/
+        /*position: absolute;*/
+        /*top: -86px;*/
+        /*right: 0;*/
+        /*border-radius: 5px;*/
+        /*border: 1px solid #000;*/
+        /*font-size: 16px;*/
+        /*display: none;*/
+    /*}*/
+
+    /*#custom_service ul li {*/
+        /*padding: 10px 12px;*/
+        /*text-align: center;*/
+        /*width: 140px;*/
+        /*cursor: pointer;*/
+    /*}*/
+
+    /*#custom_service ul li:hover {*/
+        /*color: #000;*/
+    /*}*/
+
+    /*#custom_service ul li i {*/
+        /*margin-right: 12px;*/
+    /*}*/
+
+    /*#custom_service ul li + li {*/
+        /*border-top: 1px solid #ddd;*/
+    /*}*/
 
     #contact .modal-body {
         padding: 0 30px;
