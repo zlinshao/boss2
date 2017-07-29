@@ -231,7 +231,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: white;
+        background-color: transparent;
     }
     #custom_service > button > .fa-question-circle-o{
         font-size: 47px;
