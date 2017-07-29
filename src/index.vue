@@ -20,12 +20,12 @@
                                         </tr>
                                         <tr>
                                             <th class="top0"></th>
-                                            <th class="top0">100</th>
-                                            <th class="top0">100</th>
-                                            <th class="top0">100</th>
-                                            <th class="top0">100</th>
-                                            <th class="top0">100</th>
-                                            <th class="top0">100</th>
+                                            <th class="top0">{{bulletin_nanjin.client + bulletin_suzhou.client}}</th>
+                                            <th class="top0">{{bulletin_nanjin.house + bulletin_suzhou.house}}</th>
+                                            <th class="top0">{{bulletin_nanjin.log + bulletin_suzhou.log}}</th>
+                                            <th class="top0">{{bulletin_nanjin.vacancy + bulletin_suzhou.vacancy}}</th>
+                                            <th class="top0">{{bulletin_nanjin.received + bulletin_suzhou.received}}</th>
+                                            <th class="top0">{{bulletin_nanjin.rent + bulletin_suzhou.rent}}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
