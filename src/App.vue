@@ -17,7 +17,7 @@
                     <span class="fa fa-question-circle-o"></span>
                     <span class="sr-only">咨询</span>
                 </button>
-                <ul class="dropdown-menu" style="left: -120px;">
+                <ul class="dropdown-menu" style="left: -124px;">
                     <li data-toggle="modal" data-target="#contact">
                         <a href="#"><i class="fa fa-phone"></i>咨询电话</a>
                     </li>
@@ -228,16 +228,17 @@
         z-index: 100;
     }
     #custom_service > button{
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: transparent;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        border: 0;
+        background-color: #E7EAF1;
     }
     #custom_service > button > .fa-question-circle-o{
-        font-size: 47px;
-        margin-left: -13px;
-        margin-top: -10px;
-        color: #000;
+        font-size: 26px;
+        margin-left: -5px;
+        margin-top: 0;
+        color: #9AABBE;
     }
     /*#custom_service {*/
         /*position: fixed;*/
