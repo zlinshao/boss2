@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>房屋管理</li>
-            <li>未收房源</li>
+            <li>待收房源</li>
         </ol>
         <section class="panel">
             <div class="panel-body">
