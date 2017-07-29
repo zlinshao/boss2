@@ -90,7 +90,6 @@
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="cus_phone"
                                                placeholder="请输入手机号" maxlength="11" style="margin-bottom: 0;">
-                                        <a class="text-danger" @click="proving(exist_id)"><i class="fa fa-delete"></i>{{cus_exist}}</a>
                                     </div>
                                 </div>
                                 <!--进度-->
@@ -248,9 +247,20 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button data-dismiss="modal" v-if="btn_state" class="btn btn-default" type="button" @click="revise_cancel">取消</button>
+                            <div class="form-group">
+                                <div class="col-xs-12" style="padding: 0;margin-bottom: 10px;">
+                                    <a class="text-danger" v-if="cus_exist !== ''" @click="proving(exist_id)"><i
+                                            class="fa fa-delete"></i>{{cus_exist}}</a>
+                                </div>
+                            </div>
 
-                            <button data-dismiss="modal" v-if="!btn_state" class="btn btn-default" type="button" @click="remove_s">取消</button>
+                            <button data-dismiss="modal" v-if="btn_state" class="btn btn-default" type="button"
+                                    @click="revise_cancel">取消
+                            </button>
+
+                            <button data-dismiss="modal" v-if="!btn_state" class="btn btn-default" type="button"
+                                    @click="remove_s">取消
+                            </button>
 
                             <button v-if="btn_state" class="btn btn-success" type="button"
                                     @click="cus_confirm('saveCustomer')"> 确定
@@ -259,6 +269,7 @@
                             <button v-if="!btn_state" class="btn btn-warning" type="button"
                                     @click="cus_confirm('updateCustomer')">修改
                             </button>
+
                         </div>
                     </div>
                 </div>
@@ -428,12 +439,15 @@
                 this.cus_email = '';                      //邮箱
                 this.cus_nature = '1';                    //性格
                 this.cus_remarks = '';                    //备注
+                this.cus_exist = '';                      //共享
             },
 //            共享客户请求
             proving (val){
                 this.$http.get('core/customer/sharecustomer/id/' + val, {}).then((res) => {
                     console.log(res.data);
                     if (res.data.code === '70060') {
+                        $('#customModel').modal('hide');        //成功关闭模态框
+                        this.cus_cancel();
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
                         this.info.state_error = false;

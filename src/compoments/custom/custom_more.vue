@@ -24,7 +24,7 @@
                         </div>
 
                         <!--增加提醒-->
-                        <a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a>
+                        <!--<a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a>-->
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info" v-for="info in cus_info">
@@ -286,7 +286,7 @@
     import LookRemind from '../common/remind/checkRemind.vue';  //查看提醒
     import Status from '../common/status.vue';                  //提示信息
     import PicModal from '../common/largePic.vue'               //查看大图
-    import Sharing from './sharing.vue'                         //查看大图
+    import Sharing from './sharing.vue'                         //共享客户
     export default {
         components: {New_add, PicModal, Status, LookRemind, Sharing},
         data (){

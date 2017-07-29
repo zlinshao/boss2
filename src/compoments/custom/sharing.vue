@@ -6,7 +6,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="cancel">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="cancel">×
+                        </button>
                         <h4 class="modal-title">共享客户</h4>
                     </div>
                     <div class="modal-body">
@@ -22,8 +23,9 @@
                             </div>
                         </form>
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button" @click="cancel">取消</button>
-                            <button class="btn btn-primary" type="button" @click="distribution_ok">确定</button>
+                            <button data-dismiss="modal" class="btn btn-default" type="button" @click="cancel">取消
+                            </button>
+                            <button class="btn btn-primary" type="button" @click="sharing_ok">确定</button>
                         </div>
                     </div>
                 </div>
@@ -82,20 +84,21 @@
                 this.salesman_id.push(val.staff[0].id);
             },
 //            共享
-            distribution_ok (){
+            sharing_ok (){
                 this.$http.get('core/customer/doshare/customer_id/' + this.msg + '/staff_id/' + String(this.salesman_id)).then((res) => {
-                    if(res.data.code === '70070'){
+                    if (res.data.code === '70070') {
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        this.cancel ();
-                        $('#sharing').modal('hide');
-                    }else{
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
+                        this.cancel();
+                        setTimeout(function () {
+                            $('#sharing').modal('hide');
+                        }, 1000);
+
+                    } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
