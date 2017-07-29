@@ -16,8 +16,8 @@
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
                 <span>
-                    <i class="fa fa-lock" v-if="item.villa_id.status !==1"></i>
-                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"></i>
+                    <i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>
+                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1" title="已解锁"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
                 <button class="btn btn-primary" @click="inform">通知</button>
@@ -45,6 +45,16 @@
                         <li>
                             <button class="btn btn-white btn-block" @click="renewContract">
                                 续约
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="renewContract">
+                                转租
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="renewContract">
+                                调租
                             </button>
                         </li>
                     </ul>
@@ -198,11 +208,11 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>合同编号：<sup>*</sup></span>
+                                                <span>合同编号<sup>*</sup>：</span>
                                                 <span>{{item.contract_num}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>年限(月)：<sup>*</sup></span>
+                                                <span>年限(月)<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_rent_id !==null">{{item.checkin_rent_id.months}} 月</span>
                                             </div>
                                             <div class="infoList">
@@ -234,7 +244,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>已收 （定金）：<sup>*</sup></span>
+                                                <span>已收 （定金）<sup>*</sup>：</span>
                                                 <span  v-if="item.checkin_rent_id !==null">
                                                     {{item.checkin_rent_id.received_amount}} 元
                                                 </span>
@@ -249,7 +259,7 @@
                                                 <span>付款方式 （现金）：</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>付款方式 （支付宝）：<sup>*</sup></span>
+                                                <span>付款方式 （支付宝）<sup>*</sup>：</span>
                                                 <span></span>
                                             </div>
                                             <div class="infoList">
@@ -276,7 +286,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>中介名：<sup>*</sup></span>
+                                                <span>中介名<sup>*</sup>：</span>
                                                 <span>{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
                                             </div>
                                             <div class="infoList">
@@ -305,35 +315,35 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主姓名：<sup>*</sup></span>
+                                                <span>业主姓名<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>尊称：<sup>*</sup></span>
+                                                <span>尊称<sup>*</sup>：</span>
                                                 <span>{{dictionary.gender[item.customer_id.gender]}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>国籍：<sup>*</sup></span>
+                                                <span>国籍<sup>*</sup>：</span>
                                                 <span>
                                                     {{dictionary.nationality[item.customer_id.nationality]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>手机号码：<sup>*</sup></span>
+                                                <span>手机号码<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.mobile}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>证件类型：<sup>*</sup></span>.
+                                                <span>证件类型<sup>*</sup>：</span>
                                                 <span>
                                                     {{dictionary.credentials[item.customer_id.id_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>身份证号：<sup>*</sup></span>
+                                                <span>身份证号<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.id_num}}</span>
                                             </div>
                                         </div>
@@ -665,6 +675,7 @@
                 inputdata: '',    //五星好评
                 memorandum:'',   //备忘录
                 tabActive:'',
+                houseId:'',
             }
         },
         mounted(){
@@ -686,7 +697,7 @@
                 this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
-                    console.log(this.contractList)
+                    this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num;
                     this.contract_pass = res.data.data.passed
                 })
@@ -745,7 +756,7 @@
                 $('#confirm').modal('show');
             },
             inform(){   //通知
-                this.confirmMsg = {msg:'您确定通知吗'};
+                this.confirmMsg = {msg:'您确定通知相关（开单人，组长，区长）吗'};
                 this.msgFlag = 'inform';
                 $('#confirm').modal('show');
             },
@@ -761,6 +772,11 @@
             overrule(){ //合同驳回
                 this.confirmMsg = {msg:'您确定驳回吗'};
                 this.msgFlag = 'overrule';
+                $('#confirm').modal('show');
+            },
+            unLock(){
+                this.confirmMsg = {msg:'您确定解锁吗'};
+                this.msgFlag = 'lock';
                 $('#confirm').modal('show');
             },
             getConfirm(){
@@ -816,7 +832,20 @@
                             this.info.state_error = true;
                         }
                     });
-                }
+                }else if(this.msgFlag === 'lock'){
+                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                        if(res.data.code === '70010'){
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.contractDetail();
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                };
             },
             addMemorandum(){
                 this.$http.post('core/memo/savememo',{

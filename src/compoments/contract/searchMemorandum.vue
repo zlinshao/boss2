@@ -24,7 +24,7 @@
                         </span>
                     </div>
                     <div class="input-group bootstrap-timepicker" style="margin: 0 15px;">
-                        <input type="text" class="form-control"  placeholder="地址,客户,备忘录内容"
+                        <input type="text" class="form-control"  placeholder="地址/客户/备忘录内容"
                                v-model="searchRequirement.keywords"  @keyup="search">
                         <span class="input-group-btn">
                             <button class="btn btn-success "  type="button" @click="search">
@@ -67,14 +67,14 @@
                             <th class="text-center">合同编号 </th>
                             <th class="text-center">上传时间</th>
                             <th class="text-center">开单人</th>
-                            <th class="text-center">姓名</th>
+                            <th class="text-center">业主姓名</th>
                             <th class="text-center">地址</th>
                             <th class="text-center">手机号码</th>
                             <th class="text-center">资料补齐时间</th>
                             <th class="text-center">过期情况</th>
                             <th class="text-center">回访情况</th>
-                            <th class="text-center">缺少资料</th>
-                            <th class="text-center">资料状态</th>
+                            <th class="text-center">备忘</th>
+                            <th class="text-center">审核状态</th>
                         </tr>
                     </thead>
                     <tbody>
