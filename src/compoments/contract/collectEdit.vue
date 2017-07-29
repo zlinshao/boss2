@@ -64,8 +64,8 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="remindData" readonly placeholder="空置期开始时间"
-                                                   v-model="contractEdit.vac_start_date" class="form-control form_datetime">
+                                            <input @click="selectDate" readonly placeholder="空置期开始时间"
+                                                   v-model="contractEdit.vac_start_date" class="form-control form_date">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
@@ -87,14 +87,8 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期</label>
-                                        <!--<label class="col-sm-1 control-label col-lg-1" >每</label>-->
-                                        <!--<div class="col-lg-4">-->
-                                            <!--<select  class="form-control">-->
-                                                <!--<option value="">请选择</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.pay_date"
+                                        <div class="col-lg-4">
+                                            <input type="number" class="form-control" v-model="contractEdit.pay_date"
                                                    placeholder="请输入打房租日期">
                                         </div>
                                         <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
@@ -108,8 +102,8 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="remindData" readonly placeholder="资料补齐时间"
-                                                   v-model="contractEdit.complete_date" class="form-control form_datetime">
+                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractEdit.complete_date" class="form-control form_date">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -286,7 +280,7 @@
 
         },
         updated(){
-            this.remindData ();
+            this.selectDate ();
         },
         watch : {
             dictionary(val){
@@ -406,13 +400,14 @@
                     }
                 )
             },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
+            selectDate (){
+                $('.form_date').datetimepicker({
+                    minView: "month",
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
+                    clearBtn: true,
                     pickerPosition: 'bottom-left',
                 }).on('changeDate', ev => {
                     if (ev.target.placeholder === '空置期开始时间'){

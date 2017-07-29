@@ -22,7 +22,7 @@
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </label>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-left: -5px">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 5px">
                         <div class="input-group">
                             <input type="text" readonly class="form-control" placeholder="点击选择部门"
                                    @click="selectDpm" v-model="departmentName">
@@ -31,7 +31,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;margin-right: 5px">
                         <div class="input-group">
                             <input type="text" class="form-control" @keyup="search" placeholder="请输入房屋地址"
                                    v-model="contractSearchInfo.keywords">

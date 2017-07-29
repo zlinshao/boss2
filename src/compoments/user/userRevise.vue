@@ -492,7 +492,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     pickerPosition: 'top-left',
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.enroll = ev.target.value;
                 }.bind(this));
@@ -505,7 +505,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.birthday = ev.target.value;
                 }.bind(this));

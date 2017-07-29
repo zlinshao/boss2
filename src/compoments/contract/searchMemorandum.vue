@@ -44,15 +44,15 @@
                     <li  class="operate" @click="editMember">
                         <i class="fa fa-pencil-square-o"> 编辑</i>&nbsp;
                     </li>
-                    <li  class="operate">
-                        <i class="fa fa-star"> 标记</i>
-                    </li>
-                    <li  class="operate" @click="deleteContract">
-                        <i class="fa fa-times-circle"> 删除</i>
-                    </li>
-                    <li  class="operate">
-                        <i class="fa fa-arrow-up"> 置顶</i>
-                    </li>
+                    <!--<li  class="operate">-->
+                        <!--<i class="fa fa-star"> 标记</i>-->
+                    <!--</li>-->
+                    <!--<li  class="operate" @click="deleteContract">-->
+                        <!--<i class="fa fa-times-circle"> 删除</i>-->
+                    <!--</li>-->
+                    <!--<li  class="operate">-->
+                        <!--<i class="fa fa-arrow-up"> 置顶</i>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </section>
@@ -112,7 +112,7 @@
         <Page :pg="pages" @pag="getPage" :beforePage="currentPage"></Page>
         <Staff :configure='configure' @Staff="staffSeleted"></Staff>
         <Status :state='info'></Status>
-        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
 
         <EditMember :contractId="contractSeleted" @MemoUpdate = 'alreadyUpdate'></EditMember>
     </div>
@@ -123,11 +123,11 @@
     import Page from '../common/page.vue'
     import Staff from '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue';                          //提示信息
-    import Confirm from '../common/confirm.vue'
+//    import Confirm from '../common/confirm.vue'
     import EditMember from  './memorandumEdit.vue'
 
     export default{
-        components: {Page,Staff,Status,DatePicker,Confirm,EditMember},
+        components: {Page,Staff,Status,DatePicker,EditMember},
         data(){
             return {
                 pages: 1,     //总页数
@@ -237,13 +237,13 @@
                 this.searchRequirement.page=1;
                 this.search();
             },
-            deleteContract(){
-                this.confirmMsg = {msg:'您确定删除吗'};
-                $('#confirm').modal('show');
-            },
-            getConfirm(){   //confirm 返回操作
-                
-            },
+//            deleteContract(){
+//                this.confirmMsg = {msg:'您确定删除吗'};
+//                $('#confirm').modal('show');
+//            },
+//            getConfirm(){   //confirm 返回操作
+//
+//            },
             editMember(){
                 $('#memorandumEdit').modal('show');
             },

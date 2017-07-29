@@ -14,7 +14,7 @@
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                             <div class="col-lg-4">
-                                <select  class="form-control" >
+                                <select  class="form-control" v-model="media_person">
                                     <option :value="key" v-model="clientName" v-for="(value,key) in person_medium">{{value}}</option>
                                 </select>
                             </div>
@@ -44,7 +44,8 @@
                                         <input type="radio" name="radio">
                                     </td>
                                     <td>{{item.name}}</td>
-                                    <td>{{item.gender}}</td>
+                                    <td v-if="item.gender === 1">先生</td>
+                                    <td v-if="item.gender === 2">女士</td>
                                     <td>{{nationalityList[item.nationality]}}</td>
                                     <td>{{item.mobile}}</td>
                                     <td></td>
@@ -76,6 +77,7 @@
         data(){
             return {
                 keywords:'',
+                media_person:'1',
                 clientName:'',
                 customerList:[],
                 nationalityList:[],
@@ -100,14 +102,21 @@
         methods : {
             search(){
                 if(this.keywords!==''){
-                    this.$http.post('core/customer/customerList',{'keywords':this.keywords}).then((res) => {
+                    this.$http.post('core/customer/customerList',
+                            {
+                                keywords:this.keywords,
+                                person_medium:this.media_person
+                            }
+                        ).then((res) => {
                         if(res.data.code === '70030'){
                             this.customerList=res.data.data.list;
                             this.keywords='';
+                            this.media_person = '1'
                             this.isShow = false;
                         }else {
                             this.customerList=[];
                             this.keywords='';
+                            this.media_person = '1',
                             this.isShow = true;
                         }
                     })
