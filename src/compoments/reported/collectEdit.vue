@@ -311,7 +311,7 @@
                     this.$http.get('checkin/collect/'+val)
                         .then(
                             (res) => {
-                                console.log(res.data.data);
+//                                console.log(res.data.data);
                                 let val = res.data.data;
 //                                console.log(val.staff);
                                 if (val.staff!=null){

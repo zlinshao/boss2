@@ -46,7 +46,7 @@
                             <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li>
-                            <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;作废</a></h5>
+                            <h5 @click="changeStatus(0)"><a><i class="fa fa-times-circle-o"></i>&nbsp;作废</a></h5>
                         </li>
                         <li v-show="statusId==1">
                             <h5 @click="changeStatus(1)"><a><i class="fa fa-send-o"></i>&nbsp;提交</a></h5>
@@ -291,9 +291,11 @@
             getConfirm(){
                 // 提示信息
                 let num = this.confirmMsg.status;
-                console.log(num)
+                console.log(num);
                 let url;
-                if (num==1){
+                if(num==0){
+                    url = 'checkin/collect/discard/'+this.operId;
+                } else if (num==1){
 //                    this.confirmMsg.msg = '确定提交报备信息吗？';
                     url = 'checkin/collect/pending/'+this.operId;
                 } else if (num==2){
@@ -347,8 +349,9 @@
                 this.confirmMsg.id = this.operId;
                 this.confirmMsg.status= num;
 //                console.log(this.confirmMsg.status);
-
-                if (num==1){
+                if (num==0){
+                    this.confirmMsg.msg = '确定作废此报备信息吗？';
+                }else if (num==1){
                     this.confirmMsg.msg = '确定提交报备信息吗？';
                 } else if (num==2){
                     this.confirmMsg.msg = '确定通过审核吗？';
