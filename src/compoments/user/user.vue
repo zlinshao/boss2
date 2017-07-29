@@ -232,7 +232,7 @@
                             </div>
 
                         </div>
-                        <div class="inbox-body panel table table-responsive">
+                        <div class="inbox-body panel table table-responsive roll">
 
                                 <table class="table table-striped table-advance table-hover">
                                     <thead  class="text-center">
@@ -1101,19 +1101,6 @@
     }
     .table-responsive {
         overflow: visible;
-    }
-    .table-responsive::-webkit-scrollbar {
-        width:8px;
-    }
-    .table-responsive::-webkit-scrollbar-button    {
-        background-color:#ffff;
-    }
-    .table-responsive::-webkit-scrollbar-track     {
-        background:#ffffff;
-    }
-    .table-responsive::-webkit-scrollbar-thumb{
-        background:#ccc;
-        border-radius:10px;
     }
     @media(max-width: 768px) {
         .table-responsive {

@@ -24,7 +24,7 @@
                         </span>
                     </div>
                     <div class="input-group bootstrap-timepicker" style="margin: 0 15px;">
-                        <input type="text" class="form-control"  placeholder="请输入搜索条件"
+                        <input type="text" class="form-control"  placeholder="地址,客户,备忘录内容"
                                v-model="searchRequirement.keywords"  @keyup="search">
                         <span class="input-group-btn">
                             <button class="btn btn-success "  type="button" @click="search">
@@ -85,7 +85,7 @@
                             </td>
                             <td class="text-center">{{item.contract_num}}</td>
                             <td class="text-center">{{item.create_time}}</td>
-                            <td class="text-center">{{item.staff}}</td>
+                            <td class="text-center">{{item.staff_id.name}}</td>
                             <td class="text-center">{{item.name}}</td>
                             <td class="text-center">{{item.address}}</td>
                             <td class="text-center">{{item.mobile}}</td>
