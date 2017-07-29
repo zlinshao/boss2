@@ -41,7 +41,7 @@
                                 <div><span class="text-primary">租房类型：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
                                 <div><span class="text-primary">年限(月)：</span><span>{{msg.months}}</span></div>
                                 <div><span class="text-primary">付款类型：</span><span>押{{msg.bet}}付{{msg.pay}}</span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.price}}</span></div>
+                                <div><span class="text-primary">出租月单价：</span><span>{{msg.price}}</span></div>
                                 <div><span class="text-primary">应收金额：</span><span>xcxx</span></div>
                                 <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
                                 <div><span class="text-primary">付款方式：</span>

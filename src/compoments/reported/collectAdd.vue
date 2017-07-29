@@ -415,7 +415,7 @@
             },
             getClient(data){
                 // 选择客户
-//                console.log(data);
+                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
 

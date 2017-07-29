@@ -162,8 +162,8 @@
 <script>
     import Status from './status.vue';
 
-    let addr="http://restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=poi&types=120300";
-    let cityAddr = 'http://restapi.amap.com/v3/ip?key=181a17662347392d30ce7962d0deb60a&ip=';
+    let addr="//restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=poi&types=120300";
+    let cityAddr = '//restapi.amap.com/v3/ip?key=181a17662347392d30ce7962d0deb60a&ip=';
     export default{
 
         data(){

@@ -6241,3 +6241,7 @@ header.blue-bg .search:focus {
 .amap-markers .amap-marker .amap-icon img{
     border-radius: 50%;
 }
+.form-group .padding_0{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}

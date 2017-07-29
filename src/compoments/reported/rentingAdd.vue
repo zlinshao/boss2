@@ -67,8 +67,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">付款类型</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-6">
-                                            <label class="col-sm-2 control-label">押</label>
+                                        <div class="col-sm-6 padding_0">
+                                            <label class="col-sm-2 control-label padding_0">押</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="formData.bet">
                                                     <option value="0">0</option>
@@ -77,8 +77,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label class="col-sm-2 control-label">付</label>
+                                        <div class="col-sm-6 padding_0">
+                                            <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
                                                 <input type="number" class="form-control" v-model="formData.pay">
                                             </div>
@@ -96,7 +96,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">已收科目</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="formData.received_type">
                                                 <option :value="value" v-for="(key,value) in dict.subject">{{key}}</option>
                                             </select>
@@ -114,7 +114,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">付款方式</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[0].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -134,7 +134,7 @@
                                 <div v-show="more_pay_way>=2" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[1].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -151,7 +151,7 @@
                                 <div v-show="more_pay_way>=3" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[2].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -168,7 +168,7 @@
                                 <div v-show="more_pay_way>=4" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[3].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -185,7 +185,7 @@
                                 <div v-show="more_pay_way>=5" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[4].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -202,7 +202,7 @@
                                 <div v-show="more_pay_way>=6" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[5].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -219,7 +219,7 @@
                                 <div v-show="more_pay_way>=7" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[6].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -236,7 +236,7 @@
                                 <div v-show="more_pay_way>=8" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[7].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
