@@ -327,8 +327,9 @@
                         this.contractEdit.start_date = contractList.start_date;
                         this.contractEdit.end_date = contractList.end_date;
                         this.contractEdit.complete_date = contractList.complete_date[0];
-
-                        this.checkCollectId = contractList.checkin_collect_id.id;
+                        if(contractList.checkin_collect_id !==null){
+                            this.checkCollectId = contractList.checkin_collect_id.id;
+                        }
                         this.contractEdit.pay_date = contractList.pay_date;
                         this.contractEdit.remarks = contractList.remarks;
                         this.staff = contractList.staff;
@@ -412,6 +413,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
+                    pickerPosition: 'bottom-left',
                 }).on('changeDate', ev => {
                     if (ev.target.placeholder === '空置期开始时间'){
                         this.contractEdit.vac_start_date = ev.target.value;
