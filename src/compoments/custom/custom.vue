@@ -89,8 +89,7 @@
                                     class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
                         <li>
-                            <h5><a @click="remind_id"><i
-                                    class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>
+                            <!--<h5><a @click="remind_id"><i class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>-->
                         </li>
                         <li>
                             <h5><a @click="add_state('pool')"><i
@@ -220,7 +219,7 @@
         <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
 
         <!--增加提醒-->
-        <AddRemind :remindId="pitch" @cus_seccess="succ"></AddRemind>
+        <!--<AddRemind :remindId="pitch" @cus_seccess="succ"></AddRemind>-->
 
         <Status :state="info"></Status>
 
@@ -231,7 +230,7 @@
 
 <script>
     import Page from '.././common/page.vue'                             //分页
-    import AddRemind from  './addremind.vue'                            //增加提醒
+//    import AddRemind from  './addremind.vue'                            //增加提醒
     import newAdd from './new_add.vue'                                  //新增/修改客户
     import Status from '../common/status.vue'                           //提示信息
     import remindDaily from './remindDaily.vue'                         //修改客户
@@ -239,7 +238,7 @@
     import Loading from '../loading/Loading.vue'                        //Loading
 
     export default {
-        components: {Page, Distribution, newAdd, remindDaily, AddRemind, Status, Loading},
+        components: {Page, Distribution, newAdd, remindDaily, Status, Loading},
         data (){
             return {
                 wait: 1,
