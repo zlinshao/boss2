@@ -191,8 +191,8 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <router-link :to="{path:'/details',query: {nameId: list.id}}">
-                                    详情
+                                <router-link :to="{path:'/details',query: {nameId: list.id}}" style="font-size: 18px;">
+                                    <i class="fa fa-eye"></i>
                                 </router-link>
                             </td>
                         </tr>
