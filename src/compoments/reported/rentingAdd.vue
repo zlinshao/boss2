@@ -697,7 +697,7 @@
                                 this.$emit('save');
                             } else {
                                 // 失败
-                                this.info.error = '新增报备失败';
+                                this.info.error = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_error = true;
                                 //一秒自动关闭失败信息弹窗 ***
