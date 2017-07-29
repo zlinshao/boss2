@@ -398,17 +398,7 @@
         margin-left: 5px;
         font-size: 8px;
     }
-    .yellow {
-        background-color: #F9E175;
-    }
 
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
-    }
 
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;

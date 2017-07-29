@@ -534,6 +534,6 @@
     }
 
     .status.green {
-        background-color: #83E96D;
+        background-color: #78CD51;
     }
 </style>

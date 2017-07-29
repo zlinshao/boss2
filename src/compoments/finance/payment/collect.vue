@@ -364,7 +364,7 @@
         /*font-weight: bold;*/
     }
     .tips ul li span.green{
-        color: #66CC33;
+        color: #78CD51;
     }
     .tips ul li span.yellow{
         color: #FF9A02;

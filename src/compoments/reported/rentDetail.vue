@@ -324,18 +324,6 @@
         font-size: 8px;
     }
 
-    .yellow {
-        background-color: #F9E175;
-    }
-
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
-    }
-
     #change .modal-body>div span:nth-child(1){
         /*text-align: right;*/
         color: #59ace2;
