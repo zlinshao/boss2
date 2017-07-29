@@ -114,7 +114,6 @@
                     pickerPosition: 'bottom-left',
                     clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
-                    $(window).on('mousewheel', $.proxy(this.place, this));
                     this.remindTime = ev.target.value;
                 }.bind(this));
             },

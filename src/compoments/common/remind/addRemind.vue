@@ -47,7 +47,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="revise">{{remindId}}取消</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="revise">取消</button>
                         <button type="button" class="btn btn-primary" @click="add_notice">添加</button>
                     </div>
                 </div><!-- /.modal-content -->
