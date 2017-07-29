@@ -77,7 +77,8 @@
                                     sys.message.create_time,
                                     sys.message.release_name,
                                     sys.id,
-                                    sys.message.data.content)">
+                                    sys.message.data.content,
+                                    sys.read_time)">
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.release_name}}</td>
                                     <td class="text-center width180">{{sys.message.data.title}}</td>
@@ -118,7 +119,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Examines" @click="receive(sys.id)">
+                                <tr class="unread" v-for="sys in Examines" @click="receive(sys.id,sys.read_time)">
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.release_name}}</td>
                                     <td class="text-center width80">{{sys.message.data.category}}</td>
@@ -165,7 +166,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Substitutes" @click="receive(sys.id)">
+                                <tr class="unread" v-for="sys in Substitutes" @click="receive(sys.id,sys.read_time)">
                                     <td class="text-center width180">{{sys.remind_time}}</td>
                                     <td class="text-center width80">{{sys.send_name}}</td>
                                     <td class="text-center"
@@ -204,7 +205,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Secretarys" @click="receive(sys.id)">
+                                <tr class="unread" v-for="sys in Secretarys" @click="receive(sys.id,sys.read_time)">
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.data.send_name}}</td>
                                     <td class="text-center width90">{{sys.message.type}}</td>
@@ -244,7 +245,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in Messages" @click="receive(sys.read.id)">
+                                <tr class="unread" v-for="sys in Messages"
+                                    @click="receive(sys.read.id,sys.read.read_time)">
                                     <td class="text-center width180">{{sys.create_time}}</td>
                                     <td class="text-center width80">{{sys.release_name}}</td>
                                     <td class="text-center width90">{{sys.type}}</td>
@@ -317,6 +319,7 @@
                     get_release_name: '',
                     get_content: '',
                     get_id: '',
+                    get_read: ''
                 },
                 systems: [],                //公告信息
                 Examines: [],               //审批提醒
@@ -355,12 +358,14 @@
                 this.isActive = val;
             },
 //            阅读
-            receive (val){
-                this.$http.post('message/message/read_mess', {
-                    id: val,
-                }).then((res) => {
-                    this.system_page(this.beforePage);
-                });
+            receive (val, read){
+                if (read === '未读') {
+                    this.$http.post('message/message/read_mess', {
+                        id: val,
+                    }).then((res) => {
+                        this.system_page(this.beforePage);
+                    });
+                }
             },
 //            跳转
             status_info (val){
@@ -415,7 +420,7 @@
                 });
 
             },
-            announceDetail(val7, val1, val2, val3, val4, val5, val6){
+            announceDetail(val7, val1, val2, val3, val4, val5, val6,val8){
                 if (val7 === '系统公告') {
                     this.info_details.get_title = val1;
                     this.info_details.get_department_name = val2;
@@ -423,6 +428,7 @@
                     this.info_details.get_release_name = val4;
                     this.info_details.get_id = val5;
                     this.info_details.get_content = val6;
+                    this.info_details.get_read = val8;
                     $('#announceDetail').modal({
                         backdrop: 'static',         //空白处不消失
                     });
@@ -432,11 +438,11 @@
 //            系统公告
             System(val){
                 this.$http.post('message/system/index/pages/' + val).then((res) => {
-                    if(res.data.code === '100000'){
+                    if (res.data.code === '100000') {
                         this.systems = res.data.data.list;
                         this.paging = res.data.data.pages;
                         this.isSystem_s = false;
-                    }else{
+                    } else {
                         this.isSystem_s = true;
                     }
                 });
@@ -452,11 +458,11 @@
 //            审批提醒
             Examine(val){
                 this.$http.post('message/approval/index/pages/' + val).then((res) => {
-                    if(res.data.code === '100070'){
+                    if (res.data.code === '100070') {
                         this.Examines = res.data.data.list;
                         this.paging = res.data.data.pages;
                         this.Examines_s = false;
-                    }else{
+                    } else {
                         this.Examines_s = true;
                     }
 
@@ -473,11 +479,11 @@
 //            待办提醒
             Substitute(val){
                 this.$http.post('message/remind/index/pages/' + val).then((res) => {
-                    if(res.data.code === '100020'){
+                    if (res.data.code === '100020') {
                         this.Substitutes = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.Substitutes_s = false;
-                    }else{
+                    } else {
                         this.Substitutes_s = true;
                     }
 
@@ -494,11 +500,11 @@
 //            BOSS小秘书
             Secretary(val){
                 this.$http.post('message/secretary/index/pages/' + val).then((res) => {
-                    if(res.data.code === '100030'){
+                    if (res.data.code === '100030') {
                         this.Secretarys = res.data.data.list;
                         this.paging = res.data.data.pages;
                         this.Secretarys_s = false;
-                    }else{
+                    } else {
                         this.Secretarys_s = true;
                     }
 
@@ -515,11 +521,11 @@
 //            收藏
             Message(val){
                 this.$http.post('message/favourite/index/pages/' + val).then((res) => {
-                    if(res.data.code === '100040'){
+                    if (res.data.code === '100040') {
                         this.Messages = res.data.data.data;
                         this.paging = res.data.data.count;
                         this.Messages_s = false;
-                    }else{
+                    } else {
                         this.Messages_s = true;
                         this.Messages = [];
                     }

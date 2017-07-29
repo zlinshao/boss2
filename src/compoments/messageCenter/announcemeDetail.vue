@@ -58,12 +58,13 @@
         },
         methods: {
             receive (){
-                this.$http.post('message/message/read_mess', {
-                    id: this.msg.get_id,
-                }).then((res) => {
-                    this.$emit('receive');
-                });
-
+                if (this.msg.get_read === '未读') {
+                    this.$http.post('message/message/read_mess', {
+                        id: this.msg.get_id,
+                    }).then((res) => {
+                        this.$emit('receive');
+                    });
+                }
             }
         }
     }
