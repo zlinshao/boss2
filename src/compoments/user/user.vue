@@ -1110,4 +1110,10 @@
         height: 33px;
         border-radius: 50%;
     }
+    @media (max-width: 480px) {
+        .inbox-head .sr-input, .inbox-head .sr-btn {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    }
 </style>
