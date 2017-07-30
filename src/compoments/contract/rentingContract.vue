@@ -108,7 +108,7 @@
                         <th class="text-center">回访情况</th>
                         <th class="text-center">审核状态</th>
                         <th class="text-center">标记</th>
-                        <th class="text-center">锁定状态</th>
+                        <th class="text-center">锁定</th>
                         <th class="text-center">置顶</th>
                         <th class="text-center">详情</th>
                     </tr>
@@ -371,10 +371,8 @@
 
 <style scoped>
     .panel-body{
-        padding: 8px;
-        padding-bottom: 0;
+        padding: 8px 8px 0px 15px;
     }
-
     input[type=checkbox],input[type=radio]{
         width: 17px;
         height: 17px;

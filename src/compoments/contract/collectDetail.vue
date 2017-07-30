@@ -16,7 +16,7 @@
             <div class="pull-right dropdown" v-for="item in contractList">
                 <span>
                     <i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>
-                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1" title="已解锁"></i>
+                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"  title="已解锁"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
                 <button class="btn btn-primary" @click="inform">通知</button>
