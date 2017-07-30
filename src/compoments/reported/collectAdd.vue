@@ -483,14 +483,14 @@
                 this.$http.get('core/collect/readcontract/id/'+this.formData.previous_contract_id)
                     .then(
                         (res) =>{
-//                            console.log(res.data.data);
+                            console.log(res.data.data);
                             let result = res.data.data;
                             this.formData.staff_id = result.staff_id;
                             this.formData.house_id = result.villa_id.id;
                             this.formData.customer_id = result.customer_id.id;
                             this.chooseResult.staff_name = result.staff;
-                            this.chooseResult.house_name = result.customer_id.id;
-                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+                            this.chooseResult.customer_name = result.customer_id.name;
+                            this.chooseResult.house_name = result.villa_id.amap_json.villageName;
 
                         }
                     )

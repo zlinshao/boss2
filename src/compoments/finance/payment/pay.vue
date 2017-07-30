@@ -342,7 +342,7 @@
             payFlowList(){
                 this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-//                    console.log(res.data);
+                    console.log(res.data.data);
                     if (res.data.code==18400){
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
