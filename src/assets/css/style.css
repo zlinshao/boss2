@@ -6257,3 +6257,9 @@ tbody tr td .orange, span.status.orange {
 tbody tr td .green, span.status.green {
     background-color: #78CD51;
 }
+
+sup.required{
+    color: #FF6C60 !important;
+    /*font-size: 14px;*/
+    /*font-weight: bold;*/
+}

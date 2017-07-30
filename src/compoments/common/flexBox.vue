@@ -1,10 +1,10 @@
 <template>
     <div class="flexBox">
         <div class="form-group">
-            <label class="col-sm-2 control-label">收房月单价</label>
+            <label class="col-sm-2 control-label">收房月单价 <sup class="required">*</sup></label>
             <div class="col-sm-8 padding_0">
-                <label class="col-sm-3 control-label">第一年</label>
-                <div class="col-sm-6">
+                <label class="col-sm-3 control-label" v-show="moreYears>=2">第一年</label>
+                <div :class="{'col-sm-6':moreYears>=2,'col-sm-9':moreYears==1}">
                     <input type="number" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
                 <div class="col-sm-3 icons">
@@ -132,11 +132,19 @@
 //                console.log(val);
                 this.setData(val);
             },
+            flexData(val){
+                if (val<this.moreYears){
+                    this.moreYears = val;
+                    this.sendData();
+                }
+
+            }
         },
         components: {},
         methods: {
             addMoreYears(){
-                if (this.moreYears == this.flexData || this.flexData==''){
+                if (this.moreYears >= this.flexData || this.flexData==''){
+//                    this.moreYears = this.flexData;
                     return;
                 }else {
                     this.moreYears++;

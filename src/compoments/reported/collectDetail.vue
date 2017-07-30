@@ -13,7 +13,7 @@
                     <span>{{msg.create_time}}</span>
                     <span :class="{'status':true,'btn':true,'yellow':msg.status===1,'orange':msg.status===2,'green':msg.status===3}">{{dict.checkin_status[msg.status]}}</span>
                     <div class="pull-right">
-                        <button class="btn btn-primary" @click="addRentReported">租房报备</button>
+                        <button class="btn btn-primary" v-show="msg.status!=1" @click="addRentReported">租房报备</button>
                         <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
                         <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
                         <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
@@ -28,7 +28,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;收房报备信息
-                        <a class="pull-right" data-toggle="modal" data-target="#edit" v-show="msg.status==1">编辑</a>
+                        <a class="pull-right fa fa-pencil-square-o" data-toggle="modal" data-target="#edit" v-show="msg.status==1"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -250,7 +250,13 @@
                 if (num == 1){
                     // 付款方式
                     this.changeModal.title = '付款方式';
-                    this.changeModal.data = this.msg.pay_type;
+                    this.changeModal.data = [];
+                    for (let i = 0;i<this.msg.pay_type.length;i++){
+                        this.changeModal.data.push(this.dict.pay_type[this.msg.pay_type[i]]);
+                    }
+//                    console.log(this.msg.pay_type)
+//                    console.log(this.changeModal.data)
+//                    this.changeModal.data = this.msg.pay_type;
 
                 } else {
                     // 价格

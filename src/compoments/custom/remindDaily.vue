@@ -72,8 +72,6 @@
                 follow_up: '',              //沟通日志内容
 
                 pool: false,                //放入客户池
-                senior_a: false,            //高级选项
-//                dataTime: '',             //提醒时间
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -90,9 +88,6 @@
             this.$http.get('core/customer/dict').then((res) => {
                 this.select_list = res.data;
             });
-        },
-        updated (){
-            this.remindData();
         },
         methods: {
 //            确定
@@ -150,11 +145,6 @@
                 this.follow_w = val.target.value;
                 this.$emit('pitches',1)
             },
-
-//            高级选项
-            senior (){
-                this.senior_a = !this.senior_a;
-            },
         },
         watch: {
             state(val) {
@@ -164,11 +154,7 @@
                     this.pool = false;            //放入客户池
 
                 }
-//                if (val === 'inter') {
-//                    this.inter_state = true;        //提醒内容
-//                    this.daily_state = false;       //增加日志
-//                    this.pool = false;              //放入客户池
-//                }
+
                 if (val === 'pool') {
                     this.pool = true;               //放入客户池
                     this.daily_state = false;       //增加日志
