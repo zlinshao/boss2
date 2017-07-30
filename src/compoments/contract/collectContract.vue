@@ -97,6 +97,7 @@
                         <th class="text-center">
                             <!--<input type="checkbox">-->
                         </th>
+                        <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
                         <th class="text-center">上传时间</th>
                         <th class="text-center">开单人</th>
@@ -108,7 +109,6 @@
                         <th class="text-center">过期情况</th>
                         <th class="text-center">回访情况</th>
                         <th class="text-center">审核状态</th>
-                        <th class="text-center">标记</th>
                         <th class="text-center">锁定</th>
                         <th class="text-center">置顶</th>
                         <th class="text-center">详情</th>
@@ -117,7 +117,11 @@
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @click="picked(item,$event)"
-                                   :value="item.id" :checked="contractSeleted===item.id"></td>
+                                   :value="item.id" :checked="contractSeleted===item.id">
+                        </td>
+                        <td class=" myIcon">
+                            <i class="fa fa-star" v-if="item.mark === 1"></i>
+                        </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.drawer}}</td>
@@ -133,9 +137,6 @@
                                 {{dictionary.passed[item.passed]}}
                             </span>
                             <span class="label label-warning" v-if="item.passed !== 5">{{dictionary.passed[item.passed]}}</span>
-                        </td>
-                        <td class=" myIcon">
-                            <i class="fa fa-star" v-if="item.mark === 1"></i>
                         </td>
                         <td class=" myIcon">
                             <i class="fa fa-lock" v-if="item.status !== 1" ></i>
