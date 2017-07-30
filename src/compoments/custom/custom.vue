@@ -366,6 +366,7 @@
                             this.pitch = [];
                             this.cus_name = [];
                         } else {
+                            this.wait = 2;
                             this.custom_list = [];
                             this.isShow = true;
                             //失败信息 ***
