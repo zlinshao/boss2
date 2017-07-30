@@ -91,14 +91,14 @@
                         <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转账日期:</label>
+                                    <label class="col-sm-2 control-label">转账日期<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime" v-model="formData.transfer_date">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转出账户:</label>
+                                    <label class="col-sm-2 control-label">转出账户<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.account_id_out" @change="getOutRemain">
                                             <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转入账户:</label>
+                                    <label class="col-sm-2 control-label">转入账户<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.account_id_in" @change="getInRemain">
                                             <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
@@ -114,31 +114,31 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转账人员:</label>
+                                    <label class="col-sm-2 control-label">转账人员</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" readonly v-model="logName">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转出账户余额:</label>
+                                    <label class="col-sm-2 control-label">转出账户余额</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" readonly v-model="account_out_remain">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转入账户余额:</label>
+                                    <label class="col-sm-2 control-label">转入账户余额</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" readonly v-model="account_in_remain">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">转账金额:</label>
+                                    <label class="col-sm-2 control-label">转账金额<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.amount_transfer">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">备注:</label>
+                                    <label class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control" v-model="formData.remark"></textarea>
                                     </div>
