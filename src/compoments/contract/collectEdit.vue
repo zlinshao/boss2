@@ -274,6 +274,7 @@
                 },
                 more:1,
                 flag:'',
+                isClick :false,
             }
         },
         mounted(){
@@ -293,7 +294,8 @@
             'contractEdit.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal){
+                    console.log(this.isClick)
+                    if(val !== oldVal && this.isClick){
                         this.completeDate(val);
                     }
                 }
@@ -388,19 +390,27 @@
                 }
             },
             completeDate(val){  //计算空置期结束 合同开始以及结束时间
-                this.$http.post('core/collect/contractDate',
-                    {
-                        "vac_start_date":this.contractEdit.vac_start_date,
-                        "checkin_collect_id":this.checkCollectId
-                    }).then(
-                    (res) => {
-                        this.contractEdit.vac_end_date = res.data.vac_end_date;
-                        this.contractEdit.start_date = res.data.start_date;
-                        this.contractEdit.end_date = res.data.end_date;
-                    }
-                )
+                if(this.checkCollectId !== ''){
+                    this.$http.post('core/collect/contractDate',
+                        {
+                            "vac_start_date":this.contractEdit.vac_start_date,
+                            "checkin_collect_id":this.checkCollectId
+                        }).then(
+                        (res) => {
+                            this.contractEdit.vac_end_date = res.data.vac_end_date;
+                            this.contractEdit.start_date = res.data.start_date;
+                            this.contractEdit.end_date = res.data.end_date;
+                        }
+                    )
+                }else {
+                    this.info.error = '您的报备表id不存在，自动生成日期失败';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
+
             },
             selectDate (){
+                this.isClick = true;
                 $('.form_date').datetimepicker({
                     minView: "month",
                     language: 'zh-CN',
