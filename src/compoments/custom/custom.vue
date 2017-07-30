@@ -57,7 +57,7 @@
                             <input type="checkbox" class="pull-left" @click="trid($event,1)">三天内未成交
                         </label>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px;">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px;">
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus(1)"
                                    placeholder="客户名/手机号">
@@ -69,7 +69,7 @@
                     <div class="pro-sort">
                         <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
                     </div>
-                    <div class="pull-right" style="margin-bottom: 3px; margin-left: 14px;">
+                    <div class="pull-right">
                         <a class="btn btn-success"
                            @click="customers_new('new')">
                             <i class="fa fa-plus-square"></i>&nbsp;增加客户
@@ -328,16 +328,6 @@
                     });
                 }
             },
-//            分配成功更新列表
-//            pitch_dele (){
-//                this.pitch = [];
-//                this.cus_name = [];
-////                列表
-//                this.$http.post('core/customer/customerList/page/1').then((res) => {
-//                    this.custom_list = res.data.data.list;
-//                    this.paging = res.data.data.pages;
-//                });
-//            },
 
 //            新增客户展示列表
             succ (){

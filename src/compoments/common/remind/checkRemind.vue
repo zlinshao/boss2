@@ -28,7 +28,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body" v-show="remind_info.length === 0">
+                            <div class="panel-body" v-show="remind_info.length === 0" style="font-size: 18px;">
                                 暂无更多提醒
                             </div>
                         </section>
