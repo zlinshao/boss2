@@ -244,6 +244,7 @@
                                         <th class="text-center">人员状态</th>
                                         <th class="text-center">手机号</th>
                                         <th class="text-center">入职时间</th>
+                                        <th class="text-center">详情</th>
                                         <th class="text-center">操作</th>
                                     </tr>
                                     </thead>
@@ -269,9 +270,10 @@
                                         </td>
                                         <td class="text-center">{{item.mobile}}</td>
                                         <td class="text-center">{{item.enroll_time}}</td>
+                                        <td class="text-center">
+                                            <router-link :to="{path:'/userDetail',query: {UserId: item.id}}">详情</router-link>
+                                        </td>
                                         <td class="dropdown text-center">
-                                            <router-link :to="{path:'/userDetail',query: {UserId: item.id}}" title="查看详情" class=" fa fa-eye">
-                                            </router-link>
                                             <a href="#"
                                                class="dropdown-toggle fa fa-gear"
                                                data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -301,7 +303,7 @@
                                         </td>
                                     </tr>
                                     <tr v-show="userList.length==0">
-                                        <td colspan="10" class="text-center text-muted">
+                                        <td colspan="11" class="text-center text-muted">
                                             <h4>暂无数据....</h4>
                                         </td>
                                     </tr>
@@ -461,13 +463,6 @@
                     this.isFive=false;
                 })
             },
-//            preventEnter(){
-//                $(document).keydown(function(event){
-//                    switch(event.keyCode){
-//                        case 13:return false;
-//                    }
-//                });
-//            },
             getThird(id,name){
                 if(this.type!=3){
                     this.page=1

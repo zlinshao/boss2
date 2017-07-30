@@ -16,8 +16,8 @@
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
                 <span>
-                    <i class="fa fa-lock" v-if="item.villa_id.status !==1"></i>
-                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"></i>
+                    <i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>
+                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1" title="已解锁"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
                 <button class="btn btn-primary" @click="inform">通知</button>
@@ -47,6 +47,16 @@
                                 续约
                             </button>
                         </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="renewContract">
+                                转租
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="renewContract">
+                                调租
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -54,113 +64,115 @@
 
         <!--内容区-->
         <div class="row">
-
-            <!--应付款/打款/合同信息-->
-            <!--<div class="col-md-3">-->
+            <div>
+                <!--应付款/打款/合同信息-->
+                <!--<div class="col-md-3">-->
                 <!--&lt;!&ndash;应付款&ndash;&gt;-->
                 <!--<section class="panel roll">-->
-                    <!--<header class="panel-heading">-->
-                        <!--应付款-->
-                    <!--</header>-->
-                    <!--<div class="panel-body table-responsive">-->
-                        <!--<table class="table">-->
-                            <!--<thead>-->
-                            <!--<tr class="text-center">-->
-                                <!--<td>当月应付</td>-->
-                                <!--<td>付款进度</td>-->
-                                <!--<td>本次打款时间</td>-->
-                            <!--</tr>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                            <!--<tr class="text-center">-->
-                                <!--<td>2000</td>-->
-                                <!--<td>-->
-                                    <!--<div class="progress progress-striped active">-->
-                                        <!--<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar" style="width: 50%;">-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</td>-->
-                                <!--<td>2017-07-05</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                    <!--</div>-->
+                <!--<header class="panel-heading">-->
+                <!--应付款-->
+                <!--</header>-->
+                <!--<div class="panel-body table-responsive">-->
+                <!--<table class="table">-->
+                <!--<thead>-->
+                <!--<tr class="text-center">-->
+                <!--<td>当月应付</td>-->
+                <!--<td>付款进度</td>-->
+                <!--<td>本次打款时间</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr class="text-center">-->
+                <!--<td>2000</td>-->
+                <!--<td>-->
+                <!--<div class="progress progress-striped active">-->
+                <!--<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar" style="width: 50%;">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</td>-->
+                <!--<td>2017-07-05</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</div>-->
                 <!--</section>-->
                 <!--&lt;!&ndash;打款&ndash;&gt;-->
                 <!--<section class="panel roll pay">-->
-                    <!--<header class="panel-heading">-->
-                        <!--打款-->
-                        <!--<a class="pull-right" @click="transferDetail">更多</a>-->
-                    <!--</header>-->
-                    <!--<div class="panel-body table-responsive">-->
-                        <!--<div class="total">-->
-                            <!--合计:123456-->
-                            <!--未打款:123456-->
-                            <!--<br>-->
-                            <!--打款账号:12345678913246587-->
-                        <!--</div>-->
-                        <!--<table class="table">-->
-                            <!--<thead>-->
-                            <!--<tr class="lightGray text-center">-->
-                                <!--<td>打款时间</td>-->
-                                <!--<td>打款金额</td>-->
-                                <!--<td>打款人</td>-->
-                            <!--</tr>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                            <!--<tr class="text-center">-->
-                                <!--<td>2017-06-23</td>-->
-                                <!--<td>2000</td>-->
-                                <!--<td>哈哈</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="text-center">-->
-                                <!--<td>2017-06-23</td>-->
-                                <!--<td>2000</td>-->
-                                <!--<td>哈哈</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                    <!--</div>-->
+                <!--<header class="panel-heading">-->
+                <!--打款-->
+                <!--<a class="pull-right" @click="transferDetail">更多</a>-->
+                <!--</header>-->
+                <!--<div class="panel-body table-responsive">-->
+                <!--<div class="total">-->
+                <!--合计:123456-->
+                <!--未打款:123456-->
+                <!--<br>-->
+                <!--打款账号:12345678913246587-->
+                <!--</div>-->
+                <!--<table class="table">-->
+                <!--<thead>-->
+                <!--<tr class="lightGray text-center">-->
+                <!--<td>打款时间</td>-->
+                <!--<td>打款金额</td>-->
+                <!--<td>打款人</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr class="text-center">-->
+                <!--<td>2017-06-23</td>-->
+                <!--<td>2000</td>-->
+                <!--<td>哈哈</td>-->
+                <!--</tr>-->
+                <!--<tr class="text-center">-->
+                <!--<td>2017-06-23</td>-->
+                <!--<td>2000</td>-->
+                <!--<td>哈哈</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</div>-->
                 <!--</section>-->
                 <!--&lt;!&ndash;合同信息&ndash;&gt;-->
                 <!--<section class="panel roll contract">-->
-                    <!--<header class="panel-heading">-->
-                        <!--合同信息-->
-                        <!--<a class="pull-right" @click="contractInfo">更多</a>-->
-                    <!--</header>-->
-                    <!--<div class="panel-body table-responsive">-->
-                        <!--<table class="table contract_info">-->
-                            <!--<tbody>-->
-                            <!--<tr>-->
-                                <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
-                                <!--<td colspan="2">2017-07-20&nbsp;至&nbsp;2017-05-16</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>合同编号</td>-->
-                                <!--<td>合同编号</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>房屋地址</td>-->
-                                <!--<td>合同编号合同编号</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>负责人</td>-->
-                                <!--<td>合同编号</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>结束原因</td>-->
-                                <!--<td>合约到期</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                    <!--</div>-->
+                <!--<header class="panel-heading">-->
+                <!--合同信息-->
+                <!--<a class="pull-right" @click="contractInfo">更多</a>-->
+                <!--</header>-->
+                <!--<div class="panel-body table-responsive">-->
+                <!--<table class="table contract_info">-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+                <!--<td colspan="2">2017-07-20&nbsp;至&nbsp;2017-05-16</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td></td>-->
+                <!--<td>合同编号</td>-->
+                <!--<td>合同编号</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td></td>-->
+                <!--<td>房屋地址</td>-->
+                <!--<td>合同编号合同编号</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td></td>-->
+                <!--<td>负责人</td>-->
+                <!--<td>合同编号</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td></td>-->
+                <!--<td>结束原因</td>-->
+                <!--<td>合约到期</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</div>-->
 
                 <!--</section>-->
-            <!--</div>-->
+                <!--</div>-->
+            </div>
+
             <!--基本信息/房屋信息/合同附件-->
             <div class="col-md-12">
                 <section class="panel roll">
@@ -196,12 +208,12 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>合同编号：<sup>*</sup></span>
+                                                <span>合同编号<sup>*</sup>：</span>
                                                 <span>{{item.contract_num}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>年限(月)：<sup>*</sup></span>
-                                                <span>{{item.checkin_rent_id.months}} 月</span>
+                                                <span>年限(月)<sup>*</sup>：</span>
+                                                <span v-if="item.checkin_rent_id !==null">{{item.checkin_rent_id.months}} 月</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>合同起始日期：</span>
@@ -213,40 +225,54 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>付款类型：</span>
-                                                <span>押 {{item.checkin_rent_id.bet}} 付 {{item.checkin_rent_id.pay}}</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    押 {{item.checkin_rent_id.bet}} 付 {{item.checkin_rent_id.pay}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价：</span>
-                                                <span>{{item.checkin_rent_id.price}} 元</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{item.checkin_rent_id.price}} 元
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>应收：</span>
-                                                <span>{{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>已收 （定金）：<sup>*</sup></span>
-                                                <span>{{item.checkin_rent_id.received_amount}} 元</span>
+                                                <span>已收 （定金）<sup>*</sup>：</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{item.checkin_rent_id.received_amount}} 元
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式 （银行卡）：</span>
-                                                <span>{{item.checkin_rent_id.payment[1].money}} 元</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{item.checkin_rent_id.payment[1].money}} 元
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式 （现金）：</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>付款方式 （支付宝）：<sup>*</sup></span>
+                                                <span>付款方式 （支付宝）<sup>*</sup>：</span>
                                                 <span></span>
                                             </div>
                                             <div class="infoList">
                                                 <span>未收：</span>
-                                                <span>{{item.checkin_rent_id.amount_remaining}} 元</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{item.checkin_rent_id.amount_remaining}} 元
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>租房状态：</span>
-                                                <span>{{dictionary.rent_type[item.checkin_rent_id.rent_type]}}</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{dictionary.rent_type[item.checkin_rent_id.rent_type]}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>资料补齐日期：</span>
@@ -260,12 +286,14 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>中介名：<sup>*</sup></span>
+                                                <span>中介名<sup>*</sup>：</span>
                                                 <span>{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span>{{item.checkin_rent_id.cost_medi}}</span>
+                                                <span  v-if="item.checkin_rent_id !==null">
+                                                    {{item.checkin_rent_id.cost_medi}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>备注：</span>
@@ -287,35 +315,35 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主姓名：<sup>*</sup></span>
+                                                <span>业主姓名<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>尊称：<sup>*</sup></span>
+                                                <span>尊称<sup>*</sup>：</span>
                                                 <span>{{dictionary.gender[item.customer_id.gender]}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>国籍：<sup>*</sup></span>
+                                                <span>国籍<sup>*</sup>：</span>
                                                 <span>
                                                     {{dictionary.nationality[item.customer_id.nationality]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>手机号码：<sup>*</sup></span>
+                                                <span>手机号码<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.mobile}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>证件类型：<sup>*</sup></span>.
+                                                <span>证件类型<sup>*</sup>：</span>
                                                 <span>
                                                     {{dictionary.credentials[item.customer_id.id_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>身份证号：<sup>*</sup></span>
+                                                <span>身份证号<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.id_num}}</span>
                                             </div>
                                         </div>
@@ -647,6 +675,7 @@
                 inputdata: '',    //五星好评
                 memorandum:'',   //备忘录
                 tabActive:'',
+                houseId:'',
             }
         },
         mounted(){
@@ -668,7 +697,7 @@
                 this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
-                    console.log(this.contractList)
+                    this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num;
                     this.contract_pass = res.data.data.passed
                 })
@@ -727,7 +756,7 @@
                 $('#confirm').modal('show');
             },
             inform(){   //通知
-                this.confirmMsg = {msg:'您确定通知吗'};
+                this.confirmMsg = {msg:'您确定通知相关（开单人，组长，区长）吗'};
                 this.msgFlag = 'inform';
                 $('#confirm').modal('show');
             },
@@ -743,6 +772,11 @@
             overrule(){ //合同驳回
                 this.confirmMsg = {msg:'您确定驳回吗'};
                 this.msgFlag = 'overrule';
+                $('#confirm').modal('show');
+            },
+            unLock(){
+                this.confirmMsg = {msg:'您确定解锁吗'};
+                this.msgFlag = 'lock';
                 $('#confirm').modal('show');
             },
             getConfirm(){
@@ -798,7 +832,20 @@
                             this.info.state_error = true;
                         }
                     });
-                }
+                }else if(this.msgFlag === 'lock'){
+                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                        if(res.data.code === '70010'){
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.contractDetail();
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                };
             },
             addMemorandum(){
                 this.$http.post('core/memo/savememo',{

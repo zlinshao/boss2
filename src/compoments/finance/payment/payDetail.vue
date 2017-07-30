@@ -384,18 +384,6 @@
         margin-left: 12px;
         font-size: 8px;
     }
-    .yellow {
-        background-color: #F9E175;
-    }
-
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
-    }
-
     .form-horizontal .form-group span{
         line-height: 34px;
         font-size: 14px;

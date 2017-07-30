@@ -97,7 +97,7 @@
                             </td>
                             <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
                             <td>{{item.department==undefined?'':item.department.name}}</td>
-                            <td>{{item.leader.real_name}}</td>
+                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
                             <td>{{item.deal_time}}</td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>
@@ -117,12 +117,11 @@
                             <td>{{item.cost_medi}}</td>
                             <td>
                                 <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
                                 </button>
                             </td>
-                            <td><router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td><router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="16">暂无数据...</td>
@@ -399,23 +398,10 @@
         margin-left: 5px;
         font-size: 8px;
     }
-    .yellow {
-        background-color: #F9E175;
-    }
 
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
-    }
 
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
-    }
-    tr td a i{
-        font-size: 18px;
     }
 
     tbody tr td button{

@@ -24,7 +24,7 @@
                         </span>
                     </div>
                     <div class="input-group bootstrap-timepicker" style="margin: 0 15px;">
-                        <input type="text" class="form-control"  placeholder="地址,客户,备忘录内容"
+                        <input type="text" class="form-control"  placeholder="地址/客户/备忘录内容"
                                v-model="searchRequirement.keywords"  @keyup="search">
                         <span class="input-group-btn">
                             <button class="btn btn-success "  type="button" @click="search">
@@ -44,15 +44,15 @@
                     <li  class="operate" @click="editMember">
                         <i class="fa fa-pencil-square-o"> 编辑</i>&nbsp;
                     </li>
-                    <li  class="operate">
-                        <i class="fa fa-star"> 标记</i>
-                    </li>
-                    <li  class="operate" @click="deleteContract">
-                        <i class="fa fa-times-circle"> 删除</i>
-                    </li>
-                    <li  class="operate">
-                        <i class="fa fa-arrow-up"> 置顶</i>
-                    </li>
+                    <!--<li  class="operate">-->
+                        <!--<i class="fa fa-star"> 标记</i>-->
+                    <!--</li>-->
+                    <!--<li  class="operate" @click="deleteContract">-->
+                        <!--<i class="fa fa-times-circle"> 删除</i>-->
+                    <!--</li>-->
+                    <!--<li  class="operate">-->
+                        <!--<i class="fa fa-arrow-up"> 置顶</i>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </section>
@@ -67,14 +67,14 @@
                             <th class="text-center">合同编号 </th>
                             <th class="text-center">上传时间</th>
                             <th class="text-center">开单人</th>
-                            <th class="text-center">姓名</th>
+                            <th class="text-center">业主姓名</th>
                             <th class="text-center">地址</th>
                             <th class="text-center">手机号码</th>
                             <th class="text-center">资料补齐时间</th>
                             <th class="text-center">过期情况</th>
                             <th class="text-center">回访情况</th>
-                            <th class="text-center">缺少资料</th>
-                            <th class="text-center">资料状态</th>
+                            <th class="text-center">备忘</th>
+                            <th class="text-center">审核状态</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,8 +94,8 @@
                             <td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>
                             <td class="text-center">{{item.content}}</td>
                             <td class="text-center">
-                                <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
-                                <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
+                                <span class="label label-success" v-if="item.passed === 5">{{dictionary.passed[item.passed]}}</span>
+                                <span class="label label-warning" v-if="item.passed !== 5">{{dictionary.passed[item.passed]}}</span>
                             </td>
                         </tr>
                         <tr v-if="isShow">
@@ -112,7 +112,7 @@
         <Page :pg="pages" @pag="getPage" :beforePage="currentPage"></Page>
         <Staff :configure='configure' @Staff="staffSeleted"></Staff>
         <Status :state='info'></Status>
-        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
 
         <EditMember :contractId="contractSeleted" @MemoUpdate = 'alreadyUpdate'></EditMember>
     </div>
@@ -123,11 +123,11 @@
     import Page from '../common/page.vue'
     import Staff from '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue';                          //提示信息
-    import Confirm from '../common/confirm.vue'
+//    import Confirm from '../common/confirm.vue'
     import EditMember from  './memorandumEdit.vue'
 
     export default{
-        components: {Page,Staff,Status,DatePicker,Confirm,EditMember},
+        components: {Page,Staff,Status,DatePicker,EditMember},
         data(){
             return {
                 pages: 1,     //总页数
@@ -237,13 +237,13 @@
                 this.searchRequirement.page=1;
                 this.search();
             },
-            deleteContract(){
-                this.confirmMsg = {msg:'您确定删除吗'};
-                $('#confirm').modal('show');
-            },
-            getConfirm(){   //confirm 返回操作
-                
-            },
+//            deleteContract(){
+//                this.confirmMsg = {msg:'您确定删除吗'};
+//                $('#confirm').modal('show');
+//            },
+//            getConfirm(){   //confirm 返回操作
+//
+//            },
             editMember(){
                 $('#memorandumEdit').modal('show');
             },
@@ -295,5 +295,9 @@
     }
     .operate:hover{
         color: #0E90D2;
+    }
+    .label{
+        width: 78px;
+        display: inline-block;
     }
 </style>

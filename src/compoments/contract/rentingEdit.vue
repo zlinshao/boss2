@@ -82,8 +82,8 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="remindData" readonly placeholder="资料补齐时间"
-                                                   v-model="contractEdit.complete_date" class="form-control form_datetime">
+                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractEdit.complete_date" class="form-control formDatetime">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -231,7 +231,7 @@
 
         },
         updated(){
-            this.remindData ();
+            this.selectDate ();
         },
         watch : {
             dictionary(val){
@@ -315,19 +315,15 @@
                     this.relative_customer.splice(this.flag,1,val.name);
                 }
             },
-            remindData (){
-                $('.form_datetime').datetimepicker({
+            selectDate (){
+                $('.formDatetime').datetimepicker({
                     minView: "month",   //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
                 }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '空置期开始时间'){
-                        this.contractEdit.vac_start_date = ev.target.value;
-                    } else {
-                        this.contractEdit.complete_date = ev.target.value;
-                    }
+                    this.contractEdit.complete_date = ev.target.value;
                 });
             },
             //获取图片id

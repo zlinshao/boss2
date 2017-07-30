@@ -77,7 +77,7 @@
                     id:'',
                     address:''
                 },
-                isShow:false,
+                isShow:true,
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -104,11 +104,9 @@
                     this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
                         if(res.data.code === '20010'){
                             this.houseList=res.data.data;
-                            this.keywords='';
                             this.isShow = false;
                         }else {
                             this.houseList=[];
-                            this.keywords='';
                             this.isShow = true;
                         }
                     })
@@ -120,7 +118,6 @@
                 this.houseAddress.address=item.amap_json.villageName;
             },
             ensure(){
-
                 if(this.houseAddress.id === ''){
                     this.info.error = '请先选择房屋';
                     this.info.state_error = true;
@@ -128,6 +125,7 @@
                     this.$emit('House',this.houseAddress);
                     $('.selectHouse').modal('hide');
                     this.houseList=[];
+                    this.keywords='';
                 }
             },
         }
@@ -142,5 +140,8 @@
     }
     div.table.table-responsive table tr td:first-child {
         width: 80px ;
+    }
+    label{
+        margin-top: 5px;
     }
 </style>

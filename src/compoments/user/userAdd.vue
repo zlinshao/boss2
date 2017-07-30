@@ -38,8 +38,8 @@
                                         <label class="col-sm-2 control-label col-lg-2" >生日</label>
                                         <div class="col-md-4">
                                             <input @click="remindData" type="text"
-                                                   class="form-control form_datetime1" v-model="birthday"
-                                                    value="" placeholder="生日">
+                                                   class="form-control birthDate" v-model="birthday"
+                                                    readonly value="" placeholder="生日">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -137,8 +137,8 @@
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
                                             <input @click="enrollDate" type="text"
-                                                   class="form-control form_datetime2" v-model="enroll"
-                                                   value="" placeholder="入职时间">
+                                                   class="form-control enrollDate" v-model="enroll"
+                                                  readonly value="" placeholder="入职时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -345,19 +345,20 @@
                 }
             },
             enrollDate(){
-                $('.form_datetime2').datetimepicker({
+                $('.enrollDate').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
+                    pickerPosition: 'top-left',
 //                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.enroll = ev.target.value;
                 }.bind(this));
             },
             remindData (){
-                $('.form_datetime1').datetimepicker({
+                $('.birthDate').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',

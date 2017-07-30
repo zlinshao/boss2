@@ -68,7 +68,9 @@
         watch:{
             contractId(val){
                 this.MemorandumId = val;
-                this.edtiMemorandum(val);
+                if(val !== 0){
+                    this.edtiMemorandum(val);
+                }
             }
         },
         methods : {

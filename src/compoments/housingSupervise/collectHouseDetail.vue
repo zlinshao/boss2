@@ -11,7 +11,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;{{item.amap_json.villageName}}
-                        <a data-toggle="modal" class="pull-right" @click="editcollect">编辑</a>
+                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" ></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">

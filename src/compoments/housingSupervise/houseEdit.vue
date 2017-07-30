@@ -331,76 +331,78 @@
                 }
             },
             HouseRevise(val){
-                this.myHouseEdit=val;
-                this.complete_ok='ok';
-                this.reviseHouseId=val.id;
-                this.staff_id = val.staff_id;
-                this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
-                this.houseEdit.amap_json.villageName=val.amap_json.villageName;
-                this.houseEdit.amap_json.district=val.amap_json.district;
-                this.houseEdit.amap_json.address=val.amap_json.address;
-                this.houseEdit.amap_json.id=val.amap_json.id;
-                this.houseEdit.amap_json.location=val.amap_json.location;
-                this.houseEdit.building=val.building;
-                this.houseEdit.unit=val.unit;
-                this.houseEdit.house_number=val.house_number;
-                this.houseEdit.rooms.rooms=val.rooms.rooms;
-                this.houseEdit.rooms.hall=val.rooms.hall;
-                this.houseEdit.rooms.toilet=val.rooms.toilet;
-                this.houseEdit.area=val.area;
-                this.houseEdit.decoration=val.decoration;
-                this.houseEdit.floor=val.floor;
-                this.houseEdit.total_floor=val.total_floor;
-                this.houseEdit.house_type=val.house_type;
-                this.houseEdit.house_feature=val.house_feature;
-                this.houseEdit.floor_type=val.floor_type;
-                this.houseEdit.person_medium=val.person_medium;
-                this.houseEdit.source=val.source;
-                this.houseEdit.elec_card_num=val.elec_card_num;
-                this.houseEdit.water_card_num=val.water_card_num;
-                this.houseEdit.gas_card_num=val.gas_card_num;
-                this.houseEdit.remarks=val.remarks;
-                this.houseEdit.reference=val.reference;
-                this.houseEdit.facility=[];
-                for(let i=0;i<val.facility.length;i++){
-                    this.houseEdit.facility.push(val.facility[i])
-                }
+                if(Array.isArray(val) === false){
+                    this.myHouseEdit=val;
+                    this.complete_ok='ok';
+                    this.reviseHouseId=val.id;
+                    this.staff_id = val.staff_id;
+                    this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
+                    this.houseEdit.amap_json.villageName=val.amap_json.villageName;
+                    this.houseEdit.amap_json.district=val.amap_json.district;
+                    this.houseEdit.amap_json.address=val.amap_json.address;
+                    this.houseEdit.amap_json.id=val.amap_json.id;
+                    this.houseEdit.amap_json.location=val.amap_json.location;
+                    this.houseEdit.building=val.building;
+                    this.houseEdit.unit=val.unit;
+                    this.houseEdit.house_number=val.house_number;
+                    this.houseEdit.rooms.rooms=val.rooms.rooms;
+                    this.houseEdit.rooms.hall=val.rooms.hall;
+                    this.houseEdit.rooms.toilet=val.rooms.toilet;
+                    this.houseEdit.area=val.area;
+                    this.houseEdit.decoration=val.decoration;
+                    this.houseEdit.floor=val.floor;
+                    this.houseEdit.total_floor=val.total_floor;
+                    this.houseEdit.house_type=val.house_type;
+                    this.houseEdit.house_feature=val.house_feature;
+                    this.houseEdit.floor_type=val.floor_type;
+                    this.houseEdit.person_medium=val.person_medium;
+                    this.houseEdit.source=val.source;
+                    this.houseEdit.elec_card_num=val.elec_card_num;
+                    this.houseEdit.water_card_num=val.water_card_num;
+                    this.houseEdit.gas_card_num=val.gas_card_num;
+                    this.houseEdit.remarks=val.remarks;
+                    this.houseEdit.reference=val.reference;
+                    this.houseEdit.facility=[];
+                    for(let i=0;i<val.facility.length;i++){
+                        this.houseEdit.facility.push(val.facility[i])
+                    }
 
-                this.checkboxModel=val.facility;;
-                this.housePic.cus_idPhoto = [];
-                this.houseEdit.house_pic = [];
-                this.housePic.cus_idPhotos = val.album.house_pic;                    //修改图片ID
-                for (let i in this.housePic.cus_idPhotos) {
-                    this.housePic.cus_idPhoto.push(i);
-                    this.houseEdit.house_pic.push(i);
-                }
-                this.waterPic.cus_idPhoto = [];
-                this.houseEdit.water_card_pic = [];
-                this.waterPic.cus_idPhotos = val.album.water_card_pic;                    //修改图片ID
-                for (let i in this.waterPic.cus_idPhotos) {
-                    this.waterPic.cus_idPhoto.push(i);
-                    this.houseEdit.water_card_pic.push(i);
-                }
-                this.elePic.cus_idPhoto = [];
-                this.houseEdit.elec_card_pic = [];
-                this.elePic.cus_idPhotos = val.album.elec_card_pic;                    //修改图片ID
-                for (let i in this.elePic.cus_idPhotos) {
-                    this.elePic.cus_idPhoto.push(i);
-                    this.houseEdit.elec_card_pic.push(i);
-                }
-                this.gasPic.cus_idPhoto = [];
-                this.houseEdit.gas_card_pic = [];
-                this.gasPic.cus_idPhotos = val.album.gas_card_pic;                    //修改图片ID
-                for (let i in this.gasPic.cus_idPhotos) {
-                    this.gasPic.cus_idPhoto.push(i);
-                    this.houseEdit.gas_card_pic.push(i);
-                }
-                this.propertyPic.cus_idPhoto = [];
-                this.houseEdit.property_pic = [];
-                this.propertyPic.cus_idPhotos = val.album.property_pic;                    //修改图片ID
-                for (let i in this.propertyPic.cus_idPhotos) {
-                    this.propertyPic.cus_idPhoto.push(i);
-                    this.houseEdit.property_pic.push(i);
+                    this.checkboxModel=val.facility;;
+                    this.housePic.cus_idPhoto = [];
+                    this.houseEdit.house_pic = [];
+                    this.housePic.cus_idPhotos = val.album.house_pic;                    //修改图片ID
+                    for (let i in this.housePic.cus_idPhotos) {
+                        this.housePic.cus_idPhoto.push(i);
+                        this.houseEdit.house_pic.push(i);
+                    }
+                    this.waterPic.cus_idPhoto = [];
+                    this.houseEdit.water_card_pic = [];
+                    this.waterPic.cus_idPhotos = val.album.water_card_pic;                    //修改图片ID
+                    for (let i in this.waterPic.cus_idPhotos) {
+                        this.waterPic.cus_idPhoto.push(i);
+                        this.houseEdit.water_card_pic.push(i);
+                    }
+                    this.elePic.cus_idPhoto = [];
+                    this.houseEdit.elec_card_pic = [];
+                    this.elePic.cus_idPhotos = val.album.elec_card_pic;                    //修改图片ID
+                    for (let i in this.elePic.cus_idPhotos) {
+                        this.elePic.cus_idPhoto.push(i);
+                        this.houseEdit.elec_card_pic.push(i);
+                    }
+                    this.gasPic.cus_idPhoto = [];
+                    this.houseEdit.gas_card_pic = [];
+                    this.gasPic.cus_idPhotos = val.album.gas_card_pic;                    //修改图片ID
+                    for (let i in this.gasPic.cus_idPhotos) {
+                        this.gasPic.cus_idPhoto.push(i);
+                        this.houseEdit.gas_card_pic.push(i);
+                    }
+                    this.propertyPic.cus_idPhoto = [];
+                    this.houseEdit.property_pic = [];
+                    this.propertyPic.cus_idPhotos = val.album.property_pic;                    //修改图片ID
+                    for (let i in this.propertyPic.cus_idPhotos) {
+                        this.propertyPic.cus_idPhoto.push(i);
+                        this.houseEdit.property_pic.push(i);
+                    }
                 }
             },
             'checkboxModel': {

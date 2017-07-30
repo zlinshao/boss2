@@ -33,7 +33,7 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="padding: 0;">
                         <div class="input-group">
-                            <input type="text" class="form-control" @keyup="search" placeholder="请输入房屋地址"
+                            <input type="text" class="form-control" @keyup="search" placeholder="手机号/开单人/业主/地址"
                                    v-model="contractSearchInfo.keywords">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" @click="search">搜索</button>
@@ -43,7 +43,7 @@
                     <div class="pro-sort" style="margin-left: 10px;margin-top: 15px">
                         <label>
                             <input type="checkbox" v-model="contractSearchInfo.become_due" @click="search">
-                            快到期合同
+                            30天内快到期
                         </label>
                     </div>
                     <div class="pro-sort"  style="margin-left: 10px;margin-top: 15px">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="pull-right pro-sort" style="margin: 8px">
                         <router-link :to="{path:'/memorandum',query: {flag: 'collect'}}" class="btn btn-primary">
-                            <i class="fa fa-eye"></i>&nbsp;查看备忘录
+                           &nbsp;查看备忘录
                         </router-link>
                     </div>
                 </div>
@@ -97,7 +97,6 @@
                         <th class="text-center">
                             <!--<input type="checkbox">-->
                         </th>
-                        <th class="text-center"></th>
                         <th class="text-center">合同编号</th>
                         <th class="text-center">上传时间</th>
                         <th class="text-center">开单人</th>
@@ -108,16 +107,17 @@
                         <th class="text-center">资料补齐时间</th>
                         <th class="text-center">过期情况</th>
                         <th class="text-center">回访情况</th>
-                        <th class="text-center">资料状态</th>
-                        <th class="text-center">更多</th>
-                        <th class="text-center"></th>
+                        <th class="text-center">审核状态</th>
+                        <th class="text-center">标记</th>
+                        <th class="text-center">锁定状态</th>
+                        <th class="text-center">置顶</th>
+                        <th class="text-center">详情</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @click="picked(item,$event)"
                                    :value="item.id" :checked="contractSeleted===item.id"></td>
-                        <td><i class="fa fa-star" v-if="item.mark === 1"></i></td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.drawer}}</td>
@@ -129,23 +129,30 @@
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
                         <td>
-                            <span class="label label-success" v-if="item.passed === 1">{{dictionary.passed[item.passed]}}</span>
-                            <span class="label label-warning" v-if="item.passed !== 1">{{dictionary.passed[item.passed]}}</span>
+                            <span class="label label-success" v-if="item.passed === 5">
+                                {{dictionary.passed[item.passed]}}
+                            </span>
+                            <span class="label label-warning" v-if="item.passed !== 5">{{dictionary.passed[item.passed]}}</span>
                         </td>
-                        <td>
-                            <router-link :to="{path:'/contractDetail',query: {ContractId: item.id,flag:'detail'}}" class=" fa fa-eye" title="合同详情"></router-link>
-
+                        <td class=" myIcon">
+                            <i class="fa fa-star" v-if="item.mark === 1"></i>
                         </td>
-                        <td>
+                        <td class=" myIcon">
                             <i class="fa fa-lock" v-if="item.status !== 1" ></i>
                             <i class="fa fa-unlock" v-if="item.status === 1" ></i>
-
+                        </td>
+                        <td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
+                        </td>
+                        <td>
+                            <router-link :to="{path:'/contractDetail',query: {ContractId: item.id,flag:'detail'}}">
+                                详情
+                            </router-link>
                         </td>
 
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="15" class="text-center text-muted">
+                        <td colspan="16" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
@@ -210,6 +217,7 @@
                 mark:'',
                 status:'',
                 confirmMsg:[],
+                msgFlag :'',
             }
         },
         updated (){
@@ -320,39 +328,47 @@
             deleteContract(){
                 this.confirmMsg = {msg:'您确定删除吗'};
                 $('#confirm').modal('show');
+                this.msgFlag = 'delete';
+
+            },
+            deblocking(){  //解锁
+                this.confirmMsg = {msg:'您确定解锁吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'lock';
 
             },
             getConfirm(){
-                this.$http.get('core/collect/delete/id/' + this.contractSeleted).then((res) => {
-                    if(res.data.code === '70030'){
-                        this.search();
-                        this.contractSeleted = 0;
-                        this.info.success =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else {
-                        this.info.error =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
+                if(this.msgFlag === 'delete'){
+                    this.$http.get('core/collect/delete/id/' + this.contractSeleted).then((res) => {
+                        if(res.data.code === '70030'){
+                            this.search();
+                            this.contractSeleted = 0;
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }else if(this.msgFlag === 'lock'){
+                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                        if(res.data.code === '70010'){
+                            this.search();
+                            this.contractSeleted = 0;
+                            this.houseId = '';
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }
             },
-            deblocking(){  //解锁
-                this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
-                    if(res.data.code === '70010'){
-                        this.search();
-                        this.contractSeleted = 0;
-                        this.houseId = '';
-                        this.info.success =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else {
-                        this.info.error =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
-            }
         }
     }
 </script>
@@ -407,5 +423,12 @@
     }
     .operate:hover{
         color: #0E90D2;
+    }
+    .label{
+        display: inline-block;
+        width: 78px;
+    }
+    .myIcon{
+        padding: 0;
     }
 </style>

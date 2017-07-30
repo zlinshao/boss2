@@ -1,55 +1,55 @@
 <template>
     <div>
         <div class="modal fade full-width-modal-right" id="edit" tabindex="-1" role="dialog" data-backdrop="static"
-             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+             aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="remove_s">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">×</button>
                             <h4 class="modal-title">编辑租房报备</h4>
                         </div>
 
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">签约人</label>
+                                    <label class="col-sm-2 control-label">签约人<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control" readonly @click="selectStaff" v-model="chooseResult.staff_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">所属部门</label>
+                                    <label class="col-sm-2 control-label">所属部门<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" disabled v-model="chooseResult.department_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">负责人</label>
+                                    <label class="col-sm-2 control-label">负责人<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" disabled v-model="chooseResult.leader_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">房屋地址</label>
+                                    <label class="col-sm-2 control-label">房屋地址<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">客户姓名</label>
+                                    <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">租房状态</label>
+                                    <label class="col-sm-2 control-label">租房状态<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.rent_type">
                                             <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}</option>
@@ -58,17 +58,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">租房年限</label>
+                                    <label class="col-sm-2 control-label">租房年限<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.months">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">付款类型</label>
+                                    <label class="col-sm-2 control-label">付款类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-6">
-                                            <label class="col-sm-2 control-label">押</label>
+                                        <div class="col-sm-6 padding_0">
+                                            <label class="col-sm-2 control-label padding_0">押</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="formData.bet">
                                                     <option value="0">0</option>
@@ -78,7 +78,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label class="col-sm-2 control-label">付</label>
+                                            <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
                                                 <input type="number" class="form-control" v-model="formData.pay">
                                             </div>
@@ -87,16 +87,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">月单价</label>
+                                    <label class="col-sm-2 control-label">月单价<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.price">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">已收科目</label>
+                                    <label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="formData.received_type">
                                                 <option :value="value" v-for="(key,value) in dict.received_type">{{key}}</option>
                                             </select>
@@ -112,9 +112,9 @@
 
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">付款方式</label>
+                                    <label class="col-sm-2 control-label">付款方式<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[0].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -134,7 +134,7 @@
                                 <div v-show="more_pay_way>=2" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[1].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -151,7 +151,7 @@
                                 <div v-show="more_pay_way>=3" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[2].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -168,7 +168,7 @@
                                 <div v-show="more_pay_way>=4" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[3].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -185,7 +185,7 @@
                                 <div v-show="more_pay_way>=5" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[4].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -202,7 +202,7 @@
                                 <div v-show="more_pay_way>=6" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[5].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -219,7 +219,7 @@
                                 <div v-show="more_pay_way>=7" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[6].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -236,7 +236,7 @@
                                 <div v-show="more_pay_way>=8" class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[7].payment_id">
                                                 <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
                                             </select>
@@ -252,23 +252,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">尾款补齐时间</label>
+                                    <label class="col-sm-2 control-label">尾款补齐时间<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
-                                               class="form-control form_datetime" v-model="formData.complete_date">
+                                               class="form-control form_datetime" readonly v-model="formData.complete_date">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">凭证截图</label>
+                                    <label class="col-sm-2 control-label">凭证截图<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <upLoad @photo="certificatePicId" @delete="picDelete" @complete="complete"
                                                  :result="'certificatePics'" :idPhotos="certificatePic"></upLoad>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">中介费</label>
+                                <div class="form-group" v-show="is_medi==2">
+                                    <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" v-model="formData.cost_medi">
                                     </div>
@@ -293,10 +293,10 @@
                                 </div>-->
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">待签约日期</label>
+                                    <label class="col-sm-2 control-label">待签约日期<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
-                                               class="form-control form_datetime" v-model="formData.deal_time">
+                                               class="form-control form_datetime" readonly v-model="formData.deal_time">
                                     </div>
                                 </div>
 
@@ -311,7 +311,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" @click="remove_s">取消</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">取消</button>
                             <button type="button" class="btn btn-success" @click="modify">修改</button>
                         </div>
                     </div>
@@ -392,6 +392,8 @@
                     leader_name : '',
                     customer_name : ''
                 },
+
+                is_medi : 1,        // 是否中介 1否2是
                 formData : {
                     staff_id : '',
                     department_id : '',
@@ -458,75 +460,81 @@
 //                console.log(val);
 //                console.log($('#edit').css('display'))
                 if (val!=0){
-                    this.$http.get('checkin/rent/'+val)
-                        .then(
-                            (res) => {
-//                                console.log(res.data.data);
-                                let val = res.data.data;
-                                if (val.staff!=null){
-                                    this.chooseResult.staff_name=val.staff.real_name;
-                                }
-                                if (val.department!=null){
-                                    this.chooseResult.department_name=val.department.name;
-                                }
-                                if (val.leader!=null){
-                                    this.chooseResult.leader_name=val.leader.real_name;
-                                }
-                                if (val.customer!=null){
-                                    this.chooseResult.customer_name=val.customer.name;
-                                }
-                                if (val.house!=null){
-                                    this.chooseResult.house_name=val.house.detailed_address;
-                                }
-
-//                                console.log(val.payment);
-                                this.more_pay_way = val.payment.length;
-//                                console.log(this.more_pay_way);
-                                for (let i = 0; i<this.more_pay_way ; i++){
-//                                    console.log(i);
-                                    this.payments[i].payment_id = val.payment[i].payment_id;
-                                    this.payments[i].money = val.payment[i].money;
-                                }
-
-
-                                this.formData.staff_id = val.staff_id;
-                                this.formData.department_id = val.department_id;
-                                this.formData.leader_id = val.leader_id;
-                                this.formData.house_id = val.house_id;
-                                this.formData.customer_id = val.customer_id;
-
-                                this.formData.months = val.months;
-                                this.formData.pay = val.pay;
-                                this.formData.bet = val.bet;
-                                this.formData.price = val.price;
-                                this.formData.cost_medi = val.cost_medi;
-                                this.formData.cost_deposit = val.cost_deposit;
-
-                                this.certificatePic.cus_idPhoto = [];
-                                this.certificatePic.cus_idPhotos = val.album.receipt_pic;
-                                for (let i in this.certificatePic.cus_idPhotos) {
-                                    this.certificatePic.cus_idPhoto.push(i);
-                                }
-
-                                this.formData.deal_time = val.deal_time;
-                                this.formData.receipt_pic = val.receipt_pic;
-                                this.formData.received_type = val.received_type;
-                                this.formData.received_amount = val.received_amount;
-//                                this.formData.account_id = val.account_id;
-                                this.formData.complete_date = val.complete_date;
-
-                                this.formData.remark = val.remark;
-
-                                this.complete_ok = 'ok';
-
-                            }
-                        )
-//                    console.log(this.dateConfigure)
+                    this.getDetails();
                 }
 
             }
         },
         methods: {
+            getDetails(){
+                this.$http.get('checkin/rent/'+this.id)
+                    .then(
+                        (res) => {
+                            console.log(res.data.data);
+                            let val = res.data.data;
+                            if (val.staff!=null){
+                                this.chooseResult.staff_name=val.staff.real_name;
+                            }
+                            if (val.department!=null){
+                                this.chooseResult.department_name=val.department.name;
+                            }
+                            if (val.leader!=null){
+                                this.chooseResult.leader_name=val.leader.real_name;
+                            }
+                            if (val.customer!=null){
+                                this.chooseResult.customer_name=val.customer.name;
+                            }
+                            if (val.house!=null){
+                                this.chooseResult.house_name=val.house.detailed_address;
+                            }
+
+//                                console.log(val.payment);
+                            this.more_pay_way = val.payment.length;
+//                                console.log(this.more_pay_way);
+                            for (let i = 0; i<this.more_pay_way ; i++){
+//                                    console.log(i);
+                                this.payments[i].payment_id = val.payment[i].payment_id;
+                                this.payments[i].money = val.payment[i].money;
+                            }
+
+
+                            this.formData.staff_id = val.staff_id;
+                            this.formData.department_id = val.department_id;
+                            this.formData.leader_id = val.leader_id;
+                            this.formData.house_id = val.house_id;
+                            this.formData.customer_id = val.customer_id;
+
+                            this.formData.months = val.months;
+                            this.formData.pay = val.pay;
+                            this.formData.bet = val.bet;
+                            this.formData.price = val.price;
+                            this.formData.cost_medi = val.cost_medi;
+                            this.formData.cost_deposit = val.cost_deposit;
+
+                            this.certificatePic.cus_idPhoto = [];
+                            this.certificatePic.cus_idPhotos = val.album.receipt_pic;
+                            for (let i in this.certificatePic.cus_idPhotos) {
+                                this.certificatePic.cus_idPhoto.push(i);
+                            }
+
+                            this.formData.deal_time = val.deal_time;
+                            this.formData.receipt_pic = val.receipt_pic;
+                            this.formData.received_type = val.received_type;
+                            this.formData.received_amount = val.received_amount;
+//                                this.formData.account_id = val.account_id;
+                            this.formData.complete_date = val.complete_date;
+
+                            this.formData.remark = val.remark;
+                            if (val.customer!=null){
+                                this.is_medi = val.customer.person_medium;
+                            }
+
+                            this.complete_ok = 'ok';
+
+                        }
+                    )
+//                    console.log(this.dateConfigure)
+            },
             closeModal(){
                 // 清空
                 this.payments = [
@@ -596,6 +604,8 @@
                 this.remove_s ();
 
                 $('#edit').modal('hide');
+                this.remove_s();
+                this.getDetails();
             },
 
             selectStaff(){
@@ -618,7 +628,7 @@
             },
             getHouse(data){
                 // 选择房屋
-                alert(data)
+//                alert(data)
 //                console.log(data);
                 this.formData.house_id = data.id;
                 this.chooseResult.house_name = data.address;
@@ -632,6 +642,10 @@
 //                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
+                this.is_medi = data.person_medium;
+                if (this.id_medi==1){
+                    this.formData.cost_medi = '';
+                }
 
             },
 

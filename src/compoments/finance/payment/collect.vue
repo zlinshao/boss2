@@ -88,7 +88,7 @@
                             <td>
                                 <input type="checkbox">
                             </td>
-                            <td><router-link :to="{path:'/CollectPaymentDetail',query: {collectId: 1}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td><router-link :to="{path:'/CollectPaymentDetail',query: {collectId: 1}}">详情</router-link></td>
                         </tr>
                         </tbody>
                     </table>
@@ -364,7 +364,7 @@
         /*font-weight: bold;*/
     }
     .tips ul li span.green{
-        color: #66CC33;
+        color: #78CD51;
     }
     .tips ul li span.yellow{
         color: #FF9A02;
@@ -384,7 +384,5 @@
         width: 17px;
         height: 17px;
     }
-    tr td a i{
-        font-size: 18px;
-    }
+
 </style>

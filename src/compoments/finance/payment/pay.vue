@@ -128,7 +128,7 @@
                                     {{dict.account_should_status[item.status]}}
                                 </button>
                             </td>
-                            <td><router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td><router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="13">暂无数据...</td>
@@ -516,9 +516,7 @@
         width: 17px;
         height: 17px;
     }
-    tr td a i{
-        font-size: 18px;
-    }
+
     textarea{
         max-width: 100%;
     }
@@ -536,6 +534,6 @@
     }
 
     .status.green {
-        background-color: #83E96D;
+        background-color: #78CD51;
     }
 </style>

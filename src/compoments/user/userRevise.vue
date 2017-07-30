@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade full-width-modal-right" id="myModalRevise">
+        <div class="modal fade full-width-modal-right " id="myModalRevise">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -39,7 +39,7 @@
                                         <div class="col-md-4">
                                             <input @click="remindData" type="text"
                                                    class="form-control form_datetime1" v-model="birthday"
-                                                   value="" placeholder="生日">
+                                                   readonly value="" placeholder="生日">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -160,7 +160,7 @@
                                         <div class="col-md-4">
                                             <input @click="enrollDate" type="text"
                                                    class="form-control form_datetime2" v-model="enroll"
-                                                   value="" placeholder="入职时间">
+                                                    readonly value="" placeholder="入职时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -491,7 +491,8 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    pickerPosition: 'top-left',
+                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.enroll = ev.target.value;
                 }.bind(this));
@@ -504,7 +505,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.birthday = ev.target.value;
                 }.bind(this));

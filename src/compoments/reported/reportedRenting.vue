@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="input-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增租房报备
+                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增未收先租房报备
                             </a>
                         </div>
                     </form>
@@ -103,12 +103,11 @@
                             <td>{{item.deal_time}}</td>
                             <td>
                                 <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
                                 </button>
                             </td>
-                            <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}"><i title="查看详情" class=" fa fa-eye"></i></router-link></td>
+                            <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="16">暂无数据...</td>
@@ -363,23 +362,11 @@
         width: 17px;
         height: 17px;
     }
-    .yellow {
-        background-color: #F9E175;
-    }
 
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
-    }
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
     }
-    tr td a i{
-        font-size: 18px;
-    }
+
     tbody tr td button{
         color: white;
         /*font-weight: bold;*/

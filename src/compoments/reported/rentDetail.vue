@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>组长报备</li>
             <li><router-link to="/reportedRenting">租房报备</router-link></li>
-            <li>收房报备详情</li>
+            <li>租房报备详情</li>
         </ol>
 
         <section class="panel head">
@@ -13,7 +13,7 @@
                     <span>{{msg.create_time}}</span>
                     <span :class="{'status':true,'btn':true,'yellow':msg.status===1,'orange':msg.status===2,'green':msg.status===3}">{{dict.checkin_status[msg.status]}}</span>
                     <div class="pull-right">
-                        <button class="btn btn-primary" @click="addCollectReported">收房报备</button>
+                        <button class="btn btn-primary" v-show="msg.status!=1" @click="addCollectReported">收房报备</button>
                         <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
                         <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
                         <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
@@ -28,7 +28,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;租房报备信息
-                        <a class="pull-right" data-toggle="modal" data-target="#edit" v-show="msg.status==1">编辑</a>
+                        <a class="pull-right fa fa-pencil-square-o" data-toggle="modal" data-target="#edit" v-show="msg.status==1"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -41,14 +41,15 @@
                                 <div><span class="text-primary">租房类型：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
                                 <div><span class="text-primary">年限(月)：</span><span>{{msg.months}}</span></div>
                                 <div><span class="text-primary">付款类型：</span><span>押{{msg.bet}}付{{msg.pay}}</span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.price}}</span></div>
+                                <div><span class="text-primary">出租月单价：</span><span>{{msg.price}}</span></div>
                                 <div><span class="text-primary">应收金额：</span><span>xcxx</span></div>
                                 <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
                                 <div><span class="text-primary">付款方式：</span>
                                     <span>
-                                        支付宝
+                                        <!--支付宝-->
+                                        {{dict.rent_payment[msg.payment[0].payment_id]}}
                                         &nbsp;
-                                        112
+                                        {{msg.payment[0].money}}
                                         <a v-show="msg.payment.length>1" data-toggle="modal" data-target="#change">变化</a>
                                     </span>
                                 </div>
@@ -71,8 +72,8 @@
                                 <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
                                 <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
-                                <div><span class="text-primary">负责人：</span><span>{{msg.leader.real_name}}</span></div>
-                                <div><span class="text-primary">所属部门：</span><span>{{msg.department.name}}</span></div>
+                                <div><span class="text-primary">负责人：</span><span>{{msg.leader==undefined?'':msg.leader.real_name}}</span></div>
+                                <div><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
                             </div>
                         </div>
                     </div>
@@ -102,8 +103,9 @@
                         <h4 class="modal-title">付款方式</h4>
                     </div>
                     <div class="modal-body clearFix">
+                        <!--dict.rent_payment[msg.payment[0].payment_id]-->
                         <div class="col-sm-12 clearFix" v-for="item in msg.payment">
-                            <span class="col-sm-5">{{item.payment_id}}</span>
+                            <span class="col-sm-5">{{dict.rent_payment[item.payment_id]}}</span>
                             <span class="col-sm-7">{{item.money}}元</span>
                         </div>
                     </div>
@@ -322,18 +324,6 @@
     .client_info > div > div > div span a{
         margin-left: 12px;
         font-size: 8px;
-    }
-
-    .yellow {
-        background-color: #F9E175;
-    }
-
-    .orange {
-        background-color: #FCB322;
-    }
-
-    .green {
-        background-color: #83E96D;
     }
 
     #change .modal-body>div span:nth-child(1){
