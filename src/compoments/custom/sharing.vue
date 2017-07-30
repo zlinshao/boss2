@@ -65,7 +65,6 @@
         methods: {
 //            取消
             cancel (){
-                this.configure = [];
                 this.salesman = [];
                 this.salesman_id = [];
             },
@@ -79,7 +78,7 @@
             },
 //            获得派发对象
             selectDateSend (val){
-                this.salesman = [];
+                this.cancel();
                 this.salesman.push(val.staff[0].name);
                 this.salesman_id.push(val.staff[0].id);
             },
@@ -93,12 +92,12 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        this.cancel();
                         setTimeout(function () {
                             $('#sharing').modal('hide');
                         }, 1000);
-
+                        this.cancel();
                     } else {
+                        this.cancel();
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***

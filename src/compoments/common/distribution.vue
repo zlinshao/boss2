@@ -8,7 +8,7 @@
 
                     <!--客户派发-->
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="empty_cus">×</button>
                         <h4 class="modal-title">客户派发</h4>
                     </div>
 
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button" @click="empty_cus">取消</button>
                         <button class="btn btn-success" type="button" @click="distribution_ok"> 确定</button>
                     </div>
                 </div>
@@ -81,10 +81,14 @@
                     class: 'amount'
                 };
             },
-//            获得派发对象
-            selectDateSend (val){
+//            清空员工ID
+            empty_cus (){
                 this.salesman = [];
                 this.salesman_id = [];
+            },
+//            获得派发对象
+            selectDateSend (val){
+                this.empty_cus();
                 this.salesman.push(val.staff[0].name);
                 this.salesman_id.push(val.staff[0].id);
             },
@@ -103,8 +107,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        this.salesman = [];
-                        this.salesman_id = [];
+                        this.empty_cus();
                     }else{
                         //关闭成功信息(可选)
                         this.info.state_success = false;
@@ -112,8 +115,7 @@
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
-                        this.salesman = [];
-                        this.salesman_id = [];
+                        this.empty_cus();
                     }
                 });
             }
