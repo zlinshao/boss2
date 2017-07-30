@@ -433,6 +433,7 @@
 
 //            系统公告
             System(val){
+                this.paging = '';
                 this.$http.post('message/system/index/pages/' + val).then((res) => {
                     if (res.data.code === '100000') {
                         this.systems = res.data.data.list;
@@ -453,6 +454,7 @@
             },
 //            审批提醒
             Examine(val){
+                this.paging = '';
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
 
@@ -480,6 +482,7 @@
             },
 //            待办提醒
             Substitute(val){
+                this.paging = '';
                 this.$http.post('message/remind/index/pages/' + val).then((res) => {
                     if (res.data.code === '100020') {
                         this.Substitutes = res.data.data.data;
@@ -501,6 +504,7 @@
             },
 //            BOSS小秘书
             Secretary(val){
+                this.paging = '';
                 this.$http.post('message/secretary/index/pages/' + val).then((res) => {
                     if (res.data.code === '100030') {
                         this.Secretarys = res.data.data.list;
@@ -522,6 +526,7 @@
             },
 //            收藏
             Message(val){
+                this.paging = '';
                 this.$http.post('message/favourite/index/pages/' + val).then((res) => {
                     if (res.data.code === '100040') {
                         this.Messages = res.data.data.data;
