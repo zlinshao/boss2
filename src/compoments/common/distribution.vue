@@ -112,6 +112,8 @@
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
+                        this.salesman = [];
+                        this.salesman_id = [];
                     }
                 });
             }
