@@ -291,7 +291,6 @@
             'contractEdit.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    console.log(this.isClick)
                     if(val !== oldVal && this.isClick){
                         this.completeDate(val);
                     }

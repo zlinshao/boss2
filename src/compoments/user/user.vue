@@ -7,7 +7,7 @@
                     <aside class="sm-side">
                         <div class="user-head">
                             <div class="user-name" style="font-size: 16px;line-height: 60px;">
-                                组织架构{{keywords}}
+                                组织架构
                             </div>
                         </div>
 
