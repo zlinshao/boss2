@@ -277,9 +277,6 @@
                 isClick :false,
             }
         },
-        mounted(){
-
-        },
         updated(){
             this.selectDate ();
         },
@@ -550,11 +547,6 @@
         width: 17px;
         height: 17px;
     }
-    /*@media (max-width: 767px) {*/
-        /*div.modal-dialog{*/
-            /*width: 100%;*/
-        /*}*/
-    /*}*/
     .col-lg-2{
         position: relative;
         min-height: 1px;

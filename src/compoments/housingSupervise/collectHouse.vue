@@ -83,7 +83,7 @@
                                 <input type="checkbox" class="pull-left" v-model="our_group" @click="search">显示本组房屋
                             </label>
                         </div>
-                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px">
+                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
                                 <span class="input-group-btn">
@@ -91,7 +91,7 @@
                                  </span>
                             </div>
                         </div>
-                        <div class="pro-sort pull-right">
+                        <div class="pro-sort">
                             <button class="btn btn-success" type="button" @click="reset">重置</button>
                         </div>
 
