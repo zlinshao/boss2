@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button">取消{{salesman_id}}{{salesman}}</button>
                         <button class="btn btn-success" type="button" @click="distribution_ok"> 确定</button>
                     </div>
                 </div>
@@ -84,6 +84,7 @@
 //            获得派发对象
             selectDateSend (val){
                 this.salesman = [];
+                this.salesman_id = [];
                 this.salesman.push(val.staff[0].name);
                 this.salesman_id.push(val.staff[0].id);
             },
@@ -103,6 +104,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         this.salesman = [];
+                        this.salesman_id = [];
                     }else{
                         //关闭成功信息(可选)
                         this.info.state_success = false;
