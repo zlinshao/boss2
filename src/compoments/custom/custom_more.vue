@@ -153,7 +153,7 @@
             <!--</div>-->
             <!--沟通日志/房屋信息-->
             <div class="col-xs-12">
-                <section class="panel roll" style="height: 500px;overflow: auto;">
+                <section class="panel">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -165,7 +165,7 @@
                             <!--</li>-->
                         </ul>
                     </header>
-                    <div class="panel-body">
+                    <div class="panel-body roll" style="height: 500px;overflow: auto;margin-top: 2px;">
                         <div class="tab-content">
 
                             <!--沟通日志-->
