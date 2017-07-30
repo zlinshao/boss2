@@ -7,21 +7,21 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div v-show="operId==0">
+                <div>
                     <form class="form-inline" role="form">
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group clearFix">
-                            <select class="form-control">
-                                <option value="">hdjs</option>
+                            <select class="form-control" v-model="params.type" @change="search">
+                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
                         </div>
 
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址" @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址" v-model="params.search" @keydown.enter.prevent="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i
                                         class="fa fa-search"></i></button>
@@ -29,21 +29,12 @@
                         </div>
 
                         <div class="form-group pull-right">
-                            <a class="btn btn-success" @click="addNew" data-toggle="modal" data-target="#myModal">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#myModal">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增转账记录
                             </a>
                         </div>
 
                     </form>
-                </div>
-
-                <div v-show="operId!=0" class="col-lg-12 remind">
-                    <ul>
-                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li>
-                            <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </section>
@@ -56,7 +47,6 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
                             <th class="text-center">转账日期</th>
                             <th class="text-center">转出账户</th>
                             <th class="text-center">账户余额</th>
@@ -68,8 +58,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
-
+                        <tr class="text-center" v-for="item in myData">
+                            <td>{{item.transfer_date}}</td>
+                            <td>{{item.out_name}}</td>
+                            <td>{{item.amount_final_out}}</td>
+                            <td>{{item.in_name}}</td>
+                            <td>{{item.amount_final_in}}</td>
+                            <td>{{item.amount_transfer}}</td>
+                            <td>{{dict.staff_id[item.operator_id]}}</td>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="9">暂无数据...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -80,71 +80,76 @@
 
         <!--modal-->
         <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" aria-label="Close" @click="clearForm"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
-                    </div>
+            <div class="modal-dialog modal-md">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close" @click="clearForm"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">新增转账记录</h4>
+                        </div>
 
-                    <div class="modal-body clearFix">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转账日期:</label>
-                                <div class="col-sm-8">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime">
+                        <div class="modal-body clearFix">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转账日期:</label>
+                                    <div class="col-sm-10">
+                                        <input @click="remindData" type="text" name="addtime" value="" placeholder="开始时间" class="form-control form_datetime" v-model="formData.transfer_date">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转出账户:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转出账户:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" v-model="formData.account_id_out" @change="getOutRemain">
+                                            <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转入账户:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转入账户:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" v-model="formData.account_id_in" @change="getInRemain">
+                                            <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转账人员:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转账人员:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" readonly v-model="logName">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转出账户余额:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转出账户余额:</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" readonly v-model="account_out_remain">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转入账户余额:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转入账户余额:</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" readonly v-model="account_in_remain">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">转账金额:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转账金额:</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="formData.amount_transfer">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">备注:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">备注:</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" v-model="formData.remark"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary" v-show="isAdd">保存</button>
-                        <button type="button" class="btn btn-primary" v-show="!isAdd">修改</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" @click="clearForm">取消</button>
+                            <button type="button" class="btn btn-primary" @click="add">保存</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -166,6 +171,9 @@
         width: 17px;
         height: 17px;
     }
+    textarea{
+        max-width: 100%;
+    }
 </style>
 <script>
     import Page from '../common/page.vue'
@@ -176,12 +184,14 @@
         components: {Page,Status,DatePicker},
         data(){
             return {
+                dict : {},
+                isShow : false,
+
                 operId : 0,
                 paging : '',
                 page : 1,                  // 当前页数
 
-                title : '',
-                isAdd : true,
+                myData : [],
 
                 dateConfigure : [
                     {
@@ -191,8 +201,9 @@
                     }
                 ],
                 params : {
-                    startDataTime : '',
-                    finishDataTime : ''
+                    type : 1,
+                    range : '',
+                    search : ''
                 },
                 info:{
                     //成功状态 ***
@@ -204,14 +215,16 @@
                     //失败信息 ***
                     error: ''
                 },
-                modal : {
-                    date : '',
-                    outAccount : '',
-                    inAccount : '',
-                    people : '',
-                    outRemain : '',
-                    inRemain : '',
-                    amount : '',
+
+                logName : '',
+                account_in_remain : '',
+                account_out_remain : '',
+
+                formData : {
+                    transfer_date : '',
+                    account_id_out : 1,
+                    account_id_in : 1,
+                    amount_transfer : '',
                     remark : ''
                 }
             }
@@ -220,8 +233,23 @@
             this.remindData();
             //            时间选择
         },
-        created (){
-            this.generalRecordList();
+        mounted (){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.generalRecordList();
+                    }
+                );
+            // 获取当前登录人的姓名
+            this.$http.get('staff/info')
+                .then(
+                    (res) =>{
+//                        console.log(res.data);
+                        this.logName = res.data.name;
+                    }
+                )
         },
         methods : {
             changeIndex(ev,id){
@@ -236,12 +264,17 @@
 
             },
             generalRecordList(){
-                /*this.$http.get('json/generalRecord.json').then((res) => {
-//                    this.collectList = res.data.data.gleeFulCollect;
-                    this.cont.myData = res.data.data.generalRecordList;
-//                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                })*/
+                this.$http.get('account/transfer').then((res) => {
+//                    console.log(res.data.code);
+
+                    if (res.data.code==18600){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                    }
+                })
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -254,43 +287,105 @@
                 }).on('changeDate', function (ev) {
 //                    console.log($(ev.target).attr('placeholder'));
 //                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '开始时间'){
-                        this.params.startDataTime = ev.target.value;
-                    } else if (ev.target.placeholder === '结束时间'){
-                        this.modal.finishDataTime = ev.target.value;
-                    } else {
-                        this.modal.date = ev.target.value;
-                    }
+                    this.formData.transfer_date = ev.target.value;
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
             getPage(data){
                 this.page = data;
+                this.filter();
             },
             clearForm(){
+//                this.logName = "";
+                this.account_in_remain = "";
+                this.account_out_remain = "";
+
+                this.formData.transfer_date = "";
+                this.formData.account_id_out = 1;
+                this.formData.account_id_in = 1;
+                this.formData.amount_transfer = "";
+                this.formData.remark = "";
+
                 $('#myModal').modal('hide');
             },
-            addNew(){
-                this.title = '新增转账记录';
-                this.isAdd = true;
+
+            search(){
+//                this.operId = 0;
+                this.page = 1;
+                this.filter();
             },
-            oper(){
-                console.log(this.operId);
-                this.title = '编辑转账记录';
-                this.isAdd = false;
-                // 先请求
-
-//                请求成功打开模态框
-                $('#myModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
-
-            },
-
-            search(){},
             getDate(data){
+                this.params.range = data;
+                this.search();
+            },
 
+            filter(){
+                this.$http.get('account/transfer?page='+this.page,{
+                    params : this.params
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==18600){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.myData = [];
+                        this.paging = 1;
+                        this.isShow = true;
+                    }
+                })
+            },
+
+            // 新增
+            add(){
+                console.log(this.formData);
+                this.$http.post('account/transfer',this.formData)
+                    .then(
+                        (res) =>{
+                            console.log(res.data);
+                            if (res.data.code==18610){
+                                // 成功
+                                this.info.success = '转账成功';
+                                //显示失败弹窗 ***
+                                this.info.state_success = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_success = false;
+                                }, 2000);
+                                this.clearForm();
+                                this.search();
+                            } else {
+                                this.info.error = res.data.msg;
+                                //显示失败弹窗 ***
+                                this.info.state_error = true;
+                                //一秒自动关闭失败信息弹窗 ***
+                                setTimeout(() => {
+                                    this.info.state_error = false;
+                                }, 2000);
+                            }
+                        }
+                    )
+            },
+
+            // 获取转出账户余额
+            getOutRemain(){
+                this.$http.get('account/manage/'+this.formData.account_id_out)
+                    .then(
+                        (res) =>{
+                            console.log(res.data.data);
+                           this.account_out_remain = res.data.data.amount_remain
+                        }
+                    )
+            },
+//            获取转入账户余额
+            getInRemain(){
+                this.$http.get('account/manage/'+this.formData.account_id_in)
+                    .then(
+                        (res) =>{
+                            console.log(res.data.data);
+                            this.account_in_remain = res.data.data.amount_remain
+                        }
+                    )
             }
         }
     }

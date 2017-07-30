@@ -102,7 +102,7 @@
         setOptions: function(options, callback) {
 
             // this.startDate = moment().startOf('day');
-            this.startDate = moment().subtract('days', 1000);
+            this.startDate = moment().subtract('days', 2);
             // this.endDate = moment().startOf('day');
             this.endDate = moment();
             this.minDate = false;

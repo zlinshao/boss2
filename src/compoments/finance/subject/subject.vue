@@ -92,7 +92,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="clearForm">×</button>
+                            <button type="button" class="close" aria-hidden="true" @click="clearForm">×</button>
                             <h4 class="modal-title">{{title}}</h4>
                         </div>
                         <div class="modal-body">
@@ -284,7 +284,7 @@
                     .then(
 //                        console.log
                         (res) =>{
-                            console.log(res.data.data);
+//                            console.log(res.data.data);
                             let val = res.data.data;
                             this.formData.title = val.title;
                             this.formData.er_type = val.er_type;
@@ -310,7 +310,7 @@
                 this.formData.remark = '';
 
                 this.reset();
-                console.log(this.Superior_name)
+//                console.log(this.Superior_name)
                 $('#myModal').modal('hide');
             },
             getPage(data){

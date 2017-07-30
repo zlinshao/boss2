@@ -725,8 +725,8 @@
                             this.formData.house_id = result.villa_id.id;
                             this.formData.customer_id = result.customer_id.id;
                             this.chooseResult.staff_name = result.staff;
-                            this.chooseResult.house_name = result.customer_id.id;
-                            this.chooseResult.customer_name = result.villa_id.amap_json.villageName;
+                            this.chooseResult.customer_name = result.customer_id.name;
+                            this.chooseResult.house_name = result.villa_id.amap_json.villageName;
 
                         }
                     )

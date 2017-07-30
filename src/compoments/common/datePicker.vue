@@ -1,5 +1,5 @@
 <template>
-    <div class="datePickerContainer form-group">
+    <div class="datePickerContainer input-group">
         <div v-if="range">
             <div class="input-group" v-show="isPC">
                 <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
