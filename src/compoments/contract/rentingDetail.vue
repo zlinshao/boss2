@@ -12,7 +12,8 @@
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
-                <span class="label label-primary">{{passDictionary[contract_pass]}}</span>
+                <span class="label label-primary" v-if="contract_pass < 5">{{passDictionary[contract_pass]}}</span>
+                <span class="label label-primary" v-if="contract_pass >=5">已完成</span>
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
                 <span>
