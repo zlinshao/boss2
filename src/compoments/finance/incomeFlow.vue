@@ -23,8 +23,8 @@
                             <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
                         </div>-->
                         <div class="input-group">
-                            <select class="form-control">
-                                <option value="">收入</option>
+                            <select class="form-control" v-model="params.type" @change="search">
+                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
                         </div>
 
@@ -34,7 +34,7 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址"  @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址" v-model="params.search"  @keydown.enter.prevent="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                             </span>
@@ -68,28 +68,26 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
                             <th class="text-center">付款时间</th>
-                            <th class="text-center">签约人</th>
-                            <th class="text-center">房屋地址</th>
-                            <th class="text-center">付款方式</th>
-                            <th class="text-center">月单价</th>
-                            <th class="text-center">支出科目</th>
-                            <th class="text-center">应付金额</th>
-                            <th class="text-center">实付金额</th>
-                            <th class="text-center">剩余款项</th>
-                            <th class="text-center">补齐时间</th>
-                            <th class="text-center">状态</th>
+                            <th class="text-center">客户姓名</th>
                             <th class="text-center">详情</th>
+                            <th class="text-center">科目名称</th>
+                            <th class="text-center">类型</th>
+                            <th class="text-center">收/汇款方式</th>
+                            <th class="text-center">收/汇款账户</th>
+                            <th class="text-center">应付/收金额</th>
+                            <th class="text-center">实付/收金额</th>
+                            <th class="text-center">账户余额</th>
+                            <th class="text-center">收/付款人员</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td><a><i title="查看详情" class=" fa fa-eye"></i></a></td>
+                        <tr class="text-center">
+
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="11">暂无数据...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -97,30 +95,9 @@
             </div>
         </div>
 
-
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addModalLabel">{{title}}</h4>
-                    </div>
-                    <div class="modal-body clearFix">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary" v-if="isAdd">保存</button>
-                        <button type="button" class="btn btn-primary" v-else="isAdd">修改</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <Page :pg="paging" @pag="getPage"></Page>
 
 
-        <!--提示信息-->
-        <Status :state='info'></Status>
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
@@ -129,17 +106,17 @@
 
 <script>
     import Page from '../common/page.vue'
-    import Status from '../common/status.vue';
-    import FlexBox from '../common/flexBox.vue'
     import STAFF from  '../common/organization/selectStaff.vue'
     import DatePicker from '../common/datePicker.vue'
 
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF},
+        components: {Page,DatePicker,STAFF},
 
         data(){
             return {
-                operId : 0,
+                dict : {},
+                isShow :false,
+
                 paging : '',
                 page : 1,                  // 当前页数
 
@@ -156,71 +133,30 @@
                     staffList:[]
                 },
 
-                title : '',
-                isAdd : true,
-                moreYears : 1,
-                modal : {
-                    village : {
-                        villageName : ''
-                    }
-                },
-                cont: {
-                    myData: [],      //列表数据
-                    nowIndex: '',      //删除索引
-                },
+                myData: [],      //列表数据
 
                 selected : [],
                 params : {
                     department_id : [],
                     staff_id : [],
-                    startDataTime : '',
-                    finishDataTime : ''
+                    range : '',
+                    search : '',
+                    type : 1
                 },
-                tips : {},
-                info:{
-                    //成功状态 ***
-                    state_success: false,
-                    //失败状态 ***
-                    state_error: false,
-                    //成功信息 ***
-                    success: '',
-                    //失败信息 ***
-                    error: ''
-                },
-                flexData : {
-                    name : '收房价格',
-                    maxLength : 5
-                }
+                tips : {}
             }
         },
-        updated (){
-            this.remindData();
-            //            时间选择
-        },
-        created () {
-            this.payFlowList();
+        mounted () {
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.payFlowList();
+                    }
+                );
         },
         methods : {
-            changeIndex(ev,id){
-//                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked){
-                    this.operId = id;
-//                    console.log(this.operId);
-                }else {
-                    this.operId = 0;
-                }
-
-
-            },
-            addNew(){
-                this.title = '新增应付款项';
-                this.isAdd = true;
-            },
-            operation(id,index){
-                this.title = '修改应付';
-                this.isAdd = false;
-            },
-
             payFlowList(){
                 /*this.$http.get('json/itemFlow.json').then((res) => {
                  //                    this.collectList = res.data.data.gleeFulCollect;
@@ -229,43 +165,6 @@
                  //                    console.log(res.data);
                  this.paging = res.data.data.pages;
                  })*/
-            },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                });
-                $('.form-inline .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '开始时间'){
-                        this.params.startDataTime = ev.target.value;
-                    } else {
-                        this.params.finishDataTime = ev.target.value;
-                    }
-//                    console.log(this.startDataTime);
-                }.bind(this));
-            },
-            getPage(data){
-                this.page = data;
-            },
-
-            oper(){
-                console.log(this.operId);
-                this.title = '编辑应付款项';
-                this.isAdd = false;
-                // 先请求
-
-//                请求成功打开模态框
-                $('#myModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
-
             },
 
             select(){
@@ -294,26 +193,29 @@
             },
 
             search(){
-                console.log(this.params)
+                console.log(this.params);
+                this.page = 1;
+                this.filter();
             },
             getDate(data){
                 // 时间
                 console.log(data);
-
+                this.params.range = data;
+                this.search();
             },
+            getPage(data){
+                this.page = data;
+                this.filter();
+            },
+            filter(){
+
+            }
         }
     }
 </script>
 
 <style scoped>
-    .mobileTimePicker{
-        margin-bottom: 0;
-    }
-    @media (max-width: 798px) {
-        .datePickerContainer{
-            margin-top:3px;
-        }
-    }
+
     div.padd {
         display: inline-block;
     }
@@ -352,23 +254,5 @@
     }
     .tips ul li span.yellow{
         color: #FF9A02;
-    }
-    div.input-group{
-        padding: 0 15px;
-    }
-    label{
-        line-height: 34px;
-    }
-
-    tbody tr{
-        cursor: pointer;
-    }
-
-    tbody tr input[type=checkbox]{
-        width: 17px;
-        height: 17px;
-    }
-    tr td a i{
-        font-size: 18px;
     }
 </style>
