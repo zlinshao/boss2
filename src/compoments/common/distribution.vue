@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">取消{{salesman_id}}{{salesman}}</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
                         <button class="btn btn-success" type="button" @click="distribution_ok"> 确定</button>
                     </div>
                 </div>
