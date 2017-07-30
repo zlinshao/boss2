@@ -107,7 +107,7 @@
                                 <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td></td>
+                            <td>{{item.customer.name}}</td>
                             <td>
                                 {{item.description.address}}/
                                 {{dict.pay_type[item.description.pay_type]}}/
@@ -436,7 +436,7 @@
             },
 
             getHouse(data){},
-            getClient(data){},
+
 
             setTips(val,bool){
                 if (bool){
@@ -454,6 +454,7 @@
             clearForm(){
                 $('#addPay').modal('hide');
             },
+            // 新增
             save(){
 
             },
@@ -461,7 +462,8 @@
             // 选择客户
             selectClient(){
                 $('.selectClient:eq(0)').modal('show');
-            }
+            },
+            getClient(data){},
         }
     }
 </script>

@@ -11,19 +11,7 @@
                 <div>
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <!--<label style="font-weight: bold;display: inline-block">查 询</label>-->
-                            <input type="text" class="form-control" placeholder="点击选择部门/员工"
-                                   v-model="selected" @click='select' readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
-                            </span>
-                        </div>
-
-                        <!--<div class="input-group">
-                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
-                        </div>-->
-                        <div class="input-group">
-                            <select class="form-control" v-model="params.type" @change="search">
+                            <select class="form-control" v-model="params.cate" @change="search">
                                 <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
                         </div>
@@ -47,16 +35,16 @@
         <div class="panel tips">
             <ul class="clearFix">
                 <li class="col-md-4">
-                    应付金额(元) <br>
-                    <span class="green">1212</span>
+                    收入金额(元) <br>
+                    <span class="green">{{tips.receive_sum}}</span>
                 </li>
                 <li class="col-md-4">
-                    实付金额(元) <br>
-                    <span class="red">313</span>
+                    支出金额(元) <br>
+                    <span class="red">{{tips.expend_sum}}</span>
                 </li>
                 <li class="col-md-4">
-                    剩余款项(元) <br>
-                    <span class="yellow">343</span>
+                    收入支出差(元) <br>
+                    <span class="yellow">{{tips.diff_sum}}</span>
                 </li>
             </ul>
         </div>
@@ -68,7 +56,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">付款时间</th>
+                            <th class="text-center">交易时间</th>
                             <th class="text-center">客户姓名</th>
                             <th class="text-center">详情</th>
                             <th class="text-center">科目名称</th>
@@ -83,8 +71,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
-
+                        <tr class="text-center" v-for="item in myData">
+                            <td>{{item.update_time}}</td>
+                            <td>{{item.customer}}</td>
+                            <td>
+                                {{item.info.address}}/
+                                {{dict.pay_type[item.info.pay_type]}}/
+                                {{item.info.price}}/
+                                {{item.info.staff_name}}
+                            </td>
+                            <td>{{item.subject}}</td>
+                            <td>{{dict.er_type[item.cate]}}</td>
+                            <td>{{dict.account_cate[item.account_cate]}}</td>
+                            <td>{{item.account_num}}</td>
+                            <td>{{item.cate==1?item.amount_receivable:item.amount_payable}}</td>
+                            <td>{{item.cate==1?item.amount_received:item.amount_paid}}</td>
+                            <td>{{item.amount_remain}}</td>
+                            <td>{{item.operator_name}}</td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="11">暂无数据...</td>
@@ -98,19 +101,15 @@
         <Page :pg="paging" @pag="getPage"></Page>
 
 
-
-        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
-
     </div>
 </template>
 
 <script>
     import Page from '../common/page.vue'
-    import STAFF from  '../common/organization/selectStaff.vue'
     import DatePicker from '../common/datePicker.vue'
 
     export default{
-        components: {Page,DatePicker,STAFF},
+        components: {Page,DatePicker},
 
         data(){
             return {
@@ -127,23 +126,20 @@
                     }
                 ],
 
-                configure : {},
-                filtrate : {
-                    departmentList:[],
-                    staffList:[]
-                },
-
                 myData: [],      //列表数据
 
-                selected : [],
                 params : {
                     department_id : [],
                     staff_id : [],
                     range : '',
                     search : '',
-                    type : 1
+                    cate : 3
                 },
-                tips : {}
+                tips : {
+                    expend_sum: 0,                           // 总支出
+                    receive_sum: 0,                     // 总收入
+                    diff_sum: 0,                       // 收支差额
+                },
             }
         },
         mounted () {
@@ -158,38 +154,17 @@
         },
         methods : {
             payFlowList(){
-                /*this.$http.get('json/itemFlow.json').then((res) => {
-                 //                    this.collectList = res.data.data.gleeFulCollect;
-                 this.cont.myData = res.data.data.payFlowList;
-                 this.tips = res.data.data.payTips;
-                 //                    console.log(res.data);
-                 this.paging = res.data.data.pages;
-                 })*/
-            },
-
-            select(){
-                this.configure = {type: 'all', class: 'selectType'};
-                $('#selectCustom').modal('show');
-//                this.configure={id:[],class:'department'};
-//                this.configure={length:2,class:'amount'};
-            },
-            selectDateSend(val){
-//                console.log(val);
-                for(let i=0;i<val.department.length;i++){
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
-                }
-                for(let j=0;j<val.staff.length;j++){
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
-                }
-//                this.search();
-            },
-            clearSelect(){
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
-                this.search();
+                this.$http.get('account/running').then((res) => {
+                    if (res.data.code==18700){
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.setTips(res.data.data,true);
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.setTips({},false);
+                    }
+                 })
             },
 
             search(){
@@ -208,8 +183,38 @@
                 this.filter();
             },
             filter(){
+                this.$http.get('account/running?page='+this.page,{
+                    params : this.params
+                }).then(
+                    (res) =>{
+                        if (res.data.code == 18700){
+                            // 成功
+                            this.paging = res.data.data.pages;
+                            this.myData = res.data.data.data;
+                            this.setTips(res.data.data,true);
+                            this.isShow = false;
+                        } else {
+                            this.isShow = true;
+                            this.myData = [];
+                            this.paging = 0;
+                            this.page = 1;
+                            this.setTips({},false);
+                        }
+                    }
+                )
+            },
+            setTips(val,bool){
+                if (bool){
+                    this.tips.receive_sum = val.receive_sum;
+                    this.tips.expend_sum = val.expend_sum;
+                    this.tips.diff_sum = val.diff_sum;
+                } else {
+                    this.tips.receive_sum = 0.00;
+                    this.tips.expend_sum = 0.00;
+                    this.tips.diff_sum = 0.00;
+                }
 
-            }
+            },
         }
     }
 </script>

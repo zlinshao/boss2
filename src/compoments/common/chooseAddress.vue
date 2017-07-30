@@ -63,7 +63,7 @@
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.district}}</td>
                                             </tr>
-                                            <tr class="text-center" v-show="isShow">
+                                            <tr class="text-center" v-show="villages.length==0">
                                                 <td colspan="3">暂无数据...</td>
                                             </tr>
 
