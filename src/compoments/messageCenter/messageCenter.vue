@@ -126,13 +126,10 @@
                                     <td class="text-center width180">{{sys.message.data.content}}</td>
                                     <td class="text-center width80">{{sys.receive_name}}</td>
                                     <td class="text-center width60">
-                                        <span v-if="sys.message.data.approval_type === '已通过'"
-                                              class="label label-success">{{sys.message.data.approval_type}}</span>
-                                        <span v-if="sys.message.data.approval_type === '待审核' ||
-                                         sys.message.data.approval_type === '未审核'"
-                                              class="label label-danger">{{sys.message.data.approval_type}}</span>
-                                        <span v-if="sys.message.data.approval_type === '已驳回'"
-                                              class="label label-warning">{{sys.message.data.approval_type}}</span>
+                                        <span v-if="sys.message.data.approval_status > 4 "
+                                              class="label label-success">已完成</span>
+                                        <span v-if="sys.message.data.approval_status < 5 "
+                                              class="label label-warning">{{select_list.passed[sys.message.data.approval_status]}}</span>
                                     </td>
                                     <td class="text-center" style="min-width: 60px;">
                                         <i class="fa fa-folder"
@@ -144,8 +141,6 @@
                                            style="color: #e4393c"></i>
                                         <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"
                                            @click.stop="isCollect(sys.mess_id)"></i>
-
-                                        <!--<i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"></i>-->
                                     </td>
                                 </tr>
                                 <tr v-show="Examines_s">
@@ -308,6 +303,7 @@
         },
         data(){
             return {
+                select_list: {},
                 isActive: 1,
                 act: '',
                 beforePage: 1,
@@ -420,7 +416,7 @@
                 });
 
             },
-            announceDetail(val7, val1, val2, val3, val4, val5, val6,val8){
+            announceDetail(val7, val1, val2, val3, val4, val5, val6, val8){
                 if (val7 === '系统公告') {
                     this.info_details.get_title = val1;
                     this.info_details.get_department_name = val2;
@@ -457,24 +453,30 @@
             },
 //            审批提醒
             Examine(val){
-                this.$http.post('message/approval/index/pages/' + val).then((res) => {
-                    if (res.data.code === '100070') {
-                        this.Examines = res.data.data.list;
-                        this.paging = res.data.data.pages;
-                        this.Examines_s = false;
-                    } else {
-                        this.Examines_s = true;
-                    }
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.select_list = res.data;
 
+                    this.$http.post('message/approval/index/pages/' + val).then((res) => {
+                        if (res.data.code === '100070') {
+                            console.log(res.data.data);
+                            this.Examines = res.data.data.list;
+                            this.paging = res.data.data.pages;
+                            this.Examines_s = false;
+                        } else {
+                            this.Examines_s = true;
+                        }
+
+                    });
+                    this.beforePage = val;
+                    this.isSystem = false;
+                    this.isExamine = true;
+                    this.isSubstitute = false;
+                    this.isSecretary = false;
+                    this.isMessage = false;
+                    this.message = '审批提醒';
+                    this.font = 'fa-user';
+//
                 });
-                this.beforePage = val;
-                this.isSystem = false;
-                this.isExamine = true;
-                this.isSubstitute = false;
-                this.isSecretary = false;
-                this.isMessage = false;
-                this.message = '审批提醒';
-                this.font = 'fa-user';
             },
 //            待办提醒
             Substitute(val){
@@ -612,5 +614,9 @@
 
     ul.inbox-nav li {
         line-height: 60px;
+    }
+    .label{
+        display: inline-block;
+        width: 78px;
     }
 </style>
