@@ -3,20 +3,22 @@
         <ol class="breadcrumb">
             <li>财务账本</li>
             <li>
-                <router-link to="/payPayment">应收款项</router-link>
+                <router-link to="/CollectPayment">应收款项</router-link>
             </li>
             <li class="active">应收款项详情</li>
         </ol>
 
         <section class="panel head">
             <div class="panel-body">
-                <div>
+                <div v-if="msg!=''">
                     <span>房屋地址</span>
-                    <span>苏园路6号</span>
-                    <span :class="{'status':true,'btn':true}">带结清</span>
+                    <span>{{msg.description.address}}</span>
+                    <span :class="{'status':true,'btn':true,'status':true,'yellow':msg.status===1,'red':msg.status===2,'green':msg.status===3}">
+                        {{dict.account_should_status[msg.status]}}
+                    </span>
                     <div class="pull-right">
                         <button class="btn btn-primary">转为待处理项</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#collectFor">应付入账</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#collectFor">应收入账</button>
                     </div>
                 </div>
             </div>
@@ -26,40 +28,44 @@
             <div class="panel-body">
                 <header>
                     <h4 class="row">
-                        <i class="fa fa-home"></i>&nbsp;应付详情
-                        <a class="pull-right" @click="oper">编辑</a>
+                        <i class="fa fa-home"></i>&nbsp;应收详情
+                        <!--<a class="pull-right" @click="oper">编辑</a>-->
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
                     <div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" v-if="msg!=''">
                             <div class="col-md-4">
-                                <div><span class="text-primary">客户姓名：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">房屋地址：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">付款时间：</span>
+                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer.name}}</span></div>
+                                <div><span class="text-primary">房屋地址：</span><span>{{msg.description.address}}</span></div>
+                                <div><span class="text-primary">收款时间：</span>
                                     <span>
-                                        dfsdf
+                                        {{msg.pay_date}}
                                         <a data-toggle="modal" data-target="#moreTime">更多</a>
                                     </span>
                                 </div>
-                                <div><span class="text-primary">支出科目：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">汇款方式：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">付款账户：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">账户余额：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">付款方式：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">月单价：</span><span>dfsdf</span></div>
+                                <div><span class="text-primary">收入科目：</span><span>{{dict.account_subject[msg.subject_id]}}</span></div>
+                                <div><span class="text-primary">付款方式：</span><span>{{msg.description.pay_type}}</span></div>
+                                <div><span class="text-primary">月单价：</span><span>{{msg.description.price}}</span></div>
+                                <div><span class="text-primary">应收金额：</span><span>{{msg.amount_receivable}}</span></div>
+                                <div><span class="text-primary">实收金额：</span><span>{{msg.amount_received}}</span></div>
                             </div>
                             <div class="col-md-8">
-                                <div><span class="text-primary">应付金额：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">实付金额：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">累计实付：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">剩余款项：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">补齐时间：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">备注：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">剩余款项：</span><span>{{msg.balance}}</span></div>
+                                <div><span class="text-primary">补齐时间：</span><span>{{msg.complete_date}}</span></div>
+                                <div><span class="text-primary">截图凭证：</span><span>
+                                    <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
+                                </span></div>
+                                <div><span class="text-primary">备注：</span><span>{{msg.remark}}</span></div>
+                                <!--<div><span class="text-primary">签约人：</span><span>{{msg.description.staff_name}}</span></div>-->
                                 <!--待入账的没有-->
-                                <div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">历史打款记录：</span><span>sdfdsf</span></div>
+                                <!--<div><span class="text-primary">收款人员：</span><span>{{dict.staff_id[msg.staff_id]}}</span></div>-->
+                                <div><span class="text-primary">历史收款记录：</span>
+                                    <span v-for="(key,value) in msg.running_account_record">
+                                        <span>{{value}}</span>&emsp;
+                                        <span>{{key}}</span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,7 +81,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">应付入账</h4>
+                        <h4 class="modal-title">编辑付款时间</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
@@ -106,7 +112,7 @@
         </div>
 
         <!--编辑-->
-        <div class="modal fade full-width-modal-right" id="edit" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <!--<div class="modal fade full-width-modal-right" id="edit" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -190,14 +196,15 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!--提示信息-->
         <Status :state='info'></Status>
-        <!--应付入账-->
-        <ShouldCollect :id="id"></ShouldCollect>
+        <!--应收入账-->
+        <!--<ShouldCollect :id="id"></ShouldCollect>-->
         <SelectHouse @House="getHouse"></SelectHouse>
         <SelectClient @clientAdd="getClient"></SelectClient>
+        <PicModal :largePic="largePic"></PicModal>
 
     </div>
 </template>
@@ -208,13 +215,20 @@
 
     import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectClient.vue'
+    import PicModal from '../../common/largePic.vue'
 
     export default{
-        components: {Status,ShouldCollect,SelectHouse,SelectClient},
+        components: {Status,ShouldCollect,SelectHouse,SelectClient,PicModal},
         data(){
             return {
+                dict : {},
+
                 id : '',
+                msg : '',
                 currentIndex : -1,
+
+                largePic : [],
+                srcs : {},
 
                 showOper: [],
 
@@ -269,18 +283,38 @@
             }
         },
         updated (){
-            this.remindData();
+//            this.remindData();
         },
         mounted (){
             this.id = this.$route.query.collectId;
+
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                        this.getDetails();
+                    }
+                );
             for (let i = 0 ; i<this.moreTime.length ; i++){
                 this.showOper.push(false);
             }
 //            this.times = this.moreTime;
 //            console.log(this.moreTime)
 //            console.log(this.showOper)
+
         },
         methods : {
+            getDetails(){
+                this.$http.get('account/receivable/'+this.id)
+                    .then((res) =>{
+//                        console.log(res.data);
+                        this.msg = res.data.data;
+                        this.srcs = this.msg.album.receipt_pic;
+                        console.log(this.msg)
+                    })
+            },
+
             oper(){
                 $('#edit').modal('show');
             },
@@ -342,7 +376,19 @@
                 this.showOper.splice(index,1,false);
                 this.moreTime.splice(index,1,this.times[index]);
 //                console.log(this.moreTime);
-            }
+            },
+
+            // 查看大图
+            showLargePic(num){
+                this.largePic = [{
+                    src : this.srcs,
+                    i : num
+                }];
+                console.log(this.largePic)
+                $('#largePic').modal('show');
+            },
+
+
         }
     }
 </script>
@@ -388,5 +434,20 @@
     .form-horizontal .form-group span{
         line-height: 34px;
         font-size: 14px;
+    }
+
+    .status.yellow {
+        background-color: #FFCC00;
+    }
+
+    .status.red {
+        background-color: #FF9999;
+    }
+
+    .status.green {
+        background-color: #78CD51;
+    }
+    img{
+        cursor: pointer;
     }
 </style>

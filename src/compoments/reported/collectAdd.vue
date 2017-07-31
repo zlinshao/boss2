@@ -51,7 +51,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">收房年限<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.years">
+                                        <input type="number" class="form-control" v-model="formData.years" min="0">
                                     </div>
                                 </div>
 
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
 
-                                <FlexBox :flexData="formData.years" :datas="formData.price" @sendData="getFlexData"></FlexBox>
+                                <FlexBox :flexData="formData.years" :datas="formData.price" :change="false" @sendData="getFlexData"></FlexBox>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">空置期<sup class="required">*</sup></label>
@@ -207,6 +207,7 @@
                 currentDate : [],
 
                 pay_typeChange : false,
+                money_change : false,
                 one_type : '1',
                 more_type : [],
 
@@ -325,6 +326,7 @@
             closeModal(){
                 // 清空
                 this.pay_typeChange = false;
+                this.money_change = false;
                 this.one_type = '1';
                 this.more_type = [];
 

@@ -11,7 +11,6 @@
                 <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <!--<label style="font-weight: bold;display: inline-block">查 询</label>-->
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
                                    v-model="selected" @click='select' readonly>
                             <span class="input-group-btn">
@@ -37,20 +36,20 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
-                        <!--<div class="form-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
+                        <div class="form-group pull-right">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#addPay">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
                             </a>
-                        </div>-->
+                        </div>
                     </form>
                 </div>
 
                 <div v-show="operId!=0" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li>
+                        <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
-                        </li>
+                        </li>-->
                         <li v-show="statusId!=3">
                             <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a></h5>
                         </li>
@@ -124,7 +123,7 @@
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
                             <td>
-                                <button :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                <button type="button" :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}
                                 </button>
                             </td>
@@ -150,7 +149,7 @@
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">付款时间</label>
+                                <label class="col-sm-2 control-label">付款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
                                            class="form-control form_datetime">
@@ -165,7 +164,7 @@
                             </div>-->
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">客户姓名</label>
+                                <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" @click="selectClient" readonly>
                                 </div>
@@ -179,7 +178,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">支出科目</label>
+                                <label class="col-sm-2 control-label">支出科目<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <select class="form-control">
                                         <option value="">押金</option>
@@ -188,21 +187,21 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">应付金额</label>
+                                <label class="col-sm-2 control-label">应付金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">累计实付</label>
+                                <label class="col-sm-2 control-label">累计实付<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">付款人员</label>
+                                <label class="col-sm-2 control-label">付款人员<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly>
                                 </div>
@@ -236,7 +235,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
         <SelectHouse @House="getHouse"></SelectHouse>
-        <SelectClient @clientAdd="getClient"></SelectClient>
+        <SelectClient @clientPayAdd="getClient"></SelectClient>
 
         <!--应付入账-->
         <ShouldPay :id="operId"></ShouldPay>
@@ -251,7 +250,7 @@
     import DatePicker from '../../common/datePicker.vue'
 
     import SelectHouse from '../../common/selectHouse.vue'
-    import SelectClient from '../../common/selectClient.vue'
+    import SelectClient from '../../common/selectPayClient.vue'
 
     import ShouldPay from './paymentShouldPay.vue'
 
@@ -297,6 +296,9 @@
                     paid_sum: 0.00,                 // 已付总额
                     balance_sum: 0.00,          // 欠额总额
                 },
+                formData:{
+                    customer:{}
+                },
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -327,7 +329,7 @@
         methods : {
             changeIndex(ev,id,status){
 //                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked){
+                if (ev.target.checked){
                     this.operId = id;
                     this.statusId = status;
 //                    console.log(this.operId);
@@ -335,8 +337,6 @@
                     this.operId = 0;
                     this.statusId = 0;
                 }
-
-
             },
 
             payFlowList(){
@@ -463,7 +463,12 @@
             selectClient(){
                 $('.selectClient:eq(0)').modal('show');
             },
-            getClient(data){},
+            getClient(data){
+                console.log(data);
+//                this.formData.customer = data;
+                /*this.$http.post('account/payable',this.formData)
+                    .then()*/
+            },
         }
     }
 </script>
@@ -476,9 +481,6 @@
         .datePickerContainer{
             margin-top:3px;
         }
-    }
-    div.padd {
-        display: inline-block;
     }
     .tips{
         line-height: 30px;

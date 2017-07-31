@@ -108,13 +108,15 @@
             deep : true,
             largePic(val){
 //                console.log(val[0]);
-                this.src = val[0].src;
-                this.index = val[0].i;
-                this.idArr = [];
+                if (val.length!=0){
+                    this.src = val[0].src;
+                    this.index = val[0].i;
+                    this.idArr = [];
 //                console.log(this.src[this.index].big)
-                for (let key in this.src){
+                    for (let key in this.src){
 //                    console.log(key);
-                    this.idArr.push(key);
+                        this.idArr.push(key);
+                    }
                 }
 //                console.log(this.idArr);
             }
