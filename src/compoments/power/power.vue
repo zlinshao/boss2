@@ -1,5 +1,10 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>人资管理</li>
+            <li class="active">权限管理</li>
+        </ol>
+
         <Status :state="info"></Status>
         <!--新增权限管理-->
         <div class="form-group text-right">
@@ -81,7 +86,7 @@
         },
         data (){
             return {
-                myData: Array,          //列表数据
+                myData: [],          //列表数据
                 username: '',           //Name
                 title: '',              //Title
                 page: 1,
@@ -102,7 +107,11 @@
             list_power (v){
 
                 this.$http.get('manager/Auth/authList/page/' + v).then(res => {
-                    this.myData = res.data.data;
+                    if(res.data.code === '30010'){
+                        this.myData = res.data.data;
+                    }else {
+                        this.myData = [];
+                    }
                 });
             },
 

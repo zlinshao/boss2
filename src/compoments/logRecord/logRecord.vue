@@ -183,7 +183,9 @@
                     }else {
                         this.searchList=[];
                         this.pages=1;
-                        this.myModules=res.data.data.modules;
+                        if(res.data.data !== undefined){
+                            this.myModules=res.data.data.modules;
+                        }
                         this.isShow = true;
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***

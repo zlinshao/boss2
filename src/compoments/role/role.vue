@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>人资管理</li>
+            <li class="active">角色管理</li>
+        </ol>
 
         <!--新增权限管理-->
         <div class="form-group text-right">
@@ -99,8 +103,8 @@
         },
         data (){
             return {
-                myData: Array,          //权限列表
-                role_info: Array,       //角色列表
+                myData: [],          //权限列表
+                role_info: [],       //角色列表
                 data_id: [],            //权限ID
                 role_id: [],            //角色rules
                 checkboxModel: [],      //选中ID
@@ -142,11 +146,21 @@
 
             list_role (){
                 this.$http.get('manager/Role/rolesList').then(res => {
-                    this.role_info = res.data.data;
+                    if(res.data.code === '40010'){
+                        this.role_info = res.data.data;
+                    }else {
+                        this.role_info = [];
+                    }
+
                 });
 
                 this.$http.get('manager/Auth/authList/page/1').then(res => {
-                    this.myData = res.data.data;
+                    if(res.data.code === '30010'){
+                        this.myData = res.data.data;
+                    }else {
+                        this.myData = [];
+                    }
+
                 });
             },
 
