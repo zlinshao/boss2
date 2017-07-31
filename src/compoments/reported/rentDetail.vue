@@ -38,11 +38,12 @@
                                 <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
                                 <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
+                                <div><span class="text-primary">租房方式：</span><span>整租？合租</span></div>
                                 <div><span class="text-primary">租房类型：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
                                 <div><span class="text-primary">年限(月)：</span><span>{{msg.months}}</span></div>
                                 <div><span class="text-primary">付款类型：</span><span>押{{msg.bet}}付{{msg.pay}}</span></div>
                                 <div><span class="text-primary">出租月单价：</span><span>{{msg.price}}</span></div>
-                                <div><span class="text-primary">应收金额：</span><span>xcxx</span></div>
+                                <div><span class="text-primary">应收金额：</span><span>{{msg.receivable_amount}}</span></div>
                                 <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
                                 <div><span class="text-primary">付款方式：</span>
                                     <span>
@@ -54,11 +55,11 @@
                                     </span>
                                 </div>
                                 <div><span class="text-primary">已收金额：</span><span>{{msg.received_amount}}</span></div>
-                                <div><span class="text-primary">未收金额：</span><span>颠三倒</span></div>
-                                <div><span class="text-primary">尾款补齐时间：</span><span>{{msg.complete_date}}</span></div>
+
                             </div>
                             <div class="col-md-8">
-                                
+                                <div><span class="text-primary">未收金额：</span><span>{{msg.remain_amount}}</span></div>
+                                <div><span class="text-primary">尾款补齐时间：</span><span>{{msg.complete_date}}</span></div>
                                 <div><span class="text-primary">凭证截图：</span>
                                     <span>
                                         <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
@@ -68,7 +69,7 @@
                                 </div>
                                 <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                                 <!--<div><span class="text-primary">收款方式：</span><span>颠三倒</span></div>-->
-                                <div><span class="text-primary">收款账户：</span><span>颠三倒</span></div>
+                                <!--<div><span class="text-primary">收款账户：</span><span>颠三倒</span></div>-->
                                 <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
                                 <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
@@ -179,7 +180,7 @@
                 this.$http.get('checkin/rent/'+id)
                     .then(
                         (res) => {
-//                        console.log(res.data.data);
+                        console.log(res.data.data);
                             this.msg = res.data.data;
                             this.srcs = this.msg.album.receipt_pic;
                             if (res.data.data.status==1){

@@ -27,7 +27,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;应付详情
-                        <a class="pull-right" @click="oper">编辑</a>
+                        <!--<a class="pull-right fa fa-pencil-square-o" @click="oper"></a>-->
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <div><span class="text-primary">客户姓名：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">房屋地址：</span><span>dfsdf</span></div>
+                                <div><span class="text-primary">详情：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">付款时间：</span>
                                     <span>
                                         dfsdf
@@ -47,16 +47,16 @@
                                 <div><span class="text-primary">付款账户：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">账户余额：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">付款方式：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">月单价：</span><span>dfsdf</span></div>
+                                <!--<div><span class="text-primary">月单价：</span><span>dfsdf</span></div>-->
                             </div>
                             <div class="col-md-8">
                                 <div><span class="text-primary">应付金额：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">实付金额：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">累计实付：</span><span>sdfdsf</span></div>
+                                <!--<div><span class="text-primary">累计实付：</span><span>sdfdsf</span></div>-->
                                 <div><span class="text-primary">剩余款项：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">补齐时间：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">备注：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>
+                                <!--<div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>-->
                                 <!--待入账的没有-->
                                 <div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">历史打款记录：</span><span>sdfdsf</span></div>
@@ -75,7 +75,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">应付入账</h4>
+                        <h4 class="modal-title">编辑付款时间</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
@@ -106,7 +106,7 @@
         </div>
 
         <!--编辑-->
-        <div class="modal fade full-width-modal-right" id="edit" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <!--<div class="modal fade full-width-modal-right" id="edit" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -190,7 +190,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -387,5 +387,8 @@
     .form-horizontal .form-group span{
         line-height: 34px;
         font-size: 14px;
+    }
+    textarea{
+        max-width: 100%;
     }
 </style>

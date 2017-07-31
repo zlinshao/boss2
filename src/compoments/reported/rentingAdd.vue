@@ -51,6 +51,23 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">租房状态<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
+                                        <select class="form-control">
+                                            <option value="1">整租</option>
+                                            <option value="2">合租</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">房间类型<sup class="required">*</sup></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">租房状态<sup class="required">*</sup></label>
+                                    <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.rent_type">
                                             <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}</option>
                                         </select>
