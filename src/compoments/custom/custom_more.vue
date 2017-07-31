@@ -206,7 +206,10 @@
                                          style="margin-bottom: 0;padding: 0;">
                                     <div class="panel-body">
                                         <div class="panel-body table-responsive cheek cheek1">
-                                            <div><span>{{daily.create_time}}</span></div>
+                                            <div>
+                                                <span class="text-primary">跟进时间：</span>
+                                                <span>{{daily.create_time}}</span>
+                                            </div>
                                             <div>
                                                 <span class="text-primary">跟进方式：</span>
                                                 <span>{{select_list.follow_way[daily.follow_way]}}</span>
