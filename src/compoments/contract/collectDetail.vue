@@ -19,9 +19,9 @@
                     <i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>
                     <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"  title="已解锁"></i>
                 </span>
-                <button class="btn btn-primary" @click="compareContract">对比</button>
-                <router-link class="btn btn-danger" :to="{path:'/comparecontract',query:{houseId : houseId}}">
-                    收租对比
+                <!--<button class="btn btn-primary" @click="compareContract">对比</button>-->
+                <router-link class="btn btn-primary" :to="{path:'/comparecontract',query:{houseId : houseId}}">
+                    对比
                 </router-link>
                 <button class="btn btn-primary" @click="inform">通知</button>
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
@@ -651,7 +651,7 @@
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
-        <Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>
+        <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>-->
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
@@ -664,7 +664,7 @@
     import Contract from  './contractInfo.vue'
     import ContractEit from './collectEdit.vue'
     import PicModal from  '../common/largePic.vue'
-    import Comparison from  './contractCompare.vue'
+//    import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
 
     import AddModal from '../reported/collectAdd.vue'
@@ -675,7 +675,7 @@
             ContractEit,//合同编辑
             PicModal,   //图片放大
             Status,     //状态提醒
-            Comparison, //对比
+//            Comparison, //对比
             Confirm,    //confirmMsg
             AddModal    //合同续约
         },
@@ -698,7 +698,7 @@
                     //失败信息 ***
                     error: ''
                 },
-                isCompared:false,
+//                isCompared:false,
                 villaId : '',
                 contract_pass:'',
                 passDictionary:[],//通过字典
@@ -775,14 +775,14 @@
             editSuccess(val){   //成功编辑之后重新请求合同详情
                 if(val === 'success') this.contractDetail();
             },
-            compareContract(){  //合同对比
-                this.isCompared = true;
-                this.villaId = this.contractList[0].villa_id.id;
-                $('#collectVsRenting').modal('show');
-            },
-            haveCompared(){     //对比成功之后把 isCompared 置为false
-                this.isCompared = false;
-            },
+//            compareContract(){  //合同对比
+//                this.isCompared = true;
+//                this.villaId = this.contractList[0].villa_id.id;
+//                $('#collectVsRenting').modal('show');
+//            },
+//            haveCompared(){     //对比成功之后把 isCompared 置为false
+//                this.isCompared = false;
+//            },
             returnVisit(){  // 回访状态
                 this.confirmMsg = {msg:'您确定回访吗'};
                 this.msgFlag = 'returnVisit';

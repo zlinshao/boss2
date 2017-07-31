@@ -10,7 +10,7 @@
             <div class="col-md-4 col-sm-5 col-xs-6 content" v-if="noCollect">
                 <h3>收房合同信息(暂无)</h3>
             </div>
-            <div class="col-md-4 col-sm-5 col-xs-6" v-if="collectContractList !==[]">
+            <div class="col-md-4 col-sm-5 col-xs-6 content" v-if="collectContractList !==[]">
                 <div class="contract_detail"  v-for="item in collectContractList">
                     <h3>收房合同信息</h3>
                     <h4>基本信息</h4>
@@ -284,7 +284,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-5 col-xs-6" v-if="rentContractList !== []">
+            <div class="col-md-4 col-sm-5 col-xs-6 " v-if="rentContractList !== []">
                 <div class="contract_detail"  v-for="item in rentContractList">
                     <h3>租房合同信息</h3>
                     <h4>基本信息</h4>
@@ -475,7 +475,7 @@
                     <h4>房屋照片</h4>
                     <div class="infoList">
                         <span>房屋照片</span>
-                        <span class="col-lg-9">
+                        <span>
                             <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
                                  v-for="(img,index) in item.villa_id.album.house_pic">
                         </span>
@@ -511,7 +511,7 @@
                     <h4>合同附件</h4>
                     <div class="infoList">
                         <span>合同照片<sup>*</sup></span>
-                        <span class="col-lg-10">
+                        <span>
                             <img :src="img.small" @click="showLargePic('contract_pic',index)"
                                  v-for="(img,index) in item.album.contract_pic">
                         </span>
@@ -664,7 +664,7 @@
                 $('#largePic').modal('show');
             },
             showLargePic(name, index){
-                this.srcs = this.contractList[0].album[name];
+                this.srcs = this.rentContractList[0].album[name];
                 this.largePic = [{
                     src: this.srcs,
                     i: index
@@ -672,7 +672,7 @@
                 $('#largePic').modal('show');
             },
             showLargeIdPic(name, index){
-                this.srcs = this.contractList[0].customer_id.album[name];
+                this.srcs = this.rentContractList[0].customer_id.album[name];
                 this.largePic = [{
                     src: this.srcs,
                     i: index
@@ -680,7 +680,7 @@
                 $('#largePic').modal('show');
             },
             showLargeVillaPic(name, index){
-                this.srcs = this.contractList[0].villa_id.album[name];
+                this.srcs = this.rentContractList[0].villa_id.album[name];
                 this.largePic = [{
                     src: this.srcs,
                     i: index
@@ -724,5 +724,8 @@
     sup{
         color: #e4493f;
     }
+    /*.content{*/
+        /*background: rgb(250,250,244);*/
+    /*}*/
 </style>
 
