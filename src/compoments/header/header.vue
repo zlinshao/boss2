@@ -595,7 +595,7 @@
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa  fa-share-square-o"></i>
-                            <span>导出</span>
+                            <span>导出管理</span>
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 36}" @click='pitch_on(36)'>

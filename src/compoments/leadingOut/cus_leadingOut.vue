@@ -27,6 +27,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
+                            <th class="text-center">ID</th>
                             <th class="text-center">地址</th>
                             <th class="text-center">租客姓名</th>
                             <th class="text-center">租客电话</th>
@@ -37,7 +38,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="list in leading_list">
+                        <tr v-for="(list, index) in leading_list">
+                            <td class="text-center">{{index + 1}}</td>
                             <td class="text-center width130">{{list.village_name}}</td>
                             <td class="text-center width80">{{list.z_mobile}}</td>
                             <td class="text-center width110">{{list.z_name}}</td>
@@ -46,7 +48,7 @@
                             <td class="text-center width110">{{list.y_mobile}}</td>
                             <td class="text-center width170">{{list.y_id_num}}</td>
                         <tr v-show="isShow">
-                            <td colspan="7" class="text-center text-muted">
+                            <td colspan="8" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
