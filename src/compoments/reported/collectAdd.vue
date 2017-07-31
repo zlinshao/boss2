@@ -384,6 +384,8 @@
             },
             selectDateSendAdd(data){
                 // 选择人
+
+
 //                console.log(data)
                 if (data.staff.length!=0){
                     this.formData.staff_id = data.staff[0].id;
@@ -403,7 +405,7 @@
             },
 
             getFlexData(data){
-                console.log(data)
+//                console.log(data)
                 this.formData.price = data;
             },
             getDate(data){

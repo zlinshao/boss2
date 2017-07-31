@@ -15,7 +15,8 @@
 
                         <!--新增/编辑-->
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" role="form"
+                            >
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div class="form-group">
                                     <label for="villageName" class="col-sm-2 control-label">小区名称<sup>*</sup></label>

@@ -656,9 +656,11 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <AddModal :collectContactId="contractEitId"></AddModal>
+        <Loading v-if ='waiting'></Loading>
     </div>
 </template>
 <script>
+    import Loading from '../loading/Loading.vue'
     import Status from  '../common/status.vue'
     import Transfer from './transferDetail.vue'
     import Contract from  './contractInfo.vue'
@@ -677,7 +679,8 @@
             Status,     //状态提醒
 //            Comparison, //对比
             Confirm,    //confirmMsg
-            AddModal    //合同续约
+            AddModal,    //合同续约
+            Loading
         },
         data(){
             return {
@@ -710,6 +713,7 @@
                 memorandum:'',   //备忘录
                 tabActive:'',
                 houseId:'',
+                waiting : true
 
             }
         },
@@ -731,6 +735,7 @@
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
+                    this.waiting = false;
                     this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num
                     this.contract_pass = res.data.data.passed
