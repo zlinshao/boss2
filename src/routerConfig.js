@@ -42,7 +42,8 @@ import PayPayment from './compoments/finance/payment/pay.vue'                   
 import IncomeFlow from './compoments/finance/incomeFlow.vue'                    // 收支流水
 import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'         // 收支流水
 import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'         // 收支流水
-import PendingItem from './compoments/finance/pendingItem.vue'                  // 待处理项
+import PendingItem from './compoments/finance/pemdingItem/pendingItem.vue'                  // 待处理项
+import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'                  // 待处理项详情
 import GeneralOperation from './compoments/finance/generalOperation.vue'        // 总账操作
 import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
 import Chart from './compoments/finance/chart/chart.vue'
@@ -277,6 +278,11 @@ export default[
         path: '/pendingItem',
         name: 'PendingItem',
         component: PendingItem
+    },
+    {
+        path: '/pendingDetail',
+        name: 'PendingDetail',
+        component: PendingDetail
     },
     {
         path: '/generalOperation',

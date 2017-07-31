@@ -48,7 +48,7 @@
                                 <label class="col-sm-2 control-label">汇款方式</label>
                                 <div class="col-sm-10">
                                     <select class="form-control">
-                                        <option value="">银行卡</option>
+                                        <option :value="value" v-for="(key,value) in dict.account_cate">{{key}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -143,11 +143,27 @@
         components: {SelectClient},
         data(){
             return {
-                msg : {},
+                dict :{},
+                account : [],
+
+
+                formData:{
+
+                }
             }
         },
         updated (){
             this.remindData();
+        },
+        mounted(){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                    }
+                );
+
         },
         watch : {
             id(val){
@@ -179,6 +195,10 @@
             },
             //获得客户
             getClient(){
+
+            },
+
+            getAccounts(){
 
             }
         }

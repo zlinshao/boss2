@@ -1,7 +1,7 @@
 <template>
     <div class="datePickerContainer input-group">
         <div v-if="range">
-            <div class="input-group" v-show="isPC">
+            <div v-show="isPC">
                 <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
                        v-model="dateRange" class="reservation form-control" readonly>
             </div>

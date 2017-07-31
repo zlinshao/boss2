@@ -977,8 +977,6 @@
             },
             saveCheckIn(){
                 let _this = this;
-                /*$('body').append(document.createElement('script').setAttribute('src','http://webapi.amap.com/maps?v=1.3&key=b5357e10019b0a6fd5a71488846b270a'));
-                 $('body').append(document.createElement('script').setAttribute('src','http://cache.amap.com/lbs/static/addToolbar.js'));*/
 
                 let map, geolocation;
                 //加载地图，调用浏览器定位服务
