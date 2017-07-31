@@ -592,6 +592,17 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa  fa-share-square-o"></i>
+                            <span>导出</span>
+                        </a>
+                        <ul class="sub">
+                            <li :class="{'active': isActive == 36}" @click='pitch_on(36)'>
+                                <router-link to='/leadingOut'>客户导出</router-link>
+                            </li>
+                        </ul>
+                    </li>
                     <li :class="{'active': isActive == 32}" @click='pitch_on(32)'>
                         <router-link to='/messageCenter'>
                             <i class="fa fa-bell-o"></i>
