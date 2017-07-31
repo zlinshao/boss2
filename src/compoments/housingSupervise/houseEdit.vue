@@ -102,11 +102,13 @@
                                     <label class="col-lg-2 col-sm-2 control-label">楼层</label>
                                     <div class="col-lg-10">
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
-                                            <input type="number" class="form-control" placeholder="当前楼层" v-model="houseEdit.floor">
+                                            <input type="number" class="form-control" placeholder="当前楼层"
+                                                   @blur="computeFloor" v-model="houseEdit.floor">
                                         </div>
                                         <label class="col-xs-1" style="font-size: 20px">/</label>
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
-                                            <input type="number" class="form-control" placeholder="总楼层"  v-model="houseEdit.total_floor">
+                                            <input type="number" class="form-control" placeholder="总楼层"
+                                                  @blur="computeTotalFloor" v-model="houseEdit.total_floor">
                                         </div>
                                     </div>
                                 </div>
@@ -486,6 +488,22 @@
                     if (index > -1) {
                         this.houseEdit.facility.splice(index, 1);
                     }
+                }
+            },
+            computeTotalFloor(){
+                if(this.houseEdit.floor > this.houseEdit.total_floor &&  this.houseEdit.total_floor !==''){
+                    this.houseEdit.total_floor = '';
+                    this.info.error ='当前楼层不能大于总楼层！';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
+            },
+            computeFloor(){
+                if(this.houseEdit.floor > this.houseEdit.total_floor &&  this.houseEdit.floor !==''){
+                    this.houseEdit.floor = '';
+                    this.info.error ='当前楼层不能大于总楼层！';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
                 }
             },
             houseRevise(){

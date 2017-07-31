@@ -120,7 +120,7 @@
                                    :value="item.id" :checked="contractSeleted===item.id">
                         </td>
                         <td class=" myIcon">
-                            <i class="fa fa-star" v-if="item.mark === 1"></i>
+                            <i class="fa fa-star" style="color: #e8403f" v-if="item.mark === 1"></i>
                         </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>

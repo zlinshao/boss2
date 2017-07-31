@@ -305,10 +305,7 @@
                 $('#collectAdd').modal('show');
             },
             alreadyAdd(){
-                this.$http.post('core/villa/villalist').then((res) => {
-                    this.villalist=[];
-                    this.villalist=res.data.data.list;
-                });
+                this.searchUncollect();
             },
             //删除房屋
             deleteHouse(val){

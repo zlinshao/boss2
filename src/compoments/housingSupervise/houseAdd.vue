@@ -102,11 +102,13 @@
                                     <label class="col-lg-2 col-sm-2 control-label">楼层</label>
                                     <div class="col-lg-10">
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
-                                            <input type="number" class="form-control" placeholder="当前楼层" v-model="houseAdd.floor">
+                                            <input type="number" class="form-control" placeholder="当前楼层"
+                                                   @blur="computeFloor" v-model="houseAdd.floor">
                                         </div>
                                         <label class="col-xs-1" style="font-size: 20px">/</label>
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
-                                            <input type="number" class="form-control" placeholder="总楼层"  v-model="houseAdd.total_floor">
+                                            <input type="number" class="form-control" placeholder="总楼层"
+                                                   @blur="computeTotalFloor"  v-model="houseAdd.total_floor">
                                         </div>
                                     </div>
                                 </div>
@@ -434,6 +436,22 @@
                     }
                 }
             },
+            computeTotalFloor(){
+                if(this.houseAdd.floor > this.houseAdd.total_floor &&  this.houseAdd.total_floor !==''){
+                    this.houseAdd.total_floor = '';
+                    this.info.error ='当前楼层不能大于总楼层！';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
+            },
+            computeFloor(){
+                if(this.houseAdd.floor > this.houseAdd.total_floor && this.houseAdd.floor !== ''){
+                    this.houseAdd.floor = '';
+                    this.info.error ='当前楼层不能大于总楼层！';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
+            },
             addHouse(){
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
@@ -446,10 +464,6 @@
                                     this.info.success =res.data.msg;
                                     //显示成功弹窗 ***
                                     this.info.state_success = true;
-                                    //一秒自动关闭成功信息弹窗 ***
-                                    setTimeout(() => {
-                                        this.info.state_success = false;
-                                    },2000);
                                     this.houseAdd.amap_json.villageAddress='';
                                     this.houseAdd.amap_json.villageName='';
                                     this.houseAdd.amap_json.district='';
@@ -495,10 +509,6 @@
                                     this.info.error =res.data.msg;
                                     //显示成功弹窗 ***
                                     this.info.state_error = true;
-                                    //一秒自动关闭成功信息弹窗 ***
-                                    setTimeout(() => {
-                                        this.info.state_error = false;
-                                    },2000);
                                 }
                             });
                         }
