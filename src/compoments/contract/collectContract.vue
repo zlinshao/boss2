@@ -168,16 +168,18 @@
         <Status :state='info'></Status>
         <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <Loading v-if = 'Waiting'></Loading>
     </div>
 </template>
 <script>
+    import Loading from '../loading/Loading.vue'
     import Confirm from '../common/confirm.vue'
     import Page from '../common/page.vue'
     import Staff from '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue';                          //提示信息
     import DatePicker from '../common/datePicker.vue'
     export default{
-        components: {DatePicker , Page , Staff, Status,Confirm},
+        components: {DatePicker , Page , Staff, Status,Confirm,Loading},
         data(){
             return {
                 start_time:"",
@@ -221,6 +223,7 @@
                 status:'',
                 confirmMsg:[],
                 msgFlag :'',
+                Waiting : true,
             }
         },
         updated (){
@@ -246,6 +249,7 @@
                       this.contractSearchList = res.data.data.list;
                       this.pages = res.data.data.pages;
                       this.isShow = false;
+                      this.Waiting = false;
                   }else {
                       this.contractSearchList = [];
                       this.pages = 1;
