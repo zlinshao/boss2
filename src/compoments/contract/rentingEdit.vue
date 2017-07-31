@@ -123,10 +123,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">转账凭证</label>
+                                        <label class="col-lg-2 control-label">押金收条</label>
                                         <div class="col-lg-10">
-                                            <up-load @photo="paymentPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'paymentPic'" :idPhotos="paymentPic"></up-load>
+                                            <up-load @photo="receiptPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -182,7 +182,7 @@
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                paymentPic : {
+                receiptPic : {
                     cus_idPhotos : {},    //交接单图片ID
                     cus_idPhoto : [],     //交接单照片
                 },
@@ -204,7 +204,7 @@
                     water_card_pic:[],      //水卡照片
                     elec_card_pic:[],       //电卡照片
                     gas_card_pic:[],        //燃气卡卡照片
-                    payment_pic:[],         //转账凭证
+                    receipt_pic:[],         //转账凭证
                     handover_pic:[],        //交接单照片
                 },
                 staff:'',
@@ -247,7 +247,6 @@
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/rent/readcontract/id/' +this.myContractEitId).then((res)=>{
                         let contractList =res.data.data;
-                        console.log(contractList)
                         this.contractEdit.id = contractList.id; //合同id
                         if(contractList.relative_customer !== undefined){
                             if(contractList.relative_customer.name !== undefined){
@@ -276,10 +275,10 @@
                                 this.handoverPic.cus_idPhoto.push(i);
                                 this.contractEdit.handover_pic.push(i);
                             }
-                            this.paymentPic.cus_idPhotos = contractList.album.payment_pic;                    //修改图片ID
-                            for (let i in this.paymentPic.cus_idPhotos) {
-                                this.paymentPic.cus_idPhoto.push(i);
-                                this.contractEdit.payment_pic.push(i);
+                            this.receiptPic.cus_idPhotos = contractList.album.receipt_pic;                    //修改图片ID
+                            for (let i in this.receiptPic.cus_idPhotos) {
+                                this.receiptPic.cus_idPhoto.push(i);
+                                this.contractEdit.receipt_pic.push(i);
                             }
                             this.waterPic.cus_idPhotos = contractList.album.water_card_pic;                    //修改图片ID
                             for (let i in this.waterPic.cus_idPhotos) {
@@ -342,8 +341,8 @@
             handoverPicId(val){     //获取成功上传交接单 id 数组
                 this.contractEdit.handover_pic = val;
             },
-            paymentPicId(val){      //获取成功上传转账凭证 id 数组
-                this.contractEdit.payment_pic = val;
+            receiptPicId(val){      //获取成功上传转账凭证 id 数组
+                this.contractEdit.receipt_pic = val;
             },
             //图片上传完成
             complete(val){          //监控上传进度
@@ -377,10 +376,10 @@
 //                    this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractEdit.handover_pic.splice(handover, 1);
                 }
-                let payment = this.contractEdit.payment_pic.indexOf(val);
-                if (payment > -1) {
-//                    this.paymentPic.cus_idPhoto.splice(payment, 1);
-                    this.contractEdit.payment_pic.splice(payment, 1);
+                let receipt = this.contractEdit.receipt_pic.indexOf(val);
+                if (receipt > -1) {
+//                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
+                    this.contractEdit.receipt_pic.splice(receipt, 1);
                 }
             },
             editContract(){

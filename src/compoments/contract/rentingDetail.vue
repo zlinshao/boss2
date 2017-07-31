@@ -508,13 +508,6 @@
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
-                                        <span class="col-lg-1">转账凭证</span>
-                                        <span class="col-lg-11" >
-                                            <img :src="img.small" @click="showLargePic('payment_pic',index)"
-                                                 v-for="(img,index) in item.album.payment_pic">
-                                        </span>
-                                    </div>
-                                    <div class="infoList clearFix">
                                         <span class="col-lg-1">交接单照片</span>
                                         <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('handover_pic',index)"
