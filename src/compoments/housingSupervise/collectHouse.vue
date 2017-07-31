@@ -332,7 +332,8 @@
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        this.top === 1? this.top =2 : this.top = 1;
+                        this.top === 1 ? this.top =2 : this.top = 1;
+                        this.houseSeleted = 0;
                         this.search();
                     }else{
                         this.info.error = res.data.msg;
