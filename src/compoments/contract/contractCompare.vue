@@ -18,11 +18,11 @@
                                         <h3>收房合同信息</h3>
                                         <h4>基本信息</h4>
                                         <div class="infoList">
-                                            <span>合同编号：<sup>*</sup></span>
+                                            <span>合同编号<sup>*</sup>：</span>
                                             <span>{{item.contract_num}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>空置期(天)：<sup>*</sup></span>
+                                            <span>空置期(天)<sup>*</sup>：</span>
                                             <span v-if="item.checkin_collect_id !== null">
                                                     {{item.checkin_collect_id.vacancy}} 天
                                                 </span>
@@ -44,7 +44,7 @@
                                             <span>{{item.end_date}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>年限：<sup>*</sup></span>
+                                            <span>年限<sup>*</sup>：</span>
                                             <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.years}}年</span>
                                         </div>
                                         <div class="infoList">
@@ -54,7 +54,7 @@
                                                 </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>月单价：<sup>*</sup></span>
+                                            <span>月单价<sup>*</sup>：</span>
                                             <span v-if="item.checkin_collect_id !== null">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
                                                         第{{index+1}}年{{price}}元&nbsp;&nbsp;
@@ -96,31 +96,31 @@
                                         </div>
                                         <h4>业主信息</h4>
                                         <div class="infoList">
-                                            <span>业主姓名：<sup>*</sup></span>
+                                            <span>业主姓名<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{item.customer_id.name}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>尊称：<sup>*</sup></span>
+                                            <span>尊称<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{dictionary.gender[item.customer_id.gender]}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>国籍：<sup>*</sup></span>
+                                            <span>国籍<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">
                                                 {{dictionary.nationality[item.customer_id.nationality]}}
                                             </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>手机号码：<sup>*</sup></span>
+                                            <span>手机号码<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{item.customer_id.mobile}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>证件类型：<sup>*</sup></span>.
+                                            <span>证件类型<sup>*</sup>：</span>.
                                             <span v-if="item.customer_id !== null">
                                                 {{dictionary.credentials[item.customer_id.id_type]}}
                                             </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>身份证号：<sup>*</sup></span>
+                                            <span>身份证号<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{item.customer_id.id_num}}</span>
                                         </div>
                                         <h4>房屋信息</h4>
@@ -275,11 +275,11 @@
                                         <h3>租房合同信息</h3>
                                         <h4>基本信息</h4>
                                         <div class="infoList">
-                                            <span>合同编号：<sup>*</sup></span>
+                                            <span>合同编号<sup>*</sup>：</span>
                                             <span>{{item.contract_num}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>年限(月)：<sup>*</sup></span>
+                                            <span>年限(月)<sup>*</sup>：</span>
                                             <span v-if="item.checkin_rent_id !==null">{{item.checkin_rent_id.months}} 月</span>
                                         </div>
                                         <div class="infoList">
@@ -309,7 +309,7 @@
                                                 </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>已收 （定金）：<sup>*</sup></span>
+                                            <span>已收 （定金）<sup>*</sup>：</span>
                                             <span  v-if="item.checkin_rent_id !==null">
                                                     {{item.checkin_rent_id.received_amount}} 元
                                                 </span>
@@ -324,7 +324,7 @@
                                             <span>付款方式 （现金）：</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>付款方式 （支付宝）：<sup>*</sup></span>
+                                            <span>付款方式 （支付宝）<sup>*</sup>：</span>
                                             <span></span>
                                         </div>
                                         <div class="infoList">
@@ -349,7 +349,7 @@
                                                 </span>
                                         </div>
                                         <div class="infoList">
-                                            <span>中介名：<sup>*</sup></span>
+                                            <span>中介名<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
                                         </div>
                                         <div class="infoList">
@@ -372,27 +372,27 @@
                                         </div>
                                         <h4>业主信息</h4>
                                         <div class="infoList">
-                                            <span>业主姓名：<sup>*</sup></span>
+                                            <span>业主姓名<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{item.customer_id.name}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>尊称：<sup>*</sup></span>
+                                            <span>尊称<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{dictionary.gender[item.customer_id.gender]}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>国籍：<sup>*</sup></span>
+                                            <span>国籍<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{dictionary.nationality[item.customer_id.nationality]}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>手机号码：<sup>*</sup></span>
+                                            <span>手机号码<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{item.customer_id.mobile}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>证件类型：<sup>*</sup></span>.
+                                            <span>证件类型<sup>*</sup>：</span>.
                                             <span v-if="item.customer_id !== null">{{dictionary.credentials[item.customer_id.id_type]}}</span>
                                         </div>
                                         <div class="infoList">
-                                            <span>身份证号：<sup>*</sup></span>
+                                            <span>身份证号<sup>*</sup>：</span>
                                             <span v-if="item.customer_id !== null">{{item.customer_id.id_num}}</span>
                                         </div>
                                         <h4>房屋信息</h4>
@@ -643,6 +643,9 @@
     .infoList img{
         width: 60px;
         margin: 5px;
+    }
+    sup{
+        color: #e4493f;
     }
 </style>
 
