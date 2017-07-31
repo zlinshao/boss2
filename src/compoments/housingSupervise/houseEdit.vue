@@ -18,21 +18,21 @@
                             <form class="form-horizontal" role="form">
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div class="form-group">
-                                    <label for="villageName" class="col-sm-2 control-label">小区名称</label>
+                                    <label for="villageName" class="col-sm-2 control-label">小区名称<sup>*</sup></label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control" id="villageName"
                                                v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     </div>
                                  </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">小区地址</label>
+                                    <label class="col-sm-2 control-label">小区地址<sup>*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
                                                v-model="houseEdit.amap_json.villageAddress" disabled >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">门牌地址</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">门牌地址<sup>*</sup></label>
                                     <div class="col-lg-3">
                                         <input type="text" class="form-control" v-model="houseEdit.building" placeholder="栋/座">
                                     </div>
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">房型</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">房型<sup>*</sup></label>
 
                                     <div class="col-sm-3">
                                         <select class="form-control" v-model="houseEdit.rooms.rooms">
@@ -78,11 +78,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label" style="padding-top: 7px;">面积</label>
+                                    <label class="col-lg-2 col-sm-2 control-label" style="padding-top: 7px;">面积<sup>*</sup></label>
                                     <div class="col-lg-4">
                                         <input type="text" class="form-control" v-model="houseEdit.area" placeholder="请输入面积 ㎡">
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">装修</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">装修<sup>*</sup></label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseEdit.decoration">
                                             <option :value="key"  v-for="(value,key) in myDictionary.decoration">{{value}}</option>
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">配套设施</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">配套设施<sup>*</sup></label>
                                     <div class="col-lg-10">
                                         <label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
                                             <input type="checkbox" class="pull-left" :value="key" @click="rules(key,$event)"
@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">楼层</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">楼层<sup>*</sup></label>
                                     <div class="col-lg-10">
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="number" class="form-control" placeholder="当前楼层"
@@ -113,13 +113,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">房屋类型</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">房屋类型<sup>*</sup></label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseEdit.house_type">
                                             <option :value="key"  v-for="(value,key) in myDictionary.house_type">{{value}}</option>
                                         </select>
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">房屋特色</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">房屋特色<sup>*</sup></label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseEdit.house_feature">
                                             <option :value="key"  v-for="(value,key) in myDictionary.house_feature">{{value}}</option>
@@ -127,13 +127,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">建筑楼层</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">建筑楼层<sup>*</sup></label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseEdit.floor_type">
                                             <option :value="key"  v-for="(value,key) in myDictionary.floor_type">{{value}}</option>
                                         </select>
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">个人/中介</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">个人/中介<sup>*</sup></label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseEdit.person_medium">
                                             <option :value="key"  v-for="(value,key) in myDictionary.person_medium">{{value}}</option>
@@ -147,7 +147,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">房屋照片</label>
+                                    <label class="col-lg-2 control-label">房屋照片<sup>*</sup></label>
                                     <div class="col-lg-10">
                                         <up-load @photo="housePicId" @delete="picDelete" @complete="complete"
                                                  :result="'housePic'" :idPhotos="housePic"></up-load>
@@ -168,7 +168,7 @@
                                 <!--未收 新增/编辑 房屋-->
                                 <div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">房屋来源</label>
+                                        <label class="col-lg-2 control-label">房屋来源<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <select class="form-control" v-model="houseEdit.source">
                                                 <option :value="key"  v-for="(value,key) in myDictionary.source">{{value}}</option>
@@ -631,6 +631,9 @@
 
     .street select {
         margin-bottom: 10px;
+    }
+    sup{
+        color: #e8403f;
     }
 
 </style>

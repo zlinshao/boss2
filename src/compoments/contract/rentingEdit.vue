@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >合同编号</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >合同编号<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
                                             <input type="text" class="form-control" v-model="contractEdit.contract_num" placeholder="合同编号">
                                         </div>
@@ -80,7 +80,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input @click="selectDate" readonly placeholder="资料补齐时间"
                                                    v-model="contractEdit.complete_date" class="form-control formDatetime">
@@ -95,7 +95,7 @@
                                     <hr>
                                     <h3>合同附件</h3>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">合同</label>
+                                        <label class="col-lg-2 control-label">合同<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
                                                      :result="'contractPic'" :idPhotos="contractPic"></up-load>
@@ -457,5 +457,8 @@
     }
     .flexbox i:hover{
         color: #999;
+    }
+    sup{
+        color: #e8403f;
     }
 </style>

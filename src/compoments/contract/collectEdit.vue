@@ -56,13 +56,13 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >合同编号</label>
+                                        <label class="col-sm-2 control-label col-lg-2" >合同编号<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" v-model="contractEdit.contract_num" placeholder="合同编号">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >空置期开始日期</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >空置期开始日期<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input @click="selectDate" readonly placeholder="空置期开始时间"
                                                    v-model="contractEdit.vac_start_date" class="form-control form_date">
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >打房租日期</label>
+                                        <label class="col-sm-2 control-label col-lg-2" >打房租日期<sup>*</sup></label>
                                         <div class="col-lg-4">
                                             <input type="number" class="form-control" v-model="contractEdit.pay_date"
                                                    placeholder="请输入打房租日期">
@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input @click="selectDate" readonly placeholder="资料补齐时间"
                                                    v-model="contractEdit.complete_date" class="form-control form_date">
@@ -115,14 +115,14 @@
                                     <hr>
                                     <h3>合同附件</h3>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">银行卡照片</label>
+                                        <label class="col-lg-2 control-label">银行卡照片<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="bankPicId" @delete="picDelete" @complete="complete"
                                                      :result="'bankPic'" :idPhotos="bankPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">合同</label>
+                                        <label class="col-lg-2 control-label">合同<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
                                                      :result="'contractPic'" :idPhotos="contractPic"></up-load>
@@ -564,5 +564,8 @@
     }
     .flexbox i:hover{
         color: #999;
+    }
+    sup{
+        color: #e8403f;
     }
 </style>
