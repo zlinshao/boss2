@@ -96,7 +96,7 @@
                         <th class="text-center">
                             <!--<input type="checkbox">-->
                         </th>
-                        <th class="text-center"></th>
+                        <th class="text-center">标记</th>
                         <th class="text-center">合同编号</th>
                         <th class="text-center">上传时间</th>
                         <th class="text-center">开单人</th>
@@ -118,7 +118,7 @@
                         <td><input type="checkbox" @click="picked(item,$event)"
                                    :value="item.id" :checked="contractSeleted===item.id"></td>
                         <td class=" myIcon">
-                            <i class="fa fa-star" style="color: #e8403f" v-if="item.mark === 1"></i>
+                            <i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>
                         </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
