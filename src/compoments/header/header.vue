@@ -612,7 +612,7 @@
                     <li :class="{'active': isActive == 33}" @click='pitch_on(33)'>
                         <router-link to="/checkIn">
                             <i class="fa fa-map-marker"></i>
-                            <span>定位签到</span>
+                            <span>带看打卡</span>
                         </router-link>
                     </li>
                 </ul>
