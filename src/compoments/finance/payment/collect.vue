@@ -8,10 +8,9 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div>
+                <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <!--<label style="font-weight: bold;display: inline-block">查 询</label>-->
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
                                    v-model="selected" @click='select' readonly>
                             <span class="input-group-btn">
@@ -22,23 +21,41 @@
                         <!--<div class="input-group">
                             <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
                         </div>-->
+                        <div class="input-group">
+                            <select class="form-control" v-model="params.status" @change="search">
+                                <option value="">全部</option>
+                                <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}</option>
+                            </select>
+                        </div>
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"  @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search" @keydown.enter.prevent="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                         <div class="form-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#myModal" @click="addNew">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#addCollect">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应收款项
                             </a>
                         </div>
                     </form>
+                </div>
+
+                <div v-show="operId!=0" class="col-lg-12 remind">
+                    <ul>
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <!--<li>
+                            <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
+                        </li>-->
+                        <li v-show="statusId!=3">
+                            <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -47,15 +64,15 @@
             <ul class="clearFix">
                 <li class="col-md-4">
                     应付金额(元) <br>
-                    <span class="green">1212</span>
+                    <span class="green">{{tips.receivable_sum}}</span>
                 </li>
                 <li class="col-md-4">
                     实付金额(元) <br>
-                    <span class="green">313</span>
+                    <span class="green">{{tips.received_sum}}</span>
                 </li>
                 <li class="col-md-4">
                     剩余款项(元) <br>
-                    <span class="yellow">343</span>
+                    <span class="yellow">{{tips.balance_sum}}</span>
                 </li>
             </ul>
         </div>
@@ -69,26 +86,45 @@
                         <tr>
                             <th></th>
                             <th class="text-center">付款时间</th>
-                            <th class="text-center">签约人</th>
-                            <th class="text-center">房屋地址</th>
-                            <th class="text-center">付款方式</th>
-                            <th class="text-center">月单价</th>
-                            <th class="text-center">支出科目</th>
-                            <th class="text-center">应付金额</th>
-                            <th class="text-center">实付金额</th>
+                            <th class="text-center">客户姓名</th>
+                            <th class="text-center">详情</th>
+                            <th class="text-center">收入科目</th>
+                            <th class="text-center">应收金额</th>
+                            <th class="text-center">实收金额</th>
                             <th class="text-center">剩余款项</th>
                             <th class="text-center">补齐时间</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
-
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox">
+                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
                             </td>
-                            <td><router-link :to="{path:'/CollectPaymentDetail',query: {collectId: 1}}">详情</router-link></td>
+                            <td>{{item.pay_date}}</td>
+                            <td>{{item.customer==undefined?'':item.customer.name}}</td>
+                            <td>
+                                {{item.description.address}}/
+                                {{item.description.pay_type}}/
+                                {{item.description.price}}/
+                                {{item.description.staff_name}}/
+                                {{item.description.cost_medi}}
+                            </td>
+                            <td>{{dict.account_subject[item.subject_id]}}</td>
+                            <td>{{item.amount_receivable}}</td>
+                            <td>{{item.amount_received}}</td>
+                            <td>{{item.balance}}</td>
+                            <td>{{item.complete_date}}</td>
+                            <td>
+                                <button type="button" :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                    {{dict.account_should_status[item.status]}}
+                                </button>
+                            </td>
+                            <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id}}">详情</router-link></td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="13">暂无数据...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -96,21 +132,89 @@
             </div>
         </div>
 
-
-        <div class="modal fade full-width-modal-right" id="myModal" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <!--新增-->
+        <div class="modal fade full-width-modal-right" id="addCollect" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addModalLabel">{{title}}</h4>
+                        <button type="button" class="close"  @click="clearForm" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">新增应收款项</h4>
                     </div>
                     <div class="modal-body clearFix">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">收款时间<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
+                                           class="form-control form_datetime" readonly v-model="formData.pay_date">
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">详情</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="formData.description">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">收入科目<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" v-model="formData.subject_id">
+                                        <option :value="value" v-for="(key,value) in dict.account_subject">{{key}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应收金额<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" v-model="formData.amount_receivable">
+                                </div>
+                            </div>
+
+                            <!--<div class="form-group">
+                                <label class="col-sm-2 control-label">累计实收<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>-->
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">付款人员<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly v-model="logName">
+                                </div>
+                            </div>
+
+                           <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label">凭证截图<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"  placeholder="凭证截图"
+                                             :result="'certificatePic'" :idPhotos="certificatePic"></up-load>
+                                </div>
+                            </div>-->
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+
+
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary" v-if="isAdd">保存</button>
-                        <button type="button" class="btn btn-primary" v-else="isAdd">修改</button>
+                        <button type="button" class="btn btn-default" @click="clearForm">取消</button>
+                        <button type="button" class="btn btn-primary" @click="save">保存</button>
                     </div>
                 </div>
             </div>
@@ -123,6 +227,9 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
+        <SelectClient @clientPayAdd="getClient"></SelectClient>
+        <!--应收入账-->
+        <ShouldCollect :id="shouldCollectId"></ShouldCollect>
     </div>
 </template>
 
@@ -132,16 +239,30 @@
     import FlexBox from '../../common/flexBox.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
     import DatePicker from '../../common/datePicker.vue'
+    import upLoad from '../../common/upload.vue'
+    import SelectClient from '../../common/selectPayClient.vue'
+    import ShouldCollect from './paymentShouldCollect.vue'
 
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF},
+        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect},
 
         data(){
             return {
+
+                certificatePic : {
+                    cus_idPhotos : {},    //修改图片ID
+                    cus_idPhoto : [],     //证件照片
+                },
+                complete_ok: 'ok',                        //图片上传完成
+
+                isShow : false,
+
                 operId : 0,
                 statusId:0,
                 paging : '',
                 page : 1,                  // 当前页数
+
+                shouldCollectId : -1,
 
                 dict : {},
                 myData: [],      //列表数据
@@ -159,8 +280,6 @@
                     staffList:[]
                 },
 
-                title : '',
-                isAdd : true,
 
                 selected : [],
                 params : {
@@ -170,7 +289,25 @@
                     range : '',
                     search : ''
                 },
-                tips : {},
+                tips : {
+                    receivable_sum: 0,  // 应收金额
+                    received_sum: 0,    // 实收金额
+                    balance_sum: 0,     // 剩余款项
+                },
+
+                chooseResult:{
+                    customer_name : '',
+                },
+                logName : '',
+                formData:{
+                    customer_id : '',         // 客户id
+                    pay_date:'',    // 收款时间
+                    subject_id: 1,           // 科目id
+                    description:'',         // 详情
+                    amount_receivable: '',  // 应收金额
+                    remark : ''        // 备注
+                },
+
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -198,40 +335,60 @@
                     }
                 );
 
+            // 获取当前登录人的姓名
+            this.$http.get('staff/info')
+                .then(
+                    (res) =>{
+//                        console.log(res.data);
+                        this.logName = res.data.name;
+                    }
+                )
+
         },
         methods : {
-            changeIndex(ev,id){
+            clearForm(){
+                this.chooseResult.customer_name = '';
+                this.formData.customer_id = '';
+                this.formData.pay_date = '';
+                this.formData.subject_id = '';
+                this.formData.description = '';
+                this.formData.amount_receivable = '';
+                this.formData.remark = '';
+
+                $('#addCollect').modal('hide');
+            },
+
+            changeIndex(ev,id,status){
 //                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked){
+                if (ev.target.checked){
                     this.operId = id;
+                    this.statusId = status;
 //                    console.log(this.operId);
                 }else {
                     this.operId = 0;
+                    this.statusId = 0;
                 }
-
-
             },
-            addNew(){
-                this.title = '新增应付款项';
-                this.isAdd = true;
-            },
+
             operation(id,index){
                 this.title = '修改应付';
                 this.isAdd = false;
             },
 
-            payFlowList(){
-                /*this.$http.get('account/payable').then((res) => {
+            payFlowList(){-
+                this.$http.get('account/receivable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-//                    console.log(res.data);
-                    if (res.data.code==18400){
+                    console.log(res.data);
+                    if (res.data.code==18500){
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
+                        this.setTips(res.data.data,true);
                         this.isShow = false;
                     } else {
                         this.isShow = true;
+                        this.setTips({},false);
                     }
-                })*/
+                })
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -240,16 +397,13 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                 });
                 $('.form-inline .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                    if (ev.target.placeholder === '开始时间'){
-                        this.params.startDataTime = ev.target.value;
-                    } else {
-                        this.params.finishDataTime = ev.target.value;
+                    if (ev.target.placeholder == '收款时间'){
+                        this.formData.pay_date = ev.target.value;
                     }
+
 //                    console.log(this.startDataTime);
                 }.bind(this));
             },
@@ -304,16 +458,31 @@
             getDate(data){
                 // 时间
                 console.log(data);
+                this.params.range = data;
+                this.search();
+
+            },
+
+            setTips(val,bool){
+                if (bool){
+                    this.tips.receivable_sum = val.receivable_sum;
+                    this.tips.received_sum = val.received_sum;
+                    this.tips.balance_sum = val.balance_sum;
+                } else {
+                    this.tips.receivable_sum = 0.00;
+                    this.tips.received_sum = 0.00;
+                    this.tips.balance_sum = 0.00;
+                }
 
             },
 
             filter(){
                 this.operId = 0;
-                /*this.$http.get('account/payable?page='+this.page,{
+                this.$http.get('account/receivable?page='+this.page,{
                     params : this.params
                 }).then(
                     (res) =>{
-                        if (res.data.code == 18400){
+                        if (res.data.code == 18500){
                             // 成功
                             this.paging = res.data.data.pages;
                             this.myData = res.data.data.data;
@@ -325,17 +494,95 @@
                             this.page = 1;
                         }
                     }
-                )*/
+                )
             },
+
+            // 选择客户
+            selectClient(){
+                $('.selectClient:eq(0)').modal('show');
+            },
+            getClient(data){
+                console.log(data);
+                this.formData.customer_id = data.id;
+                this.chooseResult.customer_name = data.name;
+//                this.formData.customer = data;
+                /*this.$http.post('account/payable',this.formData)
+                 .then()*/
+            },
+
+            save(){
+                this.$http.post('account/receivable',this.formData).then(
+                    (res) =>{
+                        if (res.data.code==18510){
+                            // 成功
+                            this.info.success = '新增应收款项成功';
+                            //显示失败弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.clearForm();
+                            this.search();
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    }
+                )
+            },
+
+
+            // 图片上传
+            certificatePicId(data){
+                // 获取图片
+                this.certificatePic.cus_idPhoto = data;
+            },
+            picDelete(data){
+                // 删除图片
+                let index = this.certificatePic.cus_idPhoto.indexOf(data);
+                if (index > -1) {
+                    this.certificatePic.cus_idPhoto.splice(index, 1);
+                }
+            },
+            complete(data){
+                this.complete_ok = data;
+            },
+            cus_confirm(num){
+                // 提交时调用
+                this.$http.defaults.withCredentials = true;
+                if (this.complete_ok === 'ok') {
+                    this.$http.get('api/picture/poll').then((res) => {
+                        if (res.data.data === 0 || res.data.data === null) {
+                            this.save(num);
+                        }
+                    });
+                }
+                else {
+                    this.info.error = '图片正在上传';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }
+            },
+
+
+//            应收入账
+            addCollect(){
+                this.shouldCollectId = this.operId;
+//                data-toggle="modal" data-target="#collectFor"
+                $('#collectFor').modal('show');
+            }
         }
     }
 </script>
 
 <style scoped>
-    div.padd {
-        display: inline-block;
-        /*padding: 0 15px 0 0;*/
-    }
     .tips{
         line-height: 30px;
         /*padding-left: 12px;*/
@@ -369,20 +616,20 @@
     .tips ul li span.yellow{
         color: #FF9A02;
     }
-    div.input-group{
-        padding: 0 15px;
-    }
-    label{
-        line-height: 34px;
-    }
-
-    tbody tr{
-        cursor: pointer;
-    }
 
     tbody tr input[type=checkbox]{
         width: 17px;
         height: 17px;
     }
+    .status.yellow {
+        background-color: #FFCC00;
+    }
 
+    .status.red {
+        background-color: #FF9999;
+    }
+
+    .status.green {
+        background-color: #78CD51;
+    }
 </style>

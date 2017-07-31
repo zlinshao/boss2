@@ -54,12 +54,12 @@
                                     <td>{{item.name}}</td>
                                     <td v-if="item.sex === 1">先生</td>
                                     <td v-if="item.sex === 2">女士</td>
-                                    <td v-else="item.id ===2">{{item.address_s}}</td>
-                                    <td v-if="item.id ===2">{{item.address_z}}</td>
-                                    <td v-else="item.id ===2">{{item.contract_num_s}}</td>
-                                    <td v-if="item.id ===2">{{item.contract_num_z}}</td>
-                                    <td v-else="item.id ===2">{{item.staff_s}}</td>
-                                    <td v-if="item.id ===2">{{item.staff_z}}</td>
+                                    <td v-if="item.id !== 2">  {{item.id}}{{item.address_s}}</td>
+                                    <td v-if="item.id === 2">  {{item.id}}{{item.address_z}}</td>
+                                    <td v-if="item.id !== 2">  {{item.id}}{{item.contract_num_s}}</td>
+                                    <td v-if="item.id === 2"> {{item.contract_num_z}}</td>
+                                    <td v-if="item.id !== 2">{{item.staff_s}}</td>
+                                    <td v-if="item.id === 2">{{item.id}}{{item.staff_z}}</td>
                                 </tr>
                                 <tr v-if="isShow">
                                     <td colspan="10" class="text-center text-muted">
@@ -137,10 +137,9 @@
         methods : {
             search(){
                 console.log()
-                if(this.keywords!==''&& this.clien_staff === '1'){
+                if(this.clien_staff === '1'){
                     this.$http.post('index/customerInfo/index  ',
-                            {
-                                name:this.keywords,
+                            {name:this.keywords,
                             }
                         ).then((res) => {
                         if(res.data.code === '60010'){
@@ -151,7 +150,7 @@
                             this.isShow = true;
                         }
                     })
-                }else if(this.keywords!==''&& this.clien_staff === '2'){
+                }else if(this.clien_staff === '2'){
                     this.$http.get('index/profile/searchStaff/keywords/' + this.keywords).then((res) => {
                         if (res.data.code === '90010'){
                             this.customerList=res.data.data;

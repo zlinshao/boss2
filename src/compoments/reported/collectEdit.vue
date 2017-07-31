@@ -77,7 +77,7 @@
                                 </div>
                             </div>
 
-                            <FlexBox :flexData="formData.years" :datas="formData.price" @sendData="getFlexData"></FlexBox>
+                            <FlexBox :flexData="formData.years" :datas="formData.price" :change="money_change" @sendData="getFlexData"></FlexBox>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">空置期<sup class="required">*</sup></label>
@@ -216,6 +216,7 @@
                 currentDate : [],
 
                 pay_typeChange : false,
+                money_change : false,
                 one_type : '1',
                 more_type : [],
 
@@ -339,6 +340,7 @@
                                 this.chooseResult.house_name=val.house.detailed_address;
                             }
                             this.pay_typeChange = val.pay_type.length>1;
+                            this.money_change = val.price.length>1;
                             this.more_type = val.pay_type;
 
                             this.formData.staff_id = val.staff_id;
@@ -371,6 +373,7 @@
             closeModal(){
                 // 清空
                 this.pay_typeChange = false;
+                this.money_change = false;
                 this.one_type = '1';
                 this.more_type = [];
 
