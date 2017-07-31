@@ -319,7 +319,7 @@
                             setTimeout(() => {
                                 this.info.state_success = false;
                             },2000);
-                            this.getDictionary();
+                            this.search();
                             this.seletedId=0;
                         }else {
                             //失败信息 ***

@@ -252,6 +252,7 @@
                         this.keywords='';
                         this.departmentName='';
                         this.departmentId='';
+                        this.page=1;
                     }
                 }
             }
@@ -264,37 +265,12 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    this.$http.post('core/villa/receivedvillalist').then((res) => {
-                        if(res.data.code==='80030'){
-                            this.houseList=res.data.data.list;
-                            this.isShow=false;
-                            this.pages=res.data.data.pages;
-                        }else{
-                            this.houseList=[];
-                            this.pages=1;
-                            this.isShow=true;
-                        }
-                    });
+                    this.search();
                 });
             },
             //搜索房屋列表
             searchHouseList(){
                 this.currentPage=this.page;
-                if(this.our_group===true){
-                    this.house_type = '';
-                    this.rooms = '';
-                    this.decoration = '';
-                    this.reference = '';
-                    this.house_feature = '';
-                    this.villa_status = '';
-                    this.belong = '';
-                    this.area='';
-                    this.page=1;
-                    this.keywords='',
-                    this.departmentName='';
-                    this.departmentId='';
-                }
-
                 this.$http.post('core/villa/receivedvillalist',
                     {
                         house_type   : this.house_type,//房屋类型
@@ -353,26 +329,16 @@
             stick (val, num){
                 this.$http.get('core/villa/stick/id/' + val + '/top/' + num).then((res) => {
                     if(res.data.code==='80090'){
-                        //成功信息 ***
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        if (this.top === 1) {
-                            this.top = 2;
-                        } else if (this.top === 2) {
-                            this.top = 1;
-                        }
-                        this.$http.post('core/villa/receivedvillalist').then((res) => {
-                            this.houseList=res.data.data.list;
-                            this.houseSeleted = 0;
-                            this.checkboxModel=[];
-                        });
+                        this.top === 1? this.top =2 : this.top = 1;
+                        this.search();
                     }else{
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_error = true;
                     }
-
                 });
             },
             reset(){
@@ -388,7 +354,7 @@
                 this.keywords='',
                 this.departmentName='';
                 this.departmentId='';
-                this.searchHouseList();
+                this.search();
             },
             //分页搜索
             pageSearch(val){
