@@ -22,6 +22,7 @@ import AFARenting from './compoments/achievement/agencyFeeAplicarion/AFARenting.
 import Custom from "./compoments/custom/custom.vue";                        //客户
 import Details from "./compoments/custom/custom_more.vue";                  //客户详情
 import CustomerPool from "./compoments/custom/custom_pool.vue";             //客户池
+import LeadingOut from "./compoments/leadingOut/cus_leadingOut.vue";        //客户导出
 import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                     //已收房源
 import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";           //已收房源更多
 import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                   //未收房源
@@ -169,10 +170,16 @@ export default[
         path: '/collectDetail',     //客户详情
         name: 'collectDetail',
         component: CollectDetail
-    },{
+    },
+    {
         path: '/collectMore',       //客户详情
         name: 'collectMore',
         component: Collect_More
+    },
+    {
+        path: '/leadingOut',       //客户导出
+        name: 'leadingOut',
+        component: LeadingOut
     },
     {
         path: '/compare',
