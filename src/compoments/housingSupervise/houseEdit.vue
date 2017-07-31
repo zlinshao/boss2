@@ -133,7 +133,7 @@
                                             <option :value="key"  v-for="(value,key) in myDictionary.floor_type">{{value}}</option>
                                         </select>
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">个人/中介<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">个人/中介</label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseEdit.person_medium">
                                             <option :value="key"  v-for="(value,key) in myDictionary.person_medium">{{value}}</option>
