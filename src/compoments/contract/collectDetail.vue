@@ -20,6 +20,9 @@
                     <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"  title="已解锁"></i>
                 </span>
                 <button class="btn btn-primary" @click="compareContract">对比</button>
+                <router-link class="btn btn-danger" :to="{path:'/comparecontract',query:{houseId : houseId}}">
+                    收租对比
+                </router-link>
                 <button class="btn btn-primary" @click="inform">通知</button>
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
                     {{dictionary.reviewed[item.reviewed]}}

@@ -270,6 +270,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xs-6" v-if="collectContractList === []">
+                                    <h3>租房合同信息</h3>
+                                    <h4>暂无数据...</h4>
+                                </div>
                                 <div class="col-xs-6" v-if="rentContractList !== []">
                                     <div class="contract_detail"  v-for="item in rentContractList">
                                         <h3>租房合同信息</h3>
@@ -533,6 +537,10 @@
                                             </span>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-xs-6" v-if="rentContractList === []">
+                                    <h3>租房合同信息</h3>
+                                    <h4>暂无数据...</h4>
                                 </div>
                             </div>
                         </div>
