@@ -88,7 +88,7 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期<sup>*</sup></label>
                                         <div class="col-lg-4">
-                                            <input type="number" class="form-control" v-model="contractEdit.pay_date"
+                                            <input type="number" max="30" min="1" class="form-control" v-model="contractEdit.pay_date"
                                                    placeholder="请输入打房租日期">
                                         </div>
                                         <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
@@ -122,7 +122,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">合同<sup>*</sup></label>
+                                        <label class="col-lg-2 control-label">合同照片<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
                                                      :result="'contractPic'" :idPhotos="contractPic"></up-load>

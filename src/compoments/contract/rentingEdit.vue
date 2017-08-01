@@ -64,13 +64,13 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input type="text" class="form-control" v-model="contractEdit.start_date"
-                                                   disabled placeholder="合同开始时间">
+                                            <input readonly class="form-control formDatetime" v-model="contractEdit.start_date"
+                                                   @click="selectDate"  placeholder="合同开始时间">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input type="text" class="form-control" v-model="contractEdit.end_date"
-                                                   disabled placeholder="合同结束时间">
+                                            <input readonly class="form-control formDatetime" v-model="contractEdit.end_date"
+                                                   @click="selectDate"  placeholder="合同结束时间">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -322,7 +322,14 @@
                     todayBtn: 1,
                     autoclose: 1,
                 }).on('changeDate', ev => {
-                    this.contractEdit.complete_date = ev.target.value;
+                    if (ev.target.placeholder === '合同开始时间'){
+                        this.contractEdit.start_date = ev.target.value;
+                    }else if(ev.target.placeholder === '合同结束时间'){
+                        this.contractEdit.end_date = ev.target.value;
+                    }else {
+                        this.contractEdit.complete_date = ev.target.value;
+                    }
+
                 });
             },
             //获取图片id
