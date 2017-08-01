@@ -5,7 +5,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        <button type="button" class="close" @click="revise()" data-dismiss="modal"
+                                aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">应付入账</h4>
                     </div>
@@ -14,9 +15,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款时间</label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData" type="text" v-model="pay_time"
-                                           placeholder="付款时间"
-                                           class="form-control form_datetime" readonly>
+                                    <input type="text" v-model="list.pay_date"
+                                           placeholder="付款时间" class="form-control" readonly>
                                 </div>
                             </div>
 
@@ -30,29 +30,32 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="dict.staff_id[list.id]" @click="selectClient" readonly>
+                                    <input type="text" class="form-control" v-model="dict.staff_id[list.id]" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="list.description" readonly>
+                                    <textarea type="text" class="form-control" readonly rows="4"
+                                              style="margin-bottom: 18px">{{list.description}}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">支出科目</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control"
+                                           v-model="dict.account_subject[list.subject_id]" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">汇款方式</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control">
-                                        <option value=""></option>
+                                    <select class="form-control" @change="getAccount" v-model="cate">
+                                        <option value="">--请选择--</option>
+                                        <option v-for="(sub,index) in dict.payment" :value="index">{{sub}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -60,66 +63,53 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款账户</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control">
-                                        <option value="">银行卡</option>
+                                    <select class="form-control" v-model="pay_account">
+                                        <option value="">--请选择--</option>
+                                        <option v-for="(sub,index) in pay_acc" :value="index">{{sub}}</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">账户余额</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应付金额</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control" v-model="list.amount_payable" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">实付金额</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="number" v-model="payable" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">剩余款项</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control" v-model="list.balance" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">补齐日期</label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐日期"
-                                           class="form-control form_datetime" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">累计实付</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input @click="remindData1" type="text" placeholder="补齐日期"
+                                           class="form-control form_datetime1" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款人员</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control" v-model="pay_man" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">备注</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" v-model="remarks"></textarea>
                                 </div>
                             </div>
 
@@ -127,14 +117,15 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary">确认入账</button>
+                        <button type="button" class="btn btn-default" @click="revise ()">取消</button>
+                        <button type="button" class="btn btn-primary" @click="okPayment">确认入账</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <SelectClient @clientAdd="getClient"></SelectClient>
+        <Status :state='info'></Status>
+        <!--<SelectClient @clientAdd="getClient"></SelectClient>-->
     </div>
 </template>
 <style scoped>
@@ -142,26 +133,123 @@
 </style>
 <script>
     import SelectClient from '../../common/selectClient.vue'
+    import Status from '../../common/status.vue';
     export default{
         props: ['details'],
-        components: {SelectClient},
+        components: {SelectClient, Status},
         data(){
             return {
                 dict: {},
-                pay_time: '',
+                pay_acc: [],            //收款账户
+                cate: '',
+                account_id: '',         //客户ID
+                pay_account: '',        //付款账户
+                payable: '',            //实付金额
+                complete_time: '',      //补齐时间
+                remarks: '',            //备注
+                pay_man: '',            //付款人员
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
+
             }
         },
         updated (){
-            this.remindData();
+//            this.remindData();
+            this.remindData1();
         },
         mounted(){
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.dict = res.data;
+
+                this.$http.get('staff/info').then((res) => {
+                    this.pay_man = res.data.name;
+                });
             });
         },
+        watch: {
+            details(val){
+                this.account_id = val[0].id
+            }
+        },
         methods: {
-            remindData (){
-                $('.form_datetime').datetimepicker({
+//            根据收款方式获取收款账户
+            getAccount(){
+                this.$http.get('account/manage/readbycate/' + this.cate).then((res) => {
+                    console.log(res.data);
+                    if (res.data.code !== '18402') {
+                        this.pay_acc.push(res.data);
+                        this.pay_account = '';
+                    } else {
+                        this.pay_acc = [];
+                    }
+                })
+            },
+//            确认入账
+            okPayment (){
+                this.$http.post('account/payable/pay/' + this.account_id, {
+                    account_id: this.pay_account,
+                    amount_paid: this.payable,
+                    complete_date: this.complete_time,
+                    remark: this.remarks
+                }).then((res) => {
+                    if (res.data.code === '18410') {
+                        $('#payFor').modal('hide');
+                        this.$emit('pay_succ');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.pay_account = '';        //付款账户
+                        this.payable = '';            //实付金额
+                        this.complete_time = '';      //补齐时间
+                        this.remarks = '';            //备注
+                    } else {
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
+            },
+//            取消
+            revise (){
+                $('#payFor').modal('hide');
+                this.pay_account = '';        //付款账户
+                this.payable = '';            //实付金额
+                this.complete_time = '';      //补齐时间
+                this.remarks = '';            //备注
+            },
+////            付款时间
+//            remindData (){
+//                $('.form_datetime').datetimepicker({
+//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+////                    clearBtn: true,                     //清除按钮
+//                }).on('changeDate', function (ev) {
+//                    if (ev.target.placeholder === '付款时间') {
+//                        this.pay_time = ev.target.value;
+//                    } else {
+//
+//                    }
+//                }.bind(this));
+//            },
+//            补齐时间
+            remindData1 (){
+                $('.form_datetime1').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',
@@ -169,21 +257,17 @@
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '付款时间') {
-                        this.pay_time = ev.target.value;
-                    } else {
-
-                    }
+                    this.complete_time = ev.target.value;
                 }.bind(this));
             },
             // 选择客户
-            selectClient(){
-                $('.selectClient:eq(1)').modal('show');
-            },
+//            selectClient(){
+//                $('.selectClient:eq(1)').modal('show');
+//            },
             //获得客户
-            getClient(){
-
-            },
+//            getClient(){
+//
+//            },
         }
     }
 </script>

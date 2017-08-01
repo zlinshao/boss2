@@ -33,8 +33,10 @@
                 <div class="panel-body client_info">
                     <div>
                         <div class="col-md-12" v-for="list in details_info">
-                            <div class="col-md-5">
-                                <div><span class="text-primary">客户姓名：</span><span>{{select_info.staff_id[list.id]}}</span></div>
+                            <div class="col-md-6">
+                                <div><span
+                                        class="text-primary">客户姓名：</span><span>{{select_info.staff_id[list.id]}}</span>
+                                </div>
                                 <div><span class="text-primary">详情：</span><span>{{list.description}}</span>
                                 </div>
                                 <div><span class="text-primary">付款时间：</span>
@@ -43,17 +45,18 @@
                                         <a data-toggle="modal" data-target="#moreTime">更多</a>
                                     </span>
                                 </div>
-                                <div><span class="text-primary">支出科目：</span><span>{{select_info.account_subject[list.subject_id]}}</span>
+                                <div><span
+                                        class="text-primary">支出科目：</span><span>{{select_info.account_subject[list.subject_id]}}</span>
                                 </div>
-                                <div><span class="text-primary">应付金额：</span><span>{{list.amount_paid}}</span>
+                                <div><span class="text-primary">应付金额：</span><span>{{list.amount_payable}}</span>
                                 </div>
                                 <!--<div><span class="text-primary">账户余额：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">付款方式：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">月单价：</span><span>dfsdf</span></div>-->
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <!--<div><span class="text-primary">应付金额：</span><span>{{details_info.amount_paid}}</span></div>-->
-                                <div><span class="text-primary">实付金额：</span><span>{{list.amount_payable}}</span>
+                                <div><span class="text-primary">实付金额：</span><span>{{list.amount_paid}}</span>
                                 </div>
                                 <!--<div><span class="text-primary">累计实付：</span><span>sdfdsf</span></div>-->
                                 <div><span class="text-primary">剩余款项：</span><span>{{list.balance}}</span></div>
@@ -67,7 +70,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <span class="text-primary">历史收款记录：</span>
-                                <div class="table table-responsive roll col-md-3 col-md-offset-2" style="border: 0;">
+                                <div class="table table-responsive roll" style="border: 0;">
                                     <table>
                                         <tbody>
                                         <tr v-for="info in list.running_account_record">
@@ -220,7 +223,7 @@
         <Status :state='info'></Status>
 
         <!--应付入账-->
-        <ShouldPay :details="details_info"></ShouldPay>
+        <ShouldPay @pay_succ="pay_success" :details="details_info"></ShouldPay>
 
         <SelectHouse @House="getHouse"></SelectHouse>
 
@@ -311,12 +314,16 @@
 //            console.log(this.showOper)
         },
         methods: {
+            pay_success (){
+                this.details(this.should_id);
+            },
 //            详情
             details (val){
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.select_info = res.data;
 
                     this.$http.get('account/payable/' + val).then((res) => {
+                        this.details_info = [];
                         this.details_info.push(res.data.data);
                         console.log(res.data.data.description.split('/'));
                         this.descriptions = res.data.data.description.split('/');
