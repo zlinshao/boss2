@@ -5,12 +5,12 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label" v-show="moreYears>=2">第一年</label>
                 <div :class="{'col-sm-6':moreYears>=2,'col-sm-8':moreYears==1}">
-                    <input type="number" class="form-control" v-model="data[0]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
                 <div class="col-sm-4 icons">
                     <!--<i class="fa fa-plus-circle" @click="addMoreYears"></i>
                     <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>-->
-                    <label class="control-label" @click="changeMoney($event)"><input type="checkbox" :checked="change">收月单价不固定</label>
+                    <label class="control-label" @click="changeMoney($event)"><input type="checkbox" :checked="changeYears">收月单价不固定</label>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第二年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control margin_0" v-model="data[1]" @blur="sendData">
+                    <input type="number" min="0" class="form-control margin_0" v-model="data[1]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第三年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[2]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[2]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第四年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[3]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[3]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第五年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[4]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[4]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第六年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[5]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[5]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第七年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[6]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[6]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第八年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[7]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[7]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第九年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[8]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[8]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第十年</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" v-model="data[9]" @blur="sendData">
+                    <input type="number" min="0" class="form-control" v-model="data[9]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -129,7 +129,8 @@
         data(){
             return {
                 moreYears : 1,
-                data : ['','','','','','','','','','']
+                data : ['','','','','','','','','',''],
+                changeYears:false,
             }
         },
         watch: {
@@ -144,41 +145,29 @@
                     this.moreYears = val;
                     this.sendData();
                 }
-
+            },
+            change(val){
+                this.changeYears = val;
             }
         },
         components: {},
         methods: {
-            /*addMoreYears(){
-                if (this.moreYears >= this.flexData || this.flexData==''){
-//                    this.moreYears = this.flexData;
-                    return;
-                }else {
-                    this.moreYears++;
-                }
-            },
-            reduceMoreYears(){
-                if (this.moreYears === 1){
-                    return;
-                }else {
-                    console.log(this.moreYears-1);
-//                    console.log($('.flexBox input'));
-//                    console.log($('.flexBox input').eq(this.moreYears-1).val());
-//                    $('.flexBox input').eq(this.moreYears-1).val('');
-                    this.data[this.moreYears-1]='';
-                    this.moreYears--;
-                }
-            },*/
-
             changeMoney(ev){
-//                console.log(ev.target.checked)
+//                alert('changeYears=='+this.changeYears)
                 if (ev.target.checked){
-                    this.moreYears = this.flexData;
+                    this.changeYears = true;
+                    if(this.flexData!=''){
+                        this.moreYears = this.flexData;
+                    } else {
+                        this.moreYears = 1;
+                    }
                 } else {
+                    this.changeYears = false;
                     this.moreYears = 1;
                     this.data.splice(1,this.moreYears,'');
                     this.sendData();
                 }
+                console.log(this.moreYears)
             },
 
             sendData(){

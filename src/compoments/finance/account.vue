@@ -11,7 +11,7 @@
                 <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <select class="form-control" v-model="params.cate" @change="search">
+                            <select class="form-control" v-model="params.cate" @change="search(1)">
                                 <option value="">全部</option>
                                 <option :value="value" v-for="(key,value) in dict.account_cate">{{key}}</option>
                             </select>
@@ -19,9 +19,9 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="账户名称/卡号"  @keydown.enter.prevent="search" v-model="params.search">
+                            <input type="text" class="form-control" id="search_info" placeholder="账户名称/卡号"  @keydown.enter.prevent="search(1)" v-model="params.search">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                         <div class="form-group pull-right">
@@ -151,13 +151,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">初始金额<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.amount_base" :readonly="!isAdd">
+                                        <input type="number" min="0" class="form-control" v-model="formData.amount_base" :readonly="!isAdd">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">当前余额</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.amount_base" readonly>
+                                        <input type="number" min="0" class="form-control" v-model="formData.amount_base" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -183,7 +183,7 @@
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <!--分页-->
-        <Page :pg="paging" @pag="getPage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -208,6 +208,7 @@
         components: {Page,Status,Confirm},
         data(){
             return {
+                beforePage : 1,
                 isShow : false,
 
                 dict :{},
@@ -301,15 +302,15 @@
                 })
             },
 
-            search(){
+            search(val){
 //                console.log(this.params);
-                this.page = 1;
 //                this.params['page'] = 1;
-                this.operId = 0;
-                this.filter();
+                this.filter(val);
             },
-            filter(){
-                this.$http.get('account/manage?page='+this.page,{
+            filter(val){
+                this.beforePage = val;
+                this.operId = 0;
+                this.$http.get('account/manage?page='+val,{
                     params : this.params
                 })
                     .then(
@@ -400,7 +401,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
                                 this.clearForm();
-                                this.search();
+                                this.search(1);
                             } else {
                                 // 失败
                                 this.info.error = res.data.msg;
@@ -431,8 +432,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
                                 this.clearForm();
-                                this.operId = 0;
-                                this.accountList();
+                                this.search(1);
                             } else {
                                 // 失败
                                 this.info.error = res.data.msg;

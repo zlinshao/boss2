@@ -14,16 +14,16 @@
                         </div>
 
                         <div class="input-group clearFix">
-                            <select class="form-control" v-model="params.type" @change="search">
+                            <select class="form-control" v-model="params.type" @change="search(1)">
                                 <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
                         </div>
 
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="搜索账户名称" v-model="params.search" @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="搜索账户名称" v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search"><i
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i
                                         class="fa fa-search"></i></button>
                             </span>
                         </div>
@@ -124,19 +124,19 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">转出账户余额</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" readonly v-model="account_out_remain">
+                                        <input type="number" min="0" class="form-control" readonly v-model="account_out_remain">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">转入账户余额</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" readonly v-model="account_in_remain">
+                                        <input type="number" min="0" class="form-control" readonly v-model="account_in_remain">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">转账金额<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.amount_transfer">
+                                        <input type="number" min="0" class="form-control" v-model="formData.amount_transfer">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -158,7 +158,7 @@
         </div>
 
 
-        <Page :pg="paging" @pag="getPage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
         <!--提示信息-->
         <Status :state='info'></Status>
 
@@ -186,6 +186,7 @@
         components: {Page,Status,DatePicker},
         data(){
             return {
+                beforePage : 1,
                 dict : {},
                 isShow : false,
 
@@ -311,18 +312,18 @@
                 $('#myModal').modal('hide');
             },
 
-            search(){
+            search(val){
 //                this.operId = 0;
-                this.page = 1;
-                this.filter();
+                this.filter(val);
             },
             getDate(data){
                 this.params.range = data;
-                this.search();
+                this.search(1);
             },
 
             filter(){
-                this.$http.get('account/transfer?page='+this.page,{
+                this.beforePage = val;
+                this.$http.get('account/transfer?page='+val,{
                     params : this.params
                 }).then((res)=>{
 //                    console.log(res.data);
@@ -355,7 +356,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
                                 this.clearForm();
-                                this.search();
+                                this.search(1);
                             } else {
                                 this.info.error = res.data.msg;
                                 //显示失败弹窗 ***

@@ -22,7 +22,7 @@
                             <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
                         </div>-->
                         <div class="input-group">
-                            <select class="form-control" v-model="params.status" @change="search">
+                            <select class="form-control" v-model="params.status" @change="search(1)">
                                 <option value="">全部</option>
                                 <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}</option>
                             </select>
@@ -33,9 +33,9 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search" @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                         <div class="form-group pull-right">
@@ -85,7 +85,7 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">付款时间</th>
+                            <th class="text-center">收款时间</th>
                             <th class="text-center">客户姓名</th>
                             <th class="text-center">详情</th>
                             <th class="text-center">收入科目</th>
@@ -105,11 +105,7 @@
                             <td>{{item.pay_date}}</td>
                             <td>{{item.customer==undefined?'':item.customer.name}}</td>
                             <td>
-                                {{item.description.address}}/
-                                {{item.description.pay_type}}/
-                                {{item.description.price}}/
-                                {{item.description.staff_name}}/
-                                {{item.description.cost_medi}}
+                                {{item.description}}
                             </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>{{item.amount_receivable}}</td>
@@ -145,7 +141,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">收款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
+                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="收款时间"
                                            class="form-control form_datetime" readonly v-model="formData.pay_date">
                                 </div>
                             </div>
@@ -176,7 +172,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" v-model="formData.amount_receivable">
+                                    <input type="number" min="0" class="form-control" v-model="formData.amount_receivable">
                                 </div>
                             </div>
 
@@ -219,7 +215,7 @@
                 </div>
             </div>
         </div>
-        <Page :pg="paging" @pag="getPage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
 
         <!--提示信息-->
@@ -229,7 +225,7 @@
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
         <!--应收入账-->
-        <ShouldCollect :id="shouldCollectId"></ShouldCollect>
+        <ShouldCollect :id="shouldCollectId" @success="filter"></ShouldCollect>
     </div>
 </template>
 
@@ -248,7 +244,7 @@
 
         data(){
             return {
-
+                beforePage : 1,
                 certificatePic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
@@ -391,6 +387,7 @@
                 })
             },
             remindData (){
+
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
@@ -398,30 +395,13 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
-                });
-                $('.form-inline .form_datetime').on('changeDate', function (ev) {
+                }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '收款时间'){
                         this.formData.pay_date = ev.target.value;
                     }
-
-//                    console.log(this.startDataTime);
+//                    console.log(ev.target.value);
+//                    console.log(ev.target.placeholder);
                 }.bind(this));
-            },
-            getPage(data){
-                this.page = data;
-            },
-
-            oper(){
-                console.log(this.operId);
-                this.title = '编辑应付款项';
-                this.isAdd = false;
-                // 先请求
-
-//                请求成功打开模态框
-                $('#myModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
 
             },
 
@@ -441,25 +421,24 @@
                     this.selected.push(val.staff[j].name);
                     this.params.staff_id.push(val.staff[j].id)
                 }
-//                this.search();
+                this.search(1);
             },
             clearSelect(){
                 this.params.department_id = [];
                 this.params.staff_id = [];
                 this.selected = [];
-                this.search();
+                this.search(1);
             },
 
-            search(){
+            search(val){
                 console.log(this.params);
-                this.page = 1;
-                this.filter();
+                this.filter(val);
             },
             getDate(data){
                 // 时间
                 console.log(data);
                 this.params.range = data;
-                this.search();
+                this.search(1);
 
             },
 
@@ -476,9 +455,10 @@
 
             },
 
-            filter(){
+            filter(val){
                 this.operId = 0;
-                this.$http.get('account/receivable?page='+this.page,{
+                this.beforePage = val;
+                this.$http.get('account/receivable?page='+val,{
                     params : this.params
                 }).then(
                     (res) =>{
@@ -486,12 +466,14 @@
                             // 成功
                             this.paging = res.data.data.pages;
                             this.myData = res.data.data.data;
+                            this.setTips(res.data.data,true);
                             this.isShow = false;
                         } else {
                             this.isShow = true;
                             this.myData = [];
                             this.paging = 0;
                             this.page = 1;
+                            this.setTips({},false);
                         }
                     }
                 )
@@ -523,7 +505,7 @@
                                 this.info.state_success = false;
                             }, 2000);
                             this.clearForm();
-                            this.search();
+                            this.search(1);
                         } else {
                             // 失败
                             this.info.error = res.data.msg;

@@ -49,19 +49,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">租房状态<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">租房类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control">
-                                            <option value="1">整租</option>
-                                            <option value="2">合租</option>
+                                        <select class="form-control" v-model="formData.is_shared" @change="changeIsSgared">
+                                            <option :value="value" v-for="(key,value) in dict.shared_house">{{key}}</option>
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" v-show="formData.is_shared==1">
                                     <label class="col-sm-2 control-label">房间类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" >
+                                        <input type="text" class="form-control" v-model="formData.shared_part ">
                                     </div>
                                 </div>
 
@@ -77,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">租房年限<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.months">
+                                        <input type="number" min="0" class="form-control" v-model="formData.months">
                                     </div>
                                 </div>
 
@@ -97,7 +96,7 @@
                                         <div class="col-sm-6 padding_0">
                                             <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
-                                                <input type="number" class="form-control" v-model="formData.pay">
+                                                <input type="number" min="0" class="form-control" v-model="formData.pay">
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +105,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">出租月单价<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.price">
+                                        <input type="number" min="0" class="form-control" v-model="formData.price">
                                     </div>
                                 </div>
 
@@ -121,7 +120,7 @@
                                         <div class="col-sm-8">
                                             <label class="col-sm-4 control-label">已收金额<sup class="required">*</sup></label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="formData.received_amount">
+                                                <input type="number" min="0" class="form-control" v-model="formData.received_amount">
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +138,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[0].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[0].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2 icon">
@@ -159,7 +158,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[1].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[1].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -176,7 +175,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[2].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[2].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -193,7 +192,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[3].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[3].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -210,7 +209,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[4].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[4].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -227,7 +226,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[5].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[5].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -244,7 +243,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[6].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[6].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -261,7 +260,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" v-model="payments[7].money">
+                                                <input type="number" min="0" class="form-control" v-model="payments[7].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -287,7 +286,7 @@
                                 <div class="form-group" v-show="is_medi==2">
                                     <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="formData.cost_medi">
+                                        <input type="number" min="0" class="form-control" v-model="formData.cost_medi">
                                     </div>
                                 </div>
 
@@ -424,6 +423,8 @@
                     house_id : '',
                     customer_id : '',
 
+                    is_shared : 1,
+                    shared_part : '',
                     rent_type : 1,
 //                    rent_relation_id : '',
                     months : '',
@@ -472,6 +473,7 @@
                 this.formData.collect_id = val[0].id;
                 this.formData.house_id = val[0].house_id;
                 this.chooseResult.house_name = val[0].house.detailed_address;
+
 //                }
             },
 
@@ -498,6 +500,8 @@
                         this.chooseResult.department_name = val.department_name;
                         this.formData.leader_id = val.leader_id;
                         this.formData.department_id = val.department_id;
+
+                        this.certificatePic.cus_idPhotos = {};
                     }
                 );
 
@@ -541,6 +545,7 @@
                         money : ''
                     }
                 ];
+                this.more_pay_way = 1;
 
                 this.chooseResult.staff_name = '';
                 this.chooseResult.house_name = '';
@@ -553,6 +558,8 @@
 //                this.formData.leader_id = '';
                 this.formData.house_id = '';
                 this.formData.customer_id = '';
+                this.formData.is_shared = 1;
+                this.formData.shared_part = '';
                 this.formData.rent_type = 1;
 //                this.formData.rent_relation_id = '';
                 this.formData.months = '';
@@ -654,10 +661,16 @@
                 if (this.more_pay_way==1){
                     return;
                 } else {
-                    this.formData.payment[this.more_pay_way-1] = {
+//                    console.log(this.more_pay_way);
+                    this.payments.splice(this.more_pay_way-1,1,{
                         payment_id:1,
                         money : ''
-                    };
+                    });
+                    /*this.formData.payment[this.more_pay_way-1] = {
+                        payment_id:1,
+                        money : ''
+                    };*/
+
                     this.more_pay_way--;
                 }
             },
@@ -747,6 +760,15 @@
 
                         }
                     )
+            },
+
+
+//            修改租房状态
+            changeIsSgared(){
+//                alert(this.formData.is_shared);
+                if (this.formData.is_shared==2){
+                    this.formData.shared_part = '';
+                }
             }
         }
     }
