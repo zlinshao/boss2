@@ -197,7 +197,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default">取消</button>
-                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-primary" @click="addPending">保存</button>
                         </div>
 
                     </div>
@@ -283,6 +283,11 @@
             },
             getDpm(val){
                 console.log(val)
+            },
+            addPending(){
+                this.$http.post('core/customer',this.pendingAdd).then((res) =>{
+
+                })
             }
         }
     }

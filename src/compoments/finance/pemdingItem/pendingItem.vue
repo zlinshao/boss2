@@ -67,7 +67,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                             <th></th>
                             <th class="text-center">事项类型</th>
                             <th class="text-center">合同编号</th>
                             <th class="text-center">开单人</th>
@@ -175,6 +175,7 @@
                 }
 
             },
+
             getPage(val){
                 this.page = val;
             },
