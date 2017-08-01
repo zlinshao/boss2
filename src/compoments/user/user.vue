@@ -222,7 +222,7 @@
                                 <div class="col-lg-3">
                                     <input placeholder="搜索企业联系人" class="sr-input"
                                            style="margin-bottom: 0px"     @keyup="search" v-model="keywords" >
-                                    <button type="button" class="btn sr-btn"><i class="fa fa-search"></i></button>
+                                    <button type="button" class="btn sr-btn">搜索</button>
                                 </div>
 
                                 <div class="col-lg-2 col-md-12 clickBt pull-right">

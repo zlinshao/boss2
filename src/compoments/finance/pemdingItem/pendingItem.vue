@@ -28,10 +28,10 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人"  @keydown.enter.prevent="">
+                            <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人" v-model="params.search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="" v-model="params.search">
-                                    <i class="fa fa-search"></i>
+                                    搜索
                                 </button>
                             </span>
                         </div>
