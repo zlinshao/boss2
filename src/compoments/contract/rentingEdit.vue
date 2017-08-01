@@ -17,7 +17,7 @@
                                 <form class="form-horizontal tasi-form">
                                     <h3 style="margin-top: -15px">基本信息</h3>
                                     <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[0]"
                                                    readonly placeholder="业主姓名" @click="selectClient(0)">
@@ -28,28 +28,28 @@
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=2">
-                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[1]"
                                                    readonly placeholder="业主姓名" @click="selectClient(1)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=3">
-                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[2]"
                                                    readonly placeholder="业主姓名" @click="selectClient(2)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=4">
-                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[3]"
                                                    readonly placeholder="业主姓名" @click="selectClient(3)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=5">
-                                        <label class="col-sm-3 control-label col-lg-2" >附属房东</label>
+                                        <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[4]"
                                                    readonly placeholder="业主姓名" @click="selectClient(4)">
