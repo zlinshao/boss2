@@ -14,12 +14,16 @@
                             <input type="text" class="form-control" id="search" placeholder="点击查询"
                                    v-model="selected"   @click='select' readonly>
                         </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="房屋地址搜索"
-                                 v-model="keywords"  @keydown.enter="keywordSearch">
+                        <div class="input-group">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control"  id="search_info" placeholder="请输入房屋地址"
+                                   v-model="keywords"  @keydown.enter="keywordSearch">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success"  @click="keywordSearch">
+                                    搜索
+                                </button>
+                            </span>
                         </div>
-                        <button class="btn btn-primary" @click="keywordSearch">搜索</button>
                     </div>
                     <!--选中-->
                     <div class="col-lg-12 remind" v-if="distribute.length>0">
