@@ -6,7 +6,7 @@
                 <div data-original-title="" data-placement="right" class="fa fa-bars tooltips"></div>
             </div>
             <!--logo start-->
-            <router-link to="" class="logo">B<span>OSS</span></router-link>
+            <router-link to="/index" class="logo">B<span>OSS</span></router-link>
             <!--logo end-->
             <!--<div class="nav notify-row" id="top_menu">-->
             <!--&lt;!&ndash;  notification start &ndash;&gt;-->
