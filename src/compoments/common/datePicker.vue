@@ -404,10 +404,11 @@
                             to = moment().format('YYYY-MM-DD');
                             date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         }
+                        this.$emit('sendDate', from + "to" + to);
                     }
                     this.mobilePickerDate = date;
                     this.showPicker = false;
-                    this.$emit('sendDate', from + "to" + to);
+                    this.$emit('sendDate', '');
                 }
 
 
