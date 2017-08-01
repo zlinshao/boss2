@@ -11,7 +11,7 @@
                 <div>
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <select class="form-control" v-model="params.cate" @change="search">
+                            <select class="form-control" v-model="params.cate" @change="search(1)">
                                 <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
                         </div>
@@ -22,9 +22,9 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址" v-model="params.search"  @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址" v-model="params.search"  @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </form>
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <Page :pg="paging" @pag="getPage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
 
     </div>
@@ -113,6 +113,7 @@
 
         data(){
             return {
+                beforePage:1,
                 dict : {},
                 isShow :false,
 
@@ -167,23 +168,20 @@
                  })
             },
 
-            search(){
+            search(val){
                 console.log(this.params);
-                this.page = 1;
-                this.filter();
+                this.filter(val);
             },
             getDate(data){
                 // 时间
                 console.log(data);
                 this.params.range = data;
-                this.search();
+                this.search(1);
             },
-            getPage(data){
-                this.page = data;
-                this.filter();
-            },
-            filter(){
-                this.$http.get('account/running?page='+this.page,{
+
+            filter(val){
+                this.beforePage = val;
+                this.$http.get('account/running?page='+val,{
                     params : this.params
                 }).then(
                     (res) =>{

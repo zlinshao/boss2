@@ -18,9 +18,9 @@
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址"
-                                   v-model="params.search" @keydown.enter.prevent="search">
+                                   v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                            <button class="btn btn-success" id="search" type="button" @click="search"><i
+                            <button class="btn btn-success" id="search" type="button" @click="search(1)"><i
                                     class="fa fa-search"></i></button>
                         </span>
                         </div>
@@ -122,15 +122,15 @@
         <Status :state='info'></Status>
 
         <!--分页-->
-        <Page :pg="paging" @pag="getPage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <!--新增-->
-        <AddModal @save="search"></AddModal>
+        <AddModal @save="search(1)"></AddModal>
 
         <!--编辑-->
-        <EditModal :id="curOperId" @save="search"></EditModal>
+        <EditModal :id="curOperId" @save="search(1)"></EditModal>
 
     </div>
 </template>
@@ -148,6 +148,7 @@
         components: {DatePicker,Page,Confirm,Status,AddModal,EditModal},
         data(){
             return {
+                beforePage : 1,
                 operId : 0,
                 statusId : 0,
 
@@ -231,34 +232,28 @@
                     this.statusId = 0;
                 }
             },
-            search(){
+            search(val){
 //                console.log(this.params);
 //                this.operId = 0;
-                this.page = 1;
-                this.filter();
-            },
-            getPage(data){
-                // 页数
-//                console.log(data);
-                this.page = data;
-                this.filter();
 
+                this.filter(val);
             },
             getDate(data){
 //                console.log(data);
                 this.params.range = data;
-                this.search();
+                this.search(1);
             },
             oper(){
                 // 编辑
                 this.curOperId = this.operId;
                 $('#edit').modal('show');
             },
-            filter(){
+            filter(val){
+                this.beforePage = val;
                 this.operId = 0;
                 // 筛选
 //                this.myData = [];
-                this.$http.get('checkin/rent?page='+this.page,{
+                this.$http.get('checkin/rent?page='+val,{
                     params : this.params
                 }).then(
                     (res) => {
@@ -333,8 +328,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
 
-
-                                this.filter();
+                                this.filter(this.beforePage);
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***

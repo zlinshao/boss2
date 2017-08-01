@@ -12,13 +12,13 @@
             <div class="panel-body">
                 <div v-if="msg!=''">
                     <span>房屋地址</span>
-                    <span>{{msg.description.address}}</span>
+                    <span>{{msg.address}}</span>
                     <span :class="{'status':true,'btn':true,'status':true,'yellow':msg.status===1,'red':msg.status===2,'green':msg.status===3}">
                         {{dict.account_should_status[msg.status]}}
                     </span>
                     <div class="pull-right">
                         <button class="btn btn-primary">转为待处理项</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#collectFor">应收入账</button>
+                        <button v-show="msg.status!=3" class="btn btn-primary" @click="addCollect">应收入账</button>
                     </div>
                 </div>
             </div>
@@ -36,8 +36,8 @@
                     <div>
                         <div class="col-md-12" v-if="msg!=''">
                             <div class="col-md-4">
-                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer.name}}</span></div>
-                                <div><span class="text-primary">房屋地址：</span><span>{{msg.description.address}}</span></div>
+                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==null?'':msg.customer.name}}</span></div>
+                                <div><span class="text-primary">详情：</span><span>{{msg.description}}</span></div>
                                 <div><span class="text-primary">收款时间：</span>
                                     <span>
                                         {{msg.pay_date}}
@@ -53,13 +53,17 @@
                             <div class="col-md-8">
                                 <div><span class="text-primary">剩余款项：</span><span>{{msg.balance}}</span></div>
                                 <div><span class="text-primary">补齐时间：</span><span>{{msg.complete_date}}</span></div>
-                                <div><span class="text-primary">截图凭证：</span><span>
-                                    <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
-                                </span></div>
+                                <div><span class="text-primary">截图凭证：</span>
+                                    <span v-if="msg.album==undefined">
+                                        无
+                                    </span>
+                                    <span v-else="msg.album==undefined">
+                                        <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
+                                    </span>
+                                </div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark}}</span></div>
-                                <!--<div><span class="text-primary">签约人：</span><span>{{msg.description.staff_name}}</span></div>-->
-                                <!--待入账的没有-->
-                                <!--<div><span class="text-primary">收款人员：</span><span>{{dict.staff_id[msg.staff_id]}}</span></div>-->
+                            </div>
+                            <div class="col-md-12">
                                 <div><span class="text-primary">历史收款记录：</span>
                                     <span v-for="(key,value) in msg.running_account_record">
                                         <span>{{value}}</span>&emsp;
@@ -200,11 +204,13 @@
 
         <!--提示信息-->
         <Status :state='info'></Status>
-        <!--应收入账-->
-        <!--<ShouldCollect :id="id"></ShouldCollect>-->
+
         <SelectHouse @House="getHouse"></SelectHouse>
         <SelectClient @clientAdd="getClient"></SelectClient>
         <PicModal :largePic="largePic"></PicModal>
+
+        <!--应收入账-->
+        <ShouldCollect :id="currentId" @success="getDetails"></ShouldCollect>
 
     </div>
 </template>
@@ -224,6 +230,7 @@
                 dict : {},
 
                 id : '',
+                currentId : '',
                 msg : '',
                 currentIndex : -1,
 
@@ -310,7 +317,9 @@
                     .then((res) =>{
 //                        console.log(res.data);
                         this.msg = res.data.data;
-                        this.srcs = this.msg.album.receipt_pic;
+                        if (this.msg.album!=undefined){
+                            this.srcs = this.msg.album.receipt_pic;
+                        }
                         console.log(this.msg)
                     })
             },
@@ -387,7 +396,12 @@
                 console.log(this.largePic)
                 $('#largePic').modal('show');
             },
-
+//            应收入账
+            addCollect(){
+                this.currentId = this.id;
+//                data-toggle="modal" data-target="#collectFor"
+                $('#collectFor').modal('show');
+            }
 
         }
     }
@@ -425,7 +439,6 @@
         text-align: right;
         min-width: 100px;
     }
-
     .client_info > div > div > div span a{
         margin-left: 12px;
         font-size: 8px;
