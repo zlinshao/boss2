@@ -554,7 +554,7 @@
                             </li>
                             <li class="sub-menu">
                                 <a href="javascript:;">
-                                    <span>订单管理</span>
+                                    <span>订单迁移</span>
                                 </a>
                                 <ul class="sub">
                                     <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
