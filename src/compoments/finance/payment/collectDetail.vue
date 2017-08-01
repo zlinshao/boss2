@@ -74,13 +74,18 @@
                                 </div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark}}</span></div>
                             </div>
-                            <div class="col-md-12">
-                                <div><span class="text-primary">历史收款记录：</span>
-                                    <span v-for="(key,value) in msg.running_account_record">
-                                        <span>{{value}}</span>&emsp;
-                                        <span>{{key}}</span>
-                                    </span>
+                            <div class="col-xs-12">
+                                <span class="text-primary">历史收款记录：</span>
+                                <div class="table table-responsive roll" style="border: 0;">
+                                    <table>
+                                        <tbody>
+                                        <tr v-for="info in msg.running_account_record">
+                                            <td style="min-width: 240px;">{{info}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+
                             </div>
                         </div>
                     </div>
