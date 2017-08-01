@@ -295,11 +295,13 @@
                     customer_name : '',
                 },
                 logName : '',
+
                 formData:{
                     customer_id : '',         // 客户id
+//                    customer : {},
                     pay_date:'',    // 收款时间
-                    subject_id: 1,           // 科目id
                     description:'',         // 详情
+                    subject_id: 1,           // 科目id
                     amount_receivable: '',  // 应收金额
                     remark : ''        // 备注
                 },
@@ -344,10 +346,10 @@
         methods : {
             clearForm(){
                 this.chooseResult.customer_name = '';
+                this.formData.description = '';
                 this.formData.customer_id = '';
                 this.formData.pay_date = '';
                 this.formData.subject_id = '';
-                this.formData.description = '';
                 this.formData.amount_receivable = '';
                 this.formData.remark = '';
 
@@ -484,9 +486,31 @@
                 $('.selectClient:eq(0)').modal('show');
             },
             getClient(data){
-                console.log(data);
+//                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
+//                this.formData.customer = data;
+                /*let newData = {};
+                for (let attr in data){
+//                    console.log(attr);
+                    if(data[attr]!=null){
+                        newData[attr]=data[attr];
+                    }
+                }
+                console.log(newData)*/
+
+                /*if (data.type==2){
+                    // 租
+                    this.description = data.staff_s+'/'+data.address_s+'/'+JSON.parse(data.price_s)[0]+'/'+this.dict.pay_type[JSON.parse(data.pay_type_s)[0]];
+                } else {
+                    // 收
+                    let pay_way = data.pay_type_z;
+                    let bet = pay_way.split('-')[0];
+                    let pay = pay_way.split('-')[1];
+                    this.description = data.staff_s+'/'+data.address_z+'/'+data.price_z+'/押'+bet+'付'+pay;
+
+                }*/
+//                alert(this.formData.customer_id)
 //                this.formData.customer = data;
                 /*this.$http.post('account/payable',this.formData)
                  .then()*/

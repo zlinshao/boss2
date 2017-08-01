@@ -13,25 +13,26 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">事件类型</label>
                                     <div class="col-sm-10">
-                                        <select name="type" class="form-control">
+                                        <select name="type" class="form-control" v-model="pendingAdd.item_type">
                                             <option value="">调房</option>
                                             <option value="1">转租</option>
                                             <option value="1">退房</option>
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectClient" readonly>
+                                        <input type="text" class="form-control"
+                                               v-model="pendingAdd.customer_id" @click="selectPayClient" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly >
+                                        <input type="text" class="form-control"
+                                               v-model="pendingAdd.house_id" @click="selectHouse" readonly >
                                     </div>
                                 </div>
 
@@ -50,8 +51,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">入住周期</label>
-                                    <div class="col-sm-10" style="padding-bottom: 18px;">
+                                    <label class="col-sm-4 control-label">合同开始和结束时间</label>
+                                    <div class="col-sm-8" style="padding-bottom: 18px;">
                                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
@@ -59,63 +60,63 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">水费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.water_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">电费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.elec_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">燃气费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.gas_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">物业费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.property_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">网络费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control"  v-model="pendingAdd.net_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">转租费用</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.sublet_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">管理费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.manage_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">物业校验</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.check_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">违约金</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.penalty_fee">
                                     </div>
                                 </div>
 
@@ -149,7 +150,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">退款账户</label>
+                                    <label class="col-sm-2 control-label">结算账户</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control">
                                     </div>
@@ -158,21 +159,22 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">签约人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control" readonly v-model="pendingAdd.staff_id">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control"
+                                               v-model="pendingAdd.department_id" @click="selectDpm" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control" readonly v-model="pendingAdd.operator_id">
                                     </div>
                                 </div>
 
@@ -184,7 +186,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">结算时间</label>
+                                    <label class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control"></textarea>
                                     </div>
@@ -195,24 +197,28 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default">取消</button>
-                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-primary" @click="addPending">保存</button>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+        <Client @clientPayAdd = getPayClient></Client>
+        <House @House = getHouse></House>
+        <Department :configure = 'configure' @Staff = getDpm></Department>
+        <Status :state='info'></Status>
     </div>
 </template>
-<style scoped>
-    textarea{
-        max-width: 100%;
-    }
-</style>
+
 <script>
     import DatePicker from '../../common/datePicker.vue'
+    import Client from  '../../common/selectPayClient.vue'  //选择客户
+    import House from  '../../common/selectHouse.vue'  //选择房屋
+    import Department from  '../../common/organization/selectStaff.vue'
+    import Status from '../../common/status.vue'
     export default{
-        components: {DatePicker},
+        components: {DatePicker , Client , House , Department , Status},
         data(){
             return {
                 dateConfigure : [
@@ -222,13 +228,73 @@
                         position : 'top-right',
                     }
                 ],
+                configure : [],
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
+                pendingAdd:{
+                    collect_rent:'',    //收 租
+                    item_type : '',     //'1 新租 2 续租 3 转租 4 调租
+                    staff_id : '',           //'开单人id',
+                    department_id : '',           //'部门id',
+                    house_id : '',          //'房屋id',
+                    customer_id : '',   //'客户id',
+                    start_date : '',    //'开始日期',
+                    end_date : '',       //'结束日期',
+                    water_fee : '',         //'水费',
+                    elec_fee : '',            //'电费',
+                    gas_fee : '',           //'燃气费'
+                    property_fee : '',    //'物业费',
+                    penalty_fee : '',        //'违约金',
+                    check_fee : '',         //'物业校验',
+                    sublet_fee : '',    //'转租费用',
+                    manage_fee : '',    //'管理费',
+                    net_fee : '',            //'网络费',
+                    operator_id : '',   //'经手人id'
+                    status : '',        //'状态',
+                },
             }
         },
         methods: {
             selectClient(){},
-            getDate(data){
+            getDate(data){},
+            selectPayClient(){  //选择客户
+                $('#selectPayClient').modal('show');
+            },
+            getPayClient(val){
+                console.log(val)
+            },
+            selectHouse(){   //选择房屋
+                $('#selectHouse').modal('show');
+            },
+            getHouse(val){
+                console.log(val)
+            },
+            selectDpm(){    //选择部门
+                $('#selectCustom').modal('show');
+                this.configure={class:'selectType',type:'department'};
+            },
+            getDpm(val){
+                console.log(val)
+            },
+            addPending(){
+                this.$http.post('core/customer',this.pendingAdd).then((res) =>{
 
+                })
             }
         }
     }
 </script>
+
+<style scoped>
+    textarea{
+        max-width: 100%;
+    }
+</style>

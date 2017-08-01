@@ -47,7 +47,7 @@
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
-                            <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
+                            <h5 @click="edit"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li>
                             <h5><a><i class="fa fa-times-circle-o"></i>删除</a></h5>
@@ -67,7 +67,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                             <th></th>
                             <th class="text-center">事项类型</th>
                             <th class="text-center">合同编号</th>
                             <th class="text-center">开单人</th>
@@ -86,14 +86,25 @@
                         </thead>
                         <tbody>
                         <tr class="text-center">
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>
-                                <button type="button" :class="{'btn':true,'btn-sm':true}">已结算</button>
-                            </td>
-                            <td>
-                                <router-link to="/pendingDetail">详情</router-link>
+                            <td><input type="checkbox" @click="picked($event)"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr v-if="isShow">
+                            <td colspan="15" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
                             </td>
                         </tr>
                         </tbody>
@@ -105,21 +116,12 @@
         <!--新增模态框-->
         <addModal></addModal>
 
-
-        <Page :pg="paging" @pag="getPage"></Page>
-
+        <Page :pg="paging" @pag="getPage" :beforePage = 'page'></Page>
 
         <!--提示信息-->
         <Status :state='info'></Status>
     </div>
 </template>
-<style scoped>
-    tbody tr input[type=checkbox]{
-        width: 17px;
-        height: 17px;
-    }
-
-</style>
 <script>
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
@@ -134,7 +136,7 @@
                 operId : 0,
                 paging : '',
                 page : 1,                  // 当前页数
-
+                isShow:false,
                 params : {
                     startDataTime : '',
                     finishDataTime : ''
@@ -158,67 +160,38 @@
                 }
             }
         },
-        updated (){
-            this.remindData();
-            //            时间选择
-        },
         created () {
-            this.pendingItemList();
+            this.pendingList();
         },
         methods : {
-            changeIndex(ev,id){
-//                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked){
-                    this.operId = id;
-//                    console.log(this.operId);
+            pendingList(){
+
+            },
+            picked(e){
+                if(e.target.checked===true){
+                    this.operId = 1;
                 }else {
                     this.operId = 0;
                 }
 
-
             },
-            pendingItemList(){
-                /*this.$http.get('json/pendingItem.json').then((res) => {
-//                    this.collectList = res.data.data.gleeFulCollect;
-                    this.cont.myData = res.data.data.pendingItemList;
-//                    console.log(res.data);
-                    this.paging = res.data.data.pages;
-                })*/
-            },
-            remindData (){
-                var that = this;
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                });
-                $('.form-inline .form_datetime').on('changeDate', function (ev) {
-//                    console.log($(ev.target).attr('placeholder'));
-//                    console.log(ev.target.placeholder);
-                });
 
+            getPage(val){
+                this.page = val;
             },
-            getPage(data){
-                this.page = data
-            },
-            oper(){
-                console.log(this.operId);
-
-                // 先请求
-
-//                请求成功打开模态框
+            edit(){
                 $('#operModal').modal('show');
-//                失败弹出错误信息
-                /*this.info.state_error = true;
-                 this.info.error = '您没有编辑权限';*/
 
             },
-            getDate(data){
+            getDate(val){
 
             }
         }
     }
 </script>
+<style scoped>
+    tbody tr input[type=checkbox]{
+        width: 17px;
+        height: 17px;
+    }
+</style>

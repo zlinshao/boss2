@@ -47,10 +47,10 @@
                                             <span>年限<sup>*</sup>：</span>
                                             <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.years}}年</span>
                                         </div>
-                                        <div class="infoList">
+                                        <div class="infoList" v-if="item.checkin_collect_id !== null">
                                             <span>付款方式：</span>
-                                            <span v-if="item.checkin_collect_id !== null">
-                                                    {{dictionary.pay_type[item.checkin_collect_id.pay_type[0]]}}
+                                            <span v-for="pay in item.checkin_collect_id.pay_type">
+                                                    {{dictionary.pay_type[pay]}}
                                                 </span>
                                         </div>
                                         <div class="infoList">
@@ -318,18 +318,12 @@
                                                     {{item.checkin_rent_id.received_amount}} 元
                                                 </span>
                                         </div>
-                                        <div class="infoList">
-                                            <span>付款方式 （银行卡）：</span>
-                                            <span  v-if="item.checkin_rent_id !==null">
-                                                    {{item.checkin_rent_id.payment[1].money}} 元
+                                        <div class="infoList" v-if="item.checkin_rent_id !==null"
+                                             v-for="pay in item.checkin_rent_id.payment">
+                                            <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
+                                            <span>
+                                                    {{pay.money}} 元
                                                 </span>
-                                        </div>
-                                        <div class="infoList">
-                                            <span>付款方式 （现金）：</span>
-                                        </div>
-                                        <div class="infoList">
-                                            <span>付款方式 （支付宝）<sup>*</sup>：</span>
-                                            <span></span>
                                         </div>
                                         <div class="infoList">
                                             <span>未收：</span>
