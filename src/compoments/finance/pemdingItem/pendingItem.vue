@@ -9,18 +9,16 @@
                 <div v-show="operId==0">
                     <form class="form-inline" v-show="operId==0" role="form">
                         <div class="dropdown input-group">
-                            <select name="" class="form-control">
-                                <option value="">全部</option>
-                                <option value="1">租房</option>
-                                <option value="2">收房</option>
+                            <select name="" class="form-control"  v-model="params.type">
+                                <option value="">事件类型</option>
+                                <option :value="key" v-for="(value,key) in dictionary.item_type">{{value}}</option>
                             </select>
                         </div>
 
                         <div class="dropdown input-group">
-                            <select name="" class="form-control">
-                                <option value="">全部</option>
-                                <option value="1">租房</option>
-                                <option value="2">收房</option>
+                            <select name="" class="form-control" v-model="params.collect_rent">
+                                <option value="">类型</option>
+                                <option :value="key" v-for="(value,key) in dictionary.collect_rent">{{value}}</option>
                             </select>
                         </div>
 
@@ -32,7 +30,7 @@
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人"  @keydown.enter.prevent="">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="" v-model="keywords">
+                                <button class="btn btn-success" id="search" type="button" @click="" v-model="params.search">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
@@ -75,34 +73,34 @@
                             <th class="text-center">开单人</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">客户姓名</th>
-                            <th class="text-center">入住周期</th>
-                            <th class="text-center">入住时长</th>
+                            <th class="text-center">合同开始时间</th>
+                            <th class="text-center">合同结束时间</th>
                             <th class="text-center">应退</th>
                             <th class="text-center">实际扣款</th>
                             <th class="text-center">实际退款</th>
                             <th class="text-center">结算账户</th>
                             <th class="text-center">结算人</th>
                             <th class="text-center">状态</th>
-                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
+                        <tr class="text-center" v-for="item in pendingList">
                             <td><input type="checkbox" @click="picked($event)"></td>
+                            <td>{{dictionary.item_type[item.item_type]}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{item.start_date}}</td>
+                            <td>{{item.end_date}}</td>
+                            <td>{{item.penalty_fee}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{}}</td>
+                            <td>
+                                <label class="label label-warning">{{dictionary.account_pending_status [item.status]}}</label>
+                            </td>
                         </tr>
                         <tr v-if="isShow">
                             <td colspan="15" class="text-center text-muted">
@@ -118,7 +116,7 @@
         <!--新增模态框-->
         <addModal></addModal>
 
-        <Page :pg="paging" @pag="getPage" :beforePage = 'page'></Page>
+        <Page :pg="paging" @pag="getPage" :beforePage = 'params.page'></Page>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -137,11 +135,15 @@
             return {
                 operId : 0,
                 paging : 1,
-                page : 1,                  // 当前页数
+                dictionary : [],
+                pendingList : [],
                 isShow:false,
                 params : {
-                    startDataTime : '',
-                    finishDataTime : ''
+                    page : 1,
+                    type : '',
+                    range : '',
+                    search : '',
+                    collect_rent : '',
                 },
                 keywords : '',
                 dateConfigure : [
@@ -168,12 +170,17 @@
         },
         methods : {
             getDictionary(){
-                this.$http.get('').then((res) =>{
-
+                this.$http.get('revenue/glee_collect/dict').then((res) =>{
+                    this.dictionary = res.data;
+                    console.log(this.dictionary);
+                    this.getPendingList();
                 })
             },
-            pendingList(){
-
+            getPendingList(){
+                this.$http.get('account/pending',{ params : this.params}).then((res) =>{
+                    this.pendingList = res.data.data.data;
+                    console.log(this.pendingList)
+                })
             },
             picked(e){
                 if(e.target.checked===true){
@@ -181,19 +188,15 @@
                 }else {
                     this.operId = 0;
                 }
-
             },
-
             getPage(val){
-                this.page = val;
+                this.params.page = val;
             },
             edit(){
                 $('#operModal').modal('show');
-
             },
             getDate(val){
-                this.params.startDataTime = val.split('to')[0];
-                this.params.finishDataTime = val.split('to')[1];
+                this.params.range = val
             }
         }
     }
