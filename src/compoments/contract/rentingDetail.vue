@@ -218,7 +218,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>年限(月)<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_rent_id !==null">{{item.checkin_rent_id.months}} 月</span>
+                                                <span v-if="item.checkin_rent_id !==null && undefined">{{item.checkin_rent_id.months}} 月</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>合同起始日期：</span>
@@ -230,19 +230,19 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>付款类型：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     押 {{item.checkin_rent_id.bet}} 付 {{item.checkin_rent_id.pay}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     {{item.checkin_rent_id.price}} 元
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>应收：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     {{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元
                                                 </span>
                                             </div>
@@ -250,26 +250,27 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>已收 （定金）<sup>*</sup>：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     {{item.checkin_rent_id.received_amount}} 元
                                                 </span>
                                             </div>
-                                            <div class="infoList" v-if="item.checkin_rent_id !==null"
-                                                 v-for="pay in item.checkin_rent_id.payment">
-                                                <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
-                                                <span>
+                                            <div class="infoList" v-if="item.checkin_rent_id !==null && undefined">
+                                                <div v-for="pay in item.checkin_rent_id.payment">
+                                                    <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
+                                                    <span>
                                                     {{pay.money}} 元
                                                 </span>
+                                                </div>
                                             </div>
                                             <div class="infoList">
                                                 <span>未收：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     {{item.checkin_rent_id.amount_remaining}} 元
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>租房状态：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     {{dictionary.rent_type[item.checkin_rent_id.rent_type]}}
                                                 </span>
                                             </div>
@@ -290,7 +291,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
+                                                <span  v-if="item.checkin_rent_id !==null && undefined">
                                                     {{item.checkin_rent_id.cost_medi}}
                                                 </span>
                                             </div>

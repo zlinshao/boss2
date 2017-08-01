@@ -218,7 +218,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>空置期(天)<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null">
+                                                <span v-if="item.checkin_collect_id !== null && undefined">
                                                     {{item.checkin_collect_id.vacancy}} 天
                                                 </span>
                                             </div>
@@ -242,9 +242,11 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>年限<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.years}}年</span>
+                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                    {{item.checkin_collect_id.years}}年
+                                                </span>
                                             </div>
-                                            <div class="infoList" v-if="item.checkin_collect_id !== null">
+                                            <div class="infoList" v-if="item.checkin_collect_id !== null && undefined">
                                                 <span>付款方式：</span>
                                                 <span v-for="pay in item.checkin_collect_id.pay_type">
                                                     {{dictionary.pay_type[pay]}}
@@ -252,7 +254,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null">
+                                                <span v-if="item.checkin_collect_id !== null && undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
                                                         第{{index+1}}年{{price}}元&nbsp;&nbsp;
                                                     </span>
@@ -260,15 +262,21 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>开户行：</span>
-                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.bank}}</span>
+                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                    {{item.checkin_collect_id.bank}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>银行卡号：</span>
-                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.account}}</span>
+                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                    {{item.checkin_collect_id.account}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.cost_medi}}</span>
+                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                    {{item.checkin_collect_id.cost_medi}}
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">

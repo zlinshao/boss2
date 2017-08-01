@@ -100,7 +100,7 @@
                         <th class="text-center">合同编号</th>
                         <th class="text-center">上传时间</th>
                         <th class="text-center">开单人</th>
-                        <th class="text-center">业主姓名</th>
+                        <th class="text-center">租客姓名</th>
                         <th class="text-center">地址</th>
                         <th class="text-center">手机号码</th>
                         <th class="text-center">合同到期时间</th>

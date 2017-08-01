@@ -240,44 +240,44 @@
                     error: ''
                 },
                 pendingAdd:{
-                    collect_rent:'',    //收 租
-                    item_type : '',     //'1 新租 2 续租 3 转租 4 调租
-                    staff_id : '',           //'开单人id',
-                    department_id : '',           //'部门id',
-                    house_id : '',          //'房屋id',
-                    customer_id : '',   //'客户id',
-                    start_date : '',    //'开始日期',
-                    end_date : '',       //'结束日期',
-                    water_fee : '',         //'水费',
-                    elec_fee : '',            //'电费',
-                    gas_fee : '',           //'燃气费'
-                    property_fee : '',    //'物业费',
-                    penalty_fee : '',        //'违约金',
-                    check_fee : '',         //'物业校验',
-                    sublet_fee : '',    //'转租费用',
-                    manage_fee : '',    //'管理费',
-                    net_fee : '',            //'网络费',
-                    operator_id : '',   //'经手人id'
-                    status : '',        //'状态',
+                    collect_rent:'',            //收 租
+                    item_type : '',             //1 新租 2 续租 3 转租 4 调租
+                    staff_id : '',              //开单人id
+                    department_id : '',         //部门id
+                    house_id : '',              //房屋id
+                    customer_id : '',           //客户id
+                    start_date : '',            //开始日期
+                    end_date : '',              //结束日期
+                    water_fee : '',             //水费
+                    elec_fee : '',              //电费
+                    gas_fee : '',               //燃气
+                    property_fee : '',          //物业费
+                    penalty_fee : '',           //违约金
+                    check_fee : '',             //物业校验
+                    sublet_fee : '',            //转租费用
+                    manage_fee : '',            //管理费
+                    net_fee : '',               //网络费
+                    operator_id : '',           //经手人i
+                    status : '',                //状态
                 },
             }
         },
         methods: {
             selectClient(){},
             getDate(data){},
-            selectPayClient(){  //选择客户
+            selectPayClient(){      //选择客户
                 $('#selectPayClient').modal('show');
             },
             getPayClient(val){
                 console.log(val)
             },
-            selectHouse(){   //选择房屋
+            selectHouse(){          //选择房屋
                 $('#selectHouse').modal('show');
             },
             getHouse(val){
                 console.log(val)
             },
-            selectDpm(){    //选择部门
+            selectDpm(){            //选择部门
                 $('#selectCustom').modal('show');
                 this.configure={class:'selectType',type:'department'};
             },

@@ -32,7 +32,9 @@
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人"  @keydown.enter.prevent="">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click=""><i class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="" v-model="keywords">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </span>
                         </div>
                         <div class="form-group pull-right">
@@ -67,7 +69,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                             <th></th>
+                            <th></th>
                             <th class="text-center">事项类型</th>
                             <th class="text-center">合同编号</th>
                             <th class="text-center">开单人</th>
@@ -78,7 +80,7 @@
                             <th class="text-center">应退</th>
                             <th class="text-center">实际扣款</th>
                             <th class="text-center">实际退款</th>
-                            <th class="text-center">退款账户</th>
+                            <th class="text-center">结算账户</th>
                             <th class="text-center">结算人</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
@@ -134,13 +136,14 @@
         data(){
             return {
                 operId : 0,
-                paging : '',
+                paging : 1,
                 page : 1,                  // 当前页数
                 isShow:false,
                 params : {
                     startDataTime : '',
                     finishDataTime : ''
                 },
+                keywords : '',
                 dateConfigure : [
                     {
                         range : true,
@@ -161,9 +164,14 @@
             }
         },
         created () {
-            this.pendingList();
+            this.getDictionary();
         },
         methods : {
+            getDictionary(){
+                this.$http.get('').then((res) =>{
+
+                })
+            },
             pendingList(){
 
             },
@@ -184,7 +192,8 @@
 
             },
             getDate(val){
-
+                this.params.startDataTime = val.split('to')[0];
+                this.params.finishDataTime = val.split('to')[1];
             }
         }
     }
