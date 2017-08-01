@@ -14,6 +14,7 @@
                             <input type="text" class="form-control" id="search" placeholder="点击查询"
                                    v-model="selected"   @click='select' readonly>
                         </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control"  id="search_info" placeholder="请输入房屋地址"
