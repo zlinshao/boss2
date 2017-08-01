@@ -72,7 +72,7 @@ import UserDetail from './compoments/user/userDetail.vue'           //用户详�
 export default[
     {
         path: '/',             //重定向主页
-        redirect: '/user',
+        redirect: '/index',
     },
     {
         path: '/index',             //主页
@@ -155,12 +155,12 @@ export default[
         component: CustomerPool
     },
     {
-        path: '/OkCollect',         //已收房源
+        path: '/OkCollect',         //公司房源
         name: 'OkCollect',
         component: OkCollect
     },
     {
-        path: '/noCollect',         //未收房源
+        path: '/noCollect',         //待收房源
         name: 'noCollect',
         component: NoCollect
     },

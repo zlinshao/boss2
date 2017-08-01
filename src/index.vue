@@ -1,7 +1,24 @@
 <template>
     <div>
+
         <div class="row">
             <div class="col-md-9">
+                <section class="panel">
+                    <div class="panel-body">
+                        <a class="btn">快捷入口：</a>
+                        <router-link class="btn btn-link" to="/custom">客户</router-link>  <!--客户-->
+                        <router-link class="btn btn-link" to="/customerPool">客户池</router-link>  <!--客户池-->
+                        <router-link class="btn btn-link" to="/OkCollect">公司房源</router-link>  <!--公司房源-->
+                        <router-link class="btn btn-link" to="/noCollect">待收房源</router-link>  <!--待收房源-->
+                        <router-link class="btn btn-link" to="/reportedCollect">租房报备</router-link>  <!--租房报备-->
+                        <router-link class="btn btn-link" to="/reportedRenting">收房报备</router-link>  <!--收房报备-->
+                        <router-link class="btn btn-link" to="/user">员工管理</router-link>  <!--用户管理-->
+                        <router-link class="btn btn-link" to="/orderManage">收房订单迁移</router-link>  <!--收房订单迁移-->
+                        <router-link class="btn btn-link" to="/rentingOrder">租房订单迁移</router-link>  <!--租房订单迁移-->
+                        <router-link class="btn btn-link" to="/leadingOut">客户导出</router-link>  <!--客户导出-->
+                        <router-link class="btn btn-link" to="/messageCenter">消息中心</router-link>  <!--消息中心-->
+                    </div>
+                </section>
                 <!--<section class="panel">-->
                 <!--<div class="panel-body" style="padding-bottom: 0;">-->
                 <!--<div class="row">-->
@@ -73,7 +90,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in systems">
+                                <tr class="unread" v-for="sys in systems" @click="receive(sys.id, sys.read_time)">
                                     <td class="text-center width180">{{sys.message.create_time}}</td>
                                     <td class="text-center width80">{{sys.message.release_name}}</td>
                                     <td class="text-center width180">{{sys.message.data.title}}</td>
@@ -326,12 +343,12 @@
                     }
                 });
             },
-            isCollect(val){
+            isCollect(val,){
                 this.$http.post('message/message/favourite', {
                     mess_id: val
                 }).then((res) => {
                     if (res.data.code === '100054' || res.data.code === '100052') {
-                        this.home_system ()
+                        this.home_system()
                         //成功信息 ***
 //                        this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -340,6 +357,16 @@
 //                        this.info.state_success = true;
                     }
                 });
+            },
+//            读
+            receive (val, read){
+                if (read === '未读') {
+                    this.$http.post('message/message/read_mess', {
+                        id: val,
+                    }).then(() => {
+                        this.home_system();
+                    });
+                }
             },
             home_index (){
 //                字典
