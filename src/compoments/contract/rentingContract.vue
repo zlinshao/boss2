@@ -80,7 +80,7 @@
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
                         <li  class="operate">
-                            <router-link tag="i" class="fa fa-eye" :to="{path:'/contractDetail',
+                            <router-link tag="i" class="fa fa-eye" :to="{path:'/rentingDetail',
                                 query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录</router-link>
                         </li>
                     </ul>
