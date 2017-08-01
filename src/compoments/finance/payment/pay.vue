@@ -193,7 +193,7 @@
                                 <label class="col-sm-2 control-label">支出科目<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <select class="form-control" v-model="subject">
-                                        <option value=""></option>
+                                        <option value="">--请选择--</option>
                                         <option v-for="(sub,index) in select_info.account_subject" :value="index">{{sub}}</option>
                                     </select>
                                 </div>
