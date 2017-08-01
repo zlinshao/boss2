@@ -1,18 +1,22 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right" id="payFor" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="payFor" tabindex="-1" aria-hidden="true"
+             data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">应付入账</h4>
                     </div>
                     <div class="modal-body clearFix">
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" v-for="list in details">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款时间</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input @click="remindData" type="text" v-model="pay_time"
+                                           placeholder="付款时间"
+                                           class="form-control form_datetime" readonly>
                                 </div>
                             </div>
 
@@ -26,14 +30,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" @click="selectClient" readonly>
+                                    <input type="text" class="form-control" v-model="dict.staff_id[list.id]" @click="selectClient" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="list.description" readonly>
                                 </div>
                             </div>
 
@@ -48,7 +52,7 @@
                                 <label class="col-sm-2 control-label">汇款方式</label>
                                 <div class="col-sm-10">
                                     <select class="form-control">
-                                        <option :value="value" v-for="(key,value) in dict.account_cate">{{key}}</option>
+                                        <option value=""></option>
                                     </select>
                                 </div>
                             </div>
@@ -94,7 +98,7 @@
                                 <label class="col-sm-2 control-label">补齐日期</label>
                                 <div class="col-sm-10">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐日期"
-                                           class="form-control form_datetime">
+                                           class="form-control form_datetime" readonly>
                                 </div>
                             </div>
 
@@ -139,36 +143,21 @@
 <script>
     import SelectClient from '../../common/selectClient.vue'
     export default{
-        props : ['id'],
+        props: ['details'],
         components: {SelectClient},
         data(){
             return {
-                dict :{},
-                account : [],
-
-
-                formData:{
-
-                }
+                dict: {},
+                pay_time: '',
             }
         },
         updated (){
             this.remindData();
         },
         mounted(){
-            this.$http.get('revenue/glee_collect/dict')
-                .then(
-//                    console.log
-                    (res) => {
-                        this.dict = res.data;
-                    }
-                );
-
-        },
-        watch : {
-            id(val){
-                console.log(val);
-            }
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                this.dict = res.data;
+            });
         },
         methods: {
             remindData (){
@@ -180,13 +169,11 @@
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '付款时间'){
-
+                    if (ev.target.placeholder === '付款时间') {
+                        this.pay_time = ev.target.value;
                     } else {
 
                     }
-//                    console.log(ev.target.value);
-//                    console.log(ev.target.placeholder);
                 }.bind(this));
             },
             // 选择客户
@@ -197,10 +184,6 @@
             getClient(){
 
             },
-
-            getAccounts(){
-
-            }
         }
     }
 </script>

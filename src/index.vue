@@ -2,55 +2,106 @@
     <div>
         <div class="row">
             <div class="col-md-9">
+                <!--<section class="panel">-->
+                <!--<div class="panel-body" style="padding-bottom: 0;">-->
+                <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                <!--<section class="panel table-responsive roll">-->
+                <!--<table class="top table table-advance table-hover">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th class="bor0">简报</th>-->
+                <!--<th class="bor0">新增客户</th>-->
+                <!--<th class="bor0">新增房屋</th>-->
+                <!--<th class="bor0">新增沟通日志</th>-->
+                <!--<th class="bor0">空置房屋</th>-->
+                <!--<th class="bor0">已收房屋</th>-->
+                <!--<th class="bor0">已租房屋</th>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<th class="top0"></th>-->
+                <!--<th class="top0">{{bulletin_nanjin.client + bulletin_suzhou.client}}</th>-->
+                <!--<th class="top0">{{bulletin_nanjin.house + bulletin_suzhou.house}}</th>-->
+                <!--<th class="top0">{{bulletin_nanjin.log + bulletin_suzhou.log}}</th>-->
+                <!--<th class="top0">{{bulletin_nanjin.vacancy + bulletin_suzhou.vacancy}}</th>-->
+                <!--<th class="top0">{{bulletin_nanjin.received + bulletin_suzhou.received}}</th>-->
+                <!--<th class="top0">{{bulletin_nanjin.rent + bulletin_suzhou.rent}}</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                <!--<td>南京</td>-->
+                <!--<td>{{bulletin_nanjin.client}}</td>-->
+                <!--<td>{{bulletin_nanjin.house}}</td>-->
+                <!--<td>{{bulletin_nanjin.log}}</td>-->
+                <!--<td>{{bulletin_nanjin.vacancy}}</td>-->
+                <!--<td>{{bulletin_nanjin.received}}</td>-->
+                <!--<td>{{bulletin_nanjin.rent}}</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>苏州</td>-->
+                <!--<td>{{bulletin_suzhou.client}}</td>-->
+                <!--<td>{{bulletin_suzhou.house}}</td>-->
+                <!--<td>{{bulletin_suzhou.log}}</td>-->
+                <!--<td>{{bulletin_suzhou.vacancy}}</td>-->
+                <!--<td>{{bulletin_suzhou.received}}</td>-->
+                <!--<td>{{bulletin_suzhou.rent}}</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</section>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</section>-->
                 <section class="panel">
-                    <div class="panel-body" style="padding-bottom: 0;">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section class="panel table-responsive roll">
-                                    <table class="top table table-advance table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="bor0">简报</th>
-                                            <th class="bor0">新增客户</th>
-                                            <th class="bor0">新增房屋</th>
-                                            <th class="bor0">新增沟通日志</th>
-                                            <th class="bor0">空置房屋</th>
-                                            <th class="bor0">已收房屋</th>
-                                            <th class="bor0">已租房屋</th>
-                                        </tr>
-                                        <tr>
-                                            <th class="top0"></th>
-                                            <th class="top0">{{bulletin_nanjin.client + bulletin_suzhou.client}}</th>
-                                            <th class="top0">{{bulletin_nanjin.house + bulletin_suzhou.house}}</th>
-                                            <th class="top0">{{bulletin_nanjin.log + bulletin_suzhou.log}}</th>
-                                            <th class="top0">{{bulletin_nanjin.vacancy + bulletin_suzhou.vacancy}}</th>
-                                            <th class="top0">{{bulletin_nanjin.received + bulletin_suzhou.received}}</th>
-                                            <th class="top0">{{bulletin_nanjin.rent + bulletin_suzhou.rent}}</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>南京</td>
-                                            <td>{{bulletin_nanjin.client}}</td>
-                                            <td>{{bulletin_nanjin.house}}</td>
-                                            <td>{{bulletin_nanjin.log}}</td>
-                                            <td>{{bulletin_nanjin.vacancy}}</td>
-                                            <td>{{bulletin_nanjin.received}}</td>
-                                            <td>{{bulletin_nanjin.rent}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>苏州</td>
-                                            <td>{{bulletin_suzhou.client}}</td>
-                                            <td>{{bulletin_suzhou.house}}</td>
-                                            <td>{{bulletin_suzhou.log}}</td>
-                                            <td>{{bulletin_suzhou.vacancy}}</td>
-                                            <td>{{bulletin_suzhou.received}}</td>
-                                            <td>{{bulletin_suzhou.rent}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
-                            </div>
+                    <div class="panel-body">
+                        <header class="panel-heading">
+
+                        </header>
+                        <div class="table table-responsive roll">
+                            <!--系统公告-->
+                            <table class="table table-striped table-advance table-hover">
+                                <thead class="text-center">
+                                <tr>
+                                    <th class="text-center">发布时间</th>
+                                    <th class="text-center">发布人</th>
+                                    <th class="text-center">标题</th>
+                                    <th class="text-center">主要内容</th>
+                                    <th class="text-center">阅读时间</th>
+                                    <th class="text-center">收藏</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="unread" v-for="sys in systems">
+                                    <td class="text-center width180">{{sys.message.create_time}}</td>
+                                    <td class="text-center width80">{{sys.message.release_name}}</td>
+                                    <td class="text-center width180">{{sys.message.data.title}}</td>
+                                    <td class="text-center"
+                                        :class="{ more_info: isActive !== sys.id, phone: isActive === sys.id }"
+                                        @click="more_content(sys.id)">
+                                        {{sys.message.data.content}}
+                                    </td>
+                                    <td class="text-center width180">{{sys.read_time}}</td>
+                                    <td class="text-center width60">
+                                        <i class="fa fa-folder"
+                                           v-if="sys.read_time === '未读'"></i>
+                                        <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
+
+                                        <i class="fa fa-heart" v-if="sys.favourite_status === '已收藏'"
+                                           @click.stop="isCollect(sys.mess_id)"
+                                           style="color: #e4393c"></i>
+                                        <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'"
+                                           @click.stop="isCollect(sys.mess_id)"></i>
+                                    </td>
+                                </tr>
+                                <tr v-show="isSystem_s">
+                                    <td colspan="6" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
@@ -77,39 +128,44 @@
                                     </div>
                                 </section>
                             </div>
+                            <div class="col-xs-12" v-if="main_birthday.length === 0">
+                                <section class="panel text-center" style="margin-bottom: 0;font-size: 16px;">
+                                    本月暂无寿星
+                                </section>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <div class="row product-list" style="margin-top: 12px;">
-                    <div class="col-md-4">
-                        <section class="panel">
-                            <div class="panel-body text-center">
-                                <!--入住-->
-                                <h3>入住率</h3>
-                                <div id="check_in" style="height: 310px;"></div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="col-md-4">
-                        <section class="panel">
-                            <div class="panel-body text-center">
-                                <!--收租-->
-                                <h3>收房比例</h3>
-                                <div id="collect_rents" style="height: 310px;"></div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="col-md-4">
-                        <section class="panel">
-                            <div class="panel-body text-center">
-                                <!--客户来源-->
-                                <h3>客户来源</h3>
-                                <div id="custom" style="height: 310px;"></div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
+                <!--<div class="row product-list" style="margin-top: 12px;">-->
+                <!--<div class="col-md-4">-->
+                <!--<section class="panel">-->
+                <!--<div class="panel-body text-center">-->
+                <!--&lt;!&ndash;入住&ndash;&gt;-->
+                <!--<h3>入住率</h3>-->
+                <!--<div id="check_in" style="height: 310px;"></div>-->
+                <!--</div>-->
+                <!--</section>-->
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                <!--<section class="panel">-->
+                <!--<div class="panel-body text-center">-->
+                <!--&lt;!&ndash;收租&ndash;&gt;-->
+                <!--<h3>收房比例</h3>-->
+                <!--<div id="collect_rents" style="height: 310px;"></div>-->
+                <!--</div>-->
+                <!--</section>-->
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                <!--<section class="panel">-->
+                <!--<div class="panel-body text-center">-->
+                <!--&lt;!&ndash;客户来源&ndash;&gt;-->
+                <!--<h3>客户来源</h3>-->
+                <!--<div id="custom" style="height: 310px;"></div>-->
+                <!--</div>-->
+                <!--</section>-->
+                <!--</div>-->
+                <!--</div>-->
             </div>
             <div class="col-md-3">
 
@@ -143,36 +199,10 @@
                                                 <!--class="fa  fa-arrow-down"></i></span>-->
                                             </td>
                                         </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="panel" style="height: 347px;">
-                    <header class="panel-heading">
-                        公告
-                    </header>
-                    <div class="panel-body" style="padding-top: 0;">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section class="panel table-responsive roll">
-                                    <table class="table table-advance table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>标题</th>
-                                            <th>时间</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="(mess, index) in main_message" v-show="index < 6">
-                                            <td style="min-width: 100px;" class="more_info">
-                                                <router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">
-                                                    {{mess.data.title}}
-                                                </router-link>
+                                        <tr v-show="main_ranking.length === 0">
+                                            <td colspan="7" class="text-center text-muted">
+                                                <h4>暂无数据....</h4>
                                             </td>
-                                            <td style="min-width: 160px;">{{mess.create_time}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -181,6 +211,37 @@
                         </div>
                     </div>
                 </section>
+                <!--<section class="panel" style="height: 347px;">-->
+                <!--<header class="panel-heading">-->
+                <!--公告-->
+                <!--</header>-->
+                <!--<div class="panel-body" style="padding-top: 0;">-->
+                <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                <!--<section class="panel table-responsive roll">-->
+                <!--<table class="table table-advance table-hover">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th>标题</th>-->
+                <!--<th>时间</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr v-for="(mess, index) in main_message" v-show="index < 6">-->
+                <!--<td style="min-width: 100px;" class="more_info">-->
+                <!--<router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">-->
+                <!--{{mess.data.title}}-->
+                <!--</router-link>-->
+                <!--</td>-->
+                <!--<td style="min-width: 160px;">{{mess.create_time}}</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</section>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</section>-->
             </div>
         </div>
     </div>
@@ -190,12 +251,10 @@
     export default {
         data (){
             return {
-                screenWidth: document.body.clientWidth,      // 页面宽度
-//
-//                meet_with: '',                  //偶遇
-//                network: '',                    //网络
-//                recommend: '',                  //客户推荐
-//                meet_with: '',                  //偶遇
+//                screenWidth: document.body.clientWidth,      // 页面宽度
+                systems: [],                    //公告
+                isSystem_s: false,
+                isActive: -1,
 
                 select_list: [],                //字典
                 bulletin_nanjin: {},            //南京
@@ -203,6 +262,7 @@
                 main_birthday: [],              //寿星
                 main_ranking: [],               //龙虎榜
                 main_message: [],               //公告
+
                 main_customer: [],              //图表
                 myChart: [],
                 check_inData: [],               //入住
@@ -210,212 +270,241 @@
                 customData: [],                 //客户来源
             }
         },
-        mounted (){
-            this.myChart[0] = this.$echarts.init(document.getElementById('check_in'));
-            this.myChart[1] = this.$echarts.init(document.getElementById('collect_rents'));
-            this.myChart[2] = this.$echarts.init(document.getElementById('custom'));
-
-            window.onresize = () => {
-                return (() => {
-                    window.screenWidth = document.body.clientWidth;
-                    this.screenWidth = window.screenWidth;
-                })()
-            }
-        },
+//        mounted (){
+//            this.myChart[0] = this.$echarts.init(document.getElementById('check_in'));
+//            this.myChart[1] = this.$echarts.init(document.getElementById('collect_rents'));
+//            this.myChart[2] = this.$echarts.init(document.getElementById('custom'));
+//
+//            window.onresize = () => {
+//                return (() => {
+//                    window.screenWidth = document.body.clientWidth;
+//                    this.screenWidth = window.screenWidth;
+//                })()
+//            }
+//        },
         updated (){
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
             })
         },
-        watch: {
-            screenWidth (val) {
-                if (!this.timer) {
-                    this.screenWidth = val;
-                    this.timer = true;
-//                    let that = this;
-                    setTimeout(() => {
-                        // that.screenWidth = that.$store.state.canvasWidth
-//                        console.log(that.screenWidth);
-                        for (let i = 0; i < this.myChart.length; i++) {
-                            (() => {
-                                this.myChart[i].resize();
-                            })(i)
-                        }
-                        this.timer = false;
-                    }, 200)
-                }
-            }
-        },
+//        watch: {
+//            screenWidth (val) {
+//                if (!this.timer) {
+//                    this.screenWidth = val;
+//                    this.timer = true;
+////                    let that = this;
+//                    setTimeout(() => {
+//                        // that.screenWidth = that.$store.state.canvasWidth
+////                        console.log(that.screenWidth);
+//                        for (let i = 0; i < this.myChart.length; i++) {
+//                            (() => {
+//                                this.myChart[i].resize();
+//                            })(i)
+//                        }
+//                        this.timer = false;
+//                    }, 200)
+//                }
+//            }
+//        },
         created (){
             this.home_index();
+            this.home_system()
         },
         methods: {
+//            详细内容
+            more_content (val){
+                this.isActive = val;
+            },
+//            系统公告
+            home_system (){
+                this.$http.post('message/system/index/pages/1').then((res) => {
+                    if (res.data.code === '100000') {
+                        this.systems = res.data.data.list;
+                        this.isSystem_s = false;
+                    } else {
+                        this.isSystem_s = true;
+                    }
+                });
+            },
+            isCollect(val){
+                this.$http.post('message/message/favourite', {
+                    mess_id: val
+                }).then((res) => {
+                    if (res.data.code === '100054' || res.data.code === '100052') {
+                        this.home_system ()
+                        //成功信息 ***
+//                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+//                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+//                        this.info.state_success = true;
+                    }
+                });
+            },
             home_index (){
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
 
                     this.$http.post('home/index/index').then((res) => {
-                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报
-                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报
+                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报南京
+                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
                         this.main_birthday = res.data.data.birthday;                    //寿星
                         this.main_ranking = res.data.data.ranking;                      //龙虎榜
                         this.main_message = res.data.data.message;                      //公告
-                        this.check_inData = res.data.data.uprate;                       //入住率
-                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
-                        this.main_customer = res.data.data.customer;                    //客户来源
+//                        this.check_inData = res.data.data.uprate;                       //入住率
+//                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
+//                        this.main_customer = res.data.data.customer;                    //客户来源
 
-                        this.check();
-                        this.collect();
-                        this.customer();
+//                        this.check();
+//                        this.collect();
+//                        this.customer();
                     });
                 });
             },
-            check (){
-                let option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        x: 'left',
-                        data: ['已租', '空置']
-                    },
-                    series: [
-                        {
-                            name: '访问来源',
-                            type: 'pie',
-                            radius: ['50%', '70%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                normal: {
-                                    show: false,
-                                    position: 'center'
-                                },
-                                emphasis: {
-                                    show: true,
-                                    textStyle: {
-                                        fontSize: '20',
-                                        fontWeight: 'bold',
-                                    }
-                                }
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: [
-                                {value: this.check_inData.rent, name: '已租'},
-                                {value: this.check_inData.vacancy, name: '空置'},
-                            ]
-                        }
-                    ]
-                };
-                this.myChart[0].setOption(option);
-            },
-            collect (){
-                let option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        x: 'left',
-                        data: ['收房', '租房']
-                    },
-                    series: [
-                        {
-                            name: '访问来源',
-                            type: 'pie',
-                            radius: ['50%', '70%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                normal: {
-                                    show: false,
-                                    position: 'center'
-                                },
-                                emphasis: {
-                                    show: true,
-                                    textStyle: {
-                                        fontSize: '20',
-                                        fontWeight: 'bold'
-                                    }
-                                }
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: [
-                                {value: this.collect_rentsData.received, name: '收房'},
-                                {value: this.collect_rentsData.rent, name: '租房'},
-                            ]
-                        }
-                    ]
-                };
-                this.myChart[1].setOption(option);
-            },
-            customer (){
-                let option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        x: 'left',
-                        data: ['网络', '客户推荐', '偶遇', '中介']
-                    },
-                    series: [
-                        {
-                            name: '访问来源',
-                            type: 'pie',
-                            radius: ['50%', '70%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                normal: {
-                                    show: false,
-                                    position: 'center'
-                                },
-                                emphasis: {
-                                    show: true,
-                                    textStyle: {
-                                        fontSize: '20',
-                                        fontWeight: 'bold'
-                                    }
-                                }
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: [
-                                {value: this.main_customer.wl, name: '网络'},
-                                {value: this.main_customer.khtj, name: '客户推荐'},
-                                {value: this.main_customer.oy, name: '偶遇'},
-                                {value: this.main_customer.zj, name: '中介'},
-                            ]
-                        }
-                    ]
-                };
-                this.myChart[2].setOption(option);
-            },
-            getData(){
-                // 过渡---------------------
-//
-                for (let i = 0; i < this.myChart.length; i++) {
-                    (() => {
-                        this.myChart[i].showLoading({
-                            text: '正在努力的读取数据中...',    //loading话术
-                        });
-                    })(i)
-                }
-            }
+//            check (){
+//                let option = {
+//                    tooltip: {
+//                        trigger: 'item',
+//                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+//                    },
+//                    legend: {
+//                        orient: 'vertical',
+//                        x: 'left',
+//                        data: ['已租', '空置']
+//                    },
+//                    series: [
+//                        {
+//                            name: '访问来源',
+//                            type: 'pie',
+//                            radius: ['50%', '70%'],
+//                            avoidLabelOverlap: false,
+//                            label: {
+//                                normal: {
+//                                    show: false,
+//                                    position: 'center'
+//                                },
+//                                emphasis: {
+//                                    show: true,
+//                                    textStyle: {
+//                                        fontSize: '20',
+//                                        fontWeight: 'bold',
+//                                    }
+//                                }
+//                            },
+//                            labelLine: {
+//                                normal: {
+//                                    show: false
+//                                }
+//                            },
+//                            data: [
+//                                {value: this.check_inData.rent, name: '已租'},
+//                                {value: this.check_inData.vacancy, name: '空置'},
+//                            ]
+//                        }
+//                    ]
+//                };
+//                this.myChart[0].setOption(option);
+//            },
+//            collect (){
+//                let option = {
+//                    tooltip: {
+//                        trigger: 'item',
+//                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+//                    },
+//                    legend: {
+//                        orient: 'vertical',
+//                        x: 'left',
+//                        data: ['收房', '租房']
+//                    },
+//                    series: [
+//                        {
+//                            name: '访问来源',
+//                            type: 'pie',
+//                            radius: ['50%', '70%'],
+//                            avoidLabelOverlap: false,
+//                            label: {
+//                                normal: {
+//                                    show: false,
+//                                    position: 'center'
+//                                },
+//                                emphasis: {
+//                                    show: true,
+//                                    textStyle: {
+//                                        fontSize: '20',
+//                                        fontWeight: 'bold'
+//                                    }
+//                                }
+//                            },
+//                            labelLine: {
+//                                normal: {
+//                                    show: false
+//                                }
+//                            },
+//                            data: [
+//                                {value: this.collect_rentsData.received, name: '收房'},
+//                                {value: this.collect_rentsData.rent, name: '租房'},
+//                            ]
+//                        }
+//                    ]
+//                };
+//                this.myChart[1].setOption(option);
+//            },
+//            customer (){
+//                let option = {
+//                    tooltip: {
+//                        trigger: 'item',
+//                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+//                    },
+//                    legend: {
+//                        orient: 'vertical',
+//                        x: 'left',
+//                        data: ['网络', '客户推荐', '偶遇', '中介']
+//                    },
+//                    series: [
+//                        {
+//                            name: '访问来源',
+//                            type: 'pie',
+//                            radius: ['50%', '70%'],
+//                            avoidLabelOverlap: false,
+//                            label: {
+//                                normal: {
+//                                    show: false,
+//                                    position: 'center'
+//                                },
+//                                emphasis: {
+//                                    show: true,
+//                                    textStyle: {
+//                                        fontSize: '20',
+//                                        fontWeight: 'bold'
+//                                    }
+//                                }
+//                            },
+//                            labelLine: {
+//                                normal: {
+//                                    show: false
+//                                }
+//                            },
+//                            data: [
+//                                {value: this.main_customer.wl, name: '网络'},
+//                                {value: this.main_customer.khtj, name: '客户推荐'},
+//                                {value: this.main_customer.oy, name: '偶遇'},
+//                                {value: this.main_customer.zj, name: '中介'},
+//                            ]
+//                        }
+//                    ]
+//                };
+//                this.myChart[2].setOption(option);
+//            },
+//            getData(){
+//                for (let i = 0; i < this.myChart.length; i++) {
+//                    (() => {
+//                        this.myChart[i].showLoading({
+//                            text: '正在努力的读取数据中...',    //loading话术
+//                        });
+//                    })(i)
+//                }
+//            }
         }
     }
 </script>
@@ -436,10 +525,20 @@
         margin: auto;
     }
 
+    @media screen and (max-width: 767px) {
+        .table.table-responsive > .table > tbody > tr > td.phone {
+            min-width: 360px;
+            max-width: 466px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+    }
+
     .more_info {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        max-width: 300px;
         cursor: pointer
     }
 
@@ -461,21 +560,15 @@
         text-align: center;
     }
 
-    .roll::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+    .width60 {
+        min-width: 60px;
     }
 
-    .roll::-webkit-scrollbar-button {
-        background-color: #ffff;
+    .width80 {
+        min-width: 80px;
     }
 
-    .roll::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-
-    .roll::-webkit-scrollbar-thumb {
-        background: rgba(121, 121, 121, .2);
-        border-radius: 10px;
+    .width180 {
+        min-width: 180px;
     }
 </style>

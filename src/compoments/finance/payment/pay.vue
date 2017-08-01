@@ -19,9 +19,10 @@
                         </div>
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.status" @change="search">
+                            <select class="form-control" v-model="params.status" @change="search(1)">
                                 <option value="">全部</option>
-                                <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}</option>
+                                <option :value="value" v-for="(key,value) in dict.account_should_status">{{key}}
+                                </option>
                             </select>
                         </div>
 
@@ -31,13 +32,15 @@
 
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格" v-model="params.search" @keydown.enter.prevent="search">
+                            <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
+                                   v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i
+                                        class="fa fa-search"></i></button>
                             </span>
                         </div>
                         <div class="form-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#addPay">
+                            <a class="btn btn-success" @click="addPay">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
                             </a>
                         </div>
@@ -51,7 +54,8 @@
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
                         <li v-show="statusId!=3">
-                            <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a></h5>
+                            <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -103,10 +107,11 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
+                                <input type="checkbox" :checked="operId===item.id"
+                                       @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>{{item.customer.name}}</td>
+                            <td><span v-if="item.customer != null">{{item.customer.name}}</span></td>
                             <td>
                                 {{item.description.address}}/
                                 {{dict.pay_type[item.description.pay_type]}}/
@@ -123,11 +128,14 @@
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
                             <td>
-                                <button type="button" :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                <button type="button"
+                                        :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}
                                 </button>
                             </td>
-                            <td><router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}">详情</router-link></td>
+                            <td>
+                                <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}">详情</router-link>
+                            </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="13">暂无数据...</td>
@@ -139,11 +147,13 @@
         </div>
 
         <!--新增-->
-        <div class="modal fade full-width-modal-right" id="addPay" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="addPay" tabindex="-1" aria-hidden="true"
+             data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close"  @click="clearForm" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" @click="clearForm" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">新增应付款项</h4>
                     </div>
                     <div class="modal-body clearFix">
@@ -151,8 +161,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
-                                           class="form-control form_datetime">
+                                    <input @click="remindData" type="text" name="addtime" v-model="pay_time"
+                                           placeholder="付款时间"
+                                           class="form-control form_datetime" readonly>
                                 </div>
                             </div>
 
@@ -166,22 +177,24 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" @click="selectClient" readonly>
+                                    <input type="text" class="form-control" v-model="cus_name" @click="selectClient"
+                                           readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="detailed">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">支出科目<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <select class="form-control">
-                                        <option value="">押金</option>
+                                    <select class="form-control" v-model="subject">
+                                        <option value=""></option>
+                                        <option v-for="(sub,index) in select_info.account_subject" :value="index">{{sub}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -189,28 +202,21 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应付金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">累计实付<sup class="required">*</sup></label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="number" class="form-control" v-model="payable">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款人员<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control" v-model="pay_man" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">备注</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" v-model="remarks"></textarea>
                                 </div>
                             </div>
 
@@ -219,7 +225,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" @click="clearForm">取消</button>
-                        <button type="button" class="btn btn-primary" @click="save">保存</button>
+                        <button type="button" class="btn btn-primary" @click="new_addPay">保存</button>
                     </div>
                 </div>
             </div>
@@ -227,14 +233,15 @@
 
         <!--应付入账-->
 
-        <Page :pg="paging" @pag="getPage"></Page>
-
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
         <Status :state='info'></Status>
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+
         <SelectHouse @House="getHouse"></SelectHouse>
+
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
         <!--应付入账-->
@@ -255,51 +262,61 @@
     import ShouldPay from './paymentShouldPay.vue'
 
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF,SelectHouse,SelectClient,ShouldPay},
+        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay},
 
         data(){
             return {
-                operId : 0,
-                statusId:0,
-                paging : '',
-                page : 1,                  // 当前页数
+                select_info: {},
+                pay_time: '',                       //付款日期
+                cus_id: '',                         //客户ID
+                cus_name: '',                       //客户姓名
+                detailed: '',                       //详情
+                subject: '',                        //支付科目
+                payable: '',                        //应付金额
+                remarks: '',                        //备注
+                pay_man: '',                        //付款人员
 
-                dict : {},
-                myData: [],      //列表数据
-                isShow :false,
-                dateConfigure : [
+                beforePage: 1,
+                operId: 0,
+                statusId: 0,
+                paging: '',
+
+                dict: {},
+                myData: [],                 //列表数据
+                isShow: false,
+                dateConfigure: [
                     {
-                        range : true,
-                        needHour : true
+                        range: true,
+                        needHour: true
                     }
                 ],
 
-                configure : {},
-                filtrate : {
-                    departmentList:[],
-                    staffList:[]
+                configure: {},
+                filtrate: {
+                    departmentList: [],
+                    staffList: []
                 },
 
-                title : '',
-                isAdd : true,
+                title: '',
+                isAdd: true,
 
-                selected : [],
-                params : {
-                    department_id : [],
-                    staff_id : [],
-                    status : '',
-                    range : '',
-                    search : ''
+                selected: [],
+                params: {
+                    department_id: [],
+                    staff_id: [],
+                    status: '',
+                    range: '',
+                    search: ''
                 },
-                tips : {
+                tips: {
                     payable_sum: 0.00,          // 应付总额
-                    paid_sum: 0.00,                 // 已付总额
+                    paid_sum: 0.00,             // 已付总额
                     balance_sum: 0.00,          // 欠额总额
                 },
-                formData:{
-                    customer:{}
+                formData: {
+                    customer: {}
                 },
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -313,46 +330,103 @@
         },
         updated (){
             this.remindData();
-            //            时间选择
+//            时间选择
         },
         mounted (){
             this.$http.get('revenue/glee_collect/dict')
                 .then(
-//                    console.log
                     (res) => {
                         this.dict = res.data;
                         this.payFlowList();
                     }
                 );
-
         },
-        methods : {
-            changeIndex(ev,id,status){
+        methods: {
+//            新增入账模态框
+            addPay (){
+                $('#addPay').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+//            确认新增
+            new_addPay(){
+                this.$http.post('account/payable', {
+                    customer_id: this.cus_id,           //客户ID
+                    pay_date: this.pay_time,            //付款日期
+                    subject_id: this.subject,           //支付科目ID
+                    description: this.detailed,         //详情
+                    amount_payable: this.payable,       //应付
+                    remark: this.remarks                //备注
+                }).then((res) => {
+                    if (res.data.code === '18410') {
+                        $('#addPay').modal('hide');
+                        this.search(1);
+                        this.pay_time = '';                       //付款日期
+                        this.cus_id = '';                         //客户ID
+                        this.cus_name = '';                       //客户姓名
+                        this.detailed = '';                       //详情
+                        this.subject = '';                        //支付科目
+                        this.payable = '';                        //应付金额
+                        this.remarks = '';                        //备注
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+//            取消
+            clearForm(){
+                $('#addPay').modal('hide');
+                this.pay_time = '';                       //付款日期
+                this.cus_id = '';                         //客户ID
+                this.cus_name = '';                       //客户姓名
+                this.detailed = '';                       //详情
+                this.subject = '';                        //支付科目
+                this.payable = '';                        //应付金额
+                this.remarks = '';                        //备注
+            },
+
+            changeIndex(ev, id, status){
 //                console.log("一开始"+this.operId);
-                if (ev.target.checked){
+                if (ev.target.checked) {
                     this.operId = id;
                     this.statusId = status;
 //                    console.log(this.operId);
-                }else {
+                } else {
                     this.operId = 0;
                     this.statusId = 0;
                 }
             },
 
             payFlowList(){
-                this.$http.get('account/payable').then((res) => {
+                this.$http.get('staff/info').then((res) => {
+                    this.pay_man = res.data.name;
+                });
+                this.$http.get('revenue/glee_collect/dict').then((res) => {
+                    this.select_info = res.data;
+
+                    this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-                    console.log(res.data.data);
-                    if (res.data.code==18400){
-                        this.myData = res.data.data.data;
-                        this.paging = res.data.data.pages;
-                        this.setTips(res.data.data,true);
-                        this.isShow = false;
-                    } else {
-                        this.isShow = true;
-                        this.setTips({},false);
-                    }
-                })
+//                    console.log(res.data.data);
+                        if (res.data.code === '18400') {
+                            this.myData = res.data.data.data;
+                            this.paging = res.data.data.pages;
+                            this.setTips(res.data.data, true);
+                            this.isShow = false;
+                        } else {
+                            this.isShow = true;
+                            this.setTips({}, false);
+                        }
+                    })
+                });
             },
             remindData (){
                 $('.form_datetime').datetimepicker({
@@ -363,17 +437,14 @@
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '付款时间'){
-
+                    if (ev.target.placeholder === '付款时间') {
+                        this.pay_time = ev.target.value
                     } else {
 
                     }
 //                    console.log(ev.target.value);
 //                    console.log(ev.target.placeholder);
                 }.bind(this));
-            },
-            getPage(data){
-                this.page = data;
             },
 
             select(){
@@ -384,62 +455,61 @@
             },
             selectDateSend(val){
 //                console.log(val);
-                for(let i=0;i<val.department.length;i++){
+                for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
                 }
-                for(let j=0;j<val.staff.length;j++){
+                for (let j = 0; j < val.staff.length; j++) {
                     this.selected.push(val.staff[j].name);
                     this.params.staff_id.push(val.staff[j].id)
                 }
-                this.search();
+                this.search(1);
             },
             clearSelect(){
                 this.params.department_id = [];
                 this.params.staff_id = [];
                 this.selected = [];
-                this.search();
+                this.search(1);
             },
 
-            search(){
-//                console.log(this.params);
-                this.page = 1;
-                this.filter();
+            search(val){
+                this.filter(val);
             },
-            filter(){
+            filter(val){
                 this.operId = 0;
-                this.$http.get('account/payable?page='+this.page,{
-                    params : this.params
+                this.beforePage = val;
+                this.$http.get('account/payable?page=' + val, {
+                    params: this.params
                 }).then(
-                    (res) =>{
-                        if (res.data.code == 18400){
+                    (res) => {
+                        if (res.data.code === '18400') {
                             // 成功
                             this.paging = res.data.data.pages;
                             this.myData = res.data.data.data;
-                            this.setTips(res.data.data,true);
+                            this.setTips(res.data.data, true);
                             this.isShow = false;
                         } else {
                             this.isShow = true;
                             this.myData = [];
                             this.paging = 0;
                             this.page = 1;
-                            this.setTips({},false);
+                            this.setTips({}, false);
                         }
                     }
                 )
             },
             getDate(data){
                 // 时间
-//                console.log(data);
                 this.params.range = data;
-                this.search();
+                this.search(1);
             },
 
-            getHouse(data){},
+            getHouse(data){
+            },
 
 
-            setTips(val,bool){
-                if (bool){
+            setTips(val, bool){
+                if (bool) {
                     this.tips.payable_sum = val.payable_sum;
                     this.tips.paid_sum = val.paid_sum;
                     this.tips.balance_sum = val.balance_sum;
@@ -451,13 +521,6 @@
 
             },
 
-            clearForm(){
-                $('#addPay').modal('hide');
-            },
-            // 新增
-            save(){
-
-            },
 
             // 选择客户
             selectClient(){
@@ -465,24 +528,28 @@
             },
             getClient(data){
                 console.log(data);
+                this.cus_id = data.id;
+                this.cus_name = data.name
 //                this.formData.customer = data;
                 /*this.$http.post('account/payable',this.formData)
-                    .then()*/
+                 .then()*/
             },
         }
     }
 </script>
 
 <style scoped>
-    .datePickerContainer{
+    .datePickerContainer {
         margin-bottom: 0;
     }
+
     @media (max-width: 798px) {
-        .datePickerContainer{
-            margin-top:3px;
+        .datePickerContainer {
+            margin-top: 3px;
         }
     }
-    .tips{
+
+    .tips {
         line-height: 30px;
         /*padding-left: 12px;*/
         padding-bottom: 5px;
@@ -490,45 +557,52 @@
         /*margin-top: 20px;*/
         /*width: 100%;*/
     }
-    .tips ul{
+
+    .tips ul {
         margin: 0;
         padding: 12px 0;
     }
-    .tips ul li{
+
+    .tips ul li {
         /*float: left;*/
         padding: 0 50px;
         box-sizing: border-box;
     }
-    .tips ul li+li{
+
+    .tips ul li + li {
         /*margin-left: 30px;*/
         border-left: 1px solid #ddd;
 
     }
-    .tips ul li span{
+
+    .tips ul li span {
         font-size: 18px;
         padding-left: 8px;
         /*font-weight: bold;*/
     }
-    .tips ul li span.red{
+
+    .tips ul li span.red {
         color: #FF6666;
     }
-    .tips ul li span.yellow{
+
+    .tips ul li span.yellow {
         color: #FF9A02;
     }
 
-    tbody tr input[type=checkbox]{
+    tbody tr input[type=checkbox] {
         width: 17px;
         height: 17px;
     }
 
-    textarea{
+    textarea {
         max-width: 100%;
     }
 
-    tbody tr td .status{
+    tbody tr td .status {
         color: white;
         /*font-weight: bold;*/
     }
+
     .status.yellow {
         background-color: #FFCC00;
     }

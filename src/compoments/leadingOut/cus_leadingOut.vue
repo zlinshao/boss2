@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>导出管理</li>
+            <li>客户导出</li>
+        </ol>
         <section class="panel">
             <div class="panel-body">
                 <!--http://test.v2.api.boss.lejias.cn/-->
@@ -28,7 +32,7 @@
                         <thead>
                         <tr>
                             <th class="text-center">ID</th>
-                            <th class="text-center">地址</th>
+                            <th class="text-center">小区</th>
                             <th class="text-center">租客姓名</th>
                             <th class="text-center">租客电话</th>
                             <th class="text-center">租客身份证号</th>

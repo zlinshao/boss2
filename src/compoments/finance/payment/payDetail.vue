@@ -30,36 +30,53 @@
                         <!--<a class="pull-right fa fa-pencil-square-o" @click="oper"></a>-->
                     </h4>
                 </header>
-                <div class="panel-body table-responsive client_info">
+                <div class="panel-body client_info">
                     <div>
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div><span class="text-primary">客户姓名：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">详情：</span><span>dfsdf</span></div>
+                        <div class="col-md-12" v-for="list in details_info">
+                            <div class="col-md-5">
+                                <div><span class="text-primary">客户姓名：</span><span>{{select_info.staff_id[list.id]}}</span></div>
+                                <div><span class="text-primary">详情：</span><span>{{list.description}}</span>
+                                </div>
                                 <div><span class="text-primary">付款时间：</span>
                                     <span>
-                                        dfsdf
+                                        {{list.pay_date}}
                                         <a data-toggle="modal" data-target="#moreTime">更多</a>
                                     </span>
                                 </div>
-                                <div><span class="text-primary">支出科目：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">汇款方式：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">付款账户：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">账户余额：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">付款方式：</span><span>dfsdf</span></div>
+                                <div><span class="text-primary">支出科目：</span><span>{{select_info.account_subject[list.subject_id]}}</span>
+                                </div>
+                                <div><span class="text-primary">应付金额：</span><span>{{list.amount_paid}}</span>
+                                </div>
+                                <!--<div><span class="text-primary">账户余额：</span><span>{{details_info.description}}</span></div>-->
+                                <!--<div><span class="text-primary">付款方式：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">月单价：</span><span>dfsdf</span></div>-->
                             </div>
-                            <div class="col-md-8">
-                                <div><span class="text-primary">应付金额：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">实付金额：</span><span>sdfdsf</span></div>
+                            <div class="col-md-7">
+                                <!--<div><span class="text-primary">应付金额：</span><span>{{details_info.amount_paid}}</span></div>-->
+                                <div><span class="text-primary">实付金额：</span><span>{{list.amount_payable}}</span>
+                                </div>
                                 <!--<div><span class="text-primary">累计实付：</span><span>sdfdsf</span></div>-->
-                                <div><span class="text-primary">剩余款项：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">补齐时间：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">备注：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">剩余款项：</span><span>{{list.balance}}</span></div>
+                                <div><span class="text-primary">补齐时间：</span><span>{{list.complete_date}}</span>
+                                </div>
+                                <div><span class="text-primary">备注：</span><span>{{list.remark}}</span></div>
                                 <!--<div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>-->
                                 <!--待入账的没有-->
-                                <div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">历史打款记录：</span><span>sdfdsf</span></div>
+                                <!--<div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>-->
+                                <!--<div><span class="text-primary">历史打款记录：</span><span>sdfdsf</span></div>-->
+                            </div>
+                            <div class="col-xs-12">
+                                <span class="text-primary">历史收款记录：</span>
+                                <div class="table table-responsive roll col-md-3 col-md-offset-2" style="border: 0;">
+                                    <table>
+                                        <tbody>
+                                        <tr v-for="info in list.running_account_record">
+                                            <td style="min-width: 240px;">{{info}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -70,24 +87,31 @@
 
 
         <!--付款时间-->
-        <div class="modal fade full-width-modal-right" id="moreTime" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="moreTime" tabindex="-1" aria-hidden="true"
+             data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">编辑付款时间</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
                             <div class="form-group" v-for="(item,index) in moreTime">
-                                <label class="col-sm-3 control-label">第{{index+1}}次付款时间</label>
+                                <label class="col-sm-3 control-label">第{{index + 1}}次付款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
-                                        <input @click="remindData" type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
+                                        <input @click="remindData" type="text" readonly
+                                               :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}"
+                                               v-model="moreTime[index]">
                                     </div>
                                     <div class="col-sm-5">
-                                        <button type="button" class="btn btn-sm btn-success" @click="operTime(index)">确定</button>
-                                        <button type="button" class="btn btn-sm btn-primary" @click="cancel(index)">取消</button>
+                                        <button type="button" class="btn btn-sm btn-success" @click="operTime(index)">
+                                            确定
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-primary" @click="cancel(index)">取消
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-sm-8" v-else="showOper[index]">
@@ -194,9 +218,12 @@
 
         <!--提示信息-->
         <Status :state='info'></Status>
+
         <!--应付入账-->
-        <ShouldPay :id="id"></ShouldPay>
+        <ShouldPay :details="details_info"></ShouldPay>
+
         <SelectHouse @House="getHouse"></SelectHouse>
+
         <SelectClient @clientAdd="getClient"></SelectClient>
 
     </div>
@@ -210,15 +237,17 @@
     import SelectClient from '../../common/selectClient.vue'
 
     export default{
-        components: {Status,ShouldPay,SelectHouse,SelectClient},
+        components: {Status, ShouldPay, SelectHouse, SelectClient},
         data(){
             return {
-                id : '',
-                currentIndex : -1,
-
+                descriptions: [],
+                select_info: [],
+//                should_id: '',              //应付ID
+                currentIndex: -1,
+                details_info: [],           //应付详情
                 showOper: [],
 
-                times : [
+                times: [
                     '2017/09/12',
                     '2017/09/12',
                     '2017/09/12',
@@ -237,7 +266,7 @@
                     '2017/09/12',
                     '2017/09/12',
                 ],
-                moreTime : [
+                moreTime: [
                     '2017/09/12',
                     '2017/09/12',
                     '2017/09/12',
@@ -256,7 +285,7 @@
                     '2017/09/12',
                     '2017/09/12',
                 ],
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -269,18 +298,32 @@
             }
         },
         updated (){
-            this.remindData();
+//            this.remindData();
         },
         mounted (){
-            this.id = this.$route.query.payId;
-            for (let i = 0 ; i<this.moreTime.length ; i++){
+            this.should_id = this.$route.query.payId;
+            this.details(this.should_id);
+            for (let i = 0; i < this.moreTime.length; i++) {
                 this.showOper.push(false);
             }
 //            this.times = this.moreTime;
 //            console.log(this.moreTime)
 //            console.log(this.showOper)
         },
-        methods : {
+        methods: {
+//            详情
+            details (val){
+                this.$http.get('revenue/glee_collect/dict').then((res) => {
+                    this.select_info = res.data;
+
+                    this.$http.get('account/payable/' + val).then((res) => {
+                        this.details_info.push(res.data.data);
+                        console.log(res.data.data.description.split('/'));
+                        this.descriptions = res.data.data.description.split('/');
+
+                    });
+                });
+            },
             oper(){
                 $('#edit').modal('show');
             },
@@ -295,10 +338,10 @@
 //                    clearBtn: true,                     //清除按钮
 //                    pickerPosition : 'top-left'
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '付款时间'){
+                    if (ev.target.placeholder === '付款时间') {
                         // 编辑中的付款时间
                     } else {
-                        this.moreTime.splice(this.currentIndex,1,ev.target.value);
+                        this.moreTime.splice(this.currentIndex, 1, ev.target.value);
                     }
 //                    console.log(ev.target.value);
 //                    console.log(ev.target.placeholder);
@@ -310,22 +353,23 @@
                     todayBtn: 1,
                     autoclose: 1,
 //                    clearBtn: true,                     //清除按钮
-                    pickerPosition : 'top-left'
+                    pickerPosition: 'top-left'
                 }).on('changeDate', function (ev) {
-                    this.moreTime.splice(this.currentIndex,1,ev.target.value);
-//                    console.log(ev.target.value);
+                    this.moreTime.splice(this.currentIndex, 1, ev.target.value);
                 }.bind(this));
             },
 
-            getHouse(data){},
-            getClient(data){},
+            getHouse(data){
+            },
+            getClient(data){
+            },
 
             changeShow(index){
 //                console.log(this.currentIndex);
-                if (this.currentIndex==-1){
+                if (this.currentIndex === -1) {
                     this.currentIndex = index;
 //                this.showOper[index] = true;
-                    this.showOper.splice(index,1,true);
+                    this.showOper.splice(index, 1, true);
 //                    console.log(this.showOper)
                 }
 //                console.log(this.currentIndex);
@@ -333,14 +377,14 @@
             },
             operTime(index){
                 this.currentIndex = -1;
-                this.showOper.splice(index,1,false);
+                this.showOper.splice(index, 1, false);
 //                console.log(this.moreTime);
-                this.times.splice(index,1,this.moreTime[index]);
+                this.times.splice(index, 1, this.moreTime[index]);
             },
             cancel(index){
                 this.currentIndex = -1;
-                this.showOper.splice(index,1,false);
-                this.moreTime.splice(index,1,this.times[index]);
+                this.showOper.splice(index, 1, false);
+                this.moreTime.splice(index, 1, this.times[index]);
 //                console.log(this.moreTime);
             }
         }
@@ -348,15 +392,15 @@
 </script>
 
 <style scoped>
-    .head .panel-body>div span{
-        /*display: inline-block;*/
+    .head .panel-body > div span {
         font-weight: bold;
     }
-    .head .panel-body>div span+span{
+
+    .head .panel-body > div span + span {
         margin-left: 12px;
     }
-    .head .panel-body>div span.status{
-        /*color: white;*/
+
+    .head .panel-body > div span.status {
         font-weight: normal;
         font-size: 12px;
     }
@@ -369,6 +413,7 @@
     header h4 > a {
         margin-left: 10px;
     }
+
     .client_info > div > div > div > div {
         margin-bottom: 20px;
     }
@@ -377,18 +422,20 @@
         display: inline-block;
         padding-right: 20px;
         text-align: right;
-        min-width: 100px;
+        width: 120px;
     }
 
-    .client_info > div > div > div span a{
+    .client_info > div > div > div span a {
         margin-left: 12px;
         font-size: 8px;
     }
-    .form-horizontal .form-group span{
+
+    .form-horizontal .form-group span {
         line-height: 34px;
         font-size: 14px;
     }
-    textarea{
+
+    textarea {
         max-width: 100%;
     }
 </style>
