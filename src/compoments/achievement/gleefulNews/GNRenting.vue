@@ -32,8 +32,7 @@
                             <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i
-                                        class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
 
@@ -362,6 +361,6 @@
 
     div.padd {
         display: inline-block;
-        padding: 0 15px 0 0;
+        /*padding: 0 15px 0 0;*/
     }
 </style>
