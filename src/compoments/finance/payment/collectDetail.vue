@@ -52,7 +52,18 @@
                             </div>
                             <div class="col-md-8">
                                 <div><span class="text-primary">剩余款项：</span><span>{{msg.balance}}</span></div>
-                                <div><span class="text-primary">补齐时间：</span><span>{{msg.complete_date}}</span></div>
+                                <div><span class="text-primary">补齐时间：</span>
+                                    <span>
+                                        <span v-if="!changeCompleteDate">{{msg.complete_date}}</span>
+                                        <span v-else="!changeCompleteDate">
+                                            <input @click="remindData" placeholder="补齐时间" readonly type="text" class="form-control form_datetime" style="max-width: 200px;
+    display: inline-block;" v-show="changeCompleteDate" v-model="changeComplete">
+                                        </span>
+                                        <a @click="operCompleteDate" v-show="!changeCompleteDate">编辑</a>
+                                        <button v-show="changeCompleteDate" type="button" class="btn btn-sm btn-success" @click="modifyComplete">确定</button>
+                                        <button v-show="changeCompleteDate" type="button" class="btn btn-sm btn-primary" @click="cancelModify">取消</button>
+                                    </span>
+                                </div>
                                 <div><span class="text-primary">截图凭证：</span>
                                     <span v-if="msg.album==undefined">
                                         无
@@ -93,7 +104,7 @@
                                 <label class="col-sm-3 control-label">第{{index+1}}次付款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
-                                        <input @click="remindData" type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
+                                        <input @click="remindData" placeholder="收款时间" readonly type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
                                     </div>
                                     <div class="col-sm-5">
                                         <button type="button" class="btn btn-sm btn-success" @click="operTime(index)">确定</button>
@@ -104,7 +115,7 @@
                                     <div class="col-sm-6">
                                         <span>{{item}}</span>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-5" v-show="msg.status==1">
                                         <span @click="changeShow(index)"><a>编辑</a></span>
                                     </div>
                                 </div>
@@ -287,10 +298,15 @@
                     //失败信息 ***
                     error: ''
                 },
+
+//                待结清状态编辑补齐时间
+                changeCompleteDate:false,
+                beforeComplete:'',      // 初始补齐时间
+                changeComplete : ''
             }
         },
         updated (){
-//            this.remindData();
+            this.remindData();
         },
         mounted (){
             this.id = this.$route.query.collectId;
@@ -320,7 +336,8 @@
                         if (this.msg.album!=undefined){
                             this.srcs = this.msg.album.receipt_pic;
                         }
-                        console.log(this.msg)
+                        this.beforeComplete = this.msg.complete_date;
+//                        console.log(this.msg)
                     })
             },
 
@@ -335,13 +352,14 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
 //                    pickerPosition : 'top-left'
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '付款时间'){
+                    if (ev.target.placeholder == '收款时间'){
                         // 编辑中的付款时间
-                    } else {
                         this.moreTime.splice(this.currentIndex,1,ev.target.value);
+                    } else if (ev.target.placeholder == '补齐时间'){
+                        this.changeComplete = ev.target.value;
                     }
 //                    console.log(ev.target.value);
 //                    console.log(ev.target.placeholder);
@@ -352,10 +370,13 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
                     pickerPosition : 'top-left'
                 }).on('changeDate', function (ev) {
-                    this.moreTime.splice(this.currentIndex,1,ev.target.value);
+                    if (ev.target.placeholder == '收款时间'){
+                        // 编辑中的付款时间
+                        this.moreTime.splice(this.currentIndex,1,ev.target.value);
+                    }
 //                    console.log(ev.target.value);
                 }.bind(this));
             },
@@ -401,8 +422,46 @@
                 this.currentId = this.id;
 //                data-toggle="modal" data-target="#collectFor"
                 $('#collectFor').modal('show');
-            }
+            },
 
+
+
+//            带结清状态编辑补齐时间
+            operCompleteDate(){
+                this.changeCompleteDate = true;
+                this.changeComplete = this.beforeComplete;
+                console.log(this.beforeComplete)
+            },
+            modifyComplete(){
+                this.$http.put('account/receivable/'+this.id,{
+                    complete_date : this.changeComplete
+                }).then((res) =>{
+                    if (res.data.code==18510){
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        }, 2000);
+                        this.changeCompleteDate = false;
+                        this.getDetails();
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_error = false;
+                        }, 2000);
+                    }
+                })
+            },
+            cancelModify(){
+                this.changeCompleteDate = false;
+            }
         }
     }
 </script>
@@ -462,5 +521,8 @@
     }
     img{
         cursor: pointer;
+    }
+    .panel-body button{
+        vertical-align: inherit;
     }
 </style>
