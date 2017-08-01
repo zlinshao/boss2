@@ -6,14 +6,14 @@
         </ol>
 
         <div class="title clearFix">
-            <div class="contractNum">
-                <router-link to="/CollectContract" tag="button" class="btn btn-white" style="border: none">返回</router-link>
-                <h4>
+            <div class="contractNum" style="margin-bottom: 10px">
+                <h4 style="margin-right: 15px">
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
                 <span class="label label-primary" v-if="contract_pass < 5">{{passDictionary[contract_pass]}}</span>
                 <span class="label label-primary" v-if="contract_pass >=5">已完成</span>
+                <span class="remind" v-if="contract_pass >=5">审核已完成，部分资料已无法查看，请联系组长</span>
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
                 <span>
@@ -1070,6 +1070,14 @@
         padding-right: 20px;
         text-align: right;
         min-width: 100px;
+    }
+    @media (max-width: 767px) {
+        .remind{
+            display: block;
+        }
+    }
+    .remind{
+        color: #e8686b;
     }
 
 </style>

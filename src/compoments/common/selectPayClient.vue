@@ -54,12 +54,12 @@
                                     <td>{{item.name}}</td>
                                     <td v-if="item.sex === 1">先生</td>
                                     <td v-if="item.sex === 2">女士</td>
-                                    <td v-if="item.id !== 2">  {{item.id}}{{item.address_s}}</td>
-                                    <td v-if="item.id === 2">  {{item.id}}{{item.address_z}}</td>
-                                    <td v-if="item.id !== 2">  {{item.id}}{{item.contract_num_s}}</td>
-                                    <td v-if="item.id === 2"> {{item.contract_num_z}}</td>
+                                    <td v-if="item.id !== 2">{{item.address_s}}</td>
+                                    <td v-if="item.id === 2">{{item.address_z}}</td>
+                                    <td v-if="item.id !== 2">{{item.contract_num_s}}</td>
+                                    <td v-if="item.id === 2">{{item.contract_num_z}}</td>
                                     <td v-if="item.id !== 2">{{item.staff_s}}</td>
-                                    <td v-if="item.id === 2">{{item.id}}{{item.staff_z}}</td>
+                                    <td v-if="item.id === 2">{{item.staff_z}}</td>
                                 </tr>
                                 <tr v-if="isShow">
                                     <td colspan="10" class="text-center text-muted">
