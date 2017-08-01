@@ -2,6 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
+            <li>收房合同</li>
             <li class="active">收房合同详情</li>
         </ol>
 

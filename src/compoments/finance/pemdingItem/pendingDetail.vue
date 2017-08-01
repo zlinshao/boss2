@@ -37,7 +37,6 @@
                                 <div><span class="text-primary">合同编号：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">事项类型：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">入住周期：</span><span>dfsdf</span></div>
-                                <div><span class="text-primary">入住时长：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">付款方式：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">月单价：</span><span>dfsdf</span></div>
                                 <div><span class="text-primary">往来记录：</span><span>dfsdf</span></div>
@@ -58,8 +57,8 @@
                                 <div><span class="text-primary">应退：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">实际扣款：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">实际退款：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">退款方式：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">退款账户：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">结算方式：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">结算账户：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">所属部门：</span><span>sdfdsf</span></div>
                                 <div><span class="text-primary">收款人：</span><span>sdfdsf</span></div>
@@ -141,9 +140,6 @@
                 },
             }
         },
-        updated (){
-            this.remindData();
-        },
         mounted (){
             this.id = this.$route.query.payId;
             for (let i = 0 ; i<this.moreTime.length ; i++){
@@ -157,39 +153,6 @@
             oper(){
                 $('#edit').modal('show');
             },
-
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-//                    pickerPosition : 'top-left'
-                }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '付款时间'){
-                        // 编辑中的付款时间
-                    } else {
-                        this.moreTime.splice(this.currentIndex,1,ev.target.value);
-                    }
-//                    console.log(ev.target.value);
-//                    console.log(ev.target.placeholder);
-                }.bind(this));
-                $('.form_datetime2').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                    pickerPosition : 'top-left'
-                }).on('changeDate', function (ev) {
-                    this.moreTime.splice(this.currentIndex,1,ev.target.value);
-//                    console.log(ev.target.value);
-                }.bind(this));
-            },
-
             getHouse(data){},
             getClient(data){},
 

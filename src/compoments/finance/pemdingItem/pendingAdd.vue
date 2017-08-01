@@ -20,18 +20,17 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectClient" readonly>
+                                        <input type="text" class="form-control" @click="selectPayClient" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly >
+                                        <input type="text" class="form-control" @click="selectHouse" readonly >
                                     </div>
                                 </div>
 
@@ -50,8 +49,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">入住周期</label>
-                                    <div class="col-sm-10" style="padding-bottom: 18px;">
+                                    <label class="col-sm-4 control-label">合同开始和结束时间</label>
+                                    <div class="col-sm-8" style="padding-bottom: 18px;">
                                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
@@ -149,7 +148,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">退款账户</label>
+                                    <label class="col-sm-2 control-label">结算账户</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control">
                                     </div>
@@ -165,7 +164,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control" @click="selectDpm" readonly>
                                     </div>
                                 </div>
 
@@ -184,7 +183,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">结算时间</label>
+                                    <label class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control"></textarea>
                                     </div>
@@ -202,17 +201,21 @@
                 </div>
             </div>
         </div>
+        <Client @clientPayAdd = getPayClient></Client>
+        <House @House = getHouse></House>
+        <Department :configure = 'configure' @Staff = getDpm></Department>
+        <Status :state='info'></Status>
     </div>
 </template>
-<style scoped>
-    textarea{
-        max-width: 100%;
-    }
-</style>
+
 <script>
     import DatePicker from '../../common/datePicker.vue'
+    import Client from  '../../common/selectPayClient.vue'  //选择客户
+    import House from  '../../common/selectHouse.vue'  //选择房屋
+    import Department from  '../../common/organization/selectStaff.vue'
+    import Status from '../../common/status.vue'
     export default{
-        components: {DatePicker},
+        components: {DatePicker , Client , House , Department , Status},
         data(){
             return {
                 dateConfigure : [
@@ -222,13 +225,47 @@
                         position : 'top-right',
                     }
                 ],
+                configure : [],
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         methods: {
             selectClient(){},
-            getDate(data){
-
+            getDate(data){},
+            selectPayClient(){  //选择客户
+                $('#selectPayClient').modal('show');
+            },
+            getPayClient(val){
+                console.log(val)
+            },
+            selectHouse(){   //选择房屋
+                $('#selectHouse').modal('show');
+            },
+            getHouse(val){
+                console.log(val)
+            },
+            selectDpm(){    //选择部门
+                $('#selectCustom').modal('show');
+                this.configure={class:'selectType',type:'department'};
+            },
+            getDpm(val){
+                console.log(val)
             }
         }
     }
 </script>
+
+<style scoped>
+    textarea{
+        max-width: 100%;
+    }
+</style>
