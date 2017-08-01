@@ -49,8 +49,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">入住周期</label>
-                                    <div class="col-sm-10" style="padding-bottom: 18px;">
+                                    <label class="col-sm-4 control-label">合同开始和结束时间</label>
+                                    <div class="col-sm-8" style="padding-bottom: 18px;">
                                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">退款账户</label>
+                                    <label class="col-sm-2 control-label">结算账户</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control">
                                     </div>
