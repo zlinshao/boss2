@@ -325,7 +325,7 @@
                     this.$http.get('account/payable/' + val).then((res) => {
                         this.details_info = [];
                         this.details_info.push(res.data.data);
-                        console.log(res.data.data.description.split('/'));
+//                        console.log(res.data.data.description.split('/'));
                         this.descriptions = res.data.data.description.split('/');
 
                     });

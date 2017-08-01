@@ -162,7 +162,6 @@
             }
         },
         updated (){
-//            this.remindData();
             this.remindData1();
         },
         mounted(){
@@ -183,9 +182,8 @@
 //            根据收款方式获取收款账户
             getAccount(){
                 this.$http.get('account/manage/readbycate/' + this.cate).then((res) => {
-                    console.log(res.data);
                     if (res.data.code !== '18402') {
-                        this.pay_acc.push(res.data);
+                        this.pay_acc = res.data;
                         this.pay_account = '';
                     } else {
                         this.pay_acc = [];
@@ -230,23 +228,7 @@
                 this.complete_time = '';      //补齐时间
                 this.remarks = '';            //备注
             },
-////            付款时间
-//            remindData (){
-//                $('.form_datetime').datetimepicker({
-//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-//                    language: 'zh-CN',
-//                    format: 'yyyy-mm-dd',
-//                    todayBtn: 1,
-//                    autoclose: 1,
-////                    clearBtn: true,                     //清除按钮
-//                }).on('changeDate', function (ev) {
-//                    if (ev.target.placeholder === '付款时间') {
-//                        this.pay_time = ev.target.value;
-//                    } else {
-//
-//                    }
-//                }.bind(this));
-//            },
+
 //            补齐时间
             remindData1 (){
                 $('.form_datetime1').datetimepicker({
@@ -260,14 +242,6 @@
                     this.complete_time = ev.target.value;
                 }.bind(this));
             },
-            // 选择客户
-//            selectClient(){
-//                $('.selectClient:eq(1)').modal('show');
-//            },
-            //获得客户
-//            getClient(){
-//
-//            },
         }
     }
 </script>
