@@ -3,7 +3,7 @@
         <section class="panel">
             <div class="panel-body">
                 <!--http://test.v2.api.boss.lejias.cn/-->
-                <div class="pull-right" style="margin-left: 20px;" v-show="!isShow">
+                <div class="pull-right" style="margin-left: 20px;" v-if="!isShow">
                     <a class="btn btn-success"
                        :href="address_url + 'export/manager/export/village_name/' + sea_con">
                         <i class="fa  fa-share-square-o"></i>&nbsp;导出Excel

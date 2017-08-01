@@ -161,18 +161,18 @@
                                     <table class="table table-advance table-hover">
                                         <thead>
                                         <tr>
-                                            <th ref="mybox">时间</th>
                                             <th>标题</th>
+                                            <th>时间</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr v-for="(mess, index) in main_message" v-show="index < 6">
-                                            <td style="min-width: 160px;">{{mess.create_time}}</td>
                                             <td style="min-width: 100px;" class="more_info">
                                                 <router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">
                                                     {{mess.data.title}}
                                                 </router-link>
                                             </td>
+                                            <td style="min-width: 160px;">{{mess.create_time}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

@@ -230,7 +230,7 @@
 
 <script>
     import Page from '.././common/page.vue'                             //分页
-//    import AddRemind from  './addremind.vue'                            //增加提醒
+//    import AddRemind from  './addremind.vue'                          //增加提醒
     import newAdd from './new_add.vue'                                  //新增/修改客户
     import Status from '../common/status.vue'                           //提示信息
     import remindDaily from './remindDaily.vue'                         //修改客户
