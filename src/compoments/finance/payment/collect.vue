@@ -487,6 +487,7 @@
                 console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
+                alert(this.formData.customer_id)
 //                this.formData.customer = data;
                 /*this.$http.post('account/payable',this.formData)
                  .then()*/
