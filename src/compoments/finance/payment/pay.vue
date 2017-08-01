@@ -53,8 +53,8 @@
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="statusId!=3">
-                            <h5 data-toggle="modal" data-target="#payFor"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
+                        <li v-show="statusId != 3">
+                            <h5><a data-toggle="modal" data-target="#payFor"><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
                     </ul>
@@ -245,7 +245,7 @@
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
         <!--应付入账-->
-        <ShouldPay :id="operId"></ShouldPay>
+        <ShouldPay  :details="details_info"></ShouldPay>
     </div>
 </template>
 
@@ -266,6 +266,7 @@
 
         data(){
             return {
+                details_info: [],                   //应入
                 select_info: {},
                 pay_time: '',                       //付款日期
                 cus_id: '',                         //客户ID
@@ -395,6 +396,14 @@
             },
 
             changeIndex(ev, id, status){
+                this.$http.get('revenue/glee_collect/dict').then((res) => {
+                    this.select_info = res.data;
+
+                    this.$http.get('account/payable/' + id).then((res) => {
+                        this.details_info = [];
+                        this.details_info.push(res.data.data);
+                    });
+                });
 //                console.log("一开始"+this.operId);
                 if (ev.target.checked) {
                     this.operId = id;
