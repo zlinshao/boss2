@@ -9,22 +9,21 @@
             <div class="panel-body">
                 <div>
                     <form class="form-inline" role="form">
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                        </div>
+
                         <div class="input-group clearFix">
                             <select class="form-control" v-model="params.type" @change="search(1)">
                                 <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
                         </div>
 
-                        <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
-                        </div>
-
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="搜索账户名称" v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i
-                                        class="fa fa-search"></i></button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
 
