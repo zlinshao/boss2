@@ -63,7 +63,7 @@
                                     <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
                                         {{item.address_z}}
                                     </td>
-                                    <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
+                                    <td v-if="item.type === 2 && item.address_z === null ||undefined || '' ">
                                         {{item.address_s}}
                                     </td>
                                     <td v-if="item.type !== 2 && item.address_s !== null ||undefined || '' ">
@@ -75,7 +75,7 @@
                                     <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
                                         {{item.contract_num_z}}
                                     </td>
-                                    <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
+                                    <td v-if="item.type === 2 && item.address_z === null ||undefined || '' ">
                                         {{item.contract_num_s}}
                                     </td>
                                     <td v-if="item.type !== 2 && item.address_s !== null ||undefined || '' ">
@@ -87,7 +87,7 @@
                                     <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
                                         {{item.staff_z}}
                                     </td>
-                                    <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
+                                    <td v-if="item.type === 2 && item.address_z === null ||undefined || '' ">
                                         {{item.staff_s}}
                                     </td>
                                 </tr>

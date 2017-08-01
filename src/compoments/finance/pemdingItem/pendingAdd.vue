@@ -13,7 +13,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">事件类型</label>
                                     <div class="col-sm-10">
-                                        <select name="type" class="form-control">
+                                        <select name="type" class="form-control" v-model="pendingAdd.item_type">
                                             <option value="">调房</option>
                                             <option value="1">转租</option>
                                             <option value="1">退房</option>
@@ -23,14 +23,16 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectPayClient" readonly>
+                                        <input type="text" class="form-control"
+                                               v-model="pendingAdd.customer_id" @click="selectPayClient" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectHouse" readonly >
+                                        <input type="text" class="form-control"
+                                               v-model="pendingAdd.house_id" @click="selectHouse" readonly >
                                     </div>
                                 </div>
 
@@ -58,63 +60,63 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">水费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.water_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">电费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.elec_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">燃气费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.gas_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">物业费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.property_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">网络费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control"  v-model="pendingAdd.net_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">转租费用</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.sublet_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">管理费</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.manage_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">物业校验</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.check_fee">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">违约金</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="pendingAdd.penalty_fee">
                                     </div>
                                 </div>
 
@@ -157,21 +159,22 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">签约人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control" readonly v-model="pendingAdd.staff_id">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectDpm" readonly>
+                                        <input type="text" class="form-control"
+                                               v-model="pendingAdd.department_id" @click="selectDpm" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control" readonly v-model="pendingAdd.operator_id">
                                     </div>
                                 </div>
 
@@ -235,6 +238,27 @@
                     success: '',
                     //失败信息 ***
                     error: ''
+                },
+                pendingAdd:{
+                    collect_rent:'',    //收 租
+                    item_type : '',     //'1 新租 2 续租 3 转租 4 调租
+                    staff_id : '',           //'开单人id',
+                    department_id : '',           //'部门id',
+                    house_id : '',          //'房屋id',
+                    customer_id : '',   //'客户id',
+                    start_date : '',    //'开始日期',
+                    end_date : '',       //'结束日期',
+                    water_fee : '',         //'水费',
+                    elec_fee : '',            //'电费',
+                    gas_fee : '',           //'燃气费'
+                    property_fee : '',    //'物业费',
+                    penalty_fee : '',        //'违约金',
+                    check_fee : '',         //'物业校验',
+                    sublet_fee : '',    //'转租费用',
+                    manage_fee : '',    //'管理费',
+                    net_fee : '',            //'网络费',
+                    operator_id : '',   //'经手人id'
+                    status : '',        //'状态',
                 },
             }
         },
