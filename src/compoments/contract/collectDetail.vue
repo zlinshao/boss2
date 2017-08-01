@@ -243,10 +243,10 @@
                                                 <span>年限<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_collect_id !== null">{{item.checkin_collect_id.years}}年</span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="item.checkin_collect_id !== null">
                                                 <span>付款方式：</span>
-                                                <span v-if="item.checkin_collect_id !== null">
-                                                    {{dictionary.pay_type[item.checkin_collect_id.pay_type[0]]}}
+                                                <span v-for="pay in item.checkin_collect_id.pay_type">
+                                                    {{dictionary.pay_type[pay]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
@@ -484,18 +484,18 @@
                             </div>
 
                             <!--合同附件-->
-                            <div id="contract" class="tab-pane ">
+                            <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
                                     <div class="infoList clearFix">
                                         <span class="col-lg-1">证件照片<sup>*</sup></span>
-                                        <span class="col-lg-11">
+                                        <span class="col-lg-11" v-if="item.customer_id.album.id_pic !==undefined">
                                              <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
                                                   v-for="(img,index) in item.customer_id.album.id_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-1">银行卡<sup>*</sup></span>
-                                        <span class="col-lg-11">
+                                        <span class="col-lg-11"  v-if="item.customer_id.album.id_pic !==undefined">
                                              <img :src="img.small" @click="showLargePic('bank_pic',index)"
                                                   v-for="(img,index) in item.album.bank_pic">
                                         </span>

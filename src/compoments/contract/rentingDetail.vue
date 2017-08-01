@@ -253,18 +253,12 @@
                                                     {{item.checkin_rent_id.received_amount}} 元
                                                 </span>
                                             </div>
-                                            <div class="infoList">
-                                                <span>付款方式 （银行卡）：</span>
-                                                <span  v-if="item.checkin_rent_id !==null">
-                                                    {{item.checkin_rent_id.payment[1].money}} 元
+                                            <div class="infoList" v-if="item.checkin_rent_id !==null"
+                                                 v-for="pay in item.checkin_rent_id.payment">
+                                                <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
+                                                <span>
+                                                    {{pay.money}} 元
                                                 </span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>付款方式 （现金）：</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>付款方式 （支付宝）<sup>*</sup>：</span>
-                                                <span></span>
                                             </div>
                                             <div class="infoList">
                                                 <span>未收：</span>
@@ -697,6 +691,7 @@
                 this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
+                    console.log(this.contractList)
                     this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num;
                     this.contract_pass = res.data.data.passed;
