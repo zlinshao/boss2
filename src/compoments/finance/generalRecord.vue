@@ -9,14 +9,14 @@
             <div class="panel-body">
                 <div>
                     <form class="form-inline" role="form">
-                        <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
-                        </div>
-
                         <div class="input-group clearFix">
                             <select class="form-control" v-model="params.type" @change="search(1)">
                                 <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
+                        </div>
+
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group clearFix">
@@ -321,7 +321,7 @@
                 this.search(1);
             },
 
-            filter(){
+            filter(val){
                 this.beforePage = val;
                 this.$http.get('account/transfer?page='+val,{
                     params : this.params

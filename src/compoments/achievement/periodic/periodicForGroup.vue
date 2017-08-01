@@ -27,9 +27,9 @@
                         </select>
                     </div>-->
 
-                    <div class="input-group" @click="search">
+                    <!--<div class="input-group" @click="search(1)">
                         <button type="button" class="btn btn-success">搜索</button>
-                    </div>
+                    </div>-->
                 </form>
             </div>
         </section>
@@ -128,7 +128,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
         <!--分页-->
-        <Page :pg="paging" @pag="getData"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
     </div>
@@ -159,6 +159,7 @@
         components: {Page,STAFF,Status,DatePicker},
         data(){
             return {
+                beforePage : 1,
                 isShow : false,
                 dict : '',
                 params : {
@@ -204,7 +205,15 @@
                 currentDate : [],
             }
         },
-
+        mounted(){
+            this.$http.get('periodic/range')
+                .then(
+                    (res) => {
+                        this.dict = res.data.data;
+                        this.perGroupList();
+                    }
+                );
+        },
         methods : {
             perGroupList (){
 
@@ -230,15 +239,14 @@
                     );
             },
 
-            getData(data){
-                // 页数
-                console.log(data);
-                this.page = data;
-                this.search();
-            },
-            search(){
+            search(val){
                 console.log(this.params);
-                this.$http.get('periodic?page='+this.page,{
+                this.filter(val);
+            },
+
+            filter(val){
+                this.beforePage = val;
+                this.$http.get('periodic?page='+val,{
                     params : this.params
                 }).then(
                     (res) => {
@@ -270,7 +278,7 @@
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
                 }
-                this.search();
+                this.search(1);
 //
 
             },
@@ -305,12 +313,12 @@
             getDate(data){
                 console.log(data);
                 this.date_range = data;
-                this.search();
+                this.search(1);
             },
             clearSelect(){
                 this.params.department_id = [];
                 this.selected = [];
-                this.search();
+                this.search(1);
             },
         }
     }

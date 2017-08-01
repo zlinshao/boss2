@@ -26,9 +26,9 @@
                         <div class="input-group clearFix">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
-                                   v-model="params.search" @keydown.enter.prevent="search">
+                                   v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search"><i
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)"><i
                                         class="fa fa-search"></i></button>
                             </span>
                         </div>
@@ -93,7 +93,7 @@
         </div>
 
         <!--分页-->
-        <Page :pg="paging" @pag="getData"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
 
         <!--选择小区控件-->
@@ -121,6 +121,7 @@
         components: {Page, Status , STAFF, DatePicker},
         data(){
             return {
+                beforePage : 1,
                 isShow: false,
 
                 paging: '',                 //总页数
@@ -197,13 +198,13 @@
 //                    console.log(this.paging)
                 })
             },
-            search(){
-                this.page = 1;
-                console.log(this.params);
-                this.filter();
+            search(val){
+
+                this.filter(val);
             },
-            filter(){
-                this.$http.get('glee/collect?page=' + this.page, {
+            filter(val){
+                this.beforePage = val;
+                this.$http.get('glee/collect?page=' + val, {
                     params: this.params
                 })
                     .then((res) => {
@@ -221,14 +222,6 @@
                         }
                     });
             },
-
-            getData(data){
-                // 页数
-//                console.log(data);
-                this.page = data;
-                this.filter();
-            },
-
             select(){
                 this.configure = {type: 'all', class: 'selectType'};
                 $('#selectCustom').modal('show');
@@ -245,20 +238,20 @@
                     this.selected.push(val.staff[j].name);
                     this.params.staff_id.push(val.staff[j].id)
                 }
-                this.search();
+                this.search(1);
             },
             clearSelect(){
                 this.params.department_id = [];
                 this.params.staff_id = [];
                 this.selected = [];
-                this.search();
+                this.search(1);
             },
 
             getDate(data){
                 // 获取时间
                 console.log(data);
                 this.params.date_range = data;
-                this.search();
+                this.search(1);
             }
 
         }

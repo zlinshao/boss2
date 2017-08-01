@@ -69,7 +69,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
         <!--分页-->
-        <Page :pg="paging" @pag="getData"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
     </div>
 </template>
@@ -89,6 +89,7 @@
         components: {Page,Status,DatePicker},
         data(){
             return {
+                beforePage : 1,
                 isShow : false,
                 dict : '',
                 params : {
@@ -123,13 +124,13 @@
             }
         },
         mounted (){
-            /*this.$http.get('periodic/range')
+            this.$http.get('periodic/range')
                 .then(
                     (res) => {
                         this.dict = res.data.data;
                         this.perPersonList();
                     }
-                );*/
+                );
 
         },
         updated (){
@@ -137,25 +138,6 @@
 //            时间选择
 //            this.remindData();
         },
-        /*watch : {
-            'params.month':{
-                handler(val,oldVal){
-                    console.log(val);
-                    let that = this;
-                    this.$http.get('periodic/range?month='+val)
-                        .then(
-                            (res) => {
-//                                console.log(that.params.month)
-                                that.dict = res.data.data;
-                                that.params.periodic = 1
-//                                console.log(that.dict)
-//                                console.log(res.data.data)
-                            }
-                        )
-//                    console.log(oldVal)
-                }
-            }
-        },*/
         methods : {
             perPersonList (){
                 this.$http.get('revenue/periodic/ranking')
@@ -177,15 +159,13 @@
                         (res) => this.params.periodic = res.data.data
                     );
             },
-            getData(data){
-                // 页数
-//                console.log(data);
-                this.page = data;
-                this.search();
+
+            search(val){
+                this.filter(val);
             },
-            search(){
-                console.log(this.params);
-                this.$http.get('revenue/periodic/ranking?page='+this.page,{
+            filter(val){
+                this.beforePage = val;
+                this.$http.get('revenue/periodic/ranking?page='+val,{
                     params : this.params
                 })
                     .then(
@@ -207,7 +187,7 @@
             getDate(data){
                 console.log(data);
                 this.date_range = data;
-                this.search();
+                this.search(1);
             }
         }
     }

@@ -157,7 +157,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">当前余额</label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.amount_base" readonly>
+                                        <input type="number" min="0" class="form-control" v-model="formData.account_remain" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -372,9 +372,10 @@
                                 this.formData.bank = val.bank;
                                 this.formData.sub_bank = val.sub_bank;
                                 this.formData.amount_base = val.amount_base;
-                                this.formData.account_remain = val.account_remain;
+                                this.formData.account_remain = val.amount_remain;
                                 this.formData.remark = val.remark;
                                 $('#myModal').modal('show');
+//                                alert(this.formData.account_remain)
                             }
                         }
                     )
