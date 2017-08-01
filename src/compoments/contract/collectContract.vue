@@ -254,6 +254,7 @@
                       this.contractSearchList = [];
                       this.pages = 1;
                       this.isShow = true;
+                      this.Waiting = false;
                   }
               })
             },
