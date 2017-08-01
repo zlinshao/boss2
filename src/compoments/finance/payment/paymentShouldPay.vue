@@ -200,13 +200,15 @@
                 }).then((res) => {
                     if (res.data.code === '18410') {
                         $('#payFor').modal('hide');
-                        this.$emit('pay_succ');
+                        this.$emit('pay_succ',1);
+//                        this.$emit('pay');
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
+                        this.pay_acc = [];
                         this.pay_account = '';        //付款账户
                         this.payable = '';            //实付金额
                         this.complete_time = '';      //补齐时间
@@ -223,6 +225,7 @@
 //            取消
             revise (){
                 $('#payFor').modal('hide');
+                this.pay_acc = [];
                 this.pay_account = '';        //付款账户
                 this.payable = '';            //实付金额
                 this.complete_time = '';      //补齐时间

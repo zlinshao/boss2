@@ -245,7 +245,7 @@
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
         <!--应付入账-->
-        <ShouldPay  :details="details_info"></ShouldPay>
+        <ShouldPay @pay_succ="search"  :details="details_info"></ShouldPay>
     </div>
 </template>
 
@@ -529,7 +529,6 @@
                 }
 
             },
-
 
             // 选择客户
             selectClient(){
