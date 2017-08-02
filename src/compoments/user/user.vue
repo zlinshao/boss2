@@ -219,7 +219,7 @@
                                     </label>
                                 </div>
 
-                                <div class="col-lg-3">
+                                <div class="col-lg-4 col-md-12">
                                     <input placeholder="搜索企业联系人" class="sr-input"
                                            style="margin-bottom: 0px"     @keyup="search" v-model="keywords" >
                                     <button type="button" class="btn sr-btn">搜索</button>
