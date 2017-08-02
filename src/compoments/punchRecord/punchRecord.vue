@@ -4,14 +4,14 @@
             <div class="panel-body">
                 <div>
                     <!--<div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px;">-->
-                        <!--<div class="input-group">-->
-                            <!--<input type="text" @click="dis_staff"-->
-                                   <!--class="form-control" v-model="staff_man"-->
-                                   <!--placeholder="请选择员工" readonly>-->
-                            <!--<span class="input-group-btn">-->
-                            <!--<button class="btn btn-warning" type="button">清空</button>-->
-                        <!--</span>-->
-                        <!--</div>-->
+                    <!--<div class="input-group">-->
+                    <!--<input type="text" @click="dis_staff"-->
+                    <!--class="form-control" v-model="staff_man"-->
+                    <!--placeholder="请选择员工" readonly>-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<button class="btn btn-warning" type="button">清空</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
                     <!--</div>-->
                     <div class="pro-sort">
                         <input type="text" @click="dis_staff"
@@ -45,42 +45,32 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">员工</th>
                             <th class="text-center">姓名</th>
                             <th class="text-center">性别</th>
                             <th class="text-center">部门</th>
-                            <th class="text-center">人员状态</th>
                             <th class="text-center">打卡时间</th>
                             <th class="text-center">打卡情况</th>
                             <th class="text-center">打卡地点</th>
-                            <th class="text-center">操作记录</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="list in punch_list">
-                            <td class="text-center">
+                            <td class="text-center width100">
                                 <img :src="list.avatar" class="head" v-if="list.avatar !== ''">
                                 <img src="../../assets/img/head.png" class="head" v-if="list.avatar === ''">
+                                {{list.real_name}}
                             </td>
-                            <td class="text-center">{{list.real_name}}</td>
-                            <td class="text-center">
+                            <td class="text-center width50">
                                 <span v-if="list.gender === 1">男</span>
                                 <span v-if="list.gender === 2">女</span>
                             </td>
-                            <td class="text-center">{{list.name}}</td>
-                            <td class="text-center">
-                                <a v-if="list.status === 1" class="btn btn-success btn-sm">在职</a>
-                                <a v-if="list.status === 3" class="btn btn-warning btn-sm">离职</a>
-                            </td>
-                            <td class="text-center">{{list.userCheckTime}}</td>
-                            <td class="text-center">{{select_info.timeResult[list.timeResult]}}</td>
-                            <td class="text-center">{{select_info.locationResult[list.locationResult]}}</td>
-                            <td class="text-center" @click="more_content()">
-                                {{list.name}}
-                            </td>
+                            <td class="text-center width180">{{list.name}}</td>
+                            <td class="text-center width155">{{list.userCheckTime}}</td>
+                            <td class="text-center width80">{{select_info.timeResult[list.timeResult]}}</td>
+                            <td class="text-center width80">{{select_info.locationResult[list.locationResult]}}</td>
                         </tr>
                         <tr v-show="isShow">
-                            <td colspan="9" class="text-center text-muted">
+                            <td colspan="6" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -272,23 +262,24 @@
 
 
 <style scoped>
-
-    @media screen and (max-width: 767px) {
-        .table.table-responsive > .table > tbody > tr > td.phone {
-            min-width: 360px;
-            max-width: 420px;
-            white-space: normal;
-            word-wrap: break-word;
-        }
-
+    .width100 {
+        min-width: 100px;
     }
 
-    .more_info {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 300px;
-        cursor: pointer
+    .width180 {
+        min-width: 180px;
+    }
+
+    .width155 {
+        min-width: 155px;
+    }
+
+    .width80 {
+        min-width: 80px;
+    }
+
+    .width50 {
+        min-width: 50px;
     }
 
     .pro-sort {
