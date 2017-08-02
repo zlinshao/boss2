@@ -610,7 +610,7 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary"  @EditStatus="editSuccess"></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <AddModal :rentContactId="contractEitId"></AddModal>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
@@ -661,6 +661,7 @@
                     error: ''
                 },
 //                isCompared:false,
+                isEditRent : false,
                 villaId : '',
                 contract_pass:'',
                 passDictionary:[],
@@ -708,6 +709,7 @@
                 $('#contractInfo').modal('show');
             },
             editContract(){
+                this.isEditRent = true;
                 $('.rem_div').remove();
                 $('#rentingEdit').modal('show');
             },
@@ -739,7 +741,10 @@
                 $('#largePic').modal('show');
             },
             editSuccess(val){
-                if(val === 'success') this.contractDetail();
+                this.isEditRent = false;
+                if(val === 'success') {
+                    this.contractDetail();
+                }
             },
 //            compareContract(){
 //                this.isCompared = true;
