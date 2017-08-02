@@ -811,7 +811,7 @@
                         }
                     })
                 }else if(this.msgFlag === 'inform'){
-                    this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
+                    this.$http.get('core/rent/inform/id/' + this.contractEitId).then((res) => {
                         if(res.data.code === '70040'){
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
@@ -837,7 +837,7 @@
                         }
                     });
                 }else if(this.msgFlag === 'lock'){
-                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                    this.$http.get('core/rent/unVillalock/house_id/' + this.houseId).then((res) => {
                         if(res.data.code === '70010'){
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
