@@ -276,7 +276,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">凭证截图<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">凭证截图</label>
                                     <div class="col-sm-10">
                                         <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"  placeholder="凭证截图"
                                                  :result="'certificatePic'" :idPhotos="certificatePic"></up-load>
@@ -287,6 +287,22 @@
                                     <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" min="0" class="form-control" v-model="formData.cost_medi">
+                                    </div>
+                                </div>
+
+                                <div class="form-group" v-show="is_medi==2">
+                                    <label class="col-sm-2 control-label">中介账户类型</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" v-model="formData.medi_account_type">
+                                            <option :value="value" v-for="(key,value) in dict.payment">{{key}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" v-show="is_medi==2">
+                                    <label class="col-sm-2 control-label">中介账号<sup class="required">*</sup></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" v-model="formData.medi_account_num " >
                                     </div>
                                 </div>
 
@@ -432,6 +448,8 @@
                     bet : 0,
                     price : '',
                     cost_medi : '',
+                    medi_account_type : 1,
+                    medi_account_num  :'',
 //                    is_medi
                     cost_deposit : '',
                     payment : [],
@@ -567,6 +585,8 @@
                 this.formData.bet = 0;
                 this.formData.price = '';
                 this.formData.cost_medi = '';
+                this.formData.medi_account_type = 1;
+                this.formData.medi_account_num = '';
                 this.formData.cost_deposit = '';
                 this.formData.payment = [];
                 this.formData.deal_time = '';
@@ -618,7 +638,7 @@
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
                 this.is_medi = data.person_medium;
-                if (this.id_medi==1){
+                if (this.is_medi==1){
                     this.formData.cost_medi = '';
                 }
 

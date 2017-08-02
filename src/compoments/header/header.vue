@@ -1018,7 +1018,7 @@
                     _this.mapMsg.township = data.addressComponent.township;
                     _this.mapMsg.streetNumber = data.addressComponent.streetNumber;
 //                    console.log(typeof _this.mapMsg.location);
-                    alert(_this.mapMsg.location);
+//                    alert(_this.mapMsg.location);
 
                     _this.$http.post('amap/signin/saveSignin', _this.mapMsg)
                         .then(
@@ -1042,7 +1042,7 @@
                 }
 
                 function onError(data) {
-//                    alert('定位失败');
+                    alert('定位失败');
 //                    alert(data);
 //                    console.log(data);
                 }

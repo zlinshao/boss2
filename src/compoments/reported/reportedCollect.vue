@@ -22,8 +22,7 @@
 
 
                         <div class="input-group clearFix">
-                            <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="搜索房屋地址"
+                            <input type="text" class="form-control" placeholder="搜索房屋地址"
                                    v-model="params.search" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>

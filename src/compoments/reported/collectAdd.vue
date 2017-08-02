@@ -111,6 +111,22 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group" v-show="is_medi==2">
+                                    <label class="col-sm-2 control-label">中介账户类型</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" v-model="formData.medi_account_type">
+                                            <option :value="value" v-for="(key,value) in dict.payment">{{key}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" v-show="is_medi==2">
+                                    <label class="col-sm-2 control-label">中介账号<sup class="required">*</sup></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" v-model="formData.medi_account_num " >
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">待签约日期<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
@@ -235,6 +251,8 @@
                     vacancy : '',
                     cost_medi : '',
 //                    is_medi : 1,
+                    medi_account_type : 1,
+                    medi_account_num  :'',
                     cost_deposit : '',
                     deal_time : '',
                     payment : 1,
@@ -347,6 +365,8 @@
                 this.formData.price.splice(0,this.formData.price.length);
                 this.formData.vacancy = '';
                 this.formData.cost_medi = '';
+                this.formData.medi_account_type = 1;
+                this.formData.medi_account_num = '';
 //                this.formData.is_medi = 1;
                 this.formData.cost_deposit = '';
                 this.formData.deal_time = '';
@@ -425,7 +445,7 @@
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
                 this.is_medi = data.person_medium;
-                if (this.id_medi==1){
+                if (this.is_medi==1){
                     this.formData.cost_medi = '';
                 }
 
