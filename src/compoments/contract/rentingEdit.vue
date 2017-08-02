@@ -7,7 +7,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeEdit">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">编辑合同</h4>
@@ -140,7 +140,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeEdit">关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
@@ -250,6 +250,21 @@
             gitContractInfo(){
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/rent/readcontract/id/' +this.myContractEitId).then((res)=>{
+                        this.relative_customer = [];
+                        this.contractEdit.relative_customer_id = [];
+                        this.contractPic.cus_idPhoto = [];
+                        this.contractEdit.contract_pic =[];
+                        this.handoverPic.cus_idPhoto = [];
+                        this.contractEdit.handover_pic =[];
+                        this.receiptPic.cus_idPhoto = [];
+                        this.contractEdit.receipt_pic = [];
+                        this.waterPic.cus_idPhoto = [];
+                        this.contractEdit.water_card_pic = [];
+                        this.elePic.cus_idPhoto = [];
+                        this.contractEdit.elec_card_pic = [];
+                        this.gasPic.cus_idPhoto = [];
+                        this.contractEdit.gas_card_pic = [];
+
                         let contractList =res.data.data;
                         this.contractEdit.id = contractList.id; //合同id
                         if(contractList.relative_customer !== undefined){
@@ -435,6 +450,9 @@
                 }
 
             },
+            closeEdit(){
+                this.$emit('EditStatus','error');
+            }
         }
     }
 </script>
