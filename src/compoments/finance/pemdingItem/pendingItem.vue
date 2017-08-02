@@ -14,7 +14,6 @@
                                 <option :value="key" v-for="(value,key) in dictionary.item_type">{{value}}</option>
                             </select>
                         </div>
-
                         <div class="dropdown input-group">
                             <select name="" class="form-control" v-model="params.collect_rent">
                                 <option value="">类型</option>
@@ -67,7 +66,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th>{{operId}}</th>
+                            <th></th>
                             <th class="text-center">事项类型</th>
                             <th class="text-center">合同编号</th>
                             <th class="text-center">开单人</th>
@@ -103,7 +102,7 @@
                             </td>
                         </tr>
                         <tr v-if="isShow">
-                            <td colspan="15" class="text-center text-muted">
+                            <td colspan="14" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -197,7 +196,7 @@
             },
             getDate(val){
                 this.params.range = val
-            }
+            },
         }
     }
 </script>

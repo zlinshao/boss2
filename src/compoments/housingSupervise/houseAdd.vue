@@ -103,12 +103,12 @@
                                     <div class="col-lg-10">
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="number" class="form-control" placeholder="当前楼层"
-                                                   @blur="computeFloor" v-model="houseAdd.floor">
+                                                   @blur="computeFloor($event)" v-model="houseAdd.floor">
                                         </div>
                                         <label class="col-xs-1" style="font-size: 20px">/</label>
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="number" class="form-control" placeholder="总楼层"
-                                                   @blur="computeTotalFloor"  v-model="houseAdd.total_floor">
+                                                   @blur="computeFloor($event)"  v-model="houseAdd.total_floor">
                                         </div>
                                     </div>
                                 </div>
@@ -436,22 +436,26 @@
                     }
                 }
             },
-            computeTotalFloor(){
-                if(this.houseAdd.floor > this.houseAdd.total_floor &&  this.houseAdd.total_floor !==''){
-                    this.houseAdd.total_floor = '';
+            computeFloor(e){
+                if(this.houseAdd.floor > this.houseAdd.total_floor &&  this.houseAdd.total_floor !=='' && this.houseAdd.floor !== ''){
+                    if(e.target.placeholder === '总楼层'){
+                        this.houseAdd.total_floor = '';
+                    }else {
+                        this.houseAdd.floor = '';
+                    }
                     this.info.error ='当前楼层不能大于总楼层！';
                     //显示成功弹窗 ***
                     this.info.state_error = true;
                 }
             },
-            computeFloor(){
-                if(this.houseAdd.floor > this.houseAdd.total_floor && this.houseAdd.floor !== ''){
-                    this.houseAdd.floor = '';
-                    this.info.error ='当前楼层不能大于总楼层！';
-                    //显示成功弹窗 ***
-                    this.info.state_error = true;
-                }
-            },
+//            computeFloor(){
+//                if(this.houseAdd.floor > this.houseAdd.total_floor && this.houseAdd.floor !== ''){
+//                    this.houseAdd.floor = '';
+//                    this.info.error ='当前楼层不能大于总楼层！';
+//                    //显示成功弹窗 ***
+//                    this.info.state_error = true;
+//                }
+//            },
             addHouse(){
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
