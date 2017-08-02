@@ -204,18 +204,18 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(ran, index) in main_ranking">
-                                            <td style="min-width: 60px;">{{index + 1}}</td>
-                                            <td style="min-width: 80px;">{{ran.name}}</td>
-                                            <td style="min-width: 110px;">{{ran.department}}</td>
-                                            <td style="min-width: 100px;">
-                                                {{ran.money}}
-                                                <!--<span class="text-danger" v-if="ran.rank_id === 1"><i-->
-                                                <!--class="fa fa-arrow-up"></i></span>-->
-                                                <!--<span class="text-success" v-if="ran.rank_id === 2"><i-->
-                                                <!--class="fa  fa-arrow-down"></i></span>-->
-                                            </td>
-                                        </tr>
+                                        <!--<tr v-for="(ran, index) in main_ranking">-->
+                                            <!--<td style="min-width: 60px;">{{index + 1}}</td>-->
+                                            <!--<td style="min-width: 80px;">{{ran.name}}</td>-->
+                                            <!--<td style="min-width: 110px;">{{ran.department}}</td>-->
+                                            <!--<td style="min-width: 100px;">-->
+                                                <!--{{ran.money}}-->
+                                                <!--&lt;!&ndash;<span class="text-danger" v-if="ran.rank_id === 1"><i&ndash;&gt;-->
+                                                <!--&lt;!&ndash;class="fa fa-arrow-up"></i></span>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span class="text-success" v-if="ran.rank_id === 2"><i&ndash;&gt;-->
+                                                <!--&lt;!&ndash;class="fa  fa-arrow-down"></i></span>&ndash;&gt;-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
                                         <tr v-show="main_ranking.length === 0">
                                             <td colspan="7" class="text-center text-muted">
                                                 <h4>暂无数据....</h4>
@@ -324,7 +324,7 @@
 //            }
 //        },
         created (){
-            this.home_index();
+//            this.home_index();
             this.home_system()
         },
         methods: {
@@ -368,27 +368,27 @@
                     });
                 }
             },
-            home_index (){
-//                字典
-                this.$http.get('core/customer/dict').then((res) => {
-                    this.select_list = res.data;
-
-                    this.$http.post('home/index/index').then((res) => {
-                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报南京
-                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
-                        this.main_birthday = res.data.data.birthday;                    //寿星
-                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
-                        this.main_message = res.data.data.message;                      //公告
-//                        this.check_inData = res.data.data.uprate;                       //入住率
-//                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
-//                        this.main_customer = res.data.data.customer;                    //客户来源
-
-//                        this.check();
-//                        this.collect();
-//                        this.customer();
-                    });
-                });
-            },
+//            home_index (){
+////                字典
+//                this.$http.get('core/customer/dict').then((res) => {
+//                    this.select_list = res.data;
+//
+//                    this.$http.post('home/index/index').then((res) => {
+//                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报南京
+//                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
+//                        this.main_birthday = res.data.data.birthday;                    //寿星
+//                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
+//                        this.main_message = res.data.data.message;                      //公告
+////                        this.check_inData = res.data.data.uprate;                       //入住率
+////                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
+////                        this.main_customer = res.data.data.customer;                    //客户来源
+//
+////                        this.check();
+////                        this.collect();
+////                        this.customer();
+//                    });
+//                });
+//            },
 //            check (){
 //                let option = {
 //                    tooltip: {
