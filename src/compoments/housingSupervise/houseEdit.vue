@@ -492,11 +492,11 @@
                 }
             },
             computeFloor(e){
-                if(this.houseAdd.floor > this.houseAdd.total_floor &&  this.houseAdd.total_floor !=='' && this.houseAdd.floor !== ''){
+                if(this.houseEdit.floor > this.houseEdit.total_floor &&  this.houseEdit.total_floor !=='' && this.houseEdit.floor !== ''){
                     if(e.target.placeholder === '总楼层'){
-                        this.houseAdd.total_floor = '';
+                        this.houseEdit.total_floor = '';
                     }else {
-                        this.houseAdd.floor = '';
+                        this.houseEdit.floor = '';
                     }
                     this.info.error ='当前楼层不能大于总楼层！';
                     //显示成功弹窗 ***
