@@ -615,6 +615,12 @@
                             <span>带看打卡</span>
                         </router-link>
                     </li>
+                    <li :class="{'active': isActive == 37}" @click='pitch_on(37)'>
+                        <router-link to="/punchRecord">
+                            <i class="fa fa-map-marker"></i>
+                            <span>打卡记录</span>
+                        </router-link>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>

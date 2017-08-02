@@ -112,10 +112,7 @@
                             <td>{{item.pay_date}}</td>
                             <td><span v-if="item.customer != null">{{item.customer.name}}</span></td>
                             <td>
-                                {{item.description.address}}/
-                                {{dict.pay_type[item.description.pay_type]}}/
-                                {{item.description.price}}/
-                                {{item.description.staff_name}}
+                                {{item.description}}
                             </td>
                             <!--<td>{{item.description.staff_name}}</td>
                             <td>{{item.description.address}}</td>
@@ -208,6 +205,24 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">账户类型<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" v-model="accountType">
+                                        <option value="">--请选择--</option>
+                                        <option v-for="(list,index) in select_info.payment" :value="index">{{list}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">账户账号<sup class="required">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="accountNumber" maxlength="25">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">付款人员<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" v-model="pay_man" readonly>
@@ -246,7 +261,7 @@
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
         <!--应付入账-->
-        <ShouldPay @pay_succ="search"  :details="details_info"></ShouldPay>
+        <ShouldPay @pay_succ="search" :details="details_info"></ShouldPay>
     </div>
 </template>
 
@@ -267,6 +282,8 @@
 
         data(){
             return {
+                accountType: '',                    //账户类型
+                accountNumber: '',                  //账户账号
                 details_info: [],                   //应入
                 select_info: {},
                 pay_time: '',                       //付款日期
@@ -353,12 +370,14 @@
 //            确认新增
             new_addPay(){
                 this.$http.post('account/payable', {
-                    customer_id: this.cus_id,           //客户ID
-                    pay_date: this.pay_time,            //付款日期
-                    subject_id: this.subject,           //支付科目ID
-                    description: this.detailed,         //详情
-                    amount_payable: this.payable,       //应付
-                    remark: this.remarks                //备注
+                    customer_id: this.cus_id,                           //客户ID
+                    pay_date: this.pay_time,                            //付款日期
+                    subject_id: this.subject,                           //支付科目ID
+                    customer_account_type: this.accountType,            //账户类型
+                    customer_account_num: this.accountNumber,           //账户账号
+                    description: this.detailed,                         //详情
+                    amount_payable: this.payable,                       //应付
+                    remark: this.remarks                                //备注
                 }).then((res) => {
                     if (res.data.code === '18410') {
                         $('#addPay').modal('hide');
@@ -387,6 +406,8 @@
 //            取消
             clearForm(){
                 $('#addPay').modal('hide');
+                this.accountType = '';                    //账户类型
+                this.accountNumber = '';                  //账户账号
                 this.pay_time = '';                       //付款日期
                 this.cus_id = '';                         //客户ID
                 this.cus_name = '';                       //客户姓名

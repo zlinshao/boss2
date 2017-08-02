@@ -16,7 +16,7 @@
                     <span :class="{'status':true,'btn':true}">带结清</span>
                     <div class="pull-right">
                         <button class="btn btn-primary">转为待处理项</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#payFor">应付入账</button>
+                        <button class="btn btn-primary" v-if="detailsStatus" data-toggle="modal" data-target="#payFor">应付入账</button>
                     </div>
                 </div>
             </div>
@@ -34,35 +34,60 @@
                     <div>
                         <div class="col-md-12" v-for="list in details_info">
                             <div class="col-md-6">
-                                <div><span
-                                        class="text-primary">客户姓名：</span><span>{{select_info.staff_id[list.id]}}</span>
+                                <div>
+                                    <span class="text-primary">客户姓名：</span>
+                                    <span>{{select_info.staff_id[list.id]}}</span>
                                 </div>
-                                <div><span class="text-primary">详情：</span><span>{{list.description}}</span>
+                                <div>
+                                    <span class="text-primary">详情：</span>
+                                    <span>{{list.description}}</span>
                                 </div>
-                                <div><span class="text-primary">付款时间：</span>
+                                <div>
+                                    <span class="text-primary">付款时间：</span>
                                     <span>
                                         {{list.pay_date}}
                                         <a data-toggle="modal" data-target="#moreTime">更多</a>
                                     </span>
                                 </div>
-                                <div><span
-                                        class="text-primary">支出科目：</span><span>{{select_info.account_subject[list.subject_id]}}</span>
+
+                                <div>
+                                    <span class="text-primary">账户类型：</span>
+                                    <span>{{select_info.payment[list.customer_account_type]}}</span>
                                 </div>
-                                <div><span class="text-primary">应付金额：</span><span>{{list.amount_payable}}</span>
+                                <div>
+                                    <span class="text-primary">账户账号：</span>
+                                    <span>{{list.customer_account_num}}</span>
                                 </div>
                                 <!--<div><span class="text-primary">账户余额：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">付款方式：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">月单价：</span><span>dfsdf</span></div>-->
                             </div>
                             <div class="col-md-6">
+                                <div>
+                                    <span class="text-primary">支出科目：</span>
+                                    <span>{{select_info.account_subject[list.subject_id]}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">应付金额：</span>
+                                    <span>{{list.amount_payable}}</span>
+                                </div>
                                 <!--<div><span class="text-primary">应付金额：</span><span>{{details_info.amount_paid}}</span></div>-->
-                                <div><span class="text-primary">实付金额：</span><span>{{list.amount_paid}}</span>
+                                <div>
+                                    <span class="text-primary">实付金额：</span>
+                                    <span>{{list.amount_paid}}</span>
                                 </div>
                                 <!--<div><span class="text-primary">累计实付：</span><span>sdfdsf</span></div>-->
-                                <div><span class="text-primary">剩余款项：</span><span>{{list.balance}}</span></div>
-                                <div><span class="text-primary">补齐时间：</span><span>{{list.complete_date}}</span>
+                                <div>
+                                    <span class="text-primary">剩余款项：</span>
+                                    <span>{{list.balance}}</span></div>
+                                <div>
+                                    <span class="text-primary">补齐时间：</span>
+                                    <span>{{list.complete_date}}</span>
                                 </div>
-                                <div><span class="text-primary">备注：</span><span>{{list.remark}}</span></div>
+                                <div>
+                                    <span class="text-primary">备注：</span>
+                                    <span>{{list.remark}}</span>
+                                </div>
                                 <!--<div><span class="text-primary">签约人：</span><span>sdfdsf</span></div>-->
                                 <!--待入账的没有-->
                                 <!--<div><span class="text-primary">付款人员：</span><span>sdfdsf</span></div>-->
@@ -243,6 +268,7 @@
         components: {Status, ShouldPay, SelectHouse, SelectClient},
         data(){
             return {
+                detailsStatus: true,
                 descriptions: [],
                 select_info: [],
 //                should_id: '',              //应付ID
@@ -325,7 +351,11 @@
                     this.$http.get('account/payable/' + val).then((res) => {
                         this.details_info = [];
                         this.details_info.push(res.data.data);
-//                        console.log(res.data.data.description.split('/'));
+                        if(res.data.data.balance === '0.00'){
+                            this.detailsStatus = false;
+                        }else{
+                            this.detailsStatus = true;
+                        }
                         this.descriptions = res.data.data.description.split('/');
 
                     });

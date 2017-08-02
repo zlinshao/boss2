@@ -71,16 +71,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">应付金额</label>
+                                <label class="col-sm-2 control-label">账户类型</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="list.amount_payable" readonly>
+                                    <input type="text" class="form-control" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">实付金额</label>
+                                <label class="col-sm-2 control-label">账户账号</label>
                                 <div class="col-sm-10">
-                                    <input type="number" v-model="payable" class="form-control">
+                                    <input type="number" class="form-control">
                                 </div>
                             </div>
 

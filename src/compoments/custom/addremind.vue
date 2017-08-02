@@ -111,6 +111,7 @@
                     format: 'yyyy-mm-dd hh:00',
                     todayBtn: 1,
                     autoclose: 1,
+                    initialDate: new Date(),
                     pickerPosition: 'bottom-left',
                     clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
