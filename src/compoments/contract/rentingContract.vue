@@ -10,12 +10,10 @@
             <div class="panel-body">
                 <div v-if="contractSeleted === 0">
                     <div class="pro-sort">
-                        <label>
-                            <select class="form-control" @change="search" v-model="contractSearchInfo.passed">
-                                <option value="">合同状态</option>
-                                <option v-for="(value,key) in dictionary.passed" :value="key">{{value}}</option>
-                            </select>
-                        </label>
+                        <select class="form-control" @change="search" v-model="contractSearchInfo.passed">
+                            <option value="">合同状态</option>
+                            <option v-for="(value,key) in dictionary.passed" :value="key">{{value}}</option>
+                        </select>
                     </div>
                     <div class="pro-sort">
                         <label>
@@ -434,5 +432,13 @@
     }
     .myIcon{
         padding: 0;
+    }
+    @media (max-width: 767px) {
+        select{
+            margin-bottom: 5px;
+        }
+        .pro-sort{
+            margin-top: 0px;
+        }
     }
 </style>

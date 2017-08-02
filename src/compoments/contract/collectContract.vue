@@ -438,4 +438,12 @@
     .myIcon{
         padding: 0;
     }
+    @media (max-width: 767px) {
+        select{
+            margin-bottom: 5px;
+        }
+        .pro-sort{
+            margin-top: 0px;
+        }
+    }
 </style>
