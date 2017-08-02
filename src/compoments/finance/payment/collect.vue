@@ -112,9 +112,9 @@
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
                             <td>
-                                <button type="button" :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                <label :class="{'label':true,'label-warning ':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}
-                                </button>
+                                </label>
                             </td>
                             <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id}}">详情</router-link></td>
                         </tr>
@@ -638,5 +638,11 @@
 
     .status.green {
         background-color: #78CD51;
+    }
+
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
     }
 </style>

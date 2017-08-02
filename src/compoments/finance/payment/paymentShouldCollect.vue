@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">收款方式</label>
+                                <label class="col-sm-2 control-label">收款方式<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <select class="form-control" @change="getAccount" v-model="cate">
                                         <option value="">--请选择--</option>
@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">收款账户</label>
+                                <label class="col-sm-2 control-label">收款账户<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <select class="form-control" v-model="formData.account_id">
                                         <option value="">--请选择--</option>
@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">实收金额</label>
+                                <label class="col-sm-2 control-label">实收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="number" min="0" class="form-control" v-model="formData.amount_received" @blur="getBalance">
                                 </div>
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">补齐时间</label>
+                                <label class="col-sm-2 control-label">补齐时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
                                            class="form-control form_datetime" readonly v-model="formData.complete_date">

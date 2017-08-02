@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <form class="form-inline clearFix" role="form">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="点击选择部门/员工"
+                        <input type="text" class="form-control" placeholder="点击选择部门"
                                v-model="selected" @click='select' readonly>
                         <span class="input-group-btn">
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
@@ -140,6 +140,11 @@
     div.padd {
         display: inline-block;
         /*padding: 0 15px 0 0;*/
+    }
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
     }
 </style>
 <script>
@@ -305,7 +310,7 @@
             },
             getDate(data){
                 console.log(data);
-                this.date_range = data;
+                this.params.date_range = data;
                 this.search(1);
             },
             clearSelect(){
