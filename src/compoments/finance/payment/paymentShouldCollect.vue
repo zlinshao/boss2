@@ -96,10 +96,10 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">截图凭证</label>
                                 <div class="col-sm-10">
-                                    <span v-if="msg.album==undefined">
+                                    <span v-if="msg.album==undefined||msg.album.length==0">
                                         无
                                     </span>
-                                    <span v-else="msg.album==undefined">
+                                    <span v-else="msg.album==undefined||msg.album.length==0">
                                         <img  :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
                                     </span>
                                 </div>
@@ -179,7 +179,6 @@
         },
         watch : {
             id(val){
-                console.log(val);
                 this.currentId = val;
                 this.largePic = [];
                 this.srcs = {};
@@ -212,7 +211,7 @@
                 this.formData.complete_date = '';
                 this.formData.remark = '';
                 this.largePic = [];
-                this.srcs = {};
+//                this.srcs = {};
 
                 $('#collectFor').modal('hide');
             },
@@ -244,6 +243,7 @@
                         if (this.msg.album!=undefined){
 //                            alert(1)
                             this.srcs = this.msg.album.receipt_pic;
+                            console.log(this.srcs)
                             this.beforeBalance = this.msg.balance;
                         }
                     })
@@ -255,8 +255,9 @@
                     src : this.srcs,
                     i : num
                 }];
-//                console.log(this.largePic)
-                $('#largePic').modal('show');
+//                alert(this.largePic[0].src[10705].raw)
+                console.log(this.largePic)
+                $('.largePic:eq(0)').modal('show');
             },
 
 //            根据收款方式获取收款账户

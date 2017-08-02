@@ -223,11 +223,12 @@
 
         <SelectHouse @House="getHouse"></SelectHouse>
         <SelectClient @clientAdd="getClient"></SelectClient>
-        <PicModal :largePic="largePic"></PicModal>
+
 
         <!--应收入账-->
         <ShouldCollect :id="currentId" @success="getDetails"></ShouldCollect>
 
+        <PicModal :largePic="largePic"></PicModal>
     </div>
 </template>
 
@@ -420,7 +421,7 @@
                     i : num
                 }];
                 console.log(this.largePic)
-                $('#largePic').modal('show');
+                $('.largePic:eq(1)').modal('show');
             },
 //            应收入账
             addCollect(){
