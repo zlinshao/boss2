@@ -119,7 +119,9 @@
                             <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="13">暂无数据...</td>
+                            <td colspan="13" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

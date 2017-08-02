@@ -108,7 +108,9 @@
                             <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="16">暂无数据...</td>
+                            <td colspan="16" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

@@ -37,7 +37,7 @@
         <!--表格-->
         <div class="row">
             <div class="col-md-12">
-                <section class="panel table table-responsive">
+                <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
@@ -62,23 +62,20 @@
                             <td>{{item.collect}}</td>
                             <td>{{item.rent}}</td>
                         </tr>
-                        <tr v-show="isShow" class="text-center">
-                            <td colspan="7">暂无数据...</td>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="7" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
-
-
                         </tbody>
                     </table>
                 </section>
             </div>
         </div>
 
-        <div class="col-lg-12">
-
-        </div>
 
         <!--modal-->
-        <div class="modal fade bs-example-modal-lg" id="showDetail" tabindex="-1"  role="dialog" aria-labelledby="myModalLabel">
+        <!--<div class="modal fade bs-example-modal-lg" id="showDetail" tabindex="-1"  role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -123,7 +120,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -136,10 +133,6 @@
 <style scoped>
     .tagsinput{
         border:none;
-    }
-    h4{
-        display: inline-block;
-        margin: 0;
     }
     .table-striped tbody tr{
         cursor: pointer;

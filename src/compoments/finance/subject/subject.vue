@@ -76,7 +76,9 @@
                             <td>{{item.remark}}</td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="5">暂无数据...</td>
+                            <td colspan="5" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

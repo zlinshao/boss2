@@ -89,7 +89,9 @@
                             <td>{{item.operator_name}}</td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="11">暂无数据...</td>
+                            <td colspan="11" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

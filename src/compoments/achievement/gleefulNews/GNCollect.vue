@@ -40,7 +40,7 @@
         <!--表格-->
         <div class="row">
             <div class="col-md-12">
-                <section class="panel table-responsive">
+                <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
@@ -80,7 +80,9 @@
 
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="20">暂无数据...</td>
+                            <td colspan="20" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
 
 

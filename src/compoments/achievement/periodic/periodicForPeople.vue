@@ -33,8 +33,8 @@
         <!--表格-->
         <div class="row">
             <div class="col-md-12">
-                <section class="panel table table-responsive">
-                    <table class="table table-striped table-advance">
+                <section class="panel table table-responsive roll">
+                    <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
                             <!--<th class="text-center">城市</th>-->
@@ -58,7 +58,9 @@
                             <td></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="6">暂无数据...</td>
+                            <td colspan="6" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
