@@ -506,7 +506,6 @@
                     this.$http.get('api/picture/poll').then((res) => {
                         this.$http.post('core/collect/updatecontract',this.contractEdit).then((res) => {
                             if(res.data.code === "70010"){
-                                this.myIsEditCollect = false;
                                 this.$emit('EditStatus','success');
                                 $('#contractEdit').modal('hide');
                                 this.info.success = res.data.msg;
