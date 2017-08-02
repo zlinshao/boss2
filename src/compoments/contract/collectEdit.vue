@@ -191,7 +191,7 @@
     import upLoad from '../common/upload.vue'
     import Status from '../common/status.vue'
     export default{
-        props:['contractEitId','dictionary'],
+        props:['contractEitId','dictionary','isEditCollect'],
         components:{
             SelectClient,
             upLoad,
@@ -275,6 +275,7 @@
                 more:1,
                 flag:'',
                 isClick :false,
+                myIsEditCollect : false,
             }
         },
         updated(){
@@ -287,6 +288,10 @@
             contractEitId(val){
                 this.myContractEitId = val;
                 this.gitContractInfo();
+            },
+            isEditCollect(val){
+                this.myIsEditCollect = val;
+                if(this.myIsEditCollect) this.gitContractInfo();
             },
             'contractEdit.vac_start_date' : {
                 deep:true,
@@ -454,42 +459,42 @@
             },
             //删除照片ID
             picDelete (val){
-                let bank = this.bankPic.cus_idPhoto.indexOf(val);
+                let bank = this.contractEdit.bank_pic.indexOf(val);
                 if (bank > -1) {
                     this.bankPic.cus_idPhoto.splice(bank, 1);
                     this.contractEdit.bank_pic.splice(bank, 1);
                 }
-                let contract = this.contractPic.cus_idPhoto.indexOf(val);
+                let contract = this.contractEdit.contract_pic.indexOf(val);
                 if (contract > -1) {
                     this.contractPic.cus_idPhoto.splice(contract, 1);
                     this.contractEdit.contract_pic.splice(contract, 1);
                 }
-                let water = this.waterPic.cus_idPhoto.indexOf(val);
+                let water = this.contractEdit.water_card_pic.indexOf(val);
                 if (water > -1) {
                     this.waterPic.cus_idPhoto.splice(water, 1);
                     this.contractEdit.water_card_pic.splice(water, 1);
                 }
-                let ele = this.elePic.cus_idPhoto.indexOf(val);
+                let ele = this.contractEdit.elec_card_pic.indexOf(val);
                 if (ele > -1) {
                     this.elePic.cus_idPhoto.splice(ele, 1);
                     this.contractEdit.elec_card_pic.splice(ele, 1);
                 }
-                let gas = this.gasPic.cus_idPhoto.indexOf(val);
+                let gas = this.contractEdit.gas_card_pic.indexOf(val);
                 if (gas > -1) {
                     this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.contractEdit.gas_card_pic.splice(gas, 1);
                 }
-                let proxy = this.proxyPic.cus_idPhoto.indexOf(val);
+                let proxy = this.contractEdit.proxy_pic.indexOf(val);
                 if (proxy > -1) {
                     this.proxy.cus_idPhoto.splice(proxy, 1);
                     this.contractEdit.proxy_pic.splice(proxy, 1);
                 }
-                let handover = this.handoverPic.cus_idPhoto.indexOf(val);
+                let handover = this.contractEdit.handover_pic.indexOf(val);
                 if (handover > -1) {
                     this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractEdit.handover_pic.splice(handover, 1);
                 }
-                let receipt = this.receiptPic.cus_idPhoto.indexOf(val);
+                let receipt = this.contractEdit.receipt_pic.indexOf(val);
                 if (receipt > -1) {
                     this.receiptPic.cus_idPhoto.splice(receipt, 1);
                     this.contractEdit.receipt_pic.splice(receipt, 1);
@@ -501,6 +506,7 @@
                     this.$http.get('api/picture/poll').then((res) => {
                         this.$http.post('core/collect/updatecontract',this.contractEdit).then((res) => {
                             if(res.data.code === "70010"){
+                                this.myIsEditCollect = false;
                                 this.$emit('EditStatus','success');
                                 $('#contractEdit').modal('hide');
                                 this.info.success = res.data.msg;

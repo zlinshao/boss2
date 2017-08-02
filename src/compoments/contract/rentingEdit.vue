@@ -157,7 +157,7 @@
     import upLoad from '../common/upload.vue'
     import Status from '../common/status.vue'
     export default{
-        props:['contractEitId','dictionary'],
+        props:['contractEitId','dictionary','isEditRent'],
         components:{
             SelectClient,
             upLoad,
@@ -225,6 +225,7 @@
                 },
                 more:1,
                 flag:'',
+                myIsEditRent : false,
             }
         },
         mounted(){
@@ -239,8 +240,11 @@
             },
             contractEitId(val){
                 this.myContractEitId = val;
-                this.gitContractInfo();
             },
+            isEditRent(val){
+                this.myIsEditRent = val;
+                if(this.myIsEditRent) this.gitContractInfo();
+            }
         },
         methods : {
             gitContractInfo(){
@@ -396,6 +400,7 @@
                         this.$http.post('core/rent/updatecontract',this.contractEdit).then((res) => {
                             if(res.data.code === "80010"){
                                 this.$emit('EditStatus','success');
+                                this.myIsEditCollect = false;
                                 $('#rentingEdit').modal('hide');
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***

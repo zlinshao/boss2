@@ -658,7 +658,8 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :isEditCollect="isEditCollect"
+                     :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>-->
@@ -712,6 +713,7 @@
                     error: ''
                 },
 //                isCompared:false,
+                isEditCollect : false,
                 villaId : '',
                 contract_pass:'',
                 passDictionary:[],//通过字典
@@ -758,6 +760,8 @@
                 $('#contractInfo').modal('show');
             },
             editContract(){
+                $('.rem_div').remove();
+                this.isEditCollect = true;
                 $('#contractEdit').modal('show');
             },
             renewContract(){    //续约合同
@@ -788,7 +792,10 @@
                 $('#largePic').modal('show');
             },
             editSuccess(val){   //成功编辑之后重新请求合同详情
-                if(val === 'success') this.contractDetail();
+                this.isEditCollect = false;
+                if(val === 'success') {
+                    this.contractDetail();
+                }
             },
 //            compareContract(){  //合同对比
 //                this.isCompared = true;
