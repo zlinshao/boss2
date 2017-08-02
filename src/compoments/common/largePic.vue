@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade modal-dialog-center in" id="largePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal fade modal-dialog-center in largePic" id="largePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
@@ -112,6 +112,7 @@
                     this.src = val[0].src;
                     this.index = val[0].i;
                     this.idArr = [];
+                    console.log(this.src)
 //                console.log(this.src[this.index].big)
                     for (let key in this.src){
 //                    console.log(key);

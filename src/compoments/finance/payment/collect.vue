@@ -63,11 +63,11 @@
         <div class="panel tips">
             <ul class="clearFix">
                 <li class="col-md-4">
-                    应付金额(元) <br>
+                    应收金额(元) <br>
                     <span class="green">{{tips.receivable_sum}}</span>
                 </li>
                 <li class="col-md-4">
-                    实付金额(元) <br>
+                    实收金额(元) <br>
                     <span class="green">{{tips.received_sum}}</span>
                 </li>
                 <li class="col-md-4">
