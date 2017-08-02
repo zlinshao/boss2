@@ -74,11 +74,11 @@
                 <section class="panel">
                     <div class="panel-body">
                         <header class="panel-heading">
-
+                            系统公告
                         </header>
                         <div class="table table-responsive roll">
                             <!--系统公告-->
-                            <table class="table table-striped table-advance table-hover">
+                            <table class="table table-advance table-hover">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">发布时间</th>

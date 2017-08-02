@@ -1,0 +1,307 @@
+<template>
+    <div>
+        <section class="panel">
+            <div class="panel-body">
+                <div>
+                    <!--<div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px;">-->
+                        <!--<div class="input-group">-->
+                            <!--<input type="text" @click="dis_staff"-->
+                                   <!--class="form-control" v-model="staff_man"-->
+                                   <!--placeholder="请选择员工" readonly>-->
+                            <!--<span class="input-group-btn">-->
+                            <!--<button class="btn btn-warning" type="button">清空</button>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="pro-sort">
+                        <input type="text" @click="dis_staff"
+                               class="form-control" v-model="staff_man"
+                               placeholder="请选择员工" readonly>
+                    </div>
+                    <div class="pro-sort">
+                        <input type="text" @click="dis_branch"
+                               class="form-control" v-model="department_branch"
+                               placeholder="请选择部门" readonly>
+                    </div>
+                    <div class="pro-sort">
+                        <input @click="remindTimes()" type="text" placeholder="开始时间"
+                               v-model="startTimes" class="form-control remindTime" readonly>
+                        <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
+                    </div>
+                    <div class="pro-sort">
+                        <input @click="remindTimes()" type="text" placeholder="结束时间"
+                               v-model="endTime" class="form-control remindTime" readonly>
+                        <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
+                    </div>
+                    <div class="pro-sort">
+                        <button class="btn btn-success" type="button" @click="punch_record(1,'resetting')">重置</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel table-responsive roll">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">员工</th>
+                            <th class="text-center">姓名</th>
+                            <th class="text-center">性别</th>
+                            <th class="text-center">部门</th>
+                            <th class="text-center">人员状态</th>
+                            <th class="text-center">打卡时间</th>
+                            <th class="text-center">打卡情况</th>
+                            <th class="text-center">打卡地点</th>
+                            <th class="text-center">操作记录</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="list in punch_list">
+                            <td class="text-center">
+                                <img :src="list.avatar" class="head" v-if="list.avatar !== ''">
+                                <img src="../../assets/img/head.png" class="head" v-if="list.avatar === ''">
+                            </td>
+                            <td class="text-center">{{list.real_name}}</td>
+                            <td class="text-center">{{list.gender}}</td>
+                            <td class="text-center">{{list.name}}</td>
+                            <td class="text-center">
+                                <a v-if="true" class="btn btn-success btn-sm">在职</a>
+                                <!--<a v-if="true" class="btn btn-warning btn-sm">离职</a>-->
+                            </td>
+                            <td class="text-center">{{list.name}}</td>
+                            <td class="text-center">{{list.name}}</td>
+                            <td class="text-center">{{list.name}}</td>
+                            <td class="text-center" @click="more_content()">
+                                {{list.name}}
+                            </td>
+                        </tr>
+                        <tr v-show="isShow">
+                            <td colspan="9" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+
+        <!--分页-->
+        <Page @pag="punch_record" :pg="paging" :beforePage="beforePage"></Page>
+
+        <!--人资管理-->
+        <SelectStaff @Staff="selectDateSend" :configure="configure"></SelectStaff>
+    </div>
+</template>
+
+<script>
+    import DatePicker from '../common/datePicker.vue'                   //时间
+    import SelectStaff from '../common/organization/selectStaff.vue'    //人资管理
+    import Page from '../common/page.vue'                               //分页
+    export default {
+        components: {Page, SelectStaff, DatePicker},
+        data (){
+            return {
+//                dateConfigure: [
+//                    {
+//                        range: true,
+//                        needHour: true
+//                    }
+//                ],
+//                range: '',                    //日期
+                startTimes: '',                 //开始时间
+                endTime: '',                    //结束时间
+                isActive: '',                   //详情
+                isShow: '',                     //暂无数据
+                beforePage: 1,                  //当前页数
+                select_info: '',                //字典
+                punch_list: [],                 //打卡记录列表
+                paging: '',                     //总页数
+                configure: [],
+                staff_man: [],                  //员工姓名
+                staff_id: [],                   //员工ID
+                department_branch: [],          //部门
+                department_id: [],              //部门ID
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                }
+            }
+        },
+        mounted (){
+            this.punch_record(1);
+        },
+        updated (){
+            this.remindTimes();
+        },
+        watch: {
+            'startTimes': {
+                deep: true,
+                handler(val, oldVal){
+                    this.punch_record(1);
+                }
+            },
+            'endTime': {
+                deep: true,
+                handler(val, oldVal){
+                    this.punch_record(1);
+                }
+            },
+        },
+        methods: {
+//            时间
+//            getDate(data){
+//                this.range = data;
+//                console.log(data);
+//                this.punch_record(1);
+//            },
+//            开始时间
+            remindTimes (){
+                $('.remindTime').datetimepicker({
+                    minView: 'month',                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    initialDate: new Date(),
+                    pickerPosition: 'bottom-left',
+                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    if (ev.target.placeholder === '开始时间') {
+                        this.startTimes = ev.target.value;
+                    } else {
+                        this.endTime = ev.target.value;
+                    }
+                }.bind(this));
+            },
+
+//            组织架构员工
+            dis_staff (){
+                $('#selectCustom').modal('show');
+                this.configure = {
+                    length: 1,
+                    class: 'amount'
+                };
+            },
+//            组织架构部门
+            dis_branch (){
+                $('#selectCustom').modal('show');
+                this.configure = {
+                    class: 'selectType',
+                    type: 'department'
+                };
+            },
+
+//            获得派发对象
+            selectDateSend (val){
+                if (val.department.length === 0) {
+                    this.empty_staff();
+                    this.staff_man.push(val.staff[0].name);
+                    this.staff_id.push(val.staff[0].id);
+                    this.punch_record(1);
+                } else if (val.staff.length === 0) {
+                    this.empty_branch();
+                    this.department_branch.push(val.department[0].name);
+                    this.department_id.push(val.department[0].id);
+                    this.punch_record(1);
+                }
+
+            },
+
+//            清空员工ID
+            empty_staff (){
+                this.staff_man = [];
+                this.staff_id = [];
+            },
+//            清空部门ID
+            empty_branch (){
+                this.department_branch = [];
+                this.department_id = [];
+            },
+
+//            详细内容
+            more_content (val){
+                this.isActive = val;
+            },
+
+//            打卡记录
+            punch_record (val, pun){
+                if (pun === 'resetting') {
+                    this.startTimes = '';                 //开始时间
+                    this.endTime = '';                    //结束时间
+                    this.staff_man = [];
+                    this.staff_id = [];
+                    this.department_branch = [];
+                    this.department_id = [];
+                }
+                this.beforePage = val;
+                this.$http.get('clock/index/dict').then((res) => {
+                    this.select_info = res.data;
+
+                    this.$http.post('clock/index/index/pages/' + val, {
+                        staff_id: String(this.staff_id),
+                        department_id: String(this.department_id),
+                        start_time: this.startTimes,
+                        end_time: this.endTime,
+                    }).then((res) => {
+                        this.paging = '';
+                        if (res.data.code === '30000') {
+                            this.punch_list = res.data.data.data;
+                            this.paging = res.data.data.pages;
+                            this.isShow = false;
+                        } else {
+                            this.punch_list = [];
+                            this.isShow = true;
+                        }
+                    })
+                });
+            }
+        }
+    }
+</script>
+
+
+<style scoped>
+
+    @media screen and (max-width: 767px) {
+        .table.table-responsive > .table > tbody > tr > td.phone {
+            min-width: 360px;
+            max-width: 420px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+    }
+
+    .more_info {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 300px;
+        cursor: pointer
+    }
+
+    .pro-sort {
+        padding-left: 10px;
+        display: inline-block;
+        height: 39px;
+    }
+
+    .head {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    input, label {
+        margin-bottom: 0;
+    }
+
+</style>

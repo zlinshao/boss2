@@ -68,6 +68,7 @@ import ReopetedRentDetail from './compoments/reported/rentDetail.vue'// 租房�
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
+import PunchRecord from './compoments/punchRecord/punchRecord.vue'           //打卡记录
 
 export default[
     {
@@ -372,6 +373,10 @@ export default[
         path: '/comparecontract',
         name: 'Comparecontract',
         component: Comparecontract
+    },{
+        path: '/punchRecord',
+        name: 'punchRecord',            //打卡记录
+        component: PunchRecord
     },
 
 

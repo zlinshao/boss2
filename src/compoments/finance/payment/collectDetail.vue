@@ -18,7 +18,7 @@
                     </span>
                     <div class="pull-right">
                         <button class="btn btn-primary">转为待处理项</button>
-                        <button v-show="msg.status!=3" class="btn btn-primary" @click="addCollect">应收入账</button>
+                        <button v-show="msg.status != 3" class="btn btn-primary" @click="addCollect">应收入账</button>
                     </div>
                 </div>
             </div>
