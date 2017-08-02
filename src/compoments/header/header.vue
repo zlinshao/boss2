@@ -463,7 +463,7 @@
                             <span>业绩管理</span>
                         </a>
                         <ul class="sub">
-                            <li class="sub-menu">
+                            <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>喜报管理</span>
                                 </a>
@@ -475,7 +475,7 @@
                                         <router-link to="/gNRenting">租房</router-link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>公司业绩</span>

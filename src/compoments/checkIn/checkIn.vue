@@ -10,10 +10,17 @@
                         <button class="btn btn-primary" type="button" @click="select">筛选员工</button>
                     </div>-->
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="点击选择部门/员工"
-                               v-model="selected" @click='select' readonly>
+                        <input type="text" class="form-control" placeholder="点击选择部门"
+                               v-model="departments" @click='selectDepartment' readonly>
                         <span class="input-group-btn">
-                            <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            <button class="btn btn-warning" type="button" @click="clearSelect(1)">清空</button>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="点击选择员工"
+                               v-model="staffs" @click='selectStaff' readonly>
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning" type="button" @click="clearSelect(2)">清空</button>
                         </span>
                     </div>
                     <div class="padd">
@@ -27,7 +34,7 @@
 
         <!--列表-->
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="checkInContainer clearFix">
 
                     <div class="checkInList" v-for="item in myData">
@@ -42,11 +49,11 @@
                             </div>
                             <div class="position">
                                 <i class="fa fa-map-marker"></i>&nbsp;
-                                {{item.province}}{{item.city}}{{item.district}}{{item.street}}{{item.township}}{{item.streetNumber}}
+                                {{item.detailPlace}}
                             </div>
                             <div class="time">
                                 <i class="fa fa-clock-o"></i>&nbsp;
-                                {{item.create_time}}
+                                {{item.timestamp}}
                             </div>
                         </div>
                     </div>
@@ -57,15 +64,17 @@
                     </div>
 
 
-                    <div class="page pull-right" v-show="paging>1">
-                        <button class="btn btn-white" :disabled="page==1" @click="prev">上一页</button>
-                        <button class="btn btn-white" :disabled="page==paging" @click="next">下一页</button>
+                    <div class="page pull-right">
+                        <span>第 {{page}} 页</span>
+                        <button class="btn btn-white" :disabled="this.page==1" @click="prev">上一页</button>
+                        <button class="btn btn-white" :disabled="this.page==this.paging" @click="next">下一页</button>
+                        <span>共 {{paging}} 页</span>
                     </div>
 
                 </div>
             </div>
 
-            <div class="col-md-9" v-show="isPc">
+            <div class="col-md-7" v-show="isPc">
                 <div id="mapContainer"></div>
             </div>
         </div>
@@ -97,11 +106,18 @@
                 ],
                 configure : {},
 
-                selected : [],
+                departments : [],
+                staffs : [],
+
+                selectType : 0,
                 params :{
-                    department_id : [],
-                    staff_id : [],
-                    date_range : '',
+                    department_id : '',
+                    staff_id : '',
+                    start_time :'',
+                    end_time : '',
+//                    offset : 0,
+//                    size : 5,
+//                    order : 'asc'
                 },
                 info: {
                     //成功状态 ***
@@ -124,36 +140,55 @@
                 setTimeout(this.getMap,1000)
             }
         },
-        watch : {
-            deep : true,
-            'params.date_range':{
-                handler(curVal,oldVal){
-                    console.log('now===='+curVal)
-                    console.log('old===='+oldVal)
-                }
-            }
-        },
         methods: {
             getCheckInList(){
-                this.$http.post('amap/signin/index')
+                this.$http.post('clock/sign/index?pages='+this.page,this.params)
                     .then(
                         (res) => {
 //                            console.log(res);
 
-                            if (res.data.code=='20011'){
-                                this.noData = true;
-                                this.paging = 0;
-                            } else {
+                            if (res.data.code=='30010'){
+//                                console.log(res.data.data);
                                 this.myData = res.data.data.data;
                                 this.paging = res.data.data.pages;
                                 this.noData = false;
+                                if (this.isPc){
+                                    setTimeout(this.getMap,1000)
+                                }
+                            } else {
+                                this.myData = [];
+                                this.noData = true;
+//                                this.paging = 0;
+
                             }
                         }
                     )
             },
+
+            prev(){
+                // 上一页
+                if (this.page==0){
+                    return;
+                }
+                this.this.page--;
+                this.getCheckInList();
+            },
+            next(){
+                // 下一页
+//                console.log(this.paging);
+                if (this.page==this.paging){
+                    return;
+                }
+                this.page++;
+//                console.log(this.params.offset)
+//                console.log(this.params)
+                this.getCheckInList();
+            },
+
             search(){
                 this.page = 1;
-                this.$http.post('amap/signin/search?page=1',this.params)
+                this.getCheckInList();
+                /*this.$http.post('amap/signin/search?page=1',this.params)
                     .then(
                         (res) => {
 //                                console.log(res);
@@ -179,7 +214,7 @@
                                 this.page = 1
                             }
                         }
-                    )
+                    )*/
 
             },
             getDate(data){
@@ -189,37 +224,56 @@
 //                if (data!=this.params.date_range){
 //                    alert(1)
 //                }
-                this.params.date_range = data;
+                this.params.start_time = data.split('to')[0];
+                this.params.end_time = data.split('to')[1];
                 this.search();
             },
-            select(){
+            selectDepartment(){
 
-                this.configure = {type: 'all', class: 'selectType'};
+                this.selectType = 1;
+//                this.configure = {type: 'all', class: 'selectType'};
+                this.configure={type:'department',class:'selectType'};
                 $('#selectCustom').modal('show');
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },
+            selectStaff(){
+                this.selectType = 2;
+                this.configure={type:'staff',class:'selectType'};
+                $('#selectCustom').modal('show');
+            },
             selectDateSend(val){
 //                console.log(val);
-                for(let i=0;i<val.department.length;i++){
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
-                }
-                for(let j=0;j<val.staff.length;j++){
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
-                }
-                this.search();
-//                this.filtrate.departmentList = val.department;
-//                this.filtrate.staffList = val.staff;
-
-            },
-            clearSelect(){
-                this.params.department_id = [];
-                this.params.staff_id = [];
                 this.selected = [];
+                if (this.selectType == 1){
+                    this.params.department_id = val.department[0].id;
+                    this.departments.push(val.department[0].name);
+                } else {
+                    this.params.staff_id = val.staff[0].id;
+                    this.staffs.push(val.staff[0].name);
+                }
+                this.search();
+//                console.log(this.params)
+            },
+
+            clearSelect(num){
+                if (num==1){
+                    if (this.departments.length==0){
+                        return
+                    }
+                    this.params.department_id = '';
+                    this.departments = [];
+                } else {
+                    if (this.staffs.length==0){
+                        return
+                    }
+                    this.params.staff_id = '';
+                    this.staffs = [];
+                }
+
                 this.search();
             },
+
 
             getMap(){
                 let map = new AMap.Map('mapContainer', {
@@ -235,7 +289,7 @@
                 for (let i =0;i<this.myData.length;i++){
                     markers.push({
                         'icon' : this.myData[i].avatar,
-                        'position' : this.myData[i].location.split(',')
+                        'position' : [this.myData[i].longitude,this.myData[i].latitude]
                     })
                 }
 //                console.log(markers)
@@ -254,18 +308,7 @@
                     });
                 });
             },
-            prev(){
-                // 上一页
-                this.page--;
-                this.searchByPage();
-            },
-            next(){
-                // 下一页
-//                console.log(this.paging);
-//                console.log(this.page)
-                this.page++;
-                this.searchByPage();
-            },
+
             IsPC(){
                 let userAgentInfo = navigator.userAgent;
                 let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
@@ -402,5 +445,9 @@
 
     .amap-markers .amap-marker .amap-icon img{
         border-radius: 50%;
+    }
+    .page span{
+        color: #999;
+        margin: 0 3px;
     }
 </style>

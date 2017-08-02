@@ -100,10 +100,9 @@
                             <td>{{item.received_amount}}</td>
                             <td>{{item.deal_time}}</td>
                             <td>
-                                <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
+                                <label  :class="{'label':true,'label-warning ':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
-                                </button>
+                                </label>
                             </td>
                             <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}">详情</router-link></td>
                         </tr>
@@ -365,5 +364,9 @@
         color: white;
         /*font-weight: bold;*/
     }
-
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
+    }
 </style>

@@ -259,4 +259,9 @@
     .tips ul li span.yellow{
         color: #FF9A02;
     }
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
+    }
 </style>
