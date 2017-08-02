@@ -63,15 +63,18 @@
                                 <img src="../../assets/img/head.png" class="head" v-if="list.avatar === ''">
                             </td>
                             <td class="text-center">{{list.real_name}}</td>
-                            <td class="text-center">{{list.gender}}</td>
-                            <td class="text-center">{{list.name}}</td>
                             <td class="text-center">
-                                <a v-if="true" class="btn btn-success btn-sm">在职</a>
-                                <!--<a v-if="true" class="btn btn-warning btn-sm">离职</a>-->
+                                <span v-if="list.gender === 1">男</span>
+                                <span v-if="list.gender === 2">女</span>
                             </td>
                             <td class="text-center">{{list.name}}</td>
-                            <td class="text-center">{{list.name}}</td>
-                            <td class="text-center">{{list.name}}</td>
+                            <td class="text-center">
+                                <a v-if="list.status === 1" class="btn btn-success btn-sm">在职</a>
+                                <a v-if="list.status === 3" class="btn btn-warning btn-sm">离职</a>
+                            </td>
+                            <td class="text-center">{{list.userCheckTime}}</td>
+                            <td class="text-center">{{select_info.timeResult[list.timeResult]}}</td>
+                            <td class="text-center">{{select_info.locationResult[list.locationResult]}}</td>
                             <td class="text-center" @click="more_content()">
                                 {{list.name}}
                             </td>
@@ -115,7 +118,7 @@
                 isActive: '',                   //详情
                 isShow: '',                     //暂无数据
                 beforePage: 1,                  //当前页数
-                select_info: '',                //字典
+                select_info: {},                //字典
                 punch_list: [],                 //打卡记录列表
                 paging: '',                     //总页数
                 configure: [],
@@ -243,7 +246,7 @@
                 }
                 this.beforePage = val;
                 this.$http.get('clock/index/dict').then((res) => {
-                    this.select_info = res.data;
+                    this.select_info = res.data.dict;
 
                     this.$http.post('clock/index/index/pages/' + val, {
                         staff_id: String(this.staff_id),
