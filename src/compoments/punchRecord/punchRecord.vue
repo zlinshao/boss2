@@ -315,6 +315,7 @@
     }
 
     .label{
+        display: inline-block;
         width: 70px;
     }
 
