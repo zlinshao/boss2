@@ -94,8 +94,8 @@
                             <td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>
                             <td class="text-center">{{item.content}}</td>
                             <td class="text-center">
-                                <span class="label label-success" v-if="item.passed === 5">{{dictionary.passed[item.passed]}}</span>
-                                <span class="label label-warning" v-if="item.passed !== 5">{{dictionary.passed[item.passed]}}</span>
+                                <span class="label label-success" v-if="item.passed > 4">已完成</span>
+                                <span class="label label-warning" v-if="item.passed < 5">{{dictionary.passed[item.passed]}}</span>
                             </td>
                         </tr>
                         <tr v-if="isShow">

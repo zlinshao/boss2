@@ -109,7 +109,7 @@
                                         <label class="col-xs-1" style="font-size: 20px">/</label>
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="number" class="form-control" placeholder="总楼层"
-                                                  @blur="computeTotalFloor" v-model="houseEdit.total_floor">
+                                                  @blur="computeFloor" v-model="houseEdit.total_floor">
                                         </div>
                                     </div>
                                 </div>
@@ -491,17 +491,13 @@
                     }
                 }
             },
-            computeTotalFloor(){
-                if(this.houseEdit.floor > this.houseEdit.total_floor &&  this.houseEdit.total_floor !==''){
-                    this.houseEdit.total_floor = '';
-                    this.info.error ='当前楼层不能大于总楼层！';
-                    //显示成功弹窗 ***
-                    this.info.state_error = true;
-                }
-            },
-            computeFloor(){
-                if(this.houseEdit.floor > this.houseEdit.total_floor &&  this.houseEdit.floor !==''){
-                    this.houseEdit.floor = '';
+            computeFloor(e){
+                if(this.houseAdd.floor > this.houseAdd.total_floor &&  this.houseAdd.total_floor !=='' && this.houseAdd.floor !== ''){
+                    if(e.target.placeholder === '总楼层'){
+                        this.houseAdd.total_floor = '';
+                    }else {
+                        this.houseAdd.floor = '';
+                    }
                     this.info.error ='当前楼层不能大于总楼层！';
                     //显示成功弹窗 ***
                     this.info.state_error = true;
