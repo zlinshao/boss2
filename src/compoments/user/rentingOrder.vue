@@ -16,8 +16,8 @@
                         </div>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <div class="input-group">
-                            <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control"  id="search_info" placeholder="请输入房屋地址"
+                            <!--<label class="sr-only" for="search_info">搜索</label>-->
+                            <input type="text" class="form-control"  placeholder="请输入房屋地址"
                                    v-model="keywords"  @keydown.enter="keywordSearch">
                             <span class="input-group-btn">
                                 <button class="btn btn-success"  @click="keywordSearch">

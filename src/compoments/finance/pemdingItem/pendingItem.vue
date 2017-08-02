@@ -27,8 +27,8 @@
                         </div>
 
                         <div class="input-group">
-                            <label class="sr-only" for="search_info">搜索</label>
-                            <input type="text" class="form-control" id="search_info" placeholder="房屋地址/租房人" v-model="params.search">
+                            <!--<label class="sr-only" for="search_info">搜索</label>-->
+                            <input type="text" class="form-control" placeholder="房屋地址/租房人" v-model="params.search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="" v-model="params.search">
                                     搜索
@@ -67,7 +67,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th>{{operId}}</th>
                             <th class="text-center">事项类型</th>
                             <th class="text-center">合同编号</th>
                             <th class="text-center">开单人</th>
@@ -85,7 +85,7 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in pendingList">
-                            <td><input type="checkbox" @click="picked($event)"></td>
+                            <td><input type="checkbox" @click="picked(item,$event)"></td>
                             <td>{{dictionary.item_type[item.item_type]}}</td>
                             <td>{{}}</td>
                             <td>{{}}</td>
@@ -182,9 +182,9 @@
                     console.log(this.pendingList)
                 })
             },
-            picked(e){
+            picked(item,e){
                 if(e.target.checked===true){
-                    this.operId = 1;
+                    this.operId = item.id;
                 }else {
                     this.operId = 0;
                 }

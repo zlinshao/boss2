@@ -20,7 +20,7 @@
                                         <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[0]"
-                                                   readonly placeholder="业主姓名" @click="selectClient(0)">
+                                                   readonly placeholder="租客姓名" @click="selectClient(0)">
                                         </div>
                                         <div class="col-sm-2 flexbox">
                                             <i class="fa fa-plus-circle" @click="addMore"></i>
@@ -31,28 +31,28 @@
                                         <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[1]"
-                                                   readonly placeholder="业主姓名" @click="selectClient(1)">
+                                                   readonly placeholder="租客姓名" @click="selectClient(1)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=3">
                                         <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[2]"
-                                                   readonly placeholder="业主姓名" @click="selectClient(2)">
+                                                   readonly placeholder="租客姓名" @click="selectClient(2)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=4">
                                         <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[3]"
-                                                   readonly placeholder="业主姓名" @click="selectClient(3)">
+                                                   readonly placeholder="租客姓名" @click="selectClient(3)">
                                         </div>
                                     </div>
                                     <div class="row" v-show="more>=5">
                                         <label class="col-sm-3 control-label col-lg-2" >附属租客</label>
                                         <div class="col-sm-7 col-lg-8">
                                             <input type="text" class="form-control" v-model="relative_customer[4]"
-                                                   readonly placeholder="业主姓名" @click="selectClient(4)">
+                                                   readonly placeholder="租客姓名" @click="selectClient(4)">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -95,7 +95,7 @@
                                     <hr>
                                     <h3>合同附件</h3>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">合同<sup>*</sup></label>
+                                        <label class="col-lg-2 control-label">合同照片<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
                                                      :result="'contractPic'" :idPhotos="contractPic"></up-load>
@@ -301,11 +301,11 @@
                 }
 
             },
-            selectClient(val){         //选择业主姓名
+            selectClient(val){         //选择租客姓名
                 this.flag = val;
                 $('#selectClient').modal('show');
             },
-            receiveClient(val){     //接收业主id
+            receiveClient(val){     //接收租客id
                 if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) == -1){
                     this.contractEdit.relative_customer_id .push(val.id);
                     this.relative_customer.push(val.name);
