@@ -294,4 +294,9 @@
     .selected{
         background: #fffcd9 !important;
     }
+    @media (max-width: 767px) {
+        .form-group {
+            margin-bottom: 15px;
+        }
+    }
 </style>

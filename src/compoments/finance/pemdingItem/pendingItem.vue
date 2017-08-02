@@ -8,20 +8,20 @@
             <div class="panel-body">
                 <div v-show="operId==0">
                     <form class="form-inline" v-show="operId==0" role="form">
-                        <div class="dropdown input-group">
-                            <select name="" class="form-control"  v-model="params.type">
+                        <div class="pro-sort">
+                            <select name="" class="form-control"  v-model="params.type" >
                                 <option value="">事件类型</option>
                                 <option :value="key" v-for="(value,key) in dictionary.item_type">{{value}}</option>
                             </select>
                         </div>
-                        <div class="dropdown input-group">
+                        <div class="pro-sort">
                             <select name="" class="form-control" v-model="params.collect_rent">
-                                <option value="">类型</option>
+                                <option value="">收租类型</option>
                                 <option :value="key" v-for="(value,key) in dictionary.collect_rent">{{value}}</option>
                             </select>
                         </div>
 
-                        <div class="padd">
+                        <div class="input-group">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
 
@@ -204,5 +204,8 @@
     tbody tr input[type=checkbox]{
         width: 17px;
         height: 17px;
+    }
+    select{
+        margin-bottom: 5px;
     }
 </style>
