@@ -45,7 +45,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">姓名</th>
+                            <th>员工姓名</th>
                             <th class="text-center">性别</th>
                             <th class="text-center">部门</th>
                             <th class="text-center">打卡时间</th>
@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                         <tr v-for="list in punch_list">
-                            <td class="text-center width100">
+                            <td class="width100">
                                 <img :src="list.avatar" class="head" v-if="list.avatar !== ''">
                                 <img src="../../assets/img/head.png" class="head" v-if="list.avatar === ''">
                                 {{list.real_name}}
@@ -66,8 +66,24 @@
                             </td>
                             <td class="text-center width180">{{list.name}}</td>
                             <td class="text-center width155">{{list.userCheckTime}}</td>
-                            <td class="text-center width80">{{select_info.timeResult[list.timeResult]}}</td>
-                            <td class="text-center width80">{{select_info.locationResult[list.locationResult]}}</td>
+                            <td class="text-center width80">
+                                <label v-if="select_info.timeResult[list.timeResult] === '正常'">
+                                    {{select_info.timeResult[list.timeResult]}}
+                                </label>
+                                <label v-if="select_info.timeResult[list.timeResult] !== '正常'"
+                                       class="label label-warning">{{select_info.timeResult[list.timeResult]}}
+                                </label>
+                            </td>
+                            <td class="text-center width80">
+                                <label v-if="select_info.locationResult[list.locationResult] === '范围内'">
+                                    {{select_info.locationResult[list.locationResult]}}
+                                </label>
+                                <label v-if="select_info.locationResult[list.locationResult] !== '范围内'"
+                                       class="label label-warning">
+                                    {{select_info.locationResult[list.locationResult]}}
+                                </label>
+
+                            </td>
                         </tr>
                         <tr v-show="isShow">
                             <td colspan="6" class="text-center text-muted">
@@ -294,8 +310,12 @@
         border-radius: 50%;
     }
 
-    input, label {
+    input{
         margin-bottom: 0;
+    }
+
+    .label{
+        width: 70px;
     }
 
 </style>

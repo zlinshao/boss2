@@ -73,14 +73,21 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">账户类型</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
+                                    <input type="text" class="form-control" readonly v-model="dict.payment[list.customer_account_type]">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">账户账号</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="text" class="form-control" v-model="list.customer_account_num" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">实收金额</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" v-model="payable">
                                 </div>
                             </div>
 
