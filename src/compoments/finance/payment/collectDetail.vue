@@ -45,7 +45,7 @@
                                     </span>
                                 </div>
                                 <div><span class="text-primary">收入科目：</span><span>{{dict.account_subject[msg.subject_id]}}</span></div>
-                                <div><span class="text-primary">付款方式：</span><span>{{msg.description.pay_type}}</span></div>
+                                <div><span class="text-primary">收款方式：</span><span>{{msg.description.pay_type}}</span></div>
                                 <div><span class="text-primary">月单价：</span><span>{{msg.description.price}}</span></div>
                                 <div><span class="text-primary">应收金额：</span><span>{{msg.amount_receivable}}</span></div>
                                 <div><span class="text-primary">实收金额：</span><span>{{msg.amount_received}}</span></div>
@@ -95,7 +95,7 @@
         </section>
 
 
-        <!--付款时间-->
+        <!--收款时间-->
         <div class="modal fade full-width-modal-right" id="moreTime" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -106,7 +106,7 @@
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
                             <div class="form-group" v-for="(item,index) in moreTime">
-                                <label class="col-sm-3 control-label">第{{index+1}}收付款时间</label>
+                                <label class="col-sm-3 control-label">第{{index+1}}收款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
                                         <input @click="remindData" placeholder="收款时间" readonly type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
@@ -367,7 +367,7 @@
                     pickerPosition : 'top-left'
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '收款时间'){
-                        // 编辑中的付款时间
+                        // 编辑中的收款时间
                         this.moreTime.splice(this.currentIndex,1,ev.target.value);
                     }
 //                    console.log(ev.target.value);

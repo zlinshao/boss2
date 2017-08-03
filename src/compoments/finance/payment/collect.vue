@@ -155,7 +155,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">详情</label>
+                                <label class="col-sm-2 control-label">详情<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" v-model="formData.description">
                                 </div>
@@ -592,7 +592,7 @@
     }
     .tips ul li span{
         font-size: 18px;
-        padding-left: 8px;
+        /*padding-left: 8px;*/
         /*font-weight: bold;*/
     }
     .tips ul li span.green{
