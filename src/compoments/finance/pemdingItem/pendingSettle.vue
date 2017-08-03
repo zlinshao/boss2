@@ -1,22 +1,21 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right" id="add" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right pendingSettle" id="pendingSettle" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">新增待处理项</h4>
+                            <h4 class="modal-title">结算</h4>
                         </div>
                         <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">事件类型</label>
                                     <div class="col-sm-10">
-                                        <select name="type" class="form-control" v-model="pendingAdd.item_type">
-                                            <option value="">调房</option>
-                                            <option value="1">转租</option>
-                                            <option value="1">退房</option>
+                                        <select name="type" class="form-control" v-model="pendingSellter.item_type">
+                                            <option value="">事件类型</option>
+                                            <option :value="key" v-for="(value,key) in myDictionary.item_type">{{value}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -24,7 +23,7 @@
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="pendingAdd.customer_id" @click="selectPayClient" readonly>
+                                               v-model="customer_name" @click="selectPayClient" readonly>
                                     </div>
                                 </div>
 
@@ -32,7 +31,7 @@
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="pendingAdd.house_id" @click="selectHouse" readonly >
+                                               v-model="house_name" @click="selectHouse" readonly >
                                     </div>
                                 </div>
 
@@ -45,34 +44,36 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">合同开始和结束时间</label>
                                     <div class="col-sm-8" style="padding-bottom: 18px;">
-                                        <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                                        <DatePicker :dateConfigure="dateConfigure"
+                                                   :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">应退</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" v-model="refund_should">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">实际扣款</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" readonly>
+                                        <input type="number" class="form-control" readonly v-model="refund_diff">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">实际退款</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" readonly>
+                                        <input type="number" class="form-control" readonly v-model="refund_real">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算方式</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control">
-                                            <option value="">银行卡</option>
+                                        <select class="form-control" v-model="account_type">
+                                            <option value="">结算方式</option>
+                                            <option :value="key" v-for="(value,key) in myDictionary.payment">{{value}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -80,7 +81,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算账户</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" v-model="account_num">
                                     </div>
                                 </div>
 
@@ -95,14 +96,14 @@
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="pendingAdd.department_id" @click="selectDpm" readonly>
+                                               v-model="department_name" @click="selectDpm" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly v-model="pendingAdd.operator_id">
+                                        <input type="text" class="form-control" readonly v-model="operator_name">
                                     </div>
                                 </div>
 
@@ -116,7 +117,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" v-model="pendingSellter.remark"></textarea>
                                     </div>
                                 </div>
 
@@ -125,7 +126,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default">取消</button>
-                            <button type="button" class="btn btn-primary" @click="addPending">保存</button>
+                            <button type="button" class="btn btn-primary" @click="addPending">结算</button>
                         </div>
 
                     </div>
@@ -146,6 +147,7 @@
     import Department from  '../../common/organization/selectStaff.vue'
     import Status from '../../common/status.vue'
     export default{
+        props:['settleId' , "dictionary" , 'collect_rent'],
         components: {DatePicker , Client , House , Department , Status},
         data(){
             return {
@@ -167,7 +169,7 @@
                     //失败信息 ***
                     error: ''
                 },
-                pendingAdd:{
+                pendingSellter:{
                     collect_rent:'',            //收 租
                     item_type : '',             //1 新租 2 续租 3 转租 4 调租
                     staff_id : '',              //开单人id
@@ -176,33 +178,87 @@
                     customer_id : '',           //客户id
                     start_date : '',            //开始日期
                     end_date : '',              //结束日期
-                    water_fee : '',             //水费
-                    elec_fee : '',              //电费
-                    gas_fee : '',               //燃气
-                    property_fee : '',          //物业费
-                    penalty_fee : '',           //违约金
-                    check_fee : '',             //物业校验
-                    sublet_fee : '',            //转租费用
-                    manage_fee : '',            //管理费
-                    net_fee : '',               //网络费
                     operator_id : '',           //经手人i
                     status : '',                //状态
+                    remark : '',
                 },
                 staff_name : '',
+                myDictionary: [],
+                mySettleId : '',
+                pendingSettleList : [],
+                customer_name : '',
+                department_name : '',
+                house_name:'',
+                operator_name : '',
+                currentDate : [],
+                refund_should:'',
+                refund_diff: '',
+                refund_real :"",
+                account_type : '',
+                account_num : '',
             }
         },
         created (){
             this.Info();
         },
+        watch:{
+            settleId(val){
+                this.mySettleId =val;
+                this.getSettleList ();
+            },
+            dictionary(val){
+                this.myDictionary = val;
+            },
+            collect_rent(val){
+                this.pendingSellter.collect_rent = val;
+            }
+        },
         methods: {
             Info(){
                 this.$http.get('staff/info').then((res)=>{
-                    this.pendingAdd.staff_id=res.data.id;
+                    this.pendingSellter.staff_id=res.data.id;
                     this.staff_name=res.data.name;
                 })
             },
-            selectClient(){},
-            getDate(data){},
+            getSettleList(){
+                this.$http.get('account/pending/' + this.mySettleId).then((res) =>{
+                    if(res.data.code === '18800'){
+//                        this.pendingSettleList = [];
+//                        this.pendingSettleList .push(res.data.data);
+                        console.log(res.data.data)
+                        //****f赋值
+                        this.pendingSellter.item_type =res.data.data.item_type;
+                        this.pendingSellter.customer_id =res.data.data.customer_id;
+                        this.customer_name =res.data.data.customer_name;
+                        this.pendingSellter.house_id =res.data.data.house_id;
+                        this.house_name =res.data.data.detailed_address;
+                        this.pendingSellter.department_id =res.data.data.department_id;
+                        this.department_name =res.data.data.department_name;
+                        this.pendingSellter.start_date =res.data.data.start_date;
+                        this.pendingSellter.end_date =res.data.data.end_date;
+                        this.pendingSellter.operator_id =res.data.data.operator_id;
+                        this.pendingSellter.status =res.data.data.status;
+                        this.account_type =res.data.data.account_type;
+                        this.account_num =res.data.data.account_num;
+                        this.refund_should =res.data.data.refund_should;
+                        this.refund_diff =res.data.data.refund_diff;
+                        this.refund_real =res.data.data.refund_real;
+                        this.operator_name =res.data.data.operator_name;
+                        this.currentDate.push(res.data.data.start_date);
+                        this.currentDate.push(res.data.data.end_date);
+
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+
+                })
+            },
+            getDate(val){
+                this.pendingSellter.start_date = val.split('to')[0];
+                this.pendingSellter.end_date = val.split('to')[1];
+            },
             selectPayClient(){      //选择客户
                 $('.selectClient:eq(0)').modal('show');
             },
@@ -223,7 +279,16 @@
                 console.log(val)
             },
             addPending(){
-                this.$http.post('core/customer',this.pendingAdd).then((res) =>{
+                this.$http.post('account/pending/settle/' + this.mySettleId,this.pendingSellter).then((res) =>{
+                    if(res.data.code === '18810'){
+                        this.info.success =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
 
                 })
             }
