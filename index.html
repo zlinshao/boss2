@@ -20,6 +20,7 @@
     <link href="src/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <!--right slidebar-->
     <link href="src/assets/css/slidebars.css" rel="stylesheet">
+    <link href="src/assets/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet"> <!--备忘录-->
 
     <!--more pics-->
     <link href="src/assets/css/dropzone.css" rel="stylesheet">
@@ -38,15 +39,15 @@
     <link href="src/assets/css/style.css" rel="stylesheet">
     <link href="src/assets/css/style-responsive.css" rel="stylesheet"/>
     <link href="src/assets/css/loading.css" rel="stylesheet"/>
-  <script>
-      window.onload=function(){
-          document.getElementById('log').style.display='none';
+    <script>
+        window.onload = function () {
+            document.getElementById('log').style.display = 'none';
 
-          if (navigator.userAgent.indexOf('WebKit') === -1 || navigator.userAgent.indexOf('Edge') != -1) {
-              document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/">下载</a></h4>');
-          }
-      };
-  </script>
+            if (navigator.userAgent.indexOf('WebKit') === -1 || navigator.userAgent.indexOf('Edge') != -1) {
+                document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/">下载</a></h4>');
+            }
+        };
+    </script>
 </head>
 <body>
 <div id="log">
@@ -69,6 +70,8 @@
 <script src="src/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="src/assets/js/bootstrap-datetimepicker.js"></script>       <!--日期选择-->
 <script src="src/assets/js/bootstrap-datetimepicker.zh-CN.js"></script> <!--日期汉化-->
+<script src="src/assets/fullcalendar/fullcalendar.min.js"></script>     <!--备忘录-->
+<script src="src/assets/fullcalendar/external-dragging-calendar.js"></script> <!--备忘录-->
 
 <script src="src/assets/js/moment.min.js"></script>
 <script src="src/assets/js/daterangepicker.js"></script>
