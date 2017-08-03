@@ -48,7 +48,6 @@
                                 <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
                                 <div><span class="text-primary">付款方式：</span>
                                     <span>
-                                        <!--支付宝-->
                                         {{dict.rent_payment[msg.payment[0].payment_id]}}
                                         &nbsp;
                                         {{msg.payment[0].money}}
