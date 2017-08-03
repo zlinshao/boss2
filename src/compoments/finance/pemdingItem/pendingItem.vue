@@ -124,7 +124,8 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <settleModal :settleId = 'operId' :dictionary = 'dictionary' :collect_rent = 'collect_rent'></settleModal>
+        <settleModal :settleId = 'operId' :dictionary = 'dictionary'
+                     :collect_rent = 'collect_rent' @Settle="hasSettle"></settleModal>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
@@ -250,6 +251,10 @@
                     }
 
                 })
+            },
+            hasSettle(){
+                this.operId = 0;
+                this.searchList();
             }
         }
     }
