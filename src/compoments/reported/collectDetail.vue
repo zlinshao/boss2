@@ -269,7 +269,7 @@
             addRentReported(){
                 this.collectMsg = [
                     {
-                        id : this.id,
+                        id : this.msg.id,
                         house_id : this.msg.house_id,
                         house : this.msg.house
                     }

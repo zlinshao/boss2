@@ -59,7 +59,7 @@
                                             <input @click="remindData" placeholder="补齐时间" readonly type="text" class="form-control form_datetime" style="max-width: 200px;
     display: inline-block;" v-show="changeCompleteDate" v-model="changeComplete">
                                         </span>
-                                        <a @click="operCompleteDate" v-show="!changeCompleteDate">编辑</a>
+                                        <a @click="operCompleteDate" v-show="!changeCompleteDate&&msg.status==2">编辑</a>
                                         <button v-show="changeCompleteDate" type="button" class="btn btn-sm btn-success" @click="modifyComplete">确定</button>
                                         <button v-show="changeCompleteDate" type="button" class="btn btn-sm btn-primary" @click="cancelModify">取消</button>
                                     </span>
