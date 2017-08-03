@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">截图凭证</label>
                                 <div class="col-sm-10">
-                                    <span v-if="msg.album==undefined||msg.album.length==0">
+                                    <span class="form-control" style="border: none" v-if="srcs==undefined||srcs.length==0">
                                         无
                                     </span>
                                     <span v-else="msg.album==undefined||msg.album.length==0">
