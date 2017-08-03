@@ -437,7 +437,8 @@
                 }
             },
             computeFloor(e){
-                if(this.houseAdd.floor > this.houseAdd.total_floor &&  this.houseAdd.total_floor !=='' && this.houseAdd.floor !== ''){
+                if(Number(this.houseAdd.floor) > Number(this.houseAdd.total_floor) &&
+                    this.houseAdd.total_floor !=='' && this.houseAdd.floor !== ''){
                     if(e.target.placeholder === '总楼层'){
                         this.houseAdd.total_floor = '';
                     }else {
