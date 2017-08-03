@@ -127,9 +127,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default">退出</button>
-                    </div>
                 </div>
             </div>
         </div>
