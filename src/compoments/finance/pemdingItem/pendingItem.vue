@@ -1,7 +1,7 @@
 <template>
     <div>
         <ol class="breadcrumb">
-            <li>财务账本</li>
+            <li>财务账本{{params.search}}</li>
             <li class="active">待处理项</li>
         </ol>
         <section class="panel">
