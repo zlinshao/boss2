@@ -31,7 +31,7 @@ import CollectContract from "./compoments/contract/collectContract.vue";        
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
 import ContractDetail from './compoments/contract/collectDetail.vue'           // 收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
-import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //c查看备忘录
+import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //查看备忘录
 
 import  Comparecontract from  './compoments/contract/Compare.vue'
 
@@ -65,10 +65,10 @@ import ReportedRenting from './compoments/reported/reportedRenting.vue'    //租
 import ReopetedRentDetail from './compoments/reported/rentDetail.vue'// 租房报备详情
 
 
-
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'           //打卡记录
+import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'           //备忘录
 
 export default[
     {
@@ -96,15 +96,15 @@ export default[
         component: Role
     },
     /*{
-        path: '/village',
-        name: 'Village',
-        component: Village
-    },
-    {
-        path: '/villageDetail',
-        name: 'VillageDetail',
-        component: VillageDetail
-    },*/
+     path: '/village',
+     name: 'Village',
+     component: Village
+     },
+     {
+     path: '/villageDetail',
+     name: 'VillageDetail',
+     component: VillageDetail
+     },*/
     {
         path: '/cACollect',
         name: 'CACollect',
@@ -269,7 +269,7 @@ export default[
         path: '/payPayment',
         name: 'PayPayment',
         component: PayPayment
-    },{
+    }, {
         path: '/incomeFlow',
         name: 'IncomeFlow',
         component: IncomeFlow
@@ -365,7 +365,7 @@ export default[
         component: ReopetedRentDetail
     },
     {
-        path: '/memorandum',
+        path: '/Memorandum',
         name: 'Memorandum',
         component: Memorandum
     },
@@ -373,10 +373,16 @@ export default[
         path: '/comparecontract',
         name: 'Comparecontract',
         component: Comparecontract
-    },{
+    },
+    {
         path: '/punchRecord',
-        name: 'punchRecord',            //打卡记录
+        name: 'punchRecord',                //打卡记录
         component: PunchRecord
+    },
+    {
+        path: '/HeaderMemorandum',
+        name: 'HeaderMemorandum',           //备忘录
+        component: HeaderMemorandum
     },
 
 

@@ -181,7 +181,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">详情</label>
+                                <label class="col-sm-2 control-label">详情<span class="text-danger">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" v-model="detailed">
                                 </div>
