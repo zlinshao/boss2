@@ -28,6 +28,7 @@
                                v-model="startTimes" class="form-control remindTime" readonly>
                         <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
                     </div>
+
                     <div class="pro-sort">
                         <input @click="remindTimes()" type="text" placeholder="结束时间"
                                v-model="endTime" class="form-control remindTime" readonly>
@@ -96,6 +97,8 @@
             </div>
         </div>
 
+        <Status :state="info"></Status>
+
         <!--分页-->
         <Page @pag="punch_record" :pg="paging" :beforePage="beforePage"></Page>
 
@@ -106,10 +109,11 @@
 
 <script>
     import DatePicker from '../common/datePicker.vue'                   //时间
+    import Status from '../common/status.vue'                           //提示信息
     import SelectStaff from '../common/organization/selectStaff.vue'    //人资管理
     import Page from '../common/page.vue'                               //分页
     export default {
-        components: {Page, SelectStaff, DatePicker},
+        components: {Page, SelectStaff, DatePicker, Status},
         data (){
             return {
 //                dateConfigure: [
@@ -185,8 +189,22 @@
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder === '开始时间') {
                         this.startTimes = ev.target.value;
+                        if (this.endTime < this.startTimes && this.endTime !== '') {
+                            this.endTime = '';
+                            //失败信息 ***
+                            this.info.error = '结束时间不能小于开始时间';
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     } else {
                         this.endTime = ev.target.value;
+                        if (this.endTime < this.startTimes) {
+                            this.endTime = '';
+                            //失败信息 ***
+                            this.info.error = '结束时间不能小于开始时间';
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     }
                 }.bind(this));
             },
@@ -310,11 +328,11 @@
         border-radius: 50%;
     }
 
-    input{
+    input {
         margin-bottom: 0;
     }
 
-    .label{
+    .label {
         display: inline-block;
         width: 70px;
     }
