@@ -35,7 +35,7 @@
                 <div class="panel-body table-responsive client_info">
                     <div>
                         <div class="col-md-12" v-if="msg!=''">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==null?'':msg.customer.name}}</span></div>
                                 <div><span class="text-primary">详情：</span><span>{{msg.description}}</span></div>
                                 <div><span class="text-primary">收款时间：</span>
@@ -50,7 +50,7 @@
                                 <div><span class="text-primary">应收金额：</span><span>{{msg.amount_receivable}}</span></div>
                                 <div><span class="text-primary">实收金额：</span><span>{{msg.amount_received}}</span></div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div><span class="text-primary">剩余款项：</span><span>{{msg.balance}}</span></div>
                                 <div><span class="text-primary">补齐时间：</span>
                                     <span>
@@ -126,6 +126,9 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default">退出</button>
                     </div>
                 </div>
             </div>
@@ -471,6 +474,7 @@
         /*color: white;*/
         font-weight: normal;
         font-size: 12px;
+        color: white;
     }
 
     header h4 {
@@ -489,7 +493,7 @@
         display: inline-block;
         padding-right: 20px;
         text-align: right;
-        min-width: 100px;
+        min-width: 120px;
     }
     .client_info > div > div > div span a{
         margin-left: 12px;
