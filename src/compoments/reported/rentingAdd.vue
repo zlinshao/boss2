@@ -482,7 +482,7 @@
         },
         watch : {
             collectMsg(val){
-//                console.log(val[0])
+                console.log(val[0])
 //                if (this.collectMsg!=undefined){
 //                    console.log(val[0]);
 //                    console.log(val[0].id);
