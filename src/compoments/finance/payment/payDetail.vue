@@ -22,10 +22,10 @@
                 <div class="pro-sort">
                     <button class="status btn btn-success">{{address}}</button>
                 </div>
-                <div class="pro-sort">
-                    <label class="label label-warning" v-if="status === 1">待入帐</label>
-                    <label class="label" v-if="status === 2" style="background-color: #FF9999;">待结清</label>
-                    <label class="label label-success" v-if="status === 3">已结清</label>
+                <div class="pro-sort status1">
+                    <button class="btn btn-warning" v-if="status === 1">待入帐</button>
+                    <button class="btn" v-if="status === 2" style="background-color: #FF9999;">待结清</button>
+                    <button class="btn btn-success" v-if="status === 3">已结清</button>
                 </div>
             </div>
         </section>
@@ -508,16 +508,15 @@
     .pro-sort .status {
         background-color: transparent;
         color: #868886;
+        font-weight: bold;
         border: 0;
         cursor: auto;
     }
-
-    label.label {
-        display: inline-block;
-        margin-top: 5px;
-        font-weight: normal;
+    .status1 button{
+        color: #FFFFFF;
+        border: 0;
+        cursor: auto;
     }
-
     header h4 {
         border-bottom: 1px solid #aaaaaa;
         padding: 0 30px 8px;
