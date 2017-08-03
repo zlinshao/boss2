@@ -38,7 +38,8 @@
                                 <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
                                 <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
-                                <div><span class="text-primary">租房方式：</span><span>整租？合租</span></div>
+                                <div><span class="text-primary">租房方式：</span><span>{{dict.shared_house[msg.is_shared]}}</span></div>
+                                <div><span class="text-primary" v-if="msg.is_shared==1">房间类型：</span><span>{{msg.shared_part}}</span></div>
                                 <div><span class="text-primary">租房类型：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
                                 <div><span class="text-primary">年限(月)：</span><span>{{msg.months}}</span></div>
                                 <div><span class="text-primary">付款类型：</span><span>押{{msg.bet}}付{{msg.pay}}</span></div>
@@ -47,7 +48,6 @@
                                 <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
                                 <div><span class="text-primary">付款方式：</span>
                                     <span>
-                                        <!--支付宝-->
                                         {{dict.rent_payment[msg.payment[0].payment_id]}}
                                         &nbsp;
                                         {{msg.payment[0].money}}
