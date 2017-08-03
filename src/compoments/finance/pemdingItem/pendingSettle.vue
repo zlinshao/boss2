@@ -23,7 +23,7 @@
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="customer_name" @click="selectPayClient" readonly>
+                                               v-model="customer_name" readonly>
                                     </div>
                                 </div>
 
@@ -31,7 +31,7 @@
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="house_name" @click="selectHouse" readonly >
+                                               v-model="house_name" readonly >
                                     </div>
                                 </div>
 
@@ -81,7 +81,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算账户</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="account_num">
+                                        <input type="text" class="form-control" readonly v-model="account_num">
                                     </div>
                                 </div>
 
@@ -96,7 +96,7 @@
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="department_name" @click="selectDpm" readonly>
+                                               v-model="department_name" readonly>
                                     </div>
                                 </div>
 
@@ -133,9 +133,9 @@
                 </div>
             </div>
         </div>
-        <Client @clientPayAdd = getPayClient></Client>
-        <House @House = getHouse></House>
-        <Department :configure = 'configure' @Staff = getDpm></Department>
+        <!--<Client @clientPayAdd = getPayClient></Client>-->
+        <!--<House @House = getHouse></House>-->
+        <!--<Department :configure = 'configure' @Staff = getDpm></Department>-->
         <Status :state='info'></Status>
     </div>
 </template>
@@ -248,9 +248,7 @@
                         this.currentDate.push(res.data.data.end_date);
 
                     }else {
-                        this.info.error =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
+
                     }
 
                 })
@@ -259,28 +257,30 @@
                 this.pendingSellter.start_date = val.split('to')[0];
                 this.pendingSellter.end_date = val.split('to')[1];
             },
-            selectPayClient(){      //选择客户
-                $('.selectClient:eq(0)').modal('show');
-            },
-            getPayClient(val){
-                console.log(val)
-            },
-            selectHouse(){          //选择房屋
-                $('.selectHouse:eq(0)').modal('show');
-            },
-            getHouse(val){
-                console.log(val)
-            },
-            selectDpm(){            //选择部门
-                $('.selectCustom:eq(0)').modal('show');
-                this.configure={class:'selectType',type:'department'};
-            },
-            getDpm(val){
-                console.log(val)
-            },
+//            selectPayClient(){      //选择客户
+//                $('.selectClient:eq(0)').modal('show');
+//            },
+//            getPayClient(val){
+//                console.log(val)
+//            },
+//            selectHouse(){          //选择房屋
+//                $('.selectHouse:eq(0)').modal('show');
+//            },
+//            getHouse(val){
+//                console.log(val)
+//            },
+//            selectDpm(){            //选择部门
+//                $('.selectCustom:eq(0)').modal('show');
+//                this.configure={class:'selectType',type:'department'};
+//            },
+//            getDpm(val){
+//                console.log(val)
+//            },
             addPending(){
                 this.$http.post('account/pending/settle/' + this.mySettleId,this.pendingSellter).then((res) =>{
                     if(res.data.code === '18810'){
+                        this.$emit('Settle','yes');
+                        $('#pendingSettle').modal('hide');
                         this.info.success =res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
