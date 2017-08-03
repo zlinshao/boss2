@@ -112,7 +112,7 @@
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
                             <td>
-                                <label :class="{'label':true,'label-warning ':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
+                                <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>

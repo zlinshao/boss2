@@ -114,7 +114,7 @@
                             <td>{{item.cost_deposit}}</td>
                             <td>{{item.cost_medi}}</td>
                             <td>
-                                <label :class="{'label':true,'label-warning ':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
+                                <label :class="{'label':true,'status':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
                                 </label>
                             </td>
