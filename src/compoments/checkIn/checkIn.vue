@@ -453,4 +453,9 @@
         color: #999;
         margin: 0 3px;
     }
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
+    }
 </style>

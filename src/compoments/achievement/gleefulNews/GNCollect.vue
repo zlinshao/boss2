@@ -335,12 +335,10 @@
         background-color: #fffcd9;
     }
 
-    .pro-sort {
-        padding-right: 6px;
-    }
-
-    .pro-sort select.form-control {
-        padding: 6px 8px;
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
     }
 
     /*.panel span{

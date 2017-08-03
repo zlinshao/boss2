@@ -364,4 +364,9 @@
         display: inline-block;
         /*padding: 0 15px 0 0;*/
     }
+    @media (max-width: 798px) {
+        .panel-body .form-inline .input-group{
+            margin-bottom: 5px;
+        }
+    }
 </style>
