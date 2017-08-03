@@ -607,8 +607,6 @@
 
     .tips ul li span {
         font-size: 18px;
-        padding-left: 8px;
-        /*font-weight: bold;*/
     }
 
     .tips ul li span.red {

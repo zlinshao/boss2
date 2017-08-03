@@ -10,14 +10,22 @@
 
         <section class="panel head">
             <div class="panel-body">
-                <div>
-                    <span>房屋地址</span>
-                    <span>苏园路6号</span>
-                    <span :class="{'status':true,'btn':true}">带结清</span>
-                    <div class="pull-right">
-                        <button class="btn btn-primary">转为待处理项</button>
-                        <button class="btn btn-primary" v-if="detailsStatus" data-toggle="modal" data-target="#payFor">应付入账</button>
-                    </div>
+                <div class="pull-right">
+                    <button class="btn btn-primary">转为待处理项</button>
+                    <button class="btn btn-primary" v-if="detailsStatus" data-toggle="modal" data-target="#payFor">
+                        应付入账
+                    </button>
+                </div>
+                <div class="pro-sort">
+                    <button class="status btn btn-success">房屋地址</button>
+                </div>
+                <div class="pro-sort">
+                    <button class="status btn btn-success">{{address}}</button>
+                </div>
+                <div class="pro-sort">
+                    <label class="label label-warning" v-if="status === 1">带入帐</label>
+                    <label class="label" v-if="status === 2" style="background-color: #FF9999;">带结清</label>
+                    <label class="label label-success" v-if="status === 3">已结清</label>
                 </div>
             </div>
         </section>
@@ -36,7 +44,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <span class="text-primary">客户姓名：</span>
-                                    <span>{{select_info.staff_id[list.id]}}</span>
+                                    <span>{{list.customer.name}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">详情：</span>
@@ -268,6 +276,8 @@
         components: {Status, ShouldPay, SelectHouse, SelectClient},
         data(){
             return {
+                address: '',
+                status: '',
                 detailsStatus: true,
                 descriptions: [],
                 select_info: [],
@@ -351,9 +361,11 @@
                     this.$http.get('account/payable/' + val).then((res) => {
                         this.details_info = [];
                         this.details_info.push(res.data.data);
-                        if(res.data.data.balance === '0.00'){
+                        this.status = res.data.data.status;
+                        this.address = res.data.data.address;
+                        if (res.data.data.balance === '0.00') {
                             this.detailsStatus = false;
-                        }else{
+                        } else {
                             this.detailsStatus = true;
                         }
                         this.descriptions = res.data.data.description.split('/');
@@ -437,9 +449,17 @@
         margin-left: 12px;
     }
 
-    .head .panel-body > div span.status {
+    .pro-sort .status {
+        background-color: transparent;
+        color: #868886;
+        border: 0;
+        cursor: auto;
+    }
+
+    label.label {
+        display: inline-block;
+        margin-top: 5px;
         font-weight: normal;
-        font-size: 12px;
     }
 
     header h4 {

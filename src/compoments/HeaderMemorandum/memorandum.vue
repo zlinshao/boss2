@@ -13,6 +13,15 @@
                 </div>
             </div>
         </section>
+        <div class="row">
+            <aside class="col-lg-12">
+                <section class="panel">
+                    <div class="panel-body">
+                        <div id="calendar" class="has-toolbar"></div>
+                    </div>
+                </section>
+            </aside>
+        </div>
     </div>
 </template>
 
