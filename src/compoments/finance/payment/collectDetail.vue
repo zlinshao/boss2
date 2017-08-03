@@ -101,12 +101,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">编辑付款时间</h4>
+                        <h4 class="modal-title">编辑收款时间</h4>
                     </div>
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
                             <div class="form-group" v-for="(item,index) in moreTime">
-                                <label class="col-sm-3 control-label">第{{index+1}}次付款时间</label>
+                                <label class="col-sm-3 control-label">第{{index+1}}收付款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
                                         <input @click="remindData" placeholder="收款时间" readonly type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
@@ -257,42 +257,29 @@
                 showOper: [],
 
                 times : [
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
                 ],
                 moreTime : [
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
-                    '2017/09/12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+                    '2017-09-12',
+
                 ],
                 info:{
                     //成功状态 ***

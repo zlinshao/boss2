@@ -490,7 +490,7 @@
                 $('.selectClient:eq(0)').modal('show');
             },
             getClient(data){
-//                console.log(data);
+                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
             },
