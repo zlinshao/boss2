@@ -23,8 +23,8 @@
                     <button class="status btn btn-success">{{address}}</button>
                 </div>
                 <div class="pro-sort">
-                    <label class="label label-warning" v-if="status === 1">带入帐</label>
-                    <label class="label" v-if="status === 2" style="background-color: #FF9999;">带结清</label>
+                    <label class="label label-warning" v-if="status === 1">待入帐</label>
+                    <label class="label" v-if="status === 2" style="background-color: #FF9999;">待结清</label>
                     <label class="label label-success" v-if="status === 3">已结清</label>
                 </div>
             </div>
@@ -90,7 +90,20 @@
                                     <span>{{list.balance}}</span></div>
                                 <div>
                                     <span class="text-primary">补齐时间：</span>
-                                    <span>{{list.complete_date}}</span>
+                                    <span v-if="changeCompleteDate">{{list.complete_date}}</span>
+
+                                    <span v-if="!changeCompleteDate">
+                                        <span>
+                                            <input type="text" @click="remindData1" v-model="complete_date" readonly
+                                                   class="form-control form_datetime1"
+                                                   style="max-width: 200px;display: inline-block;">
+                                        </span>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                @click="change_com">确定</button>
+                                        <button type="button" class="btn btn-sm btn-primary"
+                                                @click="changeComplete">取消</button>
+                                    </span>
+                                    <a v-if="changeCompleteDate && status === 2" @click="changeComplete">编辑</a>
                                 </div>
                                 <div>
                                     <span class="text-primary">备注：</span>
@@ -139,7 +152,7 @@
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
                                         <input @click="remindData" type="text" readonly
-                                               :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}"
+                                               :class="{'form-control' : true,'form_datetime':index < 4,'form_datetime2':index >= 4}"
                                                v-model="moreTime[index]">
                                     </div>
                                     <div class="col-sm-5">
@@ -155,7 +168,7 @@
                                         <span>{{item}}</span>
                                     </div>
                                     <div class="col-sm-5">
-                                        <span @click="changeShow(index)"><a>编辑</a></span>
+                                        <span @click="changeShow(index)" v-if="status === 1"><a>编辑</a></span>
                                     </div>
                                 </div>
                             </div>
@@ -276,14 +289,16 @@
         components: {Status, ShouldPay, SelectHouse, SelectClient},
         data(){
             return {
+                changeCompleteDate: true,       //修改补齐时间
+                complete_date: '',              //资料补齐时间
                 address: '',
                 status: '',
                 detailsStatus: true,
                 descriptions: [],
                 select_info: [],
-//                should_id: '',              //应付ID
+//                should_id: '',                //应付ID
                 currentIndex: -1,
-                details_info: [],           //应付详情
+                details_info: [],               //应付详情
                 showOper: [],
 
                 times: [
@@ -337,7 +352,8 @@
             }
         },
         updated (){
-//            this.remindData();
+            this.remindData();
+            this.remindData1();
         },
         mounted (){
             this.should_id = this.$route.query.payId;
@@ -350,6 +366,45 @@
 //            console.log(this.showOper)
         },
         methods: {
+//            资料补齐时间
+            remindData1 (){
+                $('.form_datetime1').datetimepicker({
+                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition: 'top-left'
+                }).on('changeDate', function (ev) {
+                    this.complete_date = ev.target.value;
+                }.bind(this));
+            },
+//            编辑资料补齐时间
+            changeComplete (){
+                this.changeCompleteDate = !this.changeCompleteDate;
+            },
+//            修改资料补齐时间
+            change_com (){
+                this.$http.put('account/payable/' + this.should_id, {
+                    complete_date: this.complete_date
+                }).then((res) => {
+                    if (res.data.code === '18410') {
+                        this.pay_success();
+                        this.changeCompleteDate = true;
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else{
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
+            },
             pay_success (){
                 this.details(this.should_id);
             },
@@ -363,6 +418,7 @@
                         this.details_info.push(res.data.data);
                         this.status = res.data.data.status;
                         this.address = res.data.data.address;
+                        this.complete_date = res.data.data.complete_date;
                         if (res.data.data.balance === '0.00') {
                             this.detailsStatus = false;
                         } else {
