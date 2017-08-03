@@ -102,7 +102,7 @@
                 params : {
 //                    department_id : [],
 //                    staff_id : [],
-                    periodic : 1,
+//                    periodic : 1,
                     date_range : ''
                 },
                 myData : [],
@@ -131,13 +131,7 @@
             }
         },
         mounted (){
-            this.$http.get('periodic/range')
-                .then(
-                    (res) => {
-                        this.dict = res.data.data;
-                        this.perPersonList();
-                    }
-                );
+            this.perPersonList();
 
         },
         updated (){
@@ -161,10 +155,10 @@
 
                         }
                     );
-                this.$http.get('periodic/now')
+                /*this.$http.get('periodic/now')
                     .then(
                         (res) => this.params.periodic = res.data.data
-                    );
+                    );*/
             },
 
             search(val){
@@ -193,7 +187,7 @@
             },
             getDate(data){
                 console.log(data);
-                this.date_range = data;
+                this.params.date_range = data;
                 this.search(1);
             }
         }

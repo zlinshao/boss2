@@ -47,6 +47,9 @@
                                     <a>{{item.name}}</a>
                                 </div>
                             </div>
+                            <div class="remark" v-show="item.remark!=''">
+                                备注：{{item.remark}}
+                            </div>
                             <div class="position">
                                 <i class="fa fa-map-marker"></i>&nbsp;
                                 {{item.detailPlace}}
@@ -425,7 +428,7 @@
         vertical-align: middle;
     }
 
-    .checkInItem .position,.checkInItem .time{
+    .checkInItem .position,.checkInItem .time,.checkInItem .remark{
         color: #667A8F;
         margin-top: 14px;
     }

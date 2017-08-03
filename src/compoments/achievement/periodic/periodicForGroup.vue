@@ -204,13 +204,7 @@
             }
         },
         mounted(){
-            this.$http.get('periodic/range')
-                .then(
-                    (res) => {
-                        this.dict = res.data.data;
-                        this.perGroupList();
-                    }
-                );
+            this.perGroupList();
         },
         methods : {
             perGroupList (){
@@ -228,13 +222,13 @@
                     }
 
                 });
-                this.$http.get('periodic/now')
+                /*this.$http.get('periodic/now')
                     .then(
                         (res) => {
                             this.params.periodic = res.data.data;
 //                        alert(this.params.periodic)
                         }
-                    );
+                    );*/
             },
 
             search(val){
@@ -314,6 +308,9 @@
                 this.search(1);
             },
             clearSelect(){
+                if (this.selected.length==0){
+                    return;
+                }
                 this.params.department_id = [];
                 this.selected = [];
                 this.search(1);

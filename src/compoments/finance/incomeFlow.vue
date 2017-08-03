@@ -74,10 +74,11 @@
                             <td>{{item.update_time}}</td>
                             <td>{{item.customer}}</td>
                             <td>
-                                {{item.info.address}}/
+                                {{item.info=='-'?'':item.info.address+'/'+dict.pay_type[item.info.pay_type]+'/'+item.info.price+'/'+item.info.staff_name}}
+                                <!--{{item.info.address}}/
                                 {{dict.pay_type[item.info.pay_type]}}/
                                 {{item.info.price}}/
-                                {{item.info.staff_name}}
+                                {{item.info.staff_name}}-->
                             </td>
                             <td>{{item.subject}}</td>
                             <td>{{dict.er_type[item.cate]}}</td>
