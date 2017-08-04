@@ -37,7 +37,7 @@
                                 <td>
                                     <input type="radio" name="radio" >
                                 </td>
-                                <td>{{item.amap_json.villageName}}</td>
+                                <td>{{item.detailed_address}}</td>
                                 <td>
                                     <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
                                 </td>
