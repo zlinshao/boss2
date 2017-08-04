@@ -77,7 +77,7 @@
                                 </div>
                             </div>
 
-                            <FlexBox :flexData="formData.years" :datas="formData.price" :change="money_change" @sendData="getFlexData"></FlexBox>
+                            <FlexBox :flexData="formData.years" :datas="formData.price" :change="money_change" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">空置期<sup class="required">*</sup></label>

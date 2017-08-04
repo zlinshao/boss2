@@ -1,7 +1,7 @@
 <template>
     <div class="flexBox">
         <div class="form-group">
-            <label class="col-sm-2 control-label">收房月单价 <sup class="required">*</sup></label>
+            <label class="col-sm-2 control-label">{{title}}<sup class="required">*</sup></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label" v-show="moreYears>=2">第一年</label>
                 <div :class="{'col-sm-6':moreYears>=2,'col-sm-8':moreYears==1}">
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=3">
+        <div class="form-group" v-show="moreYears>=3">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第三年</label>
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=4">
+        <div class="form-group" v-show="moreYears>=4">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第四年</label>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=5">
+        <div class="form-group" v-show="moreYears>=5">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第五年</label>
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=6">
+        <div class="form-group" v-show="moreYears>=6">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第六年</label>
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=7">
+        <div class="form-group" v-show="moreYears>=7">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第七年</label>
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=8">
+        <div class="form-group" v-show="moreYears>=8">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第八年</label>
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=9">
+        <div class="form-group" v-show="moreYears>=9">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第九年</label>
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"  v-show="moreYears>=10">
+        <div class="form-group" v-show="moreYears>=10">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第十年</label>
@@ -125,7 +125,7 @@
 </style>
 <script>
     export default{
-        props : ['flexData','datas','change'],
+        props : ['flexData','datas','change','title'],
         data(){
             return {
                 moreYears : 1,
