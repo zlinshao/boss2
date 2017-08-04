@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
 
-                                <FlexBox :flexData="formData.years" :datas="formData.price" :change="false" @sendData="getFlexData"></FlexBox>
+                                <FlexBox :flexData="formData.years" :datas="formData.price" :change="false" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">空置期<sup class="required">*</sup></label>
@@ -155,7 +155,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">汇款账户</label>
+                                    <label v-if="formData.payment==1" class="col-sm-2 control-label">汇款账户</label>
+                                    <label v-if="formData.payment==2" class="col-sm-2 control-label">支付宝账号</label>
+                                    <label v-if="formData.payment==3" class="col-sm-2 control-label">微信账号</label>
+                                    <label v-if="formData.payment==4" class="col-sm-2 control-label">存折账号</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.account">
                                     </div>
