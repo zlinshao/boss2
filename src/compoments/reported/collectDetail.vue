@@ -270,7 +270,7 @@
                 this.collectMsg = [
                     {
                         id : this.msg.id,
-                        house_id : this.msg.house_id,
+                         house_id : this.msg.house_id,
                         house : this.msg.house
                     }
                 ];

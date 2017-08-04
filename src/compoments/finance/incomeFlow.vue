@@ -55,6 +55,7 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
+                            <th></th>
                             <th class="text-center">交易时间</th>
                             <th class="text-center">客户姓名</th>
                             <th class="text-center">详情</th>
@@ -71,10 +72,14 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
+                            <td :class="{'red':item.cate==2,'green':item.cate==1}">
+                                <i class="fa fa-circle"></i>
+                            </td>
                             <td>{{item.update_time}}</td>
                             <td>{{item.customer}}</td>
                             <td>
-                                {{item.info=='-'?'':item.info.address+'/'+dict.pay_type[item.info.pay_type]+'/'+item.info.price+'/'+item.info.staff_name}}
+                                {{item.info}}
+                                <!--{{item.info=='-'||item.info==undefined?'':item.info.address+'/'+dict.pay_type[item.info.pay_type]+'/'+item.info.price+'/'+item.info.staff_name}}-->
                                 <!--{{item.info.address}}/
                                 {{dict.pay_type[item.info.pay_type]}}/
                                 {{item.info.price}}/
@@ -171,7 +176,7 @@
             },
 
             search(val){
-                console.log(this.params);
+//                console.log(this.params);
                 this.filter(val);
             },
             getDate(data){
@@ -248,13 +253,13 @@
     }
     .tips ul li span{
         font-size: 18px;
-        padding-left: 8px;
+        /*padding-left: 8px;*/
         /*font-weight: bold;*/
     }
-    .tips ul li span.green{
+    .tips ul li span.green,td.green{
         color: #66CC33;
     }
-    .tips ul li span.red{
+    .tips ul li span.red,td.red{
         color: #FF6666;
     }
     .tips ul li span.yellow{
