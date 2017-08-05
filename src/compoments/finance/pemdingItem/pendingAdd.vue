@@ -42,12 +42,84 @@
                                         <input type="text" class="form-control" readonly >
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">差额</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">合同开始和结束时间</label>
                                     <div class="col-sm-8" style="padding-bottom: 18px;">
                                         <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">水费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.water_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">电费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.elec_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">燃气费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.gas_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">物业费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.property_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">网络费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control"  v-model="pendingAdd.net_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转租费用</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.sublet_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">管理费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.manage_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">物业校验</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.check_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">违约金</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingAdd.penalty_fee">
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">应退</label>
                                     <div class="col-sm-10">
@@ -69,7 +141,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">结算方式</label>
+                                    <label class="col-sm-2 control-label">实际退款</label>
                                     <div class="col-sm-10">
                                         <select class="form-control">
                                             <option value="">银行卡</option>
@@ -87,7 +159,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">签约人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly v-model="staff_name">
+                                        <input type="text" class="form-control" readonly v-model="pendingAdd.staff_id">
                                     </div>
                                 </div>
 
@@ -188,35 +260,25 @@
                     operator_id : '',           //经手人i
                     status : '',                //状态
                 },
-                staff_name : '',
             }
         },
-        created (){
-            this.Info();
-        },
         methods: {
-            Info(){
-                this.$http.get('staff/info').then((res)=>{
-                    this.pendingAdd.staff_id=res.data.id;
-                    this.staff_name=res.data.name;
-                })
-            },
             selectClient(){},
             getDate(data){},
             selectPayClient(){      //选择客户
-                $('.selectClient:eq(0)').modal('show');
+                $('#selectPayClient').modal('show');
             },
             getPayClient(val){
                 console.log(val)
             },
             selectHouse(){          //选择房屋
-                $('.selectHouse:eq(0)').modal('show');
+                $('#selectHouse').modal('show');
             },
             getHouse(val){
                 console.log(val)
             },
             selectDpm(){            //选择部门
-                $('.selectCustom:eq(0)').modal('show');
+                $('#selectCustom').modal('show');
                 this.configure={class:'selectType',type:'department'};
             },
             getDpm(val){

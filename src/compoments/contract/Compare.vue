@@ -20,7 +20,7 @@
                     </div>
                     <div class="infoList">
                         <span>空置期(天)<sup>*</sup>：</span>
-                        <span v-if="item.checkin_collect_id !== null && undefined">
+                        <span v-if="item.checkin_collect_id !== null || undefined">
                                                 {{item.checkin_collect_id.vacancy}} 天
                                             </span>
                     </div>
@@ -42,9 +42,9 @@
                     </div>
                     <div class="infoList">
                         <span>年限<sup>*</sup>：</span>
-                        <span v-if="item.checkin_collect_id !== null && undefined">{{item.checkin_collect_id.years}}年</span>
+                        <span v-if="item.checkin_collect_id !== null || undefined">{{item.checkin_collect_id.years}}年</span>
                     </div>
-                    <div class="infoList" v-if="item.checkin_collect_id !== null && undefined">
+                    <div class="infoList" v-if="item.checkin_collect_id !== null || undefined">
                         <span>付款方式：</span>
                         <span v-for="pay in item.checkin_collect_id.pay_type">
                             {{myDictionary.pay_type[pay]}}
@@ -52,7 +52,7 @@
                     </div>
                     <div class="infoList">
                         <span>月单价<sup>*</sup>：</span>
-                        <span v-if="item.checkin_collect_id !== null && undefined">
+                        <span v-if="item.checkin_collect_id !== null || undefined">
                             <span v-for="(price,index) in item.checkin_collect_id.price">
                                 第{{index+1}}年{{price}}元&nbsp;&nbsp;
                             </span>
@@ -60,15 +60,15 @@
                     </div>
                     <div class="infoList">
                         <span>开户行：</span>
-                        <span v-if="item.checkin_collect_id !== null && undefined">{{item.checkin_collect_id.bank}}</span>
+                        <span v-if="item.checkin_collect_id !== null || undefined">{{item.checkin_collect_id.bank}}</span>
                     </div>
                     <div class="infoList">
                         <span>银行卡号：</span>
-                        <span v-if="item.checkin_collect_id !== null && undefined">{{item.checkin_collect_id.account}}</span>
+                        <span v-if="item.checkin_collect_id !== null || undefined">{{item.checkin_collect_id.account}}</span>
                     </div>
                     <div class="infoList">
                         <span>中介费用：</span>
-                        <span v-if="item.checkin_collect_id !== null && undefined">{{item.checkin_collect_id.cost_medi}}</span>
+                        <span v-if="item.checkin_collect_id !== null || undefined">{{item.checkin_collect_id.cost_medi}}</span>
                     </div>
                     <div class="infoList">
                         <span>资料补齐日期：</span>
@@ -94,36 +94,36 @@
                     <h4>业主信息</h4>
                     <div class="infoList">
                         <span>业主姓名<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{item.customer_id.name}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{item.customer_id.name}}</span>
                     </div>
                     <div class="infoList">
                         <span>尊称<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{myDictionary.gender[item.customer_id.gender]}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{myDictionary.gender[item.customer_id.gender]}}</span>
                     </div>
                     <div class="infoList">
                         <span>国籍<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">
+                        <span v-if="item.customer_id !== null || undefined">
                             {{myDictionary.nationality[item.customer_id.nationality]}}
                         </span>
                     </div>
                     <div class="infoList">
                         <span>手机号码<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{item.customer_id.mobile}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{item.customer_id.mobile}}</span>
                     </div>
                     <div class="infoList">
                         <span>证件类型<sup>*</sup>：</span>.
-                        <span v-if="item.customer_id !== null && undefined">
+                        <span v-if="item.customer_id !== null || undefined">
                             {{myDictionary.credentials[item.customer_id.id_type]}}
                         </span>
                     </div>
                     <div class="infoList">
                         <span>身份证号<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{item.customer_id.id_num}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{item.customer_id.id_num}}</span>
                     </div>
                     <h4>房屋信息</h4>
                     <div class="infoList ">
                         <span >房屋地址：</span>
-                        <span>{{item.villa_id.address}}</span>
+                        <span>{{item.villa_id.detailed_address}}</span>
                     </div>
                     <div class="infoList ">
                         <span >房型：</span>
@@ -294,7 +294,7 @@
                     </div>
                     <div class="infoList">
                         <span>年限(月)<sup>*</sup>：</span>
-                        <span v-if="item.checkin_rent_id !==null && undefined">{{item.checkin_rent_id.months}} 月</span>
+                        <span v-if="item.checkin_rent_id !==null || undefined">{{item.checkin_rent_id.months}} 月</span>
                     </div>
                     <div class="infoList">
                         <span>合同起始日期：</span>
@@ -306,29 +306,29 @@
                     </div>
                     <div class="infoList">
                         <span>付款类型：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             押 {{item.checkin_rent_id.bet}} 付 {{item.checkin_rent_id.pay}}
                         </span>
                     </div>
                     <div class="infoList">
                         <span>月单价：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             {{item.checkin_rent_id.price}} 元
                         </span>
                     </div>
                     <div class="infoList">
                         <span>应收：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             {{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元
                         </span>
                     </div>
                     <div class="infoList">
                         <span>已收 （定金）<sup>*</sup>：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             {{item.checkin_rent_id.received_amount}} 元
                         </span>
                     </div>
-                    <div class="infoList" v-if="item.checkin_rent_id !==null && undefined && undefined">
+                    <div class="infoList" v-if="item.checkin_rent_id !==null || undefined && undefined">
                         <div v-for="pay in item.checkin_rent_id.payment">
                             <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
                             <span>
@@ -338,13 +338,13 @@
                     </div>
                     <div class="infoList">
                         <span>未收：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             {{item.checkin_rent_id.amount_remaining}} 元
                         </span>
                     </div>
                     <div class="infoList">
                         <span>租房状态：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             {{myDictionary.rent_type[item.checkin_rent_id.rent_type]}}
                         </span>
                     </div>
@@ -359,11 +359,11 @@
                     </div>
                     <div class="infoList">
                         <span>中介名<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{myDictionary.person_medium[item.customer_id.person_medium]}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{myDictionary.person_medium[item.customer_id.person_medium]}}</span>
                     </div>
                     <div class="infoList">
                         <span>中介费用：</span>
-                        <span  v-if="item.checkin_rent_id !==null && undefined">
+                        <span  v-if="item.checkin_rent_id !==null || undefined">
                             {{item.checkin_rent_id.cost_medi}}
                         </span>
                     </div>
@@ -382,32 +382,32 @@
                     <h4>业主信息</h4>
                     <div class="infoList">
                         <span>业主姓名<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{item.customer_id.name}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{item.customer_id.name}}</span>
                     </div>
                     <div class="infoList">
                         <span>尊称<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{myDictionary.gender[item.customer_id.gender]}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{myDictionary.gender[item.customer_id.gender]}}</span>
                     </div>
                     <div class="infoList">
                         <span>国籍<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{myDictionary.nationality[item.customer_id.nationality]}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{myDictionary.nationality[item.customer_id.nationality]}}</span>
                     </div>
                     <div class="infoList">
                         <span>手机号码<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{item.customer_id.mobile}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{item.customer_id.mobile}}</span>
                     </div>
                     <div class="infoList">
                         <span>证件类型<sup>*</sup>：</span>.
-                        <span v-if="item.customer_id !== null && undefined">{{myDictionary.credentials[item.customer_id.id_type]}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{myDictionary.credentials[item.customer_id.id_type]}}</span>
                     </div>
                     <div class="infoList">
                         <span>身份证号<sup>*</sup>：</span>
-                        <span v-if="item.customer_id !== null && undefined">{{item.customer_id.id_num}}</span>
+                        <span v-if="item.customer_id !== null || undefined">{{item.customer_id.id_num}}</span>
                     </div>
                     <h4>房屋信息</h4>
                     <div class="infoList">
                         <span>房屋地址：</span>
-                        <span>{{item.villa_id.address}}</span>
+                        <span>{{item.villa_id.detailed_address}}</span>
                     </div>
                     <div class="infoList">
                         <span>房型：</span>
