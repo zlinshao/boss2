@@ -218,7 +218,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>空置期(天)<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null || undefined">
                                                     {{item.checkin_collect_id.vacancy}} 天
                                                 </span>
                                             </div>
@@ -242,11 +242,11 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>年限<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null || undefined">
                                                     {{item.checkin_collect_id.years}}年
                                                 </span>
                                             </div>
-                                            <div class="infoList" v-if="item.checkin_collect_id !== null && undefined">
+                                            <div class="infoList" v-if="item.checkin_collect_id !== null || undefined">
                                                 <span>付款方式：</span>
                                                 <span v-for="pay in item.checkin_collect_id.pay_type">
                                                     {{dictionary.pay_type[pay]}}
@@ -254,7 +254,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null || undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
                                                         第{{index+1}}年{{price}}元&nbsp;&nbsp;
                                                     </span>
@@ -262,19 +262,19 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>开户行：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
-                                                    {{item.checkin_collect_id.bank}}
+                                                <span v-if="item.checkin_collect_id !== null || undefined">
+                                                    {{dictionary.banks[item.checkin_collect_id.bank]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>银行卡号：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null || undefined">
                                                     {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null || undefined">
                                                     {{item.checkin_collect_id.cost_medi}}
                                                 </span>
                                             </div>
@@ -394,7 +394,7 @@
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋地址：</span>
-                                                <span class="col-lg-8">{{item.villa_id.address}}</span>
+                                                <span class="col-lg-8">{{item.villa_id.detailed_address}}</span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房型：</span>
@@ -428,7 +428,7 @@
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">所属小区：</span>
-                                                <span class="col-lg-8">{{item.villa_id.village_name}}</span>
+                                                <span class="col-lg-8">{{item.villa_id.detailed_address}}</span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋特色：</span>
@@ -739,6 +739,7 @@
             getDictionary(){    //请求字典 以及 合同详情信息
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+                    console.log(this.dictionary)
                     this.passDictionary = res.data.passed;
                     this.contractDetail();
                 });
@@ -747,6 +748,7 @@
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
+                    console.log(this.contractList)
                     this.waiting = false;
                     this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num

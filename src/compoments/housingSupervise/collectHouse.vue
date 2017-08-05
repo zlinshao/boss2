@@ -145,7 +145,7 @@
                                 <input type="checkbox" class="pull-left"  :value="item.id"
                                        :checked="houseSeleted===item.id" @click="picked(item.id,$event,item.top)">
                             </td>
-                            <td class="text-center">{{item.amap_json.villageName}}</td>
+                            <td class="text-center">{{item.detailed_address}}</td>
                             <td class="text-center">
                                 {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
                             </td>
@@ -289,7 +289,7 @@
                 ).then((res) => {
                     if(res.data.code==='80030'){
                         this.houseList=res.data.data.list;
-                        this.houseList=res.data.data.list;
+                        console.log(this.houseList)
                         this.isShow=false;
                         this.pages=res.data.data.pages;
                         this.info.success = res.data.msg;

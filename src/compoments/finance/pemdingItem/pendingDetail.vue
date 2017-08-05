@@ -49,6 +49,17 @@
                                 <div><span class="text-primary">往来记录：</span><span></span></div>
                             </div>
                             <div class="col-md-4">
+                                <div><span class="text-primary">水费：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">电费：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">燃气费：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">物业费：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">网络费：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">转租费用：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">管理费：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">物业校验：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">违约金：</span><span>sdfdsf</span></div>
+                            </div>
+                            <div class="col-md-4">
                                 <div><span class="text-primary">应退：</span><span>{{item.refund_should}}</span></div>
                                 <div><span class="text-primary">实际扣款：</span><span>{{item.refund_diff}}</span></div>
                                 <div><span class="text-primary">实际退款：</span><span>{{item.refund_real}}</span></div>

@@ -10,7 +10,7 @@
             <div class="panel-body"  v-for="item in houseDetail">
                 <header>
                     <h4 class="row">
-                        <i class="fa fa-home"></i>&nbsp;{{item.amap_json.villageName}}
+                        <i class="fa fa-home"></i>&nbsp;{{item.address}}
                         <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" ></a>
                     </h4>
                 </header>
@@ -18,7 +18,7 @@
                     <div>
                         <div class="col-md-12">
                             <div class="col-md-4">
-                                <div><span class="text-primary">详细地址：</span><span>{{item.amap_json.villageAddress}}</span>
+                                <div><span class="text-primary">详细地址：</span><span>{{item.detailed_address}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">房型：</span>
@@ -371,6 +371,7 @@
                     this.dictionary = res.data;
                     this.$http.get('core/villa/readvilla/id/' + this.houseId).then((res) => {
                         this.houseDetail.push(res.data.data);
+                        console.log(this.houseDetail)
                         this.houseRevise = res.data.data;
                     });
 

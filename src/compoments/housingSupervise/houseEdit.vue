@@ -29,7 +29,7 @@
                                     <label class="col-sm-2 control-label">小区地址<sup>*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="houseEdit.amap_json.villageAddress" disabled >
+                                               v-model="detailed_address" disabled >
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -324,6 +324,7 @@
                     error: ''
                 },
                 staff_id:'',  //负责人
+                detailed_address : '',
             }
         },
         watch:{
@@ -338,19 +339,24 @@
                     this.myHouseEdit=val;
                     this.complete_ok='ok';
                     this.reviseHouseId=val.id;
+                    this.detailed_address =val.detailed_address;
                     this.staff_id = val.staff_id;
-                    this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
-                    this.houseEdit.amap_json.villageName=val.amap_json.villageName;
-                    this.houseEdit.amap_json.district=val.amap_json.district;
-                    this.houseEdit.amap_json.address=val.amap_json.address;
-                    this.houseEdit.amap_json.id=val.amap_json.id;
-                    this.houseEdit.amap_json.location=val.amap_json.location;
+                    if(val.amap_json !==null || undefined){
+                        this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
+                        this.houseEdit.amap_json.villageName=val.amap_json.villageName;
+                        this.houseEdit.amap_json.district=val.amap_json.district;
+                        this.houseEdit.amap_json.address=val.amap_json.address;
+                        this.houseEdit.amap_json.id=val.amap_json.id;
+                        this.houseEdit.amap_json.location=val.amap_json.location;
+                    }
                     this.houseEdit.building=val.building;
                     this.houseEdit.unit=val.unit;
                     this.houseEdit.house_number=val.house_number;
-                    this.houseEdit.rooms.rooms=val.rooms.rooms;
-                    this.houseEdit.rooms.hall=val.rooms.hall;
-                    this.houseEdit.rooms.toilet=val.rooms.toilet;
+                    if(val.rooms !== null || undefined){
+                        this.houseEdit.rooms.rooms=val.rooms.rooms;
+                        this.houseEdit.rooms.hall=val.rooms.hall;
+                        this.houseEdit.rooms.toilet=val.rooms.toilet;
+                    }
                     this.houseEdit.area=val.area;
                     this.houseEdit.decoration=val.decoration;
                     this.houseEdit.floor=val.floor;

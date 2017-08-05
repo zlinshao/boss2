@@ -9,14 +9,14 @@
             <div class="panel-body" v-for="item in houseDetail">
                 <header>
                     <h4>
-                        <i class="fa fa-home"></i>&nbsp;{{item.amap_json.villageName}}
+                        <i class="fa fa-home"></i>&nbsp;{{item.address}}
                         <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editUncollect"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info"  >
                     <div>
                         <div class="col-md-4">
-                            <div><span class="text-primary">房屋地址：</span><span>{{item.amap_json.villageAddress}}</span></div>
+                            <div><span class="text-primary">房屋地址：</span><span>{{item.detailed_address}}</span></div>
                             <div>
                                 <span class="text-primary">房型：</span>
                                 <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
