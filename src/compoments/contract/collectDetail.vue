@@ -680,7 +680,7 @@
 //    import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
 
-    import AddModal from '../reported/collectAdd.vue'
+    import AddModal from '../reported/collect/collectAdd.vue'
     export default{
         components: {
             Transfer,   //转账

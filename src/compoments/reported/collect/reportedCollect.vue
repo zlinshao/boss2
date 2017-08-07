@@ -58,6 +58,12 @@
                         <li v-show="statusId==3">
                             <h5 @click="changeStatus(4)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
                         </li>
+                        <li>
+                            <h5><a>新增报备</a></h5>
+                        </li>
+                        <li>
+                            <h5><a>新增其余款项报备</a></h5>
+                        </li>
                     </ul>
                 </div>
 
@@ -72,19 +78,20 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">签约人</th>
-                            <th class="text-center">所属部门</th>
-                            <th class="text-center">负责人</th>
-                            <th class="text-center">待签约日期</th>
                             <th class="text-center">房屋地址</th>
-                            <th class="text-center">房型</th>
                             <th class="text-center">月单价</th>
                             <th class="text-center">收房年限</th>
                             <th class="text-center">付款方式</th>
                             <th class="text-center">空置期</th>
                             <th class="text-center">押金</th>
                             <th class="text-center">中介费</th>
+                            <th class="text-center">待签约日期</th>
+                            <th class="text-center">签约人</th>
+                            <th class="text-center">所属部门</th>
+                            <th class="text-center">负责人</th>
                             <th class="text-center">状态</th>
+
+                            <!--<th class="text-center">房型</th>-->
                             <th class="text-center">详情</th>
                         </tr>
                         </thead>
@@ -93,26 +100,19 @@
                             <td>
                                 <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
-                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
-                            <td>{{item.department==undefined?'':item.department.name}}</td>
-                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
-                            <td>{{item.deal_time}}</td>
                             <td>{{item.house.detailed_address}}</td>
-                            <td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>
                             <td>{{item.price[0]}}<a v-show="item.price.length>1">变化</a></td>
-                            <!--<td class="dropdown">
-                                <button class="btn btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">{{item.price[0]}}
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-center">
-                                    <li v-for="price in item.price">{{price}}</li>
-                                </ul>
-                            </td>-->
                             <td>{{item.years}}</td>
                             <td>{{dict.pay_type[item.pay_type[0]]}}<a v-show="item.pay_type.length>1">变化</a></td>
                             <td>{{item.vacancy}}</td>
                             <td>{{item.cost_deposit}}</td>
                             <td>{{item.cost_medi}}</td>
+                            <td>{{item.deal_time}}</td>
+                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
+                            <td>{{item.department==undefined?'':item.department.name}}</td>
+                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
+
+                            <!--<td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>-->
                             <td>
                                 <label :class="{'label':true,'status':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
@@ -150,10 +150,10 @@
 </template>
 
 <script>
-    import Page from '../common/page.vue'
-    import Status from '../common/status.vue';
-    import DatePicker from '../common/datePicker.vue'
-    import Confirm from '../common/confirm.vue'
+    import Page from '../../common/page.vue'
+    import Status from '../../common/status.vue';
+    import DatePicker from '../../common/datePicker.vue'
+    import Confirm from '../../common/confirm.vue'
 
     import AddModal from './collectAdd.vue'
     import EditModal from './collectEdit.vue'

@@ -121,11 +121,11 @@
 </template>
 
 <script>
-    import Confirm from '../common/confirm.vue'
-    import Status from '../common/status.vue'
-    import AddModal from './collectAdd.vue'
+    import Confirm from '../../common/confirm.vue'
+    import Status from '../../common/status.vue'
+    import AddModal from '../collect/collectAdd.vue'
     import EditModal from './rentingEdit.vue'
-    import PicModal from '../common/largePic.vue'
+    import PicModal from '../../common/largePic.vue'
     export default{
         components: {Confirm,Status,EditModal,PicModal,AddModal},
         data(){

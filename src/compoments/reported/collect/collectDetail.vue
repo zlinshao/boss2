@@ -101,10 +101,10 @@
 </template>
 
 <script>
-    import Confirm from '../common/confirm.vue'
-    import Status from '../common/status.vue'
+    import Confirm from '../../common/confirm.vue'
+    import Status from '../../common/status.vue'
 
-    import AddModal from './rentingAdd.vue'
+    import AddModal from '../rent/rentingAdd.vue'
     import EditModal from './collectEdit.vue'
     export default{
         components: {Confirm,Status,EditModal,AddModal},

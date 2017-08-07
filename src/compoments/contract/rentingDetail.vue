@@ -629,7 +629,7 @@
     import PicModal from  '../common/largePic.vue'
 //    import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
-    import AddModal from '../reported/rentingAdd.vue'
+    import AddModal from '../reported/rent/rentingAdd.vue'
     export default{
         components: {
             Transfer,   //转账
