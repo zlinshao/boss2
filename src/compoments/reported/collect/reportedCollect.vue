@@ -50,7 +50,7 @@
                             <h5 @click="changeStatus(1)"><a><i class="fa fa-send-o"></i>&nbsp;提交</a></h5>
                         </li>
                         <li v-show="statusId==2">
-                            <h5 @click="changeStatus(2)"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
+                            <h5 @click="pass"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
                         </li>
                         <li v-show="statusId==2">
                             <h5 @click="changeStatus(3)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
@@ -146,6 +146,8 @@
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
+        <!--生成款项-->
+        <CtearePayment :from="from" :addPayment_id="addPayment_id"></CtearePayment>
     </div>
 </template>
 
@@ -157,8 +159,9 @@
 
     import AddModal from './collectAdd.vue'
     import EditModal from './collectEdit.vue'
+    import CtearePayment from '../createPayment.vue'
     export default{
-        components: {Page,Status,DatePicker,AddModal,EditModal,Confirm},
+        components: {Page,Status,DatePicker,AddModal,EditModal,Confirm,CtearePayment},
         data(){
             return {
                 beforePage : 1,
@@ -204,6 +207,12 @@
                     msg: '',
                     status: ''
                 },
+
+
+//                生成款项
+                from : 1,
+                addPayment_id : 0,
+
             }
         },
         mounted (){
@@ -348,15 +357,22 @@
                     this.confirmMsg.msg = '确定作废此报备信息吗？';
                 }else if (num==1){
                     this.confirmMsg.msg = '确定提交报备信息吗？';
-                } else if (num==2){
+                }
+                /*else if (num==2){
                     this.confirmMsg.msg = '确定通过审核吗？';
-                } else if (num==3){
+                }*/
+                else if (num==3){
                     this.confirmMsg.msg = '确定驳回吗？';
                 } else if (num==4){
                     this.confirmMsg.msg = '确定驳回吗？';
                 }
                 $('#confirm').modal('show');
 
+            },
+
+            pass(){
+                this.addPayment_id = this.operId;
+                $('#cteatePayment').modal('show');
             }
         }
     }

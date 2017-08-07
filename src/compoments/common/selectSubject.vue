@@ -69,6 +69,14 @@
 
                 this.$emit('choose',this.curSuperior_id);
             },
+            reset(){
+                this.curSuperior_id = 0;
+//                this.formData.superior_id = 0;
+                this.Superior_name = '';
+                this.showChooseSubject = false;
+                this.subjectData = [];
+                this.$emit('choose','');
+            },
 
         }
     }
