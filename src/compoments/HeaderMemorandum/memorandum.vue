@@ -192,11 +192,12 @@
                     console.log(res.data.data.data);
                     this.memorandum = [];
                     this.memorandum = res.data.data.data;
-                    this.list_info (this.memorandum);
+                    this.list_info(this.memorandum);
                 });
             },
 //            列表数据
             list_info (){
+                let this_ = this;
                 $('#calendar').fullCalendar({
                     buttonText: {
                         today: '今天',
@@ -230,9 +231,9 @@
 //                        let selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');//格式化日期
 //                        console.log(1111);
 //                    },
-                    eventClick: function(calEvent, jsEvent, view) {
-                        $('#calendar').fullCalendar('removeEvents',calEvent.memo_id);
-                        console.log(calEvent._id);
+                    eventClick: function (calEvent, jsEvent, view) {
+//                        $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                        console.log(this_.format(calEvent.start, 'yyyy-MM-dd HH:mm:ss'));
                         console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
                         console.log('View: ' + view.name);
                     },
@@ -261,7 +262,58 @@
 //                        }
 //
 //                    },
-                    events: this.memorandum,
+                    events (start, end, timezone, callback) {
+                        $.ajax({
+                            url: 'myxmlfeed.php',
+                            dataType: 'xml',
+                            data: {
+                                // our hypothetical feed requires UNIX timestamps
+                                start: start.unix(),
+                                end: end.unix()
+                            },
+                            success: function (doc) {
+                                var events = [];
+                                $(doc).find('event').each(function () {
+                                    events.push({
+                                        title: $(this).attr('title'),
+                                        start: $(this).attr('start') // will be parsed
+                                    });
+                                });
+                                callback(events);
+                            }
+                        });
+                    },
+                });
+            },
+
+//            转换时间格式
+            format (time, format){
+                let t = new Date(time);
+                let tf = function (i) {
+                    return (i < 10 ? '0' : '')
+                        + i
+                };
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                        case 'yyyy':
+                            return tf(t.getFullYear());
+                            break;
+                        case 'MM':
+                            return tf(t.getMonth() + 1);
+                            break;
+                        case 'mm':
+                            return tf(t.getMinutes());
+                            break;
+                        case 'dd':
+                            return tf(t.getDate());
+                            break;
+                        case 'HH':
+                            return tf(t.getHours());
+                            break;
+                        case 'ss':
+                            return tf(t.getSeconds());
+                            break;
+                    }
                 });
             },
 //            选择日期

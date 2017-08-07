@@ -54,7 +54,7 @@
                         </label>
                     </div>
                     <div class="pull-right pro-sort" style="margin: 8px">
-                        <router-link :to="{path:'/HeaderMemorandum',query: {flag: 'rent'}}" class="btn btn-primary">
+                        <router-link :to="{path:'/Memorandum',query: {flag: 'rent'}}" class="btn btn-primary">
                            &nbsp;查看备忘录
                         </router-link>
                     </div>

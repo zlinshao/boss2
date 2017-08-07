@@ -7,7 +7,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div  v-show="operId==0">
+                <div v-show="operId === 0">
                     <form class="form-inline clearFix" role="form">
                         <!--<div class="dropdown form-group">
                             <select name="" class="form-control">
@@ -35,16 +35,10 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
-
-                        <div class="input-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增其余款项报备
-                            </a>
-                        </div>
-                        <h3 data-toggle="modal" data-target="#cteatePayment">生成款项</h3>
                     </form>
                 </div>
 
-                <div v-show="operId!=0" class="col-lg-12 remind">
+                <div v-show="operId !== 0" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
@@ -89,12 +83,12 @@
                         <tbody>
                         <tr class="text-center">
                             <td>
-                                <input type="checkbox">
+                                <input type="checkbox" :checked="isActive === index" @click="check(index)">
                             </td>
                             <td>
-                                <label :class="{'label':true,'status':true,'yellow':true}">
-                                    待提交
-                                </label>
+                                <label class="label label-default">未提交</label>
+                                <label class="label label-warning">待审核</label>
+                                <label class="label label-success">已通过</label>
                             </td>
                             <td>
                                 <router-link :to="{path:'/reportedOtherDetail',query: {collectId: 1}}">详情</router-link>
@@ -113,7 +107,6 @@
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--生成款项-->
-        <CtearePayment></CtearePayment>
 
     </div>
 </template>
@@ -123,21 +116,19 @@
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
-
-    import CtearePayment from '../createPayment.vue'
     export default{
-        components: {DatePicker,STAFF,Page,Status,CtearePayment},
+        components: { DatePicker, STAFF, Page, Status },
         data(){
             return {
-                beforePage : 1,
-                operId : 0,
-                statusId : 0,
+                isActive: '',
+                beforePage: 1,
+                operId: 0,
+                statusId: 0,
 
-                dict : {},
-                paging : '',
-                myData : [],
+                dict: {},
+                paging: '',
+                myData: [],
 
-                page : 1,
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -149,19 +140,19 @@
                     error: ''
                 },
 
-                dateConfigure : [
+                dateConfigure: [
                     {
-                        range : true,
-                        needHour : true,
-                        position : 'top-right',
+                        range: true,
+                        needHour: true,
+                        position: 'top-right',
                     }
                 ],
 
-                params : {
+                params: {
                     department_id: [],
                     staff_id: [],
-                    range : '',
-                    search : ''
+                    range: '',
+                    search: ''
                 },
 
                 configure: {},
@@ -173,15 +164,16 @@
             }
         },
         methods: {
+//            选中
+            check (val){
+                this.isActive = val;
+            },
+//            搜索
             search(val){
-//                console.log(this.params);
-//                this.operId = 0;
-//                this.page = 1;
-
                 this.filter(val);
             },
+//            日期搜索
             getDate(data){
-//                console.log(data);
                 this.params.range = data;
                 this.search(1);
             },
@@ -191,23 +183,23 @@
                 this.operId = 0;
                 // 筛选
                 /*this.$http.get('checkin/collect?page='+val,{
-                    params : this.params
-                }).then(
-                    (res) => {
-//                        console.log(res.data)
-                        if (res.data.code == 18200){
-                            // 成功
-                            this.paging = res.data.data.pages;
-                            this.myData = res.data.data.data;
-                            this.isShow = false;
-                        } else {
-                            this.isShow = true;
-                            this.myData = [];
-                            this.paging = 0;
-                            this.page = 1;
-                        }
-                    }
-                )*/
+                 params : this.params
+                 }).then(
+                 (res) => {
+                 //                        console.log(res.data)
+                 if (res.data.code == 18200){
+                 // 成功
+                 this.paging = res.data.data.pages;
+                 this.myData = res.data.data.data;
+                 this.isShow = false;
+                 } else {
+                 this.isShow = true;
+                 this.myData = [];
+                 this.paging = 0;
+                 this.page = 1;
+                 }
+                 }
+                 )*/
             },
             select(){
                 this.configure = {type: 'all', class: 'selectType'};
@@ -237,8 +229,12 @@
     }
 </script>
 <style scoped>
-    input[type=checkbox]{
+    input[type=checkbox] {
         width: 17px;
         height: 17px;
+    }
+
+    .label {
+        font-weight: normal;
     }
 </style>
