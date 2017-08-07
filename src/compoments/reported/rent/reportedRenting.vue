@@ -66,18 +66,18 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">签约人</th>
-                            <th class="text-center">所属部门</th>
-                            <th class="text-center">负责人</th>
-                            <th class="text-center">租房类型</th>
                             <th class="text-center">房屋地址</th>
+                            <th class="text-center">租房类型</th>
                             <th class="text-center">月单价</th>
                             <th class="text-center">租房年限(月)</th>
                             <th class="text-center">付款方式</th>
                             <th class="text-center">中介费</th>
-                            <th class="text-center">已收科目</th>
+                            <th class="text-center">已收款项</th>
                             <th class="text-center">已收金额</th>
                             <th class="text-center">待签约日期</th>
+                            <th class="text-center">签约人</th>
+                            <th class="text-center">所属部门</th>
+                            <th class="text-center">负责人</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
                         </tr>
@@ -87,11 +87,8 @@
                             <td>
                                 <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
-                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
-                            <td>{{item.department==undefined?'':item.department.name}}</td>
-                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
-                            <td>{{dict.rent_type[item.rent_type]}}</td>
                             <td>{{item.house.detailed_address}}</td>
+                            <td>{{dict.rent_type[item.rent_type]}}</td>
                             <td>{{item.price}}</td>
                             <td>{{item.months}}</td>
                             <td>押{{item.bet}}付{{item.pay}}</td>
@@ -99,6 +96,9 @@
                             <td>{{dict.subject[item.received_type]}}</td>
                             <td>{{item.received_amount}}</td>
                             <td>{{item.deal_time}}</td>
+                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
+                            <td>{{item.department==undefined?'':item.department.name}}</td>
+                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
                             <td>
                                 <label  :class="{'label':true,'label-warning ':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}

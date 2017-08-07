@@ -42,6 +42,27 @@
                                         <input type="text" class="form-control" disabled>
                                     </div>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">款项名称</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control">
+                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label">款项科目</label>
+                                    <div class="col-sm-4">
+                                        <SelectSubject @choose="getSubject"></SelectSubject>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">备注</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -57,16 +78,36 @@
     </div>
 </template>
 <style scoped>
-
+    textarea{
+        max-width: 100%;
+    }
 </style>
 <script>
+    import SelectSubject from '../common/selectSubject.vue'
     export default{
+        components: {SelectSubject},
         data(){
             return {
-                msg: 'hello vue'
+                dict : {},
+                val : {},
+                money_name : {},
+                formData:{
+
+                }
             }
         },
-        components: {},
-        methods: {}
+        mounted (){
+            this.$http.get('revenue/glee_collect/dict')
+            .then(
+//                    console.log
+                (res) => this.dict = res.data
+            );
+        },
+        methods: {
+            // 获取选择的科目名称
+            getSubject(val){
+                console.log(val)
+            }
+        }
     }
 </script>
