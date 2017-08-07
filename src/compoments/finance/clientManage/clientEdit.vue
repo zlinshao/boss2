@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Modal -->
-        <div class="modal fade full-width-modal-right" id="clientAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+        <div class="modal fade full-width-modal-right" id="clientEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -12,31 +12,31 @@
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >签约人</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" readonly placeholder="签约人" @click="selectStaff">
+                                <input type="text" class="form-control" readonly placeholder="签约人">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >所属部门</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" readonly placeholder="所属部门" @click="selectDpm">
+                                <input type="text" class="form-control" readonly placeholder="所属部门">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >负责人</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" readonly placeholder="负责人" @click="selectCharge">
+                                <input type="text" class="form-control" readonly placeholder="负责人">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >客户姓名</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" readonly placeholder="客户姓名" @click="selectPayClient">
+                                <input type="text" class="form-control" readonly placeholder="客户姓名">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" readonly placeholder="房屋地址" @click="selectHouse">
+                                <input type="text" class="form-control" readonly placeholder="房屋地址">
                             </div>
                         </div>
                         <div class="row">
@@ -108,25 +108,17 @@
                 </div>
             </div>
         </div>
-        <organize :configure="configure" @Staff=getValue></organize>
-        <Client @clientPayAdd = getPayClient></Client>
-        <House @House = getHouse></House>
     </div>
 </template>
 
 <script>
-    import organize from '../../common/organization/selectStaff.vue'
-    import Client from  '../../common/selectPayClient.vue'
-    import House from '../../common/selectHouse.vue'
     export default{
-        components : {organize , House , Client},
+        components : {},
         data(){
             return{
                 myDictionary : [],
                 payment : '1',
                 bank : '',
-                configure : [],
-                configureType : '',
             }
         },
         mounted(){
@@ -138,43 +130,6 @@
                     this.myDictionary = res.data;
                     console.log(this.myDictionary);
                 })
-            },
-            selectStaff(){
-                $('.selectCustom:eq(1)').modal('show');
-                this.configureType = 'selectStaff';
-                this.configure={class:'selectType',type:'staff'};
-            },
-            selectDpm(){
-                $('.selectCustom:eq(1)').modal('show');
-                this.configureType = 'selectDpm';
-                this.configure={class:'selectType',type:'department'};
-            },
-            selectCharge(){
-                $('.selectCustom:eq(1)').modal('show');
-                this.configureType = 'selectCharge';
-                this.configure={class:'selectType',type:'staff'};
-            },
-            getValue(val){
-                if(this.configureType === 'selectStaff'){
-
-                }else if(this.configureType === 'selectDpm'){
-
-                }else if(this.configureType === 'selectCharge'){
-
-                }
-            },
-
-            selectHouse(){          //选择房屋
-                $('#selectHouse').modal('show');
-            },
-            getHouse(val){
-                console.log(val)
-            },
-            selectPayClient(){      //选择客户
-                $('#selectPayClient').modal('show');
-            },
-            getPayClient(val){
-                console.log(val)
             },
         }
     }

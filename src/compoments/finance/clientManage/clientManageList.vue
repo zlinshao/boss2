@@ -7,27 +7,30 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
-                <div  v-if="clientSeleted === 0">
-                    <div class="pro-sort">
-                        <label>
-                            <input type="text" readonly class="form-control" @click="selectDpm" placeholder="点击选择部门">
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
-                        </label>
-                    </div>
+                <div  v-if="clientSelected === 0">
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入房屋地址">
+                            <input type="text" readonly class="form-control" @click="selectDpm"
+                                   v-model="departmentName" placeholder="点击选择部门">
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="reset">清空</button>
+                        </span>
+                        </div>
+
+                    </div>
+                    <!--<div class="pro-sort">-->
+                        <!--<label>-->
+                            <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="房屋地址/客户名"
+                                  v-model="searchInformation.keywords" @keyup="search">
                             <span class="input-group-btn">
                                     <button class="btn btn-success" type="button">搜索</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="pro-sort">
-                        <button class="btn btn-success" type="button">重置</button>
                     </div>
                     <div class="pro-sort pull-right">
                         <button class="btn btn-success" type="button" @click="addClient">
@@ -38,15 +41,12 @@
                 </div>
 
                 <!--选中-->
-                <div class="col-lg-12 remind" v-if="clientSeleted>0">
+                <div class="col-lg-12 remind" v-if="clientSelected>0">
                     <ul>
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
-                        <li>
-                            <h5><a><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a></h5>
-                        </li>
-                        <li>
+                        <li @click="deleteClient">
                             <h5><a><i class="fa fa-times-circle"></i>&nbsp;删除</a></h5>
                         </li>
                     </ul>
@@ -75,26 +75,30 @@
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr class="text-center">
-                        <td><input type="checkbox" @click="picked($event)"></td>
-                        <td class="text-center">房屋地址</td>
-                        <td class="text-center">客户姓名</td>
-                        <td class="text-center">身份</td>
-                        <td class="text-center">汇款方式</td>
-                        <td class="text-center">收款人姓名</td>
-                        <td class="text-center">开户行</td>
-                        <td class="text-center">账号</td>
-                        <td class="text-center">签约人</td>
-                        <td class="text-center">所属部门</td>
-                        <td class="text-center">负责人</td>
-                        <td class="text-center">状态</td>
+                    <tr class="text-center" v-for="item in clientList">
+                        <td><input type="checkbox" @click="picked(item.id,$event)"></td>
+                        <td class="text-center">{{item.address}}</td>
+                        <td class="text-center">{{item.name}}</td>
+                        <td class="text-center">{{item.identity}}</td>
+                        <td class="text-center">{{dictionary.payment[item.identity]}}</td>
+                        <td class="text-center">{{item.payee}}</td>
+                        <td class="text-center">{{dictionary.bank[item.bank]}}</td>
+                        <td class="text-center">{{item.account}}</td>
+                        <td class="text-center">{{item.real_name}}</td>
+                        <td class="text-center">{{item.department_name}}</td>
+                        <td class="text-center">{{item.head_name}}</td>
                         <td class="text-center">
-                            <router-link :to="{path:'/ClientManageDetail'}">
+                            <label class="label label-primary">
+                                {{dictionary.customer.status[item.status]}}
+                            </label>
+                        </td>
+                        <td class="text-center">
+                            <router-link :to="{path:'/ClientManageDetail',query:{clientId :item.id}}">
                                 更多
                             </router-link>
                         </td>
                     </tr>
-                    <tr>
+                    <tr v-if="isShow">
                         <td colspan="13" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
@@ -102,48 +106,108 @@
                 </tbody>
             </table>
         </section>
-        <Department  :configure='configure' @Staff="dpmSeleted"></Department>
+        <Department  :configure='configure' @Staff="dpmSelected"></Department>
         <ClientAdd></ClientAdd>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+
+        <Page :pg="pages" @pag="pageSearch" :beforePage="searchInformation.pages"></Page>
     </div>
 </template>
 
 <script>
-    import DatePicker from '../../common/datePicker.vue'
+    import Confirm from '../../common/confirm.vue'
+//    import DatePicker from '../../common/datePicker.vue'
     import Department from '../../common/organization/selectStaff.vue'
     import ClientAdd from  './clientAdd.vue'
+    import Page from  '../../common/page.vue'
     export default{
-        components:{DatePicker , Department , ClientAdd},
+        components:{ Department , ClientAdd , Confirm ,Page},
         data(){
           return{
               dateConfigure : [{
                   range : true, // 是否选择范围
                   needHour : false // 是否需要选择小时
               }],
-              clientSeleted : 0,
+              clientSelected : 0,
               configure : [],
+              clientList :[],
+              confirmMsg : '',
+              searchInformation : {
+                  department_id : '',
+                  keywords :'',
+                  pages : '',
+              },
+              pages : '',
+              isShow :false,
+              departmentName : '',
           }
         },
+        mounted(){
+            this.getDictionary();
+        },
         methods:{
-            getDate(val){},
-            picked(e){
+            getDictionary(){
+                this.$http.get('revenue/customer/dict').then((res) =>{
+                    this.dictionary = res.data;
+                    console.log(this.dictionary);
+                    this.search();
+                })
+            },
+            search(){
+                this.searchInformation.pages = 1;
+                this.getClientList();
+            },
+            getClientList(){
+                this.$http.post('revenue/customer/index',this.searchInformation).then((res) =>{
+                    if(res.data.code === '20000'){
+                        this.clientList = res.data.data.data;
+                        this.pages = res.data.data.pages;
+                        this.isShow = false;
+                    }else {
+                        this.clientList = [];
+                        this.pages = 1;
+                        this.isShow = true;
+                    }
+                })
+            },
+            picked(id,e){
                 if(e.target.checked === true){
-                    this.clientSeleted = 1;
+                    this.clientSelected = id;
                 }else {
-                    this.clientSeleted = 0;
+                    this.clientSelected = 0;
                 }
             },
             selectDpm(){
                 $('.selectCustom:eq(0)').modal('show');
-                this.configure={class:'selectType',type:'department'};
+                this.configure={length:1,class:'department'};
             },
-            dpmSeleted(val){
-                console.log(val)
+            dpmSelected(val){
+               this.searchInformation.department_id = val.department[0].id;
+               this.departmentName = val.department[0].name;
+               this.search();
             },
 
             addClient(){
                 $('#clientAdd').modal('show');
             },
+            deleteClient(){
+                this.confirmMsg = {msg:'您确定删除吗'};
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.clientSelected = 0;
+                this.search();
 
+            },
+            pageSearch(val){
+                this.page=val;
+                this.getClientList();
+            },
+            reset(){    //清空
+                this.searchInformation.department_id = '';
+                this.departmentName = '';
+                this.search();
+            },
         }
     }
 </script>

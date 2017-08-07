@@ -18,12 +18,12 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <li>
-                                    <button class="btn btn-white btn-block">
+                                    <button class="btn btn-white btn-block" @click="editClient">
                                         编辑
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="btn btn-white btn-block">
+                                    <button class="btn btn-white btn-block" @click="deleteClient">
                                         删除
                                     </button>
                                 </li>
@@ -32,74 +32,74 @@
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
-                    <div class="row">
+                    <div class="row" v-for="item in clientDetail">
                         <div class="col-sm-4 col-xs-12 subregion">
                             <h5>基本信息</h5>
                             <div>
                                 <span class="text-primary">客户姓名：</span>
-                                <span></span>
+                                <span>{{item.name}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">房屋地址：</span>
-                                <span></span>
+                                <span>{{item.address}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">房型：</span>
-                                <span></span>
+                                <span>{{item.rooms}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">备注：</span>
-                                <span></span>
+                                <span>{{item.note}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">签约人：</span>
-                                <span></span>
+                                <span>{{item.real_name}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">负责人：</span>
-                                <span></span>
+                                <span>{{item.head_name}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">所属部门：</span>
-                                <span></span>
+                                <span>{{item.department_name}}</span>
                             </div>
                         </div>
                         <div class="col-sm-4 col-xs-12 subregion">
                             <h5>客户收款人信息</h5>
                             <div>
                                 <span class="text-primary">汇款方式：</span>
-                                <span></span>
+                                <span>{{dictionary.payment[item.financial_account[0].pay_method]}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">收款人姓名：</span>
-                                <span></span>
+                                <span>{{item.financial_account[0].payee}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">开户行：</span>
-                                <span></span>
+                                <span>{{dictionary.bank[item.financial_account[0].bank]}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">账号：</span>
-                                <span></span>
+                                <span>{{item.financial_account[0].account}}</span>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-xs-12 subregion">
+                        <div class="col-sm-4 col-xs-12 subregion" v-for="account in historyAccount">
                             <h5>历史账户信息</h5>
                             <div>
                                 <span class="text-primary">汇款方式：</span>
-                                <span></span>
+                                <span>{{dictionary.payment[account.pay_method]}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">收款人姓名：</span>
-                                <span></span>
+                                <span>{{account.payee}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">开户行：</span>
-                                <span></span>
+                                <span>{{dictionary.bank[account.bank]}}</span>
                             </div>
                             <div>
                                 <span class="text-primary">账号：</span>
-                                <span></span>
+                                <span>{{account.account}}</span>
                             </div>
                         </div>
                     </div>
@@ -107,11 +107,61 @@
 
             </div>
         </section>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <ClientEdit></ClientEdit>
     </div>
 </template>
 
 <script>
+    import Confirm from '../../common/confirm.vue'
+    import ClientEdit from  './clientEdit.vue'
+    export default{
+        components : {Confirm,ClientEdit},
+        data(){
+            return{
+                confirmMsg : '',
+                myClientId : '',
+                clientDetail : [],
+                historyAccount : [],
+            }
+        },
+        mounted(){
+            this.myClientId = this.$route.query.clientId;
+            this.getDictionary();
+        },
+        methods:{
+            getDictionary(){
+                this.$http.get('revenue/customer/dict').then((res) =>{
+                    this.dictionary = res.data;
+                    this.getClientDetail();
+                })
+            },
+            getClientDetail(){
+                this.clientDetail = [];
+                this.$http.post('revenue/customer/select',{id : this.myClientId}).then((res) =>{
+                    if(res.data.code === '20010'){
+                        this.clientDetail .push(res.data.data.data) ;
+                        let financial = res.data.data.data.financial_account
+                        financial.splice(0,1);
+                        this.historyAccount = financial;
+                        console.log(this.clientDetail)
+                    }else {
+                        this.clientDetail = [];
+                    }
+                })
+            },
+            deleteClient(){
+                this.confirmMsg = {msg:'您确定删除吗'};
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
 
+            },
+            editClient(){
+                $('#clientEdit').modal('show');
+            }
+        },
+    }
 </script>
 
 
@@ -142,7 +192,7 @@
     }
     @media (min-width: 768px) {
         .subregion:not(:last-child){
-            border-right:1px dotted #aaaaaa;
+            border-right:1px dashed #aaaaaa;
         }
         .subregion{
             min-height: 400px;
