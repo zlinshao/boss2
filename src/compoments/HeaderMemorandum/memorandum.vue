@@ -3,8 +3,8 @@
         <section class="panel">
             <div class="panel-body">
                 <div class="pro-sort">
-                    <input @click="reminds()" type="text" placeholder='选择日期'
-                           v-model="Times" class="form-control remindTimes" readonly>
+                    <input @click="reminds_month()" type="text" placeholder='选择日期'
+                           v-model="Times" class="form-control remindMonth" readonly>
                 </div>
                 <div class="pro-sort">
                     <a class="btn btn-success" @click="add_mem">
@@ -65,6 +65,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 col-sm-2 control-label">标记：</label>
                                 <div class="col-sm-10">
+                                    <div class="color_block" @click="select_color(0)">
+                                        <span v-if="isShow === 0" class="fa fa-check"></span>
+                                    </div>
                                     <div class="color_block" @click="select_color(1)">
                                         <span v-if="isShow === 1" class="fa fa-check"></span>
                                     </div>
@@ -83,9 +86,6 @@
                                     <div class="color_block" @click="select_color(6)">
                                         <span v-if="isShow === 6" class="fa fa-check"></span>
                                     </div>
-                                    <div class="color_block" @click="select_color(7)">
-                                        <span v-if="isShow === 7" class="fa fa-check"></span>
-                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -94,7 +94,13 @@
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button" @click="clear_info">取消
                         </button>
-                        <button class="btn btn-success" type="button" @click="add_memorandum"> 确定</button>
+                        <button class="btn btn-success" v-if="mem_status" type="button" @click="add_memorandum">确定
+                        </button>
+
+                        <button class="btn btn-warning" v-if="!mem_status" @click="mem_revise" type="button">修改</button>
+                        <button class="btn btn-danger pull-left" @click="mem_delete" v-if="!mem_status" type="button">
+                            删除
+                        </button>
                     </div>
                 </div>
             </div>
@@ -111,8 +117,11 @@
         components: {Status},
         data (){
             return {
+                colour: [],
+                mem_id: '',
+                mem_status: true,
                 memorandum: [],         //备忘录列表
-                isShow: 1,
+                isShow: 0,
                 Times: '',              //时间搜索
                 titles: '',             //内容
                 contents: '',           //描述
@@ -150,7 +159,8 @@
             },
 //            清楚内容
             clear_info (){
-                this.isShow = 1;
+                this.mem_status = true;
+                this.isShow = 0;
                 this.titles = '';          //内容
                 this.contents = '';        //描述
                 this.start_time = '';
@@ -173,8 +183,21 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        this.clear_info();
-                        this.memorandum_list(1);
+                        console.log(
+                            this.titles,
+                            this.start_time,
+                            this.end_time,
+                            this.contents,
+                            this.isShow,
+                        );
+                        $('#calendar').fullCalendar('renderEvent', {
+                            title: this.titles,
+                            start: this.start_time,
+                            end: this.end_time,
+                            content: this.contents,
+                            color: this.colour[this.isShow],
+                        });
+
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
@@ -183,21 +206,94 @@
                     }
                 });
             },
+//            删除备忘录
+            mem_delete (){
+                this.$http.post('clock/memo/delete', {
+                    id: this.mem_id,
+                }).then((res) => {
+                    $('#remindDaily').modal('hide');
+                    //成功信息 ***
+                    this.info.success = res.data.msg;
+                    //关闭失败弹窗 ***
+                    this.info.state_error = false;
+                    //显示成功弹窗 ***
+                    this.info.state_success = true;
+
+                    $('#calendar').fullCalendar('removeEvents', this.mem_id);
+                });
+
+            },
+//            修改备忘录
+            mem_revise (){
+                this.$http.post('clock/memo/update', {
+                    id: this.mem_id,
+                    title: this.titles,
+                    start_time: this.start_time,
+                    end_time: this.end_time,
+                    content: this.contents,
+                    colour: this.isShow,
+                }).then((res) => {
+                    if (res.data.code === '30028') {
+                        $('#remindDaily').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        console.log(
+                            this.titles,
+                            this.start_time,
+                            this.end_time,
+                            this.contents,
+                            this.isShow,
+                        );
+                        $('#calendar').fullCalendar('updateEvent', {
+                            title: this.titles,
+                            start: this.start_time,
+                            end: this.end_time,
+                            content: this.contents,
+                            color: this.isShow,
+                        });
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+
+                });
+            },
 //            备忘录列表
-            memorandum_list (val){
-                this.$http.post('clock/memo/index/page/' + val, {
+            memorandum_list (){
+                this.$http.post('clock/memo/index', {
                     start_time: '',
                     end_time: '',
                 }).then((res) => {
-                    console.log(res.data.data.data);
-                    this.memorandum = [];
-                    this.memorandum = res.data.data.data;
-                    this.list_info(this.memorandum);
+                    this.colour = res.data.data.color;
+                    let mem = res.data.data.data;
+                    let even = res.data.data.data;
+                    let color = res.data.data.color;
+                    this.list_info(mem, even, color);
                 });
             },
 //            列表数据
-            list_info (){
-                let this_ = this;
+            list_info (mem, even, color){
+                let _this = this;
+                let memorandum = [];
+                for (let i = 0; i < mem.length; i++) {
+                    memorandum.push(
+                        {
+                            id: even[i].memo_id,
+                            title: even[i].title,
+                            start: even[i].start,
+                            end: even[i].end,
+                            content: even[i].content,
+                            color: color[even[i].color],
+                            color_id: even[i].color,
+                        }
+                    )
+                }
                 $('#calendar').fullCalendar({
                     buttonText: {
                         today: '今天',
@@ -227,15 +323,19 @@
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
-//                    dayClick: function(date, allDay, jsEvent, view) {
-//                        let selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');//格式化日期
-//                        console.log(1111);
-//                    },
-                    eventClick: function (calEvent, jsEvent, view) {
-//                        $('#calendar').fullCalendar('removeEvents', calEvent.id);
-                        console.log(this_.format(calEvent.start, 'yyyy-MM-dd HH:mm:ss'));
-                        console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                        console.log('View: ' + view.name);
+                    eventClick (calEvent, jsEvent, view) {
+                        _this.mem_status = false;
+                        _this.mem_id = calEvent.id;
+                        _this.isShow = calEvent.color_id;
+                        _this.titles = calEvent.title;              //内容
+                        _this.contents = calEvent.content;          //描述
+                        _this.start_time = _this.format(calEvent.start, 'yyyy-MM-dd HH:mm');
+                        _this.end_time = _this.format(calEvent.end, 'yyyy-MM-dd HH:mm');
+                        $('#remindDaily').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+//                        console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+//                        console.log('View: ' + view.name);
                     },
 //                    editable: true,           //拖动
 //                    droppable: true,                    // this allows things to be dropped onto the calendar !!!
@@ -262,27 +362,7 @@
 //                        }
 //
 //                    },
-                    events (start, end, timezone, callback) {
-                        $.ajax({
-                            url: 'myxmlfeed.php',
-                            dataType: 'xml',
-                            data: {
-                                // our hypothetical feed requires UNIX timestamps
-                                start: start.unix(),
-                                end: end.unix()
-                            },
-                            success: function (doc) {
-                                var events = [];
-                                $(doc).find('event').each(function () {
-                                    events.push({
-                                        title: $(this).attr('title'),
-                                        start: $(this).attr('start') // will be parsed
-                                    });
-                                });
-                                callback(events);
-                            }
-                        });
-                    },
+                    events: memorandum,
                 });
             },
 
@@ -315,6 +395,21 @@
                             break;
                     }
                 });
+            },
+//            日期搜索
+            reminds_month (){
+                $('.remindMonth').datetimepicker({
+                    minView: 'month',                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    initialDate: new Date(),
+                    pickerPosition: 'bottom-right',
+                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    this.Times = ev.target.value;
+                }.bind(this));
             },
 //            选择日期
             reminds (){
