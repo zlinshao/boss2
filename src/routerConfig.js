@@ -381,7 +381,7 @@ export default[
         component: ReopetedRentDetail
     },
     {
-        path: '/Memorandum',
+        path: '/memorandum',
         name: 'Memorandum',
         component: Memorandum
     },
