@@ -1,4 +1,4 @@
-var Script = function () {
+let Script = function () {
 
 
     /* initialize the external events
@@ -8,7 +8,7 @@ var Script = function () {
 
         // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
         // it doesn't need to have a start or end
-        var eventObject = {
+        let eventObject = {
             title: $.trim($(this).text()) // use the element's text as the event title
         };
 
@@ -28,10 +28,10 @@ var Script = function () {
     /* initialize the calendar
      -----------------------------------------------------------------*/
 
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+    let date = new Date();
+    let d = date.getDate();
+    let m = date.getMonth();
+    let y = date.getFullYear();
 
     $('#calendar').fullCalendar({
         header: {
@@ -44,10 +44,10 @@ var Script = function () {
         drop: function(date, allDay) { // this function is called when something is dropped
 
             // retrieve the dropped element's stored Event Object
-            var originalEventObject = $(this).data('eventObject');
+            let originalEventObject = $(this).data('eventObject');
 
             // we need to copy it, so that multiple events don't have a reference to the same object
-            var copiedEventObject = $.extend({}, originalEventObject);
+            let copiedEventObject = $.extend({}, originalEventObject);
 
             // assign it the date that was reported
             copiedEventObject.start = date;

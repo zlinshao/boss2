@@ -10,8 +10,8 @@
                         <router-link class="btn btn-link" to="/customerPool">客户池</router-link>  <!--客户池-->
                         <router-link class="btn btn-link" to="/OkCollect">公司房源</router-link>  <!--公司房源-->
                         <router-link class="btn btn-link" to="/noCollect">待收房源</router-link>  <!--待收房源-->
-                        <router-link class="btn btn-link" to="/reportedCollect">租房报备</router-link>  <!--租房报备-->
-                        <router-link class="btn btn-link" to="/reportedRenting">收房报备</router-link>  <!--收房报备-->
+                        <router-link class="btn btn-link" to="/reportedRenting">租房报备</router-link>  <!--租房报备-->
+                        <router-link class="btn btn-link" to="/reportedCollect">收房报备</router-link>  <!--收房报备-->
                         <router-link class="btn btn-link" to="/user">员工管理</router-link>  <!--用户管理-->
                         <router-link class="btn btn-link" to="/orderManage">收房订单迁移</router-link>  <!--收房订单迁移-->
                         <router-link class="btn btn-link" to="/rentingOrder">租房订单迁移</router-link>  <!--租房订单迁移-->
