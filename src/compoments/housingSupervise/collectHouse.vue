@@ -391,9 +391,7 @@
     .remind li + li a {
         border-left: 1px solid #aaaaaa;
     }
-    .nav-tabs>li {
-        margin-bottom: 0;
-    }
+
     input, select {
          margin-bottom: 0px;
     }
@@ -405,4 +403,7 @@
     .pro-sort select.form-control {
         padding: 6px 8px;
     }
+    .nav-tabs>li {
+         margin-bottom: 0;
+     }
 </style>

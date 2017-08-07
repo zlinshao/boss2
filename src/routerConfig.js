@@ -31,9 +31,9 @@ import CollectContract from "./compoments/contract/collectContract.vue";        
 import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
 import ContractDetail from './compoments/contract/collectDetail.vue'           // 收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
-import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //c查看备忘录
+import Memorandum from  './compoments/contract/searchMemorandum.vue'          //c查看备忘录
 
-import  Comparecontract from  './compoments/contract/Compare.vue'
+import Comparecontract from  './compoments/contract/Compare.vue'
 
 // 账本
 import Account from './compoments/finance/account.vue'                          // 账号管理
@@ -68,6 +68,9 @@ import ReopetedRentDetail from './compoments/reported/rentDetail.vue'// 租房�
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
+
+import ClientManage from './compoments/finance/clientManage/clientManageList.vue'     //财务客户管理
+import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
 
 export default[
     {
@@ -373,6 +376,14 @@ export default[
         name: 'Comparecontract',
         component: Comparecontract
     },
-
-
+    {
+        path: '/clientManage',
+        name: 'ClientManage',
+        component: ClientManage
+    },
+    {
+        path: '/clientManageDetail',
+        name: 'ClientManageDetail',
+        component: ClientManageDetail
+    },
 ]
