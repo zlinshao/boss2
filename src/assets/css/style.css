@@ -2869,11 +2869,11 @@ ul.amounts li {
     color: #fff !important;
 }
 
-.fc-event-skin {
-    background-color: #6883a3 !important;
-    border-color: #6883a3 !important;
-    color: #FFFFFF !important;
-}
+/*.fc-event-skin {*/
+    /*background-color: #6883a3 !important;*/
+    /*border-color: #6883a3 !important;*/
+    /*color: #FFFFFF !important;*/
+/*}*/
 
 .fc-grid th {
     height: 30px;
