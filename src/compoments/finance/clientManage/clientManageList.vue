@@ -70,7 +70,6 @@
                     <th class="text-center">签约人</th>
                     <th class="text-center">所属部门</th>
                     <th class="text-center">负责人</th>
-                    <th class="text-center">状态</th>
                     <th class="text-center">更多</th>
                 </tr>
                 </thead>
@@ -88,18 +87,13 @@
                         <td class="text-center">{{item.department_name}}</td>
                         <td class="text-center">{{item.head_name}}</td>
                         <td class="text-center">
-                            <label class="label label-primary">
-                                {{dictionary.customer.status[item.status]}}
-                            </label>
-                        </td>
-                        <td class="text-center">
                             <router-link :to="{path:'/ClientManageDetail',query:{clientId :item.id}}">
                                 更多
                             </router-link>
                         </td>
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="13" class="text-center text-muted">
+                        <td colspan="12" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
