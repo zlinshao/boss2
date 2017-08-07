@@ -72,6 +72,9 @@ import UserDetail from './compoments/user/userDetail.vue'           //用户详�
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'           //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'           //备忘录
 
+import ClientManage from './compoments/finance/clientManage/clientManageList.vue'     //财务客户管理
+import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
+
 export default[
     {
         path: '/',             //重定向主页
@@ -98,15 +101,15 @@ export default[
         component: Role
     },
     /*{
-     path: '/village',
-     name: 'Village',
-     component: Village
-     },
-     {
-     path: '/villageDetail',
-     name: 'VillageDetail',
-     component: VillageDetail
-     },*/
+        path: '/village',
+        name: 'Village',
+        component: Village
+    },
+    {
+        path: '/villageDetail',
+        name: 'VillageDetail',
+        component: VillageDetail
+    },*/
     {
         path: '/cACollect',
         name: 'CACollect',
@@ -271,7 +274,8 @@ export default[
         path: '/payPayment',
         name: 'PayPayment',
         component: PayPayment
-    }, {
+    },
+    {
         path: '/incomeFlow',
         name: 'IncomeFlow',
         component: IncomeFlow
@@ -398,4 +402,14 @@ export default[
     },
 
 
+    {
+        path: '/clientManage',
+        name: 'ClientManage',
+        component: ClientManage
+    },
+    {
+        path: '/clientManageDetail',
+        name: 'ClientManageDetail',
+        component: ClientManageDetail
+    },
 ]

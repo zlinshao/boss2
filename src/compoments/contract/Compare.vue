@@ -60,7 +60,7 @@
                     </div>
                     <div class="infoList">
                         <span>开户行：</span>
-                        <span v-if="item.checkin_collect_id !== null || undefined">{{item.checkin_collect_id.bank}}</span>
+                        <span v-if="item.checkin_collect_id !== null || undefined">{{myDictionary.banks[item.checkin_collect_id.bank]}}</span>
                     </div>
                     <div class="infoList">
                         <span>银行卡号：</span>
