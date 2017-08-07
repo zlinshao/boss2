@@ -147,7 +147,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <!--生成款项-->
-        <CtearePayment :from="from" :addPayment_id="addPayment_id"></CtearePayment>
+        <CtearePayment :from="1" :addPayment_id="addPayment_id"></CtearePayment>
     </div>
 </template>
 
@@ -210,7 +210,7 @@
 
 
 //                生成款项
-                from : 1,
+//                from : 1,
                 addPayment_id : 0,
 
             }
