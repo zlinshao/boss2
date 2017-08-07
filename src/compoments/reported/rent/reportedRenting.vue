@@ -135,10 +135,10 @@
 </template>
 
 <script>
-    import Page from '../common/page.vue'
-    import Status from '../common/status.vue';
-    import DatePicker from '../common/datePicker.vue'
-    import Confirm from '../common/confirm.vue'
+    import Page from '../../common/page.vue'
+    import Status from '../../common/status.vue';
+    import DatePicker from '../../common/datePicker.vue'
+    import Confirm from '../../common/confirm.vue'
 
     import AddModal from './rentingAdd.vue'
     import EditModal from './rentingEdit.vue'

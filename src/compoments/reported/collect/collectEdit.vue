@@ -203,13 +203,13 @@
     }
 </style>
 <script>
-    import STAFF from  '../common/organization/selectStaff.vue'
-    import SelectHouse from '../common/selectHouse.vue'
-    import FlexBox from '../common/flexBox.vue'
-    import DatePicker from '../common/datePicker.vue'
-    import Status from '../common/status.vue';
+    import STAFF from  '../../common/organization/selectStaff.vue'
+    import SelectHouse from '../../common/selectHouse.vue'
+    import FlexBox from '../../common/flexBox.vue'
+    import DatePicker from '../../common/datePicker.vue'
+    import Status from '../../common/status.vue';
     // 选择客户
-    import SelectClient from '../common/selectClient.vue'
+    import SelectClient from '../../common/selectClient.vue'
     export default{
         props : ['id'],
         components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},

@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">租房年限<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">租房月数<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="number" min="0" class="form-control" v-model="formData.months">
                                     </div>
@@ -360,12 +360,12 @@
 </template>
 
 <script>
-    import STAFF from  '../common/organization/selectStaff.vue'
-    import SelectHouse from '../common/selectHouse.vue'
-    import Status from '../common/status.vue';
-    import upLoad from '../common/upload.vue'
+    import STAFF from  '../../common/organization/selectStaff.vue'
+    import SelectHouse from '../../common/selectHouse.vue'
+    import Status from '../../common/status.vue';
+    import upLoad from '../../common/upload.vue'
     // 选择客户
-    import SelectClient from '../common/selectClient.vue'
+    import SelectClient from '../../common/selectClient.vue'
     export default{
         props : ['id'],
         components: {STAFF,SelectHouse,Status,SelectClient,upLoad},

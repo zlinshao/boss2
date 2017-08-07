@@ -58,12 +58,14 @@ import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单�
 
 import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
 
-import ReportedCollect from './compoments/reported/reportedCollect.vue'    //收房报备
-import ReopetedCollectDetail from './compoments/reported/collectDetail.vue'// 收房报备详情
+import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'    //收房报备
+import ReopetedCollectDetail from './compoments/reported/collect/collectDetail.vue'// 收房报备详情
 
-import ReportedRenting from './compoments/reported/reportedRenting.vue'    //租房报备
-import ReopetedRentDetail from './compoments/reported/rentDetail.vue'// 租房报备详情
+import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'    //租房报备
+import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'// 租房报备详情
 
+import ReportedOther from './compoments/reported/other/reportedOther.vue'    //其余款项报备
+import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'    //其余款项报备
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
@@ -343,6 +345,16 @@ export default[
         path: '/reportedRenting',
         name: 'ReportedRenting',
         component: ReportedRenting
+    },
+    {
+        path: '/reportedOther',
+        name: 'ReportedOther',
+        component: ReportedOther
+    },
+    {
+        path: '/reportedOtherDetail',
+        name: 'ReportedOtherDetail',
+        component: ReportedOtherDetail
     },
     {
         path: '/country',
