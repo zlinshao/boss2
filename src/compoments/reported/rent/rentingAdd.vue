@@ -316,7 +316,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">中介汇款方式</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" v-model="formData.medi_account_type">
+                                            <select class="form-control" v-model="formData.medi_account_type" @change="changeMediPayment">
                                                 <option :value="value" v-for="(key,value) in dict.payment">{{key}}</option>
                                             </select>
                                         </div>
@@ -955,6 +955,15 @@
             getFlexData(data){
                 console.log(data);
                 this.formData.price = data;
+            },
+
+            // 修改中介收款方式
+            changeMediPayment(){
+                this.formData.medi_account_owner = '';
+                this.formData.medi_account_subbank = '';
+                this.formData.medi_alipay_owner = '';
+                this.formData.medi_account_bank = 1;
+                this.formData.medi_account_num = '';
             }
         }
     }
