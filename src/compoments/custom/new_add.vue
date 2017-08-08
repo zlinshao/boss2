@@ -370,10 +370,10 @@
                 this.cus_gender = val.gender;                                           //性别
                 this.cus_progress = val.follow;                                         //进度
                 if (val.nationality) {
-                    this.cus_nationality = val.nationality;                                 //国籍ID
+                    this.cus_nationality = val.nationality;                             //国籍ID
                     for(let key in this.all_count){
                         if(this.all_count[key].id === val.nationality)
-                        this.cus_nationality_name = this.all_count[key].zh_name;            //国籍
+                        this.cus_nationality_name = this.all_count[key].zh_name;        //国籍
                     }
                 }
                 this.cus_phone = val.mobile;                                            //手机号
