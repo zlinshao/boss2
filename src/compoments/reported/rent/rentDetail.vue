@@ -32,21 +32,22 @@
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
-                    <div>
-                        <div class="col-md-12" v-if="msg!=''">
+                    <div class="col-md-12" v-if="msg!=''">
+                        <h5 class="title">基本信息</h5>
+                        <div class="clearFix">
                             <div class="col-md-4">
-                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
-                                <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
-                                <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
-                                <div><span class="text-primary">租房方式：</span><span>{{dict.shared_house[msg.is_shared]}}</span></div>
-                                <div><span class="text-primary" v-if="msg.is_shared==1">房间类型：</span><span>{{msg.shared_part}}</span></div>
-                                <div><span class="text-primary">租房类型：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
-                                <div><span class="text-primary">年限(月)：</span><span>{{msg.months}}</span></div>
-                                <div><span class="text-primary">付款类型：</span><span>押{{msg.bet}}付{{msg.pay}}</span></div>
-                                <div><span class="text-primary">出租月单价：</span><span>{{msg.price}}</span></div>
-                                <div><span class="text-primary">应收金额：</span><span>{{msg.receivable_amount}}</span></div>
-                                <div><span class="text-primary">已收科目：</span><span>{{dict.subject[msg.received_type]}}</span></div>
-                                <div><span class="text-primary">付款方式：</span>
+                                <div class="list"><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
+                                <div class="list"><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
+                                <div class="list"><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
+                                <div class="list"><span class="text-primary">租房类型：</span><span>{{dict.shared_house[msg.is_shared]}}</span></div>
+                                <div class="list" v-if="msg.is_shared==1"><span class="text-primary">房间类型：</span><span>{{msg.shared_part}}</span></div>
+                                <div class="list"><span class="text-primary">租房状态：</span><span>{{dict.rent_type[msg.rent_type]}}</span></div>
+                                <div class="list"><span class="text-primary">租房月数：</span><span>{{msg.months}}</span></div>
+                                <div class="list"><span class="text-primary">付款类型：</span><span>押{{msg.bet}}付{{msg.pay[0]}}<a v-show="msg.pay.length>1" @click="payChange">变化</a></span></div>
+                                <div class="list"><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="priceChange">变化</a></span></div>
+                                <div class="list"><span class="text-primary">应收金额：</span><span>{{msg.receivable_amount}}</span></div>
+                                <div class="list"><span class="text-primary">已收类型：</span><span>{{dict.subject[msg.received_type]}}</span></div>
+                                <div class="list"><span class="text-primary">付款方式：</span>
                                     <span>
                                         {{dict.rent_payment[msg.payment[0].payment_id]}}
                                         &nbsp;
@@ -54,29 +55,56 @@
                                         <a v-show="msg.payment.length>1" data-toggle="modal" data-target="#change">变化</a>
                                     </span>
                                 </div>
-                                <div><span class="text-primary">已收金额：</span><span>{{msg.received_amount}}</span></div>
+                                <div class="list"><span class="text-primary">已收金额：</span><span>{{msg.received_amount}}</span></div>
 
                             </div>
-                            <div class="col-md-8">
-                                <div><span class="text-primary">未收金额：</span><span>{{msg.remain_amount}}</span></div>
-                                <div><span class="text-primary">尾款补齐时间：</span><span>{{msg.complete_date}}</span></div>
-                                <div><span class="text-primary">凭证截图：</span>
+                            <div class="col-md-4">
+                                <div class="list"><span class="text-primary">未收金额：</span><span>{{msg.remain_amount}}</span></div>
+                                <div class="list"><span class="text-primary">尾款补齐时间：</span><span>{{msg.complete_date}}</span></div>
+                                <div class="list"><span class="text-primary">凭证截图：</span>
                                     <span>
                                         <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
-                                        <!--<img src="http://img1.imgtn.bdimg.com/it/u=1902468542,2120439953&fm=200&gp=0.jpg" alt="">
-                                        <img src="http://img1.imgtn.bdimg.com/it/u=1902468542,2120439953&fm=200&gp=0.jpg" alt="">-->
+                                            <!--<img src="http://img1.imgtn.bdimg.com/it/u=1902468542,2120439953&fm=200&gp=0.jpg" alt="">
+                                            <img src="http://img1.imgtn.bdimg.com/it/u=1902468542,2120439953&fm=200&gp=0.jpg" alt="">-->
                                     </span>
                                 </div>
-                                <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                                 <!--<div><span class="text-primary">收款方式：</span><span>颠三倒</span></div>-->
                                 <!--<div><span class="text-primary">收款账户：</span><span>颠三倒</span></div>-->
-                                <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
-                                <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
-                                <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
-                                <div><span class="text-primary">负责人：</span><span>{{msg.leader==undefined?'':msg.leader.real_name}}</span></div>
-                                <div><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
+                                <div class="list"><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
+                                <div class="list"><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
+                                <div class="list"><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
+                                <div class="list"><span class="text-primary">负责人：</span><span>{{msg.leader==undefined?'':msg.leader.real_name}}</span></div>
+                                <div class="list"><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
+                            </div>
+                            <div class="col-md-4" v-if="msg.is_shared==1">
+                                <div class="list"><span class="text-primary">电费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div class="list"><span class="text-primary">管理费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div class="list"><span class="text-primary">物业费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div class="list"><span class="text-primary">网络费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div class="list"><span class="text-primary">水费：</span><span>{{msg.cost_medi}}</span></div>
                             </div>
                         </div>
+                        <h5 class="title" v-show="msg.cost_medi!=0">中介信息</h5>
+                        <div class="clearFix" v-show="msg.cost_medi!=0">
+                            <div class="col-md-4">
+                                <div class="list"><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.medi_account_type]}}</span></div>
+                                <div><span class="text-primary">收款人姓名：</span><span>{{msg.medi_account_owner}}</span></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">开户行：</span><span>{{dict.bank[msg.medi_account_bank]}}</span></div>
+                                <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">支行：</span><span>{{msg.medi_account_subbank}}</span></div>
+                                <div v-show="msg.medi_account_bank==2"><span class="text-primary">支付宝姓名：</span><span>{{msg.medi_alipay_owner}}</span></div>
+                                <div>
+                                    <span class="text-primary" v-if="msg.medi_account_bank==2">支付宝账号：</span>
+                                    <span class="text-primary" v-else-if="msg.medi_account_bank==3">微信账号：</span>
+                                    <span class="text-primary" v-else-if="msg.medi_account_bank==4">存折账号：</span>
+                                    <span class="text-primary" v-else>账号：</span>
+                                    <span>{{msg.medi_account_num}}</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -95,6 +123,8 @@
 
         <PicModal :largePic="largePic"></PicModal>
 
+
+        <!--付款方式变化-->
         <div class="modal fade bs-example-modal-sm" id="change" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
@@ -117,6 +147,28 @@
             </div>
         </div>
 
+        <!--付款类型、月单价变化-->
+        <div class="modal fade bs-example-modal-sm" id="change2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">{{changeModal.title}}</h4>
+                    </div>
+                    <div class="modal-body clearFix">
+                        <!--dict.rent_payment[msg.payment[0].payment_id]-->
+                        <div class="col-sm-12 clearFix" v-for="(item,index) in changeModal.data">
+                            <span class="col-sm-5">第{{index+1}}期</span>
+                            <span class="col-sm-7">{{item}}</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -160,6 +212,11 @@
                     //失败信息 ***
                     error: ''
                 },
+
+                changeModal : {
+                    title : '',
+                    data : []
+                }
             }
         },
         mounted (){
@@ -275,6 +332,27 @@
                     }
                 ];
                 $('#add').modal('show');
+            },
+
+//            付款类型变化
+            payChange(){
+                this.changeModal.data = [];
+                this.changeModal.title='付款类型';
+                for (let i = 0;i<this.msg.pay.length;i++){
+                    this.changeModal.data.push(this.msg.pay[i]+'月付');
+                }
+                $('#change2').modal('show');
+//                this.changeModal.data=this.msg.pay;
+            },
+//            月单价变化
+            priceChange(){
+                this.changeModal.data = [];
+                this.changeModal.title='月单价';
+                for (let i = 0;i<this.msg.price.length;i++){
+                    this.changeModal.data.push(this.msg.price[i]+'元');
+                }
+                $('#change2').modal('show');
+//                this.changeModal.data=this.msg.price;
             }
         }
     }
@@ -303,38 +381,45 @@
         margin-left: 10px;
     }
 
-    .client_info > div > div > div > div {
+    .client_info div.list{
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > div span.text-primary {
+    .client_info div.list span.text-primary {
         display: inline-block;
         padding-right: 20px;
         text-align: right;
         min-width: 100px;
     }
-    .client_info > div > div > div span img{
+    .client_info div.list span img{
         cursor: pointer;
         width: 120px;
         height: 120px;
     }
-    .client_info > div > div > div span img+img{
+    .client_info div.list span img+img{
         margin-left: 10px;
     }
 
-    .client_info > div > div > div span a{
+    .client_info div.list span a{
         margin-left: 12px;
         font-size: 8px;
     }
 
-    #change .modal-body>div span:nth-child(1){
+    #change .modal-body>div span:nth-child(1),#change2 .modal-body>div span:nth-child(1){
         /*text-align: right;*/
         color: #59ace2;
     }
-    #change .modal-body>div{
+    #change .modal-body>div,#change2 .modal-body>div{
         line-height: 30px;
     }
     #add{
         z-index: 1044;
+    }
+    .client_info .title{
+        font-size: 16px;
+        border-left: 5px solid #FCB322;
+        padding-left: 20px;
+        line-height: 30px;
+        /*cursor: pointer;*/
     }
 </style>
