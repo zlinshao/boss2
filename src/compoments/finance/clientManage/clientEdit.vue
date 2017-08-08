@@ -156,7 +156,6 @@
         },
         watch : {
             editClientDetail(val){
-                console.log(val);
                 this.staff = val.real_name;
                 this.department = val.department_name;
                 this.houseAddress = val.address;
@@ -164,29 +163,34 @@
                 this.client = val.name;
                 this.clientId =val.id;
                 this.clientEdit.note = val.note;
-                console.log(val.financial_account[0].bank)
-                this.clientEdit.pay_method = val.financial_account[0].pay_method;
-                this.clientEdit.payee = val.financial_account[0].payee;
-                this.clientEdit.bank = val.financial_account[0].bank;
-                this.clientEdit.branch_bank = val.financial_account[0].branch_bank;
-                this.clientEdit.account = val.financial_account[0].account;
+                if(val.financial_account.length > 0){
+                    this.clientEdit.pay_method = val.financial_account[0].pay_method;
+                    this.clientEdit.payee = val.financial_account[0].payee;
+                    this.clientEdit.bank = val.financial_account[0].bank;
+                    this.clientEdit.branch_bank = val.financial_account[0].branch_bank;
+                    this.clientEdit.account = val.financial_account[0].account;
+                }
             }
         },
         mounted(){
-            this.getDictionary();
+            this.getMyDictionary();
         },
         methods : {
-            getDictionary(){
+            getMyDictionary(){
                 this.$http.get('revenue/glee_collect/dict').then((res) =>{
                     this.myDictionary = res.data;
                 })
             },
             changePayment(){
-                this.clientEdit.pay_method = '';
-                this.clientEdit.payee = '';
-                this.clientEdit.bank = '';
-                this.clientEdit.branch_bank = '';
-                this.clientEdit.account = '';
+                if(this.clientEdit.pay_method ==1 ||this.clientEdit.pay_method ==4){
+                    this.clientEdit.account = '';
+                    this.clientEdit.payee = '';
+                }else {
+                    this.clientEdit.payee = '';
+                    this.clientEdit.bank = '';
+                    this.clientEdit.branch_bank = '';
+                    this.clientEdit.account = '';
+                }
             },
             editClient(){
                 this.$http.post('revenue/customer/update/id/' + this.clientId , this.clientEdit).then((res) =>{
