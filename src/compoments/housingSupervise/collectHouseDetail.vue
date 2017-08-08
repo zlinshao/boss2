@@ -30,7 +30,7 @@
                                 <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
                             </div>
                             <div class="col-md-8">
-                                <div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>
+                                <!--<div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>-->
                                 <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
                                 <div><span class="text-primary">参考租金：</span><span>{{item.reference}} 元</span></div>
                                 <div><span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status]}}</span>

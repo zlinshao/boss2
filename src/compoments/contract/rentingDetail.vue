@@ -231,21 +231,26 @@
                                             <div class="infoList">
                                                 <span>付款类型：</span>
                                                 <span  v-if="item.checkin_rent_id !==null || undefined">
-                                                    押 {{item.checkin_rent_id.bet}} 付 {{item.checkin_rent_id.pay}}
+                                                     押 {{item.checkin_rent_id.bet}}&nbsp;&nbsp;
+                                                    <span v-for="(pay,index) in item.checkin_rent_id.pay">
+                                                        第{{index+1}}年{{pay}}月付&nbsp;&nbsp;
+                                                    </span>
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价：</span>
                                                 <span  v-if="item.checkin_rent_id !==null || undefined">
-                                                    {{item.checkin_rent_id.price}} 元
+                                                    <span v-for="(price,index) in item.checkin_rent_id.price">
+                                                        第{{index+1}}期{{price}}元&nbsp;&nbsp;
+                                                    </span>
                                                 </span>
                                             </div>
-                                            <div class="infoList">
-                                                <span>应收：</span>
-                                                <span  v-if="item.checkin_rent_id !==null || undefined">
-                                                    {{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元
-                                                </span>
-                                            </div>
+                                            <!--<div class="infoList">-->
+                                                <!--<span>应收：</span>-->
+                                                <!--<span  v-if="item.checkin_rent_id !==null || undefined">-->
+                                                    <!--{{item.checkin_rent_id.price*(item.checkin_rent_id.bet+item.checkin_rent_id.pay)}} 元-->
+                                                <!--</span>-->
+                                            <!--</div>-->
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
