@@ -94,12 +94,6 @@
                                         <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >备注</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" placeholder="请输入备注信息" v-model="contractEdit.remarks">
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input @click="selectDate" readonly placeholder="资料补齐时间"
@@ -110,6 +104,14 @@
                                         <label class="col-sm-2 control-label col-lg-2" >开单人</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" v-model="staff" disabled placeholder="开单人">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >备注</label>
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" placeholder="请输入备注信息"
+                                                     rows="3" v-model="contractEdit.remarks">
+                                            </textarea>
                                         </div>
                                     </div>
                                     <hr>

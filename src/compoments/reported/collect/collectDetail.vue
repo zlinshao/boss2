@@ -17,7 +17,7 @@
                         <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
                         <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
                         <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
-                        <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(2)">通过</button>
+                        <button class="btn btn-primary" v-show="msg.status==2" @click="pass">通过</button>
                     </div>
                 </div>
             </div>
@@ -32,28 +32,65 @@
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
-                    <div>
-                        <div class="col-md-12" v-if="msg!=''">
+                    <div class="col-md-12" v-if="msg!=''">
+                        <h5 class="title">基本信息</h5>
+                        <div class="clearFix">
                             <div class="col-md-4">
-                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
+                                <!--<div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>-->
                                 <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
                                 <div><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
                                 <div><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
                                 <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a v-show="msg.pay_type.length>1" @click="showChange(1)">变化</a></span></div>
-                                <div><span class="text-primary">收房月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
-                                <div><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
-                                <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
                             </div>
                             <div class="col-md-8">
-                                <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.payment]}}</span></div>
-                                <div><span class="text-primary">开户行：</span><span>{{dict.bank[msg.bank]}}</span></div>
-                                <div><span class="text-primary">汇款账户：</span><span>{{msg.account}}</span></div>
+                                <div><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
                                 <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
                                 <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
                                 <div><span class="text-primary">负责人：</span><span>{{msg.leader==undefined?'':msg.leader.real_name}}</span></div>
                                 <div><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
+                            </div>
+                        </div>
+                        <h5 class="title">客户信息</h5>
+                        <div class="clearFix">
+                            <div class="col-md-4">
+                                <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
+                                <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.payment]}}</span></div>
+                                <div v-show="msg.payment==1||msg.payment==4"><span class="text-primary">收款人姓名：</span><span>{{msg.account_owner}}</span></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div v-show="msg.payment==1||msg.payment==4"><span class="text-primary">开户行：</span><span>{{dict.bank[msg.bank]}}</span></div>
+                                <div v-show="msg.payment==1||msg.payment==4"><span class="text-primary">支行：</span><span>{{msg.account_subbank}}</span></div>
+                                <div v-show="msg.payment==2"><span class="text-primary">支付宝姓名：</span><span>{{msg.account_owner}}</span></div>
+                                <div>
+                                    <span class="text-primary" v-if="msg.payment==2">支付宝账号：</span>
+                                    <span class="text-primary" v-else-if="msg.payment==3">微信账号：</span>
+                                    <span class="text-primary" v-else-if="msg.payment==4">存折账号：</span>
+                                    <span class="text-primary" v-else>账号：</span>
+                                    <span>{{msg.account}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="title" v-show="msg.cost_medi!=0">中介信息</h5>
+                        <div class="clearFix" v-show="msg.cost_medi!=0">
+                            <div class="col-md-4">
+                                <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.medi_account_type]}}</span></div>
+                                <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">收款人姓名：</span><span>{{msg.medi_account_owner}}</span></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">开户行：</span><span>{{dict.bank[msg.medi_account_bank]}}</span></div>
+                                <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">支行：</span><span>{{msg.medi_account_subbank}}</span></div>
+                                <div v-show="msg.medi_account_bank==2"><span class="text-primary">支付宝姓名：</span><span>{{msg.medi_account_owner}}</span></div>
+                                <div>
+                                    <span class="text-primary" v-if="msg.medi_account_bank==2">支付宝账号：</span>
+                                    <span class="text-primary" v-else-if="msg.medi_account_bank==3">微信账号：</span>
+                                    <span class="text-primary" v-else-if="msg.medi_account_bank==4">存折账号：</span>
+                                    <span class="text-primary" v-else>账号：</span>
+                                    <span>{{msg.medi_account_num}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,10 +108,11 @@
         <AddModal :collectMsg="collectMsg"></AddModal>
 
         <!--编辑-->
-        <EditModal :id="id" @save="getDetails(id)"></EditModal>
+        <EditModal :id="id" @save="getDetails"></EditModal>
 
 
-
+        <!--生成款项-->
+        <CreatePayment :from="1" :addPayment_id="addPayment_id" @success="getDetails"></CreatePayment>
 
         <div class="modal fade bs-example-modal-sm" id="change" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-sm" role="document">
@@ -106,8 +144,9 @@
 
     import AddModal from '../rent/rentingAdd.vue'
     import EditModal from './collectEdit.vue'
+    import CreatePayment from '../createPayment.vue'
     export default{
-        components: {Confirm,Status,EditModal,AddModal},
+        components: {Confirm,Status,EditModal,AddModal,CreatePayment},
         data(){
             return {
                 msg: '',
@@ -141,7 +180,9 @@
                 changeModal : {
                     title : '',
                     data : []
-                }
+                },
+
+                addPayment_id : 0,
             }
         },
         mounted (){
@@ -153,21 +194,21 @@
 //                    console.log
                     (res) => {
                         this.dict = res.data;
-                        this.getDetails(id);
+                        this.getDetails();
                     }
                 );
 
 
         },
         methods: {
-            getDetails(id){
-                this.$http.get('checkin/collect/'+id)
+            getDetails(){
+                this.$http.get('checkin/collect/'+this.$route.query.collectId)
                     .then(
                         (res) => {
                         console.log(res.data.data);
                             this.msg = res.data.data;
                             if (res.data.data.status==1){
-                                this.id = id;
+                                this.id = this.$route.query.collectId;
                             }
 //                            this.collectMsg.house_id = res.data.data.house_id;
 //                            this.collectMsg.house = res.data.data.house;
@@ -230,7 +271,7 @@
                                 } else if (res.data.msg=='报备转为待提交状态'){
                                     this.msg.status = 1;
                                 }*/
-                                this.getDetails(id);
+                                this.getDetails();
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***
@@ -275,7 +316,12 @@
                     }
                 ];
                 $('#add').modal('show');
-            }
+            },
+
+            pass(){
+                this.addPayment_id = this.msg.id;
+                $('#cteatePayment').modal('show');
+            },
         }
     }
 </script>
@@ -326,5 +372,11 @@
     #change .modal-body>div{
         line-height: 30px;
     }
-
+    .client_info .title{
+        font-size: 16px;
+        border-left: 5px solid #FCB322;
+        padding-left: 20px;
+        line-height: 30px;
+        /*cursor: pointer;*/
+    }
 </style>

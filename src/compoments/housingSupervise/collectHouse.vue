@@ -157,7 +157,9 @@
                             </td>
                             <td class="text-center">{{dictionary.villa_status[item.status]}}</td>
                             <td class="text-center">{{item.belong}}</td>
-                            <td class="text-center">{{item.department.name}}</td>
+                            <td class="text-center">
+                                <span v-if="item.department !== null || undefined">{{item.department.name}}</span>
+                            </td>
                             <td class="text-center">{{item.staff_id}}</td>
                             <td class="text-center">
                                 <!--<i class="fa fa-unlock-alt" ></i>-->
@@ -391,9 +393,7 @@
     .remind li + li a {
         border-left: 1px solid #aaaaaa;
     }
-    .nav-tabs>li {
-        margin-bottom: 0;
-    }
+
     input, select {
          margin-bottom: 0px;
     }
@@ -405,4 +405,7 @@
     .pro-sort select.form-control {
         padding: 6px 8px;
     }
+    .nav-tabs>li {
+         margin-bottom: 0;
+     }
 </style>

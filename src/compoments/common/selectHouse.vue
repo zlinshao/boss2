@@ -39,7 +39,7 @@
                                 </td>
                                 <td>{{item.detailed_address}}</td>
                                 <td>
-                                    <span> {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                    <span>{{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
                                 </td>
                                 <td>{{item.area}}㎡</td>
                                 <td>{{dictionary.decoration[item.decoration]}}</td>
@@ -75,7 +75,8 @@
                 dictionary:[],
                 houseAddress:{          //发送回父组件的数据
                     id:'',
-                    address:''
+                    address:'',
+                    rooms : '',
                 },
                 isShow:true,
                 info:{
@@ -97,6 +98,7 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+                    console.log(this.dictionary)
                 });
             },
             search(){
@@ -115,7 +117,8 @@
             chooseItem(ev,item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
                 this.houseAddress.id=item.id;
-                this.houseAddress.address=item.amap_json.villageName;
+                this.houseAddress.address=item.detailed_address;
+                this.houseAddress.rooms=item.rooms.rooms + '室' + item.rooms.hall + '厅' + item.rooms.toilet + '卫';
             },
             ensure(){
                 if(this.houseAddress.id === ''){

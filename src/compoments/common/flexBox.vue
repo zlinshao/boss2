@@ -136,7 +136,7 @@
         watch: {
 //            deep : true,
             datas (val){
-//                alert(val);
+//                alert(typeof val);
 //                console.log(val);
                 this.setData(val);
             },

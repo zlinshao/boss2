@@ -19,6 +19,7 @@
 
 <script>
     export default{
+        props : ['current'],
         components: {},
         data(){
             return {
@@ -26,6 +27,14 @@
                 subjectData: [],
                 curSuperior_id: 0,
                 Superior_name: '',
+            }
+        },
+        watch:{
+            current(val){
+                if (val==''){
+//                    alert(1);
+                    this.Superior_name = '';
+                }
             }
         },
         methods: {
@@ -68,6 +77,14 @@
                 this.subjectData = [];
 
                 this.$emit('choose',this.curSuperior_id);
+            },
+            reset(){
+                this.curSuperior_id = 0;
+//                this.formData.superior_id = 0;
+                this.Superior_name = '';
+                this.showChooseSubject = false;
+                this.subjectData = [];
+                this.$emit('choose','');
             },
 
         }

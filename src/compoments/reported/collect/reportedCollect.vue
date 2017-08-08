@@ -50,7 +50,7 @@
                             <h5 @click="changeStatus(1)"><a><i class="fa fa-send-o"></i>&nbsp;提交</a></h5>
                         </li>
                         <li v-show="statusId==2">
-                            <h5 @click="changeStatus(2)"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
+                            <h5 @click="pass"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
                         </li>
                         <li v-show="statusId==2">
                             <h5 @click="changeStatus(3)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
@@ -58,11 +58,11 @@
                         <li v-show="statusId==3">
                             <h5 @click="changeStatus(4)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
                         </li>
+                        <!--<li>
+                            <h5><a><i class="fa fa-plus-square"></i> 新增报备</a></h5>
+                        </li>-->
                         <li>
-                            <h5><a>新增报备</a></h5>
-                        </li>
-                        <li>
-                            <h5><a>新增其余款项报备</a></h5>
+                            <h5 @click="addOther"><a><i class="fa fa-plus-square"></i> 新增其余款项报备</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -146,19 +146,26 @@
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
+        <!--生成款项-->
+        <CteatePayment :from="1" :addPayment_id="addPayment_id" @success="filter"></CteatePayment>
+
+        <!--新增其余款项-->
+        <AddOther :from="1" :addOther_id="addOther_id"></AddOther>
     </div>
 </template>
 
 <script>
     import Page from '../../common/page.vue'
-    import Status from '../../common/status.vue';
+    import Status from '../../common/status.vue'
     import DatePicker from '../../common/datePicker.vue'
     import Confirm from '../../common/confirm.vue'
-
     import AddModal from './collectAdd.vue'
     import EditModal from './collectEdit.vue'
+    import CteatePayment from '../createPayment.vue'
+    import AddOther from '../other/otherAdd.vue'
+
     export default{
-        components: {Page,Status,DatePicker,AddModal,EditModal,Confirm},
+        components: {Page,Status,DatePicker,AddModal,EditModal,Confirm,CteatePayment,AddOther},
         data(){
             return {
                 beforePage : 1,
@@ -204,6 +211,13 @@
                     msg: '',
                     status: ''
                 },
+
+//                生成款项
+//                from : 1,
+                addPayment_id : 0,
+
+//                新增其余款项
+                addOther_id : 0
             }
         },
         mounted (){
@@ -261,10 +275,13 @@
             },
 
             filter(val){
-                this.beforePage = val;
+//                alert(val);
+                if (val!=undefined){
+                    this.beforePage = val;
+                }
                 this.operId = 0;
                 // 筛选
-                this.$http.get('checkin/collect?page='+val,{
+                this.$http.get('checkin/collect?page='+this.beforePage,{
                     params : this.params
                 }).then(
                     (res) => {
@@ -348,15 +365,29 @@
                     this.confirmMsg.msg = '确定作废此报备信息吗？';
                 }else if (num==1){
                     this.confirmMsg.msg = '确定提交报备信息吗？';
-                } else if (num==2){
+                }
+                /*else if (num==2){
                     this.confirmMsg.msg = '确定通过审核吗？';
-                } else if (num==3){
+                }*/
+                else if (num==3){
                     this.confirmMsg.msg = '确定驳回吗？';
                 } else if (num==4){
                     this.confirmMsg.msg = '确定驳回吗？';
                 }
                 $('#confirm').modal('show');
 
+            },
+
+            pass(){
+                console.log(this.operId)
+                this.addPayment_id = this.operId;
+                $('#cteatePayment').modal('show');
+            },
+
+//            新增其余款项报备
+            addOther(){
+                this.addOther_id = this.operId;
+                $('#otherAdd').modal('show');
             }
         }
     }

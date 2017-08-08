@@ -359,7 +359,7 @@
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-envelope"></i>
-                            <span>组长报备</span>
+                            <span>片区经理报备</span>
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 34}" @click='pitch_on(34)'>
@@ -379,6 +379,11 @@
                             <span>财务账本</span>
                         </a>
                         <ul class="sub">
+                            <li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>
+                                <router-link to="/clientManage">
+                                    <span>客户管理</span>
+                                </router-link>
+                            </li>
                             <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
                                 <router-link to="/account">
                                     <span>账户管理</span>

@@ -46,7 +46,7 @@
                             <h5 @click="changeStatus(1)"><a><i class="fa fa-send-o"></i>&nbsp;提交</a></h5>
                         </li>
                         <li v-show="statusId==2">
-                            <h5 @click="changeStatus(2)"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
+                            <h5 @click="pass"><a><i class="fa fa-check-square-o"></i>&nbsp;通过审核</a></h5>
                         </li>
                         <li v-show="statusId==2">
                             <h5 @click="changeStatus(3)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
@@ -66,18 +66,18 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">签约人</th>
-                            <th class="text-center">所属部门</th>
-                            <th class="text-center">负责人</th>
-                            <th class="text-center">租房类型</th>
                             <th class="text-center">房屋地址</th>
+                            <th class="text-center">租房类型</th>
                             <th class="text-center">月单价</th>
                             <th class="text-center">租房年限(月)</th>
                             <th class="text-center">付款方式</th>
                             <th class="text-center">中介费</th>
-                            <th class="text-center">已收科目</th>
+                            <th class="text-center">已收款项</th>
                             <th class="text-center">已收金额</th>
                             <th class="text-center">待签约日期</th>
+                            <th class="text-center">签约人</th>
+                            <th class="text-center">所属部门</th>
+                            <th class="text-center">负责人</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
                         </tr>
@@ -87,18 +87,18 @@
                             <td>
                                 <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
-                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
-                            <td>{{item.department==undefined?'':item.department.name}}</td>
-                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
-                            <td>{{dict.rent_type[item.rent_type]}}</td>
                             <td>{{item.house.detailed_address}}</td>
-                            <td>{{item.price}}</td>
+                            <td>{{dict.rent_type[item.rent_type]}}</td>
+                            <td>{{item.price[0]}}<a v-show="item.price.length>1">变化</a></td>
                             <td>{{item.months}}</td>
-                            <td>押{{item.bet}}付{{item.pay}}</td>
+                            <td>押{{item.bet}}付{{item.pay[0]}}<a v-show="item.pay.length>1">变化</a></td>
                             <td>{{item.cost_medi}}</td>
                             <td>{{dict.subject[item.received_type]}}</td>
                             <td>{{item.received_amount}}</td>
                             <td>{{item.deal_time}}</td>
+                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
+                            <td>{{item.department==undefined?'':item.department.name}}</td>
+                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
                             <td>
                                 <label  :class="{'label':true,'label-warning ':true,'yellow':item.status===1,'orange':item.status===2,'green':item.status===3}">
                                     {{dict.checkin_status[item.status]}}
@@ -131,6 +131,9 @@
         <!--编辑-->
         <EditModal :id="curOperId" @save="search(1)"></EditModal>
 
+        <!--生成款项-->
+        <CteatePayment :from="2" :addPayment_id="addPayment_id" @success="filter"></CteatePayment>
+
     </div>
 </template>
 
@@ -142,9 +145,10 @@
 
     import AddModal from './rentingAdd.vue'
     import EditModal from './rentingEdit.vue'
+    import CteatePayment from '../createPayment.vue'
 
     export default{
-        components: {DatePicker,Page,Confirm,Status,AddModal,EditModal},
+        components: {DatePicker,Page,Confirm,Status,AddModal,EditModal,CteatePayment},
         data(){
             return {
                 beforePage : 1,
@@ -189,6 +193,9 @@
                     msg: '',
                     status: ''
                 },
+
+//                生成款项
+                addPayment_id : 0,
             }
         },
         mounted (){
@@ -248,11 +255,13 @@
                 $('#edit').modal('show');
             },
             filter(val){
-                this.beforePage = val;
+                if (val!=undefined){
+                    this.beforePage = val;
+                }
                 this.operId = 0;
                 // 筛选
 //                this.myData = [];
-                this.$http.get('checkin/rent?page='+val,{
+                this.$http.get('checkin/rent?page='+this.beforePage,{
                     params : this.params
                 }).then(
                     (res) => {
@@ -284,9 +293,11 @@
                     this.confirmMsg.msg = '确定作废此报备信息吗？';
                 }else if (num==1){
                     this.confirmMsg.msg = '确定提交报备信息吗？';
-                } else if (num==2){
+                }
+                /*else if (num==2){
                     this.confirmMsg.msg = '确定通过审核吗？';
-                } else if (num==3){
+                }*/
+                else if (num==3){
                     this.confirmMsg.msg = '确定驳回吗？';
                 } else if (num==4){
                     this.confirmMsg.msg = '确定驳回吗？';
@@ -341,6 +352,12 @@
                     );
                 /*this.filter();*/
             },
+
+            pass(){
+                console.log(this.operId)
+                this.addPayment_id = this.operId;
+                $('#cteatePayment').modal('show');
+            }
 
         }
     }

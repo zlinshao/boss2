@@ -60,7 +60,7 @@
                     </div>
                     <div class="infoList">
                         <span>开户行：</span>
-                        <span v-if="item.checkin_collect_id !== null || undefined">{{item.checkin_collect_id.bank}}</span>
+                        <span v-if="item.checkin_collect_id !== null || undefined">{{myDictionary.bank[item.checkin_collect_id.bank]}}</span>
                     </div>
                     <div class="infoList">
                         <span>银行卡号：</span>
@@ -330,7 +330,7 @@
                     </div>
                     <div class="infoList" v-if="item.checkin_rent_id !==null || undefined && undefined">
                         <div v-for="pay in item.checkin_rent_id.payment">
-                            <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
+                            <span>付款方式 （{{myDictionary.money_type[pay.payment_id]}}）：</span>
                             <span>
                                 {{pay.money}} 元
                             </span>
