@@ -256,7 +256,7 @@
                                                 <span>月单价<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_collect_id !== null || undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
-                                                        第{{index+1}}年{{price}}元&nbsp;&nbsp;
+                                                        第{{index+1}}期{{price}}元&nbsp;&nbsp;
                                                     </span>
                                                 </span>
                                             </div>
