@@ -144,7 +144,7 @@
             }
         },
         updated (){
-            this.reminds();
+
         },
         created (){
             this.memorandum_list(1);
@@ -187,13 +187,6 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        console.log(
-                            this.titles,
-                            this.start_time,
-                            this.end_time,
-                            this.contents,
-                            this.isShow,
-                        );
                         $('#calendar').fullCalendar('renderEvent', {
                             title: this.titles,
                             start: this.start_time,
@@ -266,13 +259,67 @@
                     start_time: '',
                     end_time: '',
                 }).then((res) => {
-                    this.colour = res.data.data.color;
-                    let mem = res.data.data.data;
-                    let even = res.data.data.data;
-                    let color = res.data.data.color;
-                    this.list_info(mem, even, color);
+                    this.$nextTick(() => {
+                        this.reminds();
+                        this.reminds_month();
+                    });
+                    if (res.data.code === '30020') {
+                        this.colour = res.data.data.color;
+                        let mem = res.data.data.data;
+                        let even = res.data.data.data;
+                        let color = res.data.data.color;
+                        this.list_info(mem, even, color);
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
                 });
             },
+            //            日期搜索
+            reminds_month (){
+                $('.remindMonth').datetimepicker({
+                    minView: 'month',
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    initialDate: new Date(),
+                    pickerPosition: 'bottom-right',
+                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    this.Times = ev.target.value;
+                    let year = ev.target.value.split('-')[0];
+                    let month = ev.target.value.split('-')[1];
+                    let day = ev.target.value.split('-')[2];
+                    $('#calendar').fullCalendar('gotoDate', year, month - 1, day);
+                }.bind(this));
+            },
+//            选择日期
+            reminds (){
+                $('.remindTimes').datetimepicker({
+                    minView: 'day',                     //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd hh:00',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    initialDate: new Date(),
+                    pickerPosition: 'bottom-right',
+                    clearBtn: true,                     //清除按钮
+                }).on('changeDate', function (ev) {
+                    if (ev.target.placeholder === '选择日期') {
+                        this.Times = ev.target.value;
+                    }
+                    if (ev.target.placeholder === '开始时间') {
+                        this.start_time = ev.target.value;
+                    }
+                    if (ev.target.placeholder === '结束时间') {
+                        this.end_time = ev.target.value;
+                    }
+                }.bind(this));
+            },
+
 //            列表数据
             list_info (mem, even, color){
                 let _this = this;
@@ -394,48 +441,6 @@
                             break;
                     }
                 });
-            },
-//            日期搜索
-            reminds_month (){
-                $('.remindMonth').datetimepicker({
-                    minView: 'month',                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    initialDate: new Date(),
-                    pickerPosition: 'bottom-right',
-                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    this.Times = ev.target.value;
-                    let year = ev.target.value.split('-')[0];
-                    let month = ev.target.value.split('-')[1];
-                    let day = ev.target.value.split('-')[2];
-                    $('#calendar').fullCalendar('gotoDate', year, month - 1, day);
-                }.bind(this));
-            },
-//            选择日期
-            reminds (){
-                $('.remindTimes').datetimepicker({
-                    minView: 'day',                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd hh:00',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    initialDate: new Date(),
-                    pickerPosition: 'bottom-right',
-                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '选择日期') {
-                        this.Times = ev.target.value;
-                    }
-                    if (ev.target.placeholder === '开始时间') {
-                        this.start_time = ev.target.value;
-                    }
-                    if (ev.target.placeholder === '结束时间') {
-                        this.end_time = ev.target.value;
-                    }
-                }.bind(this));
             },
         }
     }
