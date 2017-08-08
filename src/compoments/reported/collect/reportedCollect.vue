@@ -371,6 +371,7 @@
             },
 
             pass(){
+                console.log(this.operId)
                 this.addPayment_id = this.operId;
                 $('#cteatePayment').modal('show');
             }
