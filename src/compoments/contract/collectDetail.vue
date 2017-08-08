@@ -504,9 +504,9 @@
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-1">银行卡<sup>*</sup></span>
-                                        <span class="col-lg-11"  v-if="item.customer_id.album.id_pic !==undefined">
-                                             <img :src="img.small" @click="showLargePic('bank_pic',index)"
-                                                  v-for="(img,index) in item.album.bank_pic">
+                                        <span class="col-lg-11"  v-if="item.customer_id.album.bank_pic !==undefined">
+                                             <img :src="img.small" @click="showLargeIdPic('bank_pic',index)"
+                                                  v-for="(img,index) in item.customer_id.album.bank_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
