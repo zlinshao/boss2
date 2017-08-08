@@ -112,7 +112,7 @@
                             <th class="text-center">房屋特色</th>
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">负责人</th>
-                            <th class="text-center">更多</th>
+                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>

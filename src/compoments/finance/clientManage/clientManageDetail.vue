@@ -68,22 +68,30 @@
                         </div>
                         <div class="col-sm-4 col-xs-12 subregion">
                             <h5>客户收款人信息</h5>
-                            <div v-if="item.financial_account.length > 0">
+                            <div>
                                 <div>
                                     <span class="text-primary">汇款方式：</span>
-                                    <span>{{dictionary.payment[item.financial_account[0].pay_method]}}</span>
+                                    <span v-if="item.financial_account.length > 0">
+                                        {{dictionary.payment[item.financial_account[0].pay_method]}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">收款人姓名：</span>
-                                    <span>{{item.financial_account[0].payee}}</span>
+                                    <span v-if="item.financial_account.length > 0">
+                                        {{item.financial_account[0].payee}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">开户行：</span>
-                                    <span>{{dictionary.bank[item.financial_account[0].bank]}}</span>
+                                    <span v-if="item.financial_account.length > 0">
+                                        {{dictionary.bank[item.financial_account[0].bank]}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">账号：</span>
-                                    <span>{{item.financial_account[0].account}}</span>
+                                    <span v-if="item.financial_account.length > 0">
+                                        {{item.financial_account[0].account}}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -93,19 +101,19 @@
                                 <h5 v-if="historyAccount.length >1">{{index + 1}}</h5>
                                 <div>
                                     <span class="text-primary">汇款方式：</span>
-                                    <span>{{dictionary.payment[account.pay_method]}}</span>
+                                    <span v-if="historyAccount.length > 0">{{dictionary.payment[account.pay_method]}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">收款人姓名：</span>
-                                    <span>{{account.payee}}</span>
+                                    <span v-if="historyAccount.length > 0">{{account.payee}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">开户行：</span>
-                                    <span>{{dictionary.bank[account.bank]}}</span>
+                                    <span v-if="historyAccount.length > 0">{{dictionary.bank[account.bank]}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">账号：</span>
-                                    <span>{{account.account}}</span>
+                                    <span v-if="historyAccount.length > 0">{{account.account}}</span>
                                 </div>
                             </div>
 
@@ -158,15 +166,20 @@
                 })
             },
             getClientDetail(){
-                this.clientDetail = [];
                 this.$http.post('revenue/customer/select',{id : this.myClientId}).then((res) =>{
                     if(res.data.code === '20010'){
-                        this.clientDetail .push(res.data.data.data) ;
+                        this.clientDetail = [];
+                        this.clientDetail.push(res.data.data.data);
                         this.editClientDetail = res.data.data.data;
-                        let financial = res.data.data.data.financial_account
-                        financial.splice(0,1);
+
+                        var financial = [];
+                        for(let i=0 ; i<res.data.data.data.financial_account.length; i++){
+                            financial[i] = res.data.data.data.financial_account[i];
+                        }
+                        if(financial.length > 1){
+                            financial.splice(0,1);
+                        }
                         this.historyAccount = financial;
-                        console.log(this.clientDetail)
                     }else {
                         this.clientDetail = [];
                     }
@@ -193,8 +206,10 @@
             editClient(){
                 $('#clientEdit').modal('show');
             },
-            EditSuccess(){
-                this.getClientDetail();
+            EditSuccess(val){
+                if(val === 'yes'){
+                    this.getClientDetail();
+                }
             }
         },
     }

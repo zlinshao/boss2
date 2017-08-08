@@ -220,11 +220,15 @@
                 this.clientAdd.identity = val.identity;
             },
             changePayment(){
-                this.clientAdd.pay_method = '';
-                this.clientAdd.payee = '';
-                this.clientAdd.bank = '';
-                this.clientAdd.branch_bank = '';
-                this.clientAdd.account = '';
+                if(this.clientAdd.pay_method ==1 ||this.clientAdd.pay_method ==4){
+                    this.clientAdd.account = '';
+                    this.clientAdd.payee = '';
+                }else {
+                    this.clientAdd.payee = '';
+                    this.clientAdd.bank = '';
+                    this.clientAdd.branch_bank = '';
+                    this.clientAdd.account = '';
+                }
             },
             addClient(){
                 this.$http.post('revenue/customer/insert' , this.clientAdd).then((res) =>{
