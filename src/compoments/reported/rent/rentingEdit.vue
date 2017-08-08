@@ -325,7 +325,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" v-show="formData.medi_account_type==1||formData.medi_account_type==4">
                                         <label class="col-sm-2 control-label">中介收款人姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="formData.medi_account_owner">
@@ -348,7 +348,7 @@
                                     <div class="form-group"v-show="formData.medi_account_type==2">
                                         <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.medi_alipay_owner">
+                                            <input type="text" class="form-control" v-model="formData.medi_account_owner">
                                         </div>
                                     </div>
 

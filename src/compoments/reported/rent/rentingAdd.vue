@@ -322,7 +322,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" v-show="formData.medi_account_type==1||formData.medi_account_type==4">
                                         <label class="col-sm-2 control-label">中介收款人姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="formData.medi_account_owner">
@@ -345,7 +345,7 @@
                                     <div class="form-group"v-show="formData.medi_account_type==2">
                                         <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.medi_alipay_owner">
+                                            <input type="text" class="form-control" v-model="formData.medi_account_owner">
                                         </div>
                                     </div>
 
@@ -898,7 +898,7 @@
             },
 
             getContract(){
-                this.$http.get('core/rent/readcontract/id/'+this.formData.previous_contract_id)
+                    this.$http.get('core/rent/readcontract/id/'+this.formData.previous_contract_id)
                     .then(
                         (res) =>{
                             console.log(res.data.data);
@@ -908,7 +908,7 @@
                             this.formData.customer_id = result.customer_id.id;
                             this.chooseResult.staff_name = result.staff;
                             this.chooseResult.customer_name = result.customer_id.name;
-                            this.chooseResult.house_name = result.villa_id.amap_json.villageName;
+                            this.chooseResult.house_name = result.villa_id.detailed_address;
 
                         }
                     )

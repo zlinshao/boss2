@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" v-show="formData.payment==1||formData.payment==4">
                                     <label class="col-sm-2 control-label">收款人姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" :disabled="formData.reserve==1">

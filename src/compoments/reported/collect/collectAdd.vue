@@ -120,7 +120,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-show="formData.payment==1||formData.payment==4">
                                         <label class="col-sm-2 control-label">客户收款人姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="formData.account_owner">
@@ -141,10 +141,13 @@
                                         </div>
                                     </div>
 
+                                    <!--todo
+                                        以后改
+                                    -->
                                     <div class="form-group" v-show="formData.payment==2">
                                         <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.alipay_owner">
+                                            <input type="text" class="form-control" v-model="formData.account_owner">
                                         </div>
                                     </div>
 
@@ -180,7 +183,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" v-show="formData.medi_account_type==1||formData.medi_account_type==4">
                                             <label class="col-sm-2 control-label">中介收款人姓名<sup class="required">*</sup></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="formData.medi_account_owner">
@@ -203,7 +206,7 @@
                                         <div class="form-group"v-show="formData.medi_account_type==2">
                                             <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="formData.medi_alipay_owner">
+                                                <input type="text" class="form-control" v-model="formData.medi_account_owner">
                                             </div>
                                         </div>
 
@@ -600,6 +603,7 @@
 
             // 修改客户收款方式
             changeCustomerPayment(){
+                this.formData.account_owner = '';
                 this.formData.account_subbank = '';
                 this.formData.alipay_owner = '';
                 this.formData.bank = 1;
@@ -607,6 +611,7 @@
             },
             // 修改中介收款方式
             changeMediPayment(){
+                this.formData.medi_account_owner = '';
                 this.formData.medi_account_subbank = '';
                 this.formData.medi_alipay_owner = '';
                 this.formData.medi_account_bank = 1;

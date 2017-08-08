@@ -89,12 +89,12 @@
                             <div class="col-md-4">
                                 <div class="list"><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                                 <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.medi_account_type]}}</span></div>
-                                <div><span class="text-primary">收款人姓名：</span><span>{{msg.medi_account_owner}}</span></div>
+                                <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">收款人姓名：</span><span>{{msg.medi_account_owner}}</span></div>
                             </div>
                             <div class="col-md-8">
                                 <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">开户行：</span><span>{{dict.bank[msg.medi_account_bank]}}</span></div>
                                 <div v-show="msg.medi_account_bank==1||msg.medi_account_bank==4"><span class="text-primary">支行：</span><span>{{msg.medi_account_subbank}}</span></div>
-                                <div v-show="msg.medi_account_bank==2"><span class="text-primary">支付宝姓名：</span><span>{{msg.medi_alipay_owner}}</span></div>
+                                <div v-show="msg.medi_account_bank==2"><span class="text-primary">支付宝姓名：</span><span>{{msg.medi_account_type}}</span></div>
                                 <div>
                                     <span class="text-primary" v-if="msg.medi_account_bank==2">支付宝账号：</span>
                                     <span class="text-primary" v-else-if="msg.medi_account_bank==3">微信账号：</span>
