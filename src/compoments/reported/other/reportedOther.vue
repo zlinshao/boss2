@@ -7,7 +7,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div v-show="operId === 0">
+                <div v-show="operId === ''">
                     <form class="form-inline clearFix" role="form">
                         <!--<div class="dropdown form-group">
                             <select name="" class="form-control">
@@ -38,7 +38,7 @@
                     </form>
                 </div>
 
-                <div v-show="operId !== 0" class="col-lg-12 remind">
+                <div v-show="operId !== ''" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
@@ -81,10 +81,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
+                        <tr class="text-center" v-for="(a, index) in 10">
                             <td>
-                                <input type="checkbox" :checked="isActive === index" @click="check(index)">
+                                <input type="checkbox" :checked="operId === index" @click="check(index, $event)">
                             </td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
+                            <td>{{a}}</td>
                             <td>
                                 <label class="label label-default">未提交</label>
                                 <label class="label label-warning">待审核</label>
@@ -101,8 +112,10 @@
         </div>
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+
         <!--提示信息-->
         <Status :state='info'></Status>
+
         <!--分页-->
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
@@ -117,13 +130,11 @@
     import DatePicker from '../../common/datePicker.vue'
     import STAFF from  '../../common/organization/selectStaff.vue'
     export default{
-        components: { DatePicker, STAFF, Page, Status },
+        components: {DatePicker, STAFF, Page, Status},
         data(){
             return {
-                isActive: '',
+                operId: '',
                 beforePage: 1,
-                operId: 0,
-                statusId: 0,
 
                 dict: {},
                 paging: '',
@@ -165,8 +176,13 @@
         },
         methods: {
 //            选中
-            check (val){
-                this.isActive = val;
+            check (val, e){
+                if(e.target.checked === true){
+                    this.operId = val;
+                }else{
+                    this.operId = '';
+                }
+
             },
 //            搜索
             search(val){
@@ -180,7 +196,6 @@
 
             filter(val){
                 this.beforePage = val;
-                this.operId = 0;
                 // 筛选
                 /*this.$http.get('checkin/collect?page='+val,{
                  params : this.params
@@ -201,6 +216,7 @@
                  }
                  )*/
             },
+//            人资
             select(){
                 this.configure = {type: 'all', class: 'selectType'};
                 $('#selectCustom').modal('show');
@@ -208,7 +224,6 @@
 //                this.configure={length:2,class:'amount'};
             },
             selectDateSend(val){
-//                console.log(val);
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)

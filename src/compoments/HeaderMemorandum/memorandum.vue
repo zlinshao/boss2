@@ -367,6 +367,7 @@
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
+
                     eventClick (calEvent, jsEvent, view) {
                         _this.revise_info = calEvent;
                         _this.mem_status = false;
