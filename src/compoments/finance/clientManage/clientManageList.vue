@@ -70,7 +70,7 @@
                     <th class="text-center">签约人</th>
                     <th class="text-center">所属部门</th>
                     <th class="text-center">负责人</th>
-                    <th class="text-center">更多</th>
+                    <th class="text-center">详情</th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
@@ -89,7 +89,7 @@
                         <td class="text-center">{{item.head_name}}</td>
                         <td class="text-center">
                             <router-link :to="{path:'/ClientManageDetail',query:{clientId :item.id}}">
-                                更多
+                                详情
                             </router-link>
                         </td>
                     </tr>
