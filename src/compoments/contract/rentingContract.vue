@@ -342,7 +342,7 @@
             },
             getConfirm(){
                 if(this.msgFlag === 'delete'){
-                    this.$http.get('core/collect/delete/id/' + this.contractSeleted).then((res) => {
+                    this.$http.get('core/rent/delete/id/' + this.contractSeleted).then((res) => {
                         if(res.data.code === '70030'){
                             this.search();
                             this.contractSeleted = 0;
@@ -356,7 +356,7 @@
                         }
                     })
                 }else if(this.msgFlag === 'lock'){
-                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                    this.$http.get('core/rent/unVillalock/house_id/' + this.houseId).then((res) => {
                         if(res.data.code === '70010'){
                             this.search();
                             this.contractSeleted = 0;
