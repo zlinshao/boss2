@@ -566,8 +566,8 @@
                                     this.id_copy='';        //身份证复印件
                                     this.photo='';           //有无照片
                                     this.checkboxModel = [],
-                                        this.newBox = [],
-                                        this.position_id=[];     //职位
+                                    this.newBox = [],
+                                    this.position_id=[];     //职位
                                     this.position=[];    //职位
                                     this.firstDepart=[];
                                     this.secondDepart=[];
