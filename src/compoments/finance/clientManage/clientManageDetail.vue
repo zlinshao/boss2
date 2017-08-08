@@ -176,7 +176,7 @@
                         for(let i=0 ; i<res.data.data.data.financial_account.length; i++){
                             financial[i] = res.data.data.data.financial_account[i];
                         }
-                        if(financial.length > 1){
+                        if(financial.length > 0){
                             financial.splice(0,1);
                         }
                         this.historyAccount = financial;
