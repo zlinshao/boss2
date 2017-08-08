@@ -65,9 +65,6 @@
                             <div class="form-group">
                                 <label class="col-sm-2 col-sm-2 control-label">标记：</label>
                                 <div class="col-sm-10">
-                                    <div class="color_block" @click="select_color(0)">
-                                        <span v-if="isShow === 0" class="fa fa-check"></span>
-                                    </div>
                                     <div class="color_block" @click="select_color(1)">
                                         <span v-if="isShow === 1" class="fa fa-check"></span>
                                     </div>
@@ -85,6 +82,9 @@
                                     </div>
                                     <div class="color_block" @click="select_color(6)">
                                         <span v-if="isShow === 6" class="fa fa-check"></span>
+                                    </div>
+                                    <div class="color_block" @click="select_color(7)">
+                                        <span v-if="isShow === 7" class="fa fa-check"></span>
                                     </div>
                                 </div>
                             </div>
@@ -117,12 +117,16 @@
         components: {Status},
         data (){
             return {
-                colour: [],
+                revise_info: {},
+                colour: {},
                 mem_id: '',
                 mem_status: true,
                 memorandum: [],         //备忘录列表
-                isShow: 0,
+                isShow: 1,
                 Times: '',              //时间搜索
+                sea_year: '',
+                sea_month: '',
+                sea_day: '',
                 titles: '',             //内容
                 contents: '',           //描述
                 start_time: '',
@@ -160,7 +164,7 @@
 //            清楚内容
             clear_info (){
                 this.mem_status = true;
-                this.isShow = 0;
+                this.isShow = 1;
                 this.titles = '';          //内容
                 this.contents = '';        //描述
                 this.start_time = '';
@@ -221,7 +225,6 @@
 
                     $('#calendar').fullCalendar('removeEvents', this.mem_id);
                 });
-
             },
 //            修改备忘录
             mem_revise (){
@@ -241,20 +244,13 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        console.log(
-                            this.titles,
-                            this.start_time,
-                            this.end_time,
-                            this.contents,
-                            this.isShow,
-                        );
-                        $('#calendar').fullCalendar('updateEvent', {
-                            title: this.titles,
-                            start: this.start_time,
-                            end: this.end_time,
-                            content: this.contents,
-                            color: this.isShow,
-                        });
+                        this.revise_info.title = this.titles;
+                        this.revise_info.start = this.start_time;
+                        this.revise_info.end = this.end_time;
+                        this.revise_info.content = this.contents;
+                        this.revise_info.color = this.colour[this.isShow];
+                        this.revise_info.color_id = this.isShow;
+                        $('#calendar').fullCalendar('updateEvent', this.revise_info);
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
@@ -302,6 +298,7 @@
                         day: '日视图'
                     },
                     allDayText: "全天",
+
                     timeFormat: {
                         '': 'H:mm{-H:mm}'
                     },
@@ -324,6 +321,7 @@
                         right: 'month,agendaWeek,agendaDay'
                     },
                     eventClick (calEvent, jsEvent, view) {
+                        _this.revise_info = calEvent;
                         _this.mem_status = false;
                         _this.mem_id = calEvent.id;
                         _this.isShow = calEvent.color_id;
@@ -364,6 +362,7 @@
 //                    },
                     events: memorandum,
                 });
+
             },
 
 //            转换时间格式
@@ -409,6 +408,10 @@
                     clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.Times = ev.target.value;
+                    let year = ev.target.value.split('-')[0];
+                    let month = ev.target.value.split('-')[1];
+                    let day = ev.target.value.split('-')[2];
+                    $('#calendar').fullCalendar('gotoDate', year, month - 1, day);
                 }.bind(this));
             },
 //            选择日期
