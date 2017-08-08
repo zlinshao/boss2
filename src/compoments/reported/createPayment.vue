@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="msg.house.detailed_address">
+                                        <input type="text" class="form-control" disabled v-model="msg.house==undefined?'':msg.house.detailed_address">
                                     </div>
                                 </div>
 
@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">款项名称</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="money[0].money_name">
                                             <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
                                         </select>
                                     </div>
@@ -59,7 +59,7 @@
                                 <div class="form-group" v-show="money_name_length>=2">
                                     <label class="col-sm-2 control-label">款项名称</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="money[1].money_name">
                                             <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
                                         </select>
                                     </div>
@@ -71,7 +71,7 @@
                                 <div class="form-group" v-show="money_name_length>=3">
                                     <label class="col-sm-2 control-label">款项名称</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="money[2].money_name">
                                             <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
                                         </select>
                                     </div>
@@ -83,7 +83,7 @@
                                 <div class="form-group" v-show="money_name_length>=4">
                                     <label class="col-sm-2 control-label">款项名称</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="money[3].money_name">
                                             <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
                                         </select>
                                     </div>
@@ -95,13 +95,25 @@
                                 <div class="form-group" v-show="money_name_length>=5">
                                     <label class="col-sm-2 control-label">款项名称</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control">
+                                        <select class="form-control" v-model="money[4].money_name">
                                             <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-2 control-label">款项科目</label>
                                     <div class="col-sm-4">
                                         <SelectSubject @choose="getSubject5"></SelectSubject>
+                                    </div>
+                                </div>
+                                <div class="form-group" v-show="money_name_length>=6">
+                                    <label class="col-sm-2 control-label">款项名称</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" v-model="money[5].money_name">
+                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label">款项科目</label>
+                                    <div class="col-sm-4">
+                                        <SelectSubject @choose="getSubject6"></SelectSubject>
                                     </div>
                                 </div>
 
@@ -119,13 +131,16 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary">通过并生成应收款项</button>
+                                <button type="button" class="btn btn-primary" @click="save">通过并生成应收款项</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 </template>
 <style scoped>
@@ -135,9 +150,10 @@
 </style>
 <script>
     import SelectSubject from '../common/selectSubject.vue'
+    import Status from '../common/status.vue';
     export default{
         props:['from','addPayment_id'],
-        components: {SelectSubject},
+        components: {SelectSubject,Status},
         data(){
             return {
                 dict : {},
@@ -147,32 +163,45 @@
 
                 money : [
                     {
-                        money_name : 1,
+                        money_name : '1',
                         subject_id : '',
                     },
                     {
-                        money_name : 1,
+                        money_name : '1',
                         subject_id : '',
                     },
                     {
-                        money_name : 1,
+                        money_name : '1',
                         subject_id : '',
                     },
                     {
-                        money_name : 1,
+                        money_name : '1',
                         subject_id : '',
                     },
                     {
-                        money_name : 1,
+                        money_name : '1',
+                        subject_id : '',
+                    },
+                    {
+                        money_name : '1',
                         subject_id : '',
                     }
                 ],
-
+                id : '',
                 formData:{
-                    id : '',
                     item : {},
                     remark : ''
-                }
+                },
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted (){
@@ -209,21 +238,60 @@
         watch:{
             addPayment_id(val){
                 this.getDetails();
+//                this.id = this.addPayment_id;
             }
         },
         methods: {
             // 获取选择的科目名称
             getSubject1(val){
-                console.log(val)
+                console.log(val);
+                this.money[0].subject_id = val;
             },
-            getSubject2(val){},
-            getSubject3(val){},
-            getSubject4(val){},
-            getSubject5(val){},
+            getSubject2(val){
+                this.money[1].subject_id = val;
+            },
+            getSubject3(val){
+                this.money[2].subject_id = val;
+            },
+            getSubject4(val){
+                this.money[3].subject_id = val;
+            },
+            getSubject5(val){
+                this.money[4].subject_id = val;
+            },
+            getSubject6(val){
+                this.money[5].subject_id = val;
+            },
 
             closeModal(){
                 this.msg = '';
-
+                this.money = [
+                    {
+                        money_name : '1',
+                        subject_id : '',
+                    },
+                    {
+                        money_name : '1',
+                        subject_id : '',
+                    },
+                    {
+                        money_name : '1',
+                        subject_id : '',
+                    },
+                    {
+                        money_name : '1',
+                        subject_id : '',
+                    },
+                    {
+                        money_name : '1',
+                        subject_id : '',
+                    },
+                    {
+                        money_name : '1',
+                        subject_id : '',
+                    }
+                ];
+                this.formData.item = {};
                 this.formData.remark = '';
 
                 this.getDetails();
@@ -233,25 +301,88 @@
 
             },
             getDetails(){
+                this.msg = {};
+                let url;
                 if (this.from==1){
                     // 收
-                    this.$http.get('checkin/collect/'+this.addPayment_id)
-                        .then(
-                            (res) => {
-                                this.msg = res.data.data;
-                                console.log(this.msg);
-                            }
-                        );
+                    url = 'checkin/collect/'+this.addPayment_id;
                 } else if (this.from==2){
                     // 租
+                    url = 'checkin/rent/'+this.addPayment_id;
+
                 } else {
                     // 其他
                 }
+                this.$http.get(url)
+                    .then(
+                        (res) => {
+                            this.msg = res.data.data;
+                            console.log(this.msg);
+                        }
+                    );
             },
 
 
             save(){
-                this.formData.id = this.addPayment_id;
+//                this.formData.id = this.addPayment_id;
+
+                this.formData.item = this.money.slice(0,this.money_name_length);
+//                console.log(this.money_name_length)
+//                console.log(this.formData.item);
+                console.log(this.formData);
+                let url;
+                if (this.from==1){
+                    // 收
+//                    url = 'checkin/collect/generate/'+this.addPayment_id;
+                    this.$http.post('checkin/collect/generate/'+this.addPayment_id,this.formData).then((res) =>{
+                        console.log(res);
+                        if (res.data.code==18210){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    })
+                } else if (this.from==2){
+                    // 租
+//                    url = 'checkin/rent/generate/'+this.addPayment_id;
+                    this.$http.post('checkin/rent/generate/'+this.addPayment_id,this.formData).then((res) =>{
+                        console.log(res);
+                        if (res.data.code==18110){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    })
+                }
+
             }
         }
     }
