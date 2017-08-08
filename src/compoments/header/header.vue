@@ -359,7 +359,7 @@
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-envelope"></i>
-                            <span>组长报备</span>
+                            <span>片区经理报备</span>
                         </a>
                         <ul class="sub">
                             <li :class="{'active': isActive == 34}" @click='pitch_on(34)'>

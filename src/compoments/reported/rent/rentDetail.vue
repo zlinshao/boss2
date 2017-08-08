@@ -17,7 +17,7 @@
                         <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
                         <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
                         <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
-                        <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(2)">通过</button>
+                        <button class="btn btn-primary" v-show="msg.status==2" @click="pass">通过</button>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
         <AddModal :rentMsg="rentMsg"></AddModal>
 
         <!--编辑-->
-        <EditModal :id="id" @save="getDetails(id)"></EditModal>
+        <EditModal :id="id" @save="getDetails"></EditModal>
 
 
         <PicModal :largePic="largePic"></PicModal>
@@ -169,6 +169,8 @@
                 </div>
             </div>
         </div>
+        <!--生成款项-->
+        <CreatePayment :from="2" :addPayment_id="addPayment_id" @success="getDetails"></CreatePayment>
     </div>
 </template>
 
@@ -178,8 +180,9 @@
     import AddModal from '../collect/collectAdd.vue'
     import EditModal from './rentingEdit.vue'
     import PicModal from '../../common/largePic.vue'
+    import CreatePayment from '../createPayment.vue'
     export default{
-        components: {Confirm,Status,EditModal,PicModal,AddModal},
+        components: {Confirm,Status,EditModal,PicModal,AddModal,CreatePayment},
         data(){
             return {
                 msg: '',
@@ -216,7 +219,9 @@
                 changeModal : {
                     title : '',
                     data : []
-                }
+                },
+
+                addPayment_id : 0,
             }
         },
         mounted (){
@@ -228,20 +233,20 @@
 //                    console.log
                     (res) => {
                         this.dict = res.data;
-                        this.getDetails(id);
+                        this.getDetails();
                     }
                 );
         },
         methods: {
-            getDetails(id){
-                this.$http.get('checkin/rent/'+id)
+            getDetails(){
+                this.$http.get('checkin/rent/'+this.$route.query.rentId)
                     .then(
                         (res) => {
                         console.log(res.data.data);
                             this.msg = res.data.data;
                             this.srcs = this.msg.album.receipt_pic;
                             if (res.data.data.status==1){
-                                this.id = id;
+                                this.id = this.$route.query.rentId;
                             }
 //                            console.log(this.msg)
                         }
@@ -300,7 +305,7 @@
                                     this.info.state_success = false;
                                 }, 2000);
 
-                                this.getDetails(id);
+                                this.getDetails();
                             } else {
                                 this.info.error = '操作失败';
                                 //显示失败弹窗 ***
@@ -353,7 +358,12 @@
                 }
                 $('#change2').modal('show');
 //                this.changeModal.data=this.msg.price;
-            }
+            },
+
+            pass(){
+                this.addPayment_id = this.msg.id;
+                $('#cteatePayment').modal('show');
+            },
         }
     }
 </script>
