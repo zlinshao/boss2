@@ -64,7 +64,7 @@
                             <div class="row">
                                 <label class="col-sm-2 control-label col-lg-2" >开户行</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" v-model="clientAdd.bank">
+                                    <select class="form-control" v-model="clientAdd.bank" @change="changePayment">
                                         <option value="">请选择</option>
                                         <option :value="key" v-for="(value,key) in myDictionary.bank">{{value}}</option>
                                     </select>
@@ -109,7 +109,7 @@
                             <div class="row">
                                 <label class="col-sm-2 control-label col-lg-2" >备注</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" placeholder="备注" v-model="clientAdd.note">
+                                    <textarea class="form-control" v-model="clientAdd.note"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -124,6 +124,7 @@
         <organize :configure="configure" @Staff=getValue></organize>
         <Client @clientPayAdd = getPayClient></Client>
         <House @House = getHouse></House>
+        <Status :state='info'></Status>
     </div>
 </template>
 
@@ -131,8 +132,9 @@
     import organize from '../../common/organization/selectStaff.vue'
     import Client from  '../../common/selectPayClient.vue'
     import House from '../../common/selectHouse.vue'
+    import Status from '../../common/status.vue'
     export default{
-        components : {organize , House , Client},
+        components : {organize , House , Client ,Status},
         data(){
             return{
                 myDictionary : [],
@@ -155,6 +157,16 @@
                 },
                 signing_name :"",
                 head_name : '',
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted(){
@@ -205,10 +217,28 @@
             },
             getPayClient(val){
                 this.clientAdd.name = val.name;
+                this.clientAdd.identity = val.identity;
+            },
+            changePayment(){
+                this.clientAdd.pay_method = '';
+                this.clientAdd.payee = '';
+                this.clientAdd.bank = '';
+                this.clientAdd.branch_bank = '';
+                this.clientAdd.account = '';
             },
             addClient(){
                 this.$http.post('revenue/customer/insert' , this.clientAdd).then((res) =>{
-                    
+                    if(res.data.code === '20002'){
+                        this.$emit('AddSuccess','yes');
+                        $("#clientAdd").modal('hide');
+                        this.info.success =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
                 })
             },
         }
