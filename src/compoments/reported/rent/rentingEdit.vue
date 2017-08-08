@@ -670,6 +670,10 @@
                             this.formData.price = val.price;
                             this.formData.cost_medi = val.cost_medi;
                             this.formData.medi_account_type = val.medi_account_type;
+                            this.formData.medi_account_owner = val.medi_account_owner;
+                            this.formData.medi_account_bank = val.medi_account_bank;
+                            this.formData.medi_account_subbank = val.medi_account_subbank;
+                            this.formData.medi_alipay_owner = val.medi_alipay_owner;
                             this.formData.medi_account_num = val.medi_account_num;
                             this.formData.cost_deposit = val.cost_deposit;
 
@@ -699,14 +703,14 @@
                             this.formData.gas_fee = val.gas_fee;
 
                             this.complete_ok = 'ok';
-                            if (val.pay.length>0){
-                                this.change_payType==true;
+                            if (val.pay.length>1){
+                                this.change_payType=true;
                                 this.more_type = val.pay;
                             } else {
                                 this.one_type = val.pay[0];
                             }
-                            if (val.price.length>0){
-                                this.price_change==true;
+                            if (val.price.length>1){
+                                this.price_change=true;
                             }
 
                         }
@@ -789,6 +793,9 @@
                 this.formData.net_fee = 50;
                 this.formData.water_fee = '';
                 this.formData.gas_fee = '';
+
+                this.change_payType = false;
+                this.price_change = false;
 
                 this.remove_s ();
 
@@ -924,6 +931,14 @@
                 this.formData.receipt_pic = this.certificatePic.cus_idPhoto;
                 this.formData.payment = this.payments.slice(0,this.more_pay_way);
 
+                this.formData.pay = [];
+                if (this.change_payType){
+                    // 付款方式变化
+                    this.formData.pay = this.more_type;
+                } else {
+                    // 不变
+                    this.formData.pay.push(this.one_type);
+                }
                 this.$http.put('checkin/rent/'+this.id,this.formData)
                     .then(
                         (res) => {

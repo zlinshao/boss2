@@ -19,6 +19,7 @@
 
 <script>
     export default{
+        props : ['current'],
         components: {},
         data(){
             return {
@@ -26,6 +27,14 @@
                 subjectData: [],
                 curSuperior_id: 0,
                 Superior_name: '',
+            }
+        },
+        watch:{
+            current(val){
+                if (val==''){
+//                    alert(1);
+                    this.Superior_name = '';
+                }
             }
         },
         methods: {

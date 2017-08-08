@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">付款方式<sup class="required">*</sup></label>
                                     <div class="col-sm-7">
-                                        <select class="form-control" v-model="one_type">
+                                        <select class="form-control" v-model="one_type" :disabled="pay_typeChange">
                                             <option :value="value" v-for="(key,value) in dict.pay_type">{{key}}</option>
                                         </select>
                                     </div>
