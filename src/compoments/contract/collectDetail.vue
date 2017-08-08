@@ -263,7 +263,7 @@
                                             <div class="infoList">
                                                 <span>开户行：</span>
                                                 <span v-if="item.checkin_collect_id !== null || undefined">
-                                                    {{dictionary.banks[item.checkin_collect_id.bank]}}
+                                                    {{dictionary.bank[item.checkin_collect_id.bank]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">

@@ -75,7 +75,8 @@
                 </thead>
                 <tbody class="text-center">
                     <tr class="text-center" v-for="item in clientList">
-                        <td><input type="checkbox" @click="picked(item.id,$event)"></td>
+                        <td><input type="checkbox" @click="picked(item.id,$event)"
+                                   :value="item.id" :checked="clientSelected===item.id"></td>
                         <td class="text-center">{{item.address}}</td>
                         <td class="text-center">{{item.name}}</td>
                         <td class="text-center">{{item.identity}}</td>
@@ -101,21 +102,23 @@
             </table>
         </section>
         <Department  :configure='configure' @Staff="dpmSelected"></Department>
-        <ClientAdd></ClientAdd>
+        <ClientAdd @AddSuccess = 'AddSuccess'></ClientAdd>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <Page :pg="pages" @pag="pageSearch" :beforePage="searchInformation.pages"></Page>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Status from '../../common/status.vue'
     import Confirm from '../../common/confirm.vue'
 //    import DatePicker from '../../common/datePicker.vue'
     import Department from '../../common/organization/selectStaff.vue'
     import ClientAdd from  './clientAdd.vue'
     import Page from  '../../common/page.vue'
     export default{
-        components:{ Department , ClientAdd , Confirm ,Page},
+        components:{ Department , ClientAdd , Confirm , Page , Status},
         data(){
           return{
               dateConfigure : [{
@@ -134,6 +137,16 @@
               pages : '',
               isShow :false,
               departmentName : '',
+              info: {
+                  //成功状态 ***
+                  state_success: false,
+                  //失败状态 ***
+                  state_error: false,
+                  //成功信息 ***
+                  success: '',
+                  //失败信息 ***
+                  error: ''
+              },
           }
         },
         mounted(){
@@ -189,8 +202,19 @@
                 $('#confirm').modal('show');
             },
             getConfirm(){
-                this.clientSelected = 0;
-                this.search();
+                this.$http.post('revenue/customer/delete/id/' + this.clientSelected).then((res) =>{
+                    if(res.data.code === '20013'){
+                        this.clientSelected = 0;
+                        this.search();
+                        this.info.success =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else {
+                        this.info.error =res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
 
             },
             pageSearch(val){
@@ -202,6 +226,11 @@
                 this.departmentName = '';
                 this.search();
             },
+            AddSuccess(val){
+                if(val = 'yes'){
+                    this.search();
+                }
+            }
         }
     }
 </script>

@@ -98,6 +98,7 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+                    console.log(this.dictionary)
                 });
             },
             search(){
