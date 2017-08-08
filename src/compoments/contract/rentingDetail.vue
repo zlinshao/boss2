@@ -316,11 +316,11 @@
                                     </div>
                                 </div>
                                 <div class="ownerInfo">
-                                    <header>业主信息</header>
+                                    <header>租客信息</header>
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主姓名<sup>*</sup>：</span>
+                                                <span>租客姓名<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">
