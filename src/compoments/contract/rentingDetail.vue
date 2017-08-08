@@ -270,7 +270,7 @@
                                             <div class="infoList">
                                                 <span>未收：</span>
                                                 <span  v-if="item.checkin_rent_id !==null || undefined">
-                                                    {{item.checkin_rent_id.amount_remaining}} 元
+                                                    {{item.checkin_rent_id.remain_amount}} 元
                                                 </span>
                                             </div>
                                             <div class="infoList">
