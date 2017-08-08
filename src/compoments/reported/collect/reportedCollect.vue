@@ -58,9 +58,9 @@
                         <li v-show="statusId==3">
                             <h5 @click="changeStatus(4)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
                         </li>
-                        <li>
+                        <!--<li>
                             <h5><a><i class="fa fa-plus-square"></i> 新增报备</a></h5>
-                        </li>
+                        </li>-->
                         <li>
                             <h5 @click="addOther"><a><i class="fa fa-plus-square"></i> 新增其余款项报备</a></h5>
                         </li>

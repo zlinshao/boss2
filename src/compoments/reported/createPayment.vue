@@ -232,12 +232,15 @@
                     for (let i in this.money_name){
                         this.money_name_length++;
                     }
+//                    alert(this.addPayment_id)
+//                    this.getDetails()
                 }
 
             );
         },
         watch:{
             addPayment_id(val){
+//                alert(val);
                 this.getDetails();
 //                this.id = this.addPayment_id;
             }
@@ -388,6 +391,8 @@
                             setTimeout(() => {
                                 this.info.state_success = false;
                             }, 2000);
+                            this.closeModal();
+                            this.$emit('success');
                         } else {
                             // 失败
                             this.info.error = res.data.msg;
