@@ -647,6 +647,7 @@
 
             // 修改客户收款方式
             changeCustomerPayment(){
+                this.formData.account_owner = '';
                 this.formData.account_subbank = '';
                 this.formData.alipay_owner = '';
                 this.formData.bank = 1;
@@ -654,6 +655,7 @@
             },
             // 修改中介收款方式
             changeMediPayment(){
+                this.formData.medi_account_owner = '';
                 this.formData.medi_account_subbank = '';
                 this.formData.medi_alipay_owner = '';
                 this.formData.medi_account_bank = 1;
