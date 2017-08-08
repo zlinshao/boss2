@@ -46,7 +46,7 @@
                                     <td>{{item.name}}</td>
                                     <td v-if="item.gender === 1">先生</td>
                                     <td v-if="item.gender === 2">女士</td>
-                                    <td>{{nationalityList[item.nationality]}}</td>
+                                    <td>{{nationalityList[item.nationality].zh_name}}</td>
                                     <td>{{item.mobile}}</td>
                                     <td></td>
                                 </tr>
@@ -119,8 +119,9 @@
                 }
             },
             custom(){
-                this.$http.get('core/customer/dict').then((res) => {
-                    this.nationalityList=res.data.nationality;
+                this.$http.post('index/country/index').then((res) => {
+                    this.nationalityList=res.data.data;
+                    console.log(this.nationalityList)
                     this.person_medium=res.data.person_medium;
                 })
             },
