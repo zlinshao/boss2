@@ -111,6 +111,7 @@
             </div>
         </div>
 
+        <!--人资-->
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--提示信息-->
@@ -223,6 +224,7 @@
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },
+//            人资
             selectDateSend(val){
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);

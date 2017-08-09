@@ -143,7 +143,7 @@
                             <td class="text-center">{{list.belong}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
-                                <router-link :to="{path:'/details',query: {nameId: list.id}}">
+                                <router-link :to="{path:'/details',query: {nameId: list.id, cus: 2}}">
                                     详情
                                 </router-link>
                             </td>
