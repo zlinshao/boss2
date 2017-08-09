@@ -110,7 +110,7 @@
                                        @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td><span v-if="item.customer != null">{{item.customer.name}}</span></td>
+                            <td><span v-if="item.customer != null">{{item.customer.address}}</span></td>
                             <!--<td><span v-if="item.customer != null">{{item.customer.name}}</span></td>-->
                             <!--<td>{{item.description.staff_name}}</td>
                             <td>{{item.description.address}}</td>

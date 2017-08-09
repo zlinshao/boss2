@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <div v-if="msg!=''">
                     <span>房屋地址</span>
-                    <span>{{msg.address}}</span>
+                    <span>{{msg.customer==undefined?'':msg.customer.address}}</span>
                     <span :class="{'status':true,'btn':true,'status':true,'yellow':msg.status===1,'red':msg.status===2,'green':msg.status===3}">
                         {{dict.account_should_status[msg.status]}}
                     </span>
@@ -45,8 +45,8 @@
                                     </span>
                                 </div>
                                 <div><span class="text-primary">收入科目：</span><span>{{dict.account_subject[msg.subject_id]}}</span></div>
-                                <div><span class="text-primary">收款方式：</span><span>{{msg.description.pay_type}}</span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.description.price}}</span></div>
+                                <div><span class="text-primary">收款方式：</span><span>{{msg.customer.pay_type}}</span></div>
+                                <div><span class="text-primary">月单价：</span><span>{{msg.customer.price}}</span></div>
                                 <div><span class="text-primary">应收金额：</span><span>{{msg.amount_receivable}}</span></div>
                                 <div><span class="text-primary">实收金额：</span><span>{{msg.amount_received}}</span></div>
                             </div>

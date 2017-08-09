@@ -102,7 +102,7 @@
                                 <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>{{item.customer==undefined?'':item.customer.name}}</td>
+                            <td>{{item.customer==undefined?'':item.customer.address}}</td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>{{item.amount_receivable}}</td>
                             <td>{{item.amount_received}}</td>

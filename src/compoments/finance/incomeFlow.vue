@@ -78,7 +78,7 @@
                             </td>
                             <td>{{index+1}}</td>
                             <td>{{item.update_time}}</td>
-                            <td>{{item.customer}}</td>
+                            <td>{{item.customer==undefined?'':item.customer.address}}</td>
                             <td>{{item.subject}}</td>
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{dict.account_cate[item.account_cate]}}</td>
