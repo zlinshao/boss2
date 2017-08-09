@@ -2,6 +2,12 @@
     <div>
         <ol class="breadcrumb">
             <li>客户管理</li>
+            <li v-if="custom === 1">
+                <router-link to="/custom">客户</router-link>
+            </li>
+            <li v-if="custom === 2">
+                <router-link to="/customerPool">客户池</router-link>
+            </li>
             <li>客户详情</li>
         </ol>
         <!--头部-->
@@ -101,55 +107,55 @@
         <div class="row">
             <!--合同信息-->
             <!--<div class="col-md-3">-->
-                <!--<section class="panel roll" style="height: 500px;overflow: auto;">-->
-                    <!--<header class="panel-heading">-->
-                        <!--<i class="fa fa-file-text"></i>&nbsp;合同信息-->
-                    <!--</header>-->
-                    <!--&lt;!&ndash;合同信息&ndash;&gt;-->
-                    <!--<div class="panel-body table-responsive roll">-->
-                        <!--<table class="table contract_info">-->
-                            <!--<tbody>-->
-                            <!--<tr>-->
-                                <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
-                                <!--<td colspan="2" style="min-width: 200px;">2017-07-20&nbsp;至&nbsp;2017-07-20</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
-                                <!--<td>合同编号</td>-->
-                                <!--<td>-->
-                                    <!--<router-link class="text-primary" to="">LJ0000000</router-link>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>房屋地址</td>-->
-                                <!--<td>积善公寓0-000</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>负责人</td>-->
-                                <!--<td>林琪巧月</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>合同时间</td>-->
-                                <!--<td class="paddingTop">-->
-                                    <!--<a data-v-2f43a2b3="" href="#">-->
-                                        <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
-                                            <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
-                                                 <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
-                                                 <!--:style="{ width: progress + '%'}">-->
-                                                <!--<span data-v-2f43a2b3="" class="sr-only">{{progress}}% Complete</span>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</a>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                    <!--</div>-->
+            <!--<section class="panel roll" style="height: 500px;overflow: auto;">-->
+            <!--<header class="panel-heading">-->
+            <!--<i class="fa fa-file-text"></i>&nbsp;合同信息-->
+            <!--</header>-->
+            <!--&lt;!&ndash;合同信息&ndash;&gt;-->
+            <!--<div class="panel-body table-responsive roll">-->
+            <!--<table class="table contract_info">-->
+            <!--<tbody>-->
+            <!--<tr>-->
+            <!--<td><a><i class="fa fa-bookmark"></i></a></td>-->
+            <!--<td colspan="2" style="min-width: 200px;">2017-07-20&nbsp;至&nbsp;2017-07-20</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+            <!--<td><a><i class="fa fa-bookmark-o"></i></a></td>-->
+            <!--<td>合同编号</td>-->
+            <!--<td>-->
+            <!--<router-link class="text-primary" to="">LJ0000000</router-link>-->
+            <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+            <!--<td></td>-->
+            <!--<td>房屋地址</td>-->
+            <!--<td>积善公寓0-000</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+            <!--<td></td>-->
+            <!--<td>负责人</td>-->
+            <!--<td>林琪巧月</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+            <!--<td></td>-->
+            <!--<td>合同时间</td>-->
+            <!--<td class="paddingTop">-->
+            <!--<a data-v-2f43a2b3="" href="#">-->
+            <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
+            <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+            <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
+            <!--:style="{ width: progress + '%'}">-->
+            <!--<span data-v-2f43a2b3="" class="sr-only">{{progress}}% Complete</span>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+            <!--</div>-->
 
-                <!--</section>-->
+            <!--</section>-->
             <!--</div>-->
             <!--沟通日志/房屋信息-->
             <div class="col-xs-12">
@@ -161,7 +167,7 @@
                                         class="fa fa-pencil-square-o"></i>&nbsp;沟通日志</a>
                             </li>
                             <!--<li class="">-->
-                                <!--<a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-home"></i>&nbsp;房屋信息</a>-->
+                            <!--<a data-toggle="tab" href="#about" aria-expanded="false"><i class="fa fa-home"></i>&nbsp;房屋信息</a>-->
                             <!--</li>-->
                         </ul>
                     </header>
@@ -226,39 +232,39 @@
 
                             <!--房屋信息-->
                             <!--<div id="about" class="tab-pane">-->
-                                <!--<div class="row">-->
-                                    <!--<div class="col-md-12">-->
-                                        <!--<section class="panel table-responsive">-->
-                                            <!--<table class="table table-striped table-advance table-hover">-->
-                                                <!--<thead>-->
-                                                <!--<tr>-->
-                                                    <!--<th class="text-center">房屋地址</th>-->
-                                                    <!--<th class="text-center">房型</th>-->
-                                                    <!--<th class="text-center">状态</th>-->
-                                                    <!--<th class="text-center">负责人</th>-->
-                                                <!--</tr>-->
-                                                <!--</thead>-->
-                                                <!--<tbody>-->
-                                                <!--<tr>-->
-                                                    <!--<td class="text-center">-->
-                                                        <!--<router-link :to="{path:'/okCollect',query: {houseId: ''}}">-->
-                                                            <!--积善公寓2-302-->
-                                                        <!--</router-link>-->
-                                                    <!--</td>-->
-                                                    <!--<td class="text-center">三房一室一厅</td>-->
-                                                    <!--<td class="text-center">已成交</td>-->
-                                                    <!--<td class="text-center">负责人</td>-->
-                                                <!--</tr>-->
-                                                <!--<tr v-show="">-->
-                                                    <!--<td colspan="12" class="text-center text-muted">-->
-                                                        <!--<h4>暂无数据....</h4>-->
-                                                    <!--</td>-->
-                                                <!--</tr>-->
-                                                <!--</tbody>-->
-                                            <!--</table>-->
-                                        <!--</section>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                            <!--<div class="row">-->
+                            <!--<div class="col-md-12">-->
+                            <!--<section class="panel table-responsive">-->
+                            <!--<table class="table table-striped table-advance table-hover">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                            <!--<th class="text-center">房屋地址</th>-->
+                            <!--<th class="text-center">房型</th>-->
+                            <!--<th class="text-center">状态</th>-->
+                            <!--<th class="text-center">负责人</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr>-->
+                            <!--<td class="text-center">-->
+                            <!--<router-link :to="{path:'/okCollect',query: {houseId: ''}}">-->
+                            <!--积善公寓2-302-->
+                            <!--</router-link>-->
+                            <!--</td>-->
+                            <!--<td class="text-center">三房一室一厅</td>-->
+                            <!--<td class="text-center">已成交</td>-->
+                            <!--<td class="text-center">负责人</td>-->
+                            <!--</tr>-->
+                            <!--<tr v-show="">-->
+                            <!--<td colspan="12" class="text-center text-muted">-->
+                            <!--<h4>暂无数据....</h4>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                            <!--</table>-->
+                            <!--</section>-->
+                            <!--</div>-->
+                            <!--</div>-->
                             <!--</div>-->
                         </div>
                     </div>
@@ -289,8 +295,8 @@
 
 <script>
     import New_add from './new_add.vue'                         //客户修改
-//    import AddRemind from  './addremind.vue'                    //增加提醒
-//    import LookRemind from '../common/remind/checkRemind.vue';  //查看提醒
+    //    import AddRemind from  './addremind.vue'                    //增加提醒
+    //    import LookRemind from '../common/remind/checkRemind.vue';  //查看提醒
     import Status from '../common/status.vue';                  //提示信息
     import PicModal from '../common/largePic.vue'               //查看大图
     import Sharing from './sharing.vue'                         //共享客户
@@ -298,6 +304,7 @@
         components: {New_add, PicModal, Status, Sharing},
         data (){
             return {
+                custom: '',                 //客户
                 look_remind: '',            //是否有提醒
                 remind_info: [],            //查看提醒
                 revise_state: '',           //修改客户
@@ -328,6 +335,7 @@
         },
         mounted (){
             this.cus_Id = this.$route.query.nameId;
+            this.custom = this.$route.query.cus;
             this.detailed_info(this.cus_Id);
         },
         methods: {

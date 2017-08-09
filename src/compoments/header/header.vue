@@ -290,7 +290,9 @@
                             <div class="log-arrow-up"></div>
                             <li><a @click="addReminds"><i class="fa fa-plus"></i>增加提醒</a></li>
                             <li><a @click="lookRemind"><i class="fa fa-eye"></i>查看提醒</a></li>
-                            <li><router-link to="/HeaderMemorandum"><i class="fa fa-book"></i>备忘录</router-link></li>
+                            <li>
+                                <router-link to="/HeaderMemorandum"><i class="fa fa-book"></i>备忘录</router-link>
+                            </li>
                             <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
                             <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
                             <li v-show="!isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
