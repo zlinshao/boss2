@@ -59,14 +59,6 @@
                                 <a href="sms:15851899908">发短信</a>
                             </span>
                         </div>
-                        <div>
-                            <span>蔡云杰</span>
-                            <span>13327823182</span>
-                            <span>
-                                <a href="tel:13327823182">电话</a>
-                                <a href="sms:13327823182">发短信</a>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>

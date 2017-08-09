@@ -994,10 +994,8 @@
                         this.lockScreen = ''
                     }
                     if (res.data.code === '80031') {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        $('#lock_screen').modal('hide');
+                        this.lockScreen = ''
                     }
                 });
             },

@@ -193,6 +193,7 @@
                             end: this.end_time,
                             content: this.contents,
                             color: this.colour[this.isShow],
+                            color_id: this.isShow,
                         });
 
                     } else {
@@ -244,6 +245,8 @@
                         this.revise_info.color = this.colour[this.isShow];
                         this.revise_info.color_id = this.isShow;
                         $('#calendar').fullCalendar('updateEvent', this.revise_info);
+                    } else if (res.data.code === '30029') {
+                        $('#remindDaily').modal('hide');
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
@@ -367,6 +370,7 @@
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
+
                     eventClick (calEvent, jsEvent, view) {
                         _this.revise_info = calEvent;
                         _this.mem_status = false;
