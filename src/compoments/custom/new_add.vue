@@ -56,7 +56,7 @@
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="text" v-model="cus_name" class="form-control"
-                                               placeholder="起输入客户姓名">
+                                               placeholder="请输入客户姓名">
                                     </div>
                                 </div>
                                 <!--尊称-->

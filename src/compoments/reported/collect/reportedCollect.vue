@@ -7,7 +7,7 @@
         <section class="panel">
             <div class="panel-body">
 
-                <div  v-show="operId==0">
+                <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <!--<div class="dropdown form-group">
                             <select name="" class="form-control">
@@ -30,7 +30,8 @@
                         </div>
 
                         <div class="input-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增收房报备
+                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i
+                                    class="fa fa-plus-square"></i>&nbsp;新增收房报备
                             </a>
                         </div>
 
@@ -98,7 +99,8 @@
                         <tbody>
                         <tr :class="{'lightYellow' : operId===item.id , 'text-center' : true}" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="operId===item.id" @click.stop="changeCurrentIndex($event,item.id,item.status)">
+                                <input type="checkbox" :checked="operId===item.id"
+                                       @click.stop="changeCurrentIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>{{item.price[0]}}<a v-show="item.price.length>1">变化</a></td>
@@ -108,9 +110,9 @@
                             <td>{{item.cost_deposit}}</td>
                             <td>{{item.cost_medi}}</td>
                             <td>{{item.deal_time}}</td>
-                            <td>{{item.staff==undefined?'':item.staff.real_name}}</td>
-                            <td>{{item.department==undefined?'':item.department.name}}</td>
-                            <td>{{item.leader==undefined?'':item.leader.real_name}}</td>
+                            <td>{{item.staff == undefined ? '' : item.staff.real_name}}</td>
+                            <td>{{item.department == undefined ? '' : item.department.name}}</td>
+                            <td>{{item.leader == undefined ? '' : item.leader.real_name}}</td>
 
                             <!--<td>{{item.house.rooms.rooms}}室{{item.house.rooms.hall}}厅{{item.house.rooms.toilet}}</td>-->
                             <td>
@@ -118,7 +120,10 @@
                                     {{dict.checkin_status[item.status]}}
                                 </label>
                             </td>
-                            <td><router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id}}">详情</router-link></td>
+                            <td>
+                                <router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id}}">详情
+                                </router-link>
+                            </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="16" class="text-center text-muted">
@@ -165,22 +170,22 @@
     import AddOther from '../other/otherAdd.vue'
 
     export default{
-        components: {Page,Status,DatePicker,AddModal,EditModal,Confirm,CteatePayment,AddOther},
+        components: {Page, Status, DatePicker, AddModal, EditModal, Confirm, CteatePayment, AddOther},
         data(){
             return {
-                beforePage : 1,
+                beforePage: 1,
 
-                isShow : false,
+                isShow: false,
 
-                operId : 0,
-                statusId : 0,
+                operId: 0,
+                statusId: 0,
 
-                curOperId : 0,
+                curOperId: 0,
 
-                dict : {},
-                paging : '',
-                myData : [],
-                page : 1,
+                dict: {},
+                paging: '',
+                myData: [],
+                page: 1,
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -192,18 +197,18 @@
                     error: ''
                 },
 
-                dateConfigure : [
+                dateConfigure: [
                     {
-                        range : true,
-                        needHour : true,
-                        position : 'top-right',
+                        range: true,
+                        needHour: true,
+                        position: 'top-right',
                     }
                 ],
-                currentDate : [],
+                currentDate: [],
 
-                params : {
-                    range : '',
-                    search : ''
+                params: {
+                    range: '',
+                    search: ''
                 },
 
                 confirmMsg: {
@@ -214,10 +219,10 @@
 
 //                生成款项
 //                from : 1,
-                addPayment_id : 0,
+                addPayment_id: 0,
 
 //                新增其余款项
-                addOther_id : 0
+                addOther_id: 0
             }
         },
         mounted (){
@@ -239,7 +244,7 @@
                         (res) => {
 //                            console.log(res.data.code);
 //                            console.log(res.data.data.data);
-                            if (res.data.code == 18200){
+                            if (res.data.code == 18200) {
                                 // 成功
                                 this.paging = res.data.data.pages;
                                 this.myData = res.data.data.data;
@@ -251,7 +256,7 @@
                         }
                     )
             },
-            changeCurrentIndex(ev,id,status){
+            changeCurrentIndex(ev, id, status){
                 if (ev.currentTarget.checked) {
                     this.operId = id;
                     this.statusId = status;
@@ -276,17 +281,17 @@
 
             filter(val){
 //                alert(val);
-                if (val!=undefined){
+                if (val != undefined) {
                     this.beforePage = val;
                 }
                 this.operId = 0;
                 // 筛选
-                this.$http.get('checkin/collect?page='+this.beforePage,{
-                    params : this.params
+                this.$http.get('checkin/collect?page=' + this.beforePage, {
+                    params: this.params
                 }).then(
                     (res) => {
 //                        console.log(res.data)
-                        if (res.data.code == 18200){
+                        if (res.data.code == 18200) {
                             // 成功
                             this.paging = res.data.data.pages;
                             this.myData = res.data.data.data;
@@ -305,26 +310,26 @@
                 let num = this.confirmMsg.status;
                 console.log(num);
                 let url;
-                if(num==0){
-                    url = 'checkin/collect/discard/'+this.operId;
-                } else if (num==1){
+                if (num == 0) {
+                    url = 'checkin/collect/discard/' + this.operId;
+                } else if (num == 1) {
 //                    this.confirmMsg.msg = '确定提交报备信息吗？';
-                    url = 'checkin/collect/pending/'+this.operId;
-                } else if (num==2){
+                    url = 'checkin/collect/pending/' + this.operId;
+                } else if (num == 2) {
 //                    this.confirmMsg.msg = '确定通过审核吗？';
-                    url = 'checkin/collect/pass/'+this.operId;
-                } else if (num==3){
+                    url = 'checkin/collect/pass/' + this.operId;
+                } else if (num == 3) {
 //                    this.confirmMsg.msg = '确定驳回吗？';
-                    url = 'checkin/collect/stash/'+this.operId;
-                } else if (num==4){
+                    url = 'checkin/collect/stash/' + this.operId;
+                } else if (num == 4) {
 //                    this.confirmMsg.msg = '确定驳回吗？';
-                    url = 'checkin/collect/pending/'+this.operId;
+                    url = 'checkin/collect/pending/' + this.operId;
                 }
                 this.$http.get(url)
                     .then(
                         (res) => {
 //                            console.log(res);
-                            if (res.data.code==18210){
+                            if (res.data.code == 18210) {
                                 this.info.success = '操作成功';
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
@@ -359,19 +364,19 @@
 
 
                 this.confirmMsg.id = this.operId;
-                this.confirmMsg.status= num;
+                this.confirmMsg.status = num;
 //                console.log(this.confirmMsg.status);
-                if (num==0){
+                if (num == 0) {
                     this.confirmMsg.msg = '确定作废此报备信息吗？';
-                }else if (num==1){
+                } else if (num == 1) {
                     this.confirmMsg.msg = '确定提交报备信息吗？';
                 }
                 /*else if (num==2){
-                    this.confirmMsg.msg = '确定通过审核吗？';
-                }*/
-                else if (num==3){
+                 this.confirmMsg.msg = '确定通过审核吗？';
+                 }*/
+                else if (num == 3) {
                     this.confirmMsg.msg = '确定驳回吗？';
-                } else if (num==4){
+                } else if (num == 4) {
                     this.confirmMsg.msg = '确定驳回吗？';
                 }
                 $('#confirm').modal('show');
@@ -379,7 +384,7 @@
             },
 
             pass(){
-                console.log(this.operId)
+                console.log(this.operId);
                 this.addPayment_id = this.operId;
                 $('#cteatePayment').modal('show');
             },
@@ -398,7 +403,8 @@
         display: inline-block;
         /*padding: 0 15px 0 0;*/
     }
-    input[type=checkbox]{
+
+    input[type=checkbox] {
         width: 17px;
         height: 17px;
     }
@@ -417,26 +423,26 @@
         background-color: #f2f2f2;
     }
 
-    tbody tr button{
+    tbody tr button {
         /*color: white;*/
     }
 
-    td a{
+    td a {
         margin-left: 5px;
         font-size: 8px;
     }
-
 
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
     }
 
-    tbody tr td button{
+    tbody tr td button {
         color: white;
         /*font-weight: bold;*/
     }
+
     @media (max-width: 798px) {
-        .panel-body .form-inline .input-group{
+        .panel-body .form-inline .input-group {
             margin-bottom: 5px;
         }
     }
