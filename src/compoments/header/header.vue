@@ -375,7 +375,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
+                    <li class="sub-menu" v-show="account_book">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>财务账本</span>
@@ -837,7 +837,7 @@
         props: ['Name', 'Card'],
         data(){
             return {
-
+                account_book: '',           //账本
                 remind_info: [],            //查看提醒
                 isActive: 0,
                 new_info: {},               //未读信息
@@ -866,6 +866,13 @@
             }
         },
         mounted(){
+            this.$http.post('revenue/customer/is_rule').then((res) => {
+                if (res.data.code === '20015') {
+                    this.account_book = true;
+                } else {
+                    this.account_book = false;
+                }
+            });
             this.isPc = this.IsPC();
             this.new_infos();
             setInterval(function () {
