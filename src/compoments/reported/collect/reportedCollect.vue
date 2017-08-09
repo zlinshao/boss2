@@ -104,10 +104,16 @@
                             </td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>
-                                {{item.price[0]}}<a v-show="item.price.length>1">变化</a>
+                                <span v-if="item.price !== null || undefined">
+                                    {{item.price[0]}}<a v-show="item.price.length>1">变化</a>
+                                </span>
                             </td>
                             <td>{{item.years}}</td>
-                            <td>{{dict.pay_type[item.pay_type[0]]}}<a v-show="item.pay_type.length>1">变化</a></td>
+                            <td>
+                                <span  v-if="item.pay_type !== null || undefined">
+                                    {{dict.pay_type[item.pay_type[0]]}}<a v-show="item.pay_type.length>1">变化</a>
+                                </span>
+                            </td>
                             <td>{{item.vacancy}}</td>
                             <td>{{item.cost_deposit}}</td>
                             <td>{{item.cost_medi}}</td>
