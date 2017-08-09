@@ -96,7 +96,7 @@
         <CreatePayment :from="3" :addPayment_id="addPayment_id" @success="getDetails"></CreatePayment>
 
         <!--编辑-->
-        <EditModal :id="id" @save="getDetails"></EditModal>
+        <EditModal :id="id" @success="getDetails"></EditModal>
     </div>
 </template>
 

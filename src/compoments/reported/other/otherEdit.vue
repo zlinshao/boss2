@@ -123,8 +123,7 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary" @click="save(1)">保存为草稿</button>
-                                <button type="button" class="btn btn-warning" @click="save(2)">保存并提交</button>
+                                <button type="button" class="btn btn-primary" @click="modify">修改</button>
                             </div>
                         </div>
                     </div>
@@ -185,7 +184,9 @@
                     account_bank : 1,
                     account_num : '',           // 账户
                     remark : ''
-                }
+                },
+
+
             }
         },
         watch:{
@@ -273,32 +274,6 @@
                 $('#otherEdit').modal('hide');
                 this.getOtherDetails();
             },
-            /*getDetails(){
-                this.msg = {};
-                let url;
-                if (this.from==1){
-                    // 收
-                    url = 'checkin/collect/'+this.addOther_id;
-                } else if (this.from==2){
-                    // 租
-                    url = 'checkin/rent/'+this.addOther_id;
-                } else {
-                    // 其他
-                }
-                this.$http.get(url)
-                    .then(
-                        (res) => {
-                            this.msg = res.data.data;
-                            this.formData.staff_id = this.msg.staff_id;
-                            this.formData.department_id = this.msg.department_id;
-                            this.formData.leader_id = this.msg.leader_id;
-                            this.formData.customer_id = this.msg.customer_id;
-                            this.formData.house_id = this.msg.house_id;
-//                            this.setOldAccount();
-                            console.log(this.msg);
-                        }
-                    );
-            },*/
 
             // 修改客户收款方式
             changeCustomerPayment(){
@@ -308,28 +283,17 @@
                 this.formData.account_num = '';
             },
 
-            changeReserve(){
-                if (this.formData.reserve==1){
-                    // 原
-                    this.setOldAccount();
-                } else {
-                    // 新
-                    this.setNewAccount();
-                }
-            },
-
-            save(num){
-                console.log(this.addOther_id);
+            modify(){
                 console.log(this.formData);
-                let url = 'checkin/extra?status='+num;
                 /*if (num==1){
                  // 保存为草稿
 
                  } else {
                  // 保存并提交
                  }*/
-                this.$http.post(url,this.formData)
+                this.$http.put('checkin/extra/'+this.id,this.formData)
                     .then((res)=>{
+                    console.log(res)
                         if (res.data.code==18010){
                             // 成功
                             this.info.success = res.data.msg;

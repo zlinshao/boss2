@@ -137,7 +137,7 @@
         <CteatePayment :from="3" :addPayment_id="addPayment_id" @success="filter"></CteatePayment>
 
         <!--编辑-->
-        <EditModal :id="curOperId" @save="search(1)"></EditModal>
+        <EditModal :id="curOperId" @success="search(1)"></EditModal>
     </div>
 </template>
 
