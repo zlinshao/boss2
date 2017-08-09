@@ -58,7 +58,7 @@
                             <th></th>
                             <th class="text-center">交易时间</th>
                             <th class="text-center">客户姓名</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center">详细信息</th>
                             <th class="text-center">科目名称</th>
                             <th class="text-center">类型</th>
                             <th class="text-center">收/汇款方式</th>

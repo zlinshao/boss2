@@ -442,7 +442,7 @@
                 this.formData.account = '';
                 this.formData.account_owner = '';
                 this.formData.account_subbank = '';
-                this.formData.alipay_owner = '';
+//                this.formData.alipay_owner = '';
 
                 this.formData.cost_medi = '';
                 this.formData.medi_account_type = 1;
@@ -450,7 +450,7 @@
                 this.formData.medi_account_owner = '';
                 this.formData.medi_account_bank = 1;
                 this.formData.medi_account_subbank = 1;
-                this.formData.medi_alipay_owner = 1;
+//                this.formData.medi_alipay_owner = 1;
 //                this.formData.is_medi = 1;
 
                 this.showBase = true;
