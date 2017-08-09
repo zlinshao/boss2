@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选择客户</h4>
                     </div>
-                    <div class="modal-body inbox-body panel table table-responsive">
+                    <div class="modal-body inbox-body panel table table-responsive roll">
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                             <div class="col-lg-4">
@@ -226,5 +226,9 @@
     }
     label{
         margin-top: 5px;
+    }
+    .modal-body{
+        max-height: 400px;
+        overflow: auto;
     }
 </style>

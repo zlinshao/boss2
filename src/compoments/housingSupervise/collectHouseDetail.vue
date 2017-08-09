@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>房源管理</li>
-            <li>公司房源</li>
+            <router-link to="/okCollect" tag="li" style="cursor: pointer" class="bread">公司房源</router-link>
             <li>公司房源详情</li>
         </ol>
         <!--头部-->
@@ -496,5 +496,8 @@
             overflow: visible;
             height: 100%;
         }
+    }
+    .bread:hover{
+        color: #59ace2;
     }
 </style>

@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li>收房合同</li>
+            <router-link to="/collectContract" tag="li" style="cursor: pointer" class="bread">收房合同</router-link>
             <li class="active">收房合同详情</li>
         </ol>
 
@@ -1134,5 +1134,7 @@
     .remind{
         color: #e8686b;
     }
-
+    .bread:hover{
+        color: #59ace2;
+    }
 </style>
