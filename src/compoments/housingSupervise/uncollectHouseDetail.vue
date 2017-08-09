@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>房源管理</li>
-            <li>待收房源</li>
+            <router-link to="/noCollect" tag="li" style="cursor: pointer" class="bread">待收房源</router-link>
             <li>待收房源详情</li>
         </ol>
         <section class="panel">
@@ -169,5 +169,7 @@
         text-align: right;
         min-width: 100px;
     }
-
+    .bread:hover{
+        color: #59ace2;
+    }
 </style>
