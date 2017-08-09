@@ -53,7 +53,9 @@
 
                                     </td>
                                     <td>{{item.mobile}}</td>
-                                    <td></td>
+                                    <td>
+                                        <span v-if="item.amap_id !== null || undefined">{{item.amap_id.villageAddress}}</span>
+                                    </td>
                                 </tr>
                                 <tr v-if="isShow">
                                     <td colspan="10" class="text-center text-muted">
@@ -107,14 +109,9 @@
         methods : {
             search(){
                 if(this.keywords!==''){
-                    this.$http.post('core/customer/customerList',
-                            {
-                                keywords:this.keywords,
-                                person_medium:this.media_person
-                            }
-                        ).then((res) => {
-                        if(res.data.code === '70030'){
-                            this.customerList=res.data.data.list;
+                    this.$http.get('core/core_common/customerList/person_medium/' +this.media_person +'/keywords/' + this.keywords).then((res) => {
+                        if(res.data.code === '20010'){
+                            this.customerList=res.data.data;
                             this.isShow = false;
                         }else {
                             this.customerList=[];

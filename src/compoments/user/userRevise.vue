@@ -146,7 +146,66 @@
                                                        @click="roles" v-model="checkboxModel"
                                                 > {{item.role}}
                                             </label>
-                                            <label class="checkbox-inline check first" v-for="item in roleList"  v-if="item.module === 'revenue'">
+                                            <!--财务权限-->
+                                            <h5 class="financeRole" v-if="isFinance">组长报备</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'CheckinCollect' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <h5 class="financeRole" v-if="isFinance">客户管理</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'Customer' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <h5 class="financeRole" v-if="isFinance">账户管理</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'Account' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <h5 class="financeRole" v-if="isFinance">科目管理</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'AccountSubject' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <h5 class="financeRole" v-if="isFinance">应付款项</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'AccountPayable' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <h5 class="financeRole" v-if="isFinance">应收款项</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'AccountReceivable' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <!--<h5>收支流水</h5>-->
+                                            <!--<label class="checkbox-inline check first" v-for="item in roleList"-->
+                                                   <!--v-if="item.module === 'revenue' && item.child_module === 'CheckinCollect' ">-->
+                                                <!--<input type="checkbox" class="pull-left" :value="item.id"-->
+                                                       <!--@click="roles" v-model="checkboxModel"-->
+                                                <!--&gt; {{item.role}}-->
+                                            <!--</label>-->
+                                            <h5 class="financeRole" v-if="isFinance">转账操作记录</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'Transfer' ">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <h5 class="financeRole" v-if="isFinance">待处理项</h5>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"
+                                                   v-if="item.module === 'revenue' && item.child_module === 'AccountPending' ">
                                                 <input type="checkbox" class="pull-left" :value="item.id"
                                                        @click="roles" v-model="checkboxModel"
                                                 > {{item.role}}
@@ -274,6 +333,7 @@
                     cus_idPhoto : [],     //银行卡照片
                 },
                 complete_ok:'ok',
+                isFinance : '', //  财务角色
             }
         },
         mounted(){
@@ -422,6 +482,11 @@
             searchRoles(){
                 this.$http.get('manager/user/searchRoles').then((res)=>{
                     this.roleList=res.data.data;
+                    if(this.roleList[0].module === 'human'){
+                        this.isFinance = false;
+                    }else if(this.roleList[0].module === 'revenue'){
+                        this.isFinance = true;
+                    }
                     for(let i=0;i<this.roleList.length;i++){
                         this.oldBox.push(this.roleList[i].id);
                     }
@@ -637,5 +702,9 @@
     }
     #revise{
         color: #fff !important;
+    }
+    .financeRole{
+        color:#59ace2;
+        font-size: 16px;
     }
 </style>
