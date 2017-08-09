@@ -8,7 +8,7 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body">
-                <div v-if="contractSeleted === 0">
+                <div v-if="contractSeleted.length === 0">
                     <div class="pro-sort">
                         <select class="form-control" @change="search" v-model="contractSearchInfo.passed">
                             <option value="">合同状态</option>
@@ -60,26 +60,29 @@
                     </div>
                 </div>
                 <!--选中-->
-                <div class="panel-body" v-if="contractSeleted > 0" style="padding: 0;">
+                <div class="panel-body" v-if="contractSeleted.length > 0" style="padding: 0;">
                     <ul>
-                        <li>已选中&nbsp; 1 &nbsp;项</li>
-                        <li  class="operate">
+                        <li>已选中&nbsp; {{contractSeleted.length}} &nbsp;项</li>
+                        <li  class="operate"  v-if="contractSeleted.length ===1">
                             <i class="fa fa-star"  v-if="mark == 1" @click="marked"> 标记</i>
                             <i class="fa fa-star"  v-if="mark == 2" @click="marked"> 取消标记</i>
                         </li>
-                        <li  class="operate">
+                        <li  class="operate" v-if="contractSeleted.length ===1">
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
-                        <li  class="operate">
+                        <li  class="operate" v-if="contractSeleted.length ===1">
                             <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick"> 置顶</i>
                             <i class="fa fa-times-circle-o"  v-if="top == 2" @click="stick"> 取消置顶</i>
                         </li>
-                        <li  class="operate"  v-if="status !== 1" >
+                        <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1"  >
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
-                        <li  class="operate">
+                        <li  class="operate" v-if="contractSeleted.length ===1">
                             <router-link tag="i" class="fa fa-eye" :to="{path:'/rentingDetail',
                                 query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录</router-link>
+                        </li>
+                        <li class="operate" @click="distribution">
+                            <i class="fa fa-sitemap">分配</i>&nbsp;
                         </li>
                     </ul>
                 </div>
@@ -114,7 +117,7 @@
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList">
                         <td><input type="checkbox" @click="picked(item,$event)"
-                                   :value="item.id" :checked="contractSeleted===item.id"></td>
+                                   :value="item.id"  v-model="checkboxModel"></td>
                         <td class=" myIcon">
                             <i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>
                         </td>
@@ -211,18 +214,25 @@
                 configure:[],
                 pages:'',
                 isShow :false,
-                contractSeleted:0,
-                houseId:'',
+                contractSeleted:[],
+                houseId:[],
                 top:'',
                 mark:'',
                 status:'',
                 confirmMsg:[],
                 msgFlag : '',
-                waiting : true
+                waiting : true,
+                checkboxModel : [],
+                staff_id : '',
             }
         },
-        updated (){
-
+        watch: {
+            'contractSeleted':{
+                deep:true,
+                handler(val ,oldVal){
+                    this.checkboxModel = val;
+                }
+            }
         },
         mounted(){
             this.getDictionary();
@@ -254,14 +264,37 @@
                 })
             },
             selectDpm(){ //选择部门
+                this.configureType = 'selectDpm';
                 $('#selectCustom').modal('show');
                 this.configure={length:1,class:'department',id:[9],name:'市场部'};
             },
             dpmSeleted(val){
-                if(val.department.length){
-                    this.departmentName=val.department[0].name;
-                    this.contractSearchInfo.department_id=val.department[0].id;
-                    this.search();
+                if(this.configureType=== 'selectDpm'){
+                    if(val.department.length){
+                        this.departmentName=val.department[0].name;
+                        this.contractSearchInfo.department_id=val.department[0].id;
+                        this.search();
+                    }
+                }else if(this.configureType=== 'distribution'){
+                    this.staff_id = val.staff[0].id;
+                    this.$http.post('core/move_order/moveorder',
+                        {'type' :'rent',
+                            'id' : this.contractSeleted,
+                            'staff_id' : this.staff_id ,
+                        }).then((res) => {
+                        if(res.data.code === '70020'){
+                            this.search();
+                            this.contractSeleted = [];
+                            this.staff_id = '';
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
                 }
             },
             getDate(val){
@@ -288,21 +321,29 @@
             },
             picked (item,e){  //复选框单选并保存选中的id
                 if(e.target.checked===true){
-                    this.contractSeleted = item.id;
-                    this.houseId = item.house_id;
+                    this.contractSeleted.push(item.id);
+                    this.houseId.push(item.house_id);
                     item.top === 2? this.top = 1:this.top = 2;
                     item.mark === 2? this.mark = 1:this.mark = 2;
                     item.status !==1? this.status = 2:this.status = 1;
                 }else {
-                    this.contractSeleted = 0;
-                    this.houseId = '';
+                    for(let i=0;i<this.contractSeleted.length;i++){
+                        if(item.id===this.contractSeleted[i]){
+                            this.contractSeleted.splice(i,1)
+                        }
+                    }
+                    for(let i=0;i<this.houseId.length;i++){
+                        if(item.id===this.houseId[i]){
+                            this.houseId.splice(i,1)
+                        }
+                    }
                 }
             },
             stick(){  //top
-                this.$http.get('core/rent/stick/id/' + this.contractSeleted +'/top/' +this.top).then((res) => {
+                this.$http.get('core/rent/stick/id/' + this.contractSeleted[0] +'/top/' +this.top).then((res) => {
                     if(res.data.code === '80090'){
                         this.search();
-                        this.contractSeleted = 0;
+                        this.contractSeleted = [];
                         this.info.success =res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
@@ -314,10 +355,10 @@
                 })
             },
             marked(){
-                this.$http.get('core/rent/mark/id/' + this.contractSeleted +'/mark/' +this.mark).then((res) => {
+                this.$http.get('core/rent/mark/id/' + this.contractSeleted[0] +'/mark/' +this.mark).then((res) => {
                     if(res.data.code === '80090'){
                         this.search();
-                        this.contractSeleted = 0;
+                        this.contractSeleted = [];
                         this.info.success =res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
@@ -342,10 +383,10 @@
             },
             getConfirm(){
                 if(this.msgFlag === 'delete'){
-                    this.$http.get('core/collect/delete/id/' + this.contractSeleted).then((res) => {
+                    this.$http.get('core/rent/delete/id/' + this.contractSeleted[0]).then((res) => {
                         if(res.data.code === '70030'){
                             this.search();
-                            this.contractSeleted = 0;
+                            this.contractSeleted = [];
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
@@ -356,11 +397,11 @@
                         }
                     })
                 }else if(this.msgFlag === 'lock'){
-                    this.$http.get('core/collect/unVillalock/house_id/' + this.houseId).then((res) => {
+                    this.$http.get('core/rent/unVillalock/house_id/' + this.houseId[0]).then((res) => {
                         if(res.data.code === '70010'){
                             this.search();
-                            this.contractSeleted = 0;
-                            this.houseId = '';
+                            this.contractSeleted = [];
+                            this.houseId = [];
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
@@ -372,6 +413,11 @@
                     })
                 }
             },
+            distribution(){
+                $('#selectCustom').modal('show');
+                this.configure={length:1,class:'amount'};
+                this.configureType = 'distribution';
+            }
         }
     }
 </script>

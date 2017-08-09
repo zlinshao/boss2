@@ -54,6 +54,9 @@
                         <li v-show="statusId==3">
                             <h5 @click="changeStatus(4)"><a><i class="fa fa-mail-reply"></i>&nbsp;驳回</a></h5>
                         </li>
+                        <li>
+                            <h5 @click="addOther"><a><i class="fa fa-plus-square"></i> 新增其余款项报备</a></h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -133,6 +136,8 @@
 
         <!--生成款项-->
         <CteatePayment :from="2" :addPayment_id="addPayment_id" @success="filter"></CteatePayment>
+        <!--新增其余款项-->
+        <AddOther :from="2" :addOther_id="addOther_id"></AddOther>
 
     </div>
 </template>
@@ -142,13 +147,14 @@
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
     import Confirm from '../../common/confirm.vue'
+    import AddOther from '../other/otherAdd.vue'
 
     import AddModal from './rentingAdd.vue'
     import EditModal from './rentingEdit.vue'
     import CteatePayment from '../createPayment.vue'
 
     export default{
-        components: {DatePicker,Page,Confirm,Status,AddModal,EditModal,CteatePayment},
+        components: {DatePicker,Page,Confirm,Status,AddModal,EditModal,CteatePayment,AddOther},
         data(){
             return {
                 beforePage : 1,
@@ -196,6 +202,9 @@
 
 //                生成款项
                 addPayment_id : 0,
+
+//                新增其余款项
+                addOther_id : 0
             }
         },
         mounted (){
@@ -357,6 +366,12 @@
                 console.log(this.operId)
                 this.addPayment_id = this.operId;
                 $('#cteatePayment').modal('show');
+            },
+
+            //            新增其余款项报备
+            addOther(){
+                this.addOther_id = this.operId;
+                $('#otherAdd').modal('show');
             }
 
         }

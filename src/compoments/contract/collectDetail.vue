@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li>收房合同</li>
+            <router-link to="/collectContract" tag="li" style="cursor: pointer" class="bread">收房合同</router-link>
             <li class="active">收房合同详情</li>
         </ol>
 
@@ -504,9 +504,9 @@
                                     </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-1">银行卡<sup>*</sup></span>
-                                        <span class="col-lg-11"  v-if="item.customer_id.album.id_pic !==undefined">
-                                             <img :src="img.small" @click="showLargePic('bank_pic',index)"
-                                                  v-for="(img,index) in item.album.bank_pic">
+                                        <span class="col-lg-11"  v-if="item.customer_id.album.bank_pic !==undefined">
+                                             <img :src="img.small" @click="showLargeIdPic('bank_pic',index)"
+                                                  v-for="(img,index) in item.customer_id.album.bank_pic">
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
@@ -1134,5 +1134,7 @@
     .remind{
         color: #e8686b;
     }
-
+    .bread:hover{
+        color: #59ace2;
+    }
 </style>

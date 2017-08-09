@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选择客户</h4>
                     </div>
-                    <div class="modal-body inbox-body panel table table-responsive">
+                    <div class="modal-body inbox-body panel table table-responsive roll">
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                             <div class="col-lg-4">
@@ -46,7 +46,12 @@
                                     <td>{{item.name}}</td>
                                     <td v-if="item.gender === 1">先生</td>
                                     <td v-if="item.gender === 2">女士</td>
-                                    <td>{{nationalityList[item.nationality]}}</td>
+                                    <td>
+                                        <span v-for="nation in nationalityList" v-if="nation.id === item.nationality">
+                                            {{nation.zh_name}}
+                                        </span>
+
+                                    </td>
                                     <td>{{item.mobile}}</td>
                                     <td></td>
                                 </tr>
@@ -119,10 +124,13 @@
                 }
             },
             custom(){
-                this.$http.get('core/customer/dict').then((res) => {
-                    this.nationalityList=res.data.nationality;
+                this.$http.post('index/country/index').then((res) => {
+                    this.nationalityList=res.data.data;
                     this.person_medium=res.data.person_medium;
                 })
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.person_medium=res.data.person_medium;
+                });
             },
             selectClient(ev,item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked' , 'true');
@@ -158,5 +166,9 @@
     }
     label{
         margin-top: 5px;
+    }
+    .modal-body{
+        max-height: 400px;
+        overflow: auto;
     }
 </style>

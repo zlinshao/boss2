@@ -703,6 +703,9 @@
                 this.formData.cost_medi = '';
                 this.formData.medi_account_type = 1;
                 this.formData.medi_account_num = '';
+                this.formData.medi_account_owner = '';
+                this.formData.medi_account_bank = 1;
+                this.formData.medi_account_subbank = 1;
                 this.formData.cost_deposit = '';
                 this.formData.payment = [];
                 this.formData.deal_time = '';

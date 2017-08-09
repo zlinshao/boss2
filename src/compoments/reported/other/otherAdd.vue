@@ -61,19 +61,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">汇款账户</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" v-model="formData.reserve" @change="changeReserve">
-                                            <option value="1">原账户</option>
-                                            <option value="2">新账户</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">汇款方式</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" @change="changeCustomerPayment" v-model="formData.payment" :disabled="formData.reserve==1">
+                                        <select class="form-control" @change="changeCustomerPayment" v-model="formData.payment">
                                             <option :value="value" v-for="(key,value) in dict.payment">{{key}}</option>
                                         </select>
                                     </div>
@@ -82,13 +74,13 @@
                                 <div class="form-group" v-show="formData.payment==1||formData.payment==4">
                                     <label class="col-sm-2 control-label">收款人姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" :disabled="formData.reserve==1">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group" v-show="formData.payment==1||formData.payment==4">
                                     <label class="col-sm-2 control-label">开户行<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="formData.bank" :disabled="formData.reserve==1">
+                                        <select class="form-control" v-model="formData.bank">
                                             <option :value="value" v-for="(key,value) in dict.bank">{{key}}</option>
                                         </select>
                                     </div>
@@ -96,25 +88,25 @@
                                 <div class="form-group" v-show="formData.payment==1||formData.payment==4">
                                     <label class="col-sm-2 control-label">支行<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="formData.account_subbank" :disabled="formData.reserve==1">
+                                        <input type="text" class="form-control" v-model="formData.account_subbank">
                                     </div>
                                 </div>
 
                                 <div class="form-group" v-show="formData.payment==2">
                                     <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="formData.alipay_owner" :disabled="formData.reserve==1">
+                                        <input type="text" class="form-control" v-model="formData.account_owner">
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label v-show="formData.payment==1" class="col-sm-2 control-label">账号<sup class="required">*</sup></label>
-                                    <label v-show="formData.payment==2" class="col-sm-2 control-label">支付宝账号<sup class="required">*</sup></label>
-                                    <label v-show="formData.payment==3" class="col-sm-2 control-label">微信账号<sup class="required">*</sup></label>
-                                    <label v-show="formData.payment==4" class="col-sm-2 control-label">存折账号<sup class="required">*</sup></label>
+                                    <label v-if="formData.payment==2" class="col-sm-2 control-label">支付宝账号<sup class="required">*</sup></label>
+                                    <label v-else-if="formData.payment==3" class="col-sm-2 control-label">微信账号<sup class="required">*</sup></label>
+                                    <label v-else-if="formData.payment==4" class="col-sm-2 control-label">存折账号<sup class="required">*</sup></label>
+                                    <label v-else="" class="col-sm-2 control-label">账号<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="formData.account" :disabled="formData.reserve==1">
+                                        <input type="text" class="form-control" v-model="formData.account">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -128,8 +120,8 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary">保存为草稿</button>
-                                <button type="button" class="btn btn-warning">保存并提交</button>
+                                <button type="button" class="btn btn-primary" @click="save(1)">保存为草稿</button>
+                                <button type="button" class="btn btn-warning" @click="save(2)">保存并提交</button>
                             </div>
                         </div>
                     </div>
@@ -167,12 +159,15 @@
                 },
 
                 formData : {
-                    reserve : 1,
+//                    staff_id,
+//                    department_id,
+//                    leader_id,
+//                    customer_id,
+//                    house_id,
 
                     payment : 1,
                     account_owner : '',     // 收款人姓名
                     account_subbank : '',   // 支行
-                    alipay_owner : '',      // 支付宝姓名
                     bank : 1,
                     account : '',           // 账户
                     remark : ''
@@ -217,7 +212,7 @@
                     .then(
                         (res) => {
                             this.msg = res.data.data;
-                            this.setOldAccount();
+//                            this.setOldAccount();
                             console.log(this.msg);
                         }
                     );
@@ -225,8 +220,8 @@
 
             // 修改客户收款方式
             changeCustomerPayment(){
+                this.formData.account_owner = '';
                 this.formData.account_subbank = '';
-                this.formData.alipay_owner = '';
                 this.formData.bank = 1;
                 this.formData.account = '';
             },
@@ -241,12 +236,20 @@
                 }
             },
 
+            save(num){
+                console.log(this.addOther_id);
+                console.log(this.formData);
+                if (num==1){
+                    // 保存为草稿
+                } else {
+                    // 保存并提交
+                }
+            }
 
-            setOldAccount(){
+            /*setOldAccount(){
                 this.formData.payment = this.msg.payment;
                 this.formData.account_owner = this.msg.account_owner;
                 this.formData.account_subbank = this.msg.account_subbank;
-                this.formData.alipay_owner = this.msg.alipay_owner;
                 this.formData.bank = this.msg.bank;
                 this.formData.account = this.msg.account;
             },
@@ -254,10 +257,9 @@
                 this.formData.payment = 1;
                 this.formData.account_owner = '';
                 this.formData.account_subbank = '';
-                this.formData.alipay_owner = '';
                 this.formData.bank = 1;
                 this.formData.account = '';
-            }
+            }*/
         }
     }
 </script>
