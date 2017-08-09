@@ -86,12 +86,12 @@
                             <th></th>
                             <th class="text-center">收款时间</th>
                             <th class="text-center">客户姓名</th>
-                            <th class="text-center">详细信息</th>
                             <th class="text-center">收入科目</th>
                             <th class="text-center">应收金额</th>
                             <th class="text-center">实收金额</th>
                             <th class="text-center">剩余款项</th>
                             <th class="text-center">补齐时间</th>
+                            <th class="text-center">详细信息</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
                         </tr>
@@ -103,14 +103,14 @@
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td>{{item.customer==undefined?'':item.customer.name}}</td>
-                            <td>
-                                {{item.description}}
-                            </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>{{item.amount_receivable}}</td>
                             <td>{{item.amount_received}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
+                            <td>
+                                {{item.description}}
+                            </td>
                             <td>
                                 <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}

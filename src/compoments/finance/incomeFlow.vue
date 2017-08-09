@@ -56,9 +56,9 @@
                         <thead>
                         <tr>
                             <th></th>
+                            <th class="text-center">ID</th>
                             <th class="text-center">交易时间</th>
                             <th class="text-center">客户姓名</th>
-                            <th class="text-center">详细信息</th>
                             <th class="text-center">科目名称</th>
                             <th class="text-center">类型</th>
                             <th class="text-center">收/汇款方式</th>
@@ -66,17 +66,26 @@
                             <th class="text-center">应付/收金额</th>
                             <th class="text-center">实付/收金额</th>
                             <th class="text-center">账户余额</th>
+                            <th class="text-center">详细信息</th>
                             <th class="text-center">收/付款人员</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in myData">
+                        <tr class="text-center" v-for="(item,index) in myData">
                             <td :class="{'red':item.cate==2,'green':item.cate==1}">
                                 <i class="fa fa-circle"></i>
                             </td>
+                            <td>{{index+1}}</td>
                             <td>{{item.update_time}}</td>
                             <td>{{item.customer}}</td>
+                            <td>{{item.subject}}</td>
+                            <td>{{dict.er_type[item.cate]}}</td>
+                            <td>{{dict.account_cate[item.account_cate]}}</td>
+                            <td>{{item.account_num}}</td>
+                            <td>{{item.cate==1?item.amount_receivable:item.amount_payable}}</td>
+                            <td>{{item.cate==1?item.amount_received:item.amount_paid}}</td>
+                            <td>{{item.amount_remain}}</td>
                             <td>
                                 {{item.info}}
                                 <!--{{item.info=='-'||item.info==undefined?'':item.info.address+'/'+dict.pay_type[item.info.pay_type]+'/'+item.info.price+'/'+item.info.staff_name}}-->
@@ -85,13 +94,6 @@
                                 {{item.info.price}}/
                                 {{item.info.staff_name}}-->
                             </td>
-                            <td>{{item.subject}}</td>
-                            <td>{{dict.er_type[item.cate]}}</td>
-                            <td>{{dict.account_cate[item.account_cate]}}</td>
-                            <td>{{item.account_num}}</td>
-                            <td>{{item.cate==1?item.amount_receivable:item.amount_payable}}</td>
-                            <td>{{item.cate==1?item.amount_received:item.amount_paid}}</td>
-                            <td>{{item.amount_remain}}</td>
                             <td>{{item.operator_name}}</td>
                         </tr>
                         <tr class="text-center" v-show="isShow">

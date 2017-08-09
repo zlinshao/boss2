@@ -88,7 +88,6 @@
                             <th></th>
                             <th class="text-center">付款时间</th>
                             <th class="text-center">客户姓名</th>
-                            <th class="text-center">详细信息</th>
                             <!--<th class="text-center">签约人</th>-->
                             <!--<th class="text-center">房屋地址</th>-->
                             <!--<th class="text-center">付款方式</th>-->
@@ -98,6 +97,7 @@
                             <th class="text-center">实付金额</th>
                             <th class="text-center">剩余款项</th>
                             <th class="text-center">补齐时间</th>
+                            <th class="text-center">详细信息</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
 
@@ -111,9 +111,7 @@
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td><span v-if="item.customer != null">{{item.customer.name}}</span></td>
-                            <td>
-                                {{item.description}}
-                            </td>
+                            <!--<td><span v-if="item.customer != null">{{item.customer.name}}</span></td>-->
                             <!--<td>{{item.description.staff_name}}</td>
                             <td>{{item.description.address}}</td>
                             <td>{{dict.pay_type[item.description.pay_type]}}</td>
@@ -123,6 +121,9 @@
                             <td>{{item.amount_paid}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
+                            <td>
+                                {{item.description}}
+                            </td>
                             <td>
                                 <button type="button"
                                         :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">

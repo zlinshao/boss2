@@ -44,80 +44,94 @@
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">款项名称</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" v-model="money[0].money_name">
-                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
-                                        </select>
+                                <div v-if="from!=3">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" v-model="money[0].money_name">
+                                                <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-3">
+                                            <SelectSubject @choose="getSubject1" :current="money[0].subject_id"></SelectSubject>
+                                        </div>
+                                        <div class="col-sm-2 icons">
+                                            <i class="fa fa-plus-circle" @click="add_nowNum"></i>
+                                            <i class="fa fa-minus-circle" @click="minus_nowNum"></i>
+                                        </div>
                                     </div>
-                                    <label class="col-sm-2 control-label">款项科目</label>
-                                    <div class="col-sm-3">
-                                        <SelectSubject @choose="getSubject1" :current="money[0].subject_id"></SelectSubject>
+                                    <div class="form-group" v-show="now_num>=2">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" v-model="money[1].money_name">
+                                                <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-3">
+                                            <SelectSubject @choose="getSubject2" :current="money[1].subject_id"></SelectSubject>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-2 icons">
-                                        <i class="fa fa-plus-circle" @click="add_nowNum"></i>
-                                        <i class="fa fa-minus-circle" @click="minus_nowNum"></i>
+                                    <div class="form-group" v-show="now_num>=3">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" v-model="money[2].money_name">
+                                                <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-3">
+                                            <SelectSubject @choose="getSubject3" :current="money[2].subject_id"></SelectSubject>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-show="now_num>=4">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" v-model="money[3].money_name">
+                                                <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-3">
+                                            <SelectSubject @choose="getSubject4" :current="money[3].subject_id"></SelectSubject>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-show="now_num>=5">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" v-model="money[4].money_name">
+                                                <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-3">
+                                            <SelectSubject @choose="getSubject5" :current="money[4].subject_id"></SelectSubject>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-show="now_num>=6">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" v-model="money[5].money_name">
+                                                <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-3">
+                                            <SelectSubject @choose="getSubject6" :current="money[5].subject_id"></SelectSubject>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group" v-show="now_num>=2">
-                                    <label class="col-sm-2 control-label">款项名称</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" v-model="money[1].money_name">
-                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">款项科目</label>
-                                    <div class="col-sm-3">
-                                        <SelectSubject @choose="getSubject2" :current="money[1].subject_id"></SelectSubject>
-                                    </div>
-                                </div>
-                                <div class="form-group" v-show="now_num>=3">
-                                    <label class="col-sm-2 control-label">款项名称</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" v-model="money[2].money_name">
-                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">款项科目</label>
-                                    <div class="col-sm-3">
-                                        <SelectSubject @choose="getSubject3" :current="money[2].subject_id"></SelectSubject>
-                                    </div>
-                                </div>
-                                <div class="form-group" v-show="now_num>=4">
-                                    <label class="col-sm-2 control-label">款项名称</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" v-model="money[3].money_name">
-                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">款项科目</label>
-                                    <div class="col-sm-3">
-                                        <SelectSubject @choose="getSubject4" :current="money[3].subject_id"></SelectSubject>
-                                    </div>
-                                </div>
-                                <div class="form-group" v-show="now_num>=5">
-                                    <label class="col-sm-2 control-label">款项名称</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" v-model="money[4].money_name">
-                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">款项科目</label>
-                                    <div class="col-sm-3">
-                                        <SelectSubject @choose="getSubject5" :current="money[4].subject_id"></SelectSubject>
-                                    </div>
-                                </div>
-                                <div class="form-group" v-show="now_num>=6">
-                                    <label class="col-sm-2 control-label">款项名称</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" v-model="money[5].money_name">
-                                            <option :value="value" v-for="(key,value) in money_name">{{key}}</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">款项科目</label>
-                                    <div class="col-sm-3">
-                                        <SelectSubject @choose="getSubject6" :current="money[5].subject_id"></SelectSubject>
+                                <div v-if="from==3">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">款项名称</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" disabled v-model="msg.money_name">
+                                        </div>
+                                        <label class="col-sm-2 control-label">款项科目</label>
+                                        <div class="col-sm-4">
+                                            <SelectSubject @choose="getSubject7" :current="otherSubject"></SelectSubject>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -186,6 +200,8 @@
                     }
                 ],
                 id : '',
+
+                otherSubject : '',
                 formData:{
                     item : {},
                     remark : ''
@@ -228,10 +244,13 @@
 //                        this.money_name = this.dict.money_name_rent;
                     }
 
-//                    console.log(this.money_name);
-                    for (let i in this.money_name){
-                        this.money_name_length++;
+                    if (this.from!=3){
+                        // console.log(this.money_name);
+                        for (let i in this.money_name){
+                            this.money_name_length++;
+                        }
                     }
+
 //                    alert(this.addPayment_id)
 //                    this.getDetails()
                 }
@@ -265,6 +284,9 @@
             },
             getSubject6(val){
                 this.money[5].subject_id = val;
+            },
+            getSubject7(val){
+                this.otherSubject = val;
             },
 
             closeModal(){
@@ -314,6 +336,7 @@
 
                 } else {
                     // 其他
+                    url = 'checkin/extra/'+this.addPayment_id;
                 }
                 this.$http.get(url)
                     .then(
@@ -403,6 +426,37 @@
                                 this.info.state_error = false;
                             }, 2000);
                         }
+                    })
+                } else {
+                    // 其他
+                    let data = {
+                        otherSubject : this.otherSubject,
+                        remark : this.formData.remark
+                    };
+                    console.log(data)
+                    this.$http.post('checkin/extra/generate/'+this.addPayment_id,data).then((res) =>{
+                        console.log(res);
+                        /*if (res.data.code==18110){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.closeModal();
+                            this.$emit('success');
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }*/
                     })
                 }
 
