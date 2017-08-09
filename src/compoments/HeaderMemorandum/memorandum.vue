@@ -179,7 +179,7 @@
                     content: this.contents,
                     colour: this.isShow,
                 }).then((res) => {
-                    if (res.data.code === '30022') {
+                    if (res.data.code === '30030') {
                         $('#remindDaily').modal('hide');
                         //成功信息 ***
                         this.info.success = res.data.msg;
@@ -194,7 +194,8 @@
                             content: this.contents,
                             color: this.colour[this.isShow],
                             color_id: this.isShow,
-                        });
+                            id: res.data.data,
+                        }, true);
 
                     } else {
                         //失败信息 ***
@@ -311,9 +312,6 @@
                     pickerPosition: 'bottom-right',
                     clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '选择日期') {
-                        this.Times = ev.target.value;
-                    }
                     if (ev.target.placeholder === '开始时间') {
                         this.start_time = ev.target.value;
                     }
@@ -372,6 +370,7 @@
                     },
 
                     eventClick (calEvent, jsEvent, view) {
+                        console.log(calEvent);
                         _this.revise_info = calEvent;
                         _this.mem_status = false;
                         _this.mem_id = calEvent.id;
