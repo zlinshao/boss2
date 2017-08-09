@@ -76,9 +76,9 @@
                             <i class="fa fa-arrow-up"  v-if="top == 1" @click="stick"> 置顶</i>
                             <i class="fa fa-times-circle"  v-if="top == 2" @click="stick"> 取消置顶</i>&nbsp;
                         </li>
-                        <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1" >
-                            <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
-                        </li>
+                        <!--<li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1" >-->
+                            <!--<i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;-->
+                        <!--</li>-->
                         <li  class="operate" v-if="contractSeleted.length ===1">
                             <!--<i class="fa fa-eye"> 查看回访记录</i>&nbsp;-->
                             <router-link tag="i" class="fa fa-eye" :to="{path:'/contractDetail',
@@ -113,7 +113,7 @@
                         <th class="text-center">过期情况</th>
                         <th class="text-center">回访情况</th>
                         <th class="text-center">审核状态</th>
-                        <th class="text-center">锁定</th>
+                        <!--<th class="text-center">锁定</th>-->
                         <th class="text-center">置顶</th>
                         <th class="text-center">详情</th>
                     </tr>
@@ -145,10 +145,10 @@
                                 {{dictionary.passed[item.passed]}}
                             </span>
                         </td>
-                        <td class=" myIcon">
-                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
-                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
-                        </td>
+                        <!--<td class=" myIcon">-->
+                            <!--<i class="fa fa-lock" v-if="item.status !== 1" ></i>-->
+                            <!--<i class="fa fa-unlock" v-if="item.status === 1" ></i>-->
+                        <!--</td>-->
                         <td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
