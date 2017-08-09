@@ -397,38 +397,6 @@
                                     <span>科目管理</span>
                                 </router-link>
                             </li>
-                            <!--<li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>科目管理</span>
-                                </a>
-                                <ul class="sub">
-                                    <li>
-                                        <router-link to="/subject">科目</router-link>
-                                    </li>
-                                    <li>
-                                        <router-link to="/classify">归类</router-link>
-                                    </li>
-                                </ul>
-                            </li>-->
-                            <!--<li>
-                                <router-link to="/jurisdiction">
-                                    <span>权限管理</span>
-                                </router-link>
-                            </li>-->
-                            <!--<li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>收支流水</span>
-                                </a>
-                                <ul class="sub">
-                                    <li>
-                                        <router-link to="/collectFlow">应收</router-link>
-                                    </li>
-                                    <li>
-                                        <router-link to="/payFlow">应付</router-link>
-                                    </li>
-                                </ul>
-                            </li>-->
-
                             <li :class="{'active': isActive == 26}" @click='pitch_on(26)'>
                                 <router-link to="/payPayment">
                                     <span>应付款项</span>
@@ -455,6 +423,37 @@
                                     <span>待处理项</span>
                                 </router-link>
                             </li>
+                            <!--<li class="sub-menu">
+                               <a href="javascript:;">
+                                   <span>科目管理</span>
+                               </a>
+                               <ul class="sub">
+                                   <li>
+                                       <router-link to="/subject">科目</router-link>
+                                   </li>
+                                   <li>
+                                       <router-link to="/classify">归类</router-link>
+                                   </li>
+                               </ul>
+                           </li>-->
+                            <!--<li>
+                                <router-link to="/jurisdiction">
+                                    <span>权限管理</span>
+                                </router-link>
+                            </li>-->
+                            <!--<li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>收支流水</span>
+                                </a>
+                                <ul class="sub">
+                                    <li>
+                                        <router-link to="/collectFlow">应收</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/payFlow">应付</router-link>
+                                    </li>
+                                </ul>
+                            </li>-->
                             <!--<li>
                                 <router-link to="/generalOperation">
                                     <span>总账操作</span>

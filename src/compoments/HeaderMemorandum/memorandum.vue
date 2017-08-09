@@ -270,9 +270,8 @@
                     if (res.data.code === '30020') {
                         this.colour = res.data.data.color;
                         let mem = res.data.data.data;
-                        let even = res.data.data.data;
                         let color = res.data.data.color;
-                        this.list_info(mem, even, color);
+                        this.list_info(mem, color);
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
@@ -322,19 +321,19 @@
             },
 
 //            列表数据
-            list_info (mem, even, color){
+            list_info (mem, color){
                 let _this = this;
                 let memorandum = [];
                 for (let i = 0; i < mem.length; i++) {
                     memorandum.push(
                         {
-                            id: even[i].memo_id,
-                            title: even[i].title,
-                            start: even[i].start,
-                            end: even[i].end,
-                            content: even[i].content,
-                            color: color[even[i].color],
-                            color_id: even[i].color,
+                            id: mem[i].memo_id,
+                            title: mem[i].title,
+                            start: mem[i].start,
+                            end: mem[i].end,
+                            content: mem[i].content,
+                            color: color[mem[i].color],
+                            color_id: mem[i].color,
                         }
                     )
                 }
@@ -370,7 +369,6 @@
                     },
 
                     eventClick (calEvent, jsEvent, view) {
-                        console.log(calEvent);
                         _this.revise_info = calEvent;
                         _this.mem_status = false;
                         _this.mem_id = calEvent.id;
