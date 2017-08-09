@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade selectClient" id="selectPayClient">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade selectClient " id="selectPayClient">
+            <div class="modal-dialog " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -33,10 +33,13 @@
                                 <tr class="lightGray"  v-if="clien_staff === '1'">
                                     <th></th>
                                     <th>客户名称</th>
-                                    <th>尊称</th>
+                                    <th>身份</th>
                                     <th>房屋地址</th>
-                                    <th>合同编号</th>
-                                    <th>签约人</th>
+                                    <th>账户</th>
+                                    <th>账号</th>
+                                    <!--<th>月单价</th>-->
+                                    <!--<th>付款方式</th>-->
+                                    <th>开单人</th>
                                 </tr>
                                 <tr class="lightGray"  v-if="clien_staff === '2'">
                                     <th></th>
@@ -52,44 +55,13 @@
                                         <input type="radio" name="radio">
                                     </td>
                                     <td>{{item.name}}</td>
-                                    <td v-if="item.sex === 1">先生</td>
-                                    <td v-if="item.sex === 2">女士</td>
-                                    <td v-if="item.type !== 2 && item.address_s !== null ||undefined || '' ">
-                                        {{item.address_s}}
-                                    </td>
-                                    <td v-if="item.type !== 2 && item.address_s === null ||undefined || '' ">
-                                        {{item.address_z}}
-                                    </td>
-                                    <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
-                                        {{item.address_z}}
-                                    </td>
-                                    <td v-if="item.type === 2 && item.address_z === null ||undefined || '' ">
-                                        {{item.address_s}}
-                                    </td>
-                                    <td v-if="item.type !== 2 && item.address_s !== null ||undefined || '' ">
-                                        {{item.contract_num_s}}
-                                    </td>
-                                    <td v-if="item.type !== 2 && item.address_s === null ||undefined || '' ">
-                                        {{item.contract_num_z}}
-                                    </td>
-                                    <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
-                                        {{item.contract_num_z}}
-                                    </td>
-                                    <td v-if="item.type === 2 && item.address_z === null ||undefined || '' ">
-                                        {{item.contract_num_s}}
-                                    </td>
-                                    <td v-if="item.type !== 2 && item.address_s !== null ||undefined || '' ">
-                                        {{item.staff_s}}
-                                    </td>
-                                    <td v-if="item.type !== 2 && item.address_s === null ||undefined || '' ">
-                                        {{item.staff_z}}
-                                    </td>
-                                    <td v-if="item.type === 2 && item.address_z !== null ||undefined || '' ">
-                                        {{item.staff_z}}
-                                    </td>
-                                    <td v-if="item.type === 2 && item.address_z === null ||undefined || '' ">
-                                        {{item.staff_s}}
-                                    </td>
+                                    <td>{{dictionary.customer.identity[item.identity]}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>{{item.payee}}</td>
+                                    <td>{{item.account}}</td>
+                                    <td>{{item.price}}</td>
+                                    <td>{{dictionary.payment[item.pay_type]}}</td>
+                                    <td>{{item.real_name}}</td>
                                 </tr>
                                 <tr v-if="isShow">
                                     <td colspan="10" class="text-center text-muted">
@@ -151,6 +123,7 @@
                     //失败信息 ***
                     error: ''
                 },
+                dictionary : [],
             }
         },
         watch : {
@@ -164,16 +137,25 @@
             }
 
         },
+        mounted(){
+            this.getDictionary();
+        },
         methods : {
+            getDictionary(){
+                this.$http.get('revenue/customer/dict').then((res) =>{
+                    this.dictionary = res.data;
+                    console.log(this.dictionary)
+                })
+            },
             search(){
-                console.log()
                 if(this.clien_staff === '1'){
-                    this.$http.post('index/customerInfo/index  ',
-                            {name:this.keywords,
+                    this.$http.post('revenue/customer/customer',
+                            {
+                                keywords:this.keywords,
                             }
                         ).then((res) => {
-                        if(res.data.code === '60010'){
-                            this.customerList=res.data.data;
+                        if(res.data.code === '20020'){
+                            this.customerList=res.data.data.data;
                             this.isShow = false;
                         }else {
                             this.customerList=[];

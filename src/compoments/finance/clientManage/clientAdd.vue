@@ -122,7 +122,7 @@
             </div>
         </div>
         <organize :configure="configure" @Staff=getValue></organize>
-        <Client @clientPayAdd = getPayClient></Client>
+        <Client @clientAdd = getClient></Client>
         <House @House = getHouse></House>
         <Status :state='info'></Status>
     </div>
@@ -130,7 +130,7 @@
 
 <script>
     import organize from '../../common/organization/selectStaff.vue'
-    import Client from  '../../common/selectPayClient.vue'
+    import Client from  '../../common/selectClient.vue'
     import House from '../../common/selectHouse.vue'
     import Status from '../../common/status.vue'
     export default{
@@ -213,9 +213,10 @@
                 this.clientAdd.address =val.address;
             },
             selectPayClient(){      //选择客户
-                $('#selectPayClient').modal('show');
+                $('#selectClient').modal('show');
             },
-            getPayClient(val){
+            getClient(val){
+                console.log(val)
                 this.clientAdd.name = val.name;
                 this.clientAdd.identity = val.identity;
             },

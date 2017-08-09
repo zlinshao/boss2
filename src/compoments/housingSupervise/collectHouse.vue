@@ -155,7 +155,7 @@
                             <td class="text-center">{{item.reference}}</td>
                             <td class="text-center"> 0
                             </td>
-                            <td class="text-center">{{dictionary.villa_status[item.status]}}</td>
+                            <td class="text-center">{{item.status_villa}}</td>
                             <td class="text-center">{{item.belong}}</td>
                             <td class="text-center">
                                 <span v-if="item.department !== null || undefined">{{item.department.name}}</span>

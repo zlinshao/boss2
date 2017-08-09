@@ -141,8 +141,13 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">用户组</label>
                                         <div class="col-lg-10">
-                                            <label class="checkbox-inline check first" v-for="item in roleList">
-                                                <input type="checkbox" class="pull-left" :value="item.role"
+                                            <label class="checkbox-inline check first" v-for="item in roleList"  v-if="item.module !== 'revenue'">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
+                                                       @click="roles" v-model="checkboxModel"
+                                                > {{item.role}}
+                                            </label>
+                                            <label class="checkbox-inline check first" v-for="item in roleList"  v-if="item.module === 'revenue'">
+                                                <input type="checkbox" class="pull-left" :value="item.id"
                                                        @click="roles" v-model="checkboxModel"
                                                 > {{item.role}}
                                             </label>
@@ -306,12 +311,12 @@
                 this.positionId=this.position_id[0].id;
                 this.role=this.myResult.role;
                 for(let i=0;i<this.role.length;i++){
-                    this.newBox.push(this.role[i].title);
+                    this.newBox.push(this.role[i].role_id);
                 };
                 this.checkboxModel=this.newBox;
                 for (let s in this.checkboxModel) {
                     for (let x in this.oldRoleBox) {
-                        if (this.checkboxModel[s] === this.oldRoleBox[x].role) {
+                        if (this.checkboxModel[s] === this.oldRoleBox[x].id) {
                             this.checkboxModelId.push(this.oldRoleBox[x].id);
                         }
                     }
@@ -418,7 +423,7 @@
                 this.$http.get('manager/user/searchRoles').then((res)=>{
                     this.roleList=res.data.data;
                     for(let i=0;i<this.roleList.length;i++){
-                        this.oldBox.push(this.roleList[i].role);
+                        this.oldBox.push(this.roleList[i].id);
                     }
                     for(let i=0;i<this.roleList.length;i++){
                         this.oldRoleBox.push(this.roleList[i]);
@@ -463,7 +468,7 @@
                 this.checkboxModelId=[]
                 for (let s in this.checkboxModel) {
                     for (let x in this.oldRoleBox) {
-                        if (this.checkboxModel[s] === this.oldRoleBox[x].role) {
+                        if (this.checkboxModel[s] === this.oldRoleBox[x].id) {
                             this.checkboxModelId.push(this.oldRoleBox[x].id);
                         }
                     }
