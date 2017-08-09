@@ -563,19 +563,19 @@
                             <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
                                 <router-link to='/user'>用户管理</router-link>
                             </li>
-                            <li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>订单迁移</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 22}" @click='pitch_on(22)'>
-                                        <router-link to='/orderManage'>收房</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 23}" @click='pitch_on(23)'>
-                                        <router-link to="/rentingOrder">租房</router-link>
-                                    </li>
-                                </ul>
-                            </li>
+                            <!--<li class="sub-menu">-->
+                                <!--<a href="javascript:;">-->
+                                    <!--<span>订单迁移</span>-->
+                                <!--</a>-->
+                                <!--<ul class="sub">-->
+                                    <!--<li :class="{'active': isActive == 22}" @click='pitch_on(22)'>-->
+                                        <!--<router-link to='/orderManage'>收房</router-link>-->
+                                    <!--</li>-->
+                                    <!--<li :class="{'active': isActive == 23}" @click='pitch_on(23)'>-->
+                                        <!--<router-link to="/rentingOrder">租房</router-link>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
                             <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
                                 <router-link to='/role'>角色管理</router-link>
                             </li>
