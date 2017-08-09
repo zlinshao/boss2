@@ -97,9 +97,9 @@
                             <td>{{a}}</td>
                             <td>{{a}}</td>
                             <td>
-                                <label class="label label-default">未提交</label>
-                                <label class="label label-warning">待审核</label>
-                                <label class="label label-success">已通过</label>
+                                <label class="label label-default" v-if="reportStatus">未提交</label>
+                                <label class="label label-warning" v-if="reportStatus">待审核</label>
+                                <label class="label label-success" v-if="reportStatus">已通过</label>
                             </td>
                             <td>
                                 <router-link :to="{path:'/reportedOtherDetail',query: {collectId: 1}}">详情</router-link>
@@ -134,6 +134,7 @@
         components: {DatePicker, STAFF, Page, Status},
         data(){
             return {
+                reportStatus: true,
                 operId: '',
                 beforePage: 1,
 
@@ -196,6 +197,7 @@
             },
 
             filter(val){
+                console.log(val);
                 this.beforePage = val;
                 // 筛选
                 /*this.$http.get('checkin/collect?page='+val,{

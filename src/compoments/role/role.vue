@@ -126,7 +126,7 @@
         watch: {//深度 watcher
             'checkboxModel': {
                 handler: function (val, oldVal) {
-                    if (this.checkboxModel.length === this.myData.length) {
+                    if  (this.checkboxModel.length === this.myData.length) {
                         this.checked = true;
                     } else {
                         this.checked = false;
