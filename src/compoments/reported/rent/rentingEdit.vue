@@ -673,7 +673,7 @@
                             this.formData.medi_account_owner = val.medi_account_owner;
                             this.formData.medi_account_bank = val.medi_account_bank;
                             this.formData.medi_account_subbank = val.medi_account_subbank;
-                            this.formData.medi_alipay_owner = val.medi_alipay_owner;
+//                            this.formData.medi_alipay_owner = val.medi_alipay_owner;
                             this.formData.medi_account_num = val.medi_account_num;
                             this.formData.cost_deposit = val.cost_deposit;
 
@@ -776,6 +776,10 @@
                 this.formData.cost_medi = '';
                 this.formData.medi_account_type = 1;
                 this.formData.medi_account_num = '';
+                this.formData.medi_account_owner = '';
+                this.formData.medi_account_bank = 1;
+                this.formData.medi_account_subbank = 1;
+//                this.formData.medi_alipay_owner = 1;
                 this.formData.cost_deposit = '';
                 this.formData.payment = [];
                 this.formData.deal_time = '';

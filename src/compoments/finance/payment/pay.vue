@@ -88,7 +88,7 @@
                             <th></th>
                             <th class="text-center">付款时间</th>
                             <th class="text-center">客户姓名</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center">详细信息</th>
                             <!--<th class="text-center">签约人</th>-->
                             <!--<th class="text-center">房屋地址</th>-->
                             <!--<th class="text-center">付款方式</th>-->
