@@ -363,29 +363,33 @@
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋地址：</span>
-                                                <span class="col-lg-8">{{item.villa_id.detailed_address}}</span>
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
+                                                    {{item.villa_id.detailed_address}}
+                                                </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房型：</span>
-                                                <span class="col-lg-8">
-                                                    {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
+                                                    <span v-if="item.villa_id.rooms !== null || undefined">
+                                                        {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
+                                                    </span>
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">面积：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     {{item.villa_id.area}}㎡
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋类型：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     {{dictionary.house_type[item.villa_id.house_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">配套设施：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     <span  v-for="list in item.villa_id.facility">
                                                         {{dictionary.facility[list]}}&nbsp;&nbsp;
                                                     </span>
@@ -393,73 +397,79 @@
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">楼层：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">楼层建筑：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     {{dictionary.floor_type[item.villa_id.floor_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">所属小区：</span>
-                                                <span class="col-lg-8">{{item.villa_id.detailed_address}}</span>
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
+                                                    {{item.villa_id.detailed_address}}
+                                                </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋特色：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     {{dictionary.house_feature[item.villa_id.house_feature]}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">水费卡号：</span>
-                                                <span class="col-lg-8">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
                                                     {{item.villa_id.water_card_num}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">电费卡号：</span>
-                                                <span class="col-lg-8">{{item.villa_id.elec_card_num}}</span>
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
+                                                    {{item.villa_id.elec_card_num}}
+                                                </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">燃气卡号：</span>
-                                                <span class="col-lg-8">{{item.villa_id.gas_card_num}}</span>
+                                                <span class="col-lg-8" v-if="item.villa_id !==null || undefined">
+                                                    {{item.villa_id.gas_card_num}}
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-3">房屋照片</span>
-                                                <span class="col-lg-9">
+                                                <span class="col-lg-9" v-if="item.villa_id !==null || undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.house_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-3">水卡照片</span>
-                                                <span class="col-lg-9" >
+                                                <span class="col-lg-9" v-if="item.villa_id !==null || undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.water_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-3">电卡卡照片</span>
-                                                <span class="col-lg-9" >
+                                                <span class="col-lg-9" v-if="item.villa_id !==null || undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-3">燃气卡照片</span>
-                                                <span class="col-lg-9" >
+                                                <span class="col-lg-9" v-if="item.villa_id !==null || undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-3">产权证照片</span>
-                                                <span class="col-lg-9" >
+                                                <span class="col-lg-9" v-if="item.villa_id !==null || undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.property_pic">
                                                 </span>
