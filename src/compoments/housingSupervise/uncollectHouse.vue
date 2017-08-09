@@ -122,7 +122,7 @@
                                 <input id="cus_id" type="checkbox" class="pull-left" :value="item.id"
                                        :checked="seletedId===item.id" @click="changeIndex($event,item.id)">
                             </td>
-                            <td class="text-center">{{item.amap_json.detailed_address}}</td>
+                            <td class="text-center">{{item.detailed_address}}</td>
                             <td class="text-center">{{dictionary.house_type[item.house_type]}}</td>
                             <td class="text-center">
                                 {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
