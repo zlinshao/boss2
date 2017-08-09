@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right otherAdd" id="otherAdd" tabindex="-1" role="dialog" data-backdrop="static"
+        <div class="modal fade full-width-modal-right otherEdit" id="otherEdit" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -8,38 +8,38 @@
                         <div class="modal-header">
                             <button type="button" class="close" aria-label="Close" @click="closeModal">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">新增其余款项报备</h4>
+                            <h4 class="modal-title">编辑其余款项报备</h4>
                         </div>
-                        <div class="modal-body clearFix"  v-if="msg!=''">
+                        <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">签约人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="msg.staff==undefined?'':msg.staff.real_name">
+                                        <input type="text" class="form-control" disabled v-model="disabledMsg.staff">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="msg.department==undefined?'':msg.department.name">
+                                        <input type="text" class="form-control" disabled v-model="disabledMsg.department">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">负责人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="msg.leader==undefined?'':msg.leader.real_name">
+                                        <input type="text" class="form-control" disabled v-model="disabledMsg.leader">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="msg.customer==undefined?'':msg.customer.name">
+                                        <input type="text" class="form-control" disabled v-model="disabledMsg.customer">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="msg.house==undefined?'':msg.house.detailed_address">
+                                        <input type="text" class="form-control" disabled v-model="disabledMsg.house">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -143,12 +143,11 @@
     import Status from '../../common/status.vue';
 
     export default{
-        props:['from','addOther_id'],
+        props:['id'],
         components: {Status},
         data(){
             return {
                 dict : {},
-                msg : '',
 
                 info: {
                     //成功状态 ***
@@ -159,6 +158,14 @@
                     success: '',
                     //失败信息 ***
                     error: ''
+                },
+
+                disabledMsg : {
+                    staff : '',
+                    department : '',
+                    leader : '',
+                    customer : '',
+                    house : ''
                 },
 
                 formData : {
@@ -182,8 +189,13 @@
             }
         },
         watch:{
-            addOther_id(val){
-                this.getDetails();
+            id(val){
+//                console.log(val);
+//                console.log($('#edit').css('display'))
+                if (val!=0){
+                    this.getOtherDetails();
+                }
+
             }
         },
         mounted(){
@@ -196,6 +208,50 @@
                 )
         },
         methods: {
+            getOtherDetails(){
+                this.$http.get('checkin/extra/'+this.id)
+                    .then(
+                        (res) => {
+                            console.log(res.data.data);
+                            let val = res.data.data;
+
+                            if (val.staff!=null){
+                                this.disabledMsg.staff = val.staff.real_name;
+                            }
+                            if (val.department!=null){
+                                this.disabledMsg.department = val.department.name;
+                            }
+                            if (val.leader!=null){
+                                this.disabledMsg.leader = val.leader.real_name;
+                            }
+                            if (val.customer!=null){
+                                this.disabledMsg.customer = val.customer.name;
+                            }
+                            if (val.house!=null){
+                                this.disabledMsg.house = val.house.detailed_address;
+                            }
+
+                            this.formData.staff_id = val.staff_id;
+                            this.formData.department_id = val.department_id;
+                            this.formData.leader_id = val.leader_id;
+                            this.formData.customer_id = val.customer_id;
+                            this.formData.house_id = val.house_id;
+
+                            this.formData.money_name = val.money_name;
+                            this.formData.money_amount = val.money_amount;
+                            this.formData.money_type = val.money_type;
+
+                            this.formData.account_type = val.account_type;
+                            this.formData.account_owner = val.account_owner;
+                            this.formData.account_subbank = val.account_subbank;
+                            this.formData.account_bank = val.account_bank;
+                            this.formData.account_num = val.account_num;
+                            this.formData.remark = val.remark;
+
+
+                        }
+                    );
+            },
 
             closeModal(){
                 this.msg = '';
@@ -214,10 +270,10 @@
                 this.formData.account_num = '';
                 this.formData.remark = '';
 
-                $('#otherAdd').modal('hide');
-                this.getDetails();
+                $('#otherEdit').modal('hide');
+                this.getOtherDetails();
             },
-            getDetails(){
+            /*getDetails(){
                 this.msg = {};
                 let url;
                 if (this.from==1){
@@ -242,7 +298,7 @@
                             console.log(this.msg);
                         }
                     );
-            },
+            },*/
 
             // 修改客户收款方式
             changeCustomerPayment(){
@@ -267,34 +323,34 @@
                 console.log(this.formData);
                 let url = 'checkin/extra?status='+num;
                 /*if (num==1){
-                    // 保存为草稿
+                 // 保存为草稿
 
-                } else {
-                    // 保存并提交
-                }*/
+                 } else {
+                 // 保存并提交
+                 }*/
                 this.$http.post(url,this.formData)
                     .then((res)=>{
-                    if (res.data.code==18010){
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        }, 2000);
-                        this.closeModal();
-                        this.$emit('success');
-                    } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    }
+                        if (res.data.code==18010){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.closeModal();
+                            this.$emit('success');
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
                     })
             },
 
@@ -307,19 +363,19 @@
             }
 
             /*setOldAccount(){
-                this.formData.payment = this.msg.payment;
-                this.formData.account_owner = this.msg.account_owner;
-                this.formData.account_subbank = this.msg.account_subbank;
-                this.formData.bank = this.msg.bank;
-                this.formData.account = this.msg.account;
-            },
-            setNewAccount(){
-                this.formData.payment = 1;
-                this.formData.account_owner = '';
-                this.formData.account_subbank = '';
-                this.formData.bank = 1;
-                this.formData.account = '';
-            }*/
+             this.formData.payment = this.msg.payment;
+             this.formData.account_owner = this.msg.account_owner;
+             this.formData.account_subbank = this.msg.account_subbank;
+             this.formData.bank = this.msg.bank;
+             this.formData.account = this.msg.account;
+             },
+             setNewAccount(){
+             this.formData.payment = 1;
+             this.formData.account_owner = '';
+             this.formData.account_subbank = '';
+             this.formData.bank = 1;
+             this.formData.account = '';
+             }*/
         }
     }
 </script>

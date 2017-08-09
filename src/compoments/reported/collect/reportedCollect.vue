@@ -155,7 +155,7 @@
         <CteatePayment :from="1" :addPayment_id="addPayment_id" @success="filter"></CteatePayment>
 
         <!--新增其余款项-->
-        <AddOther :from="1" :addOther_id="addOther_id"></AddOther>
+        <AddOther :from="1" :addOther_id="addOther_id" @success="clearOperId"></AddOther>
     </div>
 </template>
 
@@ -393,6 +393,9 @@
             addOther(){
                 this.addOther_id = this.operId;
                 $('#otherAdd').modal('show');
+            },
+            clearOperId(){
+                this.operId = 0;
             }
         }
     }
