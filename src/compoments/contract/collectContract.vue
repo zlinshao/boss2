@@ -98,7 +98,8 @@
                     <thead class="text-center">
                     <tr>
                         <th class="text-center">
-                            <!--<input type="checkbox">-->
+                            <input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
+                            <label for="allCheck"></label>
                         </th>
                         <th class="text-center">标记</th>
                         <th class="text-center">合同编号</th>
@@ -118,8 +119,9 @@
                     </tr>
                     </thead>
                     <tbody class="text-center">
-                    <tr class="text-center" v-for="item in contractSearchList">
-                        <td><input type="checkbox" @click="picked(item,$event)"
+                    <tr class="text-center" v-for="item in contractSearchList" :class="{'selected': contractSeleted.indexOf(item.id)>-1}">
+                        <td>
+                            <input type="checkbox" @click="picked(item,$event)"
                                   v-model="checkboxModel" :value="item.id">
                         </td>
                         <td class=" myIcon">
@@ -230,6 +232,8 @@
                 Waiting : true,
                 checkboxModel : [],
                 staff_id :'',
+                allCheck : '',
+                allId : [],
             }
         },
         watch: {
@@ -263,8 +267,13 @@
                       this.pages = res.data.data.pages;
                       this.isShow = false;
                       this.Waiting = false;
+                      this.allId=[];
+                      for(let j=0;j<this.contractSearchList.length;j++){
+                          this.allId.push(this.contractSearchList[j].id)
+                      }
                   }else {
                       this.contractSearchList = [];
+                      this.allId=[];
                       this.pages = 1;
                       this.isShow = true;
                       this.Waiting = false;
@@ -293,6 +302,7 @@
                         if(res.data.code === '70020'){
                             this.search();
                             this.contractSeleted = [];
+                            this.allCheck=false;
                             this.staff_id = '';
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
@@ -346,6 +356,14 @@
                             this.houseId.splice(i,1)
                         }
                     }
+                }
+            },
+            pickedAll(e){
+                if(e.target.checked===true){
+                    this.contractSeleted=[];
+                    this.contractSeleted=this.allId;
+                }else {
+                    this.contractSeleted=[];
                 }
             },
             stick(){  //top
@@ -495,5 +513,8 @@
         .pro-sort{
             margin-top: 0px;
         }
+    }
+    .selected{
+        background: #fffcd9 !important;
     }
 </style>
