@@ -320,7 +320,7 @@
             },
             refund_real : function () {
                 if(this.pendingSellter.refund_should !== ''){
-                    return this.pendingSellter.refund_should - this.refund_diff
+                    return Number(this.pendingSellter.refund_should) - this.refund_diff
                 }
             }
         },
