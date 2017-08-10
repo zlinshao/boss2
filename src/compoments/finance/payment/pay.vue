@@ -125,10 +125,9 @@
                                 {{item.description}}
                             </td>
                             <td>
-                                <button type="button"
-                                        :class="{'btn':true,'btn-sm':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}
-                                </button>
+                                </label>
                             </td>
                             <td>
                                 <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}">详情</router-link>

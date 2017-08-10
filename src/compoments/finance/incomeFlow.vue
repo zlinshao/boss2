@@ -72,11 +72,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="(item,index) in myData">
+                        <tr class="text-center" v-for="item in myData">
                             <td :class="{'red':item.cate==2,'green':item.cate==1}">
                                 <i class="fa fa-circle"></i>
                             </td>
-                            <td>{{index+1}}</td>
+                            <td>{{item.id}}</td>
                             <td>{{item.update_time}}</td>
                             <td>{{item.customer==undefined?'':item.customer.address}}</td>
                             <td>{{item.subject}}</td>
