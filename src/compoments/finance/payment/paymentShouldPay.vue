@@ -232,6 +232,7 @@
 //            取消
             revise (){
                 $('#payFor').modal('hide');
+                this.cate = '';
                 this.pay_acc = [];
                 this.pay_account = '';        //付款账户
                 this.payable = '';            //实付金额

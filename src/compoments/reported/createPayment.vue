@@ -319,6 +319,7 @@
                 ];
                 this.formData.item = {};
                 this.formData.remark = '';
+                this.otherSubject = '';
 
                 $('#cteatePayment').modal('hide');
                 this.getDetails();
@@ -436,7 +437,7 @@
                     console.log(data)
                     this.$http.post('checkin/extra/generate/'+this.addPayment_id,data).then((res) =>{
                         console.log(res);
-                        /*if (res.data.code==18110){
+                        if (res.data.code==18010){
                             // 成功
                             this.info.success = res.data.msg;
                             //显示失败弹窗 ***
@@ -456,7 +457,7 @@
                             setTimeout(() => {
                                 this.info.state_error = false;
                             }, 2000);
-                        }*/
+                        }
                     })
                 }
 
