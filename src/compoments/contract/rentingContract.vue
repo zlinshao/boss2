@@ -313,6 +313,8 @@
             },
             getPage(val){
                 this.contractSearchInfo.page = val;
+                this.allCheck=false;
+                this.contractSeleted = [];
                 this.searchContract();
             },
             isNewest(val){
