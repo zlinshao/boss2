@@ -132,7 +132,7 @@
                         <div class="row product-list" style="margin-top: 16px;">
                             <div class="col-xs-6 col-sm-3 col-lg-2" v-for="(birth,index) in main_birthday">
                                 <section class="panel" v-show="index < 6">
-                                    <div class="pro-img-box margin10" data-toggle="tooltip" data-placement="bottom"
+                                    <div class="pro-img-box margin10"
                                          :title="birth.position">
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
                                              style="border-radius: 50%;"/>
@@ -140,8 +140,8 @@
                                              style="border-radius: 50%;"/>
                                     </div>
                                     <div class="panel-body text-center padding15">
+                                        <h5>{{birth.position}}</h5>
                                         <h5>{{birth.name}}</h5>
-                                        <h5>{{birth.birthday}}</h5>
                                     </div>
                                 </section>
                             </div>
@@ -377,7 +377,8 @@
 //                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报南京
 //                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
                         this.main_birthday = res.data.data.birthday;                    //寿星
-                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
+                        console.log(res.data.data.birthday);
+//                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
 //                        this.main_message = res.data.data.message;                      //公告
 //                        this.check_inData = res.data.data.uprate;                       //入住率
 //                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
