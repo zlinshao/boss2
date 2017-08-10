@@ -82,7 +82,10 @@
                                 query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录</router-link>
                         </li>
                         <li class="operate" @click="distribution">
-                            <i class="fa fa-sitemap">分配</i>&nbsp;
+                            <i class="fa fa-sitemap">按人员分配</i>&nbsp;
+                        </li>
+                        <li class="operate" @click="distributionDpm">
+                            <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
                     </ul>
                 </div>
@@ -225,6 +228,7 @@
                 waiting : true,
                 checkboxModel : [],
                 staff_id : '',
+                department_id : '',
                 allCheck : '',
                 allId : [],
             }
@@ -286,9 +290,30 @@
                 }else if(this.configureType=== 'distribution'){
                     this.staff_id = val.staff[0].id;
                     this.$http.post('core/move_order/moveorder',
-                        {'type' :'rent',
+                        {   'type' :'rent',
                             'id' : this.contractSeleted,
                             'staff_id' : this.staff_id ,
+                        }).then((res) => {
+                        if(res.data.code === '70020'){
+                            this.search();
+                            this.contractSeleted = [];
+                            this.staff_id = '';
+                            this.allCheck=false;
+                            this.info.success =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error =res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }else if(this.configureType=== 'distributionDpm'){
+                    this.department_id = val.department[0].id;
+                    this.$http.post('core/move_order/moveOrderByDpm',
+                        {'  type' :'rent',
+                            'id' : this.contractSeleted,
+                            'department_id' : this.department_id ,
                         }).then((res) => {
                         if(res.data.code === '70020'){
                             this.search();
@@ -436,6 +461,11 @@
                 $('#selectCustom').modal('show');
                 this.configure={length:1,class:'amount'};
                 this.configureType = 'distribution';
+            },
+            distributionDpm(){
+                $('#selectCustom').modal('show');
+                this.configure={length:1,class:'department',id:[9],name:'市场部'};
+                this.configureType = 'distributionDpm';
             }
         }
     }
