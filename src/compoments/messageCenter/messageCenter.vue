@@ -647,7 +647,7 @@
                         this.New2 = false;
                     }else{
                         this.news2 = [];
-                        this.New2 = true;
+                        this.New2 = true; 
                     }
                 });
                 this.beforePage = val;
