@@ -12,9 +12,9 @@
                     </div>
                     <div class="modal-body inbox-body panel table table-responsive roll">
                         <div class="row">
-                            <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                             <div class="col-lg-4">
                                 <select  class="form-control" v-model="media_person">
+                                    <option value="">客户名称</option>
                                     <option :value="key" v-model="clientName" v-for="(value,key) in person_medium">{{value}}</option>
                                 </select>
                             </div>
@@ -23,8 +23,9 @@
                                 <input type="text" class="form-control" placeholder="请输入客户名" v-model="keywords"
                                      @keydown.enter.prevent="search"  >
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                                 <a class="btn btn-success" @click="search">搜索</a>
+                                <a class="btn btn-success" @click="newAddClient">新增</a>
                             </div>
                         </div>
                         <table class="table table-striped table-advance table-hover">
@@ -73,13 +74,16 @@
             </div>
         </div>
         <Status :state='info'></Status>
+        <AddClient @AddCustom = getAddClient></AddClient>
     </div>
 </template>
 <script>
     import Status from './status.vue'
+    import AddClient from  './addClient.vue'
     export default{
         components:{
-            Status
+            Status,
+            AddClient
         },
         data(){
             return {
@@ -146,6 +150,14 @@
                     this.media_person = '1';
                 }
 
+            },
+            newAddClient(){
+//                $('.selectClient').modal('hide');
+                $('.addClient').modal('show');
+            },
+            getAddClient(val){
+                this.selectClients=val;
+                console.log(this.selectClients)
             }
         }
     }
