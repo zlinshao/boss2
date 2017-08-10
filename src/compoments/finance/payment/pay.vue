@@ -190,10 +190,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">支出科目<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" v-model="subject">
-                                        <option value="">--请选择--</option>
+                                    <!--<select class="form-control" v-model="subject">
+                                        <option value="">&#45;&#45;请选择&#45;&#45;</option>
                                         <option v-for="(sub,index) in select_info.account_subject" :value="index">{{sub}}</option>
-                                    </select>
+                                    </select>-->
+                                    <SelectSubject @choose="getSubject" :current="subject"></SelectSubject>
                                 </div>
                             </div>
 
@@ -274,11 +275,12 @@
 
     import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectPayClient.vue'
+    import SelectSubject from '../../common/selectSubject.vue'
 
     import ShouldPay from './paymentShouldPay.vue'
 
     export default{
-        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay},
+        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay,SelectSubject},
 
         data(){
             return {
@@ -564,6 +566,9 @@
                 /*this.$http.post('account/payable',this.formData)
                  .then()*/
             },
+            getSubject(val){
+                this.subject = val;
+            }
         }
     }
 </script>

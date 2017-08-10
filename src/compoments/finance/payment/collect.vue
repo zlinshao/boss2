@@ -164,9 +164,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">收入科目<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" v-model="formData.subject_id">
+                                    <!--<select class="form-control" v-model="formData.subject_id">
+                                        <option value="">&#45;&#45;请选择&#45;&#45;</option>
                                         <option :value="value" v-for="(key,value) in dict.account_subject">{{key}}</option>
-                                    </select>
+                                    </select>-->
+                                    <SelectSubject @choose="getSubject" :current="formData.subject_id"></SelectSubject>
                                 </div>
                             </div>
 
@@ -239,9 +241,10 @@
     import upLoad from '../../common/upload.vue'
     import SelectClient from '../../common/selectPayClient.vue'
     import ShouldCollect from './paymentShouldCollect.vue'
+    import SelectSubject from '../../common/selectSubject.vue'
 
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect},
+        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect,SelectSubject},
 
         data(){
             return {
@@ -302,7 +305,7 @@
 //                    customer : {},
                     pay_date:'',    // 收款时间
                     description:'',         // 详情
-                    subject_id: 1,           // 科目id
+                    subject_id: '',           // 科目id
                     amount_receivable: '',  // 应收金额
                     remark : ''        // 备注
                 },
@@ -500,7 +503,7 @@
                     (res) =>{
                         if (res.data.code==18510){
                             // 成功
-                            this.info.success = '新增应收款项成功';
+                            this.info.success = res.data.msg;
                             //显示失败弹窗 ***
                             this.info.state_success = true;
                             //一秒自动关闭失败信息弹窗 ***
@@ -562,6 +565,10 @@
                 this.shouldCollectId = this.operId;
 //                data-toggle="modal" data-target="#collectFor"
                 $('#collectFor').modal('show');
+            },
+
+            getSubject(val){
+                this.formData.subject_id = val;
             }
         }
     }

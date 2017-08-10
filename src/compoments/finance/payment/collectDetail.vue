@@ -17,7 +17,7 @@
                         {{dict.account_should_status[msg.status]}}
                     </span>
                     <div class="pull-right">
-                        <button class="btn btn-primary">转为待处理项</button>
+                        <button v-show="msg.pendable==1" class="btn btn-primary" @click="pendingItem">转为待处理项</button>
                         <button v-show="msg.status != 3" class="btn btn-primary" @click="addCollect">应收入账</button>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                                 <div><span class="text-primary">详情：</span><span>{{msg.description}}</span></div>
                                 <div><span class="text-primary">收款时间：</span>
                                     <span>
-                                        {{msg.pay_date}}
+                                        {{msg.current_pay_date}}
                                         <a data-toggle="modal" data-target="#moreTime">更多</a>
                                     </span>
                                 </div>
@@ -100,7 +100,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="getDetails"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">编辑收款时间</h4>
                     </div>
                     <div class="modal-body clearFix">
@@ -109,16 +109,16 @@
                                 <label class="col-sm-3 control-label">第{{index+1}}收款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
-                                        <input @click="remindData" placeholder="收款时间" readonly type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index]">
+                                        <input @click="remindData" placeholder="收款时间" readonly type="text" :class="{'form-control' : true,'form_datetime':index<4,'form_datetime2':index>=4}" v-model="moreTime[index].pay_date">
                                     </div>
                                     <div class="col-sm-5">
-                                        <button type="button" class="btn btn-sm btn-success" @click="operTime(index)">确定</button>
+                                        <button type="button" class="btn btn-sm btn-success" @click="operTime(index,item.id)">确定</button>
                                         <button type="button" class="btn btn-sm btn-primary" @click="cancel(index)">取消</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-8" v-else="showOper[index]">
                                     <div class="col-sm-6">
-                                        <span>{{item}}</span>
+                                        <span>{{item.pay_date}}</span>
                                     </div>
                                     <div class="col-sm-5" v-show="msg.status==1">
                                         <span @click="changeShow(index)"><a>编辑</a></span>
@@ -130,93 +130,6 @@
                 </div>
             </div>
         </div>
-
-        <!--编辑-->
-        <!--<div class="modal fade full-width-modal-right" id="edit" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">编辑应付款项</h4>
-                    </div>
-                    <div class="modal-body clearFix">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">付款时间</label>
-                                <div class="col-sm-10">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="付款时间"
-                                           class="form-control form_datetime">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">房屋地址</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectHouse" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">客户姓名</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" data-toggle="modal" data-target="#selectClient" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">签约人</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">支出科目</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control">
-                                        <option value="">押金</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">应付金额</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">累计实付</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">付款人员</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">备注</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control"></textarea>
-                                </div>
-                            </div>
-
-
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default">取消</button>
-                        <button type="button" class="btn btn-primary">修改</button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -256,31 +169,8 @@
 
                 showOper: [],
 
-                times : [
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                ],
-                moreTime : [
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-                    '2017-09-12',
-
-                ],
+                times : [],
+                moreTime : [],
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -312,9 +202,7 @@
                         this.getDetails();
                     }
                 );
-            for (let i = 0 ; i<this.moreTime.length ; i++){
-                this.showOper.push(false);
-            }
+
 //            this.times = this.moreTime;
 //            console.log(this.moreTime)
 //            console.log(this.showOper)
@@ -328,6 +216,19 @@
                         this.msg = res.data.data;
                         if (this.msg.album!=undefined){
                             this.srcs = this.msg.album.receipt_pic;
+                        }
+                        for (let i = 0; i<res.data.data.pay_date.length; i++){
+                            this.moreTime.push(res.data.data.pay_date[i]);
+                        }
+                        for (let i = 0; i<res.data.data.pay_date.length; i++){
+                            this.times.push(res.data.data.pay_date[i]);
+                        }
+//                        this.moreTime = res.data.data.pay_date;
+//                        this.times = res.data.data.pay_date;
+//                        console.log(this.moreTime);
+//                        console.log(this.times);
+                        for (let i = 0 ; i<this.moreTime.length ; i++){
+                            this.showOper.push(false);
                         }
                         this.beforeComplete = this.msg.complete_date;
 //                        console.log(this.msg)
@@ -350,7 +251,12 @@
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '收款时间'){
                         // 编辑中的付款时间
-                        this.moreTime.splice(this.currentIndex,1,ev.target.value);
+                        this.moreTime.splice(this.currentIndex,1,{
+                            id : this.moreTime[this.currentIndex].id,
+                            pay_date : ev.target.value
+                        });
+                        console.log(this.moreTime[this.currentIndex])
+                        console.log(this.times[this.currentIndex])
                     } else if (ev.target.placeholder == '补齐时间'){
                         this.changeComplete = ev.target.value;
                     }
@@ -388,15 +294,42 @@
 //                console.log(this.currentIndex);
 
             },
-            operTime(index){
-                this.currentIndex = -1;
-                this.showOper.splice(index,1,false);
-//                console.log(this.moreTime);
-                this.times.splice(index,1,this.moreTime[index]);
+            operTime(index,id){
+//                console.log(this.moreTime[index]);
+//                console.log(this.times[index]);
+                this.$http.post('account/receivable/scheduler/'+this.moreTime[index].id,{pay_date:this.moreTime[index].pay_date})
+                    .then((res)=>{
+                    console.log(res);
+                    if (res.data.code==18510){
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        }, 2000);
+                        this.currentIndex = -1;
+                        this.showOper.splice(index,1,false);
+                        this.times.splice(index,1,this.moreTime[index]);
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_error = false;
+                        }, 2000);
+                    }
+                    })
+
+
             },
             cancel(index){
                 this.currentIndex = -1;
                 this.showOper.splice(index,1,false);
+                console.log(this.times[index])
                 this.moreTime.splice(index,1,this.times[index]);
 //                console.log(this.moreTime);
             },
@@ -454,6 +387,34 @@
             },
             cancelModify(){
                 this.changeCompleteDate = false;
+            },
+
+
+            // 转为待处理项
+            pendingItem(){
+                this.$http.post('account/pending/receivable/'+this.id)
+                    .then((res)=>{
+                        console.log(res);
+                        if (res.data.code==18810){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.getDetails();
+                        } else {}
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_error = false;
+                        }, 2000);
+                    })
             }
         }
     }
