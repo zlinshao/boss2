@@ -18,8 +18,9 @@
                                 <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords"
                                      @keydown.enter.prevent="search"  >
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                                 <a class="btn btn-success" @click="search">搜索</a>
+                                <a class="btn btn-success" @click="newAddHouse">新增</a>
                             </div>
                         </div>
                         <table class="table table-striped table-advance table-hover">
@@ -60,13 +61,16 @@
             </div>
         </div>
         <Status :state='info'></Status>
+        <AddHouse></AddHouse>
     </div>
 </template>
 <script>
     import Status from './status.vue'
+    import AddHouse from './addHouse.vue'
     export default{
         components:{
-            Status
+            Status,
+            AddHouse
         },
         data(){
             return {
@@ -131,6 +135,10 @@
                     this.keywords='';
                 }
             },
+            newAddHouse(){
+                $('.selectHouse').modal('hide');
+                $('.addHouse').modal('show');
+            }
         }
     }
 </script>
