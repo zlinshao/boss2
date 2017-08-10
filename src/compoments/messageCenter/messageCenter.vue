@@ -124,7 +124,7 @@
                                     <td class="text-center width80">{{sys.message.release_name}}</td>
                                     <td class="text-center width80">{{sys.message.data.category}}</td>
                                     <td class="text-center width180">{{sys.message.data.content}}</td>
-                                    <td class="text-center width80">{{sys.receive_name}}</td>
+                                    <td class="text-center width80">{{sys.message.data.approval_name}}</td>
                                     <td class="text-center width60">
                                         <span v-if="sys.message.data.approval_status > 4 "
                                               class="label label-success">已完成</span>
@@ -456,6 +456,7 @@
             Examine(val){
                 this.paging = '';
                 this.$http.get('core/customer/dict').then((res) => {
+                    console.log(res.data);
                     this.select_list = res.data;
 
                     this.$http.post('message/approval/index/pages/' + val).then((res) => {
