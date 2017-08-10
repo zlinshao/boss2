@@ -1,10 +1,12 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right" id="collectFor" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade full-width-modal-right" id="collectFor" tabindex="-1" aria-hidden="true"
+             data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" @click="clearForm" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" @click="clearForm" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">应收入账</h4>
                     </div>
                     <div class="modal-body clearFix" v-if="msg!=''">
@@ -19,14 +21,16 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly :value="msg.customer==null?'':msg.customer.name">
+                                    <input type="text" class="form-control" readonly
+                                           :value="msg.customer==null?'':msg.customer.name">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <textarea type="text" class="form-control" readonly rows="4" style="margin-bottom: 18px">{{msg.description}}</textarea>
+                                    <textarea type="text" class="form-control" readonly rows="4"
+                                              style="margin-bottom: 18px">{{msg.description}}</textarea>
                                 </div>
                             </div>
 
@@ -60,7 +64,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">实收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" v-model="formData.amount_received" @blur="getBalance">
+                                    <input type="number" min="0" class="form-control" v-model="formData.amount_received"
+                                           @blur="getBalance">
                                 </div>
                             </div>
 
@@ -96,11 +101,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">截图凭证</label>
                                 <div class="col-sm-10">
-                                    <span class="form-control" style="border: none" v-if="srcs==undefined||srcs.length==0">
+                                    <span class="form-control" style="border: none"
+                                          v-if="srcs == undefined">
                                         无
                                     </span>
-                                    <span v-else="msg.album==undefined||msg.album.length==0">
-                                        <img  :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic" @click="showLargePic(index)">
+                                    <span v-else="msg.album !== undefined">
+                                        <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic"
+                                             @click="showLargePic(index)">
                                     </span>
                                 </div>
                             </div>
@@ -130,7 +137,7 @@
     </div>
 </template>
 <style scoped>
-    textarea{
+    textarea {
         max-width: 100%;
         resize: none;
     }
@@ -141,27 +148,27 @@
 
 
     export default{
-        props : ['id'],
-        components: {PicModal,Status},
+        props: ['id'],
+        components: {PicModal, Status},
         data(){
             return {
-                msg : '',
-                currentId : '',
-                largePic : [],
-                srcs : {},
+                msg: {},
+                currentId: '',
+                largePic: [],
+                srcs: {},
 
-                beforeBalance:'',
-                cate : '',
-                logName : '',
-                formData:{
-                    account_id:'',            // 账户id
-                    amount_received:'',      // 收款金额
-                    complete_date : '',     // 补齐时间
-                    remark:''             // 备注
+                beforeBalance: '',
+                cate: '',
+                logName: '',
+                formData: {
+                    account_id: '',            // 账户id
+                    amount_received: '',      // 收款金额
+                    complete_date: '',     // 补齐时间
+                    remark: ''             // 备注
                 },
 
-                accounts:{},
-                info:{
+                accounts: {},
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -177,7 +184,7 @@
         updated (){
             this.remindData();
         },
-        watch : {
+        watch: {
             id(val){
                 this.currentId = val;
                 this.largePic = [];
@@ -197,7 +204,7 @@
             // 获取当前登录人的姓名
             this.$http.get('staff/info')
                 .then(
-                    (res) =>{
+                    (res) => {
 //                        console.log(res.data);
                         this.logName = res.data.name;
                     }
@@ -225,7 +232,7 @@
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '补齐时间'){
+                    if (ev.target.placeholder == '补齐时间') {
                         this.formData.complete_date = ev.target.value;
                     }
 //                    console.log(ev.target.value);
@@ -234,26 +241,27 @@
             },
 
             getDetails(){
-                this.$http.get('account/receivable/'+this.currentId)
-                    .then((res) =>{
+                this.$http.get('account/receivable/' + this.currentId)
+                    .then((res) => {
 //                        console.log(res.data);
                         this.msg = res.data.data;
 //                        console.log(this.msg)
 //                        console.log(this.msg.album)
-                        if (this.msg.album!=undefined){
+
 //                            alert(1)
+                        if (res.data.data.album) {
                             this.srcs = this.msg.album.receipt_pic;
-                            console.log(this.srcs)
-                            this.beforeBalance = this.msg.balance;
                         }
+                        this.beforeBalance = this.msg.balance;
+
                     })
             },
 
             // 查看大图
             showLargePic(num){
                 this.largePic = [{
-                    src : this.srcs,
-                    i : num
+                    src: this.srcs,
+                    i: num
                 }];
 //                alert(this.largePic[0].src[10705].raw)
                 console.log(this.largePic)
@@ -262,7 +270,7 @@
 
 //            根据收款方式获取收款账户
             getAccount(){
-                this.$http.get('account/manage/readbycate/'+this.cate).then((res) =>{
+                this.$http.get('account/manage/readbycate/' + this.cate).then((res) => {
 //                    console.log(res.data);
                     this.accounts = res.data;
                     this.formData.account_id = '';
@@ -271,9 +279,9 @@
 
 //            应收入账
             save(){
-                this.$http.post('account/receivable/receive/'+this.currentId,this.formData)
-                    .then((res) =>{
-                        if (res.data.code==18510){
+                this.$http.post('account/receivable/receive/' + this.currentId, this.formData)
+                    .then((res) => {
+                        if (res.data.code == 18510) {
                             // 成功
                             this.info.success = res.data.msg;
                             //显示失败弹窗 ***
@@ -302,9 +310,9 @@
             getBalance(){
                 console.log(this.formData.amount_received);
                 console.log(this.msg.balance)
-                console.log(this.msg.balance-this.formData.amount_received)
-                if (this.formData.amount_received!=''&&(this.msg.balance-this.formData.amount_received)>=0){
-                    this.msg.balance = this.msg.balance-this.formData.amount_received;
+                console.log(this.msg.balance - this.formData.amount_received)
+                if (this.formData.amount_received != '' && (this.msg.balance - this.formData.amount_received) >= 0) {
+                    this.msg.balance = this.msg.balance - this.formData.amount_received;
                 } else {
                     this.formData.amount_received = '';
                     this.msg.balance = this.beforeBalance;
