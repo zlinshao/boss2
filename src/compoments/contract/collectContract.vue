@@ -144,7 +144,16 @@
                             <span class="label label-success" v-if="item.passed > 4 ">
                                 已完成
                             </span>
-                            <span class="label label-warning" v-if="item.passed < 5">
+                            <span class="label label-primary" v-if="item.passed === 1">
+                                {{dictionary.passed[item.passed]}}
+                            </span>
+                            <span class="label label-default" v-if="item.passed === 2">
+                                {{dictionary.passed[item.passed]}}
+                            </span>
+                            <span class="label label-warning" v-if="item.passed === 3">
+                                {{dictionary.passed[item.passed]}}
+                            </span>
+                            <span class="label label-danger" v-if="item.passed === 4">
                                 {{dictionary.passed[item.passed]}}
                             </span>
                         </td>

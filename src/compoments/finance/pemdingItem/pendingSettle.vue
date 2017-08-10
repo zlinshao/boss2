@@ -6,7 +6,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">结算</h4>
+                            <h4 class="modal-title">生成款项</h4>
                         </div>
                         <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">
@@ -23,7 +23,7 @@
                                     <label class="col-sm-2 control-label">客户姓名</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="customer_name" readonly>
+                                               v-model="customer_name" disabled>
                                     </div>
                                 </div>
 
@@ -31,16 +31,16 @@
                                     <label class="col-sm-2 control-label">房屋地址</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="house_name" readonly >
+                                               v-model="house_name" disabled >
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">合同编号</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly >
-                                    </div>
-                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label">合同编号</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                        <!--<input type="text" class="form-control" readonly >-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">合同开始和结束时间</label>
                                     <div class="col-sm-8" style="padding-bottom: 18px;">
@@ -48,30 +48,100 @@
                                                    :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">水费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.water_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">差额</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.diff_fee">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">电费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.elec_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">燃气费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.gas_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">物业费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.property_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">网络费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control"  v-model="pendingSellter.net_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">转租费用</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.sublet_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">管理费</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.manage_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">物业校验</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.check_fee">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">违约金</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" v-model="pendingSellter.penalty_fee">
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">应退</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" v-model="refund_should">
+                                        <input type="number" class="form-control" v-model="pendingSellter.refund_should">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">实际扣款</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" readonly v-model="refund_diff">
+                                        <input type="number" class="form-control" disabled v-model="refund_diff">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">实际退款</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" readonly v-model="refund_real">
+                                        <input type="number" class="form-control" disabled v-model="refund_real">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算方式</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="account_type">
+                                        <select class="form-control" v-model="pendingSellter.account_type">
                                             <option value="">结算方式</option>
                                             <option :value="key" v-for="(value,key) in myDictionary.payment">{{value}}</option>
                                         </select>
@@ -81,14 +151,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算账户</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly v-model="account_num">
+                                        <input type="text" class="form-control" v-model="pendingSellter.account_num">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">签约人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly v-model="staff_name">
+                                        <input type="text" class="form-control" disabled v-model="staff_name">
                                     </div>
                                 </div>
 
@@ -96,21 +166,27 @@
                                     <label class="col-sm-2 control-label">所属部门</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
-                                               v-model="department_name" readonly>
+                                               v-model="department_name" disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算人</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly v-model="operator_name">
+                                        <input type="text" class="form-control" disabled v-model="operator_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结算时间</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly>
+                                        <input type="text" class="form-control" disabled v-model="settle_date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">科目 <sup>*</sup></label>
+                                    <div class="col-sm-10">
+                                        <SelectSubject @choose="getSubject" :current="pendingSellter.subject_id"></SelectSubject>
                                     </div>
                                 </div>
 
@@ -121,12 +197,14 @@
                                     </div>
                                 </div>
 
+
+
                             </form>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default">取消</button>
-                            <button type="button" class="btn btn-primary" @click="addPending">结算</button>
+                            <button type="button" class="btn btn-primary" @click="receivables">结算</button>
                         </div>
 
                     </div>
@@ -146,9 +224,11 @@
     import House from  '../../common/selectHouse.vue'  //选择房屋
     import Department from  '../../common/organization/selectStaff.vue'
     import Status from '../../common/status.vue'
+
+    import SelectSubject from '../../common/selectSubject.vue'
     export default{
         props:['settleId' , "dictionary" , 'collect_rent'],
-        components: {DatePicker , Client , House , Department , Status},
+        components: {DatePicker , Client , House , Department , Status,SelectSubject},
         data(){
             return {
                 dateConfigure : [
@@ -178,24 +258,36 @@
                     customer_id : '',           //客户id
                     start_date : '',            //开始日期
                     end_date : '',              //结束日期
+                    diff_fee : '',              //差额
+                    water_fee : '',             //水费
+                    elec_fee : '',              //电费
+                    gas_fee : '',               //燃气
+                    property_fee : '',          //物业费
+                    penalty_fee : '',           //违约金
+                    check_fee : '',             //物业校验
+                    sublet_fee : '',            //转租费用
+                    manage_fee : '',            //管理费
+                    net_fee : '',               //网络费
                     operator_id : '',           //经手人i
                     status : '',                //状态
                     remark : '',
+                    refund_should:'',           //应退
+//                    refund_diff: '',            //实际扣款
+//                    refund_real :"",            //实际退款
+                    account_type : '',          //结算方式
+                    account_num : '',           //结算账户
+                    subject_id : '',               // 科目
                 },
-                staff_name : '',
-                myDictionary: [],
-                mySettleId : '',
-                pendingSettleList : [],
-                customer_name : '',
-                department_name : '',
-                house_name:'',
-                operator_name : '',
-                currentDate : [],
-                refund_should:'',
-                refund_diff: '',
-                refund_real :"",
-                account_type : '',
-                account_num : '',
+                staff_name : '',            //员工
+                myDictionary: [],           //字典
+                mySettleId : '',            //id
+                pendingSettleList : [],     //待处理数据
+                customer_name : '',         //客户姓名
+                department_name : '',       //部门名称
+                house_name:'',              //房屋名称
+                operator_name : '',         //结算人
+                settle_date : '',           //结算时间
+                currentDate : [],           //合同开始和结束时间
             }
         },
         created (){
@@ -213,6 +305,25 @@
                 this.pendingSellter.collect_rent = val;
             }
         },
+        computed: {
+            refund_diff: function () {
+                return Number(this.pendingSellter.diff_fee)
+                    +  Number(this.pendingSellter.water_fee)
+                    +  Number(this.pendingSellter.elec_fee)
+                    +  Number(this.pendingSellter.gas_fee)
+                    +  Number(this.pendingSellter.property_fee)
+                    +  Number(this.pendingSellter.penalty_fee)
+                    +  Number(this.pendingSellter.check_fee)
+                    +  Number(this.pendingSellter.sublet_fee)
+                    +  Number(this.pendingSellter.manage_fee)
+                    +  Number(this.pendingSellter.net_fee)
+            },
+            refund_real : function () {
+                if(this.pendingSellter.refund_should !== ''){
+                    return this.pendingSellter.refund_should - this.refund_diff
+                }
+            }
+        },
         methods: {
             Info(){
                 this.$http.get('staff/info').then((res)=>{
@@ -225,8 +336,8 @@
                     if(res.data.code === '18800'){
 //                        this.pendingSettleList = [];
 //                        this.pendingSettleList .push(res.data.data);
-                        console.log(res.data.data)
-                        //****f赋值
+//                        console.log(res.data.data)
+                        //****赋值
                         this.pendingSellter.item_type =res.data.data.item_type;
                         this.pendingSellter.customer_id =res.data.data.customer_id;
                         this.customer_name =res.data.data.customer_name;
@@ -238,15 +349,26 @@
                         this.pendingSellter.end_date =res.data.data.end_date;
                         this.pendingSellter.operator_id =res.data.data.operator_id;
                         this.pendingSellter.status =res.data.data.status;
-                        this.account_type =res.data.data.account_type;
-                        this.account_num =res.data.data.account_num;
-                        this.refund_should =res.data.data.refund_should;
+                        this.pendingSellter.account_type =res.data.data.account_type;
+                        this.pendingSellter.account_num =res.data.data.account_num;
+                        this.pendingSellter.refund_should =res.data.data.refund_should;
                         this.refund_diff =res.data.data.refund_diff;
                         this.refund_real =res.data.data.refund_real;
                         this.operator_name =res.data.data.operator_name;
                         this.currentDate.push(res.data.data.start_date);
                         this.currentDate.push(res.data.data.end_date);
-
+                        this.pendingSellter.diff_fee  = res.data.data.diff_fee                  //差额
+                        this.pendingSellter.water_fee  = res.data.data.water_fee                //水费
+                        this.pendingSellter.elec_fee  = res.data.data.elec_fee                  //电费
+                        this.pendingSellter.gas_fee  = res.data.data.gas_fee                    //燃气
+                        this.pendingSellter.property_fee  = res.data.data.property_fee          //物业费
+                        this.pendingSellter.penalty_fee  = res.data.data.penalty_fee            //违约金
+                        this.pendingSellter.check_fee  = res.data.data.check_fee                //物业校验
+                        this.pendingSellter.sublet_fee  = res.data.data.sublet_fee              //转租费用
+                        this.pendingSellter.manage_fee  = res.data.data.manage_fee              //管理费
+                        this.pendingSellter.net_fee  = res.data.data.net_fee                    //网络费
+                        this.settle_date  = res.data.data.settle_date                           //结算时间
+                        this.pendingSellter.remark  = res.data.data.remark                                     //备注
                     }else {
 
                     }
@@ -276,7 +398,7 @@
 //            getDpm(val){
 //                console.log(val)
 //            },
-            addPending(){
+            receivables(){
                 this.$http.post('account/pending/settle/' + this.mySettleId,this.pendingSellter).then((res) =>{
                     if(res.data.code === '18810'){
                         this.$emit('Settle','yes');
@@ -291,6 +413,11 @@
                     }
 
                 })
+            },
+
+
+            getSubject(val){
+                this.pendingSellter.subject_id = val;
             }
         }
     }
@@ -299,5 +426,8 @@
 <style scoped>
     textarea{
         max-width: 100%;
+    }
+    sup{
+        color: #e8403f;
     }
 </style>

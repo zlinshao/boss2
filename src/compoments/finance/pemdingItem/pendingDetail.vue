@@ -16,8 +16,8 @@
                     {{myDictionary.account_pending_status[account_pending_status]}}
                 </span>
             </div>
-            <div class="pull-right dropdown">
-                <button class="btn btn-primary pull-right">生成应收款项</button>
+            <div class="pull-right dropdown" v-if="account_pending_status !== 2">
+                <button class="btn btn-primary pull-right" @click="receivables">生成应收款项</button>
             </div>
         </div>
 
@@ -34,7 +34,6 @@
                             <div class="col-md-4">
                                 <div><span class="text-primary">客户姓名：</span><span>{{item.customer_name}}</span></div>
                                 <div><span class="text-primary">房屋地址：</span><span>{{item.detailed_address}}</span></div>
-                                <div><span class="text-primary">合同编号：</span><span></span></div>
                                 <div>
                                     <span class="text-primary">事项类型：</span>
                                     <span>{{myDictionary.item_type[item.item_type]}}</span>
@@ -43,21 +42,21 @@
                                 <div><span class="text-primary">合同结束时间：</span><span>{{item.end_date}}</span></div>
                                 <div>
                                     <span class="text-primary">付款方式：</span>
-                                    <span></span>
+                                    <span>{{myDictionary.pay_type[item.pay_type]}}</span>
                                 </div>
                                 <div><span class="text-primary">月单价：</span><span></span></div>
                                 <div><span class="text-primary">往来记录：</span><span></span></div>
                             </div>
                             <div class="col-md-4">
-                                <div><span class="text-primary">水费：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">电费：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">燃气费：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">物业费：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">网络费：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">转租费用：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">管理费：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">物业校验：</span><span>sdfdsf</span></div>
-                                <div><span class="text-primary">违约金：</span><span>sdfdsf</span></div>
+                                <div><span class="text-primary">水费：</span><span>{{item.water_fee}}</span></div>
+                                <div><span class="text-primary">电费：</span><span>{{item.elec_fee}}</span></div>
+                                <div><span class="text-primary">燃气费：</span><span>{{item.gas_fee}}</span></div>
+                                <div><span class="text-primary">物业费：</span><span>{{item.property_fee}}</span></div>
+                                <div><span class="text-primary">网络费：</span><span>{{item.net_fee}}</span></div>
+                                <div><span class="text-primary">转租费用：</span><span>{{item.sublet_fee}}</span></div>
+                                <div><span class="text-primary">管理费：</span><span>{{item.manage_fee}}</span></div>
+                                <div><span class="text-primary">物业校验：</span><span>{{item.check_fee}}</span></div>
+                                <div><span class="text-primary">违约金：</span><span>{{item.penalty_fee}}</span></div>
                             </div>
                             <div class="col-md-4">
                                 <div><span class="text-primary">应退：</span><span>{{item.refund_should}}</span></div>
@@ -86,14 +85,18 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
+        <settleModal :settleId = 'rentingId' :dictionary = 'myDictionary'
+                     :collect_rent = 'collect_rent' @Settle="hasSettle"></settleModal>
+
     </div>
 </template>
 
 <script>
     import Status from '../../common/status.vue';
+    import settleModal from './pendingSettle.vue'
 
     export default{
-        components: {Status},
+        components: {Status , settleModal},
         data(){
             return {
                 myRentingId : '',
@@ -110,6 +113,8 @@
                     error: ''
                 },
                 account_pending_status : '',
+                collect_rent : '',
+                rentingId : '',
             }
         },
         mounted(){
@@ -128,8 +133,8 @@
                 this.$http.get('account/pending/' + this.myRentingId).then((res) =>{
                     if(res.data.code === '18800'){
                         this.account_pending_status = res.data.data.status;
+                        this.collect_rent = res.data.data.collect_rent;
                         this.pendingDetailList .push(res.data.data);
-                        console.log(this.pendingDetailList)
                     }else {
                         this.pendingDetailList = [];
                         this.info.error =res.data.msg;
@@ -138,7 +143,12 @@
                     }
 
                 })
-            }
+            },
+            receivables(){
+                this.rentingId = this.myRentingId;
+                $('#pendingSettle').modal('show');
+            },
+            hasSettle(){this.getRentingDetail();},
         }
     }
 </script>
