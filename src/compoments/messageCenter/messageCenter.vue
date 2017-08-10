@@ -35,6 +35,16 @@
                                     <i class=" fa fa-github"></i>BOSS小秘书
                                 </a>
                             </li>
+                            <li @click="new1(1)"><!--:class="{active: act === 'secre_mess'}"-->
+                                <a href="#">
+                                    <i class=" fa fa-male"></i>个人发件箱
+                                </a>
+                            </li>
+                            <li @click="new2(1)"><!--:class="{active: act === 'secre_mess'}"-->
+                                <a href="#">
+                                    <i class=" fa fa-users"></i>部门发件箱
+                                </a>
+                            </li>
                             <li @click="Message(1)">
                                 <a href="#">
                                     <i class=" fa fa-heart"></i>收藏
@@ -228,6 +238,58 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <!--个人发件箱-->
+                            <table class="table table-striped table-advance table-hover" v-if="isNew1">
+                                <thead class="text-center">
+                                <tr>
+                                    <th class="text-center">发件时间</th>
+                                    <th class="text-center">收件人</th>
+                                    <th class="text-center">类别</th>
+                                    <th class="text-center">内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="unread" v-for="sys in news1">
+                                    <td class="text-center width180">{{sys.create_time}}</td>
+                                    <td class="text-center width80">{{sys.receive_name}}</td>
+                                    <td class="text-center width90">{{sys.data.category}}</td>
+                                    <td class="text-center">{{sys.data.content}}</td>
+                                </tr>
+                                <tr v-show="New1">
+                                    <td colspan="4" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--部门发件箱-->
+                            <table class="table table-striped table-advance table-hover" v-if="isNew2">
+                                <thead class="text-center">
+                                <tr>
+                                    <th class="text-center">发件时间</th>
+                                    <th class="text-center">发件人</th>
+                                    <th class="text-center">收件人</th>
+                                    <th class="text-center">职位</th>
+                                    <th class="text-center">类别</th>
+                                    <th class="text-center">内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="unread" v-for="sys in news2">
+                                    <td class="text-center width180">{{sys.create_time}}</td>
+                                    <td class="text-center width80">({{sys.department_name}}){{sys.send_name}}</td>
+                                    <td class="text-center width80">{{sys.receive_name}}</td>
+                                    <td class="text-center width90">{{sys.position_name}}</td>
+                                    <td class="text-center width90">{{sys.data.category}}</td>
+                                    <td class="text-center">{{sys.data.content}}</td>
+                                </tr>
+                                <tr v-show="New2">
+                                    <td colspan="6" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                             <!--收藏-->
                             <table class="table table-striped table-advance table-hover" v-if="isMessage">
                                 <thead class="text-center">
@@ -321,6 +383,8 @@
                 Examines: [],               //审批提醒
                 Substitutes: [],            //代办提醒
                 Secretarys: [],             //BOSS小秘书
+                news1: [],                  //新增1
+                news2: [],                  //新增2
                 Messages: [],               //收藏
 
                 isSystem: true,             //系统公告
@@ -333,6 +397,10 @@
                 Secretarys_s: false,        //BOSS小秘书暂无数据
                 isMessage: false,           //收藏
                 Messages_s: false,          //收藏暂无数据
+                isNew1: false,              //新增1
+                New1: false,                //新增1暂无数据
+                isNew2: false,              //新增2
+                New2: false,                //新增2暂无数据
                 message: '',
                 fa: 'fa',
                 font: '',
@@ -401,6 +469,14 @@
                     this.Secretary(val);
                 }
 
+                if (this.isNew1 === true) {
+                    this.new1(val);
+                }
+
+                if (this.isNew2 === true) {
+                    this.new2(val);
+                }
+
                 if (this.isMessage === true) {
                     if (this.Messages.length === 1) {
                         this.Message(val - 1);
@@ -449,6 +525,8 @@
                 this.isSubstitute = false;
                 this.isSecretary = false;
                 this.isMessage = false;
+                this.isNew1 = false;
+                this.isNew2 = false;
                 this.message = '系统公告';
                 this.font = 'fa-volume-up';
             },
@@ -476,6 +554,8 @@
                     this.isSubstitute = false;
                     this.isSecretary = false;
                     this.isMessage = false;
+                    this.isNew1 = false;
+                    this.isNew2 = false;
                     this.message = '审批提醒';
                     this.font = 'fa-user';
 //
@@ -500,6 +580,8 @@
                 this.isSubstitute = true;
                 this.isSecretary = false;
                 this.isMessage = false;
+                this.isNew1 = false;
+                this.isNew2 = false;
                 this.message = '待办提醒';
                 this.font = 'fa-bell';
             },
@@ -522,8 +604,62 @@
                 this.isSubstitute = false;
                 this.isSecretary = true;
                 this.isMessage = false;
+                this.isNew1 = false;
+                this.isNew2 = false;
                 this.message = 'BOSS小秘书';
                 this.font = 'fa-github';
+            },
+//            个人发件
+            new1(val){
+                this.paging = '';
+                this.$http.post('message/message/self_message/pages/' + val,{
+                    create_time: '',
+                }).then((res) => {
+                    if(res.data.code === '100070'){
+                        this.news1 = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.New1 = false;
+                    }else{
+                        this.news1 = [];
+                        this.New1 = true;
+                    }
+                });
+                this.beforePage = val;
+                this.isSystem = false;
+                this.isExamine = false;
+                this.isSubstitute = false;
+                this.isSecretary = false;
+                this.isMessage = false;
+                this.isNew1 = true;
+                this.isNew2 = false;
+                this.message = '个人发件箱';
+                this.font = 'fa-male';
+            },
+//            部门发件
+            new2(val){
+                this.paging = '';
+                this.$http.post('message/message/department_message/pages/' + val,{
+                    create_time: '',
+                }).then((res) => {
+                    if(res.data.code === '100080'){
+                        this.news2 = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.New2 = false;
+                    }else{
+                        this.news2 = [];
+                        this.New2 = true;
+                    }
+                });
+                this.beforePage = val;
+                this.isSystem = false;
+                this.isExamine = false;
+                this.isSubstitute = false;
+                this.isSecretary = false;
+                this.isMessage = false;
+                this.isNew1 = false;
+                this.isNew2 = true;
+                this.message = '部门发件箱';
+                this.font = 'fa-users';
             },
 //            收藏
             Message(val){
@@ -545,6 +681,8 @@
                 this.isSubstitute = false;
                 this.isSecretary = false;
                 this.isMessage = true;
+                this.isNew1 = false;
+                this.isNew2 = false;
                 this.message = '收藏';
                 this.font = 'fa-heart';
             },
@@ -621,7 +759,8 @@
     ul.inbox-nav li {
         line-height: 60px;
     }
-    .label{
+
+    .label {
         display: inline-block;
         width: 78px;
     }

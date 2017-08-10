@@ -337,12 +337,15 @@
                         }
                     )
                 }
+                let d = new Date();
                 $('#calendar').fullCalendar({
+
+                    defaultDate : d,//默认日期
                     buttonText: {
                         today: '今天',
                         month: '月视图',
-                        week: '周视图',
-                        day: '日视图'
+//                        week: '周视图',
+//                        day: '日视图'
                     },
                     allDayText: "全天",
 
@@ -365,7 +368,7 @@
                     header: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
+                        right: 'month'
                     },
 
                     eventClick (calEvent, jsEvent, view) {
