@@ -6,7 +6,7 @@
             <li>公司房源详情</li>
         </ol>
         <!--头部-->
-        <section class="panel">
+        <section class="panel">7
             <div class="panel-body"  v-for="item in houseDetail">
                 <header>
                     <h4 class="row">

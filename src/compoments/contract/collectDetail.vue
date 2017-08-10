@@ -32,7 +32,7 @@
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" @click="passContract" :disabled = " contract_pass===5 && contract_pass===1">
+                <button class="btn btn-primary" @click="passContract" :disabled = " contract_pass===5 || contract_pass===1">
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>

@@ -87,7 +87,7 @@
                             <td class="text-center">{{item.create_time}}</td>
                             <td class="text-center">{{item.staff_id.name}}</td>
                             <td class="text-center">{{item.name}}</td>
-                            <td class="text-center">{{item.address}}</td>
+                            <td class="text-center">{{item.detailed_address}}</td>
                             <td class="text-center">{{item.mobile}}</td>
                             <td class="text-center">{{item.complete_date[0]}}</td>
                             <td class="text-center">{{item.complete_date[2]}}</td>
