@@ -245,11 +245,11 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>年限<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.years}}年
                                                 </span>
                                             </div>
-                                            <div class="infoList" v-if="item.checkin_collect_id !== null && undefined">
+                                            <div class="infoList" v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                 <span>付款方式：</span>
                                                 <span v-for="pay in item.checkin_collect_id.pay_type">
                                                     {{dictionary.pay_type[pay]}}
@@ -257,7 +257,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
                                                         第{{index+1}}期{{price}}元&nbsp;&nbsp;
                                                     </span>
@@ -265,19 +265,19 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>开户行：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{dictionary.bank[item.checkin_collect_id.bank]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>银行卡号：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span v-if="item.checkin_collect_id !== null && undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.cost_medi}}
                                                 </span>
                                             </div>
@@ -397,69 +397,69 @@
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋地址：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.detailed_address}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房型：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
-                                                    <span v-if="item.villa_id.rooms !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
+                                                    <span v-if="item.villa_id.rooms !==null && item.villa_id.rooms !==undefined">
                                                         {{item.villa_id.rooms.rooms}}室{{item.villa_id.rooms.hall}}厅{{item.villa_id.rooms.toilet}}卫
                                                     </span>
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">面积：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.area}}㎡
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋类型：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{dictionary.house_type[item.villa_id.house_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">楼层：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.floor}}/{{item.villa_id.total_floor}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">楼层建筑：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{dictionary.floor_type[item.villa_id.floor_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">所属小区：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.detailed_address}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">房屋特色：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{dictionary.house_feature[item.villa_id.house_feature]}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">水费卡号：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.water_card_num}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">电费卡号：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.elec_card_num}}
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-4">燃气卡号：</span>
-                                                <span class="col-lg-8" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-8" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     {{item.villa_id.gas_card_num}}
                                                 </span>
                                             </div>
@@ -467,35 +467,35 @@
                                         <div class="col-lg-6">
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-2">房屋照片</span>
-                                                <span class="col-lg-10" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-10" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('house_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.house_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-2">水卡照片</span>
-                                                <span class="col-lg-10" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-10" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('water_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.water_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-2">电卡卡照片</span>
-                                                <span class="col-lg-10" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-10" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('elec_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.elec_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-2">燃气卡照片</span>
-                                                <span class="col-lg-10" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-10" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('gas_card_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.gas_card_pic">
                                                 </span>
                                             </div>
                                             <div class="infoList clearFix">
                                                 <span class="col-lg-2">产权证照片</span>
-                                                <span class="col-lg-10" v-if="item.villa_id !==null && undefined">
+                                                <span class="col-lg-10" v-if="item.villa_id !==null && item.villa_id !==undefined">
                                                     <img :src="img.small" @click="showLargeVillaPic('property_pic',index)"
                                                          v-for="(img,index) in item.villa_id.album.property_pic">
                                                 </span>

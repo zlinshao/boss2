@@ -74,6 +74,7 @@
                             <th class="text-center">过期情况</th>
                             <th class="text-center">回访情况</th>
                             <th class="text-center">备忘</th>
+                            <th class="text-center">操作人</th>
                             <th class="text-center">审核状态</th>
                         </tr>
                     </thead>
@@ -94,12 +95,28 @@
                             <td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>
                             <td class="text-center">{{item.content}}</td>
                             <td class="text-center">
+                                <span v-if="item.manager !== null && item.manager !==undefined">
+                                    {{item.manager.name}}
+                                </span>
+                            </td>
+                            <td class="text-center">
                                 <span class="label label-success" v-if="item.passed > 4">已完成</span>
-                                <span class="label label-warning" v-if="item.passed < 5">{{dictionary.passed[item.passed]}}</span>
+                                <span class="label label-primary" v-if="item.passed === 1">
+                                    {{dictionary.passed[item.passed]}}
+                                </span>
+                                    <span class="label label-default" v-if="item.passed === 2">
+                                    {{dictionary.passed[item.passed]}}
+                                </span>
+                                    <span class="label label-warning" v-if="item.passed === 3">
+                                    {{dictionary.passed[item.passed]}}
+                                </span>
+                                    <span class="label label-danger" v-if="item.passed === 4">
+                                    {{dictionary.passed[item.passed]}}
+                                </span>
                             </td>
                         </tr>
                         <tr v-if="isShow">
-                            <td colspan="12" class="text-center text-muted">
+                            <td colspan="13" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
