@@ -327,8 +327,7 @@
         methods: {
             Info(){
                 this.$http.get('staff/info').then((res)=>{
-                    this.pendingSellter.staff_id=res.data.id;
-                    this.staff_name=res.data.name;
+                    this.operator_name=res.data.name;
                 })
             },
             getSettleList(){
@@ -354,7 +353,8 @@
                         this.pendingSellter.refund_should =res.data.data.refund_should;
                         this.refund_diff =res.data.data.refund_diff;
                         this.refund_real =res.data.data.refund_real;
-                        this.operator_name =res.data.data.operator_name;
+                        this.staff_name =res.data.data.staff_name;
+                        this.pendingSellter.staff_id=res.data.data.staff_id;
                         this.currentDate.push(res.data.data.start_date);
                         this.currentDate.push(res.data.data.end_date);
                         this.pendingSellter.diff_fee  = res.data.data.diff_fee                  //差额
