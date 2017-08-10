@@ -324,7 +324,7 @@
 //            }
 //        },
         created (){
-//            this.home_index();
+            this.home_index();
             this.home_system()
         },
         methods: {
@@ -368,27 +368,27 @@
                     });
                 }
             },
-//            home_index (){
-////                字典
-//                this.$http.get('core/customer/dict').then((res) => {
-//                    this.select_list = res.data;
-//
-//                    this.$http.post('home/index/index').then((res) => {
+            home_index (){
+//                字典
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.select_list = res.data;
+
+                    this.$http.post('home/index/index').then((res) => {
 //                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报南京
 //                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
-//                        this.main_birthday = res.data.data.birthday;                    //寿星
-//                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
+                        this.main_birthday = res.data.data.birthday;                    //寿星
+                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
 //                        this.main_message = res.data.data.message;                      //公告
-////                        this.check_inData = res.data.data.uprate;                       //入住率
-////                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
-////                        this.main_customer = res.data.data.customer;                    //客户来源
-//
-////                        this.check();
-////                        this.collect();
-////                        this.customer();
-//                    });
-//                });
-//            },
+//                        this.check_inData = res.data.data.uprate;                       //入住率
+//                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
+//                        this.main_customer = res.data.data.customer;                    //客户来源
+
+//                        this.check();
+//                        this.collect();
+//                        this.customer();
+                    });
+                });
+            },
 //            check (){
 //                let option = {
 //                    tooltip: {
