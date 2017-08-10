@@ -13,12 +13,12 @@
                     <!--</span>-->
                     <!--</div>-->
                     <!--</div>-->
-                    <div class="pro-sort">
+                    <div class="pro-sort" v-show="false">
                         <input type="text" @click="dis_staff"
                                class="form-control" v-model="staff_man"
                                placeholder="请选择员工" readonly>
                     </div>
-                    <div class="pro-sort">
+                    <div class="pro-sort" v-show="false">
                         <input type="text" @click="dis_branch"
                                class="form-control" v-model="department_branch"
                                placeholder="请选择部门" readonly>
