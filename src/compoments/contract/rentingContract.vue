@@ -311,7 +311,7 @@
                 }else if(this.configureType=== 'distributionDpm'){
                     this.department_id = val.department[0].id;
                     this.$http.post('core/move_order/moveOrderByDpm',
-                        {'  type' :'rent',
+                        {   'type' :'rent',
                             'id' : this.contractSeleted,
                             'department_id' : this.department_id ,
                         }).then((res) => {
