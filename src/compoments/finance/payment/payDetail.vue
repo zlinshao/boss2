@@ -295,6 +295,7 @@
 
                     this.$http.get('account/payable/' + val).then((res) => {
                         this.details_info = [];
+                        this.moreTime = [];
                         this.details_info.push(res.data.data);
                         this.status = res.data.data.status;
                         this.address = res.data.data.address;
