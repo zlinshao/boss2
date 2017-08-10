@@ -12,9 +12,12 @@
                     合同编号&emsp;
                     {{contract_num}}
                 </h4>
-                <span class="label label-primary" v-if="contract_pass < 5">{{passDictionary[contract_pass]}}</span>
-                <span class="label label-primary" v-if="contract_pass >=5">已完成</span>
-                <span class="remind" v-if="contract_pass >=5">审核已完成，部分资料已无法查看，请联系组长</span>
+                <span class="label label-success" v-if="contract_pass > 4 ">已完成</span>
+                <span class="label label-primary" v-if="contract_pass === 1">{{dictionary.passed[contract_pass]}}</span>
+                <span class="label label-default" v-if="contract_pass === 2">{{dictionary.passed[contract_pass]}}</span>
+                <span class="label label-warning" v-if="contract_pass === 3">{{dictionary.passed[contract_pass]}}</span>
+                <span class="label label-danger" v-if="contract_pass === 4">{{dictionary.passed[contract_pass]}}</span>
+                <span class="remind" v-if="contract_pass > 4">审核已完成，部分资料已无法查看，请联系组长</span>
             </div>
             <div class="pull-right dropdown" v-for="item in contractList">
                 <!--<span>-->

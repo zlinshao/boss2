@@ -48,7 +48,7 @@
                         <li @click="deletePending">
                             <h5><a><i class="fa fa-times-circle-o"></i>删除</a></h5>
                         </li>
-                        <li  @click="settleAccount">
+                        <li  @click="settleAccount" v-if="account_pending_status !== 2">
                             <h5><a><i class="fa fa-calculator"></i>结算</a></h5>
                         </li>
                     </ul>
@@ -65,7 +65,6 @@
                         <tr>
                             <th></th>
                             <th class="text-center">事项类型</th>
-                            <th class="text-center">合同编号</th>
                             <th class="text-center">开单人</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">客户姓名</th>
@@ -85,7 +84,6 @@
                             <td><input type="checkbox":value="item.id" :checked="operId===item.id"
                                        @click="picked(item,$event)"></td>
                             <td>{{dictionary.item_type[item.item_type]}}</td>
-                            <td>{{}}</td>
                             <td>{{item.staff_name}}</td>
                             <td>{{item.detailed_address}}</td>
                             <td>{{item.customer_name}}</td>
@@ -124,8 +122,8 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <settleModal :settleId = 'operId' :dictionary = 'dictionary'
-                     :collect_rent = 'collect_rent' @Settle="hasSettle"></settleModal>
+        <settleModal :settleId = 'pendingId' :dictionary = 'dictionary'
+                     :collect_rent = 'collectRent' @Settle="hasSettle"></settleModal>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
@@ -143,7 +141,7 @@
         data(){
             return {
                 operId : 0,
-                collect_rent :'',
+                collectRent :'',
                 paging : 1,
                 dictionary : [],
                 pendingList : [],
@@ -174,6 +172,8 @@
                     error: ''
                 },
                 confirmMsg:[],
+                pendingId : '',
+                account_pending_status : '',
             }
         },
         created () {
@@ -213,9 +213,11 @@
             picked(item,e){
                 if(e.target.checked===true){
                     this.operId = item.id;
-                    this.collect_rent = item.collect_rent;
+                    this.account_pending_status = item.status;
+                    this.collectRent = item.collect_rent;
                 }else {
                     this.operId = 0;
+                    this.account_pending_status = '';
                 }
             },
             getPage(val){
@@ -230,6 +232,7 @@
                 this.searchList();
             },
             settleAccount(){
+                this.pendingId = this.operId;
                 $('#pendingSettle').modal('show');
             },
             deletePending(){
