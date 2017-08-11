@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade selectClient" id="selectClient">
+        <div class="modal fade selectClient" id="selectClient" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" @click="closeModal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">选择客户</h4>
@@ -124,23 +124,20 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="clientAdd">确定</button>
                     </div>
                 </div>
             </div>
         </div>
         <Status :state='info'></Status>
-        <!--<AddClient @AddCustom = getAddClient></AddClient>-->
     </div>
 </template>
 <script>
     import Status from './status.vue'
-//    import AddClient from  './addClient.vue'
     export default{
         components:{
             Status,
-//            AddClient
         },
         data(){
             return {
@@ -217,8 +214,6 @@
             },
             newAddClient(){
                 this.isNewAdd = true;
-////                $('.selectClient').modal('hide');
-//                $('.addClient').modal('show');
             },
 
             clientAdd (){
@@ -255,10 +250,10 @@
                 }
 
             },
-//            getAddClient(val){
-//                this.selectClients=val;
-//                console.log(this.selectClients)
-//            }
+            closeModal(){
+                this.isNewAdd = false;
+            },
+
         }
     }
 </script>
