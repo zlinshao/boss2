@@ -94,7 +94,10 @@
                             <td>{{dict.rent_type[item.rent_type]}}</td>
                             <td>{{item.price[0]}}<a v-show="item.price.length>1">变化</a></td>
                             <td>{{item.months}}</td>
-                            <td>押{{item.bet}}付{{item.pay[0]}}<a v-show="item.pay.length>1">变化</a></td>
+                            <td>
+                                押{{item.bet}}付{{item.pay[0]}}
+                                <!--<a v-show="item.pay.length>1">变化</a>-->
+                            </td>
                             <td>{{item.cost_medi}}</td>
                             <td>{{dict.subject[item.received_type]}}</td>
                             <td>{{item.received_amount}}</td>

@@ -104,13 +104,13 @@
                             </td>
                             <td>{{item.house.detailed_address}}</td>
                             <td>
-                                <span v-if="item.price !== null && undefined">
+                                <span v-if="item.price !== null && item.price !== undefined">
                                     {{item.price[0]}}<a v-show="item.price.length>1">变化</a>
                                 </span>
                             </td>
                             <td>{{item.years}}</td>
                             <td>
-                                <span  v-if="item.pay_type !== null && undefined">
+                                <span  v-if="item.pay_type !== null && item.pay_type !== undefined">
                                     {{dict.pay_type[item.pay_type[0]]}}<a v-show="item.pay_type.length>1">变化</a>
                                 </span>
                             </td>
