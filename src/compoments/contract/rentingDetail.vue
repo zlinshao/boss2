@@ -4,6 +4,12 @@
             <li>合同管理</li>
             <router-link to="/rentingContract" tag="li" style="cursor: pointer" class="bread">租房合同</router-link>
             <li class="active">租房合同详情</li>
+
+            <li class="pull-right" >
+                <router-link :to="{path:'/rentingContract',query: {Params:myParams,departmentName:departmentName}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
 
         <div class="title clearFix">
@@ -46,7 +52,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <button class="btn btn-white btn-block" @click="editContract" :disabled = " contract_pass > 2 ">
+                            <button class="btn btn-white btn-block" @click="editContract">
                                 编辑
                             </button>
                         </li>
@@ -694,11 +700,16 @@
                 tabActive:'',
                 houseId:'',
                 waiting : true,
+
+                myParams : [],
+                departmentName:'',
             }
         },
         mounted(){
             this.contractEitId = this.$route.query.ContractId;
             this.tabActive = this.$route.query.flag;
+            this.myParams = this.$route.query.params;
+            this.departmentName = this.$route.query.departmentName;
             this.getDictionary();
         },
 
@@ -1103,5 +1114,10 @@
     }
     .bread:hover{
         color: #59ace2;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

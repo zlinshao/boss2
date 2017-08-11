@@ -3,9 +3,17 @@
         <ol class="breadcrumb">
             <li>财务账本</li>
             <li>
-                <router-link to="/clientManage">客户管理</router-link>
+                <router-link to="/clientManage">
+                    客户管理
+                </router-link>
             </li>
             <li>客户管理详情</li>
+
+            <li class="pull-right" >
+                <router-link :to="{path:'/clientManage',query: {Params:myParams,departmentName:departmentName}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
         <!--头部-->
         <section class="panel">
@@ -154,10 +162,14 @@
                     //失败信息 ***
                     error: ''
                 },
+                myParams : [],
+                departmentName : '',
             }
         },
         mounted(){
             this.myClientId = this.$route.query.clientId;
+            this.myParams = this.$route.query.searchInformation;
+            this.departmentName = this.$route.query.departmentName;
             this.getDictionary();
         },
         methods:{
@@ -268,5 +280,10 @@
     }
     dropdown-menu li:hover{
         background-color: #dedede;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

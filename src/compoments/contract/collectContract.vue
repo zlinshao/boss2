@@ -19,7 +19,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </label>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 5px">
@@ -122,7 +122,7 @@
                     </tr>
                     </thead>
                     <tbody class="text-center">
-                    <tr class="text-center" v-for="item in contractSearchList" :class="{'selected': contractSeleted.indexOf(item.id)>-1}">
+                    <tr class="text-center" v-for="item in params" :class="{'selected': contractSeleted.indexOf(item.id)>-1}">
                         <td>
                             <input type="checkbox" @click="picked(item,$event)"
                                   v-model="checkboxModel" :value="item.id">
@@ -165,7 +165,8 @@
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
                         <td>
-                            <router-link :to="{path:'/contractDetail',query: {ContractId: item.id,flag:'detail'}}">
+                            <router-link :to="{path:'/contractDetail',
+                            query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName }}">
                                 详情
                             </router-link>
                         </td>
@@ -205,8 +206,9 @@
                     range : true, // 是否选择范围
                     needHour : false // 是否需要选择小时
                 }],
+                currentDate : [],
                 departmentName:'',
-                contractSearchList:[],
+                params:[],
                 contractSearchInfo:{
                     passed : '',
                     page : '',
@@ -214,10 +216,10 @@
                     start : '',
                     end:'',
                     keywords : '',
-                    //快到期合同
-                    become_due:false,
                     //最新发布
                     newest : false,
+                    //快到期合同
+                    become_due:false,
                 },
                 dictionary:[],
                 info: {
@@ -246,6 +248,7 @@
                 staff_id :'',
                 allCheck : '',
                 allId : [],
+                keepStatus : false
             }
         },
         watch: {
@@ -254,7 +257,7 @@
                 handler(val ,oldVal){
                     this.checkboxModel = val;
                 }
-            }
+            },
 
         },
         mounted(){
@@ -264,7 +267,18 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    this.search();
+                    if(this.$route.query.Params !== undefined && this.$route.query.Params.keywords !== undefined){
+                        this.contractSearchInfo = this.$route.query.Params;
+                        this.currentDate = [];
+                        this.currentDate.push(this.contractSearchInfo.start);
+                        this.currentDate.push(this.contractSearchInfo.end);
+                        this.departmentName = this.$route.query.departmentName;
+                        this.keepStatus = true;
+                    }else {
+                        this.keepStatus = false;
+                    }
+                    this.searchContract();
+
                 });
             },
             search(){
@@ -274,17 +288,16 @@
             searchContract(){
               this.$http.post('core/collect/contractlist ',this.contractSearchInfo).then((res) =>{
                   if(res.data.code === '70010'){
-                      console.log(1)
-                      this.contractSearchList = res.data.data.list;
+                      this.params = res.data.data.list;
                       this.pages = res.data.data.pages;
                       this.isShow = false;
                       this.Waiting = false;
                       this.allId=[];
-                      for(let j=0;j<this.contractSearchList.length;j++){
-                          this.allId.push(this.contractSearchList[j].id)
+                      for(let j=0;j<this.params.length;j++){
+                          this.allId.push(this.params[j].id)
                       }
                   }else {
-                      this.contractSearchList = [];
+                      this.params = [];
                       this.allId=[];
                       this.pages = 1;
                       this.isShow = true;
@@ -350,8 +363,9 @@
 
             },
             getDate(val){
-                this.contractSearchInfo.start=val.split( 'to')[0]
-                this.contractSearchInfo.end=val.split( 'to')[1]
+                console.log(val)
+                this.contractSearchInfo.start=val.split( 'to')[0];
+                this.contractSearchInfo.end=val.split( 'to')[1];
                 this.search();
             },
             getPage(val){

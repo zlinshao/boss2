@@ -6,6 +6,12 @@
                 <router-link to="/pendingItem">应付款项</router-link>
             </li>
             <li>结算详情</li>
+
+            <li class="pull-right" >
+                <router-link :to="{path:'/pendingItem',query: {Params:Params}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
         <div class="title clearFix">
             <div class="contractNum" style="margin-bottom: 10px">
@@ -115,10 +121,12 @@
                 account_pending_status : '',
                 collect_rent : '',
                 rentingId : '',
+                Params : [],
             }
         },
         mounted(){
             this.myRentingId = this.$route.query.RentingId;  //路由接受合同id
+            this.Params = this.$route.query.myParams;  //路由接受合同id
             this.getDictionary();
         },
         methods : {

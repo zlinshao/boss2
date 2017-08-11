@@ -79,8 +79,8 @@
                                    :value="item.id" :checked="clientSelected===item.id"></td>
                         <td class="text-center">{{item.address}}</td>
                         <td class="text-center">{{item.name}}</td>
-                        <td class="text-center">{{item.identity}}</td>
-                        <td class="text-center">{{dictionary.payment[item.identity]}}</td>
+                        <td class="text-center">{{dictionary.identity[item.identity]}}</td>
+                        <td class="text-center">{{dictionary.money_type[item.pay_method]}}</td>
                         <td class="text-center">{{item.payee}}</td>
                         <td class="text-center">{{dictionary.bank[item.bank]}}</td>
                         <td class="text-center">{{item.account}}</td>
@@ -88,7 +88,8 @@
                         <td class="text-center">{{item.department_name}}</td>
                         <td class="text-center">{{item.head_name}}</td>
                         <td class="text-center">
-                            <router-link :to="{path:'/ClientManageDetail',query:{clientId :item.id}}">
+                            <router-link :to="{path:'/ClientManageDetail',
+                            query:{clientId :item.id,searchInformation:searchInformation,departmentName:departmentName}}">
                                 详情
                             </router-link>
                         </td>
@@ -147,6 +148,7 @@
                   //失败信息 ***
                   error: ''
               },
+              keepStatus : false
           }
         },
         mounted(){
@@ -154,10 +156,16 @@
         },
         methods:{
             getDictionary(){
-                this.$http.get('revenue/customer/dict').then((res) =>{
+                this.$http.get('core/customer/dict').then((res) =>{
                     this.dictionary = res.data;
-                    console.log(this.dictionary);
-                    this.search();
+                    if(this.$route.query.Params !== undefined && this.$route.query.Params.keywords !== undefined){
+                        this.searchInformation = this.$route.query.Params;
+                        this.departmentName = this.$route.query.departmentName;
+                        this.keepStatus = true;
+                    }else {
+                        this.keepStatus = false;
+                    }
+                    this.getClientList();
                 })
             },
             search(){
