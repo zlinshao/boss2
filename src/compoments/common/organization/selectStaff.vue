@@ -235,7 +235,8 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                topDepartment : [],
             }
         },
         mounted(){
@@ -256,7 +257,6 @@
                         this.noDepartment=false;
                     }
                 }else if(val.class==='department'){ //顶级部门的需求
-                    let arr=[2,4,9,10];
                     if(val.id.length===1 && val.name!==undefined){
                         this.noStaff=true;
                         let id=val.id[0];
@@ -264,8 +264,8 @@
                         this.getSecond(id,name);
                     }
                     for(let i=0;i<val.id.length;i++){
-                        this.isMarket=arr.filter((x)=>x!==val.id[i]);  //把不需要展示的部门id赋值给isMarket 防止用户进入下级部门
-                        this.checkIndex=arr.filter((x)=>x!==val.id[i]);// 同时赋值给checkIndex 防止用户选中
+                        this.isMarket=this.topDepartment.filter((x)=>x!==val.id[i]);  //把不需要展示的部门id赋值给isMarket 防止用户进入下级部门
+                        this.checkIndex=this.topDepartment.filter((x)=>x!==val.id[i]);// 同时赋值给checkIndex 防止用户选中
                     }
                 }else if(val.class==='amount'){ //提供员工单选
                     this.noDepartment=true;
@@ -308,6 +308,9 @@
             getFirst(){
                 this.$http.get('index/profile/dpmtinfo/department_id/'+1+'/type/all').then((res) => {
                     this.organizeList = res.data.department;
+                    for(let i=0; i<this.organizeList.length;i++){
+                        this.topDepartment[i] = this.organizeList[i].id
+                    }
                     this.type=1;
                     this.isSecond=false;
                     this.isThird=false;
