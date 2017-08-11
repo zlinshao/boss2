@@ -72,12 +72,12 @@
                             <th class="text-center">开单人</th>
                             <th class="text-center">业主姓名</th>
                             <th class="text-center">地址</th>
-                            <th class="text-center">手机号码</th>
+                            <!--<th class="text-center">手机号码</th>-->
                             <th class="text-center">资料补齐时间</th>
                             <th class="text-center">过期情况</th>
-                            <th class="text-center">回访情况</th>
+                            <!--<th class="text-center">回访情况</th>-->
                             <th class="text-center">备忘</th>
-                            <th class="text-center">操作人</th>
+                            <th class="text-center">创建人</th>
                             <th class="text-center">审核状态</th>
                         </tr>
                     </thead>
@@ -92,10 +92,10 @@
                             <td class="text-center">{{item.staff_id.name}}</td>
                             <td class="text-center">{{item.name}}</td>
                             <td class="text-center">{{item.detailed_address}}</td>
-                            <td class="text-center">{{item.mobile}}</td>
+                            <!--<td class="text-center">{{item.mobile}}</td>-->
                             <td class="text-center">{{item.complete_date[0]}}</td>
                             <td class="text-center">{{item.complete_date[2]}}</td>
-                            <td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>
+                            <!--<td class="text-center">{{dictionary.reviewed[item.reviewed]}}</td>-->
                             <td class="text-center">{{item.content}}</td>
                             <td class="text-center">
                                 <span v-if="item.manager !== null && item.manager !==undefined">
@@ -119,7 +119,7 @@
                             </td>
                         </tr>
                         <tr v-if="isShow">
-                            <td colspan="13" class="text-center text-muted">
+                            <td colspan="11" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>

@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="input-group">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate" :currentDate="currentDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -98,7 +98,7 @@
                                 <label class="label label-warning">{{dictionary.account_pending_status[item.status]}}</label>
                             </td>
                             <td>
-                                <router-link :to="{path:'/pendingDetail',query: {RentingId: item.id}}">
+                                <router-link :to="{path:'/pendingDetail',query: {RentingId: item.id , myParams : params}}">
                                     详情
                                 </router-link>
                             </td>
@@ -161,6 +161,7 @@
                         position : 'top-right',
                     }
                 ],
+                currentDate : [],
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -174,17 +175,28 @@
                 confirmMsg:[],
                 pendingId : '',
                 account_pending_status : '',
+                Params : '',
+                keepStatus : false,
             }
         },
         created () {
+
             this.getDictionary();
         },
         methods : {
             getDictionary(){
                 this.$http.get('revenue/glee_collect/dict').then((res) =>{
                     this.dictionary = res.data;
-                    console.log(this.dictionary);
-                    this.searchList();
+                    if(this.$route.query.Params !== undefined && this.$route.query.Params.page !== undefined){
+                        this.params = this.$route.query.Params;
+                        this.currentDate = [];
+                        this.currentDate.push(this.params.range.split( 'to')[0]);
+                        this.currentDate.push(this.params.range.split( 'to')[1]);
+                        this.keepStatus = true;
+                    }else {
+                        this.keepStatus = false;
+                    }
+                    this.getPendingList();
                 })
             },
             searchList(){

@@ -3,7 +3,12 @@
         <ol class="breadcrumb">
             <li>房源管理</li>
             <router-link to="/noCollect" tag="li" style="cursor: pointer" class="bread">待收房源</router-link>
-            <li>待收房源详情</li>
+            <li>待收房源详情 {{params}}</li>
+
+            <li class="pull-right" >
+                <router-link :to="{path:'/noCollect',query: { params:params}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步</router-link>
+            </li>
         </ol>
         <section class="panel">
             <div class="panel-body" v-for="item in houseDetail">
@@ -102,11 +107,13 @@
                 houseDetail:[],
                 houseRevise:[],
                 largePic : [],
-                srcs : {}
+                srcs : {},
+                params : [],
             }
         },
         mounted (){
             this.houseId = this.$route.query.unCollectId;
+            this.params = this.$route.query.params;
             this.getDictionary();
         },
         methods: {
@@ -171,5 +178,10 @@
     }
     .bread:hover{
         color: #59ace2;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

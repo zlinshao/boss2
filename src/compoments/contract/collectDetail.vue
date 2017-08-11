@@ -2,8 +2,14 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <router-link to="/collectContract" tag="li" style="cursor: pointer" class="bread">收房合同</router-link>
+            <router-link to="/collectContract"
+                         tag="li" style="cursor: pointer" class="bread">收房合同</router-link>
             <li class="active">收房合同详情</li>
+
+            <li class="pull-right" >
+                <router-link :to="{path:'/okCollect',query: {Params:myParams,departmentName:departmentName}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步</router-link>
+            </li>
         </ol>
 
         <div class="title clearFix">
@@ -52,7 +58,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <button class="btn btn-white btn-block" @click="editContract" :disabled = " contract_pass > 2 ">
+                            <button class="btn btn-white btn-block" @click="editContract">
                                 编辑
                             </button>
                         </li>
@@ -738,13 +744,18 @@
                 memorandum:'',   //备忘录
                 tabActive:'',
                 houseId:'',
-                waiting : true
+                waiting : true,
+
+                myParams : [],
+                departmentName:'',
 
             }
         },
         mounted(){
             this.contractEitId = this.$route.query.ContractId;  //路由接受合同id
             this.tabActive = this.$route.query.flag;
+            this.myParams = this.$route.query.params;
+            this.departmentName = this.$route.query.departmentName;
 
             this.getDictionary();   //初始化请求页面信息
         },
@@ -752,7 +763,6 @@
             getDictionary(){    //请求字典 以及 合同详情信息
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    console.log(this.dictionary)
                     this.passDictionary = res.data.passed;
                     this.contractDetail();
                 });
@@ -761,7 +771,6 @@
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
-                    console.log(this.contractList)
                     this.waiting = false;
                     this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num
@@ -1149,5 +1158,10 @@
     }
     .bread:hover{
         color: #59ace2;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

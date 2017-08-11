@@ -4,9 +4,15 @@
             <li>房源管理</li>
             <router-link to="/okCollect" tag="li" style="cursor: pointer" class="bread">公司房源</router-link>
             <li>公司房源详情</li>
+
+            <li class="pull-right" >
+                <router-link :to="{path:'/okCollect',query: { params:params,departmentName:departmentName }}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
         <!--头部-->
-        <section class="panel">7
+        <section class="panel">
             <div class="panel-body"  v-for="item in houseDetail">
                 <header>
                     <h4 class="row">
@@ -357,11 +363,15 @@
                 houseRevise: [],
                 dictionary: [],
                 largePic: [],
-                srcs: {}
+                srcs: {},
+                params : [],
+                departmentName : '',
             }
         },
         mounted (){
             this.houseId = this.$route.query.CollectId;
+            this.params = this.$route.query.params;
+            this.departmentName = this.$route.query.departmentName;
             this.getDictionary();
         },
         methods: {
@@ -371,7 +381,6 @@
                     this.dictionary = res.data;
                     this.$http.get('core/villa/readvilla/id/' + this.houseId).then((res) => {
                         this.houseDetail.push(res.data.data);
-                        console.log(this.houseDetail)
                         this.houseRevise = res.data.data;
                     });
 
@@ -499,5 +508,10 @@
     }
     .bread:hover{
         color: #59ace2;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

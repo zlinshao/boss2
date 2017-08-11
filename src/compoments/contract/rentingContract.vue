@@ -17,7 +17,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate" :currentDate="currentDate"></DatePicker>
                         </label>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 5px">
@@ -160,7 +160,8 @@
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
                         <td>
-                            <router-link :to="{path:'/rentingDetail',query: {ContractId: item.id,flag:'detail'}}">
+                            <router-link :to="{path:'/rentingDetail',
+                            query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">
                             详情
                             </router-link>
                         </td>
@@ -199,6 +200,7 @@
                     range : true, // 是否选择范围
                     needHour : false // 是否需要选择小时
                 }],
+                currentDate : [],
                 departmentName:'',
                 contractSearchList:[],
                 contractSearchInfo:{
@@ -240,6 +242,7 @@
                 department_id : '',
                 allCheck : '',
                 allId : [],
+                keepStatus :false,
             }
         },
         watch: {
@@ -257,7 +260,19 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    this.search();
+
+                    if(this.$route.query.Params !== undefined && this.$route.query.Params.keywords !== undefined){
+                        this.contractSearchInfo = this.$route.query.Params;
+                        this.currentDate = [];
+                        this.currentDate.push(this.contractSearchInfo.start);
+                        this.currentDate.push(this.contractSearchInfo.end);
+                        this.departmentName = this.$route.query.departmentName;
+                        this.keepStatus = true;
+                    }else {
+                        this.keepStatus = false;
+                    }
+
+                    this.searchContract();
                 });
             },
             search(){

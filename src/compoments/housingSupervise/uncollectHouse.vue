@@ -9,7 +9,7 @@
                 <div v-if="seletedId===0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="house_type" @change="search">
+                            <select class="form-control" v-model="params.house_type" @change="search">
                                 <option value="">房屋类型</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.house_type">{{value}}</option>
                             </select>
@@ -17,7 +17,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="rooms" @change="search">
+                            <select class="form-control" v-model="params.rooms" @change="search">
                                 <option value="">房型</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.rooms">{{value}}</option>
                             </select>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="decoration" @change="search">
+                            <select class="form-control" v-model="params.decoration" @change="search">
                                 <option value="">房屋装修</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.decoration">{{value}}</option>
                             </select>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="floor_type" @change="search">
+                            <select class="form-control" v-model="params.floor_type" @change="search">
                                 <option value="">建筑楼层</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.floor_type">{{value}}</option>
                             </select>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="house_feature" @change="search">
+                            <select class="form-control" v-model="params.house_feature" @change="search">
                                 <option value="">房屋特色</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.house_feature">{{value}}</option>
                             </select>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="area" @change="search">
+                            <select class="form-control" v-model="params.area" @change="search">
                                 <option value="">面积</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.area">{{value}}</option>
                             </select>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="person_medium" @change="search">
+                            <select class="form-control" v-model="params.person_medium" @change="search">
                                 <option value="">个人/中介</option>
                                 <option :value="key"  v-for="(value,key) in dictionary.person_medium">{{value}}</option>
                             </select>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2 " style="margin-left: -15px;margin-right: 15px">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords" @keydown.enter="search">
+                            <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="params.keywords" @keydown.enter="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" @click="search">搜索</button>
                             </span>
@@ -125,7 +125,9 @@
                             <td class="text-center">{{item.detailed_address}}</td>
                             <td class="text-center">{{dictionary.house_type[item.house_type]}}</td>
                             <td class="text-center">
-                                {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
+                                <span v-if="item.rooms !==null && item.rooms !== undefined">
+                                    {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
+                                </span>
                             </td>
                             <td class="text-center">{{item.area}}㎡</td>
                             <td class="text-center">{{dictionary.decoration[item.decoration]}}</td>
@@ -134,7 +136,7 @@
                             <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
                             <td class="text-center">{{item.staff_id}}</td>
                             <td class="text-center">
-                                <router-link :to="{path:'/collectMore',query: {unCollectId: item.id}}">
+                                <router-link :to="{path:'/collectMore',query: {unCollectId: item.id,params:params}}">
                                     详情
                                 </router-link>
                             </td>
@@ -153,7 +155,7 @@
         <Collect-add :dictionary="dictionary" @addHouse="alreadyAdd"></Collect-add>
 
         <!--分页-->
-        <Page :pg="pages" @pag="pageSearch" :beforePage="currentPage"></Page>
+        <Page :pg="pages" @pag="pageSearch" :beforePage="params.page"></Page>
 
         <Delete @IsSure="deleteHouse"></Delete>
 
@@ -184,14 +186,17 @@
                 isShow:false,
                 checkboxModel:[],
                 deleteHouseId:[],
-                house_type:"",//房屋类型
-                rooms:'',     //房型
-                decoration:'',//装修
-                house_feature:'',//房屋特色
-                floor_type:"",
-                area:'',    //面积
-                keywords:'',
-                person_medium:'',
+                params :{
+                    house_type:"",//房屋类型
+                    rooms:'',     //房型
+                    decoration:'',//装修
+                    house_feature:'',//房屋特色
+                    floor_type:"",
+                    area:'',    //面积
+                    keywords:'',
+                    person_medium:'',
+                    page:'',
+                },
                 seletedId:0,
                 info:{
                     //成功状态 ***
@@ -204,8 +209,7 @@
                     error: ''
                 },
                 pages:'',   // 总页数
-                page:'',
-                currentPage:1,
+                keepStatus : false,
             }
         },
         created (){
@@ -216,33 +220,17 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
-                    this.$http.post('core/villa/villalist').then((res) => {
-                        if(res.data.code==='80030'){
-                            this.villalist = res.data.data.list;
-                            this.isShow=false;
-                            this.pages=res.data.data.pages;
-                        }else{
-                            this.villalist = [];
-                            this.pages = 1;
-                            this.isShow=true;
-                        }
-
-                    });
+                    if(this.$route.query.params !== undefined && this.$route.query.params.keywords !== undefined){
+                        this.params = this.$route.query.params;
+                        this.keepStatus = true;
+                    }else {
+                        this.keepStatus = false;
+                    }
+                    this.searchUncollect();
                 });
             },
             searchUncollect(){
-                this.currentPage=this.page;
-                this.$http.post('core/villa/villalist',{
-                    "house_type" : this.house_type,//房屋类型
-                    'rooms':this.rooms,     //房型
-                    'decoration':this.decoration,//装修
-                    'house_feature':this.house_feature,//房屋特色
-                    'area':this.area,    //面积
-                    'person_medium':this.person_medium,
-                    'floor_type':this.floor_type,
-                    'keywords':this.keywords,
-                    'page' : this.page,
-                }).then((res) => {
+                this.$http.post('core/villa/villalist',this.params).then((res) => {
                     if(res.data.code==='80030'){
                         this.villalist=res.data.data.list;
                         this.isShow=false;
@@ -258,29 +246,17 @@
 
                 });
             },
-//            //选中的checkout框
-//            picked (id,e){
-//                if(e.target.checked===true){
-//                    this.deleteHouseId.push(id)
-//                }else {
-//                    for(let i=0;i<this.deleteHouseId.length;i++){
-//                        if(id===this.deleteHouseId[i]){
-//                            this.deleteHouseId.splice(i,1)
-//                        }
-//                    }
-//                }
-//            },
             //重置
             reset(){
-                this.house_type = '';
-                this.rooms = '';
-                this.decoration = '';
-                this.house_feature = '';
-                this.person_medium = '';
-                this.area='';
-                this.page=1;
-                this.keywords='',
-                this.floor_type='',
+                this.params.house_type = '';
+                this.params.rooms = '';
+                this.params.decoration = '';
+                this.params.house_feature = '';
+                this.params.person_medium = '';
+                this.params.area='';
+                this.params.page=1;
+                this.params.keywords='',
+                this.params.floor_type='',
                 this.searchUncollect();
             },
             changeIndex(e,id){
@@ -333,11 +309,11 @@
             },
             //分页
             pageSearch(val){
-                this.page=val;
+                this.params.page=val;
                 this.searchUncollect();
             },
             search(){
-                this.page=1;
+                this.params.page=1;
                 this.searchUncollect();
             }
         }
