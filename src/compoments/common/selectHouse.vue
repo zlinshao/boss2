@@ -40,7 +40,9 @@
                                 </td>
                                 <td>{{item.detailed_address}}</td>
                                 <td>
-                                    <span>{{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                    <span v-if="item.rooms !==null && item.rooms !==undefined">
+                                        {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
+                                    </span>
                                 </td>
                                 <td>{{item.area}}㎡</td>
                                 <td>{{dictionary.decoration[item.decoration]}}</td>
