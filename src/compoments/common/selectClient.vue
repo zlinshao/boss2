@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选择客户</h4>
                     </div>
-                    <div class="modal-body inbox-body panel table table-responsive roll">
+                    <div class="modal-body inbox-body panel table table-responsive roll" v-if="!isNewAdd">
                         <div class="row">
                             <div class="col-lg-4">
                                 <select  class="form-control" v-model="media_person">
@@ -66,6 +66,63 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="modal-body roll" v-if="isNewAdd">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">身份</label>
+                                <div class="col-lg-10 status1">
+                                    <label>
+                                        <input type="radio" name="status" value="1"
+                                               class="pull-left" v-model="cus_status">业主
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="status" value="2"
+                                               class="pull-left" v-model="cus_status">租客
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="status" value="3"
+                                               class="pull-left" v-model="cus_status">业主(代理人)
+                                    </label>
+                                </div>
+                            </div>
+                            <!--客户姓名-->
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">客户姓名&nbsp;<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="cus_name" class="form-control"
+                                           placeholder="起输入客户姓名">
+                                </div>
+                            </div>
+                            <!--尊称-->
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">尊称&nbsp;<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-lg-10 status1">
+                                    <label>
+                                        <input type="radio" name="gender" value="1"
+                                               class="pull-left" v-model="cus_gender">先生
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="gender" value="2"
+                                               class="pull-left" v-model="cus_gender">女士
+                                    </label>
+                                </div>
+                            </div>
+                            <!--手机号-->
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">手机号&nbsp;<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" v-model="cus_phone"
+                                           @keyup="cus_phone = cus_phone.replace(/[^\d]/g,'');" maxlength="11"
+                                           placeholder="请输入手机号" style="margin-bottom: 0;">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="clientAdd">确定</button>
@@ -74,16 +131,16 @@
             </div>
         </div>
         <Status :state='info'></Status>
-        <AddClient @AddCustom = getAddClient></AddClient>
+        <!--<AddClient @AddCustom = getAddClient></AddClient>-->
     </div>
 </template>
 <script>
     import Status from './status.vue'
-    import AddClient from  './addClient.vue'
+//    import AddClient from  './addClient.vue'
     export default{
         components:{
             Status,
-            AddClient
+//            AddClient
         },
         data(){
             return {
@@ -105,6 +162,12 @@
                     //失败信息 ***
                     error: ''
                 },
+                isNewAdd : false,
+
+                cus_status:'',
+                cus_gender :'',
+                cus_name: '',
+                cus_phone :'',
             }
         },
         mounted(){
@@ -137,7 +200,7 @@
                 this.selectClients=[];
                 this.selectClients=item;
             },
-            clientAdd(){
+            clientSureAdd(){
                 if(this.selectClients.length === 0){
                     this.info.error = '请先选择客户';
                     this.info.state_error = true;
@@ -148,17 +211,54 @@
                     this.selectClients=[];
                     this.keywords='';
                     this.media_person = '1';
+                    this.isNewAdd = false;
                 }
 
             },
             newAddClient(){
-//                $('.selectClient').modal('hide');
-                $('.addClient').modal('show');
+                this.isNewAdd = true;
+////                $('.selectClient').modal('hide');
+//                $('.addClient').modal('show');
             },
-            getAddClient(val){
-                this.selectClients=val;
-                console.log(this.selectClients)
-            }
+
+            clientAdd (){
+                if(this.isNewAdd === true){
+                    this.$http.post('core/customer/saveCustomer',{
+                        identity: this.cus_status,                  //业主/租客
+                        name:  this.cus_name,                        //客户姓名
+                        gender: this.cus_gender,                    //性别
+                        mobile: this.cus_phone,                     //手机号
+                    }).then((res) => {
+                        if (res.data.code === '70010') {
+                            this.cus_status = '';
+                            this.cus_gender  = '';
+                            this.cus_name = '';
+                            this.cus_phone  = '';
+                            this.selectClients = res.data.data;
+                            console.log(this.selectClients)
+                            this.clientSureAdd();
+                            //成功信息 ***
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+
+
+                        } else {
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    });
+                }else {
+                    this.clientSureAdd();
+                }
+
+            },
+//            getAddClient(val){
+//                this.selectClients=val;
+//                console.log(this.selectClients)
+//            }
         }
     }
 </script>
@@ -178,5 +278,18 @@
     .modal-body{
         max-height: 400px;
         overflow: auto;
+    }
+    input[type=checkbox], input[type=radio] {
+        margin-right: 8px;
+        margin-top: 1px;
+        width: 17px;
+        height: 17px;
+    }
+    .status1 {
+        padding-top: 7px;
+    }
+
+    .status1 label {
+        margin-right: 20px;
     }
 </style>
