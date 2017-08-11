@@ -19,6 +19,7 @@
                     <div class="pull-right">
                         <button v-show="msg.pendable==1" class="btn btn-primary" @click="pendingItem">转为待处理项</button>
                         <button v-show="msg.status != 3" class="btn btn-primary" @click="addCollect">应收入账</button>
+                        <button v-show="msg.status == 1" class="btn btn-primary" @click="dele">删除</button>
                     </div>
                 </div>
             </div>
@@ -156,19 +157,21 @@
         <ShouldCollect :id="currentId" @success="getDetails"></ShouldCollect>
 
         <PicModal :largePic="largePic"></PicModal>
+        <!--Confirm-->
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
 <script>
     import Status from '../../common/status.vue';
     import ShouldCollect from './paymentShouldCollect.vue'
-
+    import Confirm from '../../common/confirm.vue'
     import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectClient.vue'
     import PicModal from '../../common/largePic.vue'
 
     export default{
-        components: {Status, ShouldCollect, SelectHouse, SelectClient, PicModal},
+        components: {Status, ShouldCollect, SelectHouse, SelectClient, PicModal,Confirm},
         data(){
             return {
                 dict: {},
@@ -199,7 +202,12 @@
 //                待结清状态编辑补齐时间
                 changeCompleteDate: false,
                 beforeComplete: '',      // 初始补齐时间
-                changeComplete: ''
+                changeComplete: '',
+
+                confirmMsg: {
+                    id: '',
+                    msg: ''
+                },
             }
         },
         updated (){
@@ -431,6 +439,39 @@
                         setTimeout(() => {
                             this.info.state_error = false;
                         }, 2000);
+                    })
+            },
+
+            // 删除
+            dele(){
+                this.confirmMsg.id = this.operId;
+                this.confirmMsg.msg = '确定删除该条应收款项吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.post('account/receivable/delete/'+this.id)
+                    .then((res) =>{
+//                    console.log(res.data)
+                        if (res.data.code==18510){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.$router.push({path: '/collectPayment'});
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
                     })
             }
         }

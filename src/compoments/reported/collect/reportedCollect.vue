@@ -338,7 +338,7 @@
                         (res) => {
 //                            console.log(res);
                             if (res.data.code == 18210) {
-                                this.info.success = '操作成功';
+                                this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***
@@ -349,7 +349,7 @@
 
                                 this.filter(this.beforePage);
                             } else {
-                                this.info.error = '操作失败';
+                                this.info.error = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_error = true;
                                 //一秒自动关闭失败信息弹窗 ***
