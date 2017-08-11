@@ -101,8 +101,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">截图凭证</label>
                                 <div class="col-sm-10">
+                                    <!--<span class="form-control">
+                                        {{msg.album.receipt_pic}}
+                                    </span>-->
                                     <span class="form-control" style="border: none"
-                                          v-if="srcs == undefined">
+                                          v-if="msg.album == undefined||msg.album.receipt_pic.length==0">
                                         无
                                     </span>
                                     <span v-else="msg.album !== undefined">
@@ -249,8 +252,8 @@
 //                        console.log(this.msg)
 //                        console.log(this.msg.album)
 
-//                            alert(1)
-                        if (res.data.data.album) {
+//                            alert(res.data.data.album)
+                        if (res.data.data.album!=undefined) {
                             this.srcs = this.msg.album.receipt_pic;
                         }
                         this.beforeBalance = this.msg.balance;

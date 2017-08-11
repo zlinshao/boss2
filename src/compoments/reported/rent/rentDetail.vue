@@ -77,11 +77,11 @@
                                 <div class="list"><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
                             </div>
                             <div class="col-md-4" v-if="msg.is_shared==1">
-                                <div class="list"><span class="text-primary">电费：</span><span>{{msg.cost_medi}}</span></div>
-                                <div class="list"><span class="text-primary">管理费：</span><span>{{msg.cost_medi}}</span></div>
-                                <div class="list"><span class="text-primary">物业费：</span><span>{{msg.cost_medi}}</span></div>
-                                <div class="list"><span class="text-primary">网络费：</span><span>{{msg.cost_medi}}</span></div>
-                                <div class="list"><span class="text-primary">水费：</span><span>{{msg.cost_medi}}</span></div>
+                                <div class="list"><span class="text-primary">电费：</span><span>{{msg.elec_fee}}</span></div>
+                                <div class="list"><span class="text-primary">管理费：</span><span>{{msg.property_fee}}</span></div>
+                                <div class="list"><span class="text-primary">物业费：</span><span>{{msg.manage_fee}}</span></div>
+                                <div class="list"><span class="text-primary">网络费：</span><span>{{msg.elec_fee}}</span></div>
+                                <div class="list"><span class="text-primary">水费：</span><span>{{msg.water_fee}}</span></div>
                             </div>
                         </div>
                         <h5 class="title" v-show="msg.cost_medi!=0">中介信息</h5>
