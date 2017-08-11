@@ -322,9 +322,23 @@
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder === '开始时间') {
                         this.start_time = ev.target.value;
+                        if (this.end_time < this.start_time && this.end_time !== '') {
+                            this.end_time = '';
+                            //失败信息 ***
+                            this.info.error = '结束时间不能小于开始时间';
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     }
                     if (ev.target.placeholder === '结束时间') {
                         this.end_time = ev.target.value;
+                        if (this.end_time < this.start_time) {
+                            this.end_time = '';
+                            //失败信息 ***
+                            this.info.error = '结束时间不能小于开始时间';
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     }
                 }.bind(this));
             },
