@@ -230,7 +230,6 @@
                             this.cus_name = '';
                             this.cus_phone  = '';
                             this.selectClients = res.data.data;
-                            console.log(this.selectClients)
                             this.clientSureAdd();
                             //成功信息 ***
                             this.info.success = res.data.msg;
@@ -252,8 +251,7 @@
             },
             closeModal(){
                 this.isNewAdd = false;
-            },
-
+            }
         }
     }
 </script>
