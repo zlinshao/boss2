@@ -262,6 +262,8 @@
                         let id=val.id[0];
                         let name=val.name;
                         this.getSecond(id,name);
+                    }else {
+                        this.noStaff=true;
                     }
                     for(let i=0;i<val.id.length;i++){
                         this.isMarket=this.topDepartment.filter((x)=>x!==val.id[i]);  //把不需要展示的部门id赋值给isMarket 防止用户进入下级部门
