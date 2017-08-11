@@ -113,7 +113,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="list in custom_list">
+                        <tr v-for="list in custom_list"
+                            :class="{'selected': pitch.indexOf(list.id) > -1}">
                             <td class="text-center">
                                 <label for="cus_id"></label>
                                 <input id="cus_id" type="checkbox" class="pull-left"
@@ -350,4 +351,9 @@
         margin-bottom: 0;
         height: 10px;
     }
+
+    .selected {
+        background: #fffcd9 !important;
+    }
+
 </style>

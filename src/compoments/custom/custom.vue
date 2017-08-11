@@ -11,7 +11,7 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_status" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_status" @change="search_c">
                                 <option value="" selected="selected">客户状态</option>
                                 <option v-for="(val, index) in select_list.customer_status" :value="index">{{val}}
                                 </option>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_intention" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_intention" @change="search_c">
                                 <option value="" selected="selected">客户意向</option>
                                 <option v-for="(val, index) in select_list.customer_will" :value="index">{{val}}
                                 </option>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_id" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_id" @change="search_c">
                                 <option value="" selected="selected">客户身份</option>
                                 <option v-for="(val, index) in select_list.identity" :value="index">{{val}}</option>
                             </select>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_source" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_source" @change="search_c">
                                 <option value="" selected="selected">客户来源</option>
                                 <option v-for="(val, index) in select_list.source" :value="index">{{val}}
                                 </option>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_type" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_type" @change="search_c">
                                 <option value="" selected="selected">个人/中介</option>
                                 <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
                             </select>
@@ -54,12 +54,13 @@
                     </div>
                     <div class="pro-sort" style="height: 39px;">
                         <label style="margin-top: 8px;">
-                            <input type="checkbox" class="pull-left" @click="trid($event,1)">三天内未成交
+                            <input type="checkbox" :checked="return_sea.Trid" class="pull-left" @click="trid($event,1)">三天内未成交
                         </label>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="sea_info" @keyup.enter="sea_cus(1)"
+                            <input type="text" class="form-control" v-model="return_sea.sea_info"
+                                   @keyup.enter="sea_cus(1)"
                                    placeholder="客户名/手机号">
                             <span class="input-group-btn">
                             <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
@@ -155,7 +156,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="list in custom_list">
+                        <tr v-for="list in custom_list"
+                            :class="{'selected': pitch.indexOf(list.id) > -1}">
                             <td class="text-center">
                                 <label for="cus_id"></label>
                                 <input id="cus_id" type="checkbox" class="pull-left"
@@ -190,7 +192,8 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <router-link :to="{path:'/details',query: {nameId: list.id, cus: 1}}">
+                                <router-link target="_top"
+                                             :to="{path:'/details',query: {nameId: list.id, cus: 1, sear: return_sea}}">
                                     详情
                                 </router-link>
                             </td>
@@ -216,7 +219,7 @@
         <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
 
         <!--分页-->
-        <Page @pag="sea_cus" :pg="paging" :beforePage="beforePage"></Page>
+        <Page @pag="sea_cus" :pg="return_sea.paging" :beforePage="return_sea.beforePage"></Page>
 
         <!--增加提醒-->
         <!--<AddRemind :remindId="pitch" @cus_seccess="succ"></AddRemind>-->
@@ -242,28 +245,27 @@
         data (){
             return {
                 wait: 1,
-                Trid: '',                   //三天内未成交
                 top: '',                    //置顶/取消置顶
-                sea_info: '',               //客户名/手机号搜索
                 select_list: {},            //select字典
                 custom_list: [],            //列表
-
-                paging: '',                 //总页数
-                beforePage: 1,              //当前页数
-
                 pitch: [],                  //选中id
                 bool: '',
                 cus_name: [],               //派发信息
                 temporary_save: {},         //临时储存客户
                 revise_cus: {},             //修改客户
-
                 revise_state: '',           //新增/修改客户状态
 //                搜索字典
-                sea_status: '',             //客户状态
-                sea_intention: '',          //客户意向
-                sea_id: '',                 //客户身份
-                sea_source: '',             //客户来源
-                sea_type: '',               //个人/中介
+                return_sea: {
+                    paging: '',                 //总页数
+                    beforePage: 1,              //当前页数
+                    Trid: '',                   //三天内未成交
+                    sea_info: '',               //客户名/手机号搜索
+                    sea_status: '',             //客户状态
+                    sea_intention: '',          //客户意向
+                    sea_id: '',                 //客户身份
+                    sea_source: '',             //客户来源
+                    sea_type: '',               //个人/中介
+                },
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -275,20 +277,25 @@
                     error: ''
                 },
                 isShow: false,
+                sea_status: ''
             }
         },
         mounted (){
-            this.collectList(1);
+            this.sea_status = this.$route.query.cus;
+            if (this.sea_status === 1) {
+                this.collectList(this.$route.query.sear.beforePage);
+            } else {
+                this.collectList(1);
+            }
         },
         methods: {
 //            select搜索
             search_c (){
                 this.sea_cus(1);
-//                this.beforePage = 1
             },
 //            三天内未成交
             trid(val, pag) {
-                this.Trid = val.target.checked;
+                this.return_sea.Trid = val.target.checked;
                 if (val.target.checked === true) {
                     this.$http.post('core/customer/customerList', {
                         unsettled: true
@@ -298,13 +305,13 @@
                             this.info.error = res.data.msg;
                             //显示失败弹窗 ***
                             this.info.state_error = true;
-                            this.paging = '';
+                            this.return_sea.paging = '';
                             this.custom_list = [];
                             this.isShow = true;
                         } else {
                             this.custom_list = res.data.data.list;
-                            this.paging = res.data.data.pages;
-                            this.beforePage = pag;
+                            this.return_sea.paging = res.data.data.pages;
+                            this.return_sea.beforePage = pag;
                         }
                     });
                 }
@@ -314,8 +321,8 @@
                     }).then((res) => {
                         if (res.data.code === '70030') {
                             this.custom_list = res.data.data.list;
-                            this.paging = res.data.data.pages;
-                            this.beforePage = pag;
+                            this.return_sea.paging = res.data.data.pages;
+                            this.return_sea.beforePage = pag;
                             this.isShow = false;
                         } else {
                             this.custom_list = [];
@@ -336,64 +343,74 @@
 //            客户列表
             collectList (val){
                 this.wait = 1;
-                this.sea_status = '';
-                this.sea_intention = '';
-                this.sea_id = '';
-                this.sea_source = '';
-                this.sea_type = '';
-                this.sea_info = '';
-                this.beforePage = val;
+                if (this.sea_status !== 1) {
+                    this.return_sea.sea_status = '';
+                    this.return_sea.sea_intention = '';
+                    this.return_sea.sea_id = '';
+                    this.return_sea.sea_source = '';
+                    this.return_sea.sea_type = '';
+                    this.return_sea.sea_info = '';
+                }
+                this.return_sea.beforePage = val;
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
-//                列表
-                    this.$http.post('core/customer/customerList/page/' + val).then((res) => {
+                    if (this.$route.query.cus === 1) {
+                        this.sea_status = 2;
+                        this.return_sea = this.$route.query.sear;
+                        this.sea_cus(val);
                         this.wait = 2;
-                        if (res.data.code === '70030') {
-                            this.custom_list = res.data.data.list;
-                            this.paging = res.data.data.pages;
-                            this.isShow = false;
-                            this.pitch = [];
-                            this.cus_name = [];
-                        } else {
+                    } else {
+//                列表
+                        this.$http.post('core/customer/customerList').then((res) => {
                             this.wait = 2;
-                            this.custom_list = [];
-                            this.isShow = true;
-                            //失败信息 ***
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        }
-                    });
+                            if (res.data.code === '70030') {
+                                this.custom_list = res.data.data.list;
+                                this.return_sea.paging = res.data.data.pages;
+                                this.isShow = false;
+                                this.pitch = [];
+                                this.cus_name = [];
+                            } else {
+                                this.wait = 2;
+                                this.custom_list = [];
+                                this.isShow = true;
+                                //失败信息 ***
+                                this.info.error = res.data.msg;
+                                //显示失败弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                    }
                 });
+
             },
 
 //            搜索
             sea_cus (val){
-                if (this.Trid === true) {
-                    this.sea_status = '';
-                    this.sea_intention = '';
-                    this.sea_id = '';
-                    this.sea_source = '';
-                    this.sea_type = '';
-                    this.sea_info = '';
+                if (this.return_sea.Trid === true) {
+                    this.return_sea.sea_status = '';
+                    this.return_sea.sea_intention = '';
+                    this.return_sea.sea_id = '';
+                    this.return_sea.sea_source = '';
+                    this.return_sea.sea_type = '';
+                    this.return_sea.sea_info = '';
                 }
-                this.beforePage = val;
+                this.return_sea.beforePage = val;
                 this.$http.post('core/customer/customerList/page/' + val, {
-                    customer_status: this.sea_status,
-                    customer_will: this.sea_intention,
-                    identity: this.sea_id,
-                    source: this.sea_source,
-                    person_medium: this.sea_type,
-                    keywords: this.sea_info,
-                    unsettled: this.Trid,
+                    customer_status: this.return_sea.sea_status,
+                    customer_will: this.return_sea.sea_intention,
+                    identity: this.return_sea.sea_id,
+                    source: this.return_sea.sea_source,
+                    person_medium: this.return_sea.sea_type,
+                    keywords: this.return_sea.sea_info,
+                    unsettled: this.return_sea.Trid,
                 }).then((res) => {
                     if (res.data.code === '70030') {
                         this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
+                        this.return_sea.paging = res.data.data.pages;
                         this.isShow = false;
                     } else {
-                        this.paging = '';
+                        this.return_sea.paging = '';
                         this.custom_list = [];
                         this.isShow = true;
                         //失败信息 ***
@@ -483,7 +500,7 @@
 
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
+                        this.return_sea.paging = res.data.data.pages;
                         this.pitch = [];
                         this.cus_name = [];
                     });
@@ -522,6 +539,10 @@
     .progress.progress-striped.active {
         margin-bottom: 0;
         height: 10px;
+    }
+
+    .selected {
+        background: #fffcd9 !important;
     }
 
 </style>

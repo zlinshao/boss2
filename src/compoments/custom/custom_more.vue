@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>客户管理</li>
             <li v-if="custom === 1">
-                <router-link to="/custom">客户</router-link>
+                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}">客户</router-link>
             </li>
             <li v-if="custom === 2">
                 <router-link to="/customerPool">客户池</router-link>
@@ -304,6 +304,7 @@
         components: {New_add, PicModal, Status, Sharing},
         data (){
             return {
+                custom_sear: {},
                 custom: '',                 //客户
                 look_remind: '',            //是否有提醒
                 remind_info: [],            //查看提醒
@@ -336,6 +337,8 @@
         mounted (){
             this.cus_Id = this.$route.query.nameId;
             this.custom = this.$route.query.cus;
+            this.custom_sear = this.$route.query.sear;
+            console.log(this.$route.query.sear);
             this.detailed_info(this.cus_Id);
         },
         methods: {
