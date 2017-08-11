@@ -3,12 +3,18 @@
         <ol class="breadcrumb">
             <li>客户管理</li>
             <li v-if="custom === 1">
-                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}">客户</router-link>
+                <router-link to='/custom'>客户</router-link>
             </li>
             <li v-if="custom === 2">
                 <router-link to="/customerPool">客户池</router-link>
             </li>
             <li>客户详情</li>
+            <li v-if="custom === 1" class="pull-right">
+                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>返回上一步</router-link>
+            </li>
+            <li v-if="custom === 2" class="pull-right">
+                <router-link :to="{path:'/customerPool',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>返回上一步</router-link>
+            </li>
         </ol>
         <!--头部-->
         <section class="panel">
@@ -531,6 +537,11 @@
 
     .paddingTop {
         padding-top: 13px;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 
 </style>

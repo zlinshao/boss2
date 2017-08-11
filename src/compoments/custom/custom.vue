@@ -355,7 +355,7 @@
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
-                    if (this.$route.query.cus === 1) {
+                    if (this.sea_status === 1) {
                         this.sea_status = 2;
                         this.return_sea = this.$route.query.sear;
                         this.sea_cus(val);

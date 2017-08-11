@@ -12,7 +12,7 @@
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_status" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_status" @change="search_c">
                                 <option value="" selected="selected">客户状态</option>
                                 <option v-for="(val,index) in select_list.customer_status" :value="index">{{val}}
                                 </option>
@@ -22,7 +22,7 @@
 
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_intention" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_intention" @change="search_c">
                                 <option value="" selected="selected">客户意向</option>
                                 <option v-for="(val,index) in select_list.customer_will" :value="index">{{val}}</option>
                             </select>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_id" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_id" @change="search_c">
                                 <option value="" selected="selected">客户身份</option>
                                 <option v-for="(val,index) in select_list.identity" :value="index">{{val}}</option>
                             </select>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_source" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_source" @change="search_c">
                                 <option value="" selected="selected">客户来源</option>
                                 <option v-for="(val,index) in select_list.source" :value="index">{{val}}
                                 </option>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_belong" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_belong" @change="search_c">
                                 <option value="" selected="selected">客户所属</option>
                                 <option v-for="(val,index) in select_list.belong" :value="index">{{val}}
                                 </option>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="sea_type" @change="search_c">
+                            <select class="form-control" v-model="return_sea.sea_type" @change="search_c">
                                 <option value="" selected="selected">个人/中介</option>
                                 <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
                             </select>
@@ -83,7 +83,8 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a></h5>
+                            <h5><a data-toggle="modal" href="#distribution"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -144,7 +145,7 @@
                             <td class="text-center">{{list.belong}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
-                                <router-link :to="{path:'/details',query: {nameId: list.id, cus: 2}}">
+                                <router-link :to="{path:'/details',query: {nameId: list.id, cus: 2, sear: return_sea}}">
                                     详情
                                 </router-link>
                             </td>
@@ -165,7 +166,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
         <!--分页-->
-        <Page @pag="search_pool" :pg="paging" :beforePage="beforePage"></Page>
+        <Page @pag="search_pool" :pg="return_sea.paging" :beforePage="return_sea.beforePage"></Page>
     </div>
 </template>
 
@@ -182,31 +183,37 @@
                 sea_info: '',               //客户名/手机号搜索
                 select_list: {},            //select字典
                 custom_list: [],            //列表
-
-                paging: '',                 //总页数
-                beforePage: 1,              //当前页数
-
                 pitch: [],                  //选中id
                 bool: '',                   //remindDaily状态
                 cus_name: [],               //分派名称
 //                搜索字典
-                sea_status: '',             //客户状态
-                sea_intention: '',          //客户意向
-                sea_id: '',                 //客户身份
-                sea_source: '',             //客户来源
-                sea_belong: '',             //客户所属
-                sea_type: '',               //个人/中介
+                return_sea: {
+                    paging: '',                 //总页数
+                    beforePage: 1,              //当前页数
+                    sea_status: '',             //客户状态
+                    sea_intention: '',          //客户意向
+                    sea_id: '',                 //客户身份
+                    sea_source: '',             //客户来源
+                    sea_belong: '',             //客户所属
+                    sea_type: '',               //个人/中介
+                },
                 info: {
                     //失败状态 ***
                     state_error: false,
                     //失败信息 ***
                     error: ''
                 },
-                isShow:false,
+                isShow: false,
+                sea_status: ''
             }
         },
         created (){
-            this.collectList(1);
+            this.sea_status = this.$route.query.cus;
+            if (this.sea_status === 1) {
+                this.collectList(this.$route.query.sear.beforePage);
+            } else {
+                this.collectList(1);
+            }
         },
         methods: {
 //            select搜索
@@ -218,7 +225,7 @@
 //                this.$http.post('core/customer_pool/customerpool').then((res) => {
 //                    if (res.data.code === '70040') {
 //                        this.custom_list = res.data.data.list;
-//                        this.paging = res.data.data.pages;
+//                        this.return_sea.paging = res.data.data.pages;
 //                        this.isShow = false;
 //                    } else {
 //                        this.custom_list = [];
@@ -233,53 +240,62 @@
 //            },
 //            客户列表
             collectList (val){
-                this.sea_status = '';             //客户状态
-                this.sea_intention = '';          //客户意向
-                this.sea_id = '';                 //客户身份
-                this.sea_source = '';             //客户来源
-                this.sea_belong = '';             //客户所属
-                this.sea_type = '';               //个人/中介
-                this.beforePage = val;
+                if (this.sea_status !== 1) {
+                    this.return_sea.sea_status = '';             //客户状态
+                    this.return_sea.sea_intention = '';          //客户意向
+                    this.return_sea.sea_id = '';                 //客户身份
+                    this.return_sea.sea_source = '';             //客户来源
+                    this.return_sea.sea_belong = '';             //客户所属
+                    this.return_sea.sea_type = '';               //个人/中介
+                }
+                this.return_sea.beforePage = val;
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
+                    if (this.sea_status === 1) {
+                        this.sea_status = 2;
+                        this.return_sea = this.$route.query.sear;
+                        this.search_pool(val);
+                        this.wait = 2;
+                    } else {
 //                    列表
-                    this.$http.post('core/customer_pool/customerpool/page/' + val).then((res) => {
-                        if (res.data.code === '70040') {
-                            this.custom_list = res.data.data.list;
-                            this.paging = res.data.data.pages;
-                            this.isShow = false;
-                            this.pitch=[];
-                            this.cus_name = [];
-                        } else {
-                            this.custom_list = [];
-                            this.isShow = true;
-                            //失败信息 ***
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        }
-                    });
+                        this.$http.post('core/customer_pool/customerpool/page/' + val).then((res) => {
+                            if (res.data.code === '70040') {
+                                this.custom_list = res.data.data.list;
+                                this.return_sea.paging = res.data.data.pages;
+                                this.isShow = false;
+                                this.pitch = [];
+                                this.cus_name = [];
+                            } else {
+                                this.custom_list = [];
+                                this.isShow = true;
+                                //失败信息 ***
+                                this.info.error = res.data.msg;
+                                //显示失败弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                    }
                 });
             },
 //            搜索
             search_pool (val){
-                this.beforePage = val;
+                this.return_sea.beforePage = val;
                 this.$http.post('core/customer_pool/customerpool/page/' + val, {
-                    customer_status: this.sea_status,
-                    customer_will: this.sea_intention,
-                    identity: this.sea_id,
-                    source: this.sea_source,
-                    person_medium: this.sea_type,
+                    customer_status: this.return_sea.sea_status,
+                    customer_will: this.return_sea.sea_intention,
+                    identity: this.return_sea.sea_id,
+                    source: this.return_sea.sea_source,
+                    person_medium: this.return_sea.sea_type,
                     keywords: this.sea_info,
-                    belong: this.sea_belong,
+                    belong: this.return_sea.sea_belong,
                 }).then((res) => {
                     if (res.data.code === '70040') {
                         this.custom_list = res.data.data.list;
-                        this.paging = res.data.data.pages;
+                        this.return_sea.paging = res.data.data.pages;
                         this.isShow = false;
                     } else {
-                        this.paging = '';
+                        this.return_sea.paging = '';
                         this.custom_list = [];
                         this.isShow = true;
                         //失败信息 ***

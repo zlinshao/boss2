@@ -93,7 +93,7 @@
                 this.$http.post('message/system/write', {
                     department_id: this.departmentId,
                     title: this.titles,
-                    content: '<pre>' + this.contents + '</pre>'
+                    content: this.contents
                 }).then((res) => {
                     if (res.data.code === '100004') {
                         $('#announcementAdd').modal('hide');
