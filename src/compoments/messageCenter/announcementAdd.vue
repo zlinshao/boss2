@@ -31,8 +31,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label col-sm-2">内容</label>
                                         <div class="col-sm-10 ">
-                                            <textarea class="form-control" name="editor1" v-model="contents"
-                                                      rows="6"></textarea>
+                                              <textarea class="form-control" name="editor1" v-model="contents" rows="6"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -94,7 +93,7 @@
                 this.$http.post('message/system/write', {
                     department_id: this.departmentId,
                     title: this.titles,
-                    content: this.contents
+                    content: '<pre>' + this.contents + '</pre>'
                 }).then((res) => {
                     if (res.data.code === '100004') {
                         $('#announcementAdd').modal('hide');
