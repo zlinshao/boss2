@@ -34,10 +34,6 @@
                                                     陆宣羽：15851899908 <br>
                                                     <a href="tel:15851899908">电话</a>
                                                     <a href="sms:15851899908">发短信</a>
-                                                    <br>
-                                                    蔡云杰:13327823182 <br>
-                                                    <a href="tel:15851899908">电话</a>
-                                                    <a href="sms:15851899908">发短信</a>
                                                 </div>
                                             </a>
                                         </div>
@@ -239,7 +235,8 @@
             },
             clearInfo(){
                 this.searchInfo = '';
-                this.villages = []
+                this.villages = [];
+                this.isShow = false;
             },
             save(){
                 if (this.villages.length==0){
