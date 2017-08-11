@@ -4,6 +4,9 @@
             <li>组长报备</li>
             <li><router-link to="/reportedOther">其余款项报备</router-link></li>
             <li>其余款项报备详情</li>
+            <li class="pull-right">
+                <router-link :to="{path:'/reportedOther',query:{myParam:params,page:page}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+            </li>
         </ol>
 
         <section class="panel head">
@@ -133,10 +136,14 @@
                     //失败信息 ***
                     error: ''
                 },
+                params : {},
+                page : '',
             }
         },
         mounted (){
             let id = this.$route.query.otherId;
+            this.params = this.$route.query.myParams;
+            this.page = this.$route.query.page;
             console.log(id);
 //            this.collectMsg.id = id;
             this.$http.get('revenue/glee_collect/dict')
@@ -312,5 +319,10 @@
     .client_info > div > div > div span a{
         margin-left: 12px;
         font-size: 8px;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

@@ -6,6 +6,9 @@
                 <router-link to="/payPayment">应付款项</router-link>
             </li>
             <li class="active">应付款项详情</li>
+            <li class="pull-right">
+                <router-link :to="{path:'/payPayment',query:{myParam:params,page:page,selected:selected}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+            </li>
         </ol>
 
         <section class="panel head">
@@ -236,6 +239,9 @@
                     id: '',
                     msg: ''
                 },
+                params : {},
+                page : '',
+                selected : [],
             }
         },
         updated (){
@@ -244,6 +250,9 @@
         },
         mounted (){
             this.should_id = this.$route.query.payId;
+            this.params = this.$route.query.myParams;
+            this.page = this.$route.query.page;
+            this.selected = this.$route.query.selected;
             this.details(this.should_id);
             for (let i = 0; i < this.moreTime.length; i++) {
                 this.showOper.push(false);
@@ -534,5 +543,11 @@
 
     textarea {
         max-width: 100%;
+    }
+
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

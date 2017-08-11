@@ -17,7 +17,7 @@
                             </select>
                         </div>-->
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
 
@@ -129,7 +129,7 @@
                                 </label>
                             </td>
                             <td>
-                                <router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id}}">详情
+                                <router-link :to="{path:'/reopetedCollectDetail',query: {collectId: item.id,page:beforePage,myParams:params}}">详情
                                 </router-link>
                             </td>
                         </tr>
@@ -164,6 +164,7 @@
 
         <!--新增其余款项-->
         <AddOther :from="1" :addOther_id="addOther_id" @success="clearOperId"></AddOther>
+
     </div>
 </template>
 
@@ -234,13 +235,36 @@
             }
         },
         mounted (){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+//            console.log(params);
+//            alert(page);
+//            console.log(typeof params=='string')
+
+
+
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
                     (res) => {
                         this.dict = res.data;
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+                            this.filter(this.beforePage);
+                        } else {
+                            this.getCollectList();
+                        }
 //                        console.log(this.dict);
-                        this.getCollectList();
                     }
                 )
 

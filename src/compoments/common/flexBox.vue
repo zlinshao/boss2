@@ -5,7 +5,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label" v-show="moreYears>=2">第一年</label>
                 <div :class="{'col-sm-6':moreYears>=2,'col-sm-8':moreYears==1}">
-                    <input type="number" min="0" class="form-control" v-model="data[0]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
                 <div class="col-sm-4 icons">
                     <!--<i class="fa fa-plus-circle" @click="addMoreYears"></i>
@@ -20,7 +20,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第二年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control margin_0" v-model="data[1]" @blur="sendData">
+                    <input type="text" class="form-control margin_0" v-model="data[1]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第三年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[2]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[2]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第四年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[3]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[3]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第五年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[4]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[4]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第六年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[5]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[5]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第七年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[6]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[6]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第八年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[7]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[7]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第九年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[8]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[8]" @blur="sendData">
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label">第十年</label>
                 <div class="col-sm-6">
-                    <input type="number" min="0" class="form-control" v-model="data[9]" @blur="sendData">
+                    <input type="text" class="form-control" v-model="data[9]" @blur="sendData">
                 </div>
             </div>
         </div>

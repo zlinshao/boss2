@@ -28,7 +28,7 @@
                             </select>
                         </div>
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -119,7 +119,7 @@
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
-                            <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id}}">详情</router-link></td>
+                            <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id,page:beforePage,myParams:params,selected:selected}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="13" class="text-center text-muted">
@@ -178,7 +178,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" v-model="formData.amount_receivable">
+                                    <input type="text" class="form-control" v-model="formData.amount_receivable">
                                 </div>
                             </div>
 
@@ -279,6 +279,7 @@
                         needHour : true
                     }
                 ],
+                currentDate :[],
 
                 configure : {},
                 filtrate : {
@@ -338,12 +339,34 @@
             //            时间选择
         },
         mounted (){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
                     (res) => {
                         this.dict = res.data;
-                        this.payFlowList();
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+//                            alert(selected);
+                            if (selected!=undefined){
+                                this.selected = selected;
+                             }
+                            this.filter(this.beforePage);
+                        } else {
+                            this.payFlowList();
+                        }
                     }
                 );
 

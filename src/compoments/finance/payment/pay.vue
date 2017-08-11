@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -133,7 +133,7 @@
                                 </label>
                             </td>
                             <td>
-                                <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}">详情</router-link>
+                                <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id,page:beforePage,myParams:params,selected:selected}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -204,7 +204,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应付金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" v-model="payable">
+                                    <input type="text" class="form-control" v-model="payable">
                                 </div>
                             </div>
 
@@ -316,6 +316,7 @@
                         needHour: true
                     }
                 ],
+                currentDate :[],
 
                 configure: {},
                 filtrate: {
@@ -364,11 +365,34 @@
 //            时间选择
         },
         mounted (){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
                     (res) => {
                         this.dict = res.data;
-                        this.payFlowList();
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+//                            alert(selected);
+                            if (selected!=undefined){
+                                this.selected = selected;
+                            }
+                            this.filter(this.beforePage);
+                        } else {
+                            this.payFlowList();
+                        }
+
                     }
                 );
         },

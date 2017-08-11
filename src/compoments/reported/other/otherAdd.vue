@@ -49,7 +49,7 @@
                                     </div>
                                     <label class="col-sm-2 control-label">款项金额</label>
                                     <div class="col-sm-4">
-                                        <input type="number" min="0" class="form-control" v-model="formData.money_amount">
+                                        <input type="text" class="form-control" v-model="formData.money_amount">
                                     </div>
                                 </div>
                                 <div class="form-group">
