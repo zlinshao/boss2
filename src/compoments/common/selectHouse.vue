@@ -218,6 +218,7 @@
                     $('.selectHouse').modal('hide');
                     this.houseList=[];
                     this.keywords='';
+                    this.isNewHouse = false;
                 }
             },
 

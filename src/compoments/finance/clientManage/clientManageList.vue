@@ -218,7 +218,7 @@
 
             },
             pageSearch(val){
-                this.page=val;
+                this.searchInformation.pages=val;
                 this.getClientList();
             },
             reset(){    //清空
