@@ -152,7 +152,8 @@
         components: {PicModal, Status},
         data(){
             return {
-                msg: {},
+                dict : {},
+                msg: '',
                 currentId: '',
                 largePic: [],
                 srcs: {},
