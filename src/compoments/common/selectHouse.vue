@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade selectHouse" id="selectHouse">
+        <div class="modal fade selectHouse" id="selectHouse" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">选择房屋</h4>
@@ -121,7 +121,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="ensure">确定</button>
                     </div>
                 </div>
@@ -260,6 +260,9 @@
                         }
                     })
                 }
+            },
+            closeModal(){
+                this.isNewHouse = false;
             },
         }
     }
