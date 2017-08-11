@@ -412,7 +412,7 @@
                             .then(
                                 (res) => {
                                     this.dict = res.data;
-                                    this.search(1);
+                                    this.filter(this.beforePage);
                                 }
                             );
                     } else {
