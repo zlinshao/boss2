@@ -53,13 +53,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">收房年限<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.years">
+                                        <input type="text" class="form-control" v-model="formData.years">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">空置期<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.vacancy">
+                                        <input type="text" class="form-control" v-model="formData.vacancy">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -89,7 +89,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">押金<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.cost_deposit">
+                                        <input type="text" class="form-control" v-model="formData.cost_deposit">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -166,7 +166,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" v-model="formData.cost_medi" >
+                                            <input type="text" class="form-control" v-model="formData.cost_medi" >
                                         </div>
                                     </div>
 
@@ -275,8 +275,8 @@
         data(){
             return {
                 showBase : true,
-                showCustomer : false,
-                showCost : false,
+                showCustomer : true,
+                showCost : true,
 
                 dict : {},
 
@@ -516,8 +516,8 @@
 //                this.formData.medi_alipay_owner = 1;
 
                 this.showBase = true;
-                this.showCustomer = false;
-                this.showCost = false;
+                this.showCustomer = true;
+                this.showCost = true;
 
                 $('#edit').modal('hide');
                 this.getDatails();
@@ -602,7 +602,7 @@
                         (res) => {
                             if (res.data.code == 18210){
                                 // 成功
-                                this.info.success = '修改报备成功';
+                                this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***

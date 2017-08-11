@@ -110,7 +110,7 @@
                                     {{dict.checkin_status[item.status]}}
                                 </label>
                             </td>
-                            <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id}}">详情</router-link></td>
+                            <td><router-link :to="{path:'/reopetedRentDetail',query: {rentId: item.id,page:beforePage,myParams:params}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="16" class="text-center text-muted">
@@ -211,13 +211,30 @@
             }
         },
         mounted (){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
                     (res) => {
                         this.dict = res.data;
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+                            this.filter(this.beforePage);
+                        } else {
+                            this.getRentingList();
+                        }
 //                        console.log(this.dict);
-                        this.getRentingList();
                     }
                 )
 
@@ -342,7 +359,7 @@
                         (res) => {
 //                            console.log(res);
                             if (res.data.code==18110){
-                                this.info.success = '操作成功';
+                                this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***
@@ -352,7 +369,7 @@
 
                                 this.filter(this.beforePage);
                             } else {
-                                this.info.error = '操作失败';
+                                this.info.error = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_error = true;
                                 //一秒自动关闭失败信息弹窗 ***

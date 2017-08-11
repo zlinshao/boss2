@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">实付金额</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" v-model="payable">
+                                    <input type="text" class="form-control" v-model="payable">
                                 </div>
                             </div>
 
@@ -248,7 +248,9 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition : 'top-right'
+
                 }).on('changeDate', function (ev) {
                     this.complete_time = ev.target.value;
                 }.bind(this));

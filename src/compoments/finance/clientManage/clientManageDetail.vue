@@ -2,7 +2,9 @@
     <div>
         <ol class="breadcrumb">
             <li>财务账本</li>
-            <li>客户管理</li>
+            <li>
+                <router-link to="/clientManage">客户管理</router-link>
+            </li>
             <li>客户管理详情</li>
         </ol>
         <!--头部-->

@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade selectHouse" id="selectHouse">
+        <div class="modal fade selectHouse" id="selectHouse" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">选择房屋</h4>
@@ -40,7 +40,9 @@
                                 </td>
                                 <td>{{item.detailed_address}}</td>
                                 <td>
-                                    <span>{{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫</span>
+                                    <span v-if="item.rooms !==null && item.rooms !==undefined">
+                                        {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
+                                    </span>
                                 </td>
                                 <td>{{item.area}}㎡</td>
                                 <td>{{dictionary.decoration[item.decoration]}}</td>
@@ -119,7 +121,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="ensure">确定</button>
                     </div>
                 </div>
@@ -234,8 +236,9 @@
                 }else {
                     this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
                         if(res.data.code==='80010'){
+                            console.log(res.data.data)
                             this.houseAddress.id=res.data.data.id;
-                            this.houseAddress.address=res.data.data.address;
+                            this.houseAddress.address=res.data.data.detailed_address;
                             this.houseAddress.rooms=res.data.data.rooms.rooms + '室' + res.data.data.rooms.hall + '厅' + res.data.data.rooms.toilet + '卫';
                             this.addHouse();
                             this.info.success =res.data.msg;
@@ -257,6 +260,9 @@
                         }
                     })
                 }
+            },
+            closeModal(){
+                this.isNewHouse = false;
             },
         }
     }

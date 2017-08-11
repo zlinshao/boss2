@@ -4,6 +4,9 @@
             <li>组长报备</li>
             <li><router-link to="/reportedRenting">租房报备</router-link></li>
             <li>租房报备详情</li>
+            <li class="pull-right">
+                <router-link :to="{path:'/reportedRenting',query:{myParam:params,page:page}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+            </li>
         </ol>
 
         <section class="panel head">
@@ -222,10 +225,14 @@
                 },
 
                 addPayment_id : 0,
+                params : {},
+                page : '',
             }
         },
         mounted (){
             let id = this.$route.query.rentId;
+            this.params = this.$route.query.myParams;
+            this.page = this.$route.query.page;
             console.log(id);
 //            this.id = id;
             this.$http.get('revenue/glee_collect/dict')
@@ -297,7 +304,7 @@
                         (res) => {
 //                            console.log(res);
                             if (res.data.code==18110){
-                                this.info.success = '操作成功';
+                                this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***
@@ -307,7 +314,7 @@
 
                                 this.getDetails();
                             } else {
-                                this.info.error = '操作失败';
+                                this.info.error = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_error = true;
                                 //一秒自动关闭失败信息弹窗 ***
@@ -431,5 +438,10 @@
         padding-left: 20px;
         line-height: 30px;
         /*cursor: pointer;*/
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

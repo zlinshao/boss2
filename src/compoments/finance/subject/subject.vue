@@ -408,7 +408,13 @@
                             this.info.state_success = false;
                         }, 2000);
                         this.clearForm();
-                        this.search(1);
+                        this.$http.get('revenue/glee_collect/dict')
+                            .then(
+                                (res) => {
+                                    this.dict = res.data;
+                                    this.filter(this.beforePage);
+                                }
+                            );
                     } else {
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -434,7 +440,13 @@
                                 this.info.state_success = false;
                             }, 2000);
                             this.clearForm();
-                            this.search(1);
+                            this.$http.get('revenue/glee_collect/dict')
+                                .then(
+                                    (res) => {
+                                        this.dict = res.data;
+                                        this.filter(this.beforePage);
+                                    }
+                                );
                         } else {
                             this.info.error = res.data.msg;
                             //显示失败弹窗 ***

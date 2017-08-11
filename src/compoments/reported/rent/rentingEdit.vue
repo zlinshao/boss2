@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">租房月数<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.months">
+                                        <input type="text" class="form-control" v-model="formData.months">
                                     </div>
                                 </div>
 
@@ -96,7 +96,7 @@
                                         <div class="col-sm-6 padding_0">
                                             <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
-                                                <input type="number" min="0" class="form-control" v-model="one_type" :disabled="change_payType">
+                                                <input type="text" class="form-control" v-model="one_type" :disabled="change_payType">
                                             </div>
                                         </div>
                                     </div>
@@ -118,7 +118,7 @@
                                         <div class="col-sm-6 padding_0">
                                             <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
-                                                <input type="number" min="0" class="form-control" v-model="more_type[index]">
+                                                <input type="text" class="form-control" v-model="more_type[index]">
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                                 <!--<div class="form-group">
                                     <label class="col-sm-2 control-label">月单价<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.price">
+                                        <input type="text" class="form-control" v-model="formData.price">
                                     </div>
                                 </div>-->
 
@@ -144,7 +144,7 @@
                                         <div class="col-sm-8">
                                             <label class="col-sm-4 control-label">已收金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="formData.received_amount">
+                                                <input type="text" class="form-control" v-model="formData.received_amount">
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[0].money">
+                                                <input type="text" class="form-control" v-model="payments[0].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2 icon">
@@ -182,7 +182,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[1].money">
+                                                <input type="text" class="form-control" v-model="payments[1].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -199,7 +199,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[2].money">
+                                                <input type="text" class="form-control" v-model="payments[2].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -216,7 +216,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[3].money">
+                                                <input type="text" class="form-control" v-model="payments[3].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -233,7 +233,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[4].money">
+                                                <input type="text" class="form-control" v-model="payments[4].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -250,7 +250,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[5].money">
+                                                <input type="text" class="form-control" v-model="payments[5].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -267,7 +267,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[6].money">
+                                                <input type="text" class="form-control" v-model="payments[6].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -284,7 +284,7 @@
                                         <div class="col-sm-6">
                                             <label class="col-sm-4 control-label">金额</label>
                                             <div class="col-sm-8">
-                                                <input type="number" min="0" class="form-control" v-model="payments[7].money">
+                                                <input type="text" class="form-control" v-model="payments[7].money">
                                             </div>
                                         </div>
                                         <div class="col-sm-2"></div>
@@ -312,7 +312,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" v-model="formData.cost_medi">
+                                            <input type="text" class="form-control" v-model="formData.cost_medi">
                                         </div>
                                     </div>
 
@@ -948,7 +948,7 @@
                         (res) => {
                             if (res.data.code == 18110){
                                 // 成功
-                                this.info.success = '修改报备成功';
+                                this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***

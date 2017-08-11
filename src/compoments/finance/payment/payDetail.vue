@@ -6,6 +6,9 @@
                 <router-link to="/payPayment">应付款项</router-link>
             </li>
             <li class="active">应付款项详情</li>
+            <li class="pull-right">
+                <router-link :to="{path:'/payPayment',query:{myParam:params,page:page,selected:selected}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+            </li>
         </ol>
 
         <section class="panel head">
@@ -15,6 +18,7 @@
                     <button class="btn btn-primary" v-if="detailsStatus" data-toggle="modal" data-target="#payFor">
                         应付入账
                     </button>
+                    <button class="btn btn-primary" v-show="status === 1" @click="dele">删除</button>
                 </div>
                 <div class="pro-sort">
                     <button class="status btn btn-success">房屋地址</button>
@@ -188,19 +192,20 @@
         <SelectHouse @House="getHouse"></SelectHouse>
 
         <SelectClient @clientAdd="getClient"></SelectClient>
-
+        <!--Confirm-->
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
 <script>
     import Status from '../../common/status.vue';
     import ShouldPay from './paymentShouldPay.vue'
-
+    import Confirm from '../../common/confirm.vue'
     import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectClient.vue'
 
     export default{
-        components: {Status, ShouldPay, SelectHouse, SelectClient},
+        components: {Status, ShouldPay, SelectHouse, SelectClient,Confirm},
         data(){
             return {
                 changeCompleteDate: true,       //修改补齐时间
@@ -229,6 +234,14 @@
                 },
 
                 pendable : '',
+
+                confirmMsg: {
+                    id: '',
+                    msg: ''
+                },
+                params : {},
+                page : '',
+                selected : [],
             }
         },
         updated (){
@@ -237,6 +250,9 @@
         },
         mounted (){
             this.should_id = this.$route.query.payId;
+            this.params = this.$route.query.myParams;
+            this.page = this.$route.query.page;
+            this.selected = this.$route.query.selected;
             this.details(this.should_id);
             for (let i = 0; i < this.moreTime.length; i++) {
                 this.showOper.push(false);
@@ -435,6 +451,39 @@
                             this.info.state_error = false;
                         }, 2000);
                     })
+            },
+
+            // 删除
+            dele(){
+                this.confirmMsg.id = this.operId;
+                this.confirmMsg.msg = '确定删除该条应付款项吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.post('account/payable/delete/'+this.should_id)
+                    .then((res) =>{
+//                    console.log(res.data)
+                        if (res.data.code==18410){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.$router.push({path: '/payPayment'});
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    })
             }
 
         }
@@ -494,5 +543,11 @@
 
     textarea {
         max-width: 100%;
+    }
+
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

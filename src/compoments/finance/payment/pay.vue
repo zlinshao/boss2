@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -55,6 +55,9 @@
                         <li v-show="statusId != 3">
                             <h5><a data-toggle="modal" data-target="#payFor"><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
+                        </li>
+                        <li v-show="statusId==1">
+                            <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -130,7 +133,7 @@
                                 </label>
                             </td>
                             <td>
-                                <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id}}">详情</router-link>
+                                <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id,page:beforePage,myParams:params,selected:selected}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -201,7 +204,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应付金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" v-model="payable">
+                                    <input type="text" class="form-control" v-model="payable">
                                 </div>
                             </div>
 
@@ -263,6 +266,8 @@
 
         <!--应付入账-->
         <ShouldPay @pay_succ="search" :details="details_info"></ShouldPay>
+        <!--Confirm-->
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
@@ -276,11 +281,11 @@
     import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectPayClient.vue'
     import SelectSubject from '../../common/selectSubject.vue'
-
+    import Confirm from '../../common/confirm.vue'
     import ShouldPay from './paymentShouldPay.vue'
 
     export default{
-        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay,SelectSubject},
+        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay,SelectSubject,Confirm},
 
         data(){
             return {
@@ -311,6 +316,7 @@
                         needHour: true
                     }
                 ],
+                currentDate :[],
 
                 configure: {},
                 filtrate: {
@@ -346,7 +352,12 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+
+                confirmMsg: {
+                    id: '',
+                    msg: ''
+                },
             }
         },
         updated (){
@@ -354,11 +365,34 @@
 //            时间选择
         },
         mounted (){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
                     (res) => {
                         this.dict = res.data;
-                        this.payFlowList();
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+//                            alert(selected);
+                            if (selected!=undefined){
+                                this.selected = selected;
+                            }
+                            this.filter(this.beforePage);
+                        } else {
+                            this.payFlowList();
+                        }
+
                     }
                 );
         },
@@ -568,6 +602,40 @@
             },
             getSubject(val){
                 this.subject = val;
+            },
+
+            // 删除
+            dele(){
+                this.confirmMsg.id = this.operId;
+                this.confirmMsg.msg = '确定删除该条应付款项吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.post('account/payable/delete/'+this.operId)
+                    .then((res) =>{
+//                    console.log(res.data)
+                        if (res.data.code==18410){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.operId = 0;
+                            this.filter(this.beforePage);
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    })
             }
         }
     }

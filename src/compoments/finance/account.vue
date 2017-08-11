@@ -473,8 +473,8 @@
                             console.log(res.data.code);
                             if (res.data.code==18410){
                                 // 成功
-                                this.info.success = '删除账户成功';
-                                //显示失败弹窗 ***
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***
                                 setTimeout(() => {

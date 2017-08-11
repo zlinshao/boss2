@@ -28,7 +28,7 @@
                             </select>
                         </div>
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -53,6 +53,9 @@
                         </li>-->
                         <li v-show="statusId!=3">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
+                        </li>
+                        <li v-show="statusId==1">
+                            <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -116,7 +119,7 @@
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
-                            <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id}}">详情</router-link></td>
+                            <td><router-link :to="{path:'/collectPaymentDetail',query: {collectId: item.id,page:beforePage,myParams:params,selected:selected}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="13" class="text-center text-muted">
@@ -175,7 +178,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">应收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" v-model="formData.amount_receivable">
+                                    <input type="text" class="form-control" v-model="formData.amount_receivable">
                                 </div>
                             </div>
 
@@ -229,6 +232,8 @@
         <SelectClient @clientPayAdd="getClient"></SelectClient>
         <!--应收入账-->
         <ShouldCollect :id="shouldCollectId" @success="filter"></ShouldCollect>
+        <!--Confirm-->
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
@@ -242,9 +247,10 @@
     import SelectClient from '../../common/selectPayClient.vue'
     import ShouldCollect from './paymentShouldCollect.vue'
     import SelectSubject from '../../common/selectSubject.vue'
+    import Confirm from '../../common/confirm.vue'
 
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect,SelectSubject},
+        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect,SelectSubject,Confirm},
 
         data(){
             return {
@@ -273,6 +279,7 @@
                         needHour : true
                     }
                 ],
+                currentDate :[],
 
                 configure : {},
                 filtrate : {
@@ -319,7 +326,11 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                confirmMsg: {
+                    id: '',
+                    msg: ''
+                },
 
             }
         },
@@ -328,12 +339,34 @@
             //            时间选择
         },
         mounted (){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
                     (res) => {
                         this.dict = res.data;
-                        this.payFlowList();
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+//                            alert(selected);
+                            if (selected!=undefined){
+                                this.selected = selected;
+                             }
+                            this.filter(this.beforePage);
+                        } else {
+                            this.payFlowList();
+                        }
                     }
                 );
 
@@ -569,6 +602,40 @@
 
             getSubject(val){
                 this.formData.subject_id = val;
+            },
+
+            // 删除
+            dele(){
+                this.confirmMsg.id = this.operId;
+                this.confirmMsg.msg = '确定删除该条应收款项吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.post('account/receivable/delete/'+this.operId)
+                    .then((res) =>{
+//                    console.log(res.data)
+                        if (res.data.code==18510){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.operId = 0;
+                            this.filter(this.beforePage);
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    })
             }
         }
     }

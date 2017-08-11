@@ -334,6 +334,7 @@
                 },
                 complete_ok:'ok',
                 isFinance : '', //  财务角色
+                module : '',
             }
         },
         mounted(){
@@ -482,8 +483,10 @@
             searchRoles(){
                 this.$http.get('manager/user/searchRoles').then((res)=>{
                     this.roleList=res.data.data;
+                    this.module = this.roleList[0].module;
                     if(this.roleList[0].module === 'human'){
                         this.isFinance = false;
+
                     }else if(this.roleList[0].module === 'revenue'){
                         this.isFinance = true;
                     }
@@ -609,7 +612,7 @@
                                     "photo":this.photo,
                                     "enroll":this.enroll,
                                     "id_pic":this.id_Pic.cus_idPhoto,
-
+                                    "module":this.module,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{

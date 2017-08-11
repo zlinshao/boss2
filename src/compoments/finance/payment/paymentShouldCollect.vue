@@ -64,7 +64,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">实收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" v-model="formData.amount_received"
+                                    <input type="text" class="form-control" v-model="formData.amount_received"
                                            @blur="getBalance">
                                 </div>
                             </div>
@@ -232,6 +232,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
+                    pickerPosition : 'top-right'
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '补齐时间') {
                         this.formData.complete_date = ev.target.value;
