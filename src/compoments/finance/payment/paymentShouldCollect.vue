@@ -101,11 +101,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">截图凭证</label>
                                 <div class="col-sm-10">
-                                    <!--<span class="form-control">
-                                        {{msg.album.receipt_pic}}
-                                    </span>-->
                                     <span class="form-control" style="border: none"
-                                          v-if="msg.album == undefined||msg.album.receipt_pic.length==0">
+                                          v-if="srcs == undefined">
                                         无
                                     </span>
                                     <span v-else="msg.album !== undefined">
