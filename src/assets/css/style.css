@@ -2924,6 +2924,10 @@ ul.amounts li {
     -webkit-border-radius: 0 4px 4px 0;
 }
 
+#memorandum > #calendar .fc-corner-right{
+    border-radius: 4px;
+}
+
 .drp-rmv {
     padding-top: 10px;
     margin-top: 10px;

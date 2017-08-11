@@ -334,6 +334,10 @@
             },
 //            系统公告
             home_system (){
+//                this.$http.get('index/index/index').then((res) => {
+//                        console.log(JSON.parse(res.data));
+//
+//                });
                 this.$http.post('message/system/index/pages/1').then((res) => {
                     if (res.data.code === '100000') {
                         this.systems = res.data.data.list;
