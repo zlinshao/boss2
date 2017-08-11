@@ -54,6 +54,9 @@
                         <li v-show="statusId!=3">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
+                        <li v-show="statusId==1">
+                            <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -229,6 +232,8 @@
         <SelectClient @clientPayAdd="getClient"></SelectClient>
         <!--应收入账-->
         <ShouldCollect :id="shouldCollectId" @success="filter"></ShouldCollect>
+        <!--Confirm-->
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
@@ -242,9 +247,10 @@
     import SelectClient from '../../common/selectPayClient.vue'
     import ShouldCollect from './paymentShouldCollect.vue'
     import SelectSubject from '../../common/selectSubject.vue'
+    import Confirm from '../../common/confirm.vue'
 
     export default{
-        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect,SelectSubject},
+        components: {Page,Status,FlexBox,DatePicker,STAFF,upLoad,SelectClient,ShouldCollect,SelectSubject,Confirm},
 
         data(){
             return {
@@ -319,7 +325,11 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                confirmMsg: {
+                    id: '',
+                    msg: ''
+                },
 
             }
         },
@@ -569,6 +579,40 @@
 
             getSubject(val){
                 this.formData.subject_id = val;
+            },
+
+            // 删除
+            dele(){
+                this.confirmMsg.id = this.operId;
+                this.confirmMsg.msg = '确定删除该条应收款项吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.post('account/receivable/delete/'+this.operId)
+                    .then((res) =>{
+//                    console.log(res.data)
+                        if (res.data.code==18510){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
+                            this.operId = 0;
+                            this.filter(this.beforePage);
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_error = false;
+                            }, 2000);
+                        }
+                    })
             }
         }
     }

@@ -877,7 +877,7 @@
                             console.log(res);
                             if (res.data.code==18110){
                                 // 成功
-                                this.info.success = '新增报备成功';
+                                this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
                                 this.info.state_success = true;
                                 //一秒自动关闭失败信息弹窗 ***
