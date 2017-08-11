@@ -2,7 +2,10 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li >收房合同</li>
+            <router-link to="/collectContract" tag="li" style="cursor: pointer"
+                         v-if="searchRequirement.type === 'collect'" class="bread">收房合同</router-link>
+            <router-link to="/rentingContract" tag="li" style="cursor: pointer"
+                         v-if="searchRequirement.type === 'rent'" class="bread">租房合同</router-link>
             <li class="active">备忘录</li>
         </ol>
 
@@ -316,5 +319,8 @@
     .label{
         width: 78px;
         display: inline-block;
+    }
+    .bread:hover{
+        color: #59ace2;
     }
 </style>

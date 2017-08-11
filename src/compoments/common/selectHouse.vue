@@ -234,8 +234,9 @@
                 }else {
                     this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
                         if(res.data.code==='80010'){
+                            console.log(res.data.data)
                             this.houseAddress.id=res.data.data.id;
-                            this.houseAddress.address=res.data.data.address;
+                            this.houseAddress.address=res.data.data.detailed_address;
                             this.houseAddress.rooms=res.data.data.rooms.rooms + '室' + res.data.data.rooms.hall + '厅' + res.data.data.rooms.toilet + '卫';
                             this.addHouse();
                             this.info.success =res.data.msg;
