@@ -54,13 +54,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">收房年限<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" v-model="formData.years">
+                                            <input type="text" class="form-control" v-model="formData.years">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">空置期<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" v-model="formData.vacancy">
+                                            <input type="text" class="form-control" v-model="formData.vacancy">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -90,7 +90,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">押金<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="0" class="form-control" v-model="formData.cost_deposit">
+                                            <input type="text" class="form-control" v-model="formData.cost_deposit">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -170,7 +170,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                             <div class="col-sm-10">
-                                                <input type="number" min="0" class="form-control" v-model="formData.cost_medi" >
+                                                <input type="text" class="form-control" v-model="formData.cost_medi" >
                                             </div>
                                         </div>
 

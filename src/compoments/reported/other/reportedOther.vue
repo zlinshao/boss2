@@ -16,15 +16,15 @@
                                 <option value="2">梦想</option>
                             </select>
                         </div>-->
-                        <div class="input-group">
+                        <!--<div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
                                    v-model="selected" @click='select' readonly>
                             <span class="input-group-btn">
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
                             </span>
-                        </div>
+                        </div>-->
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                         </div>
 
 
@@ -108,7 +108,7 @@
                                 </label>
                             </td>
                             <td>
-                                <router-link :to="{path:'/reportedOtherDetail',query: {otherId: item.id}}">详情</router-link>
+                                <router-link :to="{path:'/reportedOtherDetail',query: {otherId: item.id,page:beforePage,myParams:params}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -180,10 +180,11 @@
                         position: 'top-right',
                     }
                 ],
+                currentDate :[],
 
                 params: {
-                    department_id: [],
-                    staff_id: [],
+//                    department_id: [],
+//                    staff_id: [],
                     range: '',
                     search: ''
                 },
@@ -208,13 +209,36 @@
             }
         },
         mounted(){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict')
                 .then(
 //                    console.log
                     (res) => {
                         this.dict = res.data;
+                        if (page!=undefined){
+                            this.page = page;
+                            this.beforePage = page;
+                            if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                                this.currentDate = params.range.split('to');
+                                // this.currentDate = params.range.split('to');
+                                // console.log(this.currentDate)
+                                this.params = params;
+                                console.log(this.params);
+//                                alert(this.beforePage)
+                            }
+//                            alert(selected);
+                            /*if (selected!=undefined){
+                                this.selected = selected;
+                            }*/
+                            this.filter(this.beforePage);
+                        } else {
+                            this.getList();
+                        }
 //                        console.log(this.dict);
-                        this.getList();
+
                     }
                 )
 

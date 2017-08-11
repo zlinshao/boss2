@@ -4,6 +4,9 @@
             <li>组长报备</li>
             <li><router-link to="/reportedCollect">收房报备</router-link></li>
             <li>收房报备详情</li>
+            <li class="pull-right">
+                <router-link :to="{path:'/reportedCollect',query:{myParam:params,page:page}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+            </li>
         </ol>
 
         <section class="panel head">
@@ -183,10 +186,15 @@
                 },
 
                 addPayment_id : 0,
+
+                params : {},
+                page : '',
             }
         },
         mounted (){
             let id = this.$route.query.collectId;
+            this.params = this.$route.query.myParams;
+            this.page = this.$route.query.page;
             console.log(id);
 //            this.collectMsg.id = id;
             this.$http.get('revenue/glee_collect/dict')
@@ -378,5 +386,11 @@
         padding-left: 20px;
         line-height: 30px;
         /*cursor: pointer;*/
+    }
+
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>
