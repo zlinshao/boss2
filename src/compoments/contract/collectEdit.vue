@@ -397,7 +397,7 @@
             },
             selectClient(val){         //选择业主姓名
                 this.flag = val;
-                $('#selectClient').modal('show');
+                $('.selectClient:eq(1)').modal('show');
             },
             receiveClient(val){     //接收业主id
                 if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) == -1){

@@ -630,11 +630,11 @@
             },
 
             selectClient(){
-                $('.selectClient:eq(0)').modal('show');
+                $('.selectClient:eq(1)').modal('show');
             },
             getClient(data){
                 // 选择客户
-//                console.log(data);
+                console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
                 this.is_medi = data.person_medium;
@@ -769,14 +769,13 @@
                 this.$http.get('core/rent/readcontract/id/'+this.formData.previous_contract_id)
                     .then(
                         (res) =>{
-                            console.log(res.data.data);
                             let result = res.data.data;
                             this.formData.staff_id = result.staff_id;
                             this.formData.house_id = result.villa_id.id;
                             this.formData.customer_id = result.customer_id.id;
                             this.chooseResult.staff_name = result.staff;
                             this.chooseResult.customer_name = result.customer_id.name;
-                            this.chooseResult.house_name = result.villa_id.amap_json.villageName;
+                            this.chooseResult.house_name = result.villa_id.detailed_address;
 
                         }
                     )
