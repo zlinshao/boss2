@@ -16,7 +16,7 @@
         <div class="row">
             <aside class="col-lg-12">
                 <section class="panel">
-                    <div class="panel-body">
+                    <div class="panel-body" id="memorandum">
                         <div id="calendar" class="has-toolbar"></div>
                     </div>
                 </section>
@@ -299,7 +299,7 @@
                     autoclose: 1,
                     initialDate: new Date(),
                     pickerPosition: 'bottom-right',
-                    clearBtn: true,                     //清除按钮
+//                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', function (ev) {
                     this.Times = ev.target.value;
                     let year = ev.target.value.split('-')[0];
@@ -513,4 +513,5 @@
         font-size: 18px;
         color: #FFFFFF;
     }
+
 </style>
