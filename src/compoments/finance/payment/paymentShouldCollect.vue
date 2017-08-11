@@ -232,6 +232,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
+                    pickerPosition : 'top-right'
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '补齐时间') {
                         this.formData.complete_date = ev.target.value;

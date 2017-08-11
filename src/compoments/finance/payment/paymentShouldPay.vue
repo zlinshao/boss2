@@ -248,7 +248,9 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition : 'top-right'
+
                 }).on('changeDate', function (ev) {
                     this.complete_time = ev.target.value;
                 }.bind(this));
