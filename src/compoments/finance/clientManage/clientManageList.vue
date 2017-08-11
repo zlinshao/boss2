@@ -186,7 +186,7 @@
             },
             selectDpm(){
                 $('.selectCustom:eq(0)').modal('show');
-                this.configure={length:1,class:'department'};
+                this.configure={length:1,class:'department',id:[]};
             },
             dpmSelected(val){
                this.searchInformation.department_id = val.department[0].id;
