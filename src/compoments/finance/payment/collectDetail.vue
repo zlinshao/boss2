@@ -331,7 +331,7 @@
                             this.times.splice(index, 1, this.moreTime[index]);
                         } else {
                             // 失败
-                            this.info.error = res.data.msg;
+                            this.info.error = res.data.msg  ;
                             //显示失败弹窗 ***
                             this.info.state_error = true;
                             //一秒自动关闭失败信息弹窗 ***

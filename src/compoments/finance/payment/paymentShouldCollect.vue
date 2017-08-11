@@ -152,7 +152,8 @@
         components: {PicModal, Status},
         data(){
             return {
-                msg: {},
+                dict: {},
+                msg: '',
                 currentId: '',
                 largePic: [],
                 srcs: {},
@@ -248,7 +249,6 @@
 //                        console.log(this.msg)
 //                        console.log(this.msg.album)
 
-//                            alert(1)
                         if (res.data.data.album) {
                             this.srcs = this.msg.album.receipt_pic;
                         }

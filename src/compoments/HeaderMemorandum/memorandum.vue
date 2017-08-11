@@ -118,7 +118,15 @@
         data (){
             return {
                 revise_info: {},
-                colour: {},
+                colour: {
+                    1: "#6883A3",
+                    2: "#46BE8A",
+                    3: "#57C7D4",
+                    4: "#F2A654",
+                    5: "#F96868",
+                    6: "#526069",
+                    7: "#926DDE"
+                },
                 mem_id: '',
                 mem_status: true,
                 memorandum: [],         //备忘录列表
@@ -273,6 +281,7 @@
                         let color = res.data.data.color;
                         this.list_info(mem, color);
                     } else {
+                        this.list_info();
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -324,23 +333,22 @@
             list_info (mem, color){
                 let _this = this;
                 let memorandum = [];
-                for (let i = 0; i < mem.length; i++) {
-                    memorandum.push(
-                        {
-                            id: mem[i].memo_id,
-                            title: mem[i].title,
-                            start: mem[i].start,
-                            end: mem[i].end,
-                            content: mem[i].content,
-                            color: color[mem[i].color],
-                            color_id: mem[i].color,
-                        }
-                    )
+                if (mem) {
+                    for (let i = 0; i < mem.length; i++) {
+                        memorandum.push(
+                            {
+                                id: mem[i].memo_id,
+                                title: mem[i].title,
+                                start: mem[i].start,
+                                end: mem[i].end,
+                                content: mem[i].content,
+                                color: color[mem[i].color],
+                                color_id: mem[i].color,
+                            }
+                        )
+                    }
                 }
-                let d = new Date();
                 $('#calendar').fullCalendar({
-
-                    defaultDate : d,//默认日期
                     buttonText: {
                         today: '今天',
                         month: '月视图',
@@ -348,7 +356,6 @@
 //                        day: '日视图'
                     },
                     allDayText: "全天",
-
                     timeFormat: {
                         '': 'H:mm{-H:mm}'
                     },
