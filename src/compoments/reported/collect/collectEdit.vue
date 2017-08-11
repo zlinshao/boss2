@@ -275,8 +275,8 @@
         data(){
             return {
                 showBase : true,
-                showCustomer : false,
-                showCost : false,
+                showCustomer : true,
+                showCost : true,
 
                 dict : {},
 
@@ -516,8 +516,8 @@
 //                this.formData.medi_alipay_owner = 1;
 
                 this.showBase = true;
-                this.showCustomer = false;
-                this.showCost = false;
+                this.showCustomer = true;
+                this.showCost = true;
 
                 $('#edit').modal('hide');
                 this.getDatails();

@@ -262,8 +262,8 @@
         data(){
             return {
                 showBase : true,
-                showCustomer : false,
-                showCost : false,
+                showCustomer : true,
+                showCost : true,
 
                 dict : {},
 
@@ -454,8 +454,8 @@
 //                this.formData.is_medi = 1;
 
                 this.showBase = true;
-                this.showCustomer = false;
-                this.showCost = false;
+                this.showCustomer = true;
+                this.showCost = true;
 
                 $('#add').modal('hide');
                 if (this.formData.previous_contract_id!=''){
