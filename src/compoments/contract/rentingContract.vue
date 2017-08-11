@@ -437,7 +437,7 @@
             getConfirm(){
                 if(this.msgFlag === 'delete'){
                     this.$http.get('core/rent/delete/id/' + this.contractSeleted[0]).then((res) => {
-                        if(res.data.code === '70030'){
+                        if(res.data.code === '80030'){
                             this.search();
                             this.contractSeleted = [];
                             this.info.success =res.data.msg;
