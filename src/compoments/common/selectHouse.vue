@@ -59,13 +59,17 @@
                     <div class="modal-body roll" v-if="isNewHouse">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="villageName" class="col-sm-2 control-label">小区名称<sup>*</sup></label>
-                                <div class="col-sm-10">
-                                    <input title="请点击选择" type="text" class="form-control" id="villageName"
+                                <label class="col-sm-2 control-label">小区名称<sup>*</sup></label>
+                                <div class="col-sm-10" v-if="houseAdd.is_amap">
+                                    <input title="请点击选择" type="text" class="form-control"
                                            v-model="houseAdd.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                 </div>
+                                <div class="col-sm-10" v-if="!houseAdd.is_amap">
+                                    <input title="请点击选择" type="text" class="form-control"
+                                           v-model="houseAdd.village_name" readonly  data-toggle="modal" data-target="#myModal1">
+                                </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" v-if="houseAdd.is_amap">
                                 <label class="col-sm-2 control-label">小区地址</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control"
@@ -171,6 +175,8 @@
                         id: '',
                         location: '',
                     },
+                    village_name : '',
+                    is_amap : true,
                     building: '',
                     unit: '',
                     house_number: '',
@@ -180,6 +186,7 @@
                         toilet:'1'
                     },
                 },
+
             }
         },
         mounted(){
@@ -227,13 +234,21 @@
                 this.isNewHouse = true;
             },
             selectAddress(val){
-                this.houseAdd.amap_json=val;
+                if(val.villageAddress ===undefined){
+                    this.houseAdd.village_name = val.villageName;
+                    this.houseAdd.is_amap = false;
+                }else {
+                    this.houseAdd.is_amap = true;
+                    for (let key in val){
+                        this.houseAdd.amap_json[key] = val[key];
+                    }
+                }
             },
             ensure(){
                 if(this.isNewHouse === false){
                     this.addHouse();
                 }else {
-                    this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
+                    this.$http.post('core/villa/savevilla/',this.houseAdd).then((res) => {
                         if(res.data.code==='80010'){
                             console.log(res.data.data)
                             this.houseAddress.id=res.data.data.id;
