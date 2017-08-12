@@ -7,7 +7,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div v-show="operId == 0">
+                <div v-show="operId==0">
                     <form class="form-inline" role="form">
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
@@ -31,12 +31,11 @@
                                 <i class="fa fa-plus-square"></i>&nbsp;新增转账记录
                             </a>
                         </div>
-
                     </form>
                 </div>
                 <div v-show="operId != 0" class="col-lg-12 remind">
                     <ul>
-
+                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                     </ul>
                 </div>
             </div>
@@ -268,6 +267,18 @@
                 )
         },
         methods : {
+//            归零
+            zero (){
+                this.$http.post('account/manage/zero/' + this.operId).then((res) => {
+                    console.log(res.data);
+                })
+            },
+//            充值
+            recharge (){
+                this.$http.post('account/manage/recharge/' + this.operId).then((res) => {
+                    console.log(res.data);
+                })
+            },
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
                 if (ev.currentTarget.checked){

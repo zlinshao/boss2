@@ -236,9 +236,7 @@
     textarea {
         max-width: 100%;
     }
-    .panel{
-        margin-bottom: 0;
-    }
+
     @media (max-width: 798px) {
         .panel-body .form-inline .input-group {
             margin-bottom: 5px;
