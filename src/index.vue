@@ -381,7 +381,6 @@
 //                        this.bulletin_nanjin = res.data.data.bulletin.nanjin;           //简报南京
 //                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
                         this.main_birthday = res.data.data.birthday;                    //寿星
-                        console.log(res.data.data.birthday);
 //                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
 //                        this.main_message = res.data.data.message;                      //公告
 //                        this.check_inData = res.data.data.uprate;                       //入住率
