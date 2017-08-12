@@ -865,6 +865,7 @@
             }
         },
         mounted(){
+//            财务权限
             this.$http.post('revenue/customer/is_rule').then((res) => {
                 if (res.data.code === '20015') {
                     this.account_book = true;
@@ -912,9 +913,7 @@
                     window.location.href = "login.html";
                 })
             },
-            clearCookie(){
 
-            },
 //            查看提醒
             lookRemind(){
                 $('#checkRemind').modal({

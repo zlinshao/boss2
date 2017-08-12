@@ -2,18 +2,18 @@
     <div>
         <ol class="breadcrumb">
             <li>客户管理</li>
-            <li v-if="custom === 1">
+            <li v-show="custom === '1' || custom === 1">
                 <router-link to='/custom'>客户</router-link>
             </li>
-            <li v-if="custom === 2">
+            <li v-show="custom === '2' || custom === 2">
                 <router-link to="/customerPool">客户池</router-link>
             </li>
             <li>客户详情</li>
-            <li v-if="custom === 1" class="pull-right">
-                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>返回上一步</router-link>
+            <li v-show="custom === 1" class="pull-right">
+                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>&nbsp;返回上一步</router-link>
             </li>
-            <li v-if="custom === 2" class="pull-right">
-                <router-link :to="{path:'/customerPool',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>返回上一步</router-link>
+            <li v-show="custom === 2" class="pull-right">
+                <router-link :to="{path:'/customerPool',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>&nbsp;返回上一步</router-link>
             </li>
         </ol>
         <!--头部-->
@@ -311,7 +311,7 @@
         data (){
             return {
                 custom_sear: {},
-                custom: '',                 //客户
+                custom: '',                 //客户或客户池
                 look_remind: '',            //是否有提醒
                 remind_info: [],            //查看提醒
                 revise_state: '',           //修改客户
@@ -340,11 +340,14 @@
                 }
             }
         },
+        created (){
+
+        },
         mounted (){
             this.cus_Id = this.$route.query.nameId;
-            this.custom = this.$route.query.cus;
             this.custom_sear = this.$route.query.sear;
-            console.log(this.$route.query.sear);
+            this.custom = this.$route.query.cus;
+//            console.log(this.$route.query.sear)
             this.detailed_info(this.cus_Id);
         },
         methods: {
@@ -539,6 +542,11 @@
         padding-top: 13px;
     }
     .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
+    }
+    .breadcrumb > li:nth-child(5):before {
         padding: 0 5px;
         color: #ccc;
         content: "";
