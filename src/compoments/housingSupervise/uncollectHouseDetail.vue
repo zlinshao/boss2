@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>房源管理</li>
             <router-link to="/noCollect" tag="li" style="cursor: pointer" class="bread">待收房源</router-link>
-            <li>待收房源详情 {{params}}</li>
+            <li>待收房源详情</li>
 
             <li class="pull-right"  v-if="typeof (params) === 'object'">
                 <router-link :to="{path:'/noCollect',query: { params:params}}">

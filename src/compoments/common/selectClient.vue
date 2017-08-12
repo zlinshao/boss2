@@ -136,6 +136,7 @@
 <script>
     import Status from './status.vue'
     export default{
+        props : ['collectRent'],
         components:{
             Status,
         },
@@ -169,6 +170,11 @@
         },
         mounted(){
             this.custom();
+        },
+        watch :{
+            collectRent(val){
+                this.cus_status = val;
+            }
         },
         methods : {
             search(){

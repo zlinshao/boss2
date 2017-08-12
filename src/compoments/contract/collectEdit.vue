@@ -184,7 +184,7 @@
             </div>
         </div>
         <!--选择客户-->
-        <SelectClient @clientAdd="receiveClient"> </SelectClient>
+        <SelectClient :collectRent="collectRent" @clientAdd="receiveClient"> </SelectClient>
         <Status :state='info'></Status>
     </div>
 </template>
@@ -201,6 +201,7 @@
         },
         data(){
             return {
+                collectRent : '',
                 complete_ok:'ok',
                 bankPic : {
                     cus_idPhotos : {},    //银行卡照片id
@@ -397,9 +398,11 @@
             },
             selectClient(val){         //选择业主姓名
                 this.flag = val;
+                this.collectRent = 1;
                 $('.selectClient:eq(1)').modal('show');
             },
             receiveClient(val){     //接收业主id
+                this.collectRent = '';
                 if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) == -1){
                     this.contractEdit.relative_customer_id .push(val.id);
                     this.relative_customer.push(val.name);
