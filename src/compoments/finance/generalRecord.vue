@@ -7,7 +7,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div v-show="operId==0">
+                <div v-show="operId == 0">
                     <form class="form-inline" role="form">
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
@@ -34,15 +34,9 @@
 
                     </form>
                 </div>
-                <div v-show="operId!=0" class="col-lg-12 remind">
+                <div v-show="operId != 0" class="col-lg-12 remind">
                     <ul>
-                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li>
-                            <h5><a>&copy;&nbsp;归零</a></h5>
-                        </li>
-                        <li>
-                            <h5><a><i class="fa fa-credit-card"></i>&nbsp;充值</a></h5>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -70,7 +64,7 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
+                                <input type="checkbox" :value="item.id" :checked="operId === item.id" @click="changeIndex($event,item.id)">
                             </td>
                             <td>{{item.transfer_date}}</td>
                             <td>{{item.out_name}}</td>
@@ -269,7 +263,6 @@
             this.$http.get('staff/info')
                 .then(
                     (res) =>{
-//                        console.log(res.data);
                         this.logName = res.data.name;
                     }
                 )
