@@ -153,6 +153,9 @@
         border-left: 6px solid transparent;
         content: '';
     }
+    #myModal1{
+        z-index: 1200;
+    }
 
 </style>
 <script>
