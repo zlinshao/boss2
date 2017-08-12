@@ -35,9 +35,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <p>
-                                    {{msg.get_content}}
-                                </p>
+                                <p style="white-space: pre-wrap;">{{msg.get_content}}</p>
                             </div>
                         </section>
                     </div>
