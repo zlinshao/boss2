@@ -159,7 +159,9 @@
                             <td class="text-center">{{item.status_villa}}</td>
                             <td class="text-center">{{item.belong}}</td>
                             <td class="text-center">
-                                <span v-if="item.department !== null || undefined">{{item.department.name}}</span>
+                                <span v-if="item.department !== null && item.department !== undefined">
+                                    {{item.department.name}}
+                                </span>
                             </td>
                             <td class="text-center">{{item.staff_id}}</td>
                             <td class="text-center">
@@ -172,7 +174,8 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <router-link :to="{path:'/collectDetail',query: {CollectId: item.id,params:params,departmentName,departmentName}}">
+                                <router-link :to="{path:'/collectDetail',
+                                    query:{CollectId: item.id,params:params,departmentName,departmentName}}">
                                     详情
                                 </router-link>
                             </td>
@@ -269,6 +272,7 @@
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary=res.data;
+
                     if(this.$route.query.params !== undefined && this.$route.query.params.keywords !== undefined){
                         this.params = this.$route.query.params;
                         this.departmentName = this.$route.query.departmentName;
@@ -280,6 +284,12 @@
                     this.searchHouseList();
                 });
             },
+            //搜索
+            search(){
+                this.params.page=1;
+                this.searchHouseList();
+            },
+
             //搜索房屋列表
             searchHouseList(){
                 this.$http.post('core/villa/receivedvillalist',this.params).then((res) => {
@@ -346,7 +356,7 @@
                 this.params.status = '';
                 this.params.belong = '';
                 this.params.area='';
-                this.params.params.page=1;
+                this.params.page=1;
                 this.params.keywords='',
                 this.departmentName='';
                 this.params.department_id='';
@@ -357,11 +367,6 @@
                 this.params.page=val;
                 this.searchHouseList();
             },
-            //搜索
-            search(){
-                this.params.page=1;
-                this.searchHouseList();
-            }
 
         }
     }
