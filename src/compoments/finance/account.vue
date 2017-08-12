@@ -18,7 +18,8 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="账户名称/卡号"  @keydown.enter.prevent="search(1)" v-model="params.search">
+                            <input type="text" class="form-control" placeholder="账户名称/卡号"
+                                   @keydown.enter.prevent="search(1)" v-model="params.search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
@@ -31,9 +32,19 @@
                     </form>
                 </div>
 
-                <div v-show="operId!=0" class="col-lg-12 remind">
+                <div v-show="operId != 0" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li>
+                            <h5>
+                                <a @click="zero">&copy;&nbsp;归零</a>
+                            </h5>
+                        </li>
+                        <li>
+                            <h5>
+                                <a @click="recharge_open"><i class="fa fa-credit-card"></i>&nbsp;充值</a>
+                            </h5>
+                        </li>
                         <li>
                             <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
@@ -44,9 +55,6 @@
                 </div>
             </div>
         </section>
-
-
-
 
         <!--表格-->
 
@@ -70,7 +78,8 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :value="item.id" :checked="operId===item.id" @click="changeIndex($event,item.id)">
+                                <input type="checkbox" :value="item.id" :checked="operId===item.id"
+                                       @click="changeIndex($event,item.id)">
                             </td>
                             <td>{{item.name}}</td>
                             <td>{{dict.account_cate[item.cate]}}</td>
@@ -105,7 +114,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" @click="clearForm" aria-hidden="true" >×</button>
+                            <button type="button" class="close" @click="clearForm" aria-hidden="true">×</button>
                             <h4 class="modal-title">{{title}}</h4>
                         </div>
                         <div class="modal-body">
@@ -121,7 +130,8 @@
                                     <label class="col-sm-2 control-label">账户类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.cate">
-                                            <option :value="value" v-for="(key,value) in dict.account_cate">{{key}}</option>
+                                            <option :value="value" v-for="(key,value) in dict.account_cate">{{key}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -152,13 +162,15 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">初始金额<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.amount_base" :readonly="!isAdd">
+                                        <input type="number" min="0" class="form-control" v-model="formData.amount_base"
+                                               :readonly="!isAdd">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">当前余额</label>
                                     <div class="col-sm-10">
-                                        <input type="number" min="0" class="form-control" v-model="formData.account_remain" readonly>
+                                        <input type="number" min="0" class="form-control"
+                                               v-model="formData.account_remain" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -180,7 +192,31 @@
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="recharge">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">充值金额</h5>
+                    </div>
+                    <div class="modal-body">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="amount" placeholder="输入充值金额">
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" @click="recharge">添加</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <!--分页-->
@@ -192,15 +228,19 @@
 </template>
 <style scoped>
 
-    tbody tr input[type=checkbox]{
+    tbody tr input[type=checkbox] {
         width: 17px;
         height: 17px;
     }
-    textarea{
+
+    textarea {
         max-width: 100%;
     }
+    .panel{
+        margin-bottom: 0;
+    }
     @media (max-width: 798px) {
-        .panel-body .form-inline .input-group{
+        .panel-body .form-inline .input-group {
             margin-bottom: 5px;
         }
     }
@@ -211,39 +251,39 @@
     import Confirm from '../common/confirm.vue'
 
     export default{
-        components: {Page,Status,Confirm},
+        components: {Page, Status, Confirm},
         data(){
             return {
-                beforePage : 1,
-                isShow : false,
+                beforePage: 1,
+                isShow: false,
+                amount: '',
+                dict: {},
 
-                dict :{},
-
-                operId : 0,
-                paging : 1,
-                page : 1,                  // 当前页数
+                operId: 0,
+                paging: 1,
+                page: 1,                  // 当前页数
 
 //                modal
-                title : '',
-                isAdd : true,       // 是否新增
+                title: '',
+                isAdd: true,       // 是否新增
 
-                params : {
-                    cate : '',
-                    search : ''
+                params: {
+                    cate: '',
+                    search: ''
                 },
 
-                formData : {
-                    name : '',
-                    cate : 1,
-                    account_num : '',
-                    bank : '',
-                    sub_bank : '',
-                    amount_base : '',
-                    account_remain : '',
-                    remark : ''
+                formData: {
+                    name: '',
+                    cate: 1,
+                    account_num: '',
+                    bank: '',
+                    sub_bank: '',
+                    amount_base: '',
+                    account_remain: '',
+                    remark: ''
                 },
                 myData: [],      //列表数据
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -271,37 +311,84 @@
                 );
 
         },
-        watch : {
-            'formData.cate' : {
-                handler(curVal,oldVal){
+        watch: {
+            'formData.cate': {
+                handler(curVal, oldVal){
 //                    console.log(curVal)
-                    if (curVal!=1){
+                    if (curVal != 1) {
                         this.formData.bank = '';
                         this.formData.sub_bank = '';
                     }
                 }
             }
         },
-        methods : {
-            changeIndex(ev,id){
+        methods: {
+//            归零
+            zero (){
+                this.$http.post('account/manage/zero/' + this.operId).then((res) => {
+                    if (res.data.code === '18610') {
+                        this.accountList();
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            recharge_open (){
+                this.amount = '';
+                $('#recharge').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+//            充值
+            recharge (){
+                this.$http.post('account/manage/recharge/' + this.operId, {
+                    amount: this.amount,
+                }).then((res) => {
+                    if (res.data.code === '18610') {
+                        $('#recharge').modal('hide');
+                        this.accountList();
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            changeIndex(ev, id){
 //                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked){
+                if (ev.currentTarget.checked) {
                     this.operId = id;
 //                    console.log(this.operId);
-                }else {
+                } else {
                     this.operId = 0;
                 }
             },
             accountList(){
+                this.paging = '';
                 this.$http.get('account/manage').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
 //                    console.log(res);
-                    if (res.data.code==18400){
+                    if (res.data.code == 18400) {
                         // 成功
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.isShow = false;
                     } else {
+                        this.myData = [];
                         // 失败
                         this.isShow = true;
                     }
@@ -316,12 +403,12 @@
             filter(val){
                 this.beforePage = val;
                 this.operId = 0;
-                this.$http.get('account/manage?page='+val,{
-                    params : this.params
+                this.$http.get('account/manage?page=' + val, {
+                    params: this.params
                 })
                     .then(
                         (res) => {
-                            if (res.data.code==18400){
+                            if (res.data.code == 18400) {
                                 this.myData = res.data.data.data;
                                 this.paging = res.data.data.pages;
                                 this.isShow = false;
@@ -365,10 +452,10 @@
                 this.isAdd = false;
                 // 先请求
 
-                this.$http.get('account/manage/'+this.operId)
+                this.$http.get('account/manage/' + this.operId)
                     .then(
                         (res) => {
-                            if (res.data.code==18400){
+                            if (res.data.code == 18400) {
                                 // 成功
                                 let val = res.data.data;
                                 console.log(val)
@@ -395,10 +482,10 @@
             add(){
                 this.formData.account_remain = this.formData.amount_base;
 //                console.log(this.formData);
-                this.$http.post('account/manage',this.formData)
+                this.$http.post('account/manage', this.formData)
                     .then(
-                        (res)=> {
-                            if (res.data.code==18410){
+                        (res) => {
+                            if (res.data.code == 18410) {
                                 // 成功
                                 this.info.success = '新增账户成功';
                                 //显示失败弹窗 ***
@@ -425,11 +512,11 @@
             modify(){
                 this.formData.account_remain = this.formData.amount_base;
 //                console.log(this.formData);
-                this.$http.put('account/manage/'+this.operId,this.formData)
+                this.$http.put('account/manage/' + this.operId, this.formData)
                     .then(
-                        (res)=> {
+                        (res) => {
 //                            console.log(res.data)
-                            if (res.data.code==18410){
+                            if (res.data.code == 18410) {
                                 // 成功
                                 this.info.success = '修改账户成功';
                                 //显示失败弹窗 ***
@@ -467,11 +554,11 @@
 
             getConfirm(){
 //                alert(1);
-                this.$http.get('account/manage/delete/'+this.operId)
+                this.$http.get('account/manage/delete/' + this.operId)
                     .then(
                         (res) => {
                             console.log(res.data.code);
-                            if (res.data.code==18410){
+                            if (res.data.code == 18410) {
                                 // 成功
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
