@@ -5,7 +5,7 @@
             <router-link to="/noCollect" tag="li" style="cursor: pointer" class="bread">待收房源</router-link>
             <li>待收房源详情</li>
 
-            <li class="pull-right"  v-if="typeof (params) === 'object'">
+            <li class="pull-right" v-show="typeof (params) === 'object'">
                 <router-link :to="{path:'/noCollect',query: { params:params}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步</router-link>
             </li>

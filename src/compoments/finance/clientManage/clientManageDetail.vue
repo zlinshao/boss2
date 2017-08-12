@@ -9,7 +9,7 @@
             </li>
             <li>客户管理详情</li>
 
-            <li class="pull-right"  v-if="typeof (myParams) === 'object'">
+            <li class="pull-right" v-show="typeof (myParams) === 'object'">
                 <router-link :to="{path:'/clientManage',query: {Params:myParams,departmentName:departmentName}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>

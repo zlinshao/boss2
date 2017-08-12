@@ -7,7 +7,7 @@
             </li>
             <li>结算详情</li>
 
-            <li class="pull-right" v-if="typeof (Params) === 'object'">
+            <li class="pull-right" v-show="typeof (Params) === 'object'">
                 <router-link :to="{path:'/pendingItem',query: {Params:Params}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>

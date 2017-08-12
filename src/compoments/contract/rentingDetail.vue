@@ -5,7 +5,7 @@
             <router-link to="/rentingContract" tag="li" style="cursor: pointer" class="bread">租房合同</router-link>
             <li class="active">租房合同详情</li>
 
-            <li class="pull-right" v-if="typeof (myParams) === 'object'">
+            <li class="pull-right" v-show="typeof (myParams) === 'object'">
                 <router-link :to="{path:'/rentingContract',query: {Params:myParams,departmentName:departmentName}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>

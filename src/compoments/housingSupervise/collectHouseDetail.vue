@@ -5,7 +5,7 @@
             <router-link to="/okCollect" tag="li" style="cursor: pointer" class="bread">公司房源</router-link>
             <li>公司房源详情</li>
 
-            <li class="pull-right" v-if="typeof (params) === 'object'">
+            <li class="pull-right" v-show="typeof (params) === 'object'">
                 <router-link :to="{path:'/okCollect',query: { params:params,departmentName:departmentName }}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
