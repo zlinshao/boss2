@@ -15,21 +15,31 @@
 
                         <!--新增/编辑-->
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form"
-                            >
+                            <form class="form-horizontal" role="form">
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
-                                <div class="form-group">
-                                    <label for="villageName" class="col-sm-2 control-label">小区名称<sup>*</sup></label>
-                                    <div class="col-sm-10">
-                                        <input title="请点击选择" type="text" class="form-control" id="villageName"
-                                               v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                <div v-if="houseEdit.amap_json !==null && houseEdit.amap_json !==undefined && houseEdit.amap_json.villageName!== ''">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">小区名称<sup>*</sup></label>
+                                        <div class="col-sm-10">
+                                            <input title="请点击选择" type="text" class="form-control"
+                                                   v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                        </div>
                                     </div>
-                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">小区地址<sup>*</sup></label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control"
-                                               v-model="detailed_address" disabled >
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">小区地址<sup>*</sup></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control"
+                                                   v-model="houseEdit.amap_json.villageAddress" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="houseEdit.amap_json.villageName === ''">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">小区地址<sup>*</sup></label>
+                                        <div class="col-sm-10">
+                                            <input title="请点击选择" type="text" class="form-control"
+                                                   v-model="houseEdit.village_name" readonly  data-toggle="modal" data-target="#myModal1">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -280,6 +290,8 @@
                         id:'',
                         location:''
                     },
+                    village_name : '',
+                    is_amap : '',
                     building:'',
                     unit:'',
                     house_number:'',
@@ -324,7 +336,6 @@
                     error: ''
                 },
                 staff_id:'',  //负责人
-                detailed_address : '',
             }
         },
         watch:{
@@ -339,7 +350,10 @@
                     this.myHouseEdit=val;
                     this.complete_ok='ok';
                     this.reviseHouseId=val.id;
-                    this.detailed_address =val.detailed_address;
+
+                    val.amap_json.villageAddress ===''? this.houseEdit.is_amap = false : this.houseEdit.is_amap = true;
+
+                    this.houseEdit.village_name =val.detailed_address;
                     this.staff_id = val.staff_id;
                     if(val.amap_json !==null || undefined){
                         this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
@@ -434,7 +448,21 @@
         },
         methods: {
             selectAddress(val){
-                this.houseEdit.amap_json=val;
+                this.houseEdit.amap_json.villageAddress='';
+                this.houseEdit.amap_json.villageName='';
+                this.houseEdit.amap_json.district='';
+                this.houseEdit.amap_json.address='';
+                this.houseEdit.amap_json.id='';
+                this.houseEdit.amap_json.location='';
+                if(val.villageAddress ===undefined){
+                    this.houseEdit.village_name = val.villageName;
+                    this.houseEdit.is_amap = false;
+                }else {
+                    this.houseEdit.is_amap = true;
+                    for (let key in val){
+                        this.houseEdit.amap_json[key] = val[key];
+                    }
+                }
             },
             //获取图片id
             housePicId (val){

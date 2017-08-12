@@ -18,13 +18,17 @@
                             <form class="form-horizontal" role="form">
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div class="form-group">
-                                    <label for="villageName" class="col-sm-2 control-label">小区名称<sup>*</sup></label>
-                                    <div class="col-sm-10">
-                                        <input title="请点击选择" type="text" class="form-control" id="villageName"
+                                    <label class="col-sm-2 control-label">小区名称<sup>*</sup></label>
+                                    <div class="col-sm-10" v-if="houseAdd.is_amap">
+                                        <input title="请点击选择" type="text" class="form-control"
                                                v-model="houseAdd.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
                                     </div>
+                                    <div class="col-sm-10" v-if="!houseAdd.is_amap">
+                                        <input title="请点击选择" type="text" class="form-control"
+                                               v-model="houseAdd.village_name" readonly  data-toggle="modal" data-target="#myModal1">
+                                    </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" v-if="houseAdd.is_amap">
                                     <label class="col-sm-2 control-label">小区地址</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
@@ -310,6 +314,7 @@
                         id:'',
                         location:''
                     },
+                    village_name : '',
                     building:'',
                     unit:'',
                     house_number:'',
@@ -337,6 +342,8 @@
                     remarks:'',
                     house_pic:[],
                     property_pic:[],
+                    is_amap : true,
+
                 },
                 staff_id:'',
                 info:{
@@ -373,7 +380,15 @@
               })
             },
             selectAddress(val){
-                this.houseAdd.amap_json=val;
+                if(val.villageAddress ===undefined){
+                    this.houseAdd.village_name = val.villageName;
+                    this.houseAdd.is_amap = false;
+                }else {
+                    this.houseAdd.is_amap = true;
+                    for (let key in val){
+                        this.houseAdd.amap_json[key] = val[key];
+                    }
+                }
             },
             //获取图片id
             housePicId (val){
