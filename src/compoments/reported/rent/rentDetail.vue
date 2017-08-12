@@ -83,7 +83,7 @@
                                 <div class="list"><span class="text-primary">电费：</span><span>{{msg.elec_fee}}</span></div>
                                 <div class="list"><span class="text-primary">管理费：</span><span>{{msg.property_fee}}</span></div>
                                 <div class="list"><span class="text-primary">物业费：</span><span>{{msg.manage_fee}}</span></div>
-                                <div class="list"><span class="text-primary">网络费：</span><span>{{msg.elec_fee}}</span></div>
+                                <div class="list"><span class="text-primary">网络费：</span><span>{{msg.net_fee}}</span></div>
                                 <div class="list"><span class="text-primary">水费：</span><span>{{msg.water_fee}}</span></div>
                             </div>
                         </div>
