@@ -129,7 +129,7 @@
                             <th class="text-center">装修</th>
                             <th class="text-center">房屋特色</th>
                             <th class="text-center">参考租金</th>
-                            <th class="text-center">剩余空置期</th>
+                            <th class="text-center">剩余空置期（天）</th>
                             <th class="text-center">房屋状态</th>
                             <th class="text-center">房屋所属</th>
                             <th class="text-center">所属部门</th>
@@ -154,8 +154,7 @@
                             <td class="text-center">{{dictionary.decoration[item.decoration]}}</td>
                             <td class="text-center">{{dictionary.house_feature[item.house_feature]}}</td>
                             <td class="text-center">{{item.reference}}</td>
-                            <td class="text-center"> 0
-                            </td>
+                            <td class="text-center"> {{item.surplus}}</td>
                             <td class="text-center">{{item.status_villa}}</td>
                             <td class="text-center">{{item.belong}}</td>
                             <td class="text-center">

@@ -14,8 +14,18 @@
                                     <label class="col-sm-2 control-label">事件类型</label>
                                     <div class="col-sm-10">
                                         <select name="type" class="form-control" v-model="pendingSellter.item_type">
-                                            <option value="">事件类型</option>
+                                            <option value="0">事件类型</option>
                                             <option :value="key" v-for="(value,key) in myDictionary.item_type">{{value}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">收退款类型</label>
+                                    <div class="col-sm-10">
+                                        <select name="type" class="form-control" v-model="pendingSellter.receive_pay">
+                                            <option value="0">请选择</option>
+                                            <option value="1">收款</option>
+                                            <option value="2">退款</option>
                                         </select>
                                     </div>
                                 </div>
@@ -277,6 +287,7 @@
                     account_type : '',          //结算方式
                     account_num : '',           //结算账户
                     subject_id : '',               // 科目
+                    receive_pay : '',            //收退款
                 },
                 staff_name : '',            //员工
                 myDictionary: [],           //字典
@@ -367,8 +378,9 @@
                         this.pendingSellter.sublet_fee  = res.data.data.sublet_fee              //转租费用
                         this.pendingSellter.manage_fee  = res.data.data.manage_fee              //管理费
                         this.pendingSellter.net_fee  = res.data.data.net_fee                    //网络费
-                        this.settle_date  = res.data.data.settle_date                           //结算时间
-                        this.pendingSellter.remark  = res.data.data.remark                                     //备注
+                        this.settle_date  = new Date().toLocaleString();                         //结算时间
+                        this.pendingSellter.remark  = res.data.data.remark                      //备注
+                        this.pendingSellter.receive_pay  = res.data.data.receive_pay            //收退款
                     }else {
 
                     }

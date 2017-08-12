@@ -44,14 +44,19 @@
                                     <span class="text-primary">事项类型：</span>
                                     <span>{{myDictionary.item_type[item.item_type]}}</span>
                                 </div>
+                                <div>
+                                    <span class="text-primary">收退款类型：</span>
+                                    <span v-if="item.receive_pay === 1">收款</span>
+                                    <span v-if="item.receive_pay === 2">退款</span>
+                                </div>
                                 <div><span class="text-primary">合同开始时间：</span><span>{{item.start_date}}</span></div>
                                 <div><span class="text-primary">合同结束时间：</span><span>{{item.end_date}}</span></div>
-                                <div>
-                                    <span class="text-primary">付款方式：</span>
-                                    <span>{{myDictionary.pay_type[item.pay_type]}}</span>
-                                </div>
-                                <div><span class="text-primary">月单价：</span><span></span></div>
-                                <div><span class="text-primary">往来记录：</span><span></span></div>
+                                <!--<div>-->
+                                    <!--<span class="text-primary">付款方式：</span>-->
+                                    <!--<span>{{myDictionary.pay_type[item.pay_type]}}</span>-->
+                                <!--</div>-->
+                                <!--<div><span class="text-primary">月单价：</span><span></span></div>-->
+                                <!--<div><span class="text-primary">往来记录：</span><span></span></div>-->
                             </div>
                             <div class="col-md-4">
                                 <div><span class="text-primary">水费：</span><span>{{item.water_fee}}</span></div>
@@ -133,13 +138,13 @@
             getDictionary(){
                 this.$http.get('revenue/glee_collect/dict').then((res) =>{
                     this.myDictionary = res.data;
-                    console.log(this.myDictionary);
                     this.getRentingDetail();
                 })
             },
             getRentingDetail(){
                 this.$http.get('account/pending/' + this.myRentingId).then((res) =>{
                     if(res.data.code === '18800'){
+                        this.pendingDetailList = [];
                         this.account_pending_status = res.data.data.status;
                         this.collect_rent = res.data.data.collect_rent;
                         this.pendingDetailList .push(res.data.data);
@@ -156,7 +161,9 @@
                 this.rentingId = this.myRentingId;
                 $('#pendingSettle').modal('show');
             },
-            hasSettle(){this.getRentingDetail();},
+            hasSettle(){
+                this.getRentingDetail();
+            },
         }
     }
 </script>
