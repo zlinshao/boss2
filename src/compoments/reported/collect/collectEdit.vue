@@ -238,7 +238,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="1"></SelectClient>
     </div>
 </template>
 <style scoped>
