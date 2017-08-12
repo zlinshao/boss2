@@ -218,7 +218,7 @@
             }
         },
         updated (){
-            this.remindData();
+
         },
         mounted (){
             this.id = this.$route.query.collectId;
@@ -232,6 +232,7 @@
                     (res) => {
                         this.dict = res.data;
                         this.getDetails();
+                        this.remindData();
                     }
                 );
 
@@ -265,7 +266,11 @@
                         }
                         this.beforeComplete = this.msg.complete_date;
 //                        console.log(this.msg)
-                    })
+                    });
+
+                if (this.currentIndex!=-1){
+                    this.cancel(this.currentIndex);
+                }
             },
 
             oper(){
