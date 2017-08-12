@@ -218,7 +218,7 @@
             }
         },
         updated (){
-
+            this.remindData();
         },
         mounted (){
             this.id = this.$route.query.collectId;
@@ -232,7 +232,6 @@
                     (res) => {
                         this.dict = res.data;
                         this.getDetails();
-                        this.remindData();
                     }
                 );
 
@@ -312,7 +311,10 @@
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder == '收款时间') {
                         // 编辑中的收款时间
-                        this.moreTime.splice(this.currentIndex, 1, ev.target.value);
+                        this.moreTime.splice(this.currentIndex, 1, {
+                            id: this.moreTime[this.currentIndex].id,
+                            pay_date: ev.target.value
+                        });
                     }
 //                    console.log(ev.target.value);
                 }.bind(this));
