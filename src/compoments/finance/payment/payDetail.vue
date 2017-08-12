@@ -372,7 +372,10 @@
 //                    clearBtn: true,                     //清除按钮
                     pickerPosition: 'top-left'
                 }).on('changeDate', function (ev) {
-                    this.moreTime.splice(this.currentIndex, 1, ev.target.value);
+                    this.moreTime.splice(this.currentIndex,1,{
+                        id : this.moreTime[this.currentIndex].id,
+                        pay_date : ev.target.value
+                    });
                 }.bind(this));
             },
 
