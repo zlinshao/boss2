@@ -192,8 +192,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <router-link target="_top"
-                                             :to="{path:'/details',query: {nameId: list.id, cus: 1, sear: return_sea}}">
+                                <router-link :to="{path:'/details',query: {nameId: list.id, cus: 1, sear: return_sea}}">
                                     详情
                                 </router-link>
                             </td>
