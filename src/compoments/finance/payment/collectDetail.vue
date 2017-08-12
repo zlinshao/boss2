@@ -6,7 +6,7 @@
                 <router-link to="/CollectPayment">应收款项</router-link>
             </li>
             <li class="active">应收款项详情</li>
-            <li class="pull-right">
+            <li class="pull-right" v-show="typeof params!='string'">
                 <router-link :to="{path:'/CollectPayment',query:{myParam:params,page:page,selected:selected}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
             </li>
         </ol>
@@ -225,6 +225,8 @@
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
             this.selected = this.$route.query.selected;
+
+//            alert(typeof this.params)
 
             this.$http.get('revenue/glee_collect/dict')
                 .then(

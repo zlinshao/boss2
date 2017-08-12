@@ -677,6 +677,7 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
+        <AddModal :collectContactId="contractEitId"></AddModal>
         <ContractEit :contractEitId="contractEitId" :isEditCollect="isEditCollect"
                      :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
@@ -685,7 +686,6 @@
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
-        <AddModal :collectContactId="contractEitId"></AddModal>
         <Loading v-if ='waiting'></Loading>
     </div>
 </template>

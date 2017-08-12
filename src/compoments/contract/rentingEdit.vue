@@ -324,7 +324,7 @@
             },
             selectClient(val){         //选择租客姓名
                 this.flag = val;
-                $('#selectClient').modal('show');
+                $('.selectClient:eq(1)').modal('show');
             },
             receiveClient(val){     //接收租客id
                 if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) == -1){

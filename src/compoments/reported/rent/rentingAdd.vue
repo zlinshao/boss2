@@ -755,7 +755,7 @@
             },
 
             selectClient(){
-                $('.selectClient:eq(1)').modal('show');
+                $('.selectClient:eq(0)').modal('show');
             },
             getClient(data){
                 // 选择客户
