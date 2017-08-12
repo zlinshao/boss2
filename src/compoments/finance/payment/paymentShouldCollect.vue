@@ -102,10 +102,10 @@
                                 <label class="col-sm-2 control-label">截图凭证</label>
                                 <div class="col-sm-10">
                                     <span class="form-control" style="border: none"
-                                          v-if="srcs == undefined">
+                                          v-if="msg.album == undefined||msg.album.receipt_pic.length==0">
                                         无
                                     </span>
-                                    <span v-else="msg.album !== undefined">
+                                    <span v-else="">
                                         <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic"
                                              @click="showLargePic(index)">
                                     </span>
@@ -199,6 +199,7 @@
 //                    console.log
                     (res) => {
                         this.dict = res.data;
+
                     }
                 );
 
@@ -250,7 +251,6 @@
 //                        console.log(this.msg)
 //                        console.log(this.msg.album)
 
-//                            alert(res.data.data.album)
                         if (res.data.data.album!=undefined) {
                             this.srcs = this.msg.album.receipt_pic;
                         }
