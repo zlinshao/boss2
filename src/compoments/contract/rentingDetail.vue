@@ -636,8 +636,8 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <AddModal :rentContactId="contractEitId"></AddModal>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared"  @Compared="haveCompared"></Comparison>-->

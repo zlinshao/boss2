@@ -4,7 +4,7 @@
             <li>组长报备</li>
             <li><router-link to="/reportedRenting">租房报备</router-link></li>
             <li>租房报备详情</li>
-            <li class="pull-right">
+            <li class="pull-right" v-show="typeof params!='string'">
                 <router-link :to="{path:'/reportedRenting',query:{myParam:params,page:page}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
             </li>
         </ol>
