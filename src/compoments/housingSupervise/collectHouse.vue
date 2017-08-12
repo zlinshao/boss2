@@ -134,7 +134,7 @@
                             <th class="text-center">房屋所属</th>
                             <th class="text-center">所属部门</th>
                             <th class="text-center">负责人</th>
-                            <th class="text-center">锁定</th>
+                            <!--<th class="text-center">锁定</th>-->
                             <th class="text-center">置顶</th>
                             <th class="text-center">详情</th>
                         </tr>
@@ -163,10 +163,10 @@
                                 </span>
                             </td>
                             <td class="text-center">{{item.staff_id}}</td>
-                            <td class="text-center">
-                                <!--<i class="fa fa-unlock-alt" ></i>-->
-                                <i class="fa fa-unlock" ></i>
-                            </td>
+                            <!--<td class="text-center">-->
+                                <!--&lt;!&ndash;<i class="fa fa-unlock-alt" ></i>&ndash;&gt;-->
+                                <!--<i class="fa fa-unlock" ></i>-->
+                            <!--</td>-->
                             <td class="text-center">
                                 <a v-if="item.top===1" @click="stick(item.id,2)">
                                     <i class="fa fa-thumb-tack"></i>
@@ -180,7 +180,7 @@
                             </td>
                         </tr>
                         <tr v-if="isShow">
-                            <td colspan="15" class="text-center text-muted">
+                            <td colspan="14" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
