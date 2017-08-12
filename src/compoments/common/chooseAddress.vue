@@ -26,15 +26,9 @@
                                                 <button class="btn btn-success" type="button" @click="search">立即搜索</button>
                                             </span>
                                         </div>
-                                        <div class="input-group" v-show="isShow">
-                                            <a class="noData" @mouseenter="showContact = true" @mouseleave="showContact = false">
-                                                没有找到相应小区?
-                                                <div class="contact" v-show="showContact">
-                                                    请联系: <br>
-                                                    陆宣羽：15851899908 <br>
-                                                    <a href="tel:15851899908">电话</a>
-                                                    <a href="sms:15851899908">发短信</a>
-                                                </div>
+                                        <div class="input-group">
+                                            <a class="noData" @click="addNew">
+                                                没有找到相应小区?点击新增
                                             </a>
                                         </div>
                                     </form>
@@ -78,6 +72,35 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close"@click="cancelAdd"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">新增小区</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">小区名称：<sup class="required"></sup></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="searchInfo" style="margin-bottom: 0">
+                                    <a style="margin-top: 5px;display: inline-block;">
+                                        小区名称规范：<br>
+                                        1.有小区名——仙居雅苑，禁填xx路xx号<br>
+                                        2.无小区名——水西门大街87号
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" @click="cancelAdd">取消</button>
+                        <button type="button" class="btn btn-primary" @click="saveAdd">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -85,6 +108,9 @@
 
 </template>
 <style scoped>
+    .input-group{
+        margin-bottom: 5px;
+    }
     .title{
         color: white;
         padding: 12px 24px;
@@ -115,7 +141,9 @@
         width: 10%;
     }
     .noData{
-        position: relative;
+        /*position: relative;*/
+        display: inline-block;
+        margin: 8px 0;
     }
     .noData .contact{
         color: black;
@@ -277,10 +305,9 @@
 
             },
             chooseItem(ev){// 点击行选中
-//                if ($(ev.currentTarget).find('input').val()!=''){
-                    $(ev.currentTarget).find('input').prop('checked' , 'true');
-                    this.villageId = $(ev.currentTarget).find('input').val();
-//                }
+                $(ev.currentTarget).find('input').prop('checked' , 'true');
+                this.villageId = $(ev.currentTarget).find('input').val();
+
 
                 console.log(this.villageId);
 //                console.log(this.villageId);
@@ -299,6 +326,23 @@
                         }
                     );
                 this.$http.defaults.withCredentials = true;
+            },
+
+
+            // 新增
+            addNew(){
+                $('#myModal1').modal('hide');
+                $('#addAddress').modal('show');
+            },
+            cancelAdd(){
+                $('#addAddress').modal('hide');
+                $('#myModal1').modal('show');
+            },
+            saveAdd(){
+                this.$emit('getChildData',{
+                    villageName : this.searchInfo,
+                });
+                $('#addAddress').modal('hide');
             }
         }
     }
