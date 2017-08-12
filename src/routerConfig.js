@@ -9,6 +9,7 @@ import CARenting from './compoments/achievement/companyAchievement/CARenting.vue
 import GNCollect from './compoments/achievement/gleefulNews/GNCollect.vue'
 import GNRenting from './compoments/achievement/gleefulNews/GNRenting.vue'
 import PeriodicForGroup from './compoments/achievement/periodic/periodicForGroup.vue'
+import PeriodicForGcompany from './compoments/achievement/periodic/periodicForGcompany.vue'
 import PeriodicForPeople from './compoments/achievement/periodic/periodicForPeople.vue'
 import WACollect from './compoments/achievement/wagesAchievement/WACollect.vue'
 import WARenting from './compoments/achievement/wagesAchievement/WARenting.vue'
@@ -134,6 +135,11 @@ export default[
         path: '/periodicForGroup',
         name: 'PeriodicForGroup',
         component: PeriodicForGroup
+    },
+    {
+        path: '/periodicForGcompany',
+        name: 'periodicForGcompany',
+        component: PeriodicForGcompany
     },
     {
         path: '/periodicForPeople',

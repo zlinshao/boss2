@@ -517,6 +517,9 @@
                                     <span>周期表</span>
                                 </a>
                                 <ul class="sub">
+                                    <li :class="{'active': isActive == 38}" @click='pitch_on(38)'>
+                                        <router-link to="/periodicForGcompany">公司</router-link>
+                                    </li>
                                     <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
                                         <router-link to="/periodicForGroup">小组</router-link>
                                     </li>
