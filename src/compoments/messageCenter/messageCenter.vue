@@ -249,11 +249,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in news1">
+                                <tr class="unread" v-for="(sys,index) in news1">
                                     <td class="text-center width180">{{sys.create_time}}</td>
                                     <td class="text-center width80">{{sys.receive_name}}</td>
                                     <td class="text-center width90">{{sys.data.category}}</td>
-                                    <td class="text-center">{{sys.data.content}}</td>
+                                    <td class="text-center"
+                                        :class="{ more_info: isActive !== index, phone: isActive === index }"
+                                        @click="more_content(index)">
+                                        {{sys.data.content}}</td>
                                 </tr>
                                 <tr v-show="New1">
                                     <td colspan="4" class="text-center text-muted">
@@ -275,13 +278,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="unread" v-for="sys in news2">
+                                <tr class="unread" v-for="(sys,index) in news2">
                                     <td class="text-center width180">{{sys.create_time}}</td>
                                     <td class="text-center width80">({{sys.department_name}}){{sys.send_name}}</td>
                                     <td class="text-center width80">{{sys.receive_name}}</td>
                                     <td class="text-center width90">{{sys.position_name}}</td>
                                     <td class="text-center width90">{{sys.data.category}}</td>
-                                    <td class="text-center">{{sys.data.content}}</td>
+                                    <td class="text-center"
+                                        :class="{ more_info: isActive !== index, phone: isActive === index }"
+                                        @click="more_content(index)">
+                                        {{sys.data.content}}</td>
                                 </tr>
                                 <tr v-show="New2">
                                     <td colspan="6" class="text-center text-muted">
