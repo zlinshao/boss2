@@ -725,7 +725,6 @@
                 this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
                     this.contractList = [];
                     this.contractList.push(res.data.data);
-                    console.log(this.contractList)
                     this.houseId = res.data.data.villa_id.id;
                     this.contract_num = res.data.data.contract_num;
                     this.contract_pass = res.data.data.passed;
