@@ -773,7 +773,7 @@
                     this.contractList.push(res.data.data);
                     this.waiting = false;
                     this.houseId = res.data.data.villa_id.id;
-                    this.contract_num = res.data.data.contract_num
+                    this.contract_num = res.data.data.contract_num;
                     this.contract_pass = res.data.data.passed
                 })
             },

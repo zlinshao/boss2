@@ -243,7 +243,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient" :collectRent="1"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="collectRent"></SelectClient>
     </div>
 </template>
 
@@ -261,16 +261,16 @@
         components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},
         data(){
             return {
+                collectRent: {
+                    coll: 1,
+                    staffId: ''
+                },
                 showBase : true,
                 showCustomer : true,
                 showCost : true,
-
                 dict : {},
-
                 configure: [],
-
                 datas: [],
-
                 dateConfigure : [
                     {
                         range : false,
@@ -487,11 +487,10 @@
             },
             selectDateSendAdd(data){
                 // 选择人
-
-
 //                console.log(data)
-                if (data.staff.length!=0){
+                if (data.staff.length != 0){
                     this.formData.staff_id = data.staff[0].id;
+                    this.collectRent.staffId = data.staff[0].id;
                     this.chooseResult.staff_name = data.staff[0].name;
                 }
 

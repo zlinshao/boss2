@@ -456,7 +456,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient" :collectRent="2"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="rentRent"></SelectClient>
 
     </div>
 </template>
@@ -474,6 +474,10 @@
         components: {STAFF,SelectHouse,Status,SelectClient,upLoad,FlexBox},
         data(){
             return {
+                rentRent: {
+                    coll: 2,
+                    staffId: ''
+                },
                 certificatePic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
@@ -738,8 +742,9 @@
             selectDateSendAdd(data){
                 // 选择人
 //                console.log(data.staff[0].id)
-                if (data.staff.length!=0){
+                if (data.staff.length != 0){
                     this.formData.staff_id = data.staff[0].id;
+                    this.rentRent.staffId = data.staff[0].id;
                     this.chooseResult.staff_name = data.staff[0].name;
                 }
             },
