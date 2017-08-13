@@ -40,14 +40,16 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                            <input type="text" v-if="dis_status === 2" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                            <input type="text" v-if="dis_status === 1" class="form-control" @click="selectClient" disabled v-model="chooseResult.customer_name">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">房屋地址<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                            <input type="text" v-if="dis_status === 2" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                            <input type="text" v-if="dis_status === 1" class="form-control" @click="selectHouse" disabled v-model="chooseResult.house_name">
                                         </div>
                                     </div>
 
@@ -239,7 +241,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
-        <SelectHouse @House="getHouse"></SelectHouse>
+        <SelectHouse @House="getHouse" :msg="collectRents"></SelectHouse>
         <!--提示信息-->
         <Status :state='info'></Status>
 
@@ -257,10 +259,12 @@
     import SelectClient from '../../common/selectClient.vue'
 
     export default{
-        props : ['rentMsg','collectContactId'],
+        props : ['rentMsg','collectContactId','msg'],
         components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},
         data(){
             return {
+                dis_status: '',
+                collectRents: '',
                 collectRent: {
                     coll: 1,
                     staffId: ''
@@ -364,8 +368,12 @@
             this.formData.pay_type.push(this.one_type);
         },
         watch : {
+            msg (val){
+                console.log(val);
+               this.dis_status = val;
+            },
             one_type(curVal,oldVal){
-                if (curVal!=oldVal){
+                if (curVal != oldVal){
                     if (!this.pay_typeChange){
                         this.formData.pay_type = [];
                         this.formData.pay_type.push(curVal);
@@ -487,10 +495,10 @@
             },
             selectDateSendAdd(data){
                 // 选择人
-//                console.log(data)
                 if (data.staff.length != 0){
                     this.formData.staff_id = data.staff[0].id;
                     this.collectRent.staffId = data.staff[0].id;
+                    this.collectRents = data.staff[0].id;
                     this.chooseResult.staff_name = data.staff[0].name;
                 }
 
@@ -535,7 +543,6 @@
                 this.formData.pay_type = [];
                 this.more_type = [];
                 if (ev.currentTarget.checked){
-//                    console.log(this.formData.years);
                     this.pay_typeChange = true;
                     if (this.formData.years!=''){
                         for (let i = 0;i<this.formData.years;i++){
@@ -585,8 +592,7 @@
 
             getContract(){
                 this.$http.get('core/collect/readcontract/id/'+this.formData.previous_contract_id)
-                    .then(
-                        (res) =>{
+                    .then((res) =>{
                             console.log(res.data.data);
                             let result = res.data.data;
                             this.formData.staff_id = result.staff_id;

@@ -677,7 +677,9 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <AddModal :collectContactId="contractEitId"></AddModal>
+
+        <AddModal :collectContactId="contractEitId" :msg="dis_status"></AddModal>
+
         <ContractEit :contractEitId="contractEitId" :isEditCollect="isEditCollect"
                      :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
@@ -714,6 +716,7 @@
         },
         data(){
             return {
+                dis_status: '',
                 show : false,        // 是否显示更多
                 contractList:[],    //详情列表
                 dictionary:[],      //所有字典集合
@@ -789,6 +792,7 @@
                 $('#contractEdit').modal('show');
             },
             renewContract(){    //续约合同
+                this.dis_status = 1;
                 $('#add').modal('show');
             },
             showLargePic(name, index){  //图片放大

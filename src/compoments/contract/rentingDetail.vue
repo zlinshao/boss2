@@ -636,7 +636,7 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <AddModal :rentContactId="contractEitId"></AddModal>
+        <AddModal :rentContactId="contractEitId" :msg="dis_status"></AddModal>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
@@ -670,6 +670,7 @@
         },
         data(){
             return {
+                dis_status: '',
                 contractList:[],
                 dictionary:[],
                 largePic: [],
@@ -744,6 +745,7 @@
                 $('#rentingEdit').modal('show');
             },
             renewContract(){
+                this.dis_status = 1;
                 $('#add').modal('show');
             },
             showLargePic(name, index){

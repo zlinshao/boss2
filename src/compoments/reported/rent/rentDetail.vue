@@ -122,7 +122,7 @@
         <Status :state='info'></Status>
 
         <!--新增收房报备-->
-        <AddModal :rentMsg="rentMsg"></AddModal>
+        <AddModal :rentMsg="rentMsg" :msg="dis_status"></AddModal>
 
         <!--编辑-->
         <EditModal :id="id" @save="getDetails"></EditModal>
@@ -192,6 +192,7 @@
         components: {Confirm,Status,EditModal,PicModal,AddModal,CreatePayment},
         data(){
             return {
+                dis_status: '',
                 msg: '',
                 dict : {},
                 id : 0,
@@ -340,6 +341,7 @@
                 $('#largePic').modal('show');
             },
             addCollectReported(){
+                this.dis_status = 2;
                 this.rentMsg = [
                     {
                         id : this.id,
