@@ -7,7 +7,7 @@
             <li class="active">收房合同详情</li>
 
             <li class="pull-right" >
-                <router-link :to="{path:'/okCollect',query: {Params:myParams,departmentName:departmentName}}">
+                <router-link :to="{path:'/collectContract',query: {Params:myParams,departmentName:departmentName}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步</router-link>
             </li>
         </ol>
