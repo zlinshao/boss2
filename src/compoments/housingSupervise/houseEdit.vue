@@ -372,7 +372,6 @@
                     this.houseEdit.remarks=val.remarks;
                     this.houseEdit.reference=val.reference;
                     this.houseEdit.facility=[];
-                    console.log(val.facility)
                     if(val.facility !==null && val.facility !==undefined){
                         for(let i=0;i<val.facility.length;i++){
                             this.houseEdit.facility.push(val.facility[i])
@@ -419,11 +418,14 @@
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
+                    if(this.checkboxModel !==null && this.checkboxModel !==undefined){
                         if (this.checkboxModel.length === this.oldFacility.length) {
                             this.checked = true;
                         } else {
                             this.checked = false;
                         }
+                    }
+
                 },
                 deep: true
             }
