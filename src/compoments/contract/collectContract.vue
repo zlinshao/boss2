@@ -270,8 +270,10 @@
                     if(this.$route.query.Params !== undefined && this.$route.query.Params.keywords !== undefined){
                         this.contractSearchInfo = this.$route.query.Params;
                         this.currentDate = [];
-                        this.currentDate.push(this.contractSearchInfo.start);
-                        this.currentDate.push(this.contractSearchInfo.end);
+                        if(this.contractSearchInfo.start !== '' || this.contractSearchInfo.end !== ''){
+                            this.currentDate.push(this.contractSearchInfo.start);
+                            this.currentDate.push(this.contractSearchInfo.end);
+                        }
                         this.departmentName = this.$route.query.departmentName;
                         this.keepStatus = true;
                     }else {
