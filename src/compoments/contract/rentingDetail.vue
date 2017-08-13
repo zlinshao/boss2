@@ -57,17 +57,17 @@
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract">
+                            <button class="btn btn-white btn-block" @click="renewContract(1)">
                                 续约
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract">
+                            <button class="btn btn-white btn-block" @click="renewContract(3)">
                                 转租
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract">
+                            <button class="btn btn-white btn-block" @click="renewContract(4)">
                                 调租
                             </button>
                         </li>
@@ -744,8 +744,8 @@
                 $('.rem_div').remove();
                 $('#rentingEdit').modal('show');
             },
-            renewContract(){
-                this.dis_status = 1;
+            renewContract(val){
+                this.dis_status = val;
                 $('#add').modal('show');
             },
             showLargePic(name, index){

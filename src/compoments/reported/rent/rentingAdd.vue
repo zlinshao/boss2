@@ -37,8 +37,10 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" v-if="dis_status === 2"  class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 2" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 3" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
                                         <input type="text" v-if="dis_status === 1" class="form-control" @click="selectClient" disabled v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 4" class="form-control" @click="selectClient" disabled v-model="chooseResult.customer_name">
                                     </div>
                                 </div>
 
@@ -46,7 +48,9 @@
                                     <label class="col-sm-2 control-label">房屋地址<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" v-if="dis_status === 2"  class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 4"  class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
                                         <input type="text" v-if="dis_status === 1" class="form-control" @click="selectHouse" disabled v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 3" class="form-control" @click="selectHouse" disabled v-model="chooseResult.house_name">
                                     </div>
                                 </div>
 
