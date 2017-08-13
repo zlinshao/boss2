@@ -238,7 +238,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient" :collectRent="1"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="collectRents"></SelectClient>
     </div>
 </template>
 <style scoped>
@@ -274,6 +274,10 @@
         components: {STAFF,SelectHouse,FlexBox,DatePicker,Status,SelectClient},
         data(){
             return {
+                collectRents: {
+                    coll: 1,
+                    staffId: ''
+                },
                 showBase : true,
                 showCustomer : true,
                 showCost : true,

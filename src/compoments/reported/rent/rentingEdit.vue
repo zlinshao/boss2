@@ -458,7 +458,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient" :collectRent="2"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="rentRent"></SelectClient>
     </div>
 </template>
 
@@ -476,6 +476,10 @@
         components: {STAFF,SelectHouse,Status,SelectClient,upLoad,FlexBox},
         data(){
             return {
+                rentRent: {
+                    coll: 2,
+                    staffId: ''
+                },
                 certificatePic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片

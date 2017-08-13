@@ -37,14 +37,16 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 2"  class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 1" class="form-control" @click="selectClient" disabled v-model="chooseResult.customer_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 2"  class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 1" class="form-control" @click="selectHouse" disabled v-model="chooseResult.house_name">
                                     </div>
                                 </div>
 
@@ -452,7 +454,7 @@
         </div>
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
-        <SelectHouse @House="getHouse"></SelectHouse>
+        <SelectHouse @House="getHouse" :msg="rentRents"></SelectHouse>
         <!--提示信息-->
         <Status :state='info'></Status>
 
@@ -470,10 +472,12 @@
     // 选择客户
     import SelectClient from '../../common/selectClient.vue'
     export default{
-        props : ['collectMsg','rentContactId'],
+        props : ['collectMsg','rentContactId','msg'],
         components: {STAFF,SelectHouse,Status,SelectClient,upLoad,FlexBox},
         data(){
             return {
+                dis_status: '',
+                rentRents: '',
                 rentRent: {
                     coll: 2,
                     staffId: ''
@@ -536,7 +540,7 @@
 
                 is_medi : 1,        // 是否中介 1否2是
                 formData : {
-                    previous_contract_id : '',   // 租房合同id
+                    previous_contract_id: '',   // 租房合同id
                     collect_id : '',
 
                     staff_id : '',
@@ -601,8 +605,12 @@
 
         },
         watch : {
+            msg (val){
+                console.log(val);
+                this.dis_status = val;
+            },
             collectMsg(val){
-                console.log(val[0])
+                console.log(val[0]);
 //                if (this.collectMsg!=undefined){
 //                    console.log(val[0]);
 //                    console.log(val[0].id);
@@ -625,15 +633,11 @@
         },
         mounted (){
             this.$http.get('revenue/glee_collect/dict')
-                .then(
-//                    console.log
-                    (res) => this.dict = res.data
+                .then((res) => this.dict = res.data
                 );
             this.$http.get('staff/details')
-                .then(
-                    (res) => {
+                .then((res) => {
                         let val = res.data;
-//                        console.log(val);
                         this.chooseResult.leader_name = val.leader_name;
                         this.chooseResult.department_name = val.department_name;
                         this.formData.leader_id = val.leader_id;
@@ -642,9 +646,6 @@
                         this.certificatePic.cus_idPhotos = {};
                     }
                 );
-
-
-
         },
         methods: {
             closeModal(){
@@ -745,6 +746,7 @@
                 if (data.staff.length != 0){
                     this.formData.staff_id = data.staff[0].id;
                     this.rentRent.staffId = data.staff[0].id;
+                    this.rentRents = data.staff[0].id;
                     this.chooseResult.staff_name = data.staff[0].name;
                 }
             },

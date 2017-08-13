@@ -108,7 +108,7 @@
 
 
         <!--新增-->
-        <AddModal :collectMsg="collectMsg"></AddModal>
+        <AddModal :collectMsg="collectMsg" :msg="dis_status"></AddModal>
 
         <!--编辑-->
         <EditModal :id="id" @save="getDetails"></EditModal>
@@ -152,6 +152,7 @@
         components: {Confirm,Status,EditModal,AddModal,CreatePayment},
         data(){
             return {
+                dis_status: '',
                 msg: '',
                 dict : {},
                 confirmMsg: {
@@ -316,6 +317,7 @@
                 $('#change').modal('show');
             },
             addRentReported(){
+                this.dis_status = 2;
                 this.collectMsg = [
                     {
                         id : this.msg.id,

@@ -143,6 +143,12 @@
             Status,
             ChooseAddress
         },
+        props: ['msg'],
+        watch: {
+            msg (val){
+                this.houseAdd.salesman = val
+            }
+        },
         data(){
             return {
                 keywords:'',
@@ -167,6 +173,7 @@
                 isNewHouse : false,
 
                 houseAdd: {
+                    salesman: '',
                     amap_json: {
                         villageAddress: '',
                         villageName: '',
