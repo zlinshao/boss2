@@ -142,6 +142,7 @@
         },
         data(){
             return {
+                cus_status_id: '',
                 keywords:'',
                 media_person:'1',
                 clientName:'',
@@ -173,7 +174,8 @@
         },
         watch :{
             collectRent(val){
-                this.cus_status = val;
+                this.cus_status = val.coll;
+                this.cus_status_id = val.staffId;
             }
         },
         methods : {
@@ -226,9 +228,10 @@
                 if(this.isNewAdd === true){
                     this.$http.post('core/customer/saveCustomer',{
                         identity: this.cus_status,                  //业主/租客
-                        name:  this.cus_name,                        //客户姓名
+                        name:  this.cus_name,                       //客户姓名
                         gender: this.cus_gender,                    //性别
                         mobile: this.cus_phone,                     //手机号
+                        salesman: this.cus_status_id,               //签约人ID
                     }).then((res) => {
                         if (res.data.code === '70010') {
                             this.cus_status = '';

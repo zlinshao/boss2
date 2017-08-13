@@ -101,9 +101,9 @@
                     range: ''
                 },
                 top: {},
-                top_name: '',
-                sum: '',
-                count: '',
+                top_name: '',       //榜首
+                sum: '',            //总业绩
+                count: '',          //本月租房套数
                 myData: [],
                 paging: '',
                 info: {

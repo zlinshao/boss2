@@ -295,6 +295,9 @@
                             </li>
                             <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
                             <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
+                            <li>
+                                <router-link to="/myAchievement"><i class="fa fa-money"></i>我的业绩</router-link>
+                            </li>
                             <li v-show="!isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
                             <li><a @click="logOut"><i class="fa  fa-sign-out"></i>退出登录</a></li>
                         </ul>

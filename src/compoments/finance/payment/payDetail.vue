@@ -399,7 +399,7 @@
                 this.$http.post('account/payable/scheduler/'+this.moreTime[index].id,{pay_date:this.moreTime[index].pay_date})
                     .then((res)=>{
                         console.log(res);
-                        if (res.data.code==18410){
+                        if (res.data.code === '18410'){
                             // 成功
                             this.info.success = res.data.msg;
                             //显示失败弹窗 ***
@@ -434,7 +434,7 @@
                 this.$http.post('account/pending/payable/'+this.should_id)
                     .then((res)=>{
                     console.log(res);
-                    if (res.data.code==18810){
+                    if (res.data.code === '18810'){
                         // 成功
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
@@ -466,7 +466,7 @@
                 this.$http.post('account/payable/delete/'+this.should_id)
                     .then((res) =>{
 //                    console.log(res.data)
-                        if (res.data.code==18410){
+                        if (res.data.code === '18410'){
                             // 成功
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***

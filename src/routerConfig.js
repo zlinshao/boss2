@@ -69,6 +69,7 @@ import ReportedOther from './compoments/reported/other/reportedOther.vue'    //�
 import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'    //其余款项报备
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
+import MyAchievement from './compoments/myAchievement/myAchievement.vue'     //我的业绩
 import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'           //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'           //备忘录
@@ -195,6 +196,11 @@ export default[
         path: '/leadingOut',       //客户导出
         name: 'leadingOut',
         component: LeadingOut
+    },
+    {
+        path: '/myAchievement',       //客户导出
+        name: 'myAchievement',
+        component: MyAchievement
     },
     {
         path: '/compare',
