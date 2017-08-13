@@ -245,7 +245,6 @@
                 deep:true,
                 handler(val,oldVal){
                     if(val){
-                        alert(2)
                         this.params.house_type = '';
                         this.params.rooms = '';
                         this.params.decoration = '';
