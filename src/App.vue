@@ -24,22 +24,43 @@
                     <li data-toggle="modal" data-target="#suggest">
                         <a href="#"><i class="fa fa-edit"></i>建议反馈</a>
                     </li>
+                    <li data-toggle="modal" data-target="#shortcut">
+                        <a href="#"><i class="fa fa-arrow-circle-o-left"></i>快捷入口</a>
+                    </li>
                 </ul>
             </div>
-            <!--<div id="custom_service" @mouseenter="show" @mouseleave="hide">-->
-                <!--&lt;!&ndash;<img src="../src/assets/img/u1032.png" alt="">&ndash;&gt;-->
-                <!--<i class="fa fa-phone"></i>-->
-                <!--<ul>-->
-                    <!--<li data-toggle="modal" data-target="#contact">-->
-                        <!--<i class="fa fa-phone"></i>咨询电话-->
-                    <!--</li>-->
-                    <!--<li data-toggle="modal" data-target="#suggest">-->
-                        <!--<i class="fa fa-edit"></i>建议反馈-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
         </section>
-
+        <!--快捷入口-->
+        <div class="modal fade bs-example-modal-sm" id="shortcut" tabindex="-1" role="dialog"
+             aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">快捷入口</h4>
+                    </div>
+                    <div class="modal-body">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <router-link class="btn btn-link col-xs-6" to="/custom">客户</router-link>  <!--客户-->
+                                <router-link class="btn btn-link col-xs-6" to="/customerPool">客户池</router-link>  <!--客户池-->
+                                <router-link class="btn btn-link col-xs-6" to="/OkCollect">公司房源</router-link>  <!--公司房源-->
+                                <router-link class="btn btn-link col-xs-6" to="/noCollect">待收房源</router-link>  <!--待收房源-->
+                                <router-link class="btn btn-link col-xs-6" to="/reportedRenting">租房报备</router-link>  <!--租房报备-->
+                                <router-link class="btn btn-link col-xs-6" to="/reportedCollect">收房报备</router-link>  <!--收房报备-->
+                                <router-link class="btn btn-link col-xs-6" to="/user">员工管理</router-link>  <!--用户管理-->
+                                <router-link class="btn btn-link col-xs-6" to="/periodicForGcompany">公司业绩</router-link>  <!--公司业绩-->
+                                <router-link class="btn btn-link col-xs-6" to="/periodicForGroup">小组业绩</router-link>  <!--小组业绩-->
+                                <router-link class="btn btn-link col-xs-6" to="/periodicForPeople">个人业绩</router-link>  <!--个人业绩-->
+                                <router-link class="btn btn-link col-xs-6" to="/leadingOut">客户导出</router-link>  <!--客户导出-->
+                                <router-link class="btn btn-link col-xs-6" to="/messageCenter">消息中心</router-link>  <!--消息中心-->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--咨询电话-->
         <div class="modal fade bs-example-modal-sm" id="contact" tabindex="-1" role="dialog"
              aria-labelledby="mySmallModalLabel">
