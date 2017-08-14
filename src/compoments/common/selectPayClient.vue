@@ -14,7 +14,7 @@
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                             <div class="col-lg-4">
-                                <select  class="form-control" v-model="clien_staff">
+                                <select  class="form-control" v-model="client_staff">
                                     <option value="1">客户</option>
                                     <option value="2">员工</option>
                                 </select>
@@ -30,18 +30,19 @@
                         </div>
                         <table class="table table-striped table-advance table-hover">
                             <thead>
-                                <tr class="lightGray"  v-if="clien_staff === '1'">
+                                <tr class="lightGray"  v-if="client_staff === '1'">
                                     <th></th>
                                     <th>客户名称</th>
                                     <th>身份</th>
                                     <th>房屋地址</th>
                                     <th>账户</th>
                                     <th>账号</th>
+                                    <th>客户生成时间</th>
                                     <!--<th>月单价</th>-->
                                     <!--<th>付款方式</th>-->
                                     <th>开单人</th>
                                 </tr>
-                                <tr class="lightGray"  v-if="clien_staff === '2'">
+                                <tr class="lightGray"  v-if="client_staff === '2'">
                                     <th></th>
                                     <th>员工姓名</th>
                                     <th>尊称</th>
@@ -49,7 +50,7 @@
                                     <th>所属部门</th>
                                 </tr>
                             </thead>
-                            <tbody  v-if="clien_staff === '1'">
+                            <tbody  v-if="client_staff === '1'">
                                 <tr v-for="item in customerList"  @click="selectClient($event,item)">
                                     <td>
                                         <input type="radio" name="radio">
@@ -59,17 +60,18 @@
                                     <td>{{item.address}}</td>
                                     <td>{{item.payee}}</td>
                                     <td>{{item.account}}</td>
-                                    <td>{{item.price}}</td>
-                                    <td>{{dictionary.payment[item.pay_type]}}</td>
+                                    <!--<td>{{item.price}}</td>-->
+                                    <!--<td>{{dictionary.payment[item.pay_type]}}</td>-->
+                                    <td>{{item.create_time}}</td>
                                     <td>{{item.real_name}}</td>
                                 </tr>
                                 <tr v-if="isShow">
-                                    <td colspan="10" class="text-center text-muted">
+                                    <td colspan="8" class="text-center text-muted">
                                         暂无数据...
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody  v-if="clien_staff === '2' && customerList.length > 0">
+                            <tbody  v-if="client_staff === '2' && customerList.length > 0">
                             <tr v-for="item in customerList"  @click="selectClient($event,item)">
                                 <td>
                                     <input type="radio" name="radio">
@@ -81,7 +83,7 @@
                                 <td>{{item.department[0].name}}</td>
                             </tr>
                             <tr v-if="isShow">
-                                <td colspan="10" class="text-center text-muted">
+                                <td colspan="5" class="text-center text-muted">
                                     暂无数据...
                                 </td>
                             </tr>
@@ -107,7 +109,7 @@
         data(){
             return {
                 keywords:'',
-                clien_staff: '1',
+                client_staff: '1',
                 customerList:[],
                 nationalityList:[],
                 person_medium:[],
@@ -127,7 +129,7 @@
             }
         },
         watch : {
-           'clien_staff' :{
+           'client_staff' :{
                deep:true,
                handler(val,oldVal){
                    if(val !== oldVal){
@@ -148,7 +150,7 @@
                 })
             },
             search(){
-                if(this.clien_staff === '1'){
+                if(this.client_staff === '1'){
                     this.$http.post('revenue/customer/customer',
                             {
                                 keywords:this.keywords,
@@ -162,7 +164,7 @@
                             this.isShow = true;
                         }
                     })
-                }else if(this.clien_staff === '2'){
+                }else if(this.client_staff === '2'){
                     this.$http.get('index/profile/searchStaff/keywords/' + this.keywords).then((res) => {
                         if (res.data.code === '90010'){
                             this.customerList=res.data.data;
@@ -189,7 +191,7 @@
                     this.customerList=[];
                     this.selectPayClients=[];
                     this.keywords='';
-                    this.clien_staff = '1';
+                    this.client_staff = '1';
                 }
 
             }
