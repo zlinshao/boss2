@@ -147,7 +147,6 @@
             getDictionary(){
                 this.$http.get('revenue/customer/dict').then((res) =>{
                     this.dictionary = res.data;
-                    console.log(this.dictionary)
                 })
             },
             search(){
@@ -163,6 +162,8 @@
                         }else {
                             this.customerList=[];
                             this.isShow = true;
+                            this.info.error = res.data.msg;
+                            this.info.state_error = true;
                         }
                     })
                 }else if(this.client_staff === '2'){
