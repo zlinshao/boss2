@@ -10,7 +10,7 @@
                         <h4 class="modal-title">提示信息</h4>
                     </div>
                     <div class="modal-body">
-                        <h4 class="modal-title">确认删除么?</h4>
+                        <h5 class="modal-title">确认删除么?</h5>
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
