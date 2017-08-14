@@ -158,7 +158,7 @@
         },
         methods:{
             getDictionary(){
-                this.$http.get('core/customer/dict').then((res) =>{
+                this.$http.get('revenue/glee_collect/dict').then((res) =>{
                     this.dictionary = res.data;
                     if(this.$route.query.Params !== undefined && this.$route.query.Params.keywords !== undefined){
                         this.searchInformation = this.$route.query.Params;
