@@ -326,9 +326,9 @@
                 this.collectRent = 2;
                 $('.selectClient:eq(1)').modal('show');
             },
-            receiveClient(val){     //接收租客id
+            receiveClient(val){     //接收附属租客id
                 this.collectRent = '';
-                if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) == -1){
+                if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) === -1){
                     this.contractEdit.relative_customer_id .push(val.id);
                     this.relative_customer.push(val.name);
                 }else if(this.more === this.relative_customer.length){
