@@ -85,6 +85,7 @@
                                 <div class="list"><span class="text-primary">物业费：</span><span>{{msg.manage_fee}}</span></div>
                                 <div class="list"><span class="text-primary">网络费：</span><span>{{msg.net_fee}}</span></div>
                                 <div class="list"><span class="text-primary">水费：</span><span>{{msg.water_fee}}</span></div>
+                                <div class="list"><span class="text-primary">燃气费：</span><span>{{msg.gas_fee}}</span></div>
                             </div>
                             <div class="col-md-4" v-if="msg.is_shared == 2">
                                 <div class="list"><span class="text-primary">管理费：</span><span>{{msg.property_fee}}</span></div>
