@@ -67,6 +67,7 @@
                     <th class="text-center">收款人姓名</th>
                     <th class="text-center">开户行</th>
                     <th class="text-center">账号</th>
+                    <th class="text-center">客户生成时间</th>
                     <th class="text-center">签约人</th>
                     <th class="text-center">所属部门</th>
                     <th class="text-center">负责人</th>
@@ -84,6 +85,7 @@
                         <td class="text-center">{{item.payee}}</td>
                         <td class="text-center">{{dictionary.bank[item.bank]}}</td>
                         <td class="text-center">{{item.account}}</td>
+                        <td class="text-center">{{item.create_time}}</td>
                         <td class="text-center">{{item.real_name}}</td>
                         <td class="text-center">{{item.department_name}}</td>
                         <td class="text-center">{{item.head_name}}</td>

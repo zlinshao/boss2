@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选择客户</h4>
                     </div>
-                    <div class="modal-body inbox-body panel table table-responsive roll" v-if="!isNewAdd">
+                    <div class="modal-body inbox-body panel" v-if="!isNewAdd">
                         <div class="row">
                             <div class="col-lg-4">
                                 <select  class="form-control" v-model="media_person">
@@ -28,8 +28,9 @@
                                 <a class="btn btn-success" @click="newAddClient">新增</a>
                             </div>
                         </div>
-                        <table class="table table-striped table-advance table-hover">
-                            <thead>
+                        <div class="table table-responsive roll">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
                                 <tr class="lightGray">
                                     <td></td>
                                     <td>客户名称</td>
@@ -38,8 +39,8 @@
                                     <td>手机号</td>
                                     <td>房屋地址</td>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr v-for="item in customerList"  @click="selectClient($event,item)">
                                     <td>
                                         <input type="radio" name="radio">
@@ -63,12 +64,13 @@
                                         暂无数据...
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
 
                     <div class="modal-body roll" v-if="isNewAdd">
-
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">身份</label>
@@ -270,8 +272,8 @@
     label{
         margin-top: 5px;
     }
-    .modal-body{
-        max-height: 400px;
+    .roll{
+        max-height: 300px;
         overflow: auto;
     }
     input[type=checkbox], input[type=radio] {
