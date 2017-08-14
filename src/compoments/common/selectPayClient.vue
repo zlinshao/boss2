@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选择客户</h4>
                     </div>
-                    <div class="modal-body inbox-body panel table table-responsive roll">
+                    <div class="modal-body inbox-body panel">
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >客户名称</label>
                             <div class="col-lg-4">
@@ -28,8 +28,9 @@
                                 <a class="btn btn-success" @click="search">搜索</a>
                             </div>
                         </div>
-                        <table class="table table-striped table-advance table-hover">
-                            <thead>
+                        <div class="table table-responsive roll">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
                                 <tr class="lightGray"  v-if="client_staff === '1'">
                                     <th></th>
                                     <th>客户名称</th>
@@ -37,7 +38,6 @@
                                     <th>房屋地址</th>
                                     <th>账户</th>
                                     <th>账号</th>
-                                    <th>客户生成时间</th>
                                     <!--<th>月单价</th>-->
                                     <!--<th>付款方式</th>-->
                                     <th>开单人</th>
@@ -49,8 +49,8 @@
                                     <th>职务</th>
                                     <th>所属部门</th>
                                 </tr>
-                            </thead>
-                            <tbody  v-if="client_staff === '1'">
+                                </thead>
+                                <tbody  v-if="client_staff === '1'">
                                 <tr v-for="item in customerList"  @click="selectClient($event,item)">
                                     <td>
                                         <input type="radio" name="radio">
@@ -62,33 +62,34 @@
                                     <td>{{item.account}}</td>
                                     <!--<td>{{item.price}}</td>-->
                                     <!--<td>{{dictionary.payment[item.pay_type]}}</td>-->
-                                    <td>{{item.create_time}}</td>
                                     <td>{{item.real_name}}</td>
                                 </tr>
                                 <tr v-if="isShow">
-                                    <td colspan="8" class="text-center text-muted">
+                                    <td colspan="7" class="text-center text-muted">
                                         暂无数据...
                                     </td>
                                 </tr>
-                            </tbody>
-                            <tbody  v-if="client_staff === '2' && customerList.length > 0">
-                            <tr v-for="item in customerList"  @click="selectClient($event,item)">
-                                <td>
-                                    <input type="radio" name="radio">
-                                </td>
-                                <td>{{item.real_name}}</td>
-                                <td v-if="item.gender === 1">先生</td>
-                                <td v-if="item.gender === 2">女士</td>
-                                <td>{{item.position_id[0].vocation}}</td>
-                                <td>{{item.department[0].name}}</td>
-                            </tr>
-                            <tr v-if="isShow">
-                                <td colspan="5" class="text-center text-muted">
-                                    暂无数据...
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                                <tbody  v-if="client_staff === '2' && customerList.length > 0">
+                                <tr v-for="item in customerList"  @click="selectClient($event,item)">
+                                    <td>
+                                        <input type="radio" name="radio">
+                                    </td>
+                                    <td>{{item.real_name}}</td>
+                                    <td v-if="item.gender === 1">先生</td>
+                                    <td v-if="item.gender === 2">女士</td>
+                                    <td>{{item.position_id[0].vocation}}</td>
+                                    <td>{{item.department[0].name}}</td>
+                                </tr>
+                                <tr v-if="isShow">
+                                    <td colspan="5" class="text-center text-muted">
+                                        暂无数据...
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -211,8 +212,8 @@
     label{
         margin-top: 5px;
     }
-    .modal-body{
-        max-height: 400px;
+    .roll{
+        max-height: 300px;
         overflow: auto;
     }
 </style>

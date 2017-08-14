@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选择房屋</h4>
                     </div>
-                    <div class="modal-body inbox-body panel table table-responsive roll" v-if="!isNewHouse">
+                    <div class="modal-body inbox-body panel" v-if="!isNewHouse">
                         <div class="row">
                             <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
                             <div class="iconic-input right col-lg-4">
@@ -23,37 +23,40 @@
                                 <a class="btn btn-success" @click="newAddHouse">新增</a>
                             </div>
                         </div>
-                        <table class="table table-striped table-advance table-hover">
-                            <thead>
-                            <tr class="lightGray">
-                                <th></th>
-                                <th>房屋地址</th>
-                                <th>房型</th>
-                                <th>面积</th>
-                                <th>装修</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="item in houseList" @click="chooseItem($event,item)">
-                                <td>
-                                    <input type="radio" name="radio" >
-                                </td>
-                                <td>{{item.detailed_address}}</td>
-                                <td>
+                        <div class="table table-responsive roll">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
+                                <tr class="lightGray">
+                                    <th></th>
+                                    <th>房屋地址</th>
+                                    <th>房型</th>
+                                    <th>面积</th>
+                                    <th>装修</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in houseList" @click="chooseItem($event,item)">
+                                    <td>
+                                        <input type="radio" name="radio" >
+                                    </td>
+                                    <td>{{item.detailed_address}}</td>
+                                    <td>
                                     <span v-if="item.rooms !==null && item.rooms !==undefined">
                                         {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
                                     </span>
-                                </td>
-                                <td>{{item.area}}㎡</td>
-                                <td>{{dictionary.decoration[item.decoration]}}</td>
-                            </tr>
-                            <tr v-if="isShow">
-                                <td colspan="10" class="text-center text-muted">
-                                    暂无数据...
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                    <td>{{item.area}}㎡</td>
+                                    <td>{{dictionary.decoration[item.decoration]}}</td>
+                                </tr>
+                                <tr v-if="isShow">
+                                    <td colspan="10" class="text-center text-muted">
+                                        暂无数据...
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
 
                     <div class="modal-body roll" v-if="isNewHouse">
@@ -301,8 +304,8 @@
     label{
         margin-top: 5px;
     }
-    .modal-body{
-        max-height: 400px;
+    .roll{
+        max-height: 300px;
         overflow: auto;
     }
 </style>
