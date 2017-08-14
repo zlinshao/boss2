@@ -16,49 +16,62 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">签约人<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input title="请点击选择" type="text" class="form-control" readonly @click="selectStaff" v-model="chooseResult.staff_name">
+                                        <input title="请点击选择" type="text" class="form-control" readonly
+                                               @click="selectStaff" v-model="chooseResult.staff_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">所属部门<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="chooseResult.department_name">
+                                        <input type="text" class="form-control" disabled
+                                               v-model="chooseResult.department_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">负责人<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="chooseResult.leader_name">
+                                        <input type="text" class="form-control" disabled
+                                               v-model="chooseResult.leader_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">客户姓名<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" v-if="dis_status === 2" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
-                                        <input type="text" v-if="dis_status === 3" class="form-control" @click="selectClient" readonly v-model="chooseResult.customer_name">
-                                        <input type="text" v-if="dis_status === 1" class="form-control" @click="selectClient" disabled v-model="chooseResult.customer_name">
-                                        <input type="text" v-if="dis_status === 4" class="form-control" @click="selectClient" disabled v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 2" class="form-control"
+                                               @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 3" class="form-control"
+                                               @click="selectClient" readonly v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 1" class="form-control"
+                                               @click="selectClient" disabled v-model="chooseResult.customer_name">
+                                        <input type="text" v-if="dis_status === 4" class="form-control"
+                                               @click="selectClient" disabled v-model="chooseResult.customer_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">房屋地址<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input type="text" v-if="dis_status === 2"  class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
-                                        <input type="text" v-if="dis_status === 4"  class="form-control" @click="selectHouse" readonly v-model="chooseResult.house_name">
-                                        <input type="text" v-if="dis_status === 1" class="form-control" @click="selectHouse" disabled v-model="chooseResult.house_name">
-                                        <input type="text" v-if="dis_status === 3" class="form-control" @click="selectHouse" disabled v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 2" class="form-control"
+                                               @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 4" class="form-control"
+                                               @click="selectHouse" readonly v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 1" class="form-control"
+                                               @click="selectHouse" disabled v-model="chooseResult.house_name">
+                                        <input type="text" v-if="dis_status === 3" class="form-control"
+                                               @click="selectHouse" disabled v-model="chooseResult.house_name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">租房类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="formData.is_shared" @change="changeIsSgared">
-                                            <option :value="value" v-for="(key,value) in dict.shared_house">{{key}}</option>
+                                        <select class="form-control" v-model="formData.is_shared"
+                                                @change="changeIsSgared">
+                                            <option :value="value" v-for="(key,value) in dict.shared_house">{{key}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -66,8 +79,9 @@
                                 <div class="form-group" v-show="formData.is_shared==1">
                                     <label class="col-sm-2 control-label">房间类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control"v-model="formData.shared_part">
-                                            <option :value="value" v-for="(key,value) in dict.shared_part">{{key}}</option>
+                                        <select class="form-control" v-model="formData.shared_part">
+                                            <option :value="value" v-for="(key,value) in dict.shared_part">{{key}}
+                                            </option>
                                         </select>
                                         <!--<input type="text" class="form-control" v-model="formData.shared_part ">-->
                                     </div>
@@ -77,7 +91,8 @@
                                     <label class="col-sm-2 control-label">租房状态<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.rent_type">
-                                            <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}</option>
+                                            <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -105,18 +120,22 @@
                                         <div class="col-sm-6 padding_0">
                                             <label class="col-sm-2 control-label padding_0">付</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="one_type" :disabled="change_payType">
+                                                <input type="text" class="form-control" v-model="one_type"
+                                                       :disabled="change_payType">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-3 padding_0">
-                                        <label class="control-label"><input type="checkbox" disabled :checked="change_payType" @click="changePayType($event)">付款方式变化</label>
+                                        <label class="control-label"><input type="checkbox" disabled
+                                                                            :checked="change_payType"
+                                                                            @click="changePayType($event)">付款方式变化</label>
                                     </div>
                                 </div>
 
                                 <!--付款方式变化-->
                                 <div class="form-group" v-for="(item,index) in more_type">
-                                    <label class="col-sm-2 control-label">第{{index+1}}年<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">第{{index + 1}}年<sup
+                                            class="required">*</sup></label>
                                     <div class="col-sm-7" style="padding-right: 0">
                                         <div class="col-sm-6 padding_0">
                                             <label class="col-sm-2 control-label padding_0">押</label>
@@ -134,20 +153,24 @@
                                 </div>
 
 
-                                <FlexBox :flexData="Math.ceil(formData.months/12)" :datas="formData.price" :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
+                                <FlexBox :flexData="Math.ceil(formData.months/12)" :datas="formData.price"
+                                         :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="formData.received_type">
-                                                <option :value="value" v-for="(key,value) in dict.subject">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.subject">{{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-8">
-                                            <label class="col-sm-4 control-label">已收金额<sup class="required">*</sup></label>
+                                            <label class="col-sm-4 control-label">已收金额<sup
+                                                    class="required">*</sup></label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" v-model="formData.received_amount">
+                                                <input type="text" class="form-control"
+                                                       v-model="formData.received_amount">
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +182,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[0].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -179,7 +204,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[1].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -196,7 +223,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[2].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -213,7 +242,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[3].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -230,7 +261,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[4].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -247,7 +280,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[5].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -264,7 +299,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[6].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -281,7 +318,9 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-4 padding_0">
                                             <select class="form-control" v-model="payments[7].payment_id">
-                                                <option :value="value" v-for="(key,value) in dict.rent_payment">{{key}}</option>
+                                                <option :value="value" v-for="(key,value) in dict.rent_payment">
+                                                    {{key}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -297,15 +336,18 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">尾款补齐时间<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
-                                               class="form-control form_datetime" readonly v-model="formData.complete_date">
+                                        <input @click="remindData" type="text" name="addtime" value=""
+                                               placeholder="补齐时间"
+                                               class="form-control form_datetime" readonly
+                                               v-model="formData.complete_date">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">凭证截图</label>
                                     <div class="col-sm-10">
-                                        <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"  placeholder="凭证截图"
+                                        <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"
+                                                 placeholder="凭证截图"
                                                  :result="'certificatePic'" :idPhotos="certificatePic"></up-load>
                                     </div>
                                 </div>
@@ -322,19 +364,25 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">中介汇款方式</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" v-model="formData.medi_account_type" @change="changeMediPayment">
-                                                <option :value="value" v-for="(key,value) in dict.payment">{{key}}</option>
+                                            <select class="form-control" v-model="formData.medi_account_type"
+                                                    @change="changeMediPayment">
+                                                <option :value="value" v-for="(key,value) in dict.payment">{{key}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group" v-show="formData.medi_account_type==1||formData.medi_account_type==4">
-                                        <label class="col-sm-2 control-label">中介收款人姓名<sup class="required">*</sup></label>
+                                    <div class="form-group"
+                                         v-show="formData.medi_account_type==1||formData.medi_account_type==4">
+                                        <label class="col-sm-2 control-label">中介收款人姓名<sup
+                                                class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.medi_account_owner">
+                                            <input type="text" class="form-control"
+                                                   v-model="formData.medi_account_owner">
                                         </div>
                                     </div>
-                                    <div class="form-group" v-show="formData.medi_account_type==1||formData.medi_account_type==4">
+                                    <div class="form-group"
+                                         v-show="formData.medi_account_type==1||formData.medi_account_type==4">
                                         <label class="col-sm-2 control-label">开户行<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="formData.medi_account_bank">
@@ -342,26 +390,34 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-show="formData.medi_account_type==1||formData.medi_account_type==4">
+                                    <div class="form-group"
+                                         v-show="formData.medi_account_type==1||formData.medi_account_type==4">
                                         <label class="col-sm-2 control-label">支行<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.medi_account_subbank">
+                                            <input type="text" class="form-control"
+                                                   v-model="formData.medi_account_subbank">
                                         </div>
                                     </div>
-                                    <div class="form-group"v-show="formData.medi_account_type==2">
+                                    <div class="form-group" v-show="formData.medi_account_type==2">
                                         <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.medi_account_owner">
+                                            <input type="text" class="form-control"
+                                                   v-model="formData.medi_account_owner">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label v-show="formData.medi_account_type==1" class="col-sm-2 control-label">账号<sup class="required">*</sup></label>
-                                        <label v-show="formData.medi_account_type==2" class="col-sm-2 control-label">支付宝账号<sup class="required">*</sup></label>
-                                        <label v-show="formData.medi_account_type==3" class="col-sm-2 control-label">微信账号<sup class="required">*</sup></label>
-                                        <label v-show="formData.medi_account_type==4" class="col-sm-2 control-label">存折账号<sup class="required">*</sup></label>
+                                        <label v-show="formData.medi_account_type==1"
+                                               class="col-sm-2 control-label">账号<sup class="required">*</sup></label>
+                                        <label v-show="formData.medi_account_type==2" class="col-sm-2 control-label">支付宝账号<sup
+                                                class="required">*</sup></label>
+                                        <label v-show="formData.medi_account_type==3" class="col-sm-2 control-label">微信账号<sup
+                                                class="required">*</sup></label>
+                                        <label v-show="formData.medi_account_type==4" class="col-sm-2 control-label">存折账号<sup
+                                                class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="formData.medi_account_num " >
+                                            <input type="text" class="form-control"
+                                                   v-model="formData.medi_account_num ">
                                         </div>
                                     </div>
                                 </div>
@@ -430,7 +486,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">待签约日期<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <input @click="remindData" type="text" name="addtime" value="" placeholder="待签约日期"
+                                        <input @click="remindData" type="text" name="addtime" value=""
+                                               placeholder="待签约日期"
                                                class="form-control form_datetime" readonly v-model="formData.deal_time">
                                     </div>
                                 </div>
@@ -462,7 +519,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient" :collectRent="rentRent"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="coll" :staffId="staffId"></SelectClient>
 
     </div>
 </template>
@@ -476,118 +533,116 @@
     // 选择客户
     import SelectClient from '../../common/selectClient.vue'
     export default{
-        props : ['collectMsg','rentContactId','msg'],
-        components: {STAFF,SelectHouse,Status,SelectClient,upLoad,FlexBox},
+        props: ['collectMsg', 'rentContactId', 'msg'],
+        components: {STAFF, SelectHouse, Status, SelectClient, upLoad, FlexBox},
         data(){
             return {
                 dis_status: '',
                 rentRents: '',
-                rentRent: {
-                    coll: 2,
-                    staffId: ''
-                },
-                certificatePic : {
-                    cus_idPhotos : {},    //修改图片ID
-                    cus_idPhoto : [],     //证件照片
+                coll: 2,
+                staffId: '',
+                certificatePic: {
+                    cus_idPhotos: {},    //修改图片ID
+                    cus_idPhoto: [],     //证件照片
                 },
                 complete_ok: 'ok',                        //图片上传完成
 
-                dict : {},
+                dict: {},
                 configure: [],
 
-                payments : [
+                payments: [
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     }
                 ],
 
-                one_type : '',
-                more_type : [],
-                change_payType : false,
+                one_type: '',
+                more_type: [],
+                change_payType: false,
 
-                chooseResult : {
-                    staff_name : '',
-                    house_name : '',
-                    department_name : '',
-                    leader_name : '',
-                    customer_name : ''
+                chooseResult: {
+                    staff_name: '',
+                    house_name: '',
+                    department_name: '',
+                    leader_name: '',
+                    customer_name: ''
                 },
 
-                is_medi : 1,        // 是否中介 1否2是
-                formData : {
+                is_medi: 1,        // 是否中介 1否2是
+                formData: {
                     previous_contract_id: '',   // 租房合同id
-                    collect_id : '',
+                    collect_id: '',
 
-                    staff_id : '',
-                    department_id : '',
-                    leader_id : '',
-                    house_id : '',
-                    customer_id : '',
+                    staff_id: '',
+                    department_id: '',
+                    leader_id: '',
+                    house_id: '',
+                    customer_id: '',
 
-                    is_shared : 1,
-                    shared_part : 1,
-                    rent_type : 1,
+                    is_shared: 1,
+                    shared_part: 1,
+                    rent_type: 1,
 //                    rent_relation_id : '',
-                    months : '',
-                    pay : [],
-                    bet : 0,
-                    price : [],
+                    months: '',
+                    pay: [],
+                    bet: 0,
+                    price: [],
 
 //                    中介
-                    cost_medi : '',
-                    medi_account_type : 1,
-                    medi_account_owner : '',     // 收款人姓名
-                    medi_account_bank : 1,   // 开户行
-                    medi_account_subbank : '',   // 支行
-                    medi_alipay_owner : '',      // 支付宝姓名
-                    medi_account_num  :'',
+                    cost_medi: '',
+                    medi_account_type: 1,
+                    medi_account_owner: '',     // 收款人姓名
+                    medi_account_bank: 1,   // 开户行
+                    medi_account_subbank: '',   // 支行
+                    medi_alipay_owner: '',      // 支付宝姓名
+                    medi_account_num: '',
 
                     // 合租费用
-                    elec_fee : '',      // 电费
-                    manage_fee : '',    // 管理费
-                    property_fee : '',  // 物业费
-                    net_fee : 50,       // 网络费
-                    water_fee : '',     // 水费
-                    gas_fee : '',       // 燃气费
+                    elec_fee: '',      // 电费
+                    manage_fee: '',    // 管理费
+                    property_fee: '',  // 物业费
+                    net_fee: 50,       // 网络费
+                    water_fee: '',     // 水费
+                    gas_fee: '',       // 燃气费
 
-                    cost_deposit : '',
-                    payment : [],
-                    deal_time : '',
-                    receipt_pic : [],
-                    received_type : 1,
-                    received_amount : '',
+                    cost_deposit: '',
+                    payment: [],
+                    deal_time: '',
+                    receipt_pic: [],
+                    received_type: 1,
+                    received_amount: '',
 //                    account_id : 1,
-                    complete_date : '',
-                    remark : '',
+                    complete_date: '',
+                    remark: '',
                 },
                 info: {
                     //成功状态 ***
@@ -600,7 +655,7 @@
                     error: ''
                 },
 
-                more_pay_way : 1,       // 付款方式
+                more_pay_way: 1,       // 付款方式
             }
         },
         updated (){
@@ -608,7 +663,7 @@
             this.remindData();
 
         },
-        watch : {
+        watch: {
             msg (val){
                 console.log(val);
                 this.dis_status = val;
@@ -656,36 +711,36 @@
                 // 清空
                 this.payments = [
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     },
                     {
-                        payment_id:1,
-                        money : ''
+                        payment_id: 1,
+                        money: ''
                     }
                 ];
                 this.more_pay_way = 1;
@@ -734,7 +789,7 @@
                 this.formData.gas_fee = '';
 
                 $('#add').modal('hide');
-                if (this.formData.previous_contract_id!=''){
+                if (this.formData.previous_contract_id != '') {
                     this.getContract();
                 }
             },
@@ -747,9 +802,9 @@
             selectDateSendAdd(data){
                 // 选择人
 //                console.log(data.staff[0].id)
-                if (data.staff.length != 0){
+                if (data.staff.length != 0) {
                     this.formData.staff_id = data.staff[0].id;
-                    this.rentRent.staffId = data.staff[0].id;
+                    this.staffId = data.staff[0].id;
                     this.rentRents = data.staff[0].id;
                     this.chooseResult.staff_name = data.staff[0].name;
                 }
@@ -774,7 +829,7 @@
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
                 this.is_medi = data.person_medium;
-                if (this.is_medi==1){
+                if (this.is_medi == 1) {
                     this.formData.cost_medi = '';
                 }
 
@@ -806,7 +861,7 @@
             // 付款方式
             addMorePayWay(){
                 // 增加付款方式
-                if (this.more_pay_way==7){
+                if (this.more_pay_way == 7) {
                     return;
                 } else {
                     this.more_pay_way++;
@@ -814,18 +869,18 @@
             },
             minusMorePayWay(){
                 // 减少付款方式
-                if (this.more_pay_way==1){
+                if (this.more_pay_way == 1) {
                     return;
                 } else {
 //                    console.log(this.more_pay_way);
-                    this.payments.splice(this.more_pay_way-1,1,{
-                        payment_id:1,
-                        money : ''
+                    this.payments.splice(this.more_pay_way - 1, 1, {
+                        payment_id: 1,
+                        money: ''
                     });
                     /*this.formData.payment[this.more_pay_way-1] = {
-                        payment_id:1,
-                        money : ''
-                    };*/
+                     payment_id:1,
+                     money : ''
+                     };*/
 
                     this.more_pay_way--;
                 }
@@ -867,10 +922,10 @@
                 console.log(num);
                 this.formData.receipt_pic = this.certificatePic.cus_idPhoto;
                 console.log(this.certificatePic);
-                this.formData.payment = this.payments.slice(0,this.more_pay_way);
+                this.formData.payment = this.payments.slice(0, this.more_pay_way);
 
                 this.formData.pay = [];
-                if (this.change_payType){
+                if (this.change_payType) {
                     // 付款方式变化
                     this.formData.pay = this.more_type;
                 } else {
@@ -882,11 +937,11 @@
 //                console.log(this.formData.payment);
                 console.log(this.formData);
                 this.formData['status'] = num;
-                this.$http.post('checkin/rent',this.formData)
+                this.$http.post('checkin/rent', this.formData)
                     .then(
                         (res) => {
                             console.log(res);
-                            if (res.data.code==18110){
+                            if (res.data.code == 18110) {
                                 // 成功
                                 this.info.success = res.data.msg;
                                 //显示失败弹窗 ***
@@ -912,9 +967,9 @@
             },
 
             getContract(){
-                    this.$http.get('core/rent/readcontract/id/'+this.formData.previous_contract_id)
+                this.$http.get('core/rent/readcontract/id/' + this.formData.previous_contract_id)
                     .then(
-                        (res) =>{
+                        (res) => {
                             let result = res.data.data;
                             this.formData.staff_id = result.staff_id;
                             this.formData.house_id = result.villa_id.id;
@@ -931,7 +986,7 @@
 //            修改租房状态
             changeIsSgared(){
 //                alert(this.formData.is_shared);
-                if (this.formData.is_shared==2){
+                if (this.formData.is_shared == 2) {
                     this.formData.shared_part = 1;
                     this.formData.elec_fee = '';
 //                    this.formData.manage_fee = '';
@@ -946,16 +1001,16 @@
             changePayType(ev){
                 this.more_type = [];
 //                this.formData.pay = [];
-                if (ev.currentTarget.checked){
+                if (ev.currentTarget.checked) {
                     this.one_type = '';
-                    if (this.formData.months==''||this.formData.months==0||Math.ceil(this.formData.months/12)==1){
+                    if (this.formData.months == '' || this.formData.months == 0 || Math.ceil(this.formData.months / 12) == 1) {
                         this.change_payType = false;
                         return;
                     }
                     this.change_payType = true;
-                    let years = Math.ceil(this.formData.months/12);
+                    let years = Math.ceil(this.formData.months / 12);
 //                    alert(years);
-                    for (let i = 0;i<years;i++){
+                    for (let i = 0; i < years; i++) {
                         this.more_type.push('');
                     }
 //                    alert(this.more_type.length)
@@ -983,32 +1038,38 @@
 </script>
 
 <style scoped>
-    .col-sm-2.icon{
+    .col-sm-2.icon {
         user-select: none;
     }
-    .col-sm-2.icon i{
+
+    .col-sm-2.icon i {
         line-height: 34px;
         font-size: 20px;
         color: #ddd;
         /* text-align: left; */
         cursor: pointer;
     }
-    .col-sm-2.icon i+i{
+
+    .col-sm-2.icon i + i {
         margin-left: 5px;
     }
-    .col-sm-2.icon i:hover{
+
+    .col-sm-2.icon i:hover {
         color: #999;
     }
-    #add{
+
+    #add {
         z-index: 1044;
     }
-    input[type=checkbox]{
+
+    input[type=checkbox] {
         width: 17px;
         height: 17px;
         margin-right: 8px;
         vertical-align: bottom;
     }
-    .line_height34{
+
+    .line_height34 {
         line-height: 34px;
     }
 </style>
