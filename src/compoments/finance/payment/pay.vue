@@ -8,7 +8,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div v-show="operId==0">
+                <div v-show="pitch.length==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
@@ -46,18 +46,23 @@
                     </form>
                 </div>
 
-                <div v-show="operId!=0" class="col-lg-12 remind">
+                <div v-show="pitch.length>0" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="statusId != 3">
+                        <li v-show="statusId != 3&&pitch.length==1">
                             <h5><a data-toggle="modal" data-target="#payFor"><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="statusId==1">
+                        <li v-show="statusId==1&&pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
+                        </li>
+                        <li>
+                            <h5 data-toggle="modal" data-target="#modifyTime">
+                                <a><i class="fa fa-pencil"></i> 修改付款时间</a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -88,7 +93,9 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th class="text-center">
+                                <input type="checkbox" :checked="pitch.length==myData.length" @click="chooseAll($event)">
+                            </th>
                             <th class="text-center">付款时间</th>
                             <th class="text-center">客户姓名</th>
                             <!--<th class="text-center">签约人</th>-->
@@ -109,8 +116,7 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="operId===item.id"
-                                       @click="changeIndex($event,item.id,item.status)">
+                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1" @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td><span v-if="item.customer != null">{{item.customer.address}}</span></td>
@@ -268,6 +274,9 @@
         <ShouldPay @pay_succ="search" :details="details_info"></ShouldPay>
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+
+        <!--编辑付款时间-->
+        <ModifyTime @save="modifyTime"></ModifyTime>
     </div>
 </template>
 
@@ -283,12 +292,15 @@
     import SelectSubject from '../../common/selectSubject.vue'
     import Confirm from '../../common/confirm.vue'
     import ShouldPay from './paymentShouldPay.vue'
+    import ModifyTime from './modifyPayTime.vue'
 
     export default{
-        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay,SelectSubject,Confirm},
+        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay,SelectSubject,Confirm,ModifyTime},
 
         data(){
             return {
+                pitch: [],                  //选中id
+
                 accountType: '',                    //账户类型
                 accountNumber: '',                  //账户账号
                 details_info: [],                   //应入
@@ -363,6 +375,16 @@
         updated (){
             this.remindData();
 //            时间选择
+        },
+        watch : {
+            pitch(val){
+                if (val.length==1){
+                    this.operId = val[0];
+                } else {
+                    this.operId = 0;
+                }
+//                console.log(this.operId);
+            }
         },
         mounted (){
             let params = this.$route.query.myParam;
@@ -453,6 +475,17 @@
                 this.remarks = '';                        //备注
             },
 
+            // 全选
+            chooseAll(ev){
+                this.pitch.splice(0,this.pitch.length);
+                if (ev.target.checked){
+                    for (let i = 0 ; i<this.myData.length;i++){
+                        this.pitch.push(this.myData[i].id);
+                    }
+                }
+
+//                console.log(this.pitch);
+            },
             changeIndex(ev, id, status){
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.select_info = res.data;
@@ -463,11 +496,16 @@
                     });
                 });
 //                console.log("一开始"+this.operId);
-                if (ev.target.checked) {
+                if (ev.target.checked){
+                    this.pitch.push(id);
                     this.operId = id;
                     this.statusId = status;
 //                    console.log(this.operId);
-                } else {
+                }else {
+                    let index = this.pitch.indexOf(id);
+                    if (index > -1) {
+                        this.pitch.splice(index, 1);
+                    }
                     this.operId = 0;
                     this.statusId = 0;
                 }
@@ -636,6 +674,38 @@
                             }, 2000);
                         }
                     })
+            },
+
+//            编辑付款时间
+            modifyTime(val){
+                console.log(val);
+                this.$http.post('account/payable/batch',{
+                    ids : this.pitch,
+                    pay_date : val
+                }).then((res)=>{
+                    console.log(res);
+                    if (res.data.code==18410){
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        }, 2000);
+                        this.pitch.splice(0,this.pitch.length);
+                        this.filter(this.beforePage);
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_error = false;
+                        }, 2000);
+                    }
+                })
             }
         }
     }
@@ -690,7 +760,10 @@
         color: #FF9A02;
     }
 
-    tbody tr input[type=checkbox] {
+    thead tr input[type=checkbox]{
+        vertical-align: inherit;
+    }
+    table tr input[type=checkbox]{
         width: 17px;
         height: 17px;
     }
