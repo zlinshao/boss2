@@ -138,7 +138,7 @@
 <script>
     import Status from './status.vue'
     export default{
-        props : ['collectRent'],
+        props : ['collectRent' , 'staffId'],
         components:{
             Status,
         },
@@ -168,10 +168,19 @@
                 cus_gender :'',
                 cus_name: '',
                 cus_phone :'',
+                salesman : '',
             }
         },
         mounted(){
             this.custom();
+        },
+        watch :{
+            collectRent(val){
+                this.cus_status = val;
+            },
+            staffId(val){
+                this.salesman = val;
+            }
         },
         methods : {
             search(){
@@ -224,11 +233,11 @@
             clientAdd (){
                 if(this.isNewAdd === true){
                     this.$http.post('core/customer/saveCustomer',{
-                        identity: this.collectRent.coll,            //业主/租客
+                        identity: this.collectRent,            //业主/租客
                         name:  this.cus_name,                       //客户姓名
                         gender: this.cus_gender,                    //性别
                         mobile: this.cus_phone,                     //手机号
-                        salesman: this.collectRent.staffId,         //签约人ID
+                        salesman: this.salesman,         //签约人ID
                     }).then((res) => {
                         if (res.data.code === '70010') {
                             this.cus_status = '';
