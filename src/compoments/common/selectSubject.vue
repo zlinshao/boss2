@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="selectSubject">
-            <input type="text" class="form-control" readonly @click="getBaseSubject" v-model="Superior_name"/>
+            <input type="text" class="form-control" readonly @click="getBaseSubject" v-model="Superior_name" />
             <div class="subjectList" v-show="showChooseSubject">
                 <ul>
                     <li @click="changeCurId(value,key)" :class="{'active':curSuperior_id == value}" v-for="(key,value) in subjectData">{{key}}</li>

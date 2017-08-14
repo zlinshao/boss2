@@ -349,6 +349,7 @@
 //                console.log(this.isActive);
                     if (num == 0) {
                         date = '';
+                        this.$emit('sendDate', '');
                     } else {
                         this.isCustom = false;
                         if (num == 1) {
@@ -360,6 +361,8 @@
                         } else if (num == 2) {
                             // 昨天
 //                        console.log(moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"to"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD'));
+                            from = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD');
+                            to = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD');
                             date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD') + "至" + moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
                         } else if (num == 3) {
                             // 近7天
@@ -387,7 +390,7 @@
                             // 上季度
                             from = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD');
                             to = moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD') + "to" + moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
+                            date = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
                         } else if (num == 8) {
                             // 本季度
                             from = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD');
@@ -408,7 +411,6 @@
                     }
                     this.mobilePickerDate = date;
                     this.showPicker = false;
-                    this.$emit('sendDate', '');
                 }
 
 
@@ -506,6 +508,7 @@
                 if (this.currentDate != undefined) {
                     if (this.currentDate.length == 1) {
                         this.date = this.currentDate[0];
+                        this.mobilePickerDate = this.currentDate[0];
                     } else if (this.currentDate.length == 2) {
                         if (this.IsPC()) {
                             this.dateRange = this.currentDate[0] + "至" + this.currentDate[1];

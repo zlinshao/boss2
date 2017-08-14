@@ -126,7 +126,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">款项名称</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" disabled v-model="msg.money_name">
+                                            <input type="text" class="form-control" readonly v-model="msg.money_name">
                                         </div>
                                         <label class="col-sm-2 control-label">款项科目</label>
                                         <div class="col-sm-4">

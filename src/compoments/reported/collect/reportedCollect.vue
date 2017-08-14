@@ -105,13 +105,13 @@
                             <td>{{item.house.detailed_address}}</td>
                             <td>
                                 <span v-if="item.price !== null && item.price !== undefined">
-                                    {{item.price[0]}}<a v-show="item.price.length>1">变化</a>
+                                    {{item.price[0]}}<a class="change" v-show="item.price.length>1">变化</a>
                                 </span>
                             </td>
                             <td>{{item.years}}</td>
                             <td>
                                 <span  v-if="item.pay_type !== null && item.pay_type !== undefined">
-                                    {{dict.pay_type[item.pay_type[0]]}}<a v-show="item.pay_type.length>1">变化</a>
+                                    {{dict.pay_type[item.pay_type[0]]}}<a class="change" v-show="item.pay_type.length>1">变化</a>
                                 </span>
                             </td>
                             <td>{{item.vacancy}}</td>
@@ -310,7 +310,7 @@
                 this.filter(val);
             },
             getDate(data){
-//                console.log(data);
+                console.log(data);
                 this.params.range = data;
                 this.search(1);
             },
@@ -466,7 +466,7 @@
         /*color: white;*/
     }
 
-    td a {
+    td a.change {
         margin-left: 5px;
         font-size: 8px;
     }

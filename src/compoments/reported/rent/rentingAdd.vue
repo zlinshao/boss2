@@ -367,7 +367,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">管理费<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">管理费</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" v-model="formData.manage_fee">
                                     </div>
@@ -376,7 +376,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">物业费<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">物业费</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" v-model="formData.property_fee">
                                     </div>
@@ -387,7 +387,7 @@
                                 <!--合租费用-->
                                 <div v-show="formData.is_shared==1">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">电费<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">电费</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" v-model="formData.elec_fee">
                                         </div>
@@ -396,7 +396,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">网络费<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">网络费</label>
                                         <div class="col-sm-8">
                                             <select class="form-control" v-model="formData.net_fee">
                                                 <option value="50">50</option>
@@ -408,7 +408,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">水费<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">水费</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" v-model="formData.water_fee">
                                         </div>
@@ -417,7 +417,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">燃气费<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">燃气费</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" v-model="formData.gas_fee">
                                         </div>
