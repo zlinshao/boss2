@@ -8,7 +8,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div v-show="operId==0">
+                <div v-show="pitch.length==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
@@ -45,17 +45,22 @@
                     </form>
                 </div>
 
-                <div v-show="operId!=0" class="col-lg-12 remind">
+                <div v-show="pitch.length>0" class="col-lg-12 remind">
                     <ul>
-                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="statusId!=3">
+                        <li v-show="statusId!=3&&pitch.length==1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
-                        <li v-show="statusId==1">
+                        <li v-show="statusId==1&&pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
+                        </li>
+                        <li>
+                            <h5>
+                                <a><i class="fa fa-pencil"></i> 修改付款时间</a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -86,7 +91,9 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th class="text-center">
+                                <input type="checkbox" :checked="pitch.length==myData.length" @click="chooseAll($event)">
+                            </th>
                             <th class="text-center">收款时间</th>
                             <th class="text-center">客户姓名</th>
                             <th class="text-center">收入科目</th>
@@ -102,7 +109,7 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id,item.status)">
+                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1" @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td>{{item.customer==undefined?'':item.customer.address}}</td>
@@ -254,6 +261,7 @@
 
         data(){
             return {
+                pitch: [],                  //选中id
                 beforePage : 1,
                 certificatePic : {
                     cus_idPhotos : {},    //修改图片ID
@@ -380,6 +388,16 @@
                 )
 
         },
+        watch : {
+            pitch(val){
+                if (val.length==1){
+                    this.operId = val[0];
+                } else {
+                    this.operId = 0;
+                }
+//                console.log(this.operId);
+            }
+        },
         methods : {
             clearForm(){
                 this.chooseResult.customer_name = '';
@@ -393,13 +411,29 @@
                 $('#addCollect').modal('hide');
             },
 
+            // 全选
+            chooseAll(ev){
+                this.pitch.splice(0,this.pitch.length);
+                if (ev.target.checked){
+                    for (let i = 0 ; i<this.myData.length;i++){
+                        this.pitch.push(this.myData[i].id);
+                    }
+                }
+
+//                console.log(this.pitch);
+            },
             changeIndex(ev,id,status){
 //                console.log("一开始"+this.operId);
                 if (ev.target.checked){
+                    this.pitch.push(id);
                     this.operId = id;
                     this.statusId = status;
 //                    console.log(this.operId);
                 }else {
+                    let index = this.pitch.indexOf(id);
+                    if (index > -1) {
+                        this.pitch.splice(index, 1);
+                    }
                     this.operId = 0;
                     this.statusId = 0;
                 }
@@ -410,7 +444,7 @@
                 this.isAdd = false;
             },
 
-            payFlowList(){-
+            payFlowList(){
                 this.$http.get('account/receivable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     console.log(res.data);
@@ -676,7 +710,7 @@
         color: #FF9A02;
     }
 
-    tbody tr input[type=checkbox]{
+    table tr input[type=checkbox]{
         width: 17px;
         height: 17px;
     }
