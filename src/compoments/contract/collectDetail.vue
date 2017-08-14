@@ -1169,6 +1169,6 @@
         content: "";
     }
     .label-danger{
-        color: #e88512;
+        background: #e88512;
     }
 </style>
