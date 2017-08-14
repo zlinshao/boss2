@@ -113,7 +113,7 @@
                                     <span class="label label-warning" v-if="item.passed === 3">
                                     {{dictionary.passed[item.passed]}}
                                 </span>
-                                    <span class="label label-danger" v-if="item.passed === 4">
+                                    <span class="label label-warning" v-if="item.passed === 4">
                                     {{dictionary.passed[item.passed]}}
                                 </span>
                             </td>
@@ -322,8 +322,5 @@
     }
     .bread:hover{
         color: #59ace2;
-    }
-    .label-danger{
-        background: #e88512;
     }
 </style>
