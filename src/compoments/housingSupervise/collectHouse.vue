@@ -8,6 +8,7 @@
             <!--未选中-->
             <div class="panel-body clearFix">
                 <div v-if="houseSeleted===0">
+                    <div v-if="flag">
                         <div class="pro-sort">
                             <label>
                                 <select class="form-control" v-model="params.house_type" @change="search">
@@ -95,7 +96,20 @@
                         <div class="pro-sort">
                             <button class="btn btn-success" type="button" @click="reset">重置</button>
                         </div>
+                    </div>
 
+                    <div class="pull-right" v-if="!flag && flag1 === false">
+                        <a class="btn btn-success" @click="showFlag"
+                           style="background-color: transparent;color: #797979;border: 0;padding: 0;margin: 0;">
+                            <a style="border-bottom: 1px solid #667FA0;">点击显示筛选条件</a>
+                        </a>
+                    </div>
+                    <div v-if="flag && flag1 === false">
+                        <a class="btn btn-success col-xs-12" @click="showFlag"
+                           style="background-color: transparent;color: #797979;border: 0;padding:8px 0 0 0;margin: 0;">
+                            <a class="pull-right" style="border-bottom: 1px solid #667FA0;">点击隐藏筛选条件</a>
+                        </a>
+                    </div>
                 </div>
 
                 <!--选中-->
@@ -205,6 +219,8 @@
         components: {Page,SelectDpm,Status},
         data (){
             return {
+                flag: true,
+                flag1: false,
                 /*********/
                 dictionary:[],      //字典列表
                 configure:[],       //配置项
@@ -266,7 +282,28 @@
         created (){
             this.getDictionary();
         },
+        mounted (){
+            this.IsPC();
+        },
         methods: {
+            showFlag (){
+                this.flag = !this.flag;
+            },
+            IsPC(){
+                let userAgentInfo = navigator.userAgent;
+                let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+                let flag = true;
+                let flag1 = true;
+                for (let v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = false;
+                        flag1 = false;
+                        break;
+                    }
+                }
+                this.flag = flag;
+                this.flag1 = flag1;
+            },
             //字典列表
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {

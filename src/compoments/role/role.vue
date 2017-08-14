@@ -4,13 +4,16 @@
             <li>人资管理</li>
             <li class="active">角色管理</li>
         </ol>
-
-        <!--新增权限管理-->
-        <div class="form-group text-right">
-            <button class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
-                <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色
-            </button>
-        </div>
+        <section class="panel">
+            <div class="panel-body">
+                <!--新增权限管理-->
+                <div class="form-group text-right" style="margin-bottom: 0;">
+                    <button class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
+                        <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色
+                    </button>
+                </div>
+            </div>
+        </section>
 
         <!--新增/修改 模态框-->
         <div class="modal fade full-width-modal-right" id="new_add" tabindex="-1" role="dialog"

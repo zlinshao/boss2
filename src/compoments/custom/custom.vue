@@ -4,80 +4,99 @@
             <li>客户管理</li>
             <li>客户</li>
         </ol>
+
         <!--客户-->
         <section class="panel">
             <div class="panel-body">
                 <!--没有选中-->
                 <div v-if="pitch.length === 0">
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="return_sea.sea_status" @change="search_c">
-                                <option value="" selected="selected">客户状态</option>
-                                <option v-for="(val, index) in select_list.customer_status" :value="index">{{val}}
-                                </option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="return_sea.sea_intention" @change="search_c">
-                                <option value="" selected="selected">客户意向</option>
-                                <option v-for="(val, index) in select_list.customer_will" :value="index">{{val}}
-                                </option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="return_sea.sea_id" @change="search_c">
-                                <option value="" selected="selected">客户身份</option>
-                                <option v-for="(val, index) in select_list.identity" :value="index">{{val}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="return_sea.sea_source" @change="search_c">
-                                <option value="" selected="selected">客户来源</option>
-                                <option v-for="(val, index) in select_list.source" :value="index">{{val}}
-                                </option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort">
-                        <label>
-                            <select class="form-control" v-model="return_sea.sea_type" @change="search_c">
-                                <option value="" selected="selected">个人/中介</option>
-                                <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pro-sort" style="height: 39px;">
-                        <label style="margin-top: 8px;">
-                            <input type="checkbox" :checked="return_sea.Trid" class="pull-left" @click="trid($event,1)">三天内未成交
-                        </label>
-                    </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px;">
-                        <div class="input-group">
-                            <input type="text" class="form-control" v-model="return_sea.sea_info"
-                                   @keyup.enter="sea_cus(1)"
-                                   placeholder="客户名/手机号">
-                            <span class="input-group-btn">
+                    <div v-if="flag">
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="return_sea.sea_status" @change="search_c">
+                                    <option value="" selected="selected">客户状态</option>
+                                    <option v-for="(val, index) in select_list.customer_status" :value="index">{{val}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="return_sea.sea_intention" @change="search_c">
+                                    <option value="" selected="selected">客户意向</option>
+                                    <option v-for="(val, index) in select_list.customer_will" :value="index">{{val}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="return_sea.sea_id" @change="search_c">
+                                    <option value="" selected="selected">客户身份</option>
+                                    <option v-for="(val, index) in select_list.identity" :value="index">{{val}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="return_sea.sea_source" @change="search_c">
+                                    <option value="" selected="selected">客户来源</option>
+                                    <option v-for="(val, index) in select_list.source" :value="index">{{val}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <label>
+                                <select class="form-control" v-model="return_sea.sea_type" @change="search_c">
+                                    <option value="" selected="selected">个人/中介</option>
+                                    <option v-for="(val,index) in select_list.person_medium" :value="index">{{val}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="pro-sort" style="height: 39px;">
+                            <label style="margin-top: 8px;">
+                                <input type="checkbox" :checked="return_sea.Trid" class="pull-left"
+                                       @click="trid($event,1)">三天内未成交
+                            </label>
+                        </div>
+                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
+                             style="padding: 0;margin-right: 20px;">
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="return_sea.sea_info"
+                                       @keyup.enter="sea_cus(1)"
+                                       placeholder="客户名/手机号">
+                                <span class="input-group-btn">
                             <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
                         </span>
+                            </div>
+                        </div>
+                        <div class="pro-sort">
+                            <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
+                        </div>
+                        <div class="pull-right">
+                            <a class="btn btn-success"
+                               @click="customers_new('new')">
+                                <i class="fa fa-plus-square"></i>&nbsp;增加客户
+                            </a>
                         </div>
                     </div>
-                    <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
+
+                    <div class="pull-right" v-if="!flag && flag1 === false">
+                        <a class="btn btn-success" @click="showFlag"
+                           style="background-color: transparent;color: #797979;border: 0;padding: 0;margin: 0;">
+                            <a style="border-bottom: 1px solid #667FA0;">点击显示筛选条件</a>
+                        </a>
                     </div>
-                    <div class="pull-right">
-                        <a class="btn btn-success"
-                           @click="customers_new('new')">
-                            <i class="fa fa-plus-square"></i>&nbsp;增加客户
+                    <div v-if="flag && flag1 === false">
+                        <a class="btn btn-success col-xs-12" @click="showFlag"
+                           style="background-color: transparent;color: #797979;border: 0;padding:8px 0 0 0;margin: 0;">
+                            <a class="pull-right" style="border-bottom: 1px solid #667FA0;">点击隐藏筛选条件</a>
                         </a>
                     </div>
                 </div>
-
 
                 <!--被选中一个-->
                 <div v-if="pitch.length === 1" class="col-lg-12 remind">
@@ -243,6 +262,8 @@
         components: {Page, Distribution, newAdd, remindDaily, Status, Loading},
         data (){
             return {
+                flag: true,
+                flag1: false,
                 wait: 1,
                 top: '',                    //置顶/取消置顶
                 select_list: {},            //select字典
@@ -280,6 +301,7 @@
             }
         },
         mounted (){
+            this.IsPC();
             this.sea_status = this.$route.query.cus;
             if (this.sea_status === 1) {
                 this.collectList(this.$route.query.sear.beforePage);
@@ -288,6 +310,24 @@
             }
         },
         methods: {
+            showFlag (){
+                this.flag = !this.flag;
+            },
+            IsPC(){
+                let userAgentInfo = navigator.userAgent;
+                let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+                let flag = true;
+                let flag1 = true;
+                for (let v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = false;
+                        flag1 = false;
+                        break;
+                    }
+                }
+                this.flag = flag;
+                this.flag1 = flag1;
+            },
 //            select搜索
             search_c (){
                 this.sea_cus(1);

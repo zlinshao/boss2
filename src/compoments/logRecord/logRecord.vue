@@ -7,7 +7,7 @@
 
         <section class="panel">
             <div class="panel-body">
-                <form class="form-inline clearFix" role="form">
+                <form class="form-inline clearFix" role="form" v-if="flag">
 
                     <div class="dropdown form-group">
                         <!--<label>操作模块</label>-->
@@ -44,6 +44,19 @@
                         <button class="btn btn-success" type="button" @click="reset">重置</button>
                     </div>
                 </form>
+
+                <div class="pull-right" v-if="!flag && flag1 === false">
+                    <a class="btn btn-success" @click="showFlag"
+                       style="background-color: transparent;color: #797979;border: 0;padding: 0;margin: 0;">
+                        <a style="border-bottom: 1px solid #667FA0;">点击显示筛选条件</a>
+                    </a>
+                </div>
+                <div v-if="flag && flag1 === false">
+                    <a class="btn btn-success col-xs-12" @click="showFlag"
+                       style="background-color: transparent;color: #797979;border: 0;padding:8px 0 0 0;margin: 0;">
+                        <a class="pull-right" style="border-bottom: 1px solid #667FA0;">点击隐藏筛选条件</a>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -109,6 +122,8 @@
         components: {Page,Staff,Status},
         data(){
             return {
+                flag: true,
+                flag1: false,
                 pages: 1,     //总页数
                 page : 1,      // 当前页数
                 params : {
@@ -140,6 +155,7 @@
         },
         mounted(){
             this.getDictionary();
+            this.IsPC();
         },
         updated(){
             this.remindData ();
@@ -159,6 +175,24 @@
             },
         },
         methods: {
+            showFlag (){
+                this.flag = !this.flag;
+            },
+            IsPC(){
+                let userAgentInfo = navigator.userAgent;
+                let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+                let flag = true;
+                let flag1 = true;
+                for (let v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = false;
+                        flag1 = false;
+                        break;
+                    }
+                }
+                this.flag = flag;
+                this.flag1 = flag1;
+            },
             getDictionary(){
               this.$http.get('log/log/dict').then((res)=>{
                   this.dictionary=res.data;
