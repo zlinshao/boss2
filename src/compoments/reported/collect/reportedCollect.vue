@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="input-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i
+                            <a class="btn btn-success" @click="disStatus"><i
                                     class="fa fa-plus-square"></i>&nbsp;新增收房报备
                             </a>
                         </div>
@@ -147,7 +147,7 @@
 
         <!--modal-->
         <!--新增-->
-        <AddModal @save="search(1)"></AddModal>
+        <AddModal @save="search(1)" :msg="dis_status"></AddModal>
 
         <!--编辑-->
         <EditModal :id="curOperId" @save="search(1)"></EditModal>
@@ -183,7 +183,7 @@
         data(){
             return {
                 beforePage: 1,
-
+                dis_status: '',
                 isShow: false,
 
                 operId: 0,
@@ -270,6 +270,10 @@
 
         },
         methods: {
+            disStatus (){
+                $('#add').modal('show');
+                this.dis_status = 2;
+            },
             getCollectList(){
                 this.$http.get('checkin/collect')
                     .then(
