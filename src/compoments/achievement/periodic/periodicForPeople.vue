@@ -4,7 +4,7 @@
         <ol class="breadcrumb">
             <li>业绩管理</li>
             <li>周期表</li>
-            <li class="active">个人</li>
+            <li>个人</li>
         </ol>
 
         <section class="panel">
@@ -46,6 +46,7 @@
                             <th class="text-center">收房/套</th>
                             <th class="text-center">租房/套</th>
                             <th class="text-center">绩效套餐</th>
+                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -56,6 +57,7 @@
                             <td>{{item.collect}}</td>
                             <td>{{item.rent}}</td>
                             <td></td>
+                            <td><router-link :to="{path:'/periodicPeopleDetail',query: {id:1}}">详情</router-link></td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
                             <td colspan="6" class="text-center text-muted">
@@ -79,7 +81,7 @@
 
     div.padd {
         display: inline-block;
-        padding: 0 15px 0 0;
+        /*padding: 0 15px 0 0;*/
     }
     @media (max-width: 798px) {
         .panel-body .form-inline .input-group{

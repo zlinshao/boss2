@@ -11,6 +11,7 @@ import GNRenting from './compoments/achievement/gleefulNews/GNRenting.vue'
 import PeriodicForGroup from './compoments/achievement/periodic/periodicForGroup.vue'
 import PeriodicForGcompany from './compoments/achievement/periodic/periodicForGcompany.vue'
 import PeriodicForPeople from './compoments/achievement/periodic/periodicForPeople.vue'
+import PeriodicPeopleDetail from './compoments/achievement/periodic/peopleDetail.vue'
 import WACollect from './compoments/achievement/wagesAchievement/WACollect.vue'
 import WARenting from './compoments/achievement/wagesAchievement/WARenting.vue'
 import Compare from './compoments/achievement/companyAchievement/compare.vue'   // 公司业绩收租房对比
@@ -146,6 +147,11 @@ export default[
         path: '/periodicForPeople',
         name: 'PeriodicForPeople',
         component: PeriodicForPeople
+    },
+    {
+        path: '/periodicPeopleDetail',
+        name: 'PeriodicPeopleDetail',
+        component: PeriodicPeopleDetail
     },
     {
         path: '/wACollect',
