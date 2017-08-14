@@ -22,7 +22,7 @@
                 <span class="label label-primary" v-if="contract_pass === 1">{{dictionary.passed[contract_pass]}}</span>
                 <span class="label label-default" v-if="contract_pass === 2">{{dictionary.passed[contract_pass]}}</span>
                 <span class="label label-warning" v-if="contract_pass === 3">{{dictionary.passed[contract_pass]}}</span>
-                <span class="label label-danger" v-if="contract_pass === 4">{{dictionary.passed[contract_pass]}}</span>
+                <span class="label label-warning" v-if="contract_pass === 4">{{dictionary.passed[contract_pass]}}</span>
                 <span class="remind" v-if="contract_pass > 4">审核已完成，部分资料已无法查看，请联系组长</span>
             </div>
             <div class="pull-right dropdown" v-for="item in contractList">
@@ -1167,8 +1167,5 @@
         padding: 0 5px;
         color: #ccc;
         content: "";
-    }
-    .label-danger{
-        background: #e88512;
     }
 </style>
