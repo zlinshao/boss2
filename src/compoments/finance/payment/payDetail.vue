@@ -48,7 +48,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <span class="text-primary">客户姓名：</span>
-                                    <span>{{list.customer.name}}</span>
+                                    <span>{{list.customer == null ? '客户已删除' : list.customer.name}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">详情：</span>

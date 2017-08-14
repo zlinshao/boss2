@@ -41,7 +41,7 @@
                         <div class="col-md-12" v-if="msg!=''">
                             <div class="col-md-6">
                                 <div><span
-                                        class="text-primary">客户姓名：</span><span>{{msg.customer == null ? '' : msg.customer.name}}</span>
+                                        class="text-primary">客户姓名：</span><span>{{msg.customer == null ? '客户已删除' : msg.customer.name}}</span>
                                 </div>
                                 <div><span class="text-primary">详情：</span><span>{{msg.description}}</span></div>
                                 <div><span class="text-primary">收款时间：</span>

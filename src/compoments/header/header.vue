@@ -371,7 +371,7 @@
                                 <router-link to='/reportedCollect'>收房报备</router-link>
                             </li>
                             <li :class="{'active': isActive == 35}" @click='pitch_on(35)'>
-                                <router-link to='/reportedRenting'>租房报备</router-link>
+                                <router-link to='/reportedRenting'>未收先租报备</router-link>
                             </li>
                             <li :class="{'active': isActive == 36}" @click='pitch_on(36)'>
                                 <router-link to='/reportedOther'>其余款项报备</router-link>
