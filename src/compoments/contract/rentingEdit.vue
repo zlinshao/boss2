@@ -10,7 +10,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeEdit">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">编辑合同</h4>
+                        <h4 class="modal-title">编辑合同{{relative_customer}}</h4>
                     </div>
                     <div class="modal-body">
                             <div class="panel-body">
@@ -270,14 +270,12 @@
 
                         let contractList =res.data.data;
                         this.contractEdit.id = contractList.id; //合同id
-                        if(contractList.relative_customer !== undefined){
-                            if(contractList.relative_customer.name !== undefined){
+                        if(contractList.relative_customer !== undefined && contractList.relative_customer !== null){
                                 this.more = contractList.relative_customer.length;
                                 for(let i=0;i<contractList.relative_customer.length;i++){
                                     this.relative_customer.push(contractList.relative_customer[i].name);
                                     this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
                                 }
-                            }
                         }
                         this.contractEdit.contract_num = contractList.contract_num; //合同编号
                         this.contractEdit.start_date = contractList.start_date;     //合同开始时间
