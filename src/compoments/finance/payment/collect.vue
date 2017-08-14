@@ -107,7 +107,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in myData">
+                        <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
                             <td>
                                 <input type="checkbox" :checked="pitch.indexOf(item.id) > -1" @click="changeIndex($event,item.id,item.status)">
                             </td>
@@ -653,6 +653,7 @@
                     .then((res) =>{
 //                    console.log(res.data)
                         if (res.data.code==18510){
+                            this.pitch = [];
                             // 成功
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
@@ -769,5 +770,9 @@
         .panel-body .form-inline .input-group{
             margin-bottom: 5px;
         }
+    }
+
+    .table-striped > tbody > tr.reds {
+        background-color: #FFCECE;
     }
 </style>

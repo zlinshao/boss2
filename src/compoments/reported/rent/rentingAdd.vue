@@ -353,7 +353,7 @@
                                 </div>
 
                                 <!--中介信息-->
-                                <div v-show="is_medi==2">
+                                <div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">中介费<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
@@ -618,7 +618,7 @@
                     price: [],
 
 //                    中介
-                    cost_medi: '',
+                    cost_medi: 0,
                     medi_account_type: 1,
                     medi_account_owner: '',     // 收款人姓名
                     medi_account_bank: 1,   // 开户行
@@ -764,7 +764,7 @@
                 this.formData.pay = [];
                 this.formData.bet = 0;
                 this.formData.price = '';
-                this.formData.cost_medi = '';
+                this.formData.cost_medi = 0;
                 this.formData.medi_account_type = 1;
                 this.formData.medi_account_num = '';
                 this.formData.medi_account_owner = '';
@@ -830,7 +830,7 @@
                 this.chooseResult.customer_name = data.name;
                 this.is_medi = data.person_medium;
                 if (this.is_medi == 1) {
-                    this.formData.cost_medi = '';
+                    this.formData.cost_medi = 0;
                 }
 
             },

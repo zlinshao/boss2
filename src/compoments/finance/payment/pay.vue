@@ -27,7 +27,8 @@
                         </div>
 
                         <div class="padd">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                        @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -94,7 +95,8 @@
                         <thead>
                         <tr>
                             <th class="text-center">
-                                <input type="checkbox" :checked="pitch.length==myData.length" @click="chooseAll($event)">
+                                <input type="checkbox" :checked="pitch.length==myData.length"
+                                       @click="chooseAll($event)">
                             </th>
                             <th class="text-center">付款时间</th>
                             <th class="text-center">客户姓名</th>
@@ -114,9 +116,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in myData">
+                        <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
                             <td>
-                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1" @click="changeIndex($event,item.id,item.status)">
+                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                                       @click="changeIndex($event,item.id,item.status)">
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td><span v-if="item.customer != null">{{item.customer.address}}</span></td>
@@ -139,7 +142,10 @@
                                 </label>
                             </td>
                             <td>
-                                <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id,page:beforePage,myParams:params,selected:selected}}">详情</router-link>
+                                <router-link
+                                        :to="{path:'/payPaymentDetail',query: {payId: item.id,page:beforePage,myParams:params,selected:selected}}">
+                                    详情
+                                </router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -295,7 +301,19 @@
     import ModifyTime from './modifyPayTime.vue'
 
     export default{
-        components: {Page, Status, FlexBox, DatePicker, STAFF, SelectHouse, SelectClient, ShouldPay,SelectSubject,Confirm,ModifyTime},
+        components: {
+            Page,
+            Status,
+            FlexBox,
+            DatePicker,
+            STAFF,
+            SelectHouse,
+            SelectClient,
+            ShouldPay,
+            SelectSubject,
+            Confirm,
+            ModifyTime
+        },
 
         data(){
             return {
@@ -328,7 +346,7 @@
                         needHour: true
                     }
                 ],
-                currentDate :[],
+                currentDate: [],
 
                 configure: {},
                 filtrate: {
@@ -376,9 +394,9 @@
             this.remindData();
 //            时间选择
         },
-        watch : {
+        watch: {
             pitch(val){
-                if (val.length==1){
+                if (val.length == 1) {
                     this.operId = val[0];
                 } else {
                     this.operId = 0;
@@ -394,10 +412,10 @@
                 .then(
                     (res) => {
                         this.dict = res.data;
-                        if (page!=undefined){
+                        if (page != undefined) {
                             this.page = page;
                             this.beforePage = page;
-                            if (params!=undefined&&typeof params!='string'){
+                            if (params != undefined && typeof params != 'string') {
 //                                this.currentDate = [];
                                 this.currentDate = params.range.split('to');
                                 // this.currentDate = params.range.split('to');
@@ -407,7 +425,7 @@
 //                                alert(this.beforePage)
                             }
 //                            alert(selected);
-                            if (selected!=undefined){
+                            if (selected != undefined) {
                                 this.selected = selected;
                             }
                             this.filter(this.beforePage);
@@ -477,9 +495,9 @@
 
             // 全选
             chooseAll(ev){
-                this.pitch.splice(0,this.pitch.length);
-                if (ev.target.checked){
-                    for (let i = 0 ; i<this.myData.length;i++){
+                this.pitch.splice(0, this.pitch.length);
+                if (ev.target.checked) {
+                    for (let i = 0; i < this.myData.length; i++) {
                         this.pitch.push(this.myData[i].id);
                     }
                 }
@@ -496,12 +514,12 @@
                     });
                 });
 //                console.log("一开始"+this.operId);
-                if (ev.target.checked){
+                if (ev.target.checked) {
                     this.pitch.push(id);
                     this.operId = id;
                     this.statusId = status;
 //                    console.log(this.operId);
-                }else {
+                } else {
                     let index = this.pitch.indexOf(id);
                     if (index > -1) {
                         this.pitch.splice(index, 1);
@@ -649,10 +667,11 @@
                 $('#confirm').modal('show');
             },
             getConfirm(){
-                this.$http.post('account/payable/delete/'+this.operId)
-                    .then((res) =>{
+                this.$http.post('account/payable/delete/' + this.operId)
+                    .then((res) => {
 //                    console.log(res.data)
-                        if (res.data.code==18410){
+                        if (res.data.code == 18410) {
+                            this.pitch = [];
                             // 成功
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
@@ -679,12 +698,12 @@
 //            编辑付款时间
             modifyTime(val){
                 console.log(val);
-                this.$http.post('account/payable/batch',{
-                    ids : this.pitch,
-                    pay_date : val
-                }).then((res)=>{
+                this.$http.post('account/payable/batch', {
+                    ids: this.pitch,
+                    pay_date: val
+                }).then((res) => {
                     console.log(res);
-                    if (res.data.code==18410){
+                    if (res.data.code == 18410) {
                         // 成功
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
@@ -693,7 +712,7 @@
                         setTimeout(() => {
                             this.info.state_success = false;
                         }, 2000);
-                        this.pitch.splice(0,this.pitch.length);
+                        this.pitch.splice(0, this.pitch.length);
                         this.filter(this.beforePage);
                     } else {
                         // 失败
@@ -760,10 +779,11 @@
         color: #FF9A02;
     }
 
-    thead tr input[type=checkbox]{
+    thead tr input[type=checkbox] {
         vertical-align: inherit;
     }
-    table tr input[type=checkbox]{
+
+    table tr input[type=checkbox] {
         width: 17px;
         height: 17px;
     }
@@ -787,5 +807,9 @@
 
     .status.green {
         background-color: #78CD51;
+    }
+
+    .table-striped > tbody > tr.reds {
+        background-color: #FFCECE;
     }
 </style>

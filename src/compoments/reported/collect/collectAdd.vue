@@ -168,7 +168,7 @@
 
 
                                 <!--中介部分-->
-                                <div v-show="is_medi==2">
+                                <div>
                                     <h4 @click="showCost=!showCost">中介信息</h4>
                                     <div v-show="showCost">
                                         <div class="form-group">
@@ -324,7 +324,7 @@
                     account : '',           // 账户
 
 //                    中介
-                    cost_medi : '',     // 中介费
+                    cost_medi : 0,     // 中介费
 //                    is_medi : 1,
                     medi_account_type : 1,
                     medi_account_owner : '',     // 收款人姓名
@@ -452,7 +452,7 @@
                 this.formData.account_subbank = '';
 //                this.formData.alipay_owner = '';
 
-                this.formData.cost_medi = '';
+                this.formData.cost_medi = 0;
                 this.formData.medi_account_type = 1;
                 this.formData.medi_account_num = '';
                 this.formData.medi_account_owner = '';
@@ -534,7 +534,7 @@
                 this.chooseResult.customer_name = data.name;
                 this.is_medi = data.person_medium;
                 if (this.is_medi==1){
-                    this.formData.cost_medi = '';
+                    this.formData.cost_medi = 0;
                 }
 
             },
