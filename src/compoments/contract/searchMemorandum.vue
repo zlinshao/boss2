@@ -323,4 +323,7 @@
     .bread:hover{
         color: #59ace2;
     }
+    .label-danger{
+        color: #e88512;
+    }
 </style>
