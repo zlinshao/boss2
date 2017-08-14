@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">房型<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">房型</label>
 
                                     <div class="col-sm-3">
                                         <select class="form-control" v-model="houseAdd.rooms.rooms">
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label" style="padding-top: 7px;">面积<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label" style="padding-top: 7px;">面积</label>
                                     <div class="col-lg-4">
                                         <input type="text" class="form-control" v-model="houseAdd.area" placeholder="请输入面积 ㎡">
                                     </div>
@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">配套设施<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">配套设施</label>
                                     <div class="col-lg-10">
                                         <label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
                                             <input type="checkbox" class="pull-left" :value="key" @click="rules(key,$event)"
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">楼层<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">楼层</label>
                                     <div class="col-lg-10">
                                         <div class="col-xs-5 col-sm-4 col-lg-5">
                                             <input type="number" class="form-control" placeholder="当前楼层"
@@ -117,13 +117,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">房屋类型<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">房屋类型</label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseAdd.house_type">
                                             <option :value="key"  v-for="(value,key) in myDictionary.house_type">{{value}}</option>
                                         </select>
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">房屋特色<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">房屋特色</label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseAdd.house_feature">
                                             <option :value="key"  v-for="(value,key) in myDictionary.house_feature">{{value}}</option>
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">建筑楼层<sup>*</sup></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">建筑楼层</label>
                                     <div class="col-lg-4">
                                         <select class="form-control" v-model="houseAdd.floor_type">
                                             <option :value="key"  v-for="(value,key) in myDictionary.floor_type">{{value}}</option>
@@ -145,7 +145,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">房屋照片<sup>*</sup></label>
+                                    <label class="col-lg-2 control-label">房屋照片</label>
                                     <div class="col-lg-10">
                                         <up-load @photo="housePicId" @delete="picDelete" @complete="complete"  placeholder="房屋照片"
                                                  :result="'housePic'" :idPhotos="housePic"></up-load>
@@ -166,7 +166,7 @@
                                 <!--未收 新增/编辑 房屋-->
                                 <div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">房屋来源<sup>*</sup></label>
+                                        <label class="col-lg-2 control-label">房屋来源</label>
                                         <div class="col-lg-10">
                                             <select class="form-control" v-model="houseAdd.source">
                                                 <option :value="key"  v-for="(value,key) in myDictionary.source">{{value}}</option>
