@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="input-group pull-right">
-                            <a class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fa fa-plus-square"></i>&nbsp;新增未收先租房报备
+                            <a class="btn btn-success" @click="disStatus"><i class="fa fa-plus-square"></i>&nbsp;新增未收先租房报备
                             </a>
                         </div>
                     </form>
@@ -132,7 +132,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <!--新增-->
-        <AddModal @save="search(1)"></AddModal>
+        <AddModal @save="search(1)" :msg="dis_status"></AddModal>
 
         <!--编辑-->
         <EditModal :id="curOperId" @save="search(1)"></EditModal>
@@ -160,6 +160,7 @@
         components: {DatePicker,Page,Confirm,Status,AddModal,EditModal,CteatePayment,AddOther},
         data(){
             return {
+                dis_status: '',
                 beforePage : 1,
                 operId : 0,
                 statusId : 0,
@@ -240,6 +241,10 @@
 
         },
         methods: {
+            disStatus (){
+                $('#add').modal('show');
+                this.dis_status = 2;
+            },
             getRentingList(){
                 this.$http.get('checkin/rent')
                     .then(
