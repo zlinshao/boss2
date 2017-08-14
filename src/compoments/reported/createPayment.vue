@@ -146,7 +146,7 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary" @click="save">通过并生成应收款项</button>
+                                <button type="button" class="btn btn-primary" @click="save">通过并生成款项</button>
                             </div>
                         </div>
                     </div>

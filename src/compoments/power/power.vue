@@ -7,11 +7,16 @@
 
         <Status :state="info"></Status>
         <!--新增权限管理-->
-        <div class="form-group text-right">
-            <a class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
-                <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增权限
-            </a>
-        </div>
+        <section class="panel">
+            <div class="panel-body">
+                <div class="form-group text-right" style="margin-bottom: 0;">
+                    <a class="btn btn-success" data-toggle="modal" href="#new_add" @click="add_btn">
+                        <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增权限
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!--新增模态框-->
         <div class="modal fade full-width-modal-right" id="new_add" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
