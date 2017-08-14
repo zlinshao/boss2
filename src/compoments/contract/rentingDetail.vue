@@ -1121,4 +1121,7 @@
         color: #ccc;
         content: "";
     }
+    .label-danger{
+        color: #e88512;
+    }
 </style>

@@ -573,4 +573,7 @@
     .selected{
         background: #fffcd9 !important;
     }
+    .label-danger{
+        color: #e88512;
+    }
 </style>
