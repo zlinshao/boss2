@@ -46,15 +46,15 @@
                             30天内快到期
                         </label>
                     </div>
-                    <div class="pro-sort"  style="margin-left: 10px;margin-top: 15px">
-                        <span>排序方式：</span>
-                        <label>
-                            <input type="radio" name="sort" @click="isNewest(0)">默认排序
-                        </label>
-                        <label>
-                            <input type="radio" name="sort" @click="isNewest(1)">最新发布
-                        </label>
-                    </div>
+                    <!--<div class="pro-sort"  style="margin-left: 10px;margin-top: 15px">-->
+                        <!--<span>排序方式：</span>-->
+                        <!--<label>-->
+                            <!--<input type="radio" name="sort" @click="isNewest(0)">默认排序-->
+                        <!--</label>-->
+                        <!--<label>-->
+                            <!--<input type="radio" name="sort" @click="isNewest(1)">最新发布-->
+                        <!--</label>-->
+                    <!--</div>-->
                     <div class="pull-right pro-sort" style="margin: 8px">
                         <router-link :to="{path:'/Memorandum',query: {flag: 'collect'}}" class="btn btn-primary">
                            &nbsp;查看备忘录
@@ -574,6 +574,6 @@
         background: #fffcd9 !important;
     }
     .label-danger{
-        color: #e88512;
+        background: #e88512;
     }
 </style>

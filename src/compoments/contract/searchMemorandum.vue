@@ -324,6 +324,6 @@
         color: #59ace2;
     }
     .label-danger{
-        color: #e88512;
+        background: #e88512;
     }
 </style>
