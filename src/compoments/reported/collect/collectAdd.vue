@@ -247,7 +247,7 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <SelectClient @clientAdd="getClient" :collectRent="collectRent"></SelectClient>
+        <SelectClient @clientAdd="getClient" :collectRent="coll" :staffId="staffId"></SelectClient>
     </div>
 </template>
 
@@ -267,10 +267,8 @@
             return {
                 dis_status: '',
                 collectRents: '',
-                collectRent: {
-                    coll: 1,
-                    staffId: ''
-                },
+                coll: 1,
+                staffId: '',
                 showBase : true,
                 showCustomer : true,
                 showCost : true,
@@ -499,7 +497,7 @@
                 // 选择人
                 if (data.staff.length != 0){
                     this.formData.staff_id = data.staff[0].id;
-                    this.collectRent.staffId = data.staff[0].id;
+                    this.staffId = data.staff[0].id;
                     this.collectRents = data.staff[0].id;
                     this.chooseResult.staff_name = data.staff[0].name;
                 }
