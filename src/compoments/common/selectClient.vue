@@ -183,6 +183,8 @@
                         }else {
                             this.customerList=[];
                             this.isShow = true;
+                            this.info.error = res.data.msg;
+                            this.info.state_error = true;
                         }
                     })
                 }
