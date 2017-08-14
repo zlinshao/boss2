@@ -37,7 +37,7 @@
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
                         <li>
                             <h5>
-                                <a @click="zero">&copy;&nbsp;归零</a>
+                                <a @click="zero_mo">&copy;&nbsp;归零</a>
                             </h5>
                         </li>
                         <li>
@@ -192,6 +192,25 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="zero">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">归零</h5>
+                    </div>
+                    <div class="modal-body" style="font-size: 16px;">
+                        确定清零吗
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-danger" @click="zero">确定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
         <div class="modal fade" id="recharge">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -202,13 +221,9 @@
                         <h5 class="modal-title">充值金额</h5>
                     </div>
                     <div class="modal-body">
-                        <section class="panel">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="amount" placeholder="输入充值金额">
-                                </div>
-                            </div>
-                        </section>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="amount" placeholder="输入充值金额">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -321,11 +336,17 @@
             }
         },
         methods: {
+            zero_mo (){
+                $('#zero').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
 //            归零
             zero (){
                 this.$http.post('account/manage/zero/' + this.operId).then((res) => {
                     if (res.data.code === '18610') {
                         this.accountList();
+                        $('#zero').modal('hide');
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
                         this.info.state_error = false;
