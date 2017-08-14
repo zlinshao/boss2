@@ -76,8 +76,7 @@
                                 </div>
                                 <!--国籍-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">国籍&nbsp;<span
-                                            class="text-danger">*</span></label>
+                                    <label class="col-lg-2 col-sm-2 control-label">国籍</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" data-toggle="modal" href="#myModal"
                                                v-model="cus_nationality_name" placeholder="选择国家" readonly>
