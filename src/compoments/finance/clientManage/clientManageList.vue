@@ -80,8 +80,8 @@
                                    :value="item.id" :checked="clientSelected===item.id"></td>
                         <td class="text-center">{{item.address}}</td>
                         <td class="text-center">{{item.name}}</td>
-                        <td class="text-center">{{dictionary.identity[item.identity]}}</td>
-                        <td class="text-center">{{dictionary.money_type[item.pay_method]}}</td>
+                        <td class="text-center">{{dictionary.customer.identity[item.identity]}}</td>
+                        <td class="text-center">{{dictionary.customer.pay_method[item.pay_method]}}</td>
                         <td class="text-center">{{item.payee}}</td>
                         <td class="text-center">{{dictionary.bank[item.bank]}}</td>
                         <td class="text-center">{{item.account}}</td>
