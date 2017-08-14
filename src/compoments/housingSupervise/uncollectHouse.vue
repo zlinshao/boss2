@@ -106,8 +106,8 @@
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
-                        <li>
-                            <h5><a data-toggle="modal" href="#delete"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a>
+                        <li @click="deleteHouse">
+                            <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a>
                             </h5>
                         </li>
                     </ul>
@@ -177,19 +177,19 @@
         <!--分页-->
         <Page :pg="pages" @pag="pageSearch" :beforePage="params.page"></Page>
 
-        <Delete @IsSure="deleteHouse"></Delete>
-
         <Status :state='info'></Status>
+
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
 <script>
     import CollectAdd from './houseAdd.vue'
     import Page from '../common/page.vue'
-    import Delete from './deleteHouse.vue'
     import Status from  '../common/status.vue'
+    import Confirm from  '../common/confirm.vue'
     export default {
-        components: {Page, CollectAdd, Delete, Status}, //, New_add
+        components: {Page, CollectAdd , Status ,Confirm}, //, New_add
         data (){
             return {
                 flag: true,
@@ -202,12 +202,12 @@
                     newState: true,              //新增房屋
                     sss: true
                 },
+                confirmMsg : [],
                 /***MR'D***/
                 dictionary: [],      //字典列表
                 villalist: [],       //未收房屋列表
                 isShow: false,
                 checkboxModel: [],
-                deleteHouseId: [],
                 params: {
                     house_type: "",//房屋类型
                     rooms: '',     //房型
@@ -328,28 +328,30 @@
                 this.searchUncollect();
             },
             //删除房屋
-            deleteHouse(val){
-                if (val === 'yes') {
-                    this.$http.get('core/villa/deletevilla/id/' + this.seletedId).then((res) => {
-                        if (res.data.code === '80040') {
-                            this.info.success = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭成功信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-                            this.search();
-                            this.seletedId = 0;
-                        } else {
-                            //失败信息 ***
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        }
+            deleteHouse(){
+                this.confirmMsg = {msg: '您确定删除吗'};
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.get('core/villa/deletevilla/id/' + this.seletedId).then((res) => {
+                    if (res.data.code === '80040') {
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭成功信息弹窗 ***
+                        setTimeout(() => {
+                            this.info.state_success = false;
+                        }, 2000);
+                        this.search();
+                        this.seletedId = 0;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
 
-                    });
-                }
+                });
             },
             //分页
             pageSearch(val){
