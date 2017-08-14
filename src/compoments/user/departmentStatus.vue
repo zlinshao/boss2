@@ -8,13 +8,13 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">启用部门（账号）</h4>
+                        <h4 class="modal-title">启用部门</h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
                                 <form class="form-horizontal tasi-form">
-                                    <h5>确定启用此部门（账号）吗？</h5>
+                                    <h5>确定启用此部门吗？</h5>
                                 </form>
                             </div>
                         </section>
@@ -60,13 +60,13 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">停用部门</h4>
+                        <h4 class="modal-title">删除部门</h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
                                 <form class="form-horizontal tasi-form">
-                                    <h5>确定停用此部门吗？</h5>
+                                    <h5>确定删除此部门吗？</h5>
                                 </form>
                             </div>
                         </section>

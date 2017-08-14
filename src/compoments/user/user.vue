@@ -36,10 +36,10 @@
                                                aria-expanded="false"></i>
                                             <ul class="dropdown-menu dropdown-menu-left">
                                                 <li @click="editDepartment(item.id)">
-                                                    <a class="btn btn-default">编辑部门</a>
+                                                    <button class="btn btn-default">编辑部门</button>
                                                 </li>
                                                 <li @click="addDeparment(item.id)">
-                                                    <a class="btn btn-default">新建下级部门</a>
+                                                    <button class="btn btn-default">新建下级部门</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -58,20 +58,37 @@
                                                style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
                                                aria-expanded="false"></i>
                                             <ul class="dropdown-menu dropdown-menu-left">
-                                                <li @click="editDepartment(item.id)">
-                                                    <a class="btn btn-default">编辑部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" @click="editDepartment(item.id)">
+                                                        编辑部门
+                                                    </button>
                                                 </li>
-                                                <li @click="addDeparment(item.id)">
-                                                    <a class="btn btn-default">新建下级部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="addDeparment(item.id)">
+                                                        新建下级部门
+                                                    </button>
                                                 </li>
-                                                <li @click="startDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='正常'"
+                                                       @click="startDepartment(item.id)">
+                                                        启用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="stopDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='停用'"
+                                                       @click="stopDepartment(item.id)">
+                                                        停用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="deleteDepartment(item.id)">
-                                                    <a class="btn btn-default">删除部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="deleteDepartment(item.id)">
+                                                        删除部门
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="transferDepartment(item.id)">
+                                                        调迁部门
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -89,20 +106,37 @@
                                                style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
                                                aria-expanded="false"></i>
                                             <ul class="dropdown-menu dropdown-menu-left">
-                                                <li @click="editDepartment(item.id)">
-                                                    <a class="btn btn-default">编辑部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" @click="editDepartment(item.id)">
+                                                        编辑部门
+                                                    </button>
                                                 </li>
-                                                <li @click="addDeparment(item.id)">
-                                                    <a class="btn btn-default">新建下级部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="addDeparment(item.id)">
+                                                        新建下级部门
+                                                    </button>
                                                 </li>
-                                                <li @click="startDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='正常'"
+                                                            @click="startDepartment(item.id)">
+                                                        启用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="stopDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='停用'"
+                                                            @click="stopDepartment(item.id)">
+                                                        停用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="deleteDepartment(item.id)">
-                                                    <a class="btn btn-default">删除部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="deleteDepartment(item.id)">
+                                                        删除部门
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="transferDepartment(item.id)">
+                                                        调迁部门
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -121,20 +155,37 @@
                                                style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
                                                aria-expanded="false"></i>
                                             <ul class="dropdown-menu dropdown-menu-left">
-                                                <li @click="editDepartment(item.id)">
-                                                    <a class="btn btn-default">编辑部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" @click="editDepartment(item.id)">
+                                                        编辑部门
+                                                    </button>
                                                 </li>
-                                                <li @click="addDeparment(item.id)">
-                                                    <a class="btn btn-default">新建下级部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="addDeparment(item.id)">
+                                                        新建下级部门
+                                                    </button>
                                                 </li>
-                                                <li @click="startDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='正常'"
+                                                            @click="startDepartment(item.id)">
+                                                        启用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="stopDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='停用'"
+                                                            @click="stopDepartment(item.id)">
+                                                        停用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="deleteDepartment(item.id)">
-                                                    <a class="btn btn-default">删除部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="deleteDepartment(item.id)">
+                                                        删除部门
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="transferDepartment(item.id)">
+                                                        调迁部门
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -153,17 +204,37 @@
                                                style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
                                                aria-expanded="false"></i>
                                             <ul class="dropdown-menu dropdown-menu-left">
-                                                <li @click="editDepartment(item.id)">
-                                                    <a class="btn btn-default">编辑部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" @click="editDepartment(item.id)">
+                                                        编辑部门
+                                                    </button>
                                                 </li>
-                                                <li @click="startDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="addDeparment(item.id)">
+                                                        新建下级部门
+                                                    </button>
                                                 </li>
-                                                <li @click="stopDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='正常'"
+                                                            @click="startDepartment(item.id)">
+                                                        启用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="deleteDepartment(item.id)">
-                                                    <a class="btn btn-default">删除部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='停用'"
+                                                            @click="stopDepartment(item.id)">
+                                                        停用部门
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="deleteDepartment(item.id)">
+                                                        删除部门
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="transferDepartment(item.id)">
+                                                        调迁部门
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -182,17 +253,32 @@
                                                style="margin-top: 12px" data-toggle="dropdown" aria-haspopup="true"
                                                aria-expanded="false"></i>
                                             <ul class="dropdown-menu dropdown-menu-left">
-                                                <li @click="editDepartment(item.id)">
-                                                    <a class="btn btn-default">编辑部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" @click="editDepartment(item.id)">
+                                                        编辑部门
+                                                    </button>
                                                 </li>
-                                                <li @click="startDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='正常'">启用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='正常'"
+                                                            @click="startDepartment(item.id)">
+                                                        启用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="stopDepartment(item.id)">
-                                                    <a class="btn btn-default" :disabled="item.status=='停用'">停用部门</a>
+                                                <li>
+                                                    <button class="btn btn-default" :disabled="item.status=='停用'"
+                                                            @click="stopDepartment(item.id)">
+                                                        停用部门
+                                                    </button>
                                                 </li>
-                                                <li @click="deleteDepartment(item.id)">
-                                                    <a class="btn btn-default">删除部门</a>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="deleteDepartment(item.id)">
+                                                        删除部门
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-default"  @click="transferDepartment(item.id)">
+                                                        调迁部门
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -340,6 +426,9 @@
         <UserRevise :editDate="editData" @reviseAccount="reviseExamine"></UserRevise>
         <depStatus :Account="depAccount" @DdpStatus='dpmStatus'></depStatus>
         <!--<Page :pg="page" @pag="getBranch" v-if="type==1"></Page>-->
+
+        <Confirm :msg="confirmMsg"></Confirm>
+        <Transfer @TransferDepartment="transferCommit"></Transfer>
     </div>
 </template>
 <script>
@@ -349,6 +438,9 @@
     import editDpm from  './editDpm.vue';
     import UserRevise from './userRevise.vue';
     import AddDpm from  './addDubordinateDpm.vue'
+
+    import Confirm from  '../common/confirm.vue'
+    import Transfer from './transferDpm.vue'
     export default{
         components: {
             UserAdd,
@@ -357,6 +449,8 @@
             editDpm,
             UserRevise,
             AddDpm,
+            Confirm,
+            Transfer
         },
         data(){
             return {
@@ -401,6 +495,9 @@
                 addDpm:'', //新建下级部门
                 isBirthday:false,
                 isInsurance:false,
+
+                confirmMsg : [],
+                transferId : '',
             }
         },
         mounted(){
@@ -874,7 +971,7 @@
             },
             //停用部门
             stopDepartment(id){
-                $('#myModalStartDpm').modal('show');
+                $('#myModalSuspendDpm').modal('show');
                 this.depAccount.id=id;
                 this.depAccount.flag=this.type;
                 if(this.type===2){
@@ -1006,6 +1103,20 @@
                 this.isInsurance = !this.isInsurance;
                 this.search();
             },
+            transferDepartment(id){
+                this.transferId = id;
+                $('#myModalTransferDpm').modal('show');
+            },
+            transferCommit(val){
+                this.$http.post('manager/department/department_move',{
+                    parent_id : val,
+                    id : this.transferId
+                }).then((res) => {
+                    if(res.data.code === '10021'){
+                        this.getBranch();
+                    }
+                })
+            }
         }
     }
 </script>
@@ -1091,9 +1202,6 @@
     .btn-lg{
         font-size: 12px;
     }
-    .panel-body {
-        padding: 0;
-    }
     .table-responsive {
         overflow: visible;
     }
@@ -1115,5 +1223,11 @@
             display: inline-block;
             margin-top: 10px;
         }
+    }
+    ul.dropdown-menu li button {
+        line-height: 40px;
+        width: 100%;
+        padding: 0 20px;
+        border-radius: 0;
     }
 </style>
