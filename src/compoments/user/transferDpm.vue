@@ -1,22 +1,23 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade" id="myModalAddDpm">
+        <div class="modal fade" id="myModalTransferDpm">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">新增下级部门</h4>
+                        <h4 class="modal-title">调迁部门</h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="row">
-                                    <label class="col-sm-2 control-label col-lg-2" >部门名称</label>
+                                    <label class="col-sm-2 control-label col-lg-2" >上级部门</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="department">
+                                        <input type="text" class="form-control" readonly  @click="choose"
+                                              placeholder="请选择上级部门" v-model="department_name">
                                     </div>
                                 </div>
                             </div>
@@ -24,24 +25,25 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" @click="responsible">确定</button>
+                        <button type="button" class="btn btn-primary" @click="selectDepartment">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
+        <SelectDpm :configure="configure" @Staff="dpmSeleted"></SelectDpm>
     </div>
 </template>
 <script>
     import Status from '../common/status.vue';
+    import SelectDpm from '../common/organization/selectStaff.vue'
     export default {
-        props:['addDpm'],
-        components: { Status },
+        components: { Status , SelectDpm},
         data(){
             return {
-                department:'',
-                id:'',
-                myAccount:this.addDpm,
+                department_name : '',
+                department_id : '',
+                configure:[],       //配置项
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -51,39 +53,24 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
             }
         },
-        watch:{
-            addDpm(val) {
-                this.myAccount = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
-                this.id=this.myAccount;
-            },
-        },
         methods:{
-            responsible(){
-                this.$http.post('manager/department/saveDpm/',{'parent_id':this.id,'name':this.department}).then((res) => {
-                    if(res.data.code==10030){
-                        this.department='';
-                        $('#myModalAddDpm').modal('hide');
-                        this.info.success = res.data.msg;
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        },2000);
-                    }else{
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-
-                })
+            choose(){
+                $('#selectCustom').modal('show');
+                this.configure={length:1,class:'department',id:[]};
             },
+            dpmSeleted(val){
+                this.department_name = val.department[0].name;
+                this.department_id = val.department[0].id;
+            },
+            selectDepartment(){
+                if(this.department_id !== ''){
+                    this.$emit('TransferDepartment',this.department_id);
+                    $('#myModalTransferDpm').modal('hide');
+                }
+            }
         }
     }
 </script>
