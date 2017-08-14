@@ -13,8 +13,9 @@
                         <router-link class="btn btn-link" to="/reportedRenting">租房报备</router-link>  <!--租房报备-->
                         <router-link class="btn btn-link" to="/reportedCollect">收房报备</router-link>  <!--收房报备-->
                         <router-link class="btn btn-link" to="/user">员工管理</router-link>  <!--用户管理-->
-                        <router-link class="btn btn-link" to="/orderManage">收房订单迁移</router-link>  <!--收房订单迁移-->
-                        <router-link class="btn btn-link" to="/rentingOrder">租房订单迁移</router-link>  <!--租房订单迁移-->
+                        <router-link class="btn btn-link" to="/periodicForGcompany">公司业绩</router-link>  <!--公司业绩-->
+                        <router-link class="btn btn-link" to="/periodicForGroup">小组业绩</router-link>  <!--小组业绩-->
+                        <router-link class="btn btn-link" to="/periodicForPeople">个人业绩</router-link>  <!--个人业绩-->
                         <router-link class="btn btn-link" to="/leadingOut">客户导出</router-link>  <!--客户导出-->
                         <router-link class="btn btn-link" to="/messageCenter">消息中心</router-link>  <!--消息中心-->
                     </div>
