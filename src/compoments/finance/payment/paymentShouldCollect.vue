@@ -22,7 +22,7 @@
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly
-                                           :value="msg.customer==null?'':msg.customer.name">
+                                           :value="msg.customer==null?'客户已被删除':msg.customer.name">
                                 </div>
                             </div>
 

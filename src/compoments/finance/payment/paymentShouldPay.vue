@@ -30,7 +30,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="list.customer.name" readonly>
+                                    <input type="text" class="form-control" readonly
+                                           :value="list.customer==null?'客户已被删除':list.customer.name">
                                 </div>
                             </div>
 
