@@ -304,7 +304,7 @@
                         location:''
                     },
                     village_name : '',
-                    is_amap : true,
+                    is_amap : false,
                     building:'',
                     unit:'',
                     house_number:'',
