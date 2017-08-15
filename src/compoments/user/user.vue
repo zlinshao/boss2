@@ -402,8 +402,9 @@
                                                     删除账号
                                                 </button>
                                             </li>
-                                            <li v-if="simulates.indexOf('staff/logins') > -1"
-                                                @click="simulate(item.id, 'staff/logins')">
+                                            <li role="separator" class="divider" style="margin: 0"></li>
+                                            <li v-if="simulate.indexOf('staff/logins') > -1"
+                                                @click="simulates(item.id, 'staff/logins')">
                                                 <button type="button" class="btn btn-default btn-lg btn-block">
                                                     模拟登陆
                                                 </button>
@@ -467,6 +468,7 @@
     import Confirm from  '../common/confirm.vue'
     import Transfer from './transferDpm.vue'
     export default{
+        props: ['simulate'],
         components: {
             UserAdd,
             Status,
@@ -479,7 +481,7 @@
         },
         data(){
             return {
-                simulates: [],
+//                simulates: [],
                 branchList: [],//部门列表
                 userList: [],  //成员列表
                 secondList: [],
@@ -528,15 +530,15 @@
         },
         mounted(){
             this.getBranch();
-            this.$http.get('staff/info').then((res) => {
-                if (res.data.code === 80019) {
-                    window.location.href = 'login.html'
-                } else {
-                    for (let i = 0; i < res.data.auth_all.length; i++) {
-                        this.simulates.push(res.data.auth_all[i].name);
-                    }
-                }
-            });
+//            this.$http.get('staff/info').then((res) => {
+//                if (res.data.code === 80019) {
+//                    window.location.href = 'login.html'
+//                } else {
+//                    for (let i = 0; i < res.data.auth_all.length; i++) {
+//                        this.simulates.push(res.data.auth_all[i].name);
+//                    }
+//                }
+//            });
         },
         watch: {
             pages: function (val, oldVal) {
@@ -545,12 +547,11 @@
                 } else {
                     $('.Next').attr({"disabled": true});
                 }
-                ;
             }
         },
         methods: {
 //            模拟登陆
-            simulate (val, address){
+            simulates (val, address){
                 this.$http.post(address, {
                     id: val
                 }).then((res) => {
@@ -563,7 +564,6 @@
                 if (this.type !== 1) {
                     this.page = 1
                 }
-                ;
                 this.$http.get('manager/user/departmentIndex/page/' + this.page).then((res) => {
                     this.branchList = res.data.data.department;
                     this.userList = res.data.data.user;
@@ -595,7 +595,7 @@
                     this.type = 2;
                     this.id = id;
                     this.name = name;
-                    console.log(this.page)
+                    console.log(this.page);
                     this.isFirst = true;
                     this.isSecond = false;
                     this.isThird = false;
