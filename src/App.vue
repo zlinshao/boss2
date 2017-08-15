@@ -6,7 +6,7 @@
             <!--router-->
             <section id="main-content">
                 <section class="wrapper">
-                    <router-view></router-view>
+                    <router-view :simulate="simulates"></router-view>
                 </section>
             </section>
             <!--loading-->
@@ -132,6 +132,7 @@
     export default {
         data (){
             return {
+                simulates: [],
                 urlName: '',
                 urlCard: '',
 
@@ -187,6 +188,9 @@
                         globalConfig.urlName = res.data.name;
                         this.urlName = res.data.name;
                         this.urlCard = res.data.avatar;
+                        for (let i = 0; i < res.data.auth_all.length; i++) {
+                            this.simulates.push(res.data.auth_all[i].name);
+                        }
                     }
                 });
             },
