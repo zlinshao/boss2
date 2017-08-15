@@ -730,13 +730,20 @@
             },
             contractDetail(){
                 this.$http.get('core/rent/readcontract/id/'+this.contractEitId).then((res)=>{
-                    this.contractList = [];
-                    this.contractList.push(res.data.data);
-                    this.houseId = res.data.data.villa_id.id;
-                    this.contract_num = res.data.data.contract_num;
-                    this.contract_pass = res.data.data.passed;
-                    this.waiting = false;
-
+                    if(res.data.code === '80020'){
+                        this.contractList = [];
+                        this.contractList.push(res.data.data);
+                        this.houseId = res.data.data.villa_id.id;
+                        this.contract_num = res.data.data.contract_num;
+                        this.contract_pass = res.data.data.passed;
+                        this.waiting = false;
+                    }else {
+                        this.contractList = [];
+                        this.waiting = false;
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
                 })
             },
             transferDetail(){
