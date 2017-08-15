@@ -772,12 +772,20 @@
             },
             contractDetail(){   //合同详情
                 this.$http.get('core/collect/readcontract/id/'+this.contractEitId).then((res)=>{
-                    this.contractList = [];
-                    this.contractList.push(res.data.data);
-                    this.waiting = false;
-                    this.houseId = res.data.data.villa_id.id;
-                    this.contract_num = res.data.data.contract_num;
-                    this.contract_pass = res.data.data.passed
+                    if(res.data.code === '70020'){
+                        this.contractList = [];
+                        this.contractList.push(res.data.data);
+                        this.waiting = false;
+                        this.houseId = res.data.data.villa_id.id;
+                        this.contract_num = res.data.data.contract_num;
+                        this.contract_pass = res.data.data.passed
+                    }else {
+                        this.contractList = [];
+                        this.waiting = false;
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
                 })
             },
             transferDetail(){
