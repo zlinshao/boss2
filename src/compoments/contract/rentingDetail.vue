@@ -493,10 +493,16 @@
                             <!--合同附件-->
                             <div id="contract" class="tab-pane">
                                 <div class="infoContainer">
-
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-1">证件照片<sup>*</sup></span>
+                                        <span class="col-lg-11">
+                                             <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
+                                                  v-for="(img,index) in item.customer_id.album.id_pic">
+                                        </span>
+                                    </div>
                                     <div class="infoList clearFix">
                                         <span class="col-lg-1">合同照片<sup>*</sup></span>
-                                        <span class="col-lg-10">
+                                        <span class="col-lg-11">
                                              <img :src="img.small" @click="showLargePic('contract_pic',index)"
                                                   v-for="(img,index) in item.album.contract_pic">
                                         </span>
@@ -587,7 +593,7 @@
                                 </div>
 
                                 <!--跟进记录-->
-                                <div style="margin-top: 20px" class="row">
+                                <div style="margin-top: 20px" class="row" v-if="item.review_log !== null && item.review_log !== undefined">
                                     <div class="panel col-sm-6" v-for="record in item.review_log"
                                          style="margin-bottom: 0;padding-bottom: 0;">
                                         <div class="panel-body">

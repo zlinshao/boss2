@@ -559,6 +559,13 @@
                     </div>
                     <h4>合同附件</h4>
                     <div class="infoList">
+                        <span>证件照片<sup>*</sup></span>
+                        <span>
+                            <img :src="img.small" @click="showLargeIdPic('id_pic',index)"
+                                 v-for="(img,index) in item.customer_id.album.id_pic">
+                        </span>
+                    </div>
+                    <div class="infoList">
                         <span>合同照片<sup>*</sup></span>
                         <span>
                             <img :src="img.small" @click="showLargePic('contract_pic',index)"
