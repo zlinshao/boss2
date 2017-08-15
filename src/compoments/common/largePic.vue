@@ -3,27 +3,29 @@
         <div class="modal fade modal-dialog-center in largePic" id="largePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content-wrap">
-                    <div class="modal-content" style="background-color: transparent">
-                        <div class="modal-header white-bg white" style="background-color: transparent">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        </div>
-                        <div class="modal-body" id="pic" style="background-color: transparent">
-                            <!--<div class="imgContainer">-->
-                            <img id="img" v-if="index!=0" :src="src[index].raw">
+                    <!--<div class="modal-header white-bg white">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>-->
+                    <div class="modal-content" id="transPic">
+                        <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <div class="modal-body" id="pic">
+                            <div class="imgContainer">
+                                <img id="img" v-if="index!=0" :src="src[index].raw">
                                 <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
-                            <!--</div>-->
-                            <div class="changePic">
-                                <div @click="prev" title="上一张"><i class="fa fa-long-arrow-left"></i></div>
-                                <div @click="rotateLeft" title="逆时针旋转"><i class="fa fa-rotate-left"></i></div>
-                                <div title="下载图片">
-                                    <a v-if="index!=0" :href="src[index].raw" download="">
-                                        <i class="fa fa-download"></i>
-                                    </a>
-                                </div>
-                                <div @click="rotateRight" title="顺时针旋转"><i class="fa fa-rotate-right"></i></div>
-                                <div @click="next" title="下一张"><i class="fa fa-long-arrow-right"></i></div>
                             </div>
+
                         </div>
+                    </div>
+                    <div class="changePic">
+                        <div @click="prev" title="上一张"><i class="fa fa-long-arrow-left"></i></div>
+                        <div @click="rotateLeft" title="逆时针旋转"><i class="fa fa-rotate-left"></i></div>
+                        <div title="下载图片">
+                            <a v-if="index!=0" :href="src[index].raw" download="">
+                                <i class="fa fa-download"></i>
+                            </a>
+                        </div>
+                        <div @click="rotateRight" title="顺时针旋转"><i class="fa fa-rotate-right"></i></div>
+                        <div @click="next" title="下一张"><i class="fa fa-long-arrow-right"></i></div>
                     </div>
                 </div>
             </div>
@@ -125,14 +127,17 @@
             rotateRight(){  // 顺时针旋转
 //                console.log(ev.currentTarget);
                 this.current = (this.current+90)%360;
-                document.getElementById('img').style.transform = 'rotate('+this.current+'deg)';
+                document.getElementById('transPic').style.transform = 'rotate('+this.current+'deg)';
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
+//                console.log(this.current)
+                this.closePosition();
             },
             rotateLeft(){   // 逆时针旋转
 //                console.log(ev.currentTarget);
                 this.current = (this.current-90)%360;
-                document.getElementById('img').style.transform = 'rotate('+this.current+'deg)';
+                document.getElementById('transPic').style.transform = 'rotate('+this.current+'deg)';
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
+                this.closePosition();
             },
             prev(){
                 /*console.log(this.current);
@@ -164,7 +169,32 @@
             },
             rotateBack(){
                 this.current = 0;
-                document.getElementById('img').style.transform = 'rotate('+(-this.current)+'deg)';
+                document.getElementById('transPic').style.transform = 'rotate('+(-this.current)+'deg)';
+                this.closePosition();
+            },
+            closePosition(){
+                let close = $('#close');
+                if (this.current==0){
+                    close.css('top','12px');
+                    close.css('right','23px');
+                    close.css('bottom','auto');
+                    close.css('left','auto');
+                } else if (this.current==90){
+                    close.css('top','12px');
+                    close.css('right','auto');
+                    close.css('bottom','auto');
+                    close.css('left','23px');
+                } else if (this.current==180){
+                    close.css('top','auto');
+                    close.css('right','auto');
+                    close.css('bottom','26px');
+                    close.css('left','23px');
+                } else if (this.current==270){
+                    close.css('top','auto');
+                    close.css('right','23px');
+                    close.css('bottom','26px');
+                    close.css('left','auto');
+                }
             }
         }
     }
@@ -173,14 +203,9 @@
     a{
         color: inherit;
     }
-    .imgContainer{
-        /*width: 850px;*/
-        /*margin: auto;*/
-        /*height: 850px;*/
-        overflow: auto;
-    }
-    .modal-body{
+    .modal-content-wrap{
         position: relative;
+        /*background-color: white;*/
     }
     .modal-body img{
         width: 100%;
@@ -229,6 +254,21 @@
 
     .modal-content{
         overflow: visible;
+    }
+    .modal-lg{
+        /*width: auto !important;*/
+    }
+    .close{
+        position: absolute;
+        right: 23px;
+        top: 12px;
+        z-index: 1000;
+        /* background-color: white; */
+        width: 30px;
+        height: 30px;
+        font-size: 40px;
+        color: white;
+        opacity: .7;
     }
 
 </style>
