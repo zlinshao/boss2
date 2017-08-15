@@ -1042,7 +1042,7 @@
         margin: auto;
     }
     .infoContainer .infoList{
-        padding: 12px;
+        padding: 10px;
         border-bottom: 1px solid #ddd;
     }
     .infoContainer .infoList sup{
