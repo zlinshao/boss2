@@ -57,17 +57,17 @@
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(1)">
+                            <button class="btn btn-white btn-block" @click="renewContract(1,2)">
                                 续约
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(3)">
+                            <button class="btn btn-white btn-block" @click="renewContract(3,3)">
                                 转租
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(4)">
+                            <button class="btn btn-white btn-block" @click="renewContract(4,4)">
                                 调租
                             </button>
                         </li>
@@ -647,7 +647,7 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <AddModal :rentContactId="contractEitId" :msg="dis_status"></AddModal>
+        <AddModal :rentContactId="contractEitId" :msg="dis_status" :type="type"></AddModal>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
@@ -719,6 +719,7 @@
 
                 myParams : [],
                 departmentName:'',
+                type:'',
             }
         },
         mounted(){
@@ -766,7 +767,8 @@
                 $('.rem_div').remove();
                 $('#rentingEdit').modal('show');
             },
-            renewContract(val){
+            renewContract(val,type){
+                this.type = type;
                 this.dis_status = val;
                 $('#add').modal('show');
             },

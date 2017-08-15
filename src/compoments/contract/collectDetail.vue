@@ -683,7 +683,7 @@
         <Transfer></Transfer>
         <Contract></Contract>
 
-        <AddModal :collectContactId="contractEitId" :msg="dis_status"></AddModal>
+        <AddModal :collectContactId="contractEitId" :msg="dis_status" :type="type"></AddModal>
 
         <ContractEit :contractEitId="contractEitId" :isEditCollect="isEditCollect"
                      :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
@@ -760,6 +760,7 @@
 
                 myParams : [],
                 departmentName:'',
+                type : '',
             }
         },
         mounted(){
@@ -809,6 +810,7 @@
             },
             renewContract(){    //续约合同
                 this.dis_status = 1;
+                this.type = 2;
                 $('#add').modal('show');
             },
             showLargePic(name, index){  //图片放大
