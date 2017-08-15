@@ -71,6 +71,11 @@
                                 调租
                             </button>
                         </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="openSimpleConvenient">
+                                简版
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -650,6 +655,8 @@
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <Loading v-if="waiting"></Loading>
+
+        <Convenient :convenientList ='contractList' :dictionary ='dictionary'></Convenient>
     </div>
 </template>
 <script>
@@ -660,6 +667,7 @@
     import ContractEit from './rentingEdit.vue'
     import PicModal from  '../common/largePic.vue'
 //    import Comparison from  './contractCompare.vue'
+    import Convenient from './rentSimpleConvenient.vue'
     import Confirm from '../common/confirm.vue'
     import AddModal from '../reported/rent/rentingAdd.vue'
     export default{
@@ -672,7 +680,8 @@
 //            Comparison, //对比
             Confirm,    //confirmMsg
             AddModal,    //合同续约
-            Loading
+            Loading,
+            Convenient
         },
         data(){
             return {
@@ -767,7 +776,7 @@
                     src: this.srcs,
                     i: index
                 }];
-                $('#largePic').modal('show');
+                $('.largePic:eq(0)').modal('show');
             },
             showLargeIdPic(name, index){
                 this.srcs = this.contractList[0].customer_id.album[name];
@@ -775,7 +784,7 @@
                     src: this.srcs,
                     i: index
                 }];
-                $('#largePic').modal('show');
+                $('.largePic:eq(0)').modal('show');
             },
             showLargeVillaPic(name, index){
                 this.srcs = this.contractList[0].villa_id.album[name];
@@ -783,7 +792,7 @@
                     src: this.srcs,
                     i: index
                 }];
-                $('#largePic').modal('show');
+                $('.largePic:eq(0)').modal('show');
             },
             editSuccess(val){
                 this.isEditRent = false;
@@ -934,7 +943,10 @@
                         this.info.state_error = true;
                     }
                 })
-            }
+            },
+            openSimpleConvenient(){ //打开简版
+                $('#rentSimpleConvenient').modal('show');
+            },
 
         }
     }
