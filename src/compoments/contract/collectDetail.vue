@@ -67,6 +67,11 @@
                                 续约
                             </button>
                         </li>
+                        <li>
+                            <button class="btn btn-white btn-block" @click="openSimpleConvenient">
+                                简版
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -689,6 +694,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <Loading v-if ='waiting'></Loading>
+        <Convenient :convenientList ='contractList' :dictionary ='dictionary'></Convenient>
     </div>
 </template>
 <script>
@@ -702,6 +708,8 @@
     import Confirm from '../common/confirm.vue'
 
     import AddModal from '../reported/collect/collectAdd.vue'
+
+    import Convenient from './rentSimpleConvenient.vue'
     export default{
         components: {
             Transfer,   //转账
@@ -712,7 +720,8 @@
 //            Comparison, //对比
             Confirm,    //confirmMsg
             AddModal,    //合同续约
-            Loading
+            Loading,
+            Convenient
         },
         data(){
             return {
@@ -751,7 +760,6 @@
 
                 myParams : [],
                 departmentName:'',
-
             }
         },
         mounted(){
@@ -809,7 +817,7 @@
                     src: this.srcs,
                     i: index
                 }];
-                $('#largePic').modal('show');
+                $('.largePic:eq(0)').modal('show');
             },
             showLargeIdPic(name, index){
                 this.srcs = this.contractList[0].customer_id.album[name];
@@ -817,7 +825,7 @@
                     src: this.srcs,
                     i: index
                 }];
-                $('#largePic').modal('show');
+                $('.largePic:eq(0)').modal('show');
             },
             showLargeVillaPic(name, index){
                 this.srcs = this.contractList[0].villa_id.album[name];
@@ -825,7 +833,7 @@
                     src: this.srcs,
                     i: index
                 }];
-                $('#largePic').modal('show');
+                $('.largePic:eq(0)').modal('show');
             },
             editSuccess(val){   //成功编辑之后重新请求合同详情
                 this.isEditCollect = false;
@@ -977,7 +985,10 @@
                         this.info.state_error = true;
                     }
                 })
-            }
+            },
+            openSimpleConvenient(){ //打开简版
+                $('#collectSimpleConvenient').modal('show');
+            },
         }
     }
 </script>
