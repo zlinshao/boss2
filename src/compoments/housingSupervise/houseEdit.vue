@@ -17,23 +17,36 @@
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
-                                <div v-if="houseEdit.amap_json !==null && houseEdit.amap_json !==undefined && houseEdit.amap_json.villageName!== ''">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">小区名称<sup>*</sup></label>
-                                        <div class="col-sm-10">
-                                            <input title="请点击选择" type="text" class="form-control"
-                                                   v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                <div v-if="houseEdit.amap_json !==null && houseEdit.amap_json !==undefined">
+                                    <div  v-if="houseEdit.amap_json.villageName!== ''">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">小区名称<sup>*</sup></label>
+                                            <div class="col-sm-10">
+                                                <input title="请点击选择" type="text" class="form-control"
+                                                       v-model="houseEdit.amap_json.villageName" readonly  data-toggle="modal" data-target="#myModal1">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">小区地址</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control"
-                                                   v-model="houseEdit.amap_json.villageAddress" disabled>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">小区地址</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control"
+                                                       v-model="houseEdit.amap_json.villageAddress" disabled>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="houseEdit.amap_json.villageName === ''">
+                                <div v-if="houseEdit.amap_json !==null && houseEdit.amap_json !==undefined">
+                                    <div v-if="houseEdit.amap_json.villageName === ''">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">小区地址</label>
+                                            <div class="col-sm-10">
+                                                <input title="请点击选择" type="text" class="form-control"
+                                                       v-model="houseEdit.village_name" readonly  data-toggle="modal" data-target="#myModal1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="houseEdit.amap_json ===null && houseEdit.amap_json ===undefined">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">小区地址</label>
                                         <div class="col-sm-10">
@@ -291,7 +304,7 @@
                         location:''
                     },
                     village_name : '',
-                    is_amap : '',
+                    is_amap : true,
                     building:'',
                     unit:'',
                     house_number:'',
@@ -351,11 +364,11 @@
                     this.complete_ok='ok';
                     this.reviseHouseId=val.id;
 
-                    val.amap_json.villageAddress ===''? this.houseEdit.is_amap = false : this.houseEdit.is_amap = true;
-
                     this.houseEdit.village_name =val.detailed_address;
                     this.staff_id = val.staff_id;
-                    if(val.amap_json !==null || undefined){
+                    if(val.amap_json !==null && val.amap_json !==undefined){
+                        val.amap_json.villageAddress ===''? this.houseEdit.is_amap = false : this.houseEdit.is_amap = true;
+
                         this.houseEdit.amap_json.villageAddress=val.amap_json.villageAddress;
                         this.houseEdit.amap_json.villageName=val.amap_json.villageName;
                         this.houseEdit.amap_json.district=val.amap_json.district;
