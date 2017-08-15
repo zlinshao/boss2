@@ -709,7 +709,7 @@
 
     import AddModal from '../reported/collect/collectAdd.vue'
 
-    import Convenient from './rentSimpleConvenient.vue'
+    import Convenient from './collectSimpleConvenient.vue'
     export default{
         components: {
             Transfer,   //转账
