@@ -3,13 +3,15 @@
         <div class="modal fade modal-dialog-center in largePic" id="largePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content-wrap">
-                    <div class="modal-content">
-                        <div class="modal-header white-bg white">
+                    <div class="modal-content" style="background-color: transparent">
+                        <div class="modal-header white-bg white" style="background-color: transparent">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
-                        <div class="modal-body" id="pic">
+                        <div class="modal-body" id="pic" style="background-color: transparent">
+                            <!--<div class="imgContainer">-->
                             <img id="img" v-if="index!=0" :src="src[index].raw">
-                            <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
+                                <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
+                            <!--</div>-->
                             <div class="changePic">
                                 <div @click="prev" title="上一张"><i class="fa fa-long-arrow-left"></i></div>
                                 <div @click="rotateLeft" title="逆时针旋转"><i class="fa fa-rotate-left"></i></div>
@@ -28,60 +30,7 @@
         </div>
     </div>
 </template>
-<style scoped>
-    a{
-        color: inherit;
-    }
-    .modal-body{
-        position: relative;
-    }
-    .modal-body img{
-        width: 100%;
-    }
-    .changePic{
-        position: absolute;
-        font-size: 0;
-        background-color: rgba(0,0,0,.4);
-        /*bottom: 1.5rem;*/
-        bottom: 30px;
-        left: 50%;
-        /*right: 0;*/
-        /*left: 50%;*/
-        /*margin-left: -6.25rem;*/
-        margin-left: -125px;
-        border-radius: 1rem;
-    }
-    .changePic div{
-        display: inline-block;
-        /*font-size: 2rem;*/
-        font-size: 32px;
-        /*width: 2.5rem;*/
-        width: 50px;
-        color: #ddd;
-        text-align: center;
-        /*line-height: 2.5rem;*/
-        line-height: 50px;
-    }
-    .changePic div:hover{
-        color: white;
-        cursor: pointer;
-    }
-    /*.prev , .next{
-        position: absolute;
-        background-color: rgba(255,255,255,.2);
-        text-align: center;
-        padding: 20px 12px;
-        font-size: 24px;
-    }*/
-    .prev{
-        left: 0;
-    }
-    .modal{
-        z-index: 999999999;
-    }
 
-
-</style>
 <script>
     export default{
         props : ['largePic'],
@@ -91,7 +40,10 @@
                 index : 0,
                 src : {},
                 idArr : [],
-                currentIndex : ''
+                currentIndex : '',
+
+                width : '',
+                height : '',
             }
         },
         components: {},
@@ -100,6 +52,7 @@
         },
         updated (){
             this.setRem();
+            this.closeModal();
 //            console.log(this.largePic);
 
         },
@@ -123,6 +76,12 @@
             }
         },
         methods : {
+            closeModal(){
+                let _this = this;
+                $('#largePic').on('hidden.bs.modal', function (e) {
+                    _this.rotateBack();
+                })
+            },
             setRem(){
                 let browser={
                     versions:function(){
@@ -206,7 +165,70 @@
             rotateBack(){
                 this.current = 0;
                 document.getElementById('img').style.transform = 'rotate('+(-this.current)+'deg)';
-            },
+            }
         }
     }
 </script>
+<style scoped>
+    a{
+        color: inherit;
+    }
+    .imgContainer{
+        /*width: 850px;*/
+        /*margin: auto;*/
+        /*height: 850px;*/
+        overflow: auto;
+    }
+    .modal-body{
+        position: relative;
+    }
+    .modal-body img{
+        width: 100%;
+    }
+    .changePic{
+        position: absolute;
+        font-size: 0;
+        background-color: rgba(0,0,0,.4);
+        /*bottom: 1.5rem;*/
+        bottom: 30px;
+        left: 50%;
+        /*right: 0;*/
+        /*left: 50%;*/
+        /*margin-left: -6.25rem;*/
+        margin-left: -125px;
+        border-radius: 1rem;
+    }
+    .changePic div{
+        display: inline-block;
+        /*font-size: 2rem;*/
+        font-size: 32px;
+        /*width: 2.5rem;*/
+        width: 50px;
+        color: #ddd;
+        text-align: center;
+        /*line-height: 2.5rem;*/
+        line-height: 50px;
+    }
+    .changePic div:hover{
+        color: white;
+        cursor: pointer;
+    }
+    /*.prev , .next{
+        position: absolute;
+        background-color: rgba(255,255,255,.2);
+        text-align: center;
+        padding: 20px 12px;
+        font-size: 24px;
+    }*/
+    .prev{
+        left: 0;
+    }
+    .modal{
+        z-index: 999999999;
+    }
+
+    .modal-content{
+        overflow: visible;
+    }
+
+</style>
