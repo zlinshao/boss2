@@ -17,10 +17,10 @@
                     <span :class="{'status':true,'btn':true,'yellow':msg.status===1,'orange':msg.status===2,'green':msg.status===3}">{{dict.checkin_status[msg.status]}}</span>
                     <div class="pull-right">
                         <button class="btn btn-primary" v-show="msg.status!=1" @click="addRentReported">租房报备</button>
-                        <button class="btn btn-primary" v-show="msg.status==1" @click="changeStatus(1)">提交</button>
-                        <button class="btn btn-primary" v-show="msg.status==2" @click="changeStatus(3)">驳回</button>
-                        <button class="btn btn-primary" v-show="msg.status==3" @click="changeStatus(4)">驳回</button>
-                        <button class="btn btn-primary" v-show="msg.status==2" @click="pass">通过</button>
+                        <button class="btn btn-primary" v-show="msg.status==1&&msg.hidden==2" @click="changeStatus(1)">提交</button>
+                        <button class="btn btn-primary" v-show="msg.status==2&&msg.hidden==2" @click="changeStatus(3)">驳回</button>
+                        <button class="btn btn-primary" v-show="msg.status==3&&msg.hidden==2" @click="changeStatus(4)">驳回</button>
+                        <button class="btn btn-primary" v-show="msg.status==2&&msg.hidden==2" @click="pass">通过</button>
                     </div>
                 </div>
             </div>
@@ -42,22 +42,22 @@
                                 <!--<div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>-->
                                 <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
-                                <div><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
-                                <div><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
-                                <div><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a v-show="msg.pay_type.length>1" @click="showChange(1)">变化</a></span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a v-show="msg.pay_type.length>1" @click="showChange(1)">变化</a></span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
                             </div>
                             <div class="col-md-8">
-                                <div><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
-                                <div><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
-                                <div><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">押金：</span><span>{{msg.cost_deposit}}</span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">待签约日期：</span><span>{{msg.deal_time}}</span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">备注：</span><span>{{msg.remark==''?'无':msg.remark}}</span></div>
                                 <div><span class="text-primary">签约人：</span><span>{{msg.staff==undefined?'':msg.staff.real_name}}</span></div>
                                 <div><span class="text-primary">负责人：</span><span>{{msg.leader==undefined?'':msg.leader.real_name}}</span></div>
                                 <div><span class="text-primary">所属部门：</span><span>{{msg.department==undefined?'':msg.department.name}}</span></div>
                             </div>
                         </div>
-                        <h5 class="title">客户信息</h5>
-                        <div class="clearFix">
+                        <h5 v-show="msg.hidden==2" class="title">客户信息</h5>
+                        <div v-show="msg.hidden==2" class="clearFix">
                             <div class="col-md-4">
                                 <div><span class="text-primary">客户姓名：</span><span>{{msg.customer==undefined?'':msg.customer.name}}</span></div>
                                 <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.payment]}}</span></div>
@@ -76,8 +76,8 @@
                                 </div>
                             </div>
                         </div>
-                        <h5 class="title" v-show="msg.cost_medi!=0">中介信息</h5>
-                        <div class="clearFix" v-show="msg.cost_medi!=0">
+                        <h5 class="title" v-show="msg.cost_medi!=0&&msg.hidden">中介信息</h5>
+                        <div class="clearFix" v-show="msg.cost_medi!=0&&msg.hidden">
                             <div class="col-md-4">
                                 <div><span class="text-primary">中介费：</span><span>{{msg.cost_medi}}</span></div>
                                 <div><span class="text-primary">汇款方式：</span><span>{{dict.payment[msg.medi_account_type]}}</span></div>
