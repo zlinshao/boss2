@@ -267,8 +267,11 @@
         width: 30px;
         height: 30px;
         font-size: 40px;
-        color: white;
+        color: #ddd;
         opacity: .7;
+    }
+    .close:hover{
+        color: #999;
     }
 
 </style>
