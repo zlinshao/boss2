@@ -533,7 +533,7 @@
     // 选择客户
     import SelectClient from '../../common/selectClient.vue'
     export default{
-        props: ['collectMsg', 'rentContactId', 'msg'],
+        props: ['collectMsg', 'rentContactId', 'msg','type'],
         components: {STAFF, SelectHouse, Status, SelectClient, upLoad, FlexBox},
         data(){
             return {
@@ -599,6 +599,8 @@
 
                 is_medi: 1,        // 是否中介 1否2是
                 formData: {
+                    type : '',
+
                     previous_contract_id: '',   // 租房合同id
                     collect_id: '',
 
@@ -688,6 +690,9 @@
                 this.formData.previous_contract_id = val;
                 this.getContract();
 
+            },
+            type(val){
+                this.formData.type = val;
             }
         },
         mounted (){
@@ -751,6 +756,8 @@
 //                this.chooseResult.leader_name = '';
                 this.chooseResult.customer_name = '';
 
+
+                this.formData.type = '';
                 this.formData.staff_id = '';
 //                this.formData.department_id = '';
 //                this.formData.leader_id = '';
