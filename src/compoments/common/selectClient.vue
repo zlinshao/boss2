@@ -233,7 +233,7 @@
             clientAdd (){
                 if(this.isNewAdd === true){
                     this.$http.post('core/customer/saveCustomer',{
-                        identity: this.collectRent,            //业主/租客
+                        identity: this.cus_status,            //业主/租客
                         name:  this.cus_name,                       //客户姓名
                         gender: this.cus_gender,                    //性别
                         mobile: this.cus_phone,                     //手机号
