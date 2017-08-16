@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li class="active">租房合同</li>
+            <li class="active">租房合同{{simulate }}</li>
         </ol>
 
         <section class="panel">
@@ -61,11 +61,10 @@
                                 &nbsp;查看备忘录
                             </router-link>
                         </div>
-                        <div class="pull-right" style="margin: 8px"
-                             :disabled="simulate.indexOf('staff/group') == -1 && simulate.indexOf('staff/area') == -1">
-                            <a class="btn btn-primary" @click="collectAdd">
+                        <div class="pull-right" style="margin: 8px">
+                            <button class="btn btn-primary" @click="collectAdd">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
-                            </a>
+                            </button>
                         </div>
                     </div>
 
