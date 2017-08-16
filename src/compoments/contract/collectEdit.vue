@@ -724,7 +724,7 @@
                     {
                         vac_start_date : this.contractEdit.vac_start_date,
                         vacancy : this.contractEdit.vacancy,
-                        months : this.contractEdit.months,
+                        months : this.contractEdit.months ,
                     }).then(
                     (res) => {
                         this.contractEdit.vac_end_date = res.data.vac_end_date;
