@@ -61,7 +61,8 @@
                                 &nbsp;查看备忘录
                             </router-link>
                         </div>
-                        <div class="pull-right" style="margin: 8px">
+                        <div class="pull-right" style="margin: 8px"
+                             :disabled="simulate.indexOf('staff/group') == -1 && simulate.indexOf('staff/area') == -1">
                             <a class="btn btn-primary" @click="collectAdd">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
                             </a>
@@ -219,6 +220,7 @@
 
     import Contract from './rentingAdd.vue'
     export default{
+        props : ['simulate'],
         components: {DatePicker, Page, Staff, Status, Confirm, Loading ,Contract},
         data(){
             return {
