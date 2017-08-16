@@ -156,7 +156,7 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >开单人</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="staff_name" disabled placeholder="开单人">
+                                            <input type="text" class="form-control" v-model="staff_name" readonly placeholder="开单人">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -360,6 +360,8 @@
         <Status :state='info'></Status>
 
         <SelectHouse @House="getHouse"></SelectHouse>
+
+        <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
     </div>
 </template>
 <script>
@@ -368,6 +370,8 @@
     import Status from '../common/status.vue'
     import FlexBox from '../common/flexBox.vue'
     import SelectHouse from  '../common/selectHouse.vue'
+
+    import Staff from '../common/organization/selectStaff.vue'
     export default{
         props:['contractEitId','dictionary','isEditCollect',],
         components:{
@@ -375,7 +379,8 @@
             upLoad,
             Status,
             SelectHouse,
-            FlexBox
+            FlexBox,
+            Staff
         },
         data(){
             return {
@@ -494,7 +499,6 @@
         },
         updated(){
             this.selectDate ();
-            this.Info();
         },
         watch : {
             dictionary(val){
@@ -549,10 +553,13 @@
             },
         },
         methods : {
-            Info(){
-                this.$http.get('staff/info').then((res)=>{
-                    this.staff_name=res.data.name;
-                })
+            selectDpm(){ //选择部门
+                $('.selectCustom:eq(1)').modal('show');
+                this.configure = {length: 1, class: 'amount'};
+            },
+            dpmSeleted(val){
+                this.staff_name = val.staff[0].name;
+                this.contractAdd.satff_id = val.staff[0].id;
             },
             selectClient(val){         //选择业主姓名
                 this.clientType = 'relative'
@@ -729,6 +736,7 @@
 
             },
             closeModal(){
+                $('#contractAdd').modal('hide');
                 this.contractAdd.contract_num = '' ;       //合同编号
                 this.contractAdd.vac_start_date = '';      //空置期开始日期
                 this.contractAdd.vac_end_date = '';        //空置期结束日期

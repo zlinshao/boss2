@@ -356,7 +356,7 @@
                 })
             },
             selectDpm(){ //选择部门
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(0)').modal('show');
                 this.configureType = 'selectDpm';
                 this.configure = {length: 1, class: 'department', id: [9], name: '市场部'};
             },
