@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>合同管理</li>
-            <li class="active">租房合同{{simulate }}</li>
+            <li class="active">租房合同</li>
         </ol>
 
         <section class="panel">

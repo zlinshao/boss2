@@ -63,9 +63,10 @@
                             </router-link>
                         </div>
                         <div class="pull-right" style="margin: 8px">
-                            <button class="btn btn-primary" @click="collectAdd">
+                            <a class="btn btn-primary" @click="collectAdd"
+                               :disabled="simulate.indexOf('staff/group') == -1 && simulate.indexOf('staff/area') == -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
-                            </button>
+                            </a>
                         </div>
                     </div>
 
