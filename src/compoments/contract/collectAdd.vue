@@ -787,11 +787,19 @@
             changePayType(ev){
                 this.contractAdd.pay_type = [];
                 this.more_type = [];
-                if (ev.currentTarget.checked){
-                    this.pay_typeChange = true;
-                    if (this.contractAdd.months!=''){
-                        for (let i = 0;i<this.contractAdd.months;i++){
-                            this.more_type.push('1');
+                if (ev.target.checked) {
+                    if (this.contractAdd.months !== '') {
+                        this.pay_typeChange = true;
+                        if (this.contractAdd.months % 12 === 0) {
+                            let month = parseInt(this.contractAdd.months / 12);
+                            for (let i = 0; i < month; i++) {
+                                this.more_type.push('1');
+                            }
+                        } else {
+                            let month = parseInt(this.contractAdd.months / 12 + 1);
+                            for (let i = 0; i < month; i++) {
+                                this.more_type.push('1');
+                            }
                         }
                     }
                 } else {

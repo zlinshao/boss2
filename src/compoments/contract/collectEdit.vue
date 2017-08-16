@@ -77,7 +77,7 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label">收房年限<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.years">
+                                            <input type="text" class="form-control" v-model="contractEdit.months">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -145,7 +145,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <FlexBox :flexData="contractEdit.years" :datas="contractEdit.price" :change="false" 
+                                    <FlexBox :flexData="contractEdit.months" :datas="contractEdit.price" :change="false"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
                                     <div class="row">
                                         <label class="col-sm-2 control-label">押金<sup>*</sup></label>
@@ -438,7 +438,7 @@
                     receipt_pic:[],         //押金收条
 
                     villa_id :'',           //fangwuid
-                    years : '',
+                    months : '',
                     pay_type : [],
                     price : [],
                     cost_deposit : '',
@@ -515,7 +515,7 @@
                     }
                 }
             },
-            'contractEdit.years' : {
+            'contractEdit.months' : {
                 deep:true,
                 handler(val,oldVal){
                     if(val !== oldVal && this.isClick){
@@ -653,13 +653,16 @@
 
                                 this.contractEdit.staff_id = contractList.checkin_collect_id.staff_id;
 
-                                this.contractEdit.years = contractList.checkin_collect_id.years;
-                                if(contractList.checkin_collect_id.pay_type.length<2){
-                                    this.one_type = contractList.checkin_collect_id.pay_type[0];
-                                }else {
-                                    this.more_type = contractList.checkin_collect_id.pay_type;
-                                    this.pay_typeChange = true;
+                                this.contractEdit.months = contractList.checkin_collect_id.months;
+                                if(contractList.checkin_collect_id.pay_type !== null && contractList.checkin_collect_id.pay_type !==undefined){
+                                    if(contractList.checkin_collect_id.pay_type.length<2){
+                                        this.one_type = contractList.checkin_collect_id.pay_type[0];
+                                    }else {
+                                        this.more_type = contractList.checkin_collect_id.pay_type;
+                                        this.pay_typeChange = true;
+                                    }
                                 }
+
                                 this.contractEdit.price = contractList.checkin_collect_id.price;
                                 if(contractList.checkin_collect_id.price.length>1){
                                     this.money_change = true;
@@ -721,7 +724,7 @@
                     {
                         vac_start_date : this.contractEdit.vac_start_date,
                         vacancy : this.contractEdit.vacancy,
-                        years : this.contractEdit.years,
+                        months : this.contractEdit.months,
                     }).then(
                     (res) => {
                         this.contractEdit.vac_end_date = res.data.vac_end_date;
@@ -866,14 +869,23 @@
                 this.$emit('EditStatus','error');
             },
 
+ //            付款方式不固定
             changePayType(ev){
-                this.contractEdit.pay_type = [];
+                this.pay_type = [];
                 this.more_type = [];
-                if (ev.currentTarget.checked){
-                    this.pay_typeChange = true;
-                    if (this.contractEdit.years!=''){
-                        for (let i = 0;i<this.contractEdit.years;i++){
-                            this.more_type.push('1');
+                if (ev.target.checked) {
+                    if (this.contractEdit.months !== '') {
+                        this.pay_typeChange = true;
+                        if (this.contractEdit.months % 12 === 0) {
+                            let month = parseInt(this.contractEdit.months / 12);
+                            for (let i = 0; i < month; i++) {
+                                this.more_type.push('1');
+                            }
+                        } else {
+                            let month = parseInt(this.contractEdit.months / 12 + 1);
+                            for (let i = 0; i < month; i++) {
+                                this.more_type.push('1');
+                            }
                         }
                     }
                 } else {
