@@ -1,13 +1,13 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade full-width-modal-right" id="rentingEdit" tabindex="-1" role="dialog" data-backdrop="static"
+        <div class="modal fade full-width-modal-right" id="contractAdd" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeEdit">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">编辑合同</h4>
@@ -73,18 +73,18 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同编号<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.contract_num" placeholder="合同编号">
+                                            <input type="text" class="form-control" v-model="contractAdd.contract_num" placeholder="合同编号">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractEdit.start_date"
+                                            <input readonly class="form-control formDatetime" v-model="contractAdd.start_date"
                                                    @click="selectDate"  placeholder="合同开始时间">
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractEdit.end_date"
+                                            <input readonly class="form-control formDatetime" v-model="contractAdd.end_date"
                                                    @click="selectDate"  placeholder="合同结束时间">
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                     <div class="row">
                                         <label class="col-sm-3 col-lg-2 control-label">租房类型<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <select class="form-control" v-model="contractEdit.is_shared"
+                                            <select class="form-control" v-model="contractAdd.is_shared"
                                                     @change="changeIsSgared">
                                                 <option :value="value" v-for="(key,value) in myDictionary.shared_house">{{key}}
                                                 </option>
@@ -100,10 +100,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="row" v-show="contractEdit.is_shared==1">
+                                    <div class="row" v-show="contractAdd.is_shared==1">
                                         <label class="col-sm-3 col-lg-2 control-label">房间类型<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <select class="form-control" v-model="contractEdit.shared_part">
+                                            <select class="form-control" v-model="contractAdd.shared_part">
                                                 <option :value="value" v-for="(key,value) in myDictionary.shared_part">{{key}}
                                                 </option>
                                             </select>
@@ -113,7 +113,7 @@
                                     <div class="row">
                                         <label class="col-sm-3 col-lg-2 control-label">租房状态<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <select class="form-control" v-model="contractEdit.rent_type">
+                                            <select class="form-control" v-model="contractAdd.rent_type">
                                                 <option :value="value" v-for="(key,value) in myDictionary.rent_type">{{key}}
                                                 </option>
                                             </select>
@@ -123,7 +123,7 @@
                                     <div class="row">
                                         <label class="col-sm-3 col-lg-2 control-label">租房月数<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.months">
+                                            <input type="text" class="form-control" v-model="contractAdd.months">
                                         </div>
                                     </div>
 
@@ -133,7 +133,7 @@
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">押</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" v-model="contractEdit.bet">
+                                                    <select class="form-control" v-model="contractAdd.bet">
                                                         <option value="0">0</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -164,7 +164,7 @@
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">押</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" readonly :value="contractEdit.bet">
+                                                    <input type="text" class="form-control" readonly :value="contractAdd.bet">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 padding_0">
@@ -176,14 +176,14 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="Math.ceil(contractEdit.months/12)" :datas="contractEdit.price"
+                                    <FlexBox :flexData="Math.ceil(contractAdd.months/12)" :datas="contractAdd.price"
                                              :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">已收类型<sup>*</sup></label>
                                         <div class="col-sm-10">
                                             <div class="col-sm-4 padding_0">
-                                                <select class="form-control" v-model="contractEdit.received_type">
+                                                <select class="form-control" v-model="contractAdd.received_type">
                                                     <option :value="value" v-for="(key,value) in myDictionary.subject">{{key}}
                                                     </option>
                                                 </select>
@@ -191,7 +191,8 @@
                                             <div class="col-sm-8">
                                                 <label class="col-sm-3 control-label">已收金额<sup>*</sup></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" v-model="contractEdit.received_amount">
+                                                    <input type="text" class="form-control"
+                                                           v-model="contractAdd.received_amount">
                                                 </div>
                                             </div>
                                         </div>
@@ -339,14 +340,14 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">中介费<sup>*</sup></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="contractEdit.cost_medi">
+                                                <input type="text" class="form-control" v-model="contractAdd.cost_medi">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">中介汇款方式</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" v-model="contractEdit.medi_account_type"
+                                                <select class="form-control" v-model="contractAdd.medi_account_type"
                                                         @change="changeMediPayment">
                                                     <option :value="value" v-for="(key,value) in myDictionary.money_type">{{key}}
                                                     </option>
@@ -355,51 +356,50 @@
                                         </div>
 
                                         <div class="form-group"
-                                             v-show="contractEdit.medi_account_type==1||contractEdit.medi_account_type==4">
+                                             v-show="contractAdd.medi_account_type==1||contractAdd.medi_account_type==4">
                                             <label class="col-sm-2 control-label">中介收款人姓名<sup
                                                    >*</sup></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control"
-                                                       v-model="contractEdit.medi_account_owner">
+                                                       v-model="contractAdd.medi_account_owner">
                                             </div>
                                         </div>
                                         <div class="form-group"
-                                             v-show="contractEdit.medi_account_type==1||contractEdit.medi_account_type==4">
+                                             v-show="contractAdd.medi_account_type==1||contractAdd.medi_account_type==4">
                                             <label class="col-sm-2 control-label">开户行<sup>*</sup></label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" v-model="contractEdit.medi_account_bank">
+                                                <select class="form-control" v-model="contractAdd.medi_account_bank">
                                                     <option :value="value" v-for="(key,value) in myDictionary.bank">{{key}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group"
-                                             v-show="contractEdit.medi_account_type==1||contractEdit.medi_account_type==4">
+                                             v-show="contractAdd.medi_account_type==1||contractAdd.medi_account_type==4">
                                             <label class="col-sm-2 control-label">支行</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control"
-                                                       v-model="contractEdit.medi_account_subbank">
+                                                       v-model="contractAdd.medi_account_subbank">
                                             </div>
                                         </div>
-                                        <div class="form-group" v-show="contractEdit.medi_account_type==2">
+                                        <div class="form-group" v-show="contractAdd.medi_account_type==2">
                                             <label class="col-sm-2 control-label">支付宝姓名<sup>*</sup></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control"
-                                                       v-model="contractEdit.medi_account_owner">
+                                                       v-model="contractAdd.medi_account_owner">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label v-show="contractEdit.medi_account_type==1"
+                                            <label v-show="contractAdd.medi_account_type==1"
                                                    class="col-sm-2 control-label">账号<sup>*</sup></label>
-                                            <label v-show="contractEdit.medi_account_type==2" class="col-sm-2 control-label">支付宝账号<sup
+                                            <label v-show="contractAdd.medi_account_type==2" class="col-sm-2 control-label">支付宝账号<sup
                                                    >*</sup></label>
-                                            <label v-show="contractEdit.medi_account_type==3" class="col-sm-2 control-label">微信账号<sup
+                                            <label v-show="contractAdd.medi_account_type==3" class="col-sm-2 control-label">微信账号<sup
                                                    >*</sup></label>
-                                            <label v-show="contractEdit.medi_account_type==4" class="col-sm-2 control-label">存折账号<sup
+                                            <label v-show="contractAdd.medi_account_type==4" class="col-sm-2 control-label">存折账号<sup
                                                    >*</sup></label>
-                                            <div class="col-sm-10"
-                                                 v-show="contractEdit.medi_account_type !=='' && contractEdit.medi_account_type !==undefined">
-                                                <input type="text" class="form-control" v-model="contractEdit.medi_account_num ">
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" v-model="contractAdd.medi_account_num ">
                                             </div>
                                         </div>
                                     </div>
@@ -407,7 +407,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">管理费</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" v-model="contractEdit.manage_fee">
+                                            <input type="text" class="form-control" v-model="contractAdd.manage_fee">
                                         </div>
                                         <div class="col-sm-2 padding_0 line_height34">
                                             元/月
@@ -416,7 +416,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">物业费</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" v-model="contractEdit.property_fee">
+                                            <input type="text" class="form-control" v-model="contractAdd.property_fee">
                                         </div>
                                         <div class="col-sm-2 padding_0 line_height34">
                                             元/月
@@ -424,11 +424,11 @@
                                     </div>
 
                                     <!--合租费用-->
-                                    <div v-show="contractEdit.is_shared==1">
+                                    <div v-show="contractAdd.is_shared==1">
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">电费</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" v-model="contractEdit.elec_fee">
+                                                <input type="text" class="form-control" v-model="contractAdd.elec_fee">
                                             </div>
                                             <div class="col-sm-2 padding_0 line_height34">
                                                 度
@@ -437,7 +437,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">网络费</label>
                                             <div class="col-sm-8">
-                                                <select class="form-control" v-model="contractEdit.net_fee">
+                                                <select class="form-control" v-model="contractAdd.net_fee">
                                                     <option value="50">50</option>
                                                     <option value="70">70</option>
                                                 </select>
@@ -449,7 +449,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">水费</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" v-model="contractEdit.water_fee">
+                                                <input type="text" class="form-control" v-model="contractAdd.water_fee">
                                             </div>
                                             <div class="col-sm-2 padding_0 line_height34">
                                                 人
@@ -458,7 +458,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">燃气费</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" v-model="contractEdit.gas_fee">
+                                                <input type="text" class="form-control" v-model="contractAdd.gas_fee">
                                             </div>
                                             <div class="col-sm-2 padding_0 line_height34">
                                                 度
@@ -470,20 +470,20 @@
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
                                             <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractEdit.complete_date" class="form-control formDatetime">
+                                                   v-model="contractAdd.complete_date" class="form-control formDatetime">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >开单人</label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <input type="text" class="form-control" v-model="staff" disabled placeholder="开单人">
+                                            <input type="text" class="form-control" v-model="staff_name" disabled placeholder="开单人">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >备注</label>
                                         <div class="col-md-9 col-lg-10">
                                             <textarea class="form-control" placeholder="请输入备注信息"
-                                                    rows="3"  v-model="contractEdit.remarks">
+                                                    rows="3"  v-model="contractAdd.remarks">
                                             </textarea>
                                         </div>
                                     </div>
@@ -542,7 +542,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeEdit">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
@@ -605,7 +605,7 @@
                     cus_idPhoto : [],     //押金收条照片
                 },
                 relative_customer : [],
-                contractEdit : {
+                contractAdd : {
                     id:'',
                     relative_customer_id:[],//客户id
                     contract_num:'',        //合同编号
@@ -622,6 +622,8 @@
 
                     payment_pic :[],        //转账凭证
 
+
+
                     villa_id: '',
                     customer_id: '',
 
@@ -634,7 +636,7 @@
                     price: [],
 
 //                    中介
-                    cost_medi: '',
+                    cost_medi: 0,
                     medi_account_type: 1,
                     medi_account_owner: '',     // 收款人姓名
                     medi_account_bank: 1,   // 开户行
@@ -650,45 +652,11 @@
                     water_fee: '',     // 水费
                     gas_fee: '',       // 燃气费
 
-                    received_amount: '',
                     cost_deposit: '',
-                    payments: [
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        },
-                        {
-                            payment_id: 1,
-                            money: ''
-                        }
-                    ],
+                    payment: [],
                     deal_time: '',
                     received_type: 1,
-
+                    received_amount: '',
                 },
                 staff:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -711,6 +679,7 @@
                 myIsEditRent : false,
 
                 house_name: '',
+                staff_name : '',
                 customer_name: '',
                 rentClientType : '',
 
@@ -760,193 +729,49 @@
         },
         updated(){
             this.selectDate ();
+            this.Info();
         },
         watch : {
             dictionary(val){
                 this.myDictionary = val;
             },
-            contractEitId(val){
-                this.myContractEitId = val;
-            },
-            isEditRent(val){
-                this.myIsEditRent = val;
-                if(this.myIsEditRent) this.gitContractInfo();
-            }
         },
         methods : {
-            gitContractInfo(){
-                if(this.myContractEitId !== ''){
-                    this.$http.get('core/rent/readcontract/id/' +this.myContractEitId).then((res)=>{
-                        this.relative_customer = [];
-                        this.contractEdit.relative_customer_id = [];
-                        this.contractPic.cus_idPhoto = [];
-                        this.contractEdit.contract_pic =[];
-                        this.handoverPic.cus_idPhoto = [];
-                        this.contractEdit.handover_pic =[];
-                        this.receiptPic.cus_idPhoto = [];
-                        this.contractEdit.receipt_pic = [];
-                        this.waterPic.cus_idPhoto = [];
-                        this.contractEdit.water_card_pic = [];
-                        this.elePic.cus_idPhoto = [];
-                        this.contractEdit.elec_card_pic = [];
-                        this.gasPic.cus_idPhoto = [];
-                        this.contractEdit.gas_card_pic = [];
-                        this.paymentPic.cus_idPhoto = [];
-                        this.contractEdit.payment_pic = [];
-
-                        let contractList =res.data.data;
-                        this.contractEdit.id = contractList.id; //合同id
-                        if(contractList.relative_customer !== undefined && contractList.relative_customer !== null){
-                                this.more = contractList.relative_customer.length;
-                                for(let i=0;i<contractList.relative_customer.length;i++){
-                                    this.relative_customer.push(contractList.relative_customer[i].name);
-                                    this.contractEdit.relative_customer_id.push(contractList.relative_customer[i].id);
-                                }
-                        }
-                        this.contractEdit.contract_num = contractList.contract_num; //合同编号
-                        this.contractEdit.start_date = contractList.start_date;     //合同开始时间
-                        this.contractEdit.end_date = contractList.end_date;         //合同结束时间
-                        this.contractEdit.complete_date = contractList.complete_date[0];    //
-
-                        this.contractEdit.remarks = contractList.remarks;
-
-                        if(!Array.isArray(contractList.ablum)){
-                            this.contractPic.cus_idPhotos = contractList.album.contract_pic;                    //修改图片ID
-                            for (let i in this.contractPic.cus_idPhotos) {
-                                this.contractPic.cus_idPhoto.push(i);
-                                this.contractEdit.contract_pic.push(i);
-                            }
-                            this.handoverPic.cus_idPhotos = contractList.album.handover_pic;                    //修改图片ID
-                            for (let i in this.handoverPic.cus_idPhotos) {
-                                this.handoverPic.cus_idPhoto.push(i);
-                                this.contractEdit.handover_pic.push(i);
-                            }
-                            this.receiptPic.cus_idPhotos = contractList.album.receipt_pic;                    //修改图片ID
-                            for (let i in this.receiptPic.cus_idPhotos) {
-                                this.receiptPic.cus_idPhoto.push(i);
-                                this.contractEdit.receipt_pic.push(i);
-                            }
-                            this.waterPic.cus_idPhotos = contractList.album.water_card_pic;                    //修改图片ID
-                            for (let i in this.waterPic.cus_idPhotos) {
-                                this.waterPic.cus_idPhoto.push(i);
-                                this.contractEdit.water_card_pic.push(i);
-                            }
-                            this.elePic.cus_idPhotos = contractList.album.elec_card_pic;                    //修改图片ID
-                            for (let i in this.elePic.cus_idPhotos) {
-                                this.elePic.cus_idPhoto.push(i);
-                                this.contractEdit.elec_card_pic.push(i);
-                            }
-                            this.gasPic.cus_idPhotos = contractList.album.gas_card_pic;                    //修改图片ID
-                            for (let i in this.gasPic.cus_idPhotos) {
-                                this.gasPic.cus_idPhoto.push(i);
-                                this.contractEdit.gas_card_pic.push(i);
-                            }
-
-                            this.paymentPic.cus_idPhotos = contractList.album.payment_pic;
-                            for (let i in this.paymentPic.cus_idPhotos) {
-                                this.contractEdit.payment_pic.push(i);
-                            }
-                        }
-                        this.staff = contractList.staff;
-
-
-                        // 清空
-                        this.pay_typeChange = false;
-                        this.money_change = false;
-                        this.one_type = '';
-                        this.more_type = [];
-                        if(contractList.customer_id !== undefined && contractList.customer_id !== null){
-                            this.customer_name = contractList.customer_id.name;
-                            this.contractEdit.customer_id = contractList.customer_id.id;
-                        }
-                        if(contractList.villa_id !== undefined && contractList.villa_id !== null){
-                            this.house_name = contractList.villa_id.detailed_address;
-                            this.contractEdit.villa_id = contractList.villa_id.id;
-
-                        }
-                        if(contractList.checkin_rent_id !== null && contractList.checkin_rent_id !==undefined){
-                            this.more_pay_way = contractList.checkin_rent_id.payment.length;
-                            for (let i = 0; i < this.more_pay_way; i++) {
-                                this.payments[i].payment_id = contractList.checkin_rent_id.payment[i].payment_id;
-                                this.payments[i].money = contractList.checkin_rent_id.payment[i].money;
-                            }
-
-                            this.contractEdit.is_shared = contractList.checkin_rent_id.is_shared;
-                            this.contractEdit.shared_part = contractList.checkin_rent_id.shared_part;
-
-
-                            this.contractEdit.months = contractList.checkin_rent_id.months;
-                            this.contractEdit.pay = contractList.checkin_rent_id.pay;
-                            this.contractEdit.bet = contractList.checkin_rent_id.bet;
-                            this.contractEdit.price = contractList.checkin_rent_id.price;
-                            this.contractEdit.cost_medi = contractList.checkin_rent_id.cost_medi;
-                            this.contractEdit.medi_account_type = contractList.checkin_rent_id.medi_account_type;
-                            this.contractEdit.medi_account_owner = contractList.checkin_rent_id.medi_account_owner;
-                            this.contractEdit.medi_account_bank = contractList.checkin_rent_id.medi_account_bank;
-                            this.contractEdit.medi_account_subbank = contractList.checkin_rent_id.medi_account_subbank;
-                            this.contractEdit.medi_account_num = contractList.checkin_rent_id.medi_account_num;
-                            this.contractEdit.cost_deposit = contractList.checkin_rent_id.cost_deposit;
-
-                            this.contractEdit.deal_time = contractList.checkin_rent_id.deal_time;
-                            this.contractEdit.receipt_pic = contractList.checkin_rent_id.receipt_pic;
-                            this.contractEdit.received_type = contractList.checkin_rent_id.received_type;
-                            this.contractEdit.received_amount = contractList.checkin_rent_id.received_amount;
-                            
-                            if (contractList.checkin_rent_id.customer != null) {
-                                this.is_medi = contractList.checkin_rent_id.customer.person_medium;
-                            }
-
-                            this.contractEdit.elec_fee = contractList.checkin_rent_id.elec_fee;
-                            this.contractEdit.manage_fee = contractList.checkin_rent_id.manage_fee;
-                            this.contractEdit.property_fee = contractList.checkin_rent_id.property_fee;
-                            this.contractEdit.net_fee = contractList.checkin_rent_id.net_fee;
-                            this.contractEdit.water_fee = contractList.checkin_rent_id.water_fee;
-                            this.contractEdit.gas_fee = contractList.checkin_rent_id.gas_fee;
-
-                            if (contractList.checkin_rent_id.pay.length > 1) {
-                                this.change_payType = true;
-                                this.more_type = contractList.checkin_rent_id.pay;
-                            } else {
-                                this.one_type = contractList.checkin_rent_id.pay[0];
-                            }
-                            if (contractList.checkin_rent_id.price.length > 1) {
-                                this.price_change = true;
-                            }
-                        }
-                    })
-                }
-
+            Info(){
+                this.$http.get('staff/info').then((res)=>{
+                    this.staff_name=res.data.name;
+                })
             },
             selectMainClient(){
                 this.rentClientType = 'main';
                 this.collectRent = 2;
-                $('.selectClient:eq(1)').modal('show');
+                $('#selectClient').modal('show');
             },
             selectClient(val){         //选择租客姓名
                 this.flag = val;
                 this.rentClientType = 'relative';
                 this.collectRent = 2;
-                $('.selectClient:eq(1)').modal('show');
+                $('#selectClient').modal('show');
             },
             selectHouse(){
-                $('.selectHouse:eq(1)').modal('show');
+                $('#selectHouse').modal('show');
             },
             getHouse(data){
-                this.contractEdit.villa_id = data.id;
+                this.contractAdd.house_id = data.id;
                 this.house_name = data.address;
             },
             receiveClient(val){     //接收附属租客id
                 this.collectRent = '';
                 if(this.rentClientType === 'relative'){
-                    if(this.more > this.relative_customer.length && this.contractEdit.relative_customer_id.indexOf(val.id) === -1){
-                        this.contractEdit.relative_customer_id .push(val.id);
+                    if(this.more > this.relative_customer.length && this.contractAdd.relative_customer_id.indexOf(val.id) === -1){
+                        this.contractAdd.relative_customer_id .push(val.id);
                         this.relative_customer.push(val.name);
                     }else if(this.more === this.relative_customer.length){
-                        this.contractEdit.relative_customer_id.splice(this.flag,1);
+                        this.contractAdd.relative_customer_id.splice(this.flag,1);
                         this.relative_customer.splice(this.flag,1,val.name);
                     }
                 }else {
-                    this.contractEdit.customer_id = val.id;
+                    this.contractAdd.customer_id = val.id;
                     this.customer_name = val.name;
                 }
 
@@ -960,36 +785,36 @@
                     autoclose: 1,
                 }).on('changeDate', ev => {
                     if (ev.target.placeholder === '合同开始时间'){
-                        this.contractEdit.start_date = ev.target.value;
+                        this.contractAdd.start_date = ev.target.value;
                     }else if(ev.target.placeholder === '合同结束时间'){
-                        this.contractEdit.end_date = ev.target.value;
+                        this.contractAdd.end_date = ev.target.value;
                     }else {
-                        this.contractEdit.complete_date = ev.target.value;
+                        this.contractAdd.complete_date = ev.target.value;
                     }
 
                 });
             },
             //获取图片id
             contractPicId(val){     //获取成功上传合同 id 数组
-                this.contractEdit.contract_pic = val;
+                this.contractAdd.contract_pic = val;
             },
             waterPicId(val){        //获取成功上传水卡 id 数组
-                this.contractEdit.water_card_pic = val;
+                this.contractAdd.water_card_pic = val;
             },
             elePicId(val){          //获取成功上传电卡 id 数组
-                this.contractEdit.elec_card_pic = val;
+                this.contractAdd.elec_card_pic = val;
             },
             gasPicId(val){          //获取成功上传燃气卡 id 数组
-                this.contractEdit.gas_card_pic = val;
+                this.contractAdd.gas_card_pic = val;
             },
             handoverPicId(val){     //获取成功上传交接单 id 数组
-                this.contractEdit.handover_pic = val;
+                this.contractAdd.handover_pic = val;
             },
             receiptPicId(val){      //获取成功上传转账凭证 id 数组
-                this.contractEdit.receipt_pic = val;
+                this.contractAdd.receipt_pic = val;
             },
             certificatePicId(val){
-                this.contractEdit.payment_pic = val;
+                this.contractAdd.payment_pic = val;
             },
             //图片上传完成
             complete(val){          //监控上传进度
@@ -998,62 +823,61 @@
             //删除照片ID
             picDelete (val){
                 console.log(val)
-                let contract = this.contractEdit.contract_pic.indexOf(val);
+                let contract = this.contractAdd.contract_pic.indexOf(val);
                 if (contract > -1) {
 //                    this.contractPic.cus_idPhoto.splice(contract, 1);
-                    this.contractEdit.contract_pic.splice(contract, 1);
+                    this.contractAdd.contract_pic.splice(contract, 1);
                 }
-                let water = this.contractEdit.water_card_pic.indexOf(val);
+                let water = this.contractAdd.water_card_pic.indexOf(val);
                 if (water > -1) {
 //                    this.waterPic.cus_idPhoto.splice(water, 1);
-                    this.contractEdit.water_card_pic.splice(water, 1);
+                    this.contractAdd.water_card_pic.splice(water, 1);
                 }
-                let ele = this.contractEdit.elec_card_pic.indexOf(val);
+                let ele = this.contractAdd.elec_card_pic.indexOf(val);
                 if (ele > -1) {
 //                    this.elePic.cus_idPhoto.splice(ele, 1);
-                    this.contractEdit.elec_card_pic.splice(ele, 1);
+                    this.contractAdd.elec_card_pic.splice(ele, 1);
                 }
-                let gas = this.contractEdit.gas_card_pic.indexOf(val);
+                let gas = this.contractAdd.gas_card_pic.indexOf(val);
                 if (gas > -1) {
 //                    this.gasPic.cus_idPhoto.splice(gas, 1);
-                    this.contractEdit.gas_card_pic.splice(gas, 1);
+                    this.contractAdd.gas_card_pic.splice(gas, 1);
                 }
-                let handover = this.contractEdit.handover_pic.indexOf(val);
+                let handover = this.contractAdd.handover_pic.indexOf(val);
                 if (handover > -1) {
 //                    this.handoverPic.cus_idPhoto.splice(handover, 1);
-                    this.contractEdit.handover_pic.splice(handover, 1);
+                    this.contractAdd.handover_pic.splice(handover, 1);
                 }
-                let receipt = this.contractEdit.receipt_pic.indexOf(val);
+                let receipt = this.contractAdd.receipt_pic.indexOf(val);
                 if (receipt > -1) {
 //                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
-                    this.contractEdit.receipt_pic.splice(receipt, 1);
+                    this.contractAdd.receipt_pic.splice(receipt, 1);
                 }
 
-                let payment = this.contractEdit.payment_pic.indexOf(val);
+                let payment = this.contractAdd.payment_pic.indexOf(val);
                 if (payment > -1) {
-                    this.contractEdit.payment_pic.splice(payment, 1);
+                    this.contractAdd.payment_pic.splice(payment, 1);
                 }
             },
             editContract(){
-                
-                this.contractEdit.payment = this.payments.slice(0, this.more_pay_way);
 
-                this.contractEdit.pay = [];
+                this.contractAdd.payment = this.payments.slice(0, this.more_pay_way);
+
+                this.contractAdd.pay = [];
                 if (this.change_payType) {
                     // 付款方式变化
-                    this.contractEdit.pay = this.more_type;
+                    this.contractAdd.pay = this.more_type;
                 } else {
                     // 不变
-                    this.contractEdit.pay.push(this.one_type);
+                    this.contractAdd.pay.push(this.one_type);
                 }
-                
+
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
-                        this.$http.post('core/rent/updatecontract',this.contractEdit).then((res) => {
+                        this.$http.post('core/rent/saveContract ',this.contractAdd).then((res) => {
                             if(res.data.code === "80010"){
-                                this.$emit('EditStatus','success');
-                                $('#rentingEdit').modal('hide');
+                                this.closeModal();
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
@@ -1082,24 +906,96 @@
                 if(this.more>1){
                     if(this.more === this.relative_customer.length ){
                         this.relative_customer.length--;
-                        this.contractEdit.relative_customer_id.length--;
+                        this.contractAdd.relative_customer_id.length--;
                     }
                     this.more--;
                 }
 
             },
-            closeEdit(){
-                this.$emit('EditStatus','error');
+            closeModal(){
+                // 清空
+                this.payments = [
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    },
+                    {
+                        payment_id: 1,
+                        money: ''
+                    }
+                ];
+                this.more_pay_way = 1;
+
+                this.staff_name = '';
+                this.house_name = '';
+                this.customer_name = '';
+
+                this.contractAdd.villa_id = '';
+                this.contractAdd.customer_id = '';
+                this.contractAdd.is_shared = 1;
+                this.contractAdd.shared_part = 1;
+                this.contractAdd.rent_type = 1;
+                this.contractAdd.months = '';
+                this.contractAdd.pay = [];
+                this.contractAdd.bet = 0;
+                this.contractAdd.price = '';
+                this.contractAdd.cost_medi = '';
+                this.contractAdd.medi_account_type = 1;
+                this.contractAdd.medi_account_num = '';
+                this.contractAdd.medi_account_owner = '';
+                this.contractAdd.medi_account_bank = 1;
+                this.contractAdd.medi_account_subbank = 1;
+                this.contractAdd.cost_deposit = '';
+                this.contractAdd.payment = [];
+                this.contractAdd.deal_time = '';
+                this.contractAdd.receipt_pic = [];
+                this.contractAdd.received_type = 1;
+                this.contractAdd.received_amount = '';
+
+                this.contractAdd.complete_date = '';
+
+                this.contractAdd.remarks = '';
+
+                this.contractAdd.elec_fee = '';
+                this.contractAdd.manage_fee = '';
+                this.contractAdd.property_fee = '';
+                this.contractAdd.net_fee = 50;
+                this.contractAdd.water_fee = '';
+                this.contractAdd.gas_fee = '';
             },
 
             //            修改租房状态
             changeIsSgared(){
-                if (this.contractEdit.is_shared == 2) {
-                    this.contractEdit.shared_part = 1;
-                    this.contractEdit.elec_fee = '';
-                    this.contractEdit.net_fee = 50;
-                    this.contractEdit.water_fee = '';
-                    this.contractEdit.gas_fee = '';
+                if (this.contractAdd.is_shared == 2) {
+                    this.contractAdd.shared_part = 1;
+                    this.contractAdd.elec_fee = '';
+                    this.contractAdd.net_fee = 50;
+                    this.contractAdd.water_fee = '';
+                    this.contractAdd.gas_fee = '';
                 }
             },
 
@@ -1108,12 +1004,12 @@
                 this.more_type = [];
                 if (ev.currentTarget.checked) {
                     this.one_type = '';
-                    if (this.contractEdit.months == '' || this.contractEdit.months == 0 || Math.ceil(this.contractEdit.months / 12) == 1) {
+                    if (this.contractAdd.months == '' || this.contractAdd.months == 0 || Math.ceil(this.contractAdd.months / 12) == 1) {
                         this.change_payType = false;
                         return;
                     }
                     this.change_payType = true;
-                    let years = Math.ceil(this.contractEdit.months / 12);
+                    let years = Math.ceil(this.contractAdd.months / 12);
                     for (let i = 0; i < years; i++) {
                         this.more_type.push('');
                     }
@@ -1122,7 +1018,8 @@
                 }
             },
             getFlexData(data){
-                this.contractEdit.price = data;
+                console.log(data);
+                this.contractAdd.price = data;
             },
             // 付款方式
             addMorePayWay(){
@@ -1147,11 +1044,11 @@
             },
             // 修改中介收款方式
             changeMediPayment(){
-                this.contractEdit.medi_account_owner = '';
-                this.contractEdit.medi_account_subbank = '';
-                this.contractEdit.medi_alipay_owner = '';
-                this.contractEdit.medi_account_bank = 1;
-                this.contractEdit.medi_account_num = '';
+                this.contractAdd.medi_account_owner = '';
+                this.contractAdd.medi_account_subbank = '';
+                this.contractAdd.medi_alipay_owner = '';
+                this.contractAdd.medi_account_bank = 1;
+                this.contractAdd.medi_account_num = '';
             }
         }
     }

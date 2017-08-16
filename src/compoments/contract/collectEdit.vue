@@ -118,13 +118,7 @@
                                         </div>
                                         <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractEdit.complete_date" class="form-control form_date">
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <label class="col-sm-2 control-label">付款方式<sup>*</sup></label>
 
@@ -167,6 +161,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractEdit.complete_date" class="form-control form_date">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >备注</label>
                                         <div class="col-md-10">
                                             <textarea class="form-control" placeholder="请输入备注信息"
@@ -202,7 +204,7 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractEdit.payment==1||contractEdit.payment==4">
-                                            <label class="col-sm-2 control-label">支行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支行</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractEdit.account_subbank">
                                             </div>
@@ -260,7 +262,7 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractEdit.medi_account_type==1||contractEdit.medi_account_type==4">
-                                            <label class="col-sm-2 control-label">支行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支行</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractEdit.medi_account_subbank">
                                             </div>
@@ -302,21 +304,21 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">水卡照片</label>
+                                        <label class="col-lg-2 control-label">水表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="waterPicId" @delete="picDelete" @complete="complete"
                                                      :result="'waterPic'" :idPhotos="waterPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">电卡照片</label>
+                                        <label class="col-lg-2 control-label">电表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="elePicId" @delete="picDelete" @complete="complete"
                                                      :result="'elePic'" :idPhotos="elePic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">燃气卡照片</label>
+                                        <label class="col-lg-2 control-label">燃气表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="gasPicId" @delete="picDelete" @complete="complete"
                                                      :result="'gasPic'" :idPhotos="gasPic"></up-load>

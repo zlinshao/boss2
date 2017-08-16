@@ -7,7 +7,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click = closeEdit>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click = closeModal>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <h4 class="modal-title">编辑合同</h4>
@@ -116,15 +116,8 @@
                                             <input type="number" max="30" min="1" class="form-control" v-model="contractAdd.pay_date"
                                                    placeholder="请输入打房租日期">
                                         </div>
-                                        <!--<label class="col-sm-1 control-label col-lg-1" >号</label>-->
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractAdd.complete_date" class="form-control form_date">
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <label class="col-sm-2 control-label">付款方式<sup>*</sup></label>
 
@@ -163,9 +156,17 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >开单人</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="staff" disabled placeholder="开单人">
+                                            <input type="text" class="form-control" v-model="staff_name" disabled placeholder="开单人">
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
+                                        <div class="col-lg-4 col-sm-9">
+                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractAdd.complete_date" class="form-control form_date">
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >备注</label>
                                         <div class="col-md-10">
@@ -202,7 +203,7 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractAdd.payment==1||contractAdd.payment==4">
-                                            <label class="col-sm-2 control-label">支行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支行</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractAdd.account_subbank">
                                             </div>
@@ -260,7 +261,7 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractAdd.medi_account_type==1||contractAdd.medi_account_type==4">
-                                            <label class="col-sm-2 control-label">支行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支行</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractAdd.medi_account_subbank">
                                             </div>
@@ -302,21 +303,21 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">水卡照片</label>
+                                        <label class="col-lg-2 control-label">水表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="waterPicId" @delete="picDelete" @complete="complete"
                                                      :result="'waterPic'" :idPhotos="waterPic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">电卡照片</label>
+                                        <label class="col-lg-2 control-label">电表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="elePicId" @delete="picDelete" @complete="complete"
                                                      :result="'elePic'" :idPhotos="elePic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">燃气卡照片</label>
+                                        <label class="col-lg-2 control-label">燃气表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="gasPicId" @delete="picDelete" @complete="complete"
                                                      :result="'gasPic'" :idPhotos="gasPic"></up-load>
@@ -347,7 +348,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" @click = closeEdit>关闭</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" @click = closeModal>关闭</button>
                             <button type="button" class="btn btn-primary" @click="addContract">确认</button>
                         </div>
                     </div>
@@ -460,7 +461,7 @@
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
                 },
-                staff:'',
+                staff_name:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
                 dateConfigureComplete: [{range:false,needHour:false, }],
                 dateType:'',
@@ -493,6 +494,7 @@
         },
         updated(){
             this.selectDate ();
+            this.Info();
         },
         watch : {
             dictionary(val){
@@ -547,6 +549,11 @@
             },
         },
         methods : {
+            Info(){
+                this.$http.get('staff/info').then((res)=>{
+                    this.staff_name=res.data.name;
+                })
+            },
             selectClient(val){         //选择业主姓名
                 this.clientType = 'relative'
                 this.flag = val;
@@ -685,53 +692,12 @@
                     this.$http.get('api/picture/poll').then((res) => {
                         this.$http.post('core/collect/saveContract ',this.contractAdd).then((res) => {
                             if(res.data.code === "70010"){
-                                $('#contractAdd').modal('hide');
+                               this.closeModal();
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
 
-                                this.contractAdd.contract_num = '' ;       //合同编号
-                                this.contractAdd.vac_start_date = '';      //空置期开始日期
-                                this.contractAdd.vac_end_date = '';        //空置期结束日期
-                                this.contractAdd.start_date = '';         //合同开始日期
-                                this.contractAdd.end_date = '';            //合同结束日期
-                                this.contractAdd.pay_date = '';            //打房租日期
-                                this.contractAdd.complete_date = '';       //资料补齐时间
-                                this.contractAdd.remarks = '';             //备注信息
 
-                                this.pay_typeChange = false;
-                                this.money_change = false;
-                                this.one_type = '';
-                                this.more_type = [];
-                                
-                                this.house_name = '';
-                                this.customer_name = '';
-
-                                this.contractAdd.type = '';
-                                this.contractAdd.staff_id = '';
-                                this.contractAdd.house_id = '';
-                                this.contractAdd.customer_id = '';
-
-                                this.contractAdd.years = '';
-                                this.contractAdd.pay_type = [];
-                                this.contractAdd.price.splice(0,this.contractAdd.price.length);
-                                this.contractAdd.vacancy = '';
-                                this.contractAdd.cost_deposit = '';
-                                this.contractAdd.deal_time = '';
-                                this.contractAdd.remark = '';
-
-                                this.contractAdd.payment = 1;
-                                this.contractAdd.bank = 1;
-                                this.contractAdd.account = '';
-                                this.contractAdd.account_owner = '';
-                                this.contractAdd.account_subbank = '';
-
-                                this.contractAdd.cost_medi = 0;
-                                this.contractAdd.medi_account_type = 1;
-                                this.contractAdd.medi_account_num = '';
-                                this.contractAdd.medi_account_owner = '';
-                                this.contractAdd.medi_account_bank = 1;
-                                this.contractAdd.medi_account_subbank = 1;
                             }else {
                                 this.info.error = res.data.msg;
                                 //显示成功弹窗 ***
@@ -762,8 +728,49 @@
                 }
 
             },
-            closeEdit(){
-                this.$emit('EditStatus','error');
+            closeModal(){
+                this.contractAdd.contract_num = '' ;       //合同编号
+                this.contractAdd.vac_start_date = '';      //空置期开始日期
+                this.contractAdd.vac_end_date = '';        //空置期结束日期
+                this.contractAdd.start_date = '';         //合同开始日期
+                this.contractAdd.end_date = '';            //合同结束日期
+                this.contractAdd.pay_date = '';            //打房租日期
+                this.contractAdd.complete_date = '';       //资料补齐时间
+                this.contractAdd.remarks = '';             //备注信息
+
+                this.pay_typeChange = false;
+                this.money_change = false;
+                this.one_type = '';
+                this.more_type = [];
+
+                this.house_name = '';
+                this.customer_name = '';
+
+                this.contractAdd.type = '';
+                this.contractAdd.staff_id = '';
+                this.contractAdd.house_id = '';
+                this.contractAdd.customer_id = '';
+
+                this.contractAdd.years = '';
+                this.contractAdd.pay_type = [];
+                this.contractAdd.price.splice(0,this.contractAdd.price.length);
+                this.contractAdd.vacancy = '';
+                this.contractAdd.cost_deposit = '';
+                this.contractAdd.deal_time = '';
+                this.contractAdd.remark = '';
+
+                this.contractAdd.payment = 1;
+                this.contractAdd.bank = 1;
+                this.contractAdd.account = '';
+                this.contractAdd.account_owner = '';
+                this.contractAdd.account_subbank = '';
+
+                this.contractAdd.cost_medi = 0;
+                this.contractAdd.medi_account_type = 1;
+                this.contractAdd.medi_account_num = '';
+                this.contractAdd.medi_account_owner = '';
+                this.contractAdd.medi_account_bank = 1;
+                this.contractAdd.medi_account_subbank = 1;
             },
 
             changePayType(ev){
