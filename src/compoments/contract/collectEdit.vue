@@ -75,9 +75,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label">收房月数<sup>*</sup></label>
+                                        <label class="col-sm-2 control-label">收房年限<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" @blur="changeisClick" v-model="contractEdit.months">
+                                            <input type="text" class="form-control" v-model="contractEdit.months">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -515,7 +515,7 @@
                     }
                 }
             },
-            'contractEdit.years' : {
+            'contractEdit.months' : {
                 deep:true,
                 handler(val,oldVal){
                     if(val !== oldVal && this.isClick){
@@ -654,12 +654,15 @@
                                 this.contractEdit.staff_id = contractList.checkin_collect_id.staff_id;
 
                                 this.contractEdit.months = contractList.checkin_collect_id.months;
-                                if(contractList.checkin_collect_id.pay_type.length<2){
-                                    this.one_type = contractList.checkin_collect_id.pay_type[0];
-                                }else {
-                                    this.more_type = contractList.checkin_collect_id.pay_type;
-                                    this.pay_typeChange = true;
+                                if(contractList.checkin_collect_id.pay_type !== null && contractList.checkin_collect_id.pay_type !==undefined){
+                                    if(contractList.checkin_collect_id.pay_type.length<2){
+                                        this.one_type = contractList.checkin_collect_id.pay_type[0];
+                                    }else {
+                                        this.more_type = contractList.checkin_collect_id.pay_type;
+                                        this.pay_typeChange = true;
+                                    }
                                 }
+
                                 this.contractEdit.price = contractList.checkin_collect_id.price;
                                 if(contractList.checkin_collect_id.price.length>1){
                                     this.money_change = true;
@@ -721,7 +724,7 @@
                     {
                         vac_start_date : this.contractEdit.vac_start_date,
                         vacancy : this.contractEdit.vacancy,
-                        years : this.contractEdit.years,
+                        months : this.contractEdit.months ,
                     }).then(
                     (res) => {
                         this.contractEdit.vac_end_date = res.data.vac_end_date;
