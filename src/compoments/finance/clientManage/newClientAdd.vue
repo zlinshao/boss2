@@ -257,46 +257,45 @@
         components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject},
         data(){
             return {
-                staff: '',                          //签约人
-                staffId: '',                        //签约人ID
-                branch_id: '',                      //所属部门ID
-                branch: '',                         //所属部门
-                person_id: '',                      //负责人ID
-                person: '',                         //负责人
+                staff: '',                              //签约人
+                staffId: '',                            //签约人ID
+                branch_id: '',                          //所属部门ID
+                branch: '',                             //所属部门
+                person_id: '',                          //负责人ID
+                person: '',                             //负责人
 
-                cus_id: '',                         //客户ID
-                cus_name: '',                       //客户
-                cus_phone: '',                      //客户联系方式
+                cus_id: '',                             //客户ID
+                cus_name: '',                           //客户
+                cus_phone: '',                          //客户联系方式
 
-                house_id: '',                       //房屋ID
-                house_name: '',                     //房屋地址
+                house_id: '',                           //房屋ID
+                house_name: '',                         //房屋地址
 
-                months: '',                         //年限
-                price: [],                          //价格
-                one_type: '1',                      //付款方式
-                deposit: '',                        //押金
-                pay_typeChange: false,              //付款方式不固定
-                pay_type: [],                       //付款方式不固定显示选择
-                more_type: [],                      //付款年份个数
-                dict: {},                           //字典
-                coll: 1,                            //租客/业主/代理
+                months: '',                             //年限
+                price: [],                              //价格
+                one_type: '1',                          //付款方式
+                deposit: '',                            //押金
+                pay_typeChange: false,                  //付款方式不固定
+                pay_type: [],                           //付款方式不固定显示选择
+                more_type: [],                          //付款年份个数
+                dict: {},                               //字典
+                coll: 1,                                //租客/业主/代理
 
-                pendingContract: '',                //待签约日期
-                vacancyPeriod: '',                  //空置期
-                firstRemittance: '',                //第一次房租日期
-                remarks: '',                        //备注
+                pendingContract: '',                    //待签约日期
+                vacancyPeriod: '',                      //空置期
+                firstRemittance: '',                    //第一次房租日期
+                remarks: '',                            //备注
 
                 //客户
-                payment: 1,                         //客户付款方式
-                account_owner: '',                  //收款人姓名
-                account_subbank: '',                //支行
-                alipay_owner: '',                   //支付宝姓名
-                bank: 1,                            //开户行
-                account: '',                        // 账户
+                payment: 1,                             //客户付款方式
+                account_owner: '',                      //收款人姓名
+                account_subbank: '',                    //支行
+                alipay_owner: '',                       //支付宝姓名
+                bank: 1,                                //开户行
+                account: '',                            // 账户
                 subject_id: {rental: '', deposit: ''},  //科目款项
 
-
-                configure: [],                      //人资
+                configure: [],                          //人资
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -307,7 +306,7 @@
                     //失败信息 ***
                     error: ''
                 },
-                oneAsk: '',             //时间请求
+                oneAsk: '',                             //时间请求
             }
         },
         mounted (){
@@ -335,9 +334,7 @@
                 }
             },
         },
-//        updated (){
-//            this.remindData();
-//        },
+
         methods: {
 //            房款科目
             houseSubject(val){
@@ -398,6 +395,8 @@
                 this.vacancyPeriod = '';                    //空置期
                 this.firstRemittance = '';                  //第一次打款日期
                 this.remarks = '';                          //备注
+                subject_id.rental = '';
+                subject_id.deposit = '';                    //科目款项
 
 //                收款方式
                 this.payment = 1;                           //客户付款方式
