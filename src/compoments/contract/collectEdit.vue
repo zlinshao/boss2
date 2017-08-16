@@ -75,9 +75,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label">收房年限<sup>*</sup></label>
+                                        <label class="col-sm-2 control-label">收房月数<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.years">
+                                            <input type="text" class="form-control" @blur="changeisClick" v-model="contractEdit.months">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -145,7 +145,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <FlexBox :flexData="contractEdit.years" :datas="contractEdit.price" :change="false" 
+                                    <FlexBox :flexData="contractEdit.months" :datas="contractEdit.price" :change="false" 
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
                                     <div class="row">
                                         <label class="col-sm-2 control-label">押金<sup>*</sup></label>
@@ -438,7 +438,7 @@
                     receipt_pic:[],         //押金收条
 
                     villa_id :'',           //fangwuid
-                    years : '',
+                    months : '',
                     pay_type : [],
                     price : [],
                     cost_deposit : '',
@@ -515,7 +515,7 @@
                     }
                 }
             },
-            'contractEdit.years' : {
+            'contractEdit.months' : {
                 deep:true,
                 handler(val,oldVal){
                     if(val !== oldVal && this.isClick){
@@ -653,7 +653,7 @@
 
                                 this.contractEdit.staff_id = contractList.checkin_collect_id.staff_id;
 
-                                this.contractEdit.years = contractList.checkin_collect_id.years;
+                                this.contractEdit.months = contractList.checkin_collect_id.months;
                                 if(contractList.checkin_collect_id.pay_type.length<2){
                                     this.one_type = contractList.checkin_collect_id.pay_type[0];
                                 }else {
@@ -721,7 +721,7 @@
                     {
                         vac_start_date : this.contractEdit.vac_start_date,
                         vacancy : this.contractEdit.vacancy,
-                        years : this.contractEdit.years,
+                        months : this.contractEdit.months,
                     }).then(
                     (res) => {
                         this.contractEdit.vac_end_date = res.data.vac_end_date;
@@ -731,8 +731,10 @@
                 )
 
             },
-            selectDate (){
+            changeisClick(){
                 this.isClick = true;
+            },
+            selectDate (){
                 $('.form_date').datetimepicker({
                     minView: "month",
                     language: 'zh-CN',
@@ -871,8 +873,8 @@
                 this.more_type = [];
                 if (ev.currentTarget.checked){
                     this.pay_typeChange = true;
-                    if (this.contractEdit.years!=''){
-                        for (let i = 0;i<this.contractEdit.years;i++){
+                    if (this.contractEdit.months!=''){
+                        for (let i = 0;i<this.contractEdit.months;i++){
                             this.more_type.push('1');
                         }
                     }

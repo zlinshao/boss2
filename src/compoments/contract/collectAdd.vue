@@ -75,9 +75,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label">收房月份<sup>*</sup></label>
+                                        <label class="col-sm-2 control-label">收房月数<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractAdd.months">
+                                            <input type="text" class="form-control" @blur="changeisClick" v-model="contractAdd.months">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -606,8 +606,11 @@
                 )
 
             },
-            selectDate (){
+
+            changeisClick(){
                 this.isClick = true;
+            },
+            selectDate (){
                 $('.form_date').datetimepicker({
                     minView: "month",
                     language: 'zh-CN',
