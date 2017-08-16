@@ -121,7 +121,11 @@
         margin-right: 8px;
         vertical-align: bottom;
     }
-
+    .form-horizontal.tasi-form .form-group {
+        border-bottom: 0px;
+        padding-bottom: 0px;
+        margin-bottom: 15px;
+    }
 </style>
 <script>
     export default{

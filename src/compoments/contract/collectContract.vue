@@ -62,6 +62,11 @@
                                 &nbsp;查看备忘录
                             </router-link>
                         </div>
+                        <div class="pull-right" style="margin: 8px">
+                            <a class="btn btn-primary" @click="collectAdd">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
+                            </a>
+                        </div>
                     </div>
 
                     <div class="pull-right" v-if="!flag && flag1 === false">
@@ -205,6 +210,8 @@
         <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <Loading v-if='Waiting'></Loading>
+
+        <AddContract  :dictionary="dictionary"></AddContract>
     </div>
 </template>
 <script>
@@ -214,8 +221,10 @@
     import Staff from '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue';                          //提示信息
     import DatePicker from '../common/datePicker.vue'
+
+    import AddContract from './collectAdd.vue'
     export default{
-        components: {DatePicker, Page, Staff, Status, Confirm, Loading},
+        components: {DatePicker, Page, Staff, Status, Confirm, Loading,AddContract},
         data(){
             return {
                 flag: true,
@@ -541,7 +550,13 @@
                 $('#selectCustom').modal('show');
                 this.configure = {length: 1, class: 'department', id: [9], name: '市场部'};
                 this.configureType = 'distributionDpm';
-            }
+            },
+
+
+            collectAdd(){
+                $('.rem_div').remove();
+                $('#contractAdd').modal('show');
+            },
         }
     }
 </script>
