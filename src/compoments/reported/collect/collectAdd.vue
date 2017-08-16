@@ -74,7 +74,10 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class="control-label"><input type="checkbox" :checked="pay_typeChange" @click="changePayType($event)">付款方式不固定</label>
+                                                <label class="control-label">
+                                                    <input type="checkbox" :checked="pay_typeChange" @click="changePayType($event)">
+                                                    付款方式不固定
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -91,6 +94,7 @@
                                     </div>
 
                                     <FlexBox :flexData="formData.years" :datas="formData.price" :change="false" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">押金<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
@@ -144,10 +148,6 @@
                                             <input type="text" class="form-control" v-model="formData.account_subbank">
                                         </div>
                                     </div>
-
-                                    <!--todo
-                                        以后改
-                                    -->
                                     <div class="form-group" v-show="formData.payment==2">
                                         <label class="col-sm-2 control-label">支付宝姓名<sup class="required">*</sup></label>
                                         <div class="col-sm-10">

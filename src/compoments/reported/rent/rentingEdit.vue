@@ -735,7 +735,7 @@
                                 this.certificatePic.cus_idPhoto.push(i);
                             }
 
-                            this.formData.deal_time = val.deal_time;
+                            this.formData.deal_time = val.deal_time;payment_pic
                             this.formData.receipt_pic = val.receipt_pic;
                             this.formData.received_type = val.received_type;
                             this.formData.received_amount = val.received_amount;

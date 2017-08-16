@@ -315,7 +315,6 @@
         watch : {
             convenientList(val){
                 this.contractList = val;
-                console.log(this.contractList);
             },
             dictionary(val){
                 this.myDictionary = val;
