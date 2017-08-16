@@ -75,9 +75,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label">收房年限<sup>*</sup></label>
+                                        <label class="col-sm-2 control-label">收房月份<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractAdd.years">
+                                            <input type="text" class="form-control" v-model="contractAdd.months">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -144,7 +144,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <FlexBox :flexData="contractAdd.years" :datas="contractAdd.price" :change="false"
+                                    <FlexBox :flexData="contractAdd.months" :datas="contractAdd.price" :change="false"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
                                     <div class="row">
                                         <label class="col-sm-2 control-label">押金<sup>*</sup></label>
@@ -442,7 +442,7 @@
                     receipt_pic:[],         //押金收条
 
                     villa_id :'',           //fangwuid
-                    years : '',
+                    months : '',
                     pay_type : [],
                     price : [],
                     cost_deposit : '',
@@ -522,7 +522,7 @@
                     }
                 }
             },
-            'contractAdd.years' : {
+            'contractAdd.months' : {
                 deep:true,
                 handler(val,oldVal){
                     if(val !== oldVal && this.isClick){
@@ -596,7 +596,7 @@
                     {
                         vac_start_date : this.contractAdd.vac_start_date,
                         vacancy : this.contractAdd.vacancy,
-                        years : this.contractAdd.years,
+                        months : this.contractAdd.months,
                     }).then(
                     (res) => {
                         this.contractAdd.vac_end_date = res.data.vac_end_date;
@@ -762,7 +762,7 @@
                 this.contractAdd.villa_id = '';
                 this.contractAdd.customer_id = '';
 
-                this.contractAdd.years = '';
+                this.contractAdd.months = '';
                 this.contractAdd.pay_type = [];
                 this.contractAdd.price.splice(0,this.contractAdd.price.length);
                 this.contractAdd.vacancy = '';
@@ -789,8 +789,8 @@
                 this.more_type = [];
                 if (ev.currentTarget.checked){
                     this.pay_typeChange = true;
-                    if (this.contractAdd.years!=''){
-                        for (let i = 0;i<this.contractAdd.years;i++){
+                    if (this.contractAdd.months!=''){
+                        for (let i = 0;i<this.contractAdd.months;i++){
                             this.more_type.push('1');
                         }
                     }
