@@ -476,7 +476,8 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >开单人</label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <input type="text" class="form-control" v-model="staff_name" disabled placeholder="开单人">
+                                            <input type="text" class="form-control" v-model="staff_name"
+                                                  @click="selectDpm" readonly placeholder="开单人">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -553,8 +554,7 @@
         <SelectClient :collectRent="collectRent" @clientAdd="receiveClient"> </SelectClient>
         <Status :state='info'></Status>
         <SelectHouse @House="getHouse"></SelectHouse>
-        
-        
+        <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
     </div>
 </template>
 <script>
@@ -563,6 +563,7 @@
     import upLoad from '../common/upload.vue'
     import Status from '../common/status.vue'
     import SelectHouse from  '../common/selectHouse.vue'
+    import Staff from '../common/organization/selectStaff.vue'
     export default{
         props:['contractEitId','dictionary','isEditRent'],
         components:{
@@ -570,7 +571,8 @@
             upLoad,
             Status,
             SelectHouse,
-            FlexBox
+            FlexBox,
+            Staff
         },
         data(){
             return {
@@ -657,8 +659,8 @@
                     deal_time: '',
                     received_type: 1,
                     received_amount: '',
+                    staff_id :'',
                 },
-                staff:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
                 dateConfigureComplete: [{range:false,needHour:false, }],
                 dateType:'',
@@ -722,6 +724,7 @@
                     }
                 ],
                 more_pay_way: 1,       // 付款方式
+                configure: [],
             }
         },
         mounted(){
@@ -729,7 +732,6 @@
         },
         updated(){
             this.selectDate ();
-            this.Info();
         },
         watch : {
             dictionary(val){
@@ -737,10 +739,13 @@
             },
         },
         methods : {
-            Info(){
-                this.$http.get('staff/info').then((res)=>{
-                    this.staff_name=res.data.name;
-                })
+            selectDpm(){ //选择部门
+                $('.selectCustom:eq(1)').modal('show');
+                this.configure = {length: 1, class: 'amount'};
+            },
+            dpmSeleted(val){
+                this.staff_name = val.staff[0].name;
+                this.contractAdd.satff_id = val.staff[0].id;
             },
             selectMainClient(){
                 this.rentClientType = 'main';
@@ -914,6 +919,7 @@
             },
             closeModal(){
                 // 清空
+                $('#contractAdd').modal('hide');
                 this.payments = [
                     {
                         payment_id: 1,
