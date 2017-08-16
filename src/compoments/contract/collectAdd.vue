@@ -759,7 +759,7 @@
 
                 this.contractAdd.type = '';
                 this.contractAdd.staff_id = '';
-                this.contractAdd.house_id = '';
+                this.contractAdd.villa_id = '';
                 this.contractAdd.customer_id = '';
 
                 this.contractAdd.years = '';
