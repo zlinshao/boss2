@@ -681,7 +681,7 @@
                 myIsEditRent : false,
 
                 house_name: '',
-                staff_name : '',
+                staff_id : '',
                 customer_name: '',
                 rentClientType : '',
 
@@ -745,7 +745,7 @@
             },
             dpmSeleted(val){
                 this.staff_name = val.staff[0].name;
-                this.contractAdd.satff_id = val.staff[0].id;
+                this.contractAdd.staff_id = val.staff[0].id;
             },
             selectMainClient(){
                 this.rentClientType = 'main';
@@ -981,6 +981,7 @@
                 this.contractAdd.receipt_pic = [];
                 this.contractAdd.received_type = 1;
                 this.contractAdd.received_amount = '';
+                this.contractAdd.staff_id = '';
 
                 this.contractAdd.complete_date = '';
 

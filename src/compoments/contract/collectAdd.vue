@@ -466,6 +466,7 @@
                     medi_account_subbank : '',   // 支行
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
+                    staff : '',
                 },
                 staff_name:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -561,7 +562,7 @@
             },
             dpmSeleted(val){
                 this.staff_name = val.staff[0].name;
-                this.contractAdd.satff_id = val.staff[0].id;
+                this.contractAdd.staff_id = val.staff[0].id;
             },
             selectClient(val){         //选择业主姓名
                 this.clientType = 'relative'
