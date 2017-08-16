@@ -684,7 +684,7 @@
                 staff_id : '',
                 customer_name: '',
                 rentClientType : '',
-
+                staff_name :'',
                 one_type: '',
                 more_type: [],
                 change_payType: false,
