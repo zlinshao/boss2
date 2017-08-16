@@ -38,6 +38,12 @@
                             新增客户
                         </button>
                     </div>
+                    <div class="pro-sort pull-right">
+                        <button class="btn btn-success" type="button" @click="newAddClient">
+                            <i class="fa fa fa-plus-square"></i>
+                            新增客户1
+                        </button>
+                    </div>
                 </div>
 
                 <!--选中-->
@@ -104,6 +110,10 @@
                 </tbody>
             </table>
         </section>
+
+        <!--NEW新增客户-->
+        <NewClientAdd></NewClientAdd>
+
         <Department  :configure='configure' @Staff="dpmSelected"></Department>
         <ClientAdd @AddSuccess = 'AddSuccess'></ClientAdd>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
@@ -119,9 +129,10 @@
 //    import DatePicker from '../../common/datePicker.vue'
     import Department from '../../common/organization/selectStaff.vue'
     import ClientAdd from  './clientAdd.vue'
+    import NewClientAdd from  './newClientAdd.vue'
     import Page from  '../../common/page.vue'
     export default{
-        components:{ Department , ClientAdd , Confirm , Page , Status},
+        components:{ Department , ClientAdd , Confirm , Page , Status, NewClientAdd},
         data(){
           return{
               dateConfigure : [{
@@ -202,6 +213,13 @@
                this.searchInformation.department_id = val.department[0].id;
                this.departmentName = val.department[0].name;
                this.search();
+            },
+
+//            new新增客户
+            newAddClient (){
+                $('#newClientAdd').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
             },
 
             addClient(){
