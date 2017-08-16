@@ -176,7 +176,7 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="Math.ceil(contractAdd.months/12)" :datas="contractAdd.price"
+                                    <FlexBox :flexData="contractAdd.months" :datas="contractAdd.price"
                                              :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">
@@ -1011,13 +1011,13 @@
                 this.more_type = [];
                 if (ev.currentTarget.checked) {
                     this.one_type = '';
-                    if (this.contractAdd.months == '' || this.contractAdd.months == 0 || Math.ceil(this.contractAdd.months / 12) == 1) {
+                    if (this.contractAdd.months == '' || this.contractAdd.months == 0 ) {
                         this.change_payType = false;
                         return;
                     }
                     this.change_payType = true;
-                    let years = Math.ceil(this.contractAdd.months / 12);
-                    for (let i = 0; i < years; i++) {
+                    let months = this.contractAdd.months ;
+                    for (let i = 0; i < months; i++) {
                         this.more_type.push('');
                     }
                 } else {
@@ -1025,7 +1025,6 @@
                 }
             },
             getFlexData(data){
-                console.log(data);
                 this.contractAdd.price = data;
             },
             // 付款方式
