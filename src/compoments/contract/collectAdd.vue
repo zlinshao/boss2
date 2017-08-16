@@ -156,7 +156,8 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >开单人</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="staff_name" readonly placeholder="开单人">
+                                            <input type="text" class="form-control" v-model="staff_name"
+                                                  @click="selectDpm" readonly placeholder="开单人">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -495,6 +496,7 @@
                 showCustomer : false,
                 clientType : '',
                 house_name : '',
+                configure : '',
             }
         },
         updated(){
