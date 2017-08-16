@@ -286,7 +286,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <hr>
                                     <h4>合同附件</h4>
                                     <div class="row">
@@ -712,7 +712,7 @@
                         this.relative_customer.splice(this.flag,1,val.name);
                     }
                 }else {
-                    console.log(val)
+                    console.log(val);
                     this.contractEdit.customer_id = val.id;
                     this.customer_name = val.name;
                 }
