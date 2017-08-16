@@ -762,7 +762,7 @@
                 $('#selectHouse').modal('show');
             },
             getHouse(data){
-                this.contractAdd.house_id = data.id;
+                this.contractAdd.villa_id = data.id;
                 this.house_name = data.address;
             },
             receiveClient(val){     //接收附属租客id
