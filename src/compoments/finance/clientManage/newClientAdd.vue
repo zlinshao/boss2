@@ -192,27 +192,27 @@
                                     </div>
                                 </div>
 
-                                <h4>科目</h4>
+                                <h4 v-if="rental_status === true || deposit_status === true">科目</h4>
                                 <div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-if="rental_status">
                                         <label class="col-sm-2 col-xs-12 control-label">房租科目</label>
                                         <div class="col-sm-9 col-xs-10">
                                             <SelectSubject @choose="houseSubject"
                                                            :current="subject_id.rental"></SelectSubject>
                                         </div>
                                         <div class="col-sm-1 col-xs-2">
-                                            <span class="fa fa-times-circle"></span>
+                                            <span @click="subject_empty(1)" class="fa fa-times-circle cha"></span>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" v-if="deposit_status">
                                         <label class="col-sm-2 col-xs-12 control-label">押金科目</label>
                                         <div class="col-sm-9 col-xs-10">
                                             <SelectSubject @choose="depositSubject"
                                                            :current="subject_id.deposit"></SelectSubject>
                                         </div>
                                         <div class="col-sm-1 col-xs-2">
-                                            <span class="fa fa-times-circle"></span>
+                                            <span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -221,9 +221,13 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary" @click="save(1)">保存为草稿</button>
-                                <button type="button" class="btn btn-warning" @click="save(2)">不生成后续款项</button>
-                                <button type="button" class="btn btn-warning" @click="save(3)">生成后续款项</button>
+                                <button type="button" class="btn btn-primary"
+                                        @click="save(1,'finance/customer/collect')">保存为草稿
+                                </button>
+                                <button type="button" class="btn btn-warning"
+                                        @click="save(2,'finance/customer/collect/freeze')">不生成后续款项
+                                </button>
+                                <button type="button" class="btn btn-warning" @click="save_show">生成后续款项</button>
                             </div>
                         </div>
                     </div>
@@ -231,6 +235,36 @@
             </div>
         </div>
 
+        <div class="modal fade" id="clientAdd1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">生成款项</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">您生成的科目有：</label>
+                                <div class="col-lg-9" style="padding-top: 8px;">
+                                    <span class="col-xs-4" v-if="this.subject_id.rental != ''">房屋科目</span>
+                                    <span v-if="this.subject_id.deposit != ''">押金科目</span>
+                                    <span v-if="this.subject_id.rental === '' && this.subject_id.deposit === ''">无</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                        <button class="btn btn-success" type="button" @click="save(3,'finance/customer/collect/generate')"> 确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--签约人-->
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
@@ -294,6 +328,8 @@
                 bank: 1,                                //开户行
                 account: '',                            // 账户
                 subject_id: {rental: '', deposit: ''},  //科目款项
+                rental_status: true,                    //房租款项状态
+                deposit_status: true,                   //科目款项状态
 
                 configure: [],                          //人资
                 info: {
@@ -336,6 +372,16 @@
         },
 
         methods: {
+//            清空科目
+            subject_empty (val){
+                if (val === 1) {
+                    this.subject_id.rental = '';         //房租款项
+                    this.rental_status = false;
+                } else if (val === 2) {
+                    this.subject_id.deposit = '';        //科目款项
+                    this.deposit_status = false;
+                }
+            },
 //            房款科目
             houseSubject(val){
                 this.subject_id.rental = val;
@@ -395,8 +441,8 @@
                 this.vacancyPeriod = '';                    //空置期
                 this.firstRemittance = '';                  //第一次打款日期
                 this.remarks = '';                          //备注
-                subject_id.rental = '';
-                subject_id.deposit = '';                    //科目款项
+                this.subject_id.rental = '';                     //房租款项
+                this.subject_id.deposit = '';                    //科目款项
 
 //                收款方式
                 this.payment = 1;                           //客户付款方式
@@ -504,41 +550,63 @@
                 this.cus_id = data.id;
                 this.cus_name = data.name;
             },
+//            新增确认科目
+            save_show (){
+                $('#clientAdd1').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
 //              新增
-            save(num){
+            save(num, address){
 //                保存为草稿
-                if (num === 1) {
-                    this.$http.post('finance/customer/collect', {
-                        staff_id: this.staffId,                     //签约人
-                        department_id: this.branch_id,              //所属部门
-                        leader_id: this.person_id,                  //负责人
-                        customer_name: this.cus_id,                 //客户
-                        contact: this.cus_phone,                    //客户联系方式
-                        address: this.house_id,                     //房屋
-                        months: this.months,                        //收房月数
-                        prices: this.price,                         //收房月单价
-                        pay_types: this.pay_type,
-                        deposit: this.deposit,                      //押金
-                        deal_date: this.pendingContract,            //待签约日期
-                        first_pay_date: this.firstRemittance,       //第一次打房租日期
-                        remark: this.remarks,                       //备注
-                        account_type: this.payment,                 //客户付款方式
-                        account_owner: this.account_owner,          //收款人姓名
-                        account_subbank: this.account_subbank,      //支行
-                        account_bank: this.bank,                    //开户行
-                        account_num: this.account,                  //账户
-                        subject_id: this.subject_id,
-                    }).then((res) => {
-
-                    });
-                    console.log('保存草稿')
-                }
-                if (num === 2) {
-                    console.log('不生成后续款项')
-                }
-                if (num === 3) {
-                    console.log('生成后续款项')
-                }
+                this.$http.post(address, {
+                    staff_id: this.staffId,                     //签约人
+                    department_id: this.branch_id,              //所属部门
+                    leader_id: this.person_id,                  //负责人
+                    customer_name: this.cus_id,                 //客户
+                    contact: this.cus_phone,                    //客户联系方式
+                    address: this.house_id,                     //房屋
+                    months: this.months,                        //收房月数
+                    prices: this.price,                         //收房月单价
+                    pay_types: this.pay_type,
+                    deposit: this.deposit,                      //押金
+                    deal_date: this.pendingContract,            //待签约日期
+                    first_pay_date: this.firstRemittance,       //第一次打房租日期
+                    remark: this.remarks,                       //备注
+                    account_type: this.payment,                 //客户付款方式
+                    account_owner: this.account_owner,          //收款人姓名
+                    account_subbank: this.account_subbank,      //支行
+                    account_bank: this.bank,                    //开户行
+                    account_num: this.account,                  //账户
+                    subject_id: this.subject_id,
+                }).then((res) => {
+                    if((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate' ){
+                        alert(1);
+                        $('#newClientAdd').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else if((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate'){
+                        alert(2);
+                        $('#clientAdd1').modal('hide');
+                        $('#newClientAdd').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }
+                    else{
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
             }
         }
     }
@@ -547,6 +615,14 @@
 <style scoped>
     textarea {
         max-width: 100%;
+    }
+
+    .cha {
+        font-size: 28px;
+        cursor: pointer;
+        float: left;
+        margin-top: 3px;
+        padding-left: 0;
     }
 
     input[type=checkbox] {

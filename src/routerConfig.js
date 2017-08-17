@@ -74,8 +74,11 @@ import MyAchievement from './compoments/myAchievement/myAchievement.vue'     //�
 import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'           //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'           //备忘录
-
 import ClientManage from './compoments/finance/clientManage/clientManageList.vue'     //财务客户管理
+
+import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'     //财务房东管理
+import NewRenter from './compoments/finance/clientManage/newRenter.vue'     //财务房东管理
+
 import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
 
 export default[
@@ -207,6 +210,16 @@ export default[
         path: '/myAchievement',       //客户导出
         name: 'myAchievement',
         component: MyAchievement
+    },
+    {
+        path: '/newLandlord',
+        name: 'newLandlord',            //财务房东管理
+        component: NewLandlord
+    },
+    {
+        path: '/newRenter',
+        name: 'newRenter',            //财务租房管理
+        component: NewRenter
     },
     {
         path: '/compare',

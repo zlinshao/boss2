@@ -38,12 +38,12 @@
                             新增客户
                         </button>
                     </div>
-                    <div class="pro-sort pull-right">
-                        <button class="btn btn-success" type="button" @click="newAddClient">
-                            <i class="fa fa fa-plus-square"></i>
-                            新增客户1
-                        </button>
-                    </div>
+                    <!--<div class="pro-sort pull-right">-->
+                        <!--<button class="btn btn-success" type="button" @click="newAddClient">-->
+                            <!--<i class="fa fa fa-plus-square"></i>-->
+                            <!--新增客户1-->
+                        <!--</button>-->
+                    <!--</div>-->
                 </div>
 
                 <!--选中-->
