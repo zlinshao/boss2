@@ -687,7 +687,8 @@
 
         <Loading v-if ='waiting'></Loading>
         <Convenient :convenientList ='contractList' :dictionary ='dictionary'></Convenient>
-        <CollectRenew :contractEitId="contractEitId" :contractRenewList="contractRenewList" :dictionary="dictionary"></CollectRenew>
+        <CollectRenew :contractEitId="contractEitId" :contractRenewList="contractRenewList"
+                     @Close="closeRenew" :dictionary="dictionary" :startRenew="startRenew"></CollectRenew>
     </div>
 </template>
 <script>
@@ -755,6 +756,7 @@
                 departmentName:'',
                 type : '',
                 contractRenewList : '',
+                startRenew : false,
             }
         },
         mounted(){
@@ -805,8 +807,12 @@
                 $('#contractEdit').modal('show');
             },
             renewContract(){    //续约合同
+                this.startRenew = true;
                 $('.rem_div').remove();
                 $('#contractRenew').modal('show');
+            },
+            closeRenew(){
+                this.startRenew = false;
             },
             showLargePic(name, index){  //图片放大
                 this.srcs = this.contractList[0].album[name];

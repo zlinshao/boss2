@@ -298,56 +298,56 @@
                                         <label class="col-lg-2 control-label">银行卡照片<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="bankPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'bankPic'" :idPhotos="bankPic"></up-load>
+                                                     :result="'bank_pic'" :idPhotos="bank_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">合同照片<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'contractPic'" :idPhotos="contractPic"></up-load>
+                                                     :result="'contract_pic'" :idPhotos="contract_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">水表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="waterPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'waterPic'" :idPhotos="waterPic"></up-load>
+                                                     :result="'water_pic'" :idPhotos="water_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">电表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="elePicId" @delete="picDelete" @complete="complete"
-                                                     :result="'elePic'" :idPhotos="elePic"></up-load>
+                                                     :result="'ele_pic'" :idPhotos="ele_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">燃气表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="gasPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'gasPic'" :idPhotos="gasPic"></up-load>
+                                                     :result="'gas_pic'" :idPhotos="gas_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">交接单照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="handoverPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'handoverPic'" :idPhotos="handoverPic"></up-load>
+                                                     :result="'handover_pic'" :idPhotos="handover_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">委托书照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="proxyPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'proxyPic'" :idPhotos="proxyPic"></up-load>
+                                                     :result="'proxy_pic'" :idPhotos="proxy_pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">押金收条</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="receiptPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
+                                                     :result="'receipt_pic'" :idPhotos="receipt_pic"></up-load>
                                         </div>
                                     </div>
                                 </form>
@@ -377,7 +377,7 @@
 
     import Staff from '../common/organization/selectStaff.vue'
     export default{
-        props:['contractEitId','dictionary','contractRenewList',],
+        props:['contractEitId','dictionary','contractRenewList','startRenew'],
         components:{
             SelectClient,
             upLoad,
@@ -390,36 +390,36 @@
             return {
                 collectRent : '',
                 complete_ok:'ok',
-                bankPic : {
+                bank_pic : {
                     cus_idPhotos : {},    //银行卡照片id
                     cus_idPhoto : [],     //银行卡照片
                 },
-                contractPic : {
+                contract_pic : {
                     cus_idPhotos : {},    //合同图片ID
                     cus_idPhoto : [],     //合同照片
                 },
-                waterPic : {
+                water_pic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                elePic : {
+                ele_pic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                gasPic : {
+                gas_pic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                proxyPic : {
+                proxy_pic : {
                     cus_idPhotos : {},    //委托书图片ID
                     cus_idPhoto : [],     //围殴托书照片
 
                 },
-                handoverPic : {
+                handover_pic : {
                     cus_idPhotos : {},    //交接单图片ID
                     cus_idPhoto : [],     //交接单照片
                 },
-                receiptPic : {
+                receipt_pic : {
                     cus_idPhotos : {},    //押金收条ID
                     cus_idPhoto : [],     //押金收条照片
                 },
@@ -513,19 +513,9 @@
             contractEitId(val){
                 this.myContractEitId = val;
             },
-            contractRenewList(val){
-                this.oldContract_num = val.contract_num;
-                this.contractRenew.villa_id = val.villa_id.id;
-                this.contractRenew.customer_id = val.customer_id.id;
-                this.house_name = val.villa_id.detailed_address;
-                this.customer_name = val.customer_id.name;
-
-                if(val.relative_customer !== undefined && val.relative_customer !== null){
-                    this.more = val.relative_customer.length;
-                    for(let i=0;i<val.relative_customer.length;i++){
-                        this.relative_customer.push(val.relative_customer[i].name);
-                        this.contractEdit.relative_customer_id.push(val.relative_customer[i].id);
-                    }
+            startRenew(val){
+                if(val){
+                   this.getContractRenewList();
                 }
             },
             'contractRenew.vac_start_date' : {
@@ -570,8 +560,23 @@
             },
         },
         methods : {
+            getContractRenewList(){
+                this.oldContract_num = this.contractRenewList.contract_num;
+                this.contractRenew.villa_id = this.contractRenewList.villa_id.id;
+                this.contractRenew.customer_id = this.contractRenewList.customer_id.id;
+                this.house_name = this.contractRenewList.villa_id.detailed_address;
+                this.customer_name = this.contractRenewList.customer_id.name;
+
+                if(this.contractRenewList.relative_customer !== undefined && this.contractRenewList.relative_customer !== null){
+                    this.more = this.contractRenewList.relative_customer.length;
+                    for(let i=0;i<this.contractRenewList.relative_customer.length;i++){
+                        this.relative_customer.push(this.contractRenewList.relative_customer[i].name);
+                        this.contractRenew.relative_customer_id.push(this.contractRenewList.relative_customer[i].id);
+                    }
+                }
+            },
             selectDpm(){ //选择部门
-                $('.selectCustom:eq(1)').modal('show');
+                $('.selectCustom:eq(0)').modal('show');
                 this.configure = {length: 1, class: 'amount'};
             },
             dpmSeleted(val){
@@ -663,27 +668,27 @@
             picDelete (val){
                 let bank = this.contractRenew.bank_pic.indexOf(val);
                 if (bank > -1) {
-                    this.bankPic.cus_idPhoto.splice(bank, 1);
+                    this.bank_pic.cus_idPhoto.splice(bank, 1);
                     this.contractRenew.bank_pic.splice(bank, 1);
                 }
                 let contract = this.contractRenew.contract_pic.indexOf(val);
                 if (contract > -1) {
-                    this.contractPic.cus_idPhoto.splice(contract, 1);
+                    this.contract_pic.cus_idPhoto.splice(contract, 1);
                     this.contractRenew.contract_pic.splice(contract, 1);
                 }
                 let water = this.contractRenew.water_card_pic.indexOf(val);
                 if (water > -1) {
-                    this.waterPic.cus_idPhoto.splice(water, 1);
+                    this.water_pic.cus_idPhoto.splice(water, 1);
                     this.contractRenew.water_card_pic.splice(water, 1);
                 }
                 let ele = this.contractRenew.elec_card_pic.indexOf(val);
                 if (ele > -1) {
-                    this.elePic.cus_idPhoto.splice(ele, 1);
+                    this.ele_pic.cus_idPhoto.splice(ele, 1);
                     this.contractRenew.elec_card_pic.splice(ele, 1);
                 }
                 let gas = this.contractRenew.gas_card_pic.indexOf(val);
                 if (gas > -1) {
-                    this.gasPic.cus_idPhoto.splice(gas, 1);
+                    this.gas_pic.cus_idPhoto.splice(gas, 1);
                     this.contractRenew.gas_card_pic.splice(gas, 1);
                 }
                 let proxy = this.contractRenew.proxy_pic.indexOf(val);
@@ -693,12 +698,12 @@
                 }
                 let handover = this.contractRenew.handover_pic.indexOf(val);
                 if (handover > -1) {
-                    this.handoverPic.cus_idPhoto.splice(handover, 1);
+                    this.handover_pic.cus_idPhoto.splice(handover, 1);
                     this.contractRenew.handover_pic.splice(handover, 1);
                 }
                 let receipt = this.contractRenew.receipt_pic.indexOf(val);
                 if (receipt > -1) {
-                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
+                    this.receipt_pic.cus_idPhoto.splice(receipt, 1);
                     this.contractRenew.receipt_pic.splice(receipt, 1);
                 }
             },
@@ -745,6 +750,7 @@
 
             },
             closeModal(){
+                this.$emit('Close');
                 $('#contractRenew').modal('hide');
                 this.contractRenew.contract_num = '' ;       //合同编号
                 this.contractRenew.vac_start_date = '';      //空置期开始日期

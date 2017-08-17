@@ -511,42 +511,42 @@
                                         <label class="col-sm-2 control-label">凭证截图</label>
                                         <div class="col-sm-10">
                                             <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"
-                                                     :result="'paymentPic'" :idPhotos="paymentPic"></up-load>
+                                                     :result="'payment_Pic'" :idPhotos="payment_Pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">水表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="waterPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'waterPic'" :idPhotos="waterPic"></up-load>
+                                                     :result="'water_Pic'" :idPhotos="water_Pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">电表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="elePicId" @delete="picDelete" @complete="complete"
-                                                     :result="'elePic'" :idPhotos="elePic"></up-load>
+                                                     :result="'ele_Pic'" :idPhotos="ele_Pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">燃气表照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="gasPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'gasPic'" :idPhotos="gasPic"></up-load>
+                                                     :result="'gas_Pic'" :idPhotos="gas_Pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">押金收条</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="receiptPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
+                                                     :result="'receipt_Pic'" :idPhotos="receipt_Pic"></up-load>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-lg-2 control-label">交接单</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="handoverPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'handoverPic'" :idPhotos="handoverPic"></up-load>
+                                                     :result="'handover_Pic'" :idPhotos="handover_Pic"></up-load>
                                         </div>
                                     </div>
                                 </form>
@@ -588,7 +588,7 @@
             return {
                 collectRent : '',
                 complete_ok:'ok',
-                paymentPic : {
+                payment_Pic : {
                     cus_idPhotos : {},    //合同图片ID
                     cus_idPhoto : [],     //合同照片
                 },
@@ -596,23 +596,23 @@
                     cus_idPhotos : {},    //合同图片ID
                     cus_idPhoto : [],     //合同照片
                 },
-                waterPic : {
+                water_Pic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                elePic : {
+                ele_Pic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                gasPic : {
+                gas_Pic : {
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
                 },
-                receiptPic : {
+                receipt_Pic : {
                     cus_idPhotos : {},    //交接单图片ID
                     cus_idPhoto : [],     //交接单照片
                 },
-                handoverPic : {
+                handover_Pic : {
                     cus_idPhotos : {},    //j交接单
                     cus_idPhoto : [],     //押金收条照片
                 },
@@ -765,7 +765,7 @@
                         this.more = this.contractRenewList.relative_customer.length;
                         for(let i=0;i<this.contractRenewList.relative_customer.length;i++){
                             this.relative_customer.push(this.contractRenewList.relative_customer[i].name);
-                            this.contractEdit.relative_customer_id.push(this.contractRenewList.relative_customer[i].id);
+                            this.contractAdd.relative_customer_id.push(this.contractRenewList.relative_customer[i].id);
                         }
                     }
                 }else if(this.operateType == 3){
@@ -778,13 +778,13 @@
                         this.more = this.contractRenewList.relative_customer.length;
                         for(let i=0;i<this.contractRenewList.relative_customer.length;i++){
                             this.relative_customer.push(this.contractRenewList.relative_customer[i].name);
-                            this.contractEdit.relative_customer_id.push(this.contractRenewList.relative_customer[i].id);
+                            this.contractAdd.relative_customer_id.push(this.contractRenewList.relative_customer[i].id);
                         }
                     }
                 }
             },
             selectDpm(){ //选择部门
-                $('.selectCustom:eq(1)').modal('show');
+                $('#selectCustom').modal('show');
                 this.configure = {length: 1, class: 'amount'};
             },
             dpmSeleted(val){
@@ -879,27 +879,27 @@
                 }
                 let water = this.contractAdd.water_card_pic.indexOf(val);
                 if (water > -1) {
-//                    this.waterPic.cus_idPhoto.splice(water, 1);
+//                    this.water_Pic.cus_idPhoto.splice(water, 1);
                     this.contractAdd.water_card_pic.splice(water, 1);
                 }
                 let ele = this.contractAdd.elec_card_pic.indexOf(val);
                 if (ele > -1) {
-//                    this.elePic.cus_idPhoto.splice(ele, 1);
+//                    this.ele_Pic.cus_idPhoto.splice(ele, 1);
                     this.contractAdd.elec_card_pic.splice(ele, 1);
                 }
                 let gas = this.contractAdd.gas_card_pic.indexOf(val);
                 if (gas > -1) {
-//                    this.gasPic.cus_idPhoto.splice(gas, 1);
+//                    this.gas_Pic.cus_idPhoto.splice(gas, 1);
                     this.contractAdd.gas_card_pic.splice(gas, 1);
                 }
                 let handover = this.contractAdd.handover_pic.indexOf(val);
                 if (handover > -1) {
-//                    this.handoverPic.cus_idPhoto.splice(handover, 1);
+//                    this.handover_Pic.cus_idPhoto.splice(handover, 1);
                     this.contractAdd.handover_pic.splice(handover, 1);
                 }
                 let receipt = this.contractAdd.receipt_pic.indexOf(val);
                 if (receipt > -1) {
-//                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
+//                    this.receipt_Pic.cus_idPhoto.splice(receipt, 1);
                     this.contractAdd.receipt_pic.splice(receipt, 1);
                 }
 

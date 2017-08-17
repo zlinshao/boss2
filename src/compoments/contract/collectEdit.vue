@@ -443,7 +443,7 @@
                     price : [],
                     cost_deposit : '',
                     vacancy : '',
-
+                    staff_id : '',
                     //                    客户
                     customer_id : '',
                     payment : 1,
