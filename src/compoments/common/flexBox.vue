@@ -4,14 +4,14 @@
             <label class="col-sm-2 control-label">{{title}}<sup class="required">*</sup></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label" v-show="moreYears>=2">第一年</label>
-                <div :class="{'col-sm-6':moreYears>=2,'col-sm-8':moreYears==1}">
+                <div :class="{'col-sm-6':moreYears>=2}" class="col-sm-8">
                     <input type="text" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
                 <div class="col-sm-4 icons">
                     <!--<i class="fa fa-plus-circle" @click="addMoreYears"></i>
                     <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>-->
-                    <label class="control-label" @click="changeMoney($event)"><input type="checkbox"
-                                                                                     :checked="changeYears">收月单价不固定</label>
+                    <label class="control-label" @click="changeMoney($event)">
+                        <input type="checkbox" :checked="changeYears">收月单价不固定</label>
                 </div>
             </div>
         </div>
