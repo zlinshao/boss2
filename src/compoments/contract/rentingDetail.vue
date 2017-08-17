@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>合同管理</li>
             <router-link to="/rentingContract" tag="li" style="cursor: pointer" class="bread">租房合同</router-link>
-            <li class="active">租房合同详情</li>
+            <li class="active">租房合同详情{{type}}</li>
 
             <li class="pull-right" v-show="typeof (myParams) === 'object'">
                 <router-link :to="{path:'/rentingContract',query: {Params:myParams,departmentName:departmentName}}">
@@ -52,22 +52,22 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <button class="btn btn-white btn-block" @click="editContract">
+                            <button class="btn btn-white btn-block" @click="editContract" :disabled="contract_pass>4">
                                 编辑
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(1,2)">
+                            <button class="btn btn-white btn-block" @click="renewContract(2)">
                                 续约
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(3,3)">
+                            <button class="btn btn-white btn-block" @click="renewContract(3)">
                                 转租
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(4,4)">
+                            <button class="btn btn-white btn-block" @click="renewContract(4)">
                                 调租
                             </button>
                         </li>
@@ -647,7 +647,8 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <AddModal :rentContactId="contractEitId" :msg="dis_status" :type="type"></AddModal>
+        <AddModal :rentContactId="contractEitId" :operateFlag="type"
+                  :dictionary="dictionary" :contractRenewList="contractRenewList"></AddModal>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
@@ -669,7 +670,7 @@
 //    import Comparison from  './contractCompare.vue'
     import Convenient from './rentSimpleConvenient.vue'
     import Confirm from '../common/confirm.vue'
-    import AddModal from '../reported/rent/rentingAdd.vue'
+    import AddModal from './rentingRenew.vue'
     export default{
         components: {
             Transfer,   //转账
@@ -685,7 +686,6 @@
         },
         data(){
             return {
-                dis_status: '',
                 contractList:[],
                 dictionary:[],
                 largePic: [],
@@ -720,6 +720,7 @@
                 myParams : [],
                 departmentName:'',
                 type:'',
+                contractRenewList : [],
             }
         },
         mounted(){
@@ -743,6 +744,7 @@
                     if(res.data.code === '80020'){
                         this.contractList = [];
                         this.contractList.push(res.data.data);
+                        this.contractRenewList = res.data.data;
                         this.houseId = res.data.data.villa_id.id;
                         this.contract_num = res.data.data.contract_num;
                         this.contract_pass = res.data.data.passed;
@@ -767,10 +769,9 @@
                 $('.rem_div').remove();
                 $('#rentingEdit').modal('show');
             },
-            renewContract(val,type){
-                this.type = type;
-                this.dis_status = val;
-                $('#add').modal('show');
+            renewContract(val){
+                this.type = val;
+                $('#contractModal').modal('show');
             },
             showLargePic(name, index){
                 this.srcs = this.contractList[0].album[name];

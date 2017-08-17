@@ -45,12 +45,7 @@
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
-                <!--<button class="btn btn-primary" @click="editContract" :disabled = " contract_pass > 2 ">-->
-                    <!--编辑-->
-                <!--</button>-->
-                <!--<button class="btn btn-primary" @click="renewContract">-->
-                    <!--续约-->
-                <!--</button>-->
+
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -58,7 +53,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <button class="btn btn-white btn-block" @click="editContract">
+                            <button class="btn btn-white btn-block" @click="editContract" :disabled="contract_pass>4">
                                 编辑
                             </button>
                         </li>
@@ -262,8 +257,8 @@
                                             </div>
                                             <div class="infoList" v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                 <span>付款方式：</span>
-                                                <span v-for="pay in item.checkin_collect_id.pay_type">
-                                                    {{dictionary.pay_type[pay]}}
+                                                <span v-for="(pay,index) in item.checkin_collect_id.pay_type">
+                                                   第{{index+1}}期{{dictionary.pay_type[pay]}}&nbsp;
                                                 </span>
                                             </div>
                                             <div class="infoList">
@@ -683,18 +678,16 @@
         <Transfer></Transfer>
         <Contract></Contract>
 
-        <AddModal :collectContactId="contractEitId" :msg="dis_status" :type="type"></AddModal>
-
         <ContractEit :contractEitId="contractEitId" :isEditCollect="isEditCollect"
                      :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
-        <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared" @Compared="haveCompared"></Comparison>-->
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
         <Loading v-if ='waiting'></Loading>
         <Convenient :convenientList ='contractList' :dictionary ='dictionary'></Convenient>
+        <CollectRenew :contractEitId="contractEitId" :contractRenewList="contractRenewList" :dictionary="dictionary"></CollectRenew>
     </div>
 </template>
 <script>
@@ -707,7 +700,7 @@
 //    import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
 
-    import AddModal from '../reported/collect/collectAdd.vue'
+    import CollectRenew from './collectRenew.vue'
 
     import Convenient from './collectSimpleConvenient.vue'
     export default{
@@ -719,7 +712,7 @@
             Status,     //状态提醒
 //            Comparison, //对比
             Confirm,    //confirmMsg
-            AddModal,    //合同续约
+            CollectRenew,    //合同续约
             Loading,
             Convenient
         },
@@ -761,6 +754,7 @@
                 myParams : [],
                 departmentName:'',
                 type : '',
+                contractRenewList : '',
             }
         },
         mounted(){
@@ -784,6 +778,8 @@
                     if(res.data.code === '70020'){
                         this.contractList = [];
                         this.contractList.push(res.data.data);
+
+                        this.contractRenewList = res.data.data;
                         this.waiting = false;
                         this.houseId = res.data.data.villa_id.id;
                         this.contract_num = res.data.data.contract_num;
@@ -809,9 +805,8 @@
                 $('#contractEdit').modal('show');
             },
             renewContract(){    //续约合同
-                this.dis_status = 1;
-                this.type = 2;
-                $('#add').modal('show');
+                $('.rem_div').remove();
+                $('#contractRenew').modal('show');
             },
             showLargePic(name, index){  //图片放大
                 this.srcs = this.contractList[0].album[name];
