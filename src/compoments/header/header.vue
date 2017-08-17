@@ -378,17 +378,30 @@
                             </li>
                         </ul>
                     </li>
-                    <!--<li class="sub-menu" v-show="account_book">-->
-                    <li class="sub-menu">
+                    <li class="sub-menu" v-show="account_book">
+                    <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>财务账本</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>
-                                <router-link to="/clientManage">
+                            <!--<li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>-->
+                                <!--<router-link to="/clientManage">-->
+                                    <!--<span>客户管理</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <li class="sub-menu">
+                                <a href="javascript:;">
                                     <span>客户管理</span>
-                                </router-link>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 40}" @click='pitch_on(40)'>
+                                        <router-link to="">房东</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 41}" @click='pitch_on(41)'>
+                                        <router-link to="">租客</router-link>
+                                    </li>
+                                </ul>
                             </li>
                             <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
                                 <router-link to="/account">
