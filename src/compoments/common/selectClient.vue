@@ -25,7 +25,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <a class="btn btn-success" @click="search">搜索</a>
-                                <a class="btn btn-success" @click="newAddClient">新增</a>
+                                <a class="btn btn-success" @click="newAddClient" v-if="newAdd">新增</a>
                             </div>
                         </div>
                         <div class="table table-responsive roll">
@@ -138,7 +138,7 @@
 <script>
     import Status from './status.vue'
     export default{
-        props : ['collectRent' , 'staffId'],
+        props : ['collectRent' , 'staffId' ,'isNewClient'],
         components:{
             Status,
         },
@@ -169,6 +169,7 @@
                 cus_name: '',
                 cus_phone :'',
                 salesman : '',
+                newAdd : true,
             }
         },
         mounted(){
@@ -180,6 +181,9 @@
             },
             staffId(val){
                 this.salesman = val;
+            },
+            isNewClient(val){
+                this.newAdd = val;
             }
         },
         methods : {

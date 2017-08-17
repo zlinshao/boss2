@@ -561,7 +561,7 @@
             </div>
         </div>
         <!--选择客户-->
-        <SelectClient :collectRent="collectRent" @clientAdd="receiveClient"> </SelectClient>
+        <SelectClient :collectRent="collectRent" @clientAdd="receiveClient" :isNewClient="isNewClient"> </SelectClient>
         <Status :state='info'></Status>
         <SelectHouse @House="getHouse"></SelectHouse>
         <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
@@ -586,6 +586,7 @@
         },
         data(){
             return {
+                isNewClient : '',
                 myContractEitId : '',
                 collectRent : '',
                 complete_ok:'ok',
@@ -795,12 +796,14 @@
             },
             selectMainClient(){
                 this.rentClientType = 'main';
+                this.isNewClient = false;
                 this.collectRent = 2;
                 $('.selectClient:eq(0)').modal('show');
             },
             selectClient(val){         //选择租客姓名
                 this.flag = val;
                 this.rentClientType = 'relative';
+                this.isNewClient = false;
                 this.collectRent = 2;
                 $('#selectClient').modal('show');
             },
@@ -812,6 +815,7 @@
                 this.house_name = data.address;
             },
             receiveClient(val){     //接收附属租客id
+                this.isNewClient = '';
                 this.collectRent = '';
                 if(this.rentClientType === 'relative'){
                     if(this.more > this.relative_customer.length && this.contractAdd.relative_customer_id.indexOf(val.id) === -1){
@@ -967,7 +971,7 @@
             closeModal(){
                 // 清空
                 this.$emit('Close');
-                $('#contractAdd').modal('hide');
+                $('#contractModal').modal('hide');
                 this.payments = [
                     {
                         payment_id: 1,
