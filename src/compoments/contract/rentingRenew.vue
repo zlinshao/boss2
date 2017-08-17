@@ -575,7 +575,7 @@
     import SelectHouse from  '../common/selectHouse.vue'
     import Staff from '../common/organization/selectStaff.vue'
     export default{
-        props:['contractEitId','dictionary','operateFlag','contractRenewList'],
+        props:['dictionary','operateFlag','contractRenewList'],
         components:{
             SelectClient,
             upLoad,
@@ -586,6 +586,7 @@
         },
         data(){
             return {
+                myContractEitId : '',
                 collectRent : '',
                 complete_ok:'ok',
                 payment_Pic : {
@@ -749,13 +750,14 @@
             },
             operateFlag(val){
                 this.operateType = val;
-                if(val){
+                if(val>1){
                     this.changeOperateType();
                 }
             },
         },
         methods : {
             changeOperateType(){
+                this.myContractEitId = this.contractRenewList.id;
                 if(this.operateType == 2){
                     this.customer_name = this.contractRenewList.customer_id.name;
                     this.contractAdd.customer_id = this.contractRenewList.customer_id.id;
@@ -924,7 +926,8 @@
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
-                        this.$http.post('core/rent/saveContract/id/' + this.contractEitId + '/type/' +this.operateType,this.contractAdd).then((res) => {
+                        this.$http.post('core/rent/saveContract/previous_contract_id/'+this.myContractEitId
+                            +'/type/'+this.operateType,this.contractAdd).then((res) => {
                             if(res.data.code === "80010"){
                                 this.closeModal();
                                 this.info.success = res.data.msg;
@@ -963,6 +966,7 @@
             },
             closeModal(){
                 // 清空
+                this.$emit('Close');
                 $('#contractAdd').modal('hide');
                 this.payments = [
                     {

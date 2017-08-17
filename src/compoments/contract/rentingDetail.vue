@@ -647,8 +647,8 @@
         <!--components-->
         <Transfer></Transfer>
         <Contract></Contract>
-        <AddModal :rentContactId="contractEitId" :operateFlag="type"
-                  :dictionary="dictionary" :contractRenewList="contractRenewList"></AddModal>
+        <AddModal :operateFlag="type" :dictionary="dictionary"
+                  :contractRenewList="contractRenewList" @Close="closeRenew"></AddModal>
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
@@ -771,7 +771,11 @@
             },
             renewContract(val){
                 this.type = val;
+                $('.rem_div').remove();
                 $('#contractModal').modal('show');
+            },
+            closeRenew(){
+                this.type = '';
             },
             showLargePic(name, index){
                 this.srcs = this.contractList[0].album[name];

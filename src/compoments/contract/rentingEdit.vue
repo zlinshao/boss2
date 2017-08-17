@@ -176,7 +176,7 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="Math.ceil(contractEdit.months/12)" :datas="contractEdit.price"
+                                    <FlexBox :flexData="contractEdit.months" :datas="contractEdit.price"
                                              :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">

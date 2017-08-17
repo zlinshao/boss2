@@ -512,6 +512,7 @@
             },
             contractEitId(val){
                 this.myContractEitId = val;
+                console.log(this.myContractEitId)
             },
             startRenew(val){
                 if(val){
@@ -711,7 +712,8 @@
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
-                        this.$http.post('core/collect/saveContract/id/ ' + this.myContractEitId +'/type/' +2,this.contractRenew).then((res) => {
+                        this.$http.post('core/collect/saveContract/previous_contract_id/' +
+                            this.myContractEitId +'/type/' +2,this.contractRenew).then((res) => {
                             if(res.data.code === "70010"){
                                this.closeModal();
                                 this.info.success = res.data.msg;
