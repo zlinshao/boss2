@@ -250,9 +250,9 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>年限<sup>*</sup>：</span>
+                                                <span>月数<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.years}}年
+                                                    {{item.checkin_collect_id.months}}月
                                                 </span>
                                             </div>
                                             <div class="infoList" v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
