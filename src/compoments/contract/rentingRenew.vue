@@ -10,7 +10,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">续约租房合同</h4>
+                        <h4 class="modal-title" v-if="operateType == 2">续约租房合同</h4>
+                        <h4 class="modal-title" v-if="operateType == 3">转租租房合同</h4>
+                        <h4 class="modal-title" v-if="operateType == 4">调租租房合同</h4>
                     </div>
                     <div class="modal-body">
                             <div class="panel-body">
