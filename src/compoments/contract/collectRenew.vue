@@ -120,7 +120,7 @@
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-8">
                                             <select class="form-control" v-model="contractRenew.pay_date">
-                                                <option value="">每月打房租日期</option>
+                                                <option value="">每期打房租日期</option>
                                                 <option :value="value" v-for="value in 30">{{value}}</option>
                                             </select>
                                         </div>
@@ -239,14 +239,14 @@
                                     <h4>中介信息</h4>
                                     <div>
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">中介费<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">中介费</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractRenew.cost_medi" >
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">中介汇款方式<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">中介汇款方式</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractRenew.medi_account_type" @change="changeMediPayment">
                                                     <option value="">请选择</option>
@@ -256,13 +256,13 @@
                                         </div>
 
                                         <div class="row" v-show="contractRenew.medi_account_type==1||contractRenew.medi_account_type==4">
-                                            <label class="col-sm-2 control-label">中介收款人姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">中介收款人姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractRenew.medi_account_owner">
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractRenew.medi_account_type==1||contractRenew.medi_account_type==4">
-                                            <label class="col-sm-2 control-label">开户行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">开户行</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractRenew.medi_account_bank">
                                                     <option :value="value" v-for="(key,value) in myDictionary.bank">{{key}}</option>
@@ -276,17 +276,17 @@
                                             </div>
                                         </div>
                                         <div class="row"v-show="contractRenew.medi_account_type==2">
-                                            <label class="col-sm-2 control-label">支付宝姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支付宝姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractRenew.medi_account_owner">
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label v-show="contractRenew.medi_account_type==1" class="col-sm-2 control-label">账号<sup>*</sup></label>
-                                            <label v-show="contractRenew.medi_account_type==2" class="col-sm-2 control-label">支付宝账号<sup>*</sup></label>
-                                            <label v-show="contractRenew.medi_account_type==3" class="col-sm-2 control-label">微信账号<sup>*</sup></label>
-                                            <label v-show="contractRenew.medi_account_type==4" class="col-sm-2 control-label">存折账号<sup>*</sup></label>
+                                            <label v-show="contractRenew.medi_account_type==1" class="col-sm-2 control-label">账号</label>
+                                            <label v-show="contractRenew.medi_account_type==2" class="col-sm-2 control-label">支付宝账号</label>
+                                            <label v-show="contractRenew.medi_account_type==3" class="col-sm-2 control-label">微信账号</label>
+                                            <label v-show="contractRenew.medi_account_type==4" class="col-sm-2 control-label">存折账号</label>
                                             <div class="col-sm-10"
                                                  v-show="contractRenew.medi_account_type !=='' && contractRenew.medi_account_type !==undefined">
                                                 <input type="text" class="form-control" v-model="contractRenew.medi_account_num " >

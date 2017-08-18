@@ -338,7 +338,7 @@
                                     <!--中介信息-->
                                     <div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">中介费<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">中介费</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractAdd.cost_medi">
                                             </div>
@@ -366,7 +366,7 @@
                                         </div>
                                         <div class="form-group"
                                              v-show="contractAdd.medi_account_type==1||contractAdd.medi_account_type==4">
-                                            <label class="col-sm-2 control-label">开户行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">开户行</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractAdd.medi_account_bank">
                                                     <option :value="value" v-for="(key,value) in myDictionary.bank">{{key}}</option>
@@ -382,7 +382,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group" v-show="contractAdd.medi_account_type==2">
-                                            <label class="col-sm-2 control-label">支付宝姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支付宝姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control"
                                                        v-model="contractAdd.medi_account_owner">
@@ -391,7 +391,7 @@
 
                                         <div class="form-group">
                                             <label v-show="contractAdd.medi_account_type==1"
-                                                   class="col-sm-2 control-label">账号<sup>*</sup></label>
+                                                   class="col-sm-2 control-label">账号</label>
                                             <label v-show="contractAdd.medi_account_type==2" class="col-sm-2 control-label">支付宝账号<sup
                                                    >*</sup></label>
                                             <label v-show="contractAdd.medi_account_type==3" class="col-sm-2 control-label">微信账号<sup
