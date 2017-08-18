@@ -112,10 +112,13 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期<sup>*</sup></label>
-                                        <div class="col-lg-10">
-                                            <input type="number" max="30" min="1" class="form-control" v-model="contractAdd.pay_date"
-                                                   placeholder="请输入打房租日期">
+                                        <div class="col-lg-4">
+                                            <select class="form-control" v-model="contractAdd.pay_date">
+                                                <option value="">每月打房租日期</option>
+                                                <option :value="value" v-for="value in 30">{{value}}</option>
+                                            </select>
                                         </div>
+                                        <label class="col-sm-1 control-label col-lg-1">号</label>
                                     </div>
 
                                     <div class="row">
