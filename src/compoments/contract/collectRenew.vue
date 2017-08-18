@@ -115,17 +115,21 @@
                                                    disabled placeholder="合同结束时间">
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期<sup>*</sup></label>
-                                        <div class="col-lg-10">
-                                            <input type="number" max="30" min="1" class="form-control" v-model="contractRenew.pay_date"
-                                                   placeholder="请输入打房租日期">
+                                        <div class="col-lg-4 col-sm-8">
+                                            <select class="form-control" v-model="contractRenew.pay_date">
+                                                <option value="">每月打房租日期</option>
+                                                <option :value="value" v-for="value in 30">{{value}}</option>
+                                            </select>
                                         </div>
+                                        <label class="col-sm-2 control-label col-lg-1">号</label>
                                     </div>
+
 
                                     <div class="row">
                                         <label class="col-sm-2 control-label">付款方式<sup>*</sup></label>
-
                                         <div class="col-sm-6">
                                             <select class="form-control" v-model="one_type" :disabled="pay_typeChange">
                                                 <option value="">请选择</option>
@@ -137,7 +141,6 @@
                                                 <input type="checkbox" :checked="pay_typeChange" @click="changePayType($event)">付款方式不固定
                                             </label>
                                         </div>
-
                                     </div>
                                     <div class="form-group" v-show="pay_typeChange">
                                         <div class="col-sm-6" v-for="(item,index) in more_type">
