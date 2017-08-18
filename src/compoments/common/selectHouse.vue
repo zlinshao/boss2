@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <a class="btn btn-success" @click="search">搜索</a>
-                                <a class="btn btn-success" @click="newAddHouse">新增</a>
+                                <a class="btn btn-success" @click="newAddHouse" v-if="isNewAddHouse != 1">新增</a>
                             </div>
                         </div>
                         <div class="table table-responsive roll">
@@ -146,7 +146,7 @@
             Status,
             ChooseAddress
         },
-        props: ['msg'],
+        props: ['msg','isNewAddHouse'],
         watch: {
             msg (val){
                 this.houseAdd.salesman = val
