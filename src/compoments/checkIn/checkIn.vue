@@ -173,7 +173,7 @@
                 if (this.page==0){
                     return;
                 }
-                this.this.page--;
+                this.page--;
                 this.getCheckInList();
             },
             next(){
