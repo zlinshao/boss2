@@ -54,7 +54,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">收房年限<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">收房月数<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="formData.years">
                                         </div>
