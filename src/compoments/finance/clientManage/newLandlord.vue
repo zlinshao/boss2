@@ -177,6 +177,21 @@
         methods: {
 //            搜索
             search(){
+                //                if (val % 12 === 0) {
+//                    let year = parseInt(val / 12);
+//                    this.flexDatas = year;
+//                    if (year < this.moreYears) {
+//                        this.moreYears = year;
+//                        this.sendData();
+//                    }
+//                } else {
+//                    let year = parseInt(val / 12 + 1);
+//                    this.flexDatas = year;
+//                    if (year < this.moreYears) {
+//                        this.moreYears = year;
+//                        this.sendData();
+//                    }
+//                }
                 this.getLandlordList(1);
             },
             getLandlordList(val){

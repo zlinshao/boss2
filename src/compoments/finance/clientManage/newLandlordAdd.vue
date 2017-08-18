@@ -99,7 +99,7 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="months" :datas="price" :change="false"
+                                    <FlexBox :flexData="Math.ceil(months/12)" :datas="price" :change="false"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">
@@ -260,7 +260,9 @@
 
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                        <button class="btn btn-success" type="button" @click="save(3,'finance/customer/collect/generate')"> 确定</button>
+                        <button class="btn btn-success" type="button"
+                                @click="save(3,'finance/customer/collect/generate')"> 确定
+                        </button>
                     </div>
                 </div>
             </div>
@@ -580,7 +582,7 @@
                     account_num: this.account,                  //账户
                     subject_id: this.subject_id,
                 }).then((res) => {
-                    if((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate' ){
+                    if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate') {
                         alert(1);
                         $('#newClientAdd').modal('hide');
                         //成功信息 ***
@@ -589,7 +591,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }else if((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate'){
+                    } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate') {
                         alert(2);
                         $('#clientAdd1').modal('hide');
                         $('#newClientAdd').modal('hide');
@@ -600,7 +602,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                     }
-                    else{
+                    else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***

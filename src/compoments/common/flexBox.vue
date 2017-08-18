@@ -4,14 +4,14 @@
             <label class="col-sm-2 control-label">{{title}}<sup class="required">*</sup></label>
             <div class="col-sm-10 padding_0">
                 <label class="col-sm-2 control-label" v-show="moreYears>=2">第一年</label>
-                <div :class="{'col-sm-6':moreYears>=2}" class="col-sm-8">
+                <div :class="{'col-sm-6':moreYears>=2,'col-sm-8':moreYears==1}">
                     <input type="text" class="form-control" v-model="data[0]" @blur="sendData">
                 </div>
                 <div class="col-sm-4 icons">
                     <!--<i class="fa fa-plus-circle" @click="addMoreYears"></i>
                     <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>-->
-                    <label class="control-label" @click="changeMoney($event)">
-                        <input type="checkbox" :checked="changeYears">收月单价不固定</label>
+                    <label class="control-label" @click="changeMoney($event)"><input type="checkbox"
+                                                                                     :checked="changeYears">收月单价不固定</label>
                 </div>
             </div>
         </div>
@@ -108,6 +108,7 @@
         line-height: 34px;
         font-size: 20px;
         color: #ddd;
+        /*text-align: left;*/
         cursor: pointer;
     }
 
@@ -136,14 +137,16 @@
         props: ['flexData', 'datas', 'change', 'title'],
         data(){
             return {
-                flexDatas: '',
                 moreYears: 1,
                 data: ['', '', '', '', '', '', '', '', '', ''],
                 changeYears: false,
             }
         },
         watch: {
+//            deep : true,
             datas (val){
+//                alert(typeof val);
+//                console.log(val);
                 this.setData(val);
             },
             flexData(val){
@@ -162,7 +165,7 @@
 //                        this.sendData();
 //                    }
 //                }
-                if (val < this.moreYears){
+                if (val < this.moreYears) {
                     this.moreYears = val;
                     this.sendData();
                 }
@@ -174,18 +177,14 @@
         components: {},
         methods: {
             changeMoney(ev){
+//                alert('changeYears=='+this.changeYears)
                 if (ev.target.checked) {
                     this.changeYears = true;
-                    if (this.flexDatas !== '') {
-                        this.moreYears = this.flexDatas;
+                    if (this.flexData !== '') {
+                        this.moreYears = this.flexData;
                     } else {
                         this.moreYears = 1;
                     }
-//                    if(this.flexData !== ''){
-//                        this.moreYears = this.flexData;
-//                    } else {
-//                        this.moreYears = 1;
-//                    }
                 } else {
                     this.changeYears = false;
                     this.moreYears = 1;
@@ -198,6 +197,7 @@
                 this.$emit('sendData', this.data.slice(0, this.moreYears))
             },
             setData(val){
+                console.log(val);
                 this.data = ['', '', '', '', '', '', '', '', '', ''];
                 if (val.length === 0) {
                     this.moreYears = 1;
@@ -210,6 +210,7 @@
                             that.data[i] = val[i];
                         })(i)
                     }
+//                    console.log(this.data);
                 }
             }
         }
