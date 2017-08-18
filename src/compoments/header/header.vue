@@ -396,10 +396,10 @@
                                 <!--</a>-->
                                 <!--<ul class="sub">-->
                                     <!--<li :class="{'active': isActive == 40}" @click='pitch_on(40)'>-->
-                                        <!--<router-link to="">房东</router-link>-->
+                                        <!--<router-link to="/newLandlord">房东</router-link>-->
                                     <!--</li>-->
                                     <!--<li :class="{'active': isActive == 41}" @click='pitch_on(41)'>-->
-                                        <!--<router-link to="">租客</router-link>-->
+                                        <!--<router-link to="/newRenter">租客</router-link>-->
                                     <!--</li>-->
                                 <!--</ul>-->
                             <!--</li>-->
