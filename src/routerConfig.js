@@ -35,6 +35,10 @@ import ContractDetail from './compoments/contract/collectDetail.vue'           /
 import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
 import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //查看备忘录
 
+import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";         //收房合同
+import RentingContractTransfer from "./compoments/contract/rentingContractTransfer.vue";         //租房合同
+
+
 import  Comparecontract from  './compoments/contract/Compare.vue'
 
 // 账本
@@ -442,5 +446,15 @@ export default[
         path: '/clientManageDetail',
         name: 'ClientManageDetail',
         component: ClientManageDetail
+    },
+    {
+        path: '/rentingContractTransfer',
+        name: 'RentingContractTransfer',
+        component: RentingContractTransfer
+    },
+    {
+        path: '/collectContractTransfer',
+        name: 'CollectContractTransfer',
+        component: CollectContractTransfer
     },
 ]
