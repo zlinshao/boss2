@@ -176,8 +176,8 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="contractEdit.months" :datas="contractEdit.price"
-                                             :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
+                                    <FlexBox :flexData="Math.ceil(contractEdit.months/12)" :datas="contractEdit.price"
+                                             :change="money_change" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">已收类型<sup>*</sup></label>
@@ -718,6 +718,7 @@
                 one_type: '',
                 more_type: [],
                 change_payType: false,
+                money_change : false,
 
                 payments: [
                     {
@@ -877,6 +878,7 @@
                             this.contractEdit.is_shared = contractList.checkin_rent_id.is_shared;
                             this.contractEdit.shared_part = contractList.checkin_rent_id.shared_part;
 
+                            this.money_change = contractList.checkin_rent_id.price.length>1;
 
                             this.contractEdit.months = contractList.checkin_rent_id.months;
                             this.contractEdit.pay = contractList.checkin_rent_id.pay;

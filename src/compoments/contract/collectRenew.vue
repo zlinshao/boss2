@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <FlexBox :flexData="contractRenew.months" :datas="contractRenew.price" :change="false"
+                                    <FlexBox :flexData="Math.ceil(contractRenew.months/12)" :datas="contractRenew.price" :change="false"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
                                     <div class="row">
                                         <label class="col-sm-2 control-label">押金<sup>*</sup></label>
@@ -494,7 +494,6 @@
                 myIsEditCollect : false,
 
                 pay_typeChange : false,
-                money_change : false,
                 one_type : '',
                 more_type : [],
                 showCustomer : false,
@@ -764,7 +763,6 @@
                 this.contractRenew.remarks = '';             //备注信息
 
                 this.pay_typeChange = false;
-                this.money_change = false;
                 this.one_type = '';
                 this.more_type = [];
 
