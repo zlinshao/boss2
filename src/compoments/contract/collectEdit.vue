@@ -145,7 +145,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <FlexBox :flexData="contractEdit.months" :datas="contractEdit.price" :change="false"
+                                    <FlexBox :flexData="Math.ceil(contractEdit.months/12)" :datas="contractEdit.price" :change="money_change"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
                                     <div class="row">
                                         <label class="col-sm-2 control-label">押金<sup>*</sup></label>
