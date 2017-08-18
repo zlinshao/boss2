@@ -147,25 +147,25 @@
                 this.setData(val);
             },
             flexData(val){
-                if (val % 12 === 0) {
-                    let year = parseInt(val / 12);
-                    this.flexDatas = year;
-                    if (year < this.moreYears) {
-                        this.moreYears = year;
-                        this.sendData();
-                    }
-                } else {
-                    let year = parseInt(val / 12 + 1);
-                    this.flexDatas = year;
-                    if (year < this.moreYears) {
-                        this.moreYears = year;
-                        this.sendData();
-                    }
-                }
-//                if (val < this.moreYears){
-//                    this.moreYears = val;
-//                    this.sendData();
+//                if (val % 12 === 0) {
+//                    let year = parseInt(val / 12);
+//                    this.flexDatas = year;
+//                    if (year < this.moreYears) {
+//                        this.moreYears = year;
+//                        this.sendData();
+//                    }
+//                } else {
+//                    let year = parseInt(val / 12 + 1);
+//                    this.flexDatas = year;
+//                    if (year < this.moreYears) {
+//                        this.moreYears = year;
+//                        this.sendData();
+//                    }
 //                }
+                if (val < this.moreYears){
+                    this.moreYears = val;
+                    this.sendData();
+                }
             },
             change(val){
                 this.changeYears = val;

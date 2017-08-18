@@ -38,12 +38,12 @@
                             新增客户
                         </button>
                     </div>
-                    <!--<div class="pro-sort pull-right">-->
-                        <!--<button class="btn btn-success" type="button" @click="newAddClient">-->
-                            <!--<i class="fa fa fa-plus-square"></i>-->
-                            <!--新增客户1-->
-                        <!--</button>-->
-                    <!--</div>-->
+                    <div class="pro-sort pull-right">
+                        <button class="btn btn-success" type="button" @click="newAddClient">
+                            <i class="fa fa fa-plus-square"></i>
+                            新增客户
+                        </button>
+                    </div>
                 </div>
 
                 <!--选中-->
@@ -129,7 +129,7 @@
 //    import DatePicker from '../../common/datePicker.vue'
     import Department from '../../common/organization/selectStaff.vue'
     import ClientAdd from  './clientAdd.vue'
-    import NewClientAdd from  './newClientAdd.vue'
+    import NewClientAdd from  './newLandlordAdd.vue'
     import Page from  '../../common/page.vue'
     export default{
         components:{ Department , ClientAdd , Confirm , Page , Status, NewClientAdd},
