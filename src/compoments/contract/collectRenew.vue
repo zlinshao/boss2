@@ -514,7 +514,6 @@
             },
             contractEitId(val){
                 this.myContractEitId = val;
-                console.log(this.myContractEitId)
             },
             startRenew(val){
                 if(val){
@@ -589,7 +588,7 @@
             selectClient(val){         //选择业主姓名
                 this.flag = val;
                 this.collectRent = 1;
-                $('#selectClient').modal('show');
+                $('.selectClient:eq(1)').modal('show');
             },
             receiveClient(val){     //接收业主id
                 this.collectRent = '';
