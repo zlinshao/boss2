@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="formData.years" :datas="formData.price" :change="false" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
+                                    <FlexBox :flexData="Math.ceil(formData.years/12)" :datas="formData.price" :change="false" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">押金<sup class="required">*</sup></label>
