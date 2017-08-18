@@ -57,16 +57,16 @@
                         <!--<input type="radio" name="sort" @click="isNewest(1)">最新发布-->
                         <!--</label>-->
                         <!--</div>-->
+                        <div class="pull-right" style="margin: 8px">
+                            <button class="btn btn-primary" @click="collectAdd"
+                                    :disabled="simulate.indexOf('core/group') == -1 && simulate.indexOf('core/area') == -1">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
+                            </button>
+                        </div>
                         <div class="pull-right pro-sort" style="margin: 8px">
                             <router-link :to="{path:'/Memorandum',query: {flag: 'collect'}}" class="btn btn-primary">
                                 &nbsp;查看备忘录
                             </router-link>
-                        </div>
-                        <div class="pull-right" style="margin: 8px">
-                            <button class="btn btn-primary" @click="collectAdd"
-                            :disabled="simulate.indexOf('core/group') == -1 && simulate.indexOf('core/area') == -1">
-                                <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
-                            </button>
                         </div>
                     </div>
 
