@@ -359,6 +359,19 @@
                                     <span>租房合同</span>
                                 </router-link>
                             </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>订单迁移</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 'collect'}" @click='pitch_on("collect")'>
+                                        <router-link to="/collectContractTransfer">收房订单</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 'rent'}" @click='pitch_on("rent")'>
+                                        <router-link to="/rentingContractTransfer">租房订单</router-link>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="sub-menu">
