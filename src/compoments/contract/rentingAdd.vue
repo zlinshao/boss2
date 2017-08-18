@@ -551,9 +551,9 @@
             </div>
         </div>
         <!--选择客户-->
-        <SelectClient :collectRent="collectRent" @clientAdd="receiveClient" :isNewClient="isNewClient"> </SelectClient>
+        <SelectClient :collectRent="collectRent" @clientAdd="receiveClient"> </SelectClient>
         <Status :state='info'></Status>
-        <SelectHouse @House="getHouse"></SelectHouse>
+        <SelectHouse @House="getHouse" :isNewAddHouse="isNewAddHouse"></SelectHouse>
         <Staff :configure='configure' @Staff="dpmSeleted"></Staff>
     </div>
 </template>
@@ -576,7 +576,7 @@
         },
         data(){
             return {
-                isNewClient :'',
+                isNewAddHouse :'',
                 collectRent : '',
                 complete_ok:'ok',
                 paymentPic : {
@@ -755,21 +755,21 @@
             },
             selectClient(val){         //选择租客姓名
                 this.flag = val;
-                this.isNewClient = false;
                 this.rentClientType = 'relative';
                 this.collectRent = 2;
                 $('#selectClient').modal('show');
             },
             selectHouse(){
+                this.isNewAddHouse = 1;
                 $('#selectHouse').modal('show');
             },
             getHouse(data){
+                this.isNewAddHouse = '';
                 this.contractAdd.villa_id = data.id;
                 this.house_name = data.address;
             },
             receiveClient(val){     //接收附属租客id
                 this.collectRent = '';
-                this.isNewClient = '';
                 if(this.rentClientType === 'relative'){
                     if(this.more > this.relative_customer.length && this.contractAdd.relative_customer_id.indexOf(val.id) === -1){
                         this.contractAdd.relative_customer_id .push(val.id);
