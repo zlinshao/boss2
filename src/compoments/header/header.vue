@@ -398,11 +398,12 @@
                             <span>财务账本</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>
-                                <router-link to="/clientManage">
-                                    <span>客户管理</span>
-                                </router-link>
-                            </li>
+                            <!--<li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>-->
+                                <!--<router-link to="/clientManage">-->
+                                <!--<router-link to="/clientManage">-->
+                                    <!--<span>客户管理</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
                             <li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>客户管理</span>

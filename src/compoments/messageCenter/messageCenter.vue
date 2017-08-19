@@ -65,17 +65,34 @@
                                     </button>
                                 </div>
                             </form>
-                            <!--<div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-5 col-lg-4"-->
-                                 <!--style="padding: 0;margin-top: 4px;">-->
-                                <!--<div class="input-group">-->
-                                    <!--<input type="text" class="form-control" v-model="News2"-->
-                                           <!--placeholder="客户名/手机号">-->
-                                    <!--<span class="input-group-btn">-->
-                                        <!--<button class="btn btn-primary" @click="searchNew2"-->
-                                                <!--style="background-color: #00A6B2" type="button">搜索</button>-->
-                                    <!--</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                            <form class="pull-right position" action="#">
+                                <div class="input-append" v-if="isNew2">
+                                    <button type="button" class="btn btn-primary" @click="resetting"
+                                            style="padding: 11px 12px;">重置
+                                    </button>
+                                </div>
+                            </form>
+                            <div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-4 col-lg-3"
+                                 style="padding: 0;margin-top: 4px;">
+                                <div class="input-group">
+                                    <input title="请点击选择" type="text" class="form-control" readonly
+                                           v-model="params.staff" @click="selectStaff" placeholder='选择收件人'>
+                                </div>
+                            </div>
+                            <div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-4 col-lg-3"
+                                 style="padding: 0;margin-top: 4px;">
+                                <div class="input-group">
+                                    <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time"
+                                           class="form-control form_datetime">
+                                </div>
+                            </div>
+                            <div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-4 col-lg-3"
+                                 style="padding: 0;margin-top: 4px;">
+                                <div class="input-group">
+                                    <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time"
+                                           class="form-control form_datetime">
+                                </div>
+                            </div>
                         </div>
                         <div class="inbox-body panel table table-responsive roll">
                             <!--系统公告-->
@@ -267,7 +284,8 @@
                                     <td class="text-center"
                                         :class="{ more_info: isActive !== index, phone: isActive === index }"
                                         @click="more_content(index)">
-                                        {{sys.data.content}}</td>
+                                        {{sys.data.content}}
+                                    </td>
                                 </tr>
                                 <tr v-show="New1">
                                     <td colspan="4" class="text-center text-muted">
@@ -298,7 +316,8 @@
                                     <td class="text-center"
                                         :class="{ more_info: isActive !== index, phone: isActive === index }"
                                         @click="more_content(index)">
-                                        {{sys.data.content}}</td>
+                                        {{sys.data.content}}
+                                    </td>
                                 </tr>
                                 <tr v-show="New2">
                                     <td colspan="6" class="text-center text-muted">
@@ -355,6 +374,7 @@
         <div class="col-xs-12">
             <Page @pag="system_page" :pg="paging" :beforePage="beforePage"></Page>
         </div>
+        <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
         <Status :state='info'></Status>
 
@@ -369,17 +389,24 @@
     import Page from '../common/page.vue';
     import AnnouncementAdd from './announcementAdd.vue'
     import AnnouncementDetail from './announcemeDetail.vue'
+    import STAFF from  '../common/organization/selectStaff.vue'
     export default{
         components: {
             AnnouncementAdd,
             AnnouncementDetail,
             Status,
-            Page
+            Page,
+            STAFF
+        },
+        created (){
+            this.System(1);
+            this.status_info(this.$route.query.nameId);
         },
         data(){
             return {
                 select_list: {},
                 isActive: 1,
+                act: '',
                 beforePage: 1,
                 paging: '',                 //总页数
                 info_details: {             //信息详情
@@ -413,6 +440,14 @@
                 New1: false,                //新增1暂无数据
                 isNew2: false,              //新增2
                 New2: false,                //新增2暂无数据
+                configure: [],              //人资
+                time_status: true,
+                params : {
+                    staff: '',                  //收件人
+                    staffId: '',                //收件人ID
+                    start_time : '',            //开始时间
+                    end_time : '',              //结束时间
+                },
                 message: '',
                 fa: 'fa',
                 font: '',
@@ -425,42 +460,24 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                },
-            }
-        },
-        created (){
-            this.System(1);
-        },
-        computed:{
-            act : function () {
-                return this.$route.query.nameId
-            }
-
-        },
-        watch : {
-            act(val , oldVal){
-                if (val === 'sys_mess') {
-                    this.System(1);
-                }
-                if (val === 'appr_mess') {
-                    this.Examine(1);
-                }
-                if (val === 'remind_mess') {
-                    this.Substitute(1);
-                }
-                if (val === 'secre_mess') {
-                    this.Secretary(1);
                 }
             }
+        },
+        watch: {
+            'params.start_time':{
+                deep:true,
+                handler(val,oldVal){
+                    this.new2(1);
+                }
+            },
+            'params.end_time':{
+                deep:true,
+                handler(val,oldVal){
+                    this.new2(1);
+                }
+            },
         },
         methods: {
-            searchNew2 (){
-                this.$http.post('message/message/read_mess', {
-                    id: val,
-                }).then((res) => {
-                    this.system_page(this.beforePage);
-                });
-            },
 //            详细内容
             more_content (val){
                 this.isActive = val;
@@ -476,24 +493,24 @@
                 }
             },
 //            跳转
-//            status_info (val){
-//                if (val === 'sys_mess') {
-//                    this.act = val;
-//                    this.System(1);
-//                }
-//                if (val === 'appr_mess') {
-//                    this.act = val;
-//                    this.Examine(1);
-//                }
-//                if (val === 'remind_mess') {
-//                    this.act = val;
-//                    this.Substitute(1);
-//                }
-//                if (val === 'secre_mess') {
-//                    this.act = val;
-//                    this.Secretary(1);
-//                }
-//            },
+            status_info (val){
+                if (val === 'sys_mess') {
+                    this.act = val;
+                    this.System(1);
+                }
+                if (val === 'appr_mess') {
+                    this.act = val;
+                    this.Examine(1);
+                }
+                if (val === 'remind_mess') {
+                    this.act = val;
+                    this.Substitute(1);
+                }
+                if (val === 'secre_mess') {
+                    this.act = val;
+                    this.Secretary(1);
+                }
+            },
 
 //            分页
             system_page (val){
@@ -589,7 +606,6 @@
                             this.Examines_s = false;
                         } else {
                             this.Examines_s = true;
-                            this.paging = '';
                         }
 
                     });
@@ -616,7 +632,6 @@
                         this.Substitutes_s = false;
                     } else {
                         this.Substitutes_s = true;
-                        this.paging = '';
                     }
 
                 });
@@ -641,7 +656,6 @@
                         this.Secretarys_s = false;
                     } else {
                         this.Secretarys_s = true;
-                        this.paging = '';
                     }
 
                 });
@@ -659,17 +673,16 @@
 //            个人发件
             new1(val){
                 this.paging = '';
-                this.$http.post('message/message/self_message/pages/' + val,{
+                this.$http.post('message/message/self_message/pages/' + val, {
                     create_time: '',
                 }).then((res) => {
-                    if(res.data.code === '100070'){
+                    if (res.data.code === '100070') {
                         this.news1 = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.New1 = false;
-                    }else{
+                    } else {
                         this.news1 = [];
                         this.New1 = true;
-                        this.paging = '';
                     }
                 });
                 this.beforePage = val;
@@ -683,22 +696,58 @@
                 this.message = '个人发件箱';
                 this.font = 'fa-male';
             },
+//            收件人
+            selectStaff(){
+                this.configure = {length: 1, class: 'amount'};
+                $('.selectCustom:eq(0)').modal('show');
+            },
+//            收件人ID
+            selectDateSendAdd(data){
+                this.params.staff = data.staff[0].name;
+                this.params.staffId = data.staff[0].id;
+            },
+//            时间搜索
+            remindData (){
+                this.time_status = true;
+                $('.form_datetime').datetimepicker({
+                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
+                    language: 'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: 1,
+                    autoclose: 1,
+                }).on('changeDate', ev => {
+                    if (ev.target.placeholder === '开始时间') {
+                        this.time_status = false;
+                        this.params.start_time = ev.target.value;
+                    } else {
+                        this.time_status = false;
+                        this.params.end_time = ev.target.value;
+                    }
+                });
+            },
+//            重置
+            resetting (){
+                this.params.start_time = '';
+                this.params.end_time = '';
+                this.params.staffId = '';
+                this.params.staff = '';
+            },
 //            部门发件
             new2(val){
                 this.paging = '';
-                this.$http.post('message/message/department_message/pages/' + val,{
-                    create_time: '',
-                    send_id: '',
-                    receive_id: '',
+                this.$http.post('message/message/department_message/pages/' + val, {
+                    create_time: this.params.start_time,
+                    end_time: this.params.end_time,
+                    receive_id: this.params.staffId,
                 }).then((res) => {
-                    if(res.data.code === '100080'){
+                    this.remindData();
+                    if (res.data.code === '100080') {
                         this.news2 = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.New2 = false;
-                    }else{
+                    } else {
                         this.news2 = [];
                         this.New2 = true;
-                        this.paging = '';
                     }
                 });
                 this.beforePage = val;
@@ -723,7 +772,6 @@
                     } else {
                         this.Messages_s = true;
                         this.Messages = [];
-                        this.paging = '';
                     }
 
                 });
