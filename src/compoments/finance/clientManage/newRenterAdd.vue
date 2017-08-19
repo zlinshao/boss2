@@ -993,6 +993,10 @@
                         this.info.state_success = true;
                     }else if(res.data.code === '90030'){
                         this.renter_id = res.data.data;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
                     } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
