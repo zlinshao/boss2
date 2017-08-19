@@ -170,18 +170,18 @@
 
             prev(){
                 // 上一页
-                if (this.page==0){
+                /*if (this.page==1){
                     return;
-                }
+                }*/
                 this.page--;
                 this.getCheckInList();
             },
             next(){
                 // 下一页
 //                console.log(this.paging);
-                if (this.page==this.paging){
+                /*if (this.page==this.paging){
                     return;
-                }
+                }*/
                 this.page++;
 //                console.log(this.params.offset)
 //                console.log(this.params)
