@@ -381,59 +381,59 @@
                                     </div>
                                 </div>
 
-                                <h4>客户信息</h4>
-                                <div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">客户汇款方式</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" v-model="payment"
-                                                    @change="changeCustomerPayment">
-                                                <option :value="value" v-for="(key,value) in dict.payment">{{key}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" v-show="payment == 1 || payment == 4">
-                                        <label class="col-sm-2 control-label">客户收款人姓名</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="account_owner">
-                                        </div>
-                                    </div>
-                                    <div class="form-group" v-show="payment == 1 || payment == 4">
-                                        <label class="col-sm-2 control-label">开户行</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" v-model="bank">
-                                                <option :value="value" v-for="(key,value) in dict.bank">{{key}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" v-show="payment == 1 || payment == 4">
-                                        <label class="col-sm-2 control-label">支行</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="account_subbank">
-                                        </div>
-                                    </div>
+                                <!--<h4>客户信息</h4>-->
+                                <!--<div>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label class="col-sm-2 control-label">客户汇款方式</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<select class="form-control" v-model="payment"-->
+                                                    <!--@change="changeCustomerPayment">-->
+                                                <!--<option :value="value" v-for="(key,value) in dict.payment">{{key}}-->
+                                                <!--</option>-->
+                                            <!--</select>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group" v-show="payment == 1 || payment == 4">-->
+                                        <!--<label class="col-sm-2 control-label">客户收款人姓名</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<input type="text" class="form-control" v-model="account_owner">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group" v-show="payment == 1 || payment == 4">-->
+                                        <!--<label class="col-sm-2 control-label">开户行</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<select class="form-control" v-model="bank">-->
+                                                <!--<option :value="value" v-for="(key,value) in dict.bank">{{key}}</option>-->
+                                            <!--</select>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group" v-show="payment == 1 || payment == 4">-->
+                                        <!--<label class="col-sm-2 control-label">支行</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<input type="text" class="form-control" v-model="account_subbank">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <!--todo
-                                        以后改
-                                    -->
-                                    <div class="form-group" v-show="payment == 2">
-                                        <label class="col-sm-2 control-label">支付宝姓名</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="account_owner">
-                                        </div>
-                                    </div>
+                                    <!--&lt;!&ndash;todo-->
+                                        <!--以后改-->
+                                    <!--&ndash;&gt;-->
+                                    <!--<div class="form-group" v-show="payment == 2">-->
+                                        <!--<label class="col-sm-2 control-label">支付宝姓名</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<input type="text" class="form-control" v-model="account_owner">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="form-group">
-                                        <label v-if="payment == 1" class="col-sm-2 control-label">账号</label>
-                                        <label v-if="payment == 2" class="col-sm-2 control-label">支付宝账号</label>
-                                        <label v-if="payment == 3" class="col-sm-2 control-label">微信账号</label>
-                                        <label v-if="payment == 4" class="col-sm-2 control-label">存折账号</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="account">
-                                        </div>
-                                    </div>
-                                </div>
+                                    <!--<div class="form-group">-->
+                                        <!--<label v-if="payment == 1" class="col-sm-2 control-label">账号</label>-->
+                                        <!--<label v-if="payment == 2" class="col-sm-2 control-label">支付宝账号</label>-->
+                                        <!--<label v-if="payment == 3" class="col-sm-2 control-label">微信账号</label>-->
+                                        <!--<label v-if="payment == 4" class="col-sm-2 control-label">存折账号</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<input type="text" class="form-control" v-model="account">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <h4 v-if="rental_status === true || deposit_status === true">科目</h4>
                                 <div>
@@ -554,6 +554,7 @@
         props: ['list'],
         data(){
             return {
+                renter_id: '',
                 is_shared: 2,
                 cus_id: '',
                 reviseStatus: '',
@@ -800,6 +801,7 @@
             closeModal(){
                 $('#newRenterAdd').modal('hide');
                 this.price.splice(0, this.price.length);    //月单价
+                this.renter_id = '';
                 this.cus_id = '';
                 this.staff = '';                            //签约人
                 this.staffId = '';                          //签约人ID
@@ -947,6 +949,7 @@
             save(num, address){
 //                保存为草稿
                 this.$http.post(address, {
+                    id: this.renter_id,
                     staff_id: this.staffId,                     //签约人
                     contact: this.cus_phone,                    //客户联系方式
                     department_id: this.branch_id,              //所属部门
@@ -988,8 +991,9 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }
-                    else {
+                    }else if(res.data.code === '90030'){
+                        this.renter_id = res.data.data;
+                    } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
