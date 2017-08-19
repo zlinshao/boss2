@@ -498,8 +498,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">凭证截图</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-lg-2 control-label">凭证截图</label>
+                                        <div class="col-lg-10">
                                             <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"
                                                      :result="'paymentPic'" :idPhotos="paymentPic"></up-load>
                                         </div>
