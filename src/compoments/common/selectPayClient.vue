@@ -32,14 +32,12 @@
                             <table class="table table-striped table-advance table-hover">
                                 <thead>
                                 <tr class="lightGray"  v-if="client_staff === '1'">
-                                    <th></th>
+                                    <th style="width: 40px"></th>
                                     <th>客户名称</th>
                                     <th>身份</th>
                                     <th>房屋地址</th>
                                     <th>账户</th>
                                     <th>账号</th>
-                                    <!--<th>月单价</th>-->
-                                    <!--<th>付款方式</th>-->
                                     <th>开单人</th>
                                 </tr>
                                 <tr class="lightGray"  v-if="client_staff === '2'">
@@ -52,7 +50,7 @@
                                 </thead>
                                 <tbody  v-if="client_staff === '1'">
                                 <tr v-for="item in customerList"  @click="selectClient($event,item)">
-                                    <td>
+                                    <td style="width: 40px">
                                         <input type="radio" name="radio">
                                     </td>
                                     <td>{{item.name}}</td>
@@ -60,8 +58,6 @@
                                     <td>{{item.address}}</td>
                                     <td>{{item.payee}}</td>
                                     <td>{{item.account}}</td>
-                                    <!--<td>{{item.price}}</td>-->
-                                    <!--<td>{{dictionary.payment[item.pay_type]}}</td>-->
                                     <td>{{item.real_name}}</td>
                                 </tr>
                                 <tr v-if="isShow">
@@ -151,7 +147,7 @@
             },
             search(){
                 if(this.client_staff === '1'){
-                    this.$http.post('revenue/customer/customer',
+                    this.$http.post('finance/customer/search',
                             {
                                 keywords:this.keywords,
                             }
@@ -195,7 +191,6 @@
                     this.keywords='';
                     this.client_staff = '1';
                 }
-
             }
         }
     }
