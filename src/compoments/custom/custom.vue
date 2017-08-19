@@ -69,8 +69,8 @@
                                        @keyup.enter="sea_cus(1)"
                                        placeholder="客户名/手机号">
                                 <span class="input-group-btn">
-                            <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
-                        </span>
+                                    <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
+                                </span>
                             </div>
                         </div>
                         <div class="pro-sort">

@@ -63,19 +63,19 @@
                                             style="padding: 11px 12px;">
                                         <i class="fa fa-plus-square"></i>&nbsp;添加公告
                                     </button>
-                                    <!--<div class="pro-sort"-->
-                                         <!--style="padding: 0;margin-right: 20px;">-->
-                                        <!--<div class="input-group">-->
-                                            <!--<input type="text" class="form-control"-->
-                                                   <!--placeholder="客户名/手机号">-->
-                                            <!--<span class="input-group-btn">-->
-                                                <!--<button class="btn btn-primary" style="background-color: #00A6B2"-->
-                                                        <!--type="button">搜索</button>-->
-                                            <!--</span>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
                                 </div>
                             </form>
+                            <!--<div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-5 col-lg-4"-->
+                                 <!--style="padding: 0;margin-top: 4px;">-->
+                                <!--<div class="input-group">-->
+                                    <!--<input type="text" class="form-control" v-model="News2"-->
+                                           <!--placeholder="客户名/手机号">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn btn-primary" @click="searchNew2"-->
+                                                <!--style="background-color: #00A6B2" type="button">搜索</button>-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                         <div class="inbox-body panel table table-responsive roll">
                             <!--系统公告-->
@@ -436,6 +436,13 @@
             }
         },
         methods: {
+            searchNew2 (){
+                this.$http.post('message/message/read_mess', {
+                    id: val,
+                }).then((res) => {
+                    this.system_page(this.beforePage);
+                });
+            },
 //            详细内容
             more_content (val){
                 this.isActive = val;
@@ -659,6 +666,8 @@
                 this.paging = '';
                 this.$http.post('message/message/department_message/pages/' + val, {
                     create_time: '',
+                    send_id: '',
+                    receive_id: '',
                 }).then((res) => {
                     if (res.data.code === '100080') {
                         this.news2 = res.data.data.data;
