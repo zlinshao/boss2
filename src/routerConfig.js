@@ -447,13 +447,11 @@ export default[
         name: 'HeaderMemorandum',           //备忘录
         component: HeaderMemorandum
     },
-
-
-    {
-        path: '/clientManage',
-        name: 'ClientManage',
-        component: ClientManage
-    },
+    // {
+    //     path: '/clientManage',
+    //     name: 'ClientManage',
+    //     component: ClientManage
+    // },
     {
         path: '/clientManageDetail',
         name: 'ClientManageDetail',
