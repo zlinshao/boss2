@@ -54,7 +54,7 @@
                     </aside>
                     <aside class="lg-side">
                         <div class="inbox-head">
-                            <h3 style="font-size: 20px;padding-top: 10px;">
+                            <h3 style="font-size: 20px;padding-top: 10px;margin-bottom: 12px;">
                                 <i :class="[fa,font]"></i>&nbsp;&nbsp;{{message}}
                             </h3>
                             <form class="pull-right position" action="#">
@@ -66,29 +66,29 @@
                                 </div>
                             </form>
                             <form class="pull-right position" action="#">
-                                <div class="input-append" v-if="isNew2">
+                                <div class="input-append pull-right" v-if="isNew2">
                                     <button type="button" class="btn btn-primary" @click="resetting"
-                                            style="padding: 11px 12px;">重置
+                                            style="background-color: #00A6B2;margin: 4px 0 0 15px;">重置
                                     </button>
                                 </div>
                             </form>
-                            <div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-4 col-lg-3"
+                            <div v-if="isNew2" class="pro-sort pull-right col-xs-12 col-md-4 col-lg-2"
                                  style="padding: 0;margin-top: 4px;">
-                                <div class="input-group">
+                                <div class="input-group pull-right">
                                     <input title="请点击选择" type="text" class="form-control" readonly
                                            v-model="params.staff" @click="selectStaff" placeholder='选择收件人'>
                                 </div>
                             </div>
-                            <div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-4 col-lg-3"
+                            <div v-if="isNew2" class="pro-sort pull-right col-xs-12 col-md-4 col-lg-2"
                                  style="padding: 0;margin-top: 4px;">
-                                <div class="input-group">
+                                <div class="input-group pull-right">
                                     <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time"
                                            class="form-control form_datetime">
                                 </div>
                             </div>
-                            <div v-if="isNew2" class="pro-sort pull-right col-xs-7 col-md-4 col-lg-3"
+                            <div v-if="isNew2" class="pro-sort pull-right col-xs-12 col-md-4 col-lg-2"
                                  style="padding: 0;margin-top: 4px;">
-                                <div class="input-group">
+                                <div class="input-group pull-right">
                                     <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time"
                                            class="form-control form_datetime">
                                 </div>
@@ -710,7 +710,7 @@
             remindData (){
                 this.time_status = true;
                 $('.form_datetime').datetimepicker({
-                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
+                    minView: "month",                   //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
