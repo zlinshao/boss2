@@ -715,6 +715,7 @@
                     format: 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
+                    clearBtn: true,                     //清除按钮
                 }).on('changeDate', ev => {
                     if (ev.target.placeholder === '开始时间') {
                         this.time_status = false;
