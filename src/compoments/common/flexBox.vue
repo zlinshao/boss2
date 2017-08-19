@@ -165,8 +165,13 @@
 //                        this.sendData();
 //                    }
 //                }
-                if (val < this.moreYears) {
+                if (this.changeYears) {
                     this.moreYears = val;
+//                    console.log(this.moreYears)
+
+                    if (this.moreYears==0){
+                        this.changeYears = false;
+                    }
                     this.sendData();
                 }
             },
@@ -178,6 +183,10 @@
         methods: {
             changeMoney(ev){
 //                alert('changeYears=='+this.changeYears)
+                if (this.moreYears==0||this.flexData==0){
+                    ev.target.checked = false;
+                    return;
+                }
                 if (ev.target.checked) {
                     this.changeYears = true;
                     if (this.flexData !== '') {
