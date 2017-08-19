@@ -554,21 +554,21 @@
             gitContractInfo(){
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/collect/readcontract/id/' +this.myContractEitId).then((res)=>{
-                        this.bankPic.cus_idPhoto = [];
+                        this.bankPic.cus_idPhotos = [];
                         this.contractEdit.bank_pic = [];
-                        this.contractPic.cus_idPhoto = [];
+                        this.contractPic.cus_idPhotos = [];
                         this.contractEdit.contract_pic = [];
-                        this.proxyPic.cus_idPhoto = [];
+                        this.proxyPic.cus_idPhotos = [];
                         this.contractEdit.proxy_pic = [];
-                        this.handoverPic.cus_idPhoto = [];
+                        this.handoverPic.cus_idPhotos = [];
                         this.contractEdit.handover_pic = [];
-                        this.receiptPic.cus_idPhoto = [];
+                        this.receiptPic.cus_idPhotos = [];
                         this.contractEdit.receipt_pic = [];
-                        this.waterPic.cus_idPhoto = [];
+                        this.waterPic.cus_idPhotos = [];
                         this.contractEdit.water_card_pic = [];
-                        this.elePic.cus_idPhoto = [];
+                        this.elePic.cus_idPhotos = [];
                         this.contractEdit.elec_card_pic = [];
-                        this.gasPic.cus_idPhoto = [];
+                        this.gasPic.cus_idPhotos = [];
                         this.contractEdit.gas_card_pic = [];
 
                         let contractList =res.data.data;

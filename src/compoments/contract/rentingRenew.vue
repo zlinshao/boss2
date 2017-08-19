@@ -738,9 +738,6 @@
                 operateType :'',
             }
         },
-        mounted(){
-
-        },
         updated(){
             this.selectDate ();
         },
@@ -757,6 +754,23 @@
         },
         methods : {
             changeOperateType(){
+                this.contractAdd.relative_customer_id = [];
+                this.contract_Pic.cus_idPhotos = [];
+                this.contractAdd.contract_pic =[];
+                this.handover_Pic.cus_idPhotos = [];
+                this.contractAdd.handover_pic =[];
+                this.receipt_Pic.cus_idPhotos = [];
+                this.contractAdd.receipt_pic = [];
+                this.water_Pic.cus_idPhotos = [];
+                this.contractAdd.water_card_pic = [];
+                this.ele_Pic.cus_idPhotos = [];
+                this.contractAdd.elec_card_pic = [];
+                this.gas_Pic.cus_idPhotos = [];
+                this.contractAdd.gas_card_pic = [];
+                this.payment_Pic.cus_idPhotos = [];
+                this.contractAdd.payment_pic = [];
+
+
                 this.myContractEitId = this.contractRenewList.id;
                 if(this.operateType == 2){
                     this.customer_name = this.contractRenewList.customer_id.name;
