@@ -429,19 +429,15 @@
         watch : {
             act(val , oldVal){
                 if (val === 'sys_mess') {
-                    this.act = val;
                     this.System(1);
                 }
                 if (val === 'appr_mess') {
-                    this.act = val;
                     this.Examine(1);
                 }
                 if (val === 'remind_mess') {
-                    this.act = val;
                     this.Substitute(1);
                 }
                 if (val === 'secre_mess') {
-                    this.act = val;
                     this.Secretary(1);
                 }
             }
