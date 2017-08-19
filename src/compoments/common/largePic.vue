@@ -6,7 +6,7 @@
                     <!--<div class="modal-header white-bg white">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>-->
-                    <div class="modal-content" id="transPic">
+                    <div class="modal-content transPic">
                         <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <div class="modal-body" id="pic">
                             <div class="imgContainer">
@@ -80,7 +80,7 @@
         methods : {
             closeModal(){
                 let _this = this;
-                $('#largePic').on('hidden.bs.modal', function (e) {
+                $('.largePic').on('hidden.bs.modal', function (e) {
                     _this.rotateBack();
                 })
             },
@@ -127,7 +127,11 @@
             rotateRight(){  // 顺时针旋转
 //                console.log(ev.currentTarget);
                 this.current = (this.current+90)%360;
-                document.getElementById('transPic').style.transform = 'rotate('+this.current+'deg)';
+                let transPic = document.getElementsByClassName('transPic');
+                for (let i = 0;i<transPic.length;i++){
+                    transPic[i].style.transform = 'rotate('+this.current+'deg)';
+                }
+//                document.getElementsByClassName('transPic').style.transform = 'rotate('+this.current+'deg)';
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
 //                console.log(this.current)
                 this.closePosition();
@@ -135,7 +139,11 @@
             rotateLeft(){   // 逆时针旋转
 //                console.log(ev.currentTarget);
                 this.current = (this.current-90)%360;
-                document.getElementById('transPic').style.transform = 'rotate('+this.current+'deg)';
+                let transPic = document.getElementsByClassName('transPic');
+                for (let i = 0;i<transPic.length;i++){
+                    transPic[i].style.transform = 'rotate('+this.current+'deg)';
+                }
+//                document.getElementById('transPic').style.transform = 'rotate('+this.current+'deg)';
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
                 this.closePosition();
             },
@@ -143,6 +151,9 @@
                 /*console.log(this.current);
                 document.getElementById('img').style.transform = 'rotate('+(Math.abs(this.current)-360)+'deg)';
                 console.log(Math.abs(this.current)-360);*/
+                if (this.idArr.length==1){
+                    return;
+                }
                 this.rotateBack();
                 this.currentIndex = this.idArr.indexOf(this.index);
 //                console.log(this.idArr.indexOf(this.index));
@@ -155,6 +166,9 @@
                 this.index = this.idArr[this.currentIndex];
             },
             next(){
+                if (this.idArr.length==1){
+                    return;
+                }
                 this.rotateBack();
                 this.currentIndex = this.idArr.indexOf(this.index);
 //                console.log(this.idArr.indexOf(this.index));
@@ -169,11 +183,15 @@
             },
             rotateBack(){
                 this.current = 0;
-                document.getElementById('transPic').style.transform = 'rotate('+(-this.current)+'deg)';
+                let transPic = document.getElementsByClassName('transPic');
+                for (let i = 0;i<transPic.length;i++){
+                    transPic[i].style.transform = 'rotate('+(-this.current)+'deg)';
+                }
+//                document.getElementById('transPic').style.transform = 'rotate('+(-this.current)+'deg)';
                 this.closePosition();
             },
             closePosition(){
-                let close = $('#close');
+                let close = $('.close');
                 if (this.current==0){
                     close.css('top','12px');
                     close.css('right','23px');
