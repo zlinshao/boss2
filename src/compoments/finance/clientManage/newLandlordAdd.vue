@@ -633,6 +633,7 @@
             save(num, address){
 //                保存为草稿
                 this.$http.post(address, {
+                    id: this.renter_id,
                     staff_id: this.staffId,                     //签约人
                     department_id: this.branch_id,              //所属部门
                     leader_id: this.person_id,                  //负责人
