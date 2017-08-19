@@ -52,8 +52,8 @@
                                 </div>
                                 <div><span class="text-primary">收入科目：</span><span>{{dict.account_subject[msg.subject_id]}}</span>
                                 </div>
-                                <div><span class="text-primary">收款方式：</span><span>{{msg.customer.pay_type}}</span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.customer.price}}</span></div>
+                                <div><span class="text-primary">收款方式：</span><span>{{msg.customer==null?'':msg.customer.pay_type}}</span></div>
+                                <div><span class="text-primary">月单价：</span><span>{{msg.customer==null?'':msg.customer.price}}</span></div>
                                 <div><span class="text-primary">应收金额：</span><span>{{msg.amount_receivable}}</span></div>
                                 <div><span class="text-primary">实收金额：</span><span>{{msg.amount_received}}</span></div>
                             </div>
