@@ -286,6 +286,8 @@
                         '本季度': [moment().subtract('days', this.quarterlyDates), moment()],
                         '上一年': [moment().subtract('days', this.lastYearDays + this.yearDates), moment().subtract('days', this.yearDates + 1)],
                         '本年': [moment().subtract('days', this.yearDates), moment()],
+                        '未来一个月': [moment(),moment().add('months', 1)],
+                        '未来一年': [moment(),moment().add('years', 1)],
                     },
                     locale: {
                         applyLabel: '确定',
