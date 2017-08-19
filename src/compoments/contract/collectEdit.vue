@@ -555,20 +555,28 @@
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/collect/readcontract/id/' +this.myContractEitId).then((res)=>{
                         this.bankPic.cus_idPhotos = [];
+                        this.bankPic.cus_idPhoto = [];
                         this.contractEdit.bank_pic = [];
                         this.contractPic.cus_idPhotos = [];
+                        this.contractPic.cus_idPhoto = [];
                         this.contractEdit.contract_pic = [];
                         this.proxyPic.cus_idPhotos = [];
+                        this.proxyPic.cus_idPhoto = [];
                         this.contractEdit.proxy_pic = [];
                         this.handoverPic.cus_idPhotos = [];
+                        this.handoverPic.cus_idPhoto = [];
                         this.contractEdit.handover_pic = [];
                         this.receiptPic.cus_idPhotos = [];
+                        this.receiptPic.cus_idPhoto = [];
                         this.contractEdit.receipt_pic = [];
                         this.waterPic.cus_idPhotos = [];
+                        this.waterPic.cus_idPhoto = [];
                         this.contractEdit.water_card_pic = [];
                         this.elePic.cus_idPhotos = [];
+                        this.elePic.cus_idPhoto = [];
                         this.contractEdit.elec_card_pic = [];
                         this.gasPic.cus_idPhotos = [];
+                        this.gasPic.cus_idPhoto = [];
                         this.contractEdit.gas_card_pic = [];
 
                         let contractList =res.data.data;
