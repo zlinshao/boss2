@@ -97,6 +97,12 @@
                                     <span class="text-primary">空置期：</span>
                                     <span>{{item.vacancy}}</span>
                                 </div>
+                                <div>
+                                    <span class="text-primary">押金：</span>
+                                    <span>
+                                        {{item.deposit}}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4 col-xs-12">
@@ -141,13 +147,13 @@
                                 <div>
                                     <span class="text-primary">房租科目：</span>
                                     <span>
-                                        {{item.remark}}
+                                        {{dictionary.account_subject[item.subject_id.rental]}}
                                     </span>
                                 </div>
                                 <div>
-                                    <span class="text-primary">押金：</span>
+                                    <span class="text-primary">押金科目：</span>
                                     <span>
-                                        {{item.deposit}}
+                                        {{dictionary.account_subject[item.subject_id.deposit]}}
                                     </span>
                                 </div>
                             </div>
