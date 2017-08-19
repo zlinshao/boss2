@@ -403,19 +403,19 @@
                                     <span>客户管理</span>
                                 </router-link>
                             </li>
-                            <!--<li class="sub-menu">-->
-                                <!--<a href="javascript:;">-->
-                                    <!--<span>客户管理</span>-->
-                                <!--</a>-->
-                                <!--<ul class="sub">-->
-                                    <!--<li :class="{'active': isActive == 40}" @click='pitch_on(40)'>-->
-                                        <!--<router-link to="/newLandlord">房东</router-link>-->
-                                    <!--</li>-->
-                                    <!--<li :class="{'active': isActive == 41}" @click='pitch_on(41)'>-->
-                                        <!--<router-link to="/newRenter">租客</router-link>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                            <!--</li>-->
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>客户管理</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 40}" @click='pitch_on(40)'>
+                                        <router-link to="/newLandlord">房东</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 41}" @click='pitch_on(41)'>
+                                        <router-link to="/newRenter">租客</router-link>
+                                    </li>
+                                </ul>
+                            </li>
                             <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
                                 <router-link to="/account">
                                     <span>账户管理</span>

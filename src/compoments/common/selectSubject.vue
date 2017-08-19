@@ -23,6 +23,8 @@
         components: {},
         data(){
             return {
+                dict:{},
+
                 showChooseSubject: false,
                 subjectData: [],
                 curSuperior_id: 0,
@@ -32,10 +34,22 @@
         watch:{
             current(val){
                 if (val==''){
-//                    alert(1);
                     this.Superior_name = '';
+                } else {
+                    console.log(val);
+                    this.Superior_name = this.dict.subject_root[val];
+                    console.log(this.dict.subject_root[val])
                 }
             }
+        },
+        mounted(){
+            this.$http.get('revenue/glee_collect/dict')
+                .then(
+//                    console.log
+                    (res) => {
+                        this.dict = res.data;
+                    }
+                );
         },
         methods: {
             changeCurId(id, name){

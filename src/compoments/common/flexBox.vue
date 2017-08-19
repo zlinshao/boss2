@@ -189,6 +189,7 @@
                     this.changeYears = false;
                     this.moreYears = 1;
                     this.data.splice(1, this.moreYears, '');
+                    this.data.splice(1, this.moreYears, '');
                     this.sendData();
                 }
             },
@@ -197,7 +198,6 @@
                 this.$emit('sendData', this.data.slice(0, this.moreYears))
             },
             setData(val){
-                console.log(val);
                 this.data = ['', '', '', '', '', '', '', '', '', ''];
                 if (val.length === 0) {
                     this.moreYears = 1;
