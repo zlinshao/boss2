@@ -134,7 +134,7 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params}}">
+                        <router-link :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1}}">
                             详情
                         </router-link>
                     </td>

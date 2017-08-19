@@ -9,7 +9,7 @@
             </li>
             <li>客户管理详情</li>
 
-            <li class="pull-right" v-show="typeof (myParams) === 'object'">
+            <li class="pull-right" v-show="cus === 1">
                 <router-link :to="{path:'/newRenter',query: { sea: seaLand, land: 1}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
@@ -239,6 +239,7 @@
         components: {Confirm, Status, NewRenterAdd},
         data(){
             return {
+                cus: '',
                 seaLand: {},                   //返回上一页
                 confirmMsg: '',                //删除信息
                 myLandlordId: '',              //ID
@@ -263,6 +264,7 @@
         mounted(){
             this.myLandlordId = this.$route.query.nameId;
             this.seaLand = this.$route.query.sea;
+            this.cus = this.$route.query.cus;
             this.getDictionary();
         },
         methods: {
