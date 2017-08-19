@@ -37,8 +37,8 @@
                     this.Superior_name = '';
                 } else {
                     console.log(val);
-                    this.Superior_name = this.dict.subject_root[val];
-                    console.log(this.dict.subject_root[val])
+                    this.Superior_name = this.dict.account_subject[val];
+//                    console.log(this.dict.account_subject[val])
                 }
             }
         },

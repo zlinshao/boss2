@@ -63,7 +63,7 @@
                 <thead class="text-center">
                 <tr>
                     <th></th>
-                    <th class="text-center">生成时间{{pitch}}</th>
+                    <th class="text-center">生成时间</th>
                     <th class="text-center">房屋地址</th>
                     <th class="text-center">客户姓名</th>
                     <th class="text-center">收房月数</th>
@@ -250,6 +250,7 @@
                             this.paging = res.data.data.pages;
                             this.isShow = false;
                         } else {
+                            this.LandlordList = [];
                             this.isShow = true;
                         }
                     })

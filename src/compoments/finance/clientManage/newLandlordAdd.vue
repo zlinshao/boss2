@@ -313,6 +313,7 @@
         props: ['list'],
         data(){
             return {
+                renter_id: '',
                 cus_id: '',
                 reviseStatus: '',
                 staff: '',                              //签约人
@@ -489,6 +490,7 @@
             },
 //            清空
             closeModal(){
+                this.renter_id = '';
                 $('#newClientAdd').modal('hide');
                 this.price.splice(0, this.price.length);    //月单价
                 this.cus_id = '';
@@ -670,8 +672,9 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }
-                    else {
+                    }else if(res.data.code === '90030'){
+                        this.renter_id = res.data.data;
+                    } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
