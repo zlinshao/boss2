@@ -365,15 +365,10 @@
             Status,
             Page
         },
-        created (){
-            this.System(1);
-            this.status_info(this.$route.query.nameId);
-        },
         data(){
             return {
                 select_list: {},
                 isActive: 1,
-                act: '',
                 beforePage: 1,
                 paging: '',                 //总页数
                 info_details: {             //信息详情
@@ -419,6 +414,35 @@
                     success: '',
                     //失败信息 ***
                     error: ''
+                },
+            }
+        },
+        created (){
+            this.System(1);
+        },
+        computed:{
+            act : function () {
+                return this.$route.query.nameId
+            }
+
+        },
+        watch : {
+            act(val , oldVal){
+                if (val === 'sys_mess') {
+                    this.act = val;
+                    this.System(1);
+                }
+                if (val === 'appr_mess') {
+                    this.act = val;
+                    this.Examine(1);
+                }
+                if (val === 'remind_mess') {
+                    this.act = val;
+                    this.Substitute(1);
+                }
+                if (val === 'secre_mess') {
+                    this.act = val;
+                    this.Secretary(1);
                 }
             }
         },
@@ -438,24 +462,24 @@
                 }
             },
 //            跳转
-            status_info (val){
-                if (val === 'sys_mess') {
-                    this.act = val;
-                    this.System(1);
-                }
-                if (val === 'appr_mess') {
-                    this.act = val;
-                    this.Examine(1);
-                }
-                if (val === 'remind_mess') {
-                    this.act = val;
-                    this.Substitute(1);
-                }
-                if (val === 'secre_mess') {
-                    this.act = val;
-                    this.Secretary(1);
-                }
-            },
+//            status_info (val){
+//                if (val === 'sys_mess') {
+//                    this.act = val;
+//                    this.System(1);
+//                }
+//                if (val === 'appr_mess') {
+//                    this.act = val;
+//                    this.Examine(1);
+//                }
+//                if (val === 'remind_mess') {
+//                    this.act = val;
+//                    this.Substitute(1);
+//                }
+//                if (val === 'secre_mess') {
+//                    this.act = val;
+//                    this.Secretary(1);
+//                }
+//            },
 
 //            分页
             system_page (val){
@@ -551,6 +575,7 @@
                             this.Examines_s = false;
                         } else {
                             this.Examines_s = true;
+                            this.paging = '';
                         }
 
                     });
@@ -577,6 +602,7 @@
                         this.Substitutes_s = false;
                     } else {
                         this.Substitutes_s = true;
+                        this.paging = '';
                     }
 
                 });
@@ -601,6 +627,7 @@
                         this.Secretarys_s = false;
                     } else {
                         this.Secretarys_s = true;
+                        this.paging = '';
                     }
 
                 });
@@ -628,6 +655,7 @@
                     }else{
                         this.news1 = [];
                         this.New1 = true;
+                        this.paging = '';
                     }
                 });
                 this.beforePage = val;
@@ -653,7 +681,8 @@
                         this.New2 = false;
                     }else{
                         this.news2 = [];
-                        this.New2 = true; 
+                        this.New2 = true;
+                        this.paging = '';
                     }
                 });
                 this.beforePage = val;
@@ -678,6 +707,7 @@
                     } else {
                         this.Messages_s = true;
                         this.Messages = [];
+                        this.paging = '';
                     }
 
                 });
