@@ -10,7 +10,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeEdit">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">编辑租房合同</h4>
+                        <h4 class="modal-title">编辑租房合同{{contractEdit.receipt_pic}}{{contractEdit.gas_card_pic}}</h4>
                     </div>
                     <div class="modal-body">
                             <div class="panel-body">
@@ -496,9 +496,9 @@
                                                      :result="'contractPic'" :idPhotos="contractPic"></up-load>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">凭证截图</label>
-                                        <div class="col-sm-10">
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label">凭证截图</label>
+                                        <div class="col-lg-10">
                                             <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"
                                                      :result="'paymentPic'" :idPhotos="paymentPic"></up-load>
                                         </div>
@@ -603,7 +603,7 @@
                 },
                 handoverPic : {
                     cus_idPhotos : {},    //j交接单
-                    cus_idPhoto : [],     //押金收条照片
+                    cus_idPhoto : [],     //
                 },
                 relative_customer : [],
                 contractEdit : {
@@ -893,7 +893,6 @@
                             this.contractEdit.cost_deposit = contractList.checkin_rent_id.cost_deposit;
 
                             this.contractEdit.deal_time = contractList.checkin_rent_id.deal_time;
-                            this.contractEdit.receipt_pic = contractList.checkin_rent_id.receipt_pic;
                             this.contractEdit.received_type = contractList.checkin_rent_id.received_type;
                             this.contractEdit.received_amount = contractList.checkin_rent_id.received_amount;
                             
@@ -1004,31 +1003,40 @@
             },
             //删除照片ID
             picDelete (val){
-                console.log(val)
                 let contract = this.contractEdit.contract_pic.indexOf(val);
                 if (contract > -1) {
 //                    this.contractPic.cus_idPhoto.splice(contract, 1);
                     this.contractEdit.contract_pic.splice(contract, 1);
+                    return;
+                }
+                let pay = this.contractEdit.payment_pic.indexOf(val);
+                if (pay > -1) {
+                    this.contractEdit.payment_pic.splice(pay, 1);
+                    return;
                 }
                 let water = this.contractEdit.water_card_pic.indexOf(val);
                 if (water > -1) {
 //                    this.waterPic.cus_idPhoto.splice(water, 1);
                     this.contractEdit.water_card_pic.splice(water, 1);
+                    return;
                 }
                 let ele = this.contractEdit.elec_card_pic.indexOf(val);
                 if (ele > -1) {
 //                    this.elePic.cus_idPhoto.splice(ele, 1);
                     this.contractEdit.elec_card_pic.splice(ele, 1);
+                    return;
                 }
                 let gas = this.contractEdit.gas_card_pic.indexOf(val);
                 if (gas > -1) {
 //                    this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.contractEdit.gas_card_pic.splice(gas, 1);
+                    return;
                 }
                 let handover = this.contractEdit.handover_pic.indexOf(val);
                 if (handover > -1) {
 //                    this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractEdit.handover_pic.splice(handover, 1);
+                    return;
                 }
                 let receipt = this.contractEdit.receipt_pic.indexOf(val);
                 if (receipt > -1) {
@@ -1036,10 +1044,6 @@
                     this.contractEdit.receipt_pic.splice(receipt, 1);
                 }
 
-                let payment = this.contractEdit.payment_pic.indexOf(val);
-                if (payment > -1) {
-                    this.contractEdit.payment_pic.splice(payment, 1);
-                }
             },
             editContract(){
                 

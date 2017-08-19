@@ -504,12 +504,12 @@
                                         <label class="col-lg-2 control-label">合同照片<sup>*</sup></label>
                                         <div class="col-lg-10">
                                             <up-load @photo="contractPicId" @delete="picDelete" @complete="complete"
-                                                     :result="'contractPic'" :idPhotos="contractPic"></up-load>
+                                                     :result="'contract_Pic'" :idPhotos="contract_Pic"></up-load>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">凭证截图</label>
-                                        <div class="col-sm-10">
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label">凭证截图</label>
+                                        <div class="col-lg-10">
                                             <up-load @photo="certificatePicId" @delete="picDelete" @complete="complete"
                                                      :result="'payment_Pic'" :idPhotos="payment_Pic"></up-load>
                                         </div>
@@ -593,7 +593,7 @@
                     cus_idPhotos : {},    //合同图片ID
                     cus_idPhoto : [],     //合同照片
                 },
-                contractPic : {
+                contract_Pic : {
                     cus_idPhotos : {},    //合同图片ID
                     cus_idPhoto : [],     //合同照片
                 },
@@ -878,7 +878,7 @@
                 console.log(val)
                 let contract = this.contractAdd.contract_pic.indexOf(val);
                 if (contract > -1) {
-//                    this.contractPic.cus_idPhoto.splice(contract, 1);
+//                    this.contract_Pic.cus_idPhoto.splice(contract, 1);
                     this.contractAdd.contract_pic.splice(contract, 1);
                 }
                 let water = this.contractAdd.water_card_pic.indexOf(val);
