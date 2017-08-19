@@ -9,7 +9,9 @@
                         <div class="modal-header">
                             <button type="button" class="close" aria-label="Close" @click="closeModal">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">新增收房报备</h4>
+                            <h4 class="modal-title" v-if="reviseStatus === 4">新增客户</h4>
+                            <h4 class="modal-title"
+                                v-if="reviseStatus === 1 || reviseStatus === 2 || reviseStatus === 3">编辑客户</h4>
                         </div>
                         <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">

@@ -9,7 +9,9 @@
                         <div class="modal-header">
                             <button type="button" class="close" aria-label="Close" @click="closeModal">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">新增租房报备</h4>
+                            <h4 class="modal-title" v-if="reviseStatus === 4">新增客户</h4>
+                            <h4 class="modal-title"
+                                v-if="reviseStatus === 1 || reviseStatus === 2 || reviseStatus === 3">编辑客户</h4>
                         </div>
                         <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">
@@ -62,7 +64,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">租房类型</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" @change="changeIsSgared" v-model="shared_house">
+                                            <select class="form-control" @change="changeIsSgared"
+                                                    v-model="shared_house">
                                                 <option :value="value" v-for="(key,value) in dict.shared_house">{{key}}
                                                 </option>
                                             </select>
@@ -81,13 +84,13 @@
                                     </div>
 
                                     <!--<div class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label">租房状态</label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<select class="form-control">-->
-                                                <!--<option :value="value" v-for="(key,value) in dict.rent_type">{{key}}-->
-                                                <!--</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label">租房状态</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<select class="form-control">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_type">{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
                                     <!--</div>-->
 
                                     <div class="form-group">
@@ -156,180 +159,180 @@
 
 
                                     <!--<div class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="received_type">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.subject">{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-8">-->
-                                                <!--<label class="col-sm-4 control-label">已收金额<sup-->
-                                                        <!--class="required">*</sup></label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control"-->
-                                                           <!--v-model="received_amount">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="received_type">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.subject">{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<label class="col-sm-4 control-label">已收金额<sup-->
+                                    <!--class="required">*</sup></label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control"-->
+                                    <!--v-model="received_amount">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
 
                                     <!--<div class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label">付款方式</label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[0].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[0].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2 icon">-->
-                                                <!--<i @click="addMorePayWay" class="fa fa-plus-circle"></i>-->
-                                                <!--<i @click="minusMorePayWay" class="fa fa-minus-circle"></i>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label">付款方式</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[0].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[0].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2 icon">-->
+                                    <!--<i @click="addMorePayWay" class="fa fa-plus-circle"></i>-->
+                                    <!--<i @click="minusMorePayWay" class="fa fa-minus-circle"></i>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
 
                                     <!--<div v-show="more_pay_way>=2" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[1].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[1].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[1].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[1].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div v-show="more_pay_way>=3" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[2].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[2].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[2].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[2].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div v-show="more_pay_way>=4" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[3].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[3].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[3].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[3].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div v-show="more_pay_way>=5" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[4].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[4].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[4].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[4].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div v-show="more_pay_way>=6" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[5].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[5].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[5].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[5].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div v-show="more_pay_way>=7" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[6].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[6].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[6].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[6].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div v-show="more_pay_way>=8" class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label"></label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<div class="col-sm-4 padding_0">-->
-                                                <!--<select class="form-control" v-model="payments[7].payment_id">-->
-                                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
-                                                        <!--{{key}}-->
-                                                    <!--</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-6">-->
-                                                <!--<label class="col-sm-4 control-label">金额</label>-->
-                                                <!--<div class="col-sm-8">-->
-                                                    <!--<input type="text" class="form-control" v-model="payments[7].money">-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-2"></div>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label"></label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<div class="col-sm-4 padding_0">-->
+                                    <!--<select class="form-control" v-model="payments[7].payment_id">-->
+                                    <!--<option :value="value" v-for="(key,value) in dict.rent_payment">-->
+                                    <!--{{key}}-->
+                                    <!--</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                    <!--<label class="col-sm-4 control-label">金额</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                    <!--<input type="text" class="form-control" v-model="payments[7].money">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2"></div>-->
+                                    <!--</div>-->
                                     <!--</div>-->
 
                                     <div class="form-group">
@@ -343,10 +346,10 @@
                                     </div>
 
                                     <!--<div class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label">押金</label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<input type="text" class="form-control" v-model="deposit">-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label">押金</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<input type="text" class="form-control" v-model="deposit">-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">待签约日期</label>
@@ -357,18 +360,18 @@
                                         </div>
                                     </div>
                                     <!--<div class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label">空置期</label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<input type="text" disabled class="form-control" v-model="vacancyPeriod">-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label">空置期</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<input type="text" disabled class="form-control" v-model="vacancyPeriod">-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div class="form-group">-->
-                                        <!--<label class="col-sm-2 control-label">第一次房租日期</label>-->
-                                        <!--<div class="col-sm-10">-->
-                                            <!--<input @click="remindData" type="text" v-model="firstRemittance"-->
-                                                   <!--placeholder="第一次房租日期"-->
-                                                   <!--class="form-control form_datetime" readonly>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 control-label">第一次房租日期</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<input @click="remindData" type="text" v-model="firstRemittance"-->
+                                    <!--placeholder="第一次房租日期"-->
+                                    <!--class="form-control form_datetime" readonly>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">备注</label>
@@ -950,7 +953,7 @@
                     leader_id: this.person_id,                  //负责人
                     house_id: this.house_id,                    //房屋
                     customer_name: this.cus_name,               //客户
-                    is_shared: this.shared_house ,              //房屋类型
+                    is_shared: this.shared_house,              //房屋类型
                     shared_part: this.shared_part,              //房间类型
                     months: this.months,                        //收房月数
                     prices: this.price,                         //收房月单价
@@ -1003,7 +1006,7 @@
                     leader_id: this.person_id,                  //负责人
                     house_id: this.house_id,                    //房屋
                     customer_name: this.cus_name,               //客户
-                    is_shared: this.shared_house ,              //房屋类型
+                    is_shared: this.shared_house,              //房屋类型
                     shared_part: this.shared_part,              //房间类型
                     months: this.months,                        //收房月数
                     prices: this.price,                         //收房月单价
