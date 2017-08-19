@@ -95,7 +95,7 @@
                         <thead>
                         <tr>
                             <th class="text-center">
-                                <input type="checkbox" :checked="pitch.length==myData.length"
+                                <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
                                        @click="chooseAll($event)">
                             </th>
                             <th class="text-center">付款时间</th>

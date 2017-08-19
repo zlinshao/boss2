@@ -74,7 +74,7 @@
                                                 @click="cancelModify">取消</button>
                                     </span>
                                 </div>
-                                <div><span class="text-primary">截图凭证：</span>
+                                <!--<div><span class="text-primary">截图凭证：</span>
                                     <span v-if="msg.album==undefined">
                                         无
                                     </span>
@@ -82,7 +82,7 @@
                                         <img :src="item.small" alt="" v-for="(item,index) in msg.album.receipt_pic"
                                              @click="showLargePic(index)">
                                     </span>
-                                </div>
+                                </div>-->
                                 <div><span class="text-primary">备注：</span><span>{{msg.remark}}</span></div>
                             </div>
                             <div class="col-xs-12">

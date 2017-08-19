@@ -49,13 +49,13 @@
             <div class="input-group" v-show="hour">
                 <label>
                     <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date"
-                           class="form-control" :class="dateId">
+                           class="form-control" :class="dateId" readonly>
                 </label>
             </div>
             <div class="input-group" v-show="!hour">
                 <label>
                     <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择日期" v-model="date"
-                           class="form-control" :class="dateId">
+                           class="form-control" :class="dateId" readonly>
                 </label>
             </div>
         </div>
