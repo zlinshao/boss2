@@ -63,6 +63,17 @@
                                             style="padding: 11px 12px;">
                                         <i class="fa fa-plus-square"></i>&nbsp;添加公告
                                     </button>
+                                    <!--<div class="pro-sort"-->
+                                         <!--style="padding: 0;margin-right: 20px;">-->
+                                        <!--<div class="input-group">-->
+                                            <!--<input type="text" class="form-control"-->
+                                                   <!--placeholder="客户名/手机号">-->
+                                            <!--<span class="input-group-btn">-->
+                                                <!--<button class="btn btn-primary" style="background-color: #00A6B2"-->
+                                                        <!--type="button">搜索</button>-->
+                                            <!--</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
                             </form>
                         </div>
@@ -256,7 +267,8 @@
                                     <td class="text-center"
                                         :class="{ more_info: isActive !== index, phone: isActive === index }"
                                         @click="more_content(index)">
-                                        {{sys.data.content}}</td>
+                                        {{sys.data.content}}
+                                    </td>
                                 </tr>
                                 <tr v-show="New1">
                                     <td colspan="4" class="text-center text-muted">
@@ -287,7 +299,8 @@
                                     <td class="text-center"
                                         :class="{ more_info: isActive !== index, phone: isActive === index }"
                                         @click="more_content(index)">
-                                        {{sys.data.content}}</td>
+                                        {{sys.data.content}}
+                                    </td>
                                 </tr>
                                 <tr v-show="New2">
                                     <td colspan="6" class="text-center text-muted">
@@ -618,14 +631,14 @@
 //            个人发件
             new1(val){
                 this.paging = '';
-                this.$http.post('message/message/self_message/pages/' + val,{
+                this.$http.post('message/message/self_message/pages/' + val, {
                     create_time: '',
                 }).then((res) => {
-                    if(res.data.code === '100070'){
+                    if (res.data.code === '100070') {
                         this.news1 = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.New1 = false;
-                    }else{
+                    } else {
                         this.news1 = [];
                         this.New1 = true;
                     }
@@ -644,16 +657,16 @@
 //            部门发件
             new2(val){
                 this.paging = '';
-                this.$http.post('message/message/department_message/pages/' + val,{
+                this.$http.post('message/message/department_message/pages/' + val, {
                     create_time: '',
                 }).then((res) => {
-                    if(res.data.code === '100080'){
+                    if (res.data.code === '100080') {
                         this.news2 = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.New2 = false;
-                    }else{
+                    } else {
                         this.news2 = [];
-                        this.New2 = true; 
+                        this.New2 = true;
                     }
                 });
                 this.beforePage = val;

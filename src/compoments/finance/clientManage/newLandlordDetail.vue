@@ -97,12 +97,6 @@
                                     <span class="text-primary">空置期：</span>
                                     <span>{{item.vacancy}}</span>
                                 </div>
-                                <div>
-                                    <span class="text-primary">押金：</span>
-                                    <span>
-                                        {{item.deposit}}
-                                    </span>
-                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4 col-xs-12">
