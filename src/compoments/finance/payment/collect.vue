@@ -92,7 +92,7 @@
                         <thead>
                         <tr>
                             <th class="text-center">
-                                <input type="checkbox" :checked="pitch.length==myData.length" @click="chooseAll($event)">
+                                <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length" @click="chooseAll($event)">
                             </th>
                             <th class="text-center">收款时间</th>
                             <th class="text-center">客户姓名</th>
@@ -154,6 +154,7 @@
                                 <div class="col-sm-10">
                                     <input @click="remindData" type="text" name="addtime" value="" placeholder="收款时间"
                                            class="form-control form_datetime" readonly v-model="formData.pay_date">
+                                    <!--<DatePicker :dateConfigure="dateConfigure1" @sendDate="getCollectTime"></DatePicker>-->
                                 </div>
                             </div>
 
@@ -288,11 +289,17 @@
                 dateConfigure : [
                     {
                         range : true,
-                        needHour : true
+                        needHour : false
                     }
                 ],
                 currentDate :[],
 
+               /* dateConfigure1 : [
+                    {
+                        range : false,
+                        needHour : false
+                    }
+                ],*/
                 configure : {},
                 filtrate : {
                     departmentList:[],
@@ -708,7 +715,10 @@
                         }, 2000);
                     }
                 })
-            }
+            },
+            /*getCollectTime(val){
+                this.formData.pay_date = val;
+            }*/
         }
     }
 </script>
