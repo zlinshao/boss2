@@ -173,7 +173,6 @@
                 this.configure = {type: 'department', class: 'selectType'};
             },
             selectDateSend(val){
-                console.log(val);
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)

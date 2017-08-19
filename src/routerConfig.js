@@ -78,6 +78,8 @@ import ClientManage from './compoments/finance/clientManage/clientManageList.vue
 
 import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'     //财务房东管理
 import NewRenter from './compoments/finance/clientManage/newRenter.vue'     //财务房东管理
+import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'     //财务房东管理
+import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDetail.vue'     //财务n房东管理
 
 import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
 
@@ -217,9 +219,19 @@ export default[
         component: NewLandlord
     },
     {
+        path: '/newLandlordDetail',
+        name: 'newLandlordDetail',            //财务房东管理详情
+        component: NewLandlordDetail
+    },
+    {
         path: '/newRenter',
         name: 'newRenter',            //财务租房管理
         component: NewRenter
+    },
+    {
+        path: '/newRenterDetail',
+        name: 'newRenterDetail',            //财务租房管理
+        component: NewRenterDetail
     },
     {
         path: '/compare',
