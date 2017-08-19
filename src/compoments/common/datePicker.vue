@@ -22,6 +22,8 @@
                         <li @click="selectDay(8)" :class="{'active' : isActive==8}">本季度</li>
                         <li @click="selectDay(9)" :class="{'active' : isActive==9}">上一年</li>
                         <li @click="selectDay(10)" :class="{'active' : isActive==10}">本年</li>
+                        <li @click="selectDay(12)" :class="{'active' : isActive==10}">未来一个月</li>
+                        <li @click="selectDay(13)" :class="{'active' : isActive==10}">未来一年</li>
                         <li @click="selectDay(11)" :class="{'active' : isActive==11}">自定义</li>
                     </ul>
                     <div v-show="isCustom">
@@ -359,56 +361,67 @@
 //                        console.log(moment().startOf('day').format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
                             from = moment().startOf('day').format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().startOf('day').format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+//                            date = moment().startOf('day').format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         } else if (num == 2) {
                             // 昨天
 //                        console.log(moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD')+"to"+moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD'));
                             from = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD');
                             to = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD');
-                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD') + "至" + moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
+//                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD') + "至" + moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
                         } else if (num == 3) {
                             // 近7天
 //                        console.log(moment().subtract('days', 6).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
                             from = moment().subtract('days', 6).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', 6).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+//                            date = moment().subtract('days', 6).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         } else if (num == 4) {
                             // 近一个月
 //                        console.log(moment().subtract('days', 29).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
                             from = moment().subtract('days', 29).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', 29).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+//                            date = moment().subtract('days', 29).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         } else if (num == 5) {
                             // 上月
                             from = moment().subtract('days', this.lastMonthDays + this.monthDates).format('YYYY-MM-DD');
                             to = moment().subtract('days', this.monthDates + 1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastMonthDays + this.monthDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.monthDates + 1).format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.lastMonthDays + this.monthDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.monthDates + 1).format('YYYY-MM-DD');
                         } else if (num == 6) {
                             // 本月
                             from = moment().subtract('days', this.monthDates).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.monthDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.monthDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         } else if (num == 7) {
                             // 上季度
                             from = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD');
                             to = moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.quarterlyDates + 1).format('YYYY-MM-DD');
                         } else if (num == 8) {
                             // 本季度
                             from = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.quarterlyDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         } else if (num == 9) {
                             // 上一年
                             from = moment().subtract('days', this.lastYearDays + this.yearDates).format('YYYY-MM-DD');
                             to = moment().subtract('days', this.yearDates + 1).format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.lastYearDays + this.yearDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.yearDates + 1).format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.lastYearDays + this.yearDates).format('YYYY-MM-DD') + "至" + moment().subtract('days', this.yearDates + 1).format('YYYY-MM-DD');
                         } else if (num == 10) {
                             // 本年
                             from = moment().subtract('days', this.yearDates).format('YYYY-MM-DD');
                             to = moment().format('YYYY-MM-DD');
-                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 12) {
+                            // 未来一个月
+                            from = moment().format('YYYY-MM-DD');
+                            to = moment().add('months', 1).format('YYYY-MM-DD');
+//                            date = from + "至" + to;
+                        } else if (num == 13) {
+                            // 未来一年
+                            from = moment().format('YYYY-MM-DD');
+                            to = moment().add('years', 1).format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         }
+                        date = from + "至" + to;
                         this.$emit('sendDate', from + "to" + to);
                     }
                     this.mobilePickerDate = date;
