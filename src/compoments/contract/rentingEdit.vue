@@ -1048,7 +1048,6 @@
                 }
                 let receipt = this.contractEdit.receipt_pic.indexOf(val);
                 if (receipt > -1) {
-//                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
                     this.contractEdit.receipt_pic.splice(receipt, 1);
                 }
 
