@@ -115,7 +115,7 @@
                                         <div class="col-lg-4 col-sm-8">
                                             <select class="form-control" v-model="contractEdit.pay_date">
                                                 <option value="">每期打房租日期</option>
-                                                <option :value="value" v-for="value in 30">{{value}}</option>
+                                                <option :value="value" v-for="value in 31">{{value}}</option>
                                             </select>
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-1">号</label>
@@ -785,44 +785,37 @@
             },
             //删除照片ID
             picDelete (val){
+                console.log( this.proxy)
                 let bank = this.contractEdit.bank_pic.indexOf(val);
                 if (bank > -1) {
-                    this.bankPic.cus_idPhoto.splice(bank, 1);
                     this.contractEdit.bank_pic.splice(bank, 1);
                 }
                 let contract = this.contractEdit.contract_pic.indexOf(val);
                 if (contract > -1) {
-                    this.contractPic.cus_idPhoto.splice(contract, 1);
                     this.contractEdit.contract_pic.splice(contract, 1);
                 }
                 let water = this.contractEdit.water_card_pic.indexOf(val);
                 if (water > -1) {
-                    this.waterPic.cus_idPhoto.splice(water, 1);
                     this.contractEdit.water_card_pic.splice(water, 1);
                 }
                 let ele = this.contractEdit.elec_card_pic.indexOf(val);
                 if (ele > -1) {
-                    this.elePic.cus_idPhoto.splice(ele, 1);
                     this.contractEdit.elec_card_pic.splice(ele, 1);
                 }
                 let gas = this.contractEdit.gas_card_pic.indexOf(val);
                 if (gas > -1) {
-                    this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.contractEdit.gas_card_pic.splice(gas, 1);
                 }
                 let proxy = this.contractEdit.proxy_pic.indexOf(val);
                 if (proxy > -1) {
-                    this.proxy.cus_idPhoto.splice(proxy, 1);
                     this.contractEdit.proxy_pic.splice(proxy, 1);
                 }
                 let handover = this.contractEdit.handover_pic.indexOf(val);
                 if (handover > -1) {
-                    this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractEdit.handover_pic.splice(handover, 1);
                 }
                 let receipt = this.contractEdit.receipt_pic.indexOf(val);
                 if (receipt > -1) {
-                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
                     this.contractEdit.receipt_pic.splice(receipt, 1);
                 }
             },

@@ -121,7 +121,7 @@
                                         <div class="col-lg-4 col-sm-8">
                                             <select class="form-control" v-model="contractRenew.pay_date">
                                                 <option value="">每期打房租日期</option>
-                                                <option :value="value" v-for="value in 30">{{value}}</option>
+                                                <option :value="value" v-for="value in 31">{{value}}</option>
                                             </select>
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-1">号</label>
@@ -670,42 +670,34 @@
             picDelete (val){
                 let bank = this.contractRenew.bank_pic.indexOf(val);
                 if (bank > -1) {
-                    this.bank_pic.cus_idPhoto.splice(bank, 1);
                     this.contractRenew.bank_pic.splice(bank, 1);
                 }
                 let contract = this.contractRenew.contract_pic.indexOf(val);
                 if (contract > -1) {
-                    this.contract_pic.cus_idPhoto.splice(contract, 1);
                     this.contractRenew.contract_pic.splice(contract, 1);
                 }
                 let water = this.contractRenew.water_card_pic.indexOf(val);
                 if (water > -1) {
-                    this.water_pic.cus_idPhoto.splice(water, 1);
                     this.contractRenew.water_card_pic.splice(water, 1);
                 }
                 let ele = this.contractRenew.elec_card_pic.indexOf(val);
                 if (ele > -1) {
-                    this.ele_pic.cus_idPhoto.splice(ele, 1);
                     this.contractRenew.elec_card_pic.splice(ele, 1);
                 }
                 let gas = this.contractRenew.gas_card_pic.indexOf(val);
                 if (gas > -1) {
-                    this.gas_pic.cus_idPhoto.splice(gas, 1);
                     this.contractRenew.gas_card_pic.splice(gas, 1);
                 }
                 let proxy = this.contractRenew.proxy_pic.indexOf(val);
                 if (proxy > -1) {
-                    this.proxy.cus_idPhoto.splice(proxy, 1);
                     this.contractRenew.proxy_pic.splice(proxy, 1);
                 }
                 let handover = this.contractRenew.handover_pic.indexOf(val);
                 if (handover > -1) {
-                    this.handover_pic.cus_idPhoto.splice(handover, 1);
                     this.contractRenew.handover_pic.splice(handover, 1);
                 }
                 let receipt = this.contractRenew.receipt_pic.indexOf(val);
                 if (receipt > -1) {
-                    this.receipt_pic.cus_idPhoto.splice(receipt, 1);
                     this.contractRenew.receipt_pic.splice(receipt, 1);
                 }
             },

@@ -115,7 +115,7 @@
                                         <div class="col-lg-4">
                                             <select class="form-control" v-model="contractAdd.pay_date">
                                                 <option value="">每期打房租日期</option>
-                                                <option :value="value" v-for="value in 30">{{value}}</option>
+                                                <option :value="value" v-for="value in 31">{{value}}</option>
                                             </select>
                                         </div>
                                         <label class="col-sm-1 control-label col-lg-1">号</label>
@@ -662,42 +662,34 @@
             picDelete (val){
                 let bank = this.contractAdd.bank_pic.indexOf(val);
                 if (bank > -1) {
-                    this.bankPic.cus_idPhoto.splice(bank, 1);
                     this.contractAdd.bank_pic.splice(bank, 1);
                 }
                 let contract = this.contractAdd.contract_pic.indexOf(val);
                 if (contract > -1) {
-                    this.contractPic.cus_idPhoto.splice(contract, 1);
                     this.contractAdd.contract_pic.splice(contract, 1);
                 }
                 let water = this.contractAdd.water_card_pic.indexOf(val);
                 if (water > -1) {
-                    this.waterPic.cus_idPhoto.splice(water, 1);
                     this.contractAdd.water_card_pic.splice(water, 1);
                 }
                 let ele = this.contractAdd.elec_card_pic.indexOf(val);
                 if (ele > -1) {
-                    this.elePic.cus_idPhoto.splice(ele, 1);
                     this.contractAdd.elec_card_pic.splice(ele, 1);
                 }
                 let gas = this.contractAdd.gas_card_pic.indexOf(val);
                 if (gas > -1) {
-                    this.gasPic.cus_idPhoto.splice(gas, 1);
                     this.contractAdd.gas_card_pic.splice(gas, 1);
                 }
                 let proxy = this.contractAdd.proxy_pic.indexOf(val);
                 if (proxy > -1) {
-                    this.proxy.cus_idPhoto.splice(proxy, 1);
                     this.contractAdd.proxy_pic.splice(proxy, 1);
                 }
                 let handover = this.contractAdd.handover_pic.indexOf(val);
                 if (handover > -1) {
-                    this.handoverPic.cus_idPhoto.splice(handover, 1);
                     this.contractAdd.handover_pic.splice(handover, 1);
                 }
                 let receipt = this.contractAdd.receipt_pic.indexOf(val);
                 if (receipt > -1) {
-                    this.receiptPic.cus_idPhoto.splice(receipt, 1);
                     this.contractAdd.receipt_pic.splice(receipt, 1);
                 }
             },
