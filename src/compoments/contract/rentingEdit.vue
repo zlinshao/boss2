@@ -853,6 +853,7 @@
 
                             this.paymentPic.cus_idPhotos = contractList.album.payment_pic;
                             for (let i in this.paymentPic.cus_idPhotos) {
+                                this.paymentPic.cus_idPhoto.push(i);
                                 this.contractEdit.payment_pic.push(i);
                             }
                         }
