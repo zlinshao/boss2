@@ -563,6 +563,24 @@
         },
         methods : {
             getContractRenewList(){
+                this.bank_pic.cus_idPhotos = [];
+                this.contractRenew.bank_pic = [];
+                this.contract_pic.cus_idPhotos = [];
+                this.contractRenew.contract_pic = [];
+                this.proxy_pic.cus_idPhotos = [];
+                this.contractRenew.proxy_pic = [];
+                this.handover_pic.cus_idPhotos = [];
+                this.contractRenew.handover_pic = [];
+                this.receipt_pic.cus_idPhotos = [];
+                this.contractRenew.receipt_pic = [];
+                this.water_pic.cus_idPhotos = [];
+                this.contractRenew.water_card_pic = [];
+                this.ele_pic.cus_idPhotos = [];
+                this.contractRenew.elec_card_pic = [];
+                this.gas_pic.cus_idPhotos = [];
+                this.contractRenew.gas_card_pic = [];
+
+
                 this.oldContract_num = this.contractRenewList.contract_num;
                 this.contractRenew.villa_id = this.contractRenewList.villa_id.id;
                 this.contractRenew.customer_id = this.contractRenewList.customer_id.id;

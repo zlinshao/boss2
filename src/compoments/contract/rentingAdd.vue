@@ -728,15 +728,28 @@
                 configure: [],
             }
         },
-        mounted(){
-
-        },
         updated(){
             this.selectDate ();
         },
         watch : {
             dictionary(val){
                 this.myDictionary = val;
+
+                this.contractAdd.relative_customer_id = [];
+                this.contractPic.cus_idPhotos = [];
+                this.contractAdd.contract_pic =[];
+                this.handoverPic.cus_idPhotos = [];
+                this.contractAdd.handover_pic =[];
+                this.receiptPic.cus_idPhotos = [];
+                this.contractAdd.receipt_pic = [];
+                this.waterPic.cus_idPhotos = [];
+                this.contractAdd.water_card_pic = [];
+                this.elePic.cus_idPhotos = [];
+                this.contractAdd.elec_card_pic = [];
+                this.gasPic.cus_idPhotos = [];
+                this.contractAdd.gas_card_pic = [];
+                this.paymentPic.cus_idPhotos = [];
+                this.contractAdd.payment_pic = [];
             },
         },
         methods : {
