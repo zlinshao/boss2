@@ -11,7 +11,7 @@
                     <!--<i class="fa fa-plus-circle" @click="addMoreYears"></i>
                     <i class="fa fa-minus-circle" @click="reduceMoreYears"></i>-->
                     <label class="control-label" @click="changeMoney($event)"><input type="checkbox"
-                                                                                     :checked="changeYears">收月单价不固定</label>
+                                                                                     :checked="changeYears">月单价不固定</label>
                 </div>
             </div>
         </div>

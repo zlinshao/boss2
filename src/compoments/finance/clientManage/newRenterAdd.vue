@@ -155,7 +155,7 @@
                                     <!--</div>-->
 
                                     <FlexBox :flexData="Math.ceil(months/12)" :datas="price" :change="put_type"
-                                             :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
+                                             :title="'租房月单价'" @sendData="getFlexData"></FlexBox>
 
 
                                     <!--<div class="form-group">-->
