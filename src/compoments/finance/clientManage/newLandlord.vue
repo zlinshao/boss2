@@ -9,7 +9,7 @@
             <!--未选中-->
             <div class="panel-body clearFix">
                 <div v-if="pitch.length === 0">
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="params.selecteds" @click='select' readonly>
@@ -18,13 +18,10 @@
                         </span>
                         </div>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-3" style="padding: 0;margin-right: 20px">
-                        <div class="input-group">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                        @sendDate="getDate"></DatePicker>
-                        </div>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-3" style="padding: 0;margin-right: 10px;">
+                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;">
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="params.search" placeholder="房屋地址/客户名"
                                    @keyup.enter="search">

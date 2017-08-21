@@ -64,14 +64,14 @@ import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单�
 
 import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
 
-import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'    //收房报备
-import ReopetedCollectDetail from './compoments/reported/collect/collectDetail.vue'// 收房报备详情
+// import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'    //收房报备
+// import ReopetedCollectDetail from './compoments/reported/collect/collectDetail.vue'// 收房报备详情
 
-import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'    //租房报备
-import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'// 租房报备详情
+// import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'    //租房报备
+// import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'// 租房报备详情
 
-import ReportedOther from './compoments/reported/other/reportedOther.vue'    //其余款项报备
-import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'    //其余款项报备
+// import ReportedOther from './compoments/reported/other/reportedOther.vue'    //其余款项报备
+// import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'    //其余款项报备
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
 import MyAchievement from './compoments/myAchievement/myAchievement.vue'     //我的业绩
@@ -197,11 +197,11 @@ export default[
         name: 'details',
         component: Details
     },
-    {
-        path: '/collectDetail',     //客户详情
-        name: 'collectDetail',
-        component: CollectDetail
-    },
+    // {
+    //     path: '/collectDetail',     //客户详情
+    //     name: 'collectDetail',
+    //     component: CollectDetail
+    // },
     {
         path: '/collectMore',       //客户详情
         name: 'collectMore',
@@ -387,26 +387,37 @@ export default[
         name: 'CheckIn',
         component: CheckIn
     },
-    {
-        path: '/reportedCollect',
-        name: 'ReportedCollect',
-        component: ReportedCollect
-    },
-    {
-        path: '/reportedRenting',
-        name: 'ReportedRenting',
-        component: ReportedRenting
-    },
-    {
-        path: '/reportedOther',
-        name: 'ReportedOther',
-        component: ReportedOther
-    },
-    {
-        path: '/reportedOtherDetail',
-        name: 'ReportedOtherDetail',
-        component: ReportedOtherDetail
-    },
+    // {
+    //     path: '/reportedCollect',
+    //     name: 'ReportedCollect',
+    //     component: ReportedCollect
+    // },
+    // {
+    //     path: '/reportedRenting',
+    //     name: 'ReportedRenting',
+    //     component: ReportedRenting
+    // },
+    // {
+    //     path: '/reportedOther',
+    //     name: 'ReportedOther',
+    //     component: ReportedOther
+    // },
+    // {
+    //     path: '/reportedOtherDetail',
+    //     name: 'ReportedOtherDetail',
+    //     component: ReportedOtherDetail
+    // },
+
+    // {
+    //     path: '/reopetedCollectDetail',
+    //     name: 'ReopetedCollectDetail',
+    //     component: ReopetedCollectDetail
+    // },
+    // {
+    //     path: '/reopetedRentDetail',
+    //     name: 'ReopetedRentDetail',
+    //     component: ReopetedRentDetail
+    // },
     {
         path: '/country',
         name: 'country',
@@ -416,16 +427,6 @@ export default[
         path: '/userDetail',             //用户详情页
         name: 'UserDetail',
         component: UserDetail
-    },
-    {
-        path: '/reopetedCollectDetail',
-        name: 'ReopetedCollectDetail',
-        component: ReopetedCollectDetail
-    },
-    {
-        path: '/reopetedRentDetail',
-        name: 'ReopetedRentDetail',
-        component: ReopetedRentDetail
     },
     {
         path: '/memorandum',
