@@ -633,7 +633,7 @@
                     pay: [],
                     bet: 0,
                     price: [],
-                    staff_id :'',
+//                    staff_id :'',
 //                    中介
                     cost_medi: '',
                     medi_account_type: 1,
@@ -875,7 +875,7 @@
 
                         }
                         if(contractList.checkin_rent_id !== null && contractList.checkin_rent_id !==undefined){
-                            this.contractEdit.staff_id = contractList.checkin_rent_id.staff_id;
+//                            this.contractEdit.staff_id = contractList.checkin_rent_id.staff_id;
 
                             this.more_pay_way = contractList.checkin_rent_id.payment.length;
                             for (let i = 0; i < this.more_pay_way; i++) {

@@ -445,7 +445,7 @@
                     price : [],
                     cost_deposit : '',
                     vacancy : '',
-                    staff_id : '',
+//                    staff_id : '',
                     //                    客户
                     customer_id : '',
                     payment : 1,
@@ -661,7 +661,7 @@
                             if(contractList.checkin_collect_id !== null && contractList.checkin_collect_id !==undefined){
                                 this.checkCollectId = contractList.checkin_collect_id.id;
 
-                                this.contractEdit.staff_id = contractList.checkin_collect_id.staff_id;
+//                                this.contractEdit.staff_id = contractList.checkin_collect_id.staff_id;
 
                                 this.contractEdit.months = contractList.checkin_collect_id.months;
                                 if(contractList.checkin_collect_id.pay_type !== null && contractList.checkin_collect_id.pay_type !==undefined){
