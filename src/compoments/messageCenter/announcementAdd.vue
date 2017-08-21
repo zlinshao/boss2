@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade" id="announcementAdd">
+        <div class="modal fade" id="announcementAdd" style="z-index: 1049;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

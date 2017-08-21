@@ -131,8 +131,7 @@
 
                                     <!--付款方式变化-->
                                     <div class="form-group" v-for="(item,index) in more_type" v-if="pay_typeChange">
-                                        <label class="col-sm-2 control-label">第{{index + 1}}年<sup
-                                                class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">第{{index + 1}}期</label>
                                         <div class="col-sm-7" style="padding-right: 0">
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">押</label>
