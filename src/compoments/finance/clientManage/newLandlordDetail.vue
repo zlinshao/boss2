@@ -56,7 +56,18 @@
                                 <div>
                                     <span class="text-primary">房型：</span>
                                     <span v-if="item.house !== null && item.house !== undefined">
-                                        {{item.house.rooms.rooms}}室/{{item.house.rooms.hall}}厅/{{item.house.rooms.toilet}}卫
+                                        <span v-if="item.house.rooms !== null && item.house.rooms !== undefined">
+                                            {{item.house.rooms.rooms}}
+                                        </span>室/
+                                        <span v-if="item.house.hall !== null && item.house.hall !== undefined">
+                                            {{item.house.rooms.hall}}
+                                        </span>
+                                        厅/
+                                        <span v-if="item.house.toilet !== null && item.house.toilet !== undefined">
+                                            {{item.house.rooms.toilet}}
+                                        </span>
+
+                                        卫
                                     </span>
                                 </div>
                                 <div>
