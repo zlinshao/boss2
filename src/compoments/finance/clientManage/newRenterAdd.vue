@@ -864,6 +864,7 @@
                 this.more_type = [];
                 if (ev.target.checked) {
                     if (this.months !== '') {
+                        this.one_type = '';
                         this.pay_typeChange = true;
                         let month = Math.ceil(this.months / 12);
                         for (let i = 0; i < month; i++) {
