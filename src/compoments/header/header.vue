@@ -374,23 +374,23 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-envelope"></i>
-                            <span>片区经理报备</span>
-                        </a>
-                        <ul class="sub">
-                            <li :class="{'active': isActive == 34}" @click='pitch_on(34)'>
-                                <router-link to='/reportedCollect'>收租房报备</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 35}" @click='pitch_on(35)'>
-                                <router-link to='/reportedRenting'>未收先租报备</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 36}" @click='pitch_on(36)'>
-                                <router-link to='/reportedOther'>其余款项报备</router-link>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="sub-menu">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-envelope"></i>-->
+                            <!--<span>片区经理报备</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li :class="{'active': isActive == 34}" @click='pitch_on(34)'>-->
+                                <!--<router-link to='/reportedCollect'>收租房报备</router-link>-->
+                            <!--</li>-->
+                            <!--<li :class="{'active': isActive == 35}" @click='pitch_on(35)'>-->
+                                <!--<router-link to='/reportedRenting'>未收先租报备</router-link>-->
+                            <!--</li>-->
+                            <!--<li :class="{'active': isActive == 36}" @click='pitch_on(36)'>-->
+                                <!--<router-link to='/reportedOther'>其余款项报备</router-link>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <!--<li class="sub-menu" v-show="account_book">-->
                     <li class="sub-menu">
                         <a href="javascript:;">
