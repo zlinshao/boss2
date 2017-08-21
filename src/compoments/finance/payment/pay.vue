@@ -98,20 +98,20 @@
                                 <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
                                        @click="chooseAll($event)">
                             </th>
-                            <th class="text-center">付款时间</th>
-                            <th class="text-center">客户姓名</th>
+                            <th class="text-center width100">付款时间</th>
+                            <th class="text-center width80">客户姓名</th>
                             <!--<th class="text-center">签约人</th>-->
                             <!--<th class="text-center">房屋地址</th>-->
                             <!--<th class="text-center">付款方式</th>-->
                             <!--<th class="text-center">月单价</th>-->
-                            <th class="text-center">支出科目</th>
-                            <th class="text-center">应付金额</th>
-                            <th class="text-center">实付金额</th>
-                            <th class="text-center">剩余款项</th>
-                            <th class="text-center">补齐时间</th>
-                            <th class="text-center">详细信息</th>
-                            <th class="text-center">状态</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center width80">支出科目</th>
+                            <th class="text-center width110">应付金额</th>
+                            <th class="text-center width110">实付金额</th>
+                            <th class="text-center width100">剩余款项</th>
+                            <th class="text-center width100">补齐时间</th>
+                            <th class="text-center phone" style="min-width: 360px;">详细信息</th>
+                            <th class="text-center width80">状态</th>
+                            <th class="text-center width50">详情</th>
 
                         </tr>
                         </thead>

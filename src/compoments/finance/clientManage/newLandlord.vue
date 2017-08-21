@@ -55,24 +55,24 @@
                 </div>
             </div>
         </section>
-        <section class="panel table table-responsive">
+        <section class="panel table table-responsive roll">
             <table class="table table-striped table-advance table-hover">
                 <thead class="text-center">
                 <tr>
                     <th></th>
-                    <th class="text-center">生成时间</th>
-                    <th class="text-center">房屋地址</th>
-                    <th class="text-center">客户姓名</th>
-                    <th class="text-center">收房月数</th>
-                    <th class="text-center">付款方式</th>
-                    <th class="text-center">月单价</th>
-                    <th class="text-center">待签约日期</th>
-                    <th class="text-center">第一次打房租日期</th>
-                    <th class="text-center">客户付款方式</th>
-                    <th class="text-center">账号</th>
-                    <th class="text-center">签约人</th>
-                    <th class="text-center">状态</th>
-                    <th class="text-center">详情</th>
+                    <th class="text-center width100">生成时间</th>
+                    <th class="text-center width100">房屋地址</th>
+                    <th class="text-center width80">客户姓名</th>
+                    <th class="text-center width80">收房月数</th>
+                    <th class="text-center width100">付款方式</th>
+                    <th class="text-center width100">月单价</th>
+                    <th class="text-center width100">待签约日期</th>
+                    <th class="text-center" style="min-width: 130px;">第一次打房租日期</th>
+                    <th class="text-center width100">客户付款方式</th>
+                    <th class="text-center width150">账号</th>
+                    <th class="text-center width80">签约人</th>
+                    <th class="text-center width80">状态</th>
+                    <th class="text-center width50">详情</th>
                 </tr>
                 </thead>
                 <tbody class="text-center">

@@ -94,16 +94,16 @@
                             <th class="text-center">
                                 <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length" @click="chooseAll($event)">
                             </th>
-                            <th class="text-center">收款时间</th>
-                            <th class="text-center">客户姓名</th>
-                            <th class="text-center">收入科目</th>
-                            <th class="text-center">应收金额</th>
-                            <th class="text-center">实收金额</th>
-                            <th class="text-center">剩余款项</th>
-                            <th class="text-center">补齐时间</th>
-                            <th class="text-center">详细信息</th>
-                            <th class="text-center">状态</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center width100">收款时间</th>
+                            <th class="text-center width80">客户姓名</th>
+                            <th class="text-center width80">收入科目</th>
+                            <th class="text-center width100">应收金额</th>
+                            <th class="text-center width100">实收金额</th>
+                            <th class="text-center width100">剩余款项</th>
+                            <th class="text-center width100">补齐时间</th>
+                            <th class="text-center phone" style="min-width: 360px;">详细信息</th>
+                            <th class="text-center width80">状态</th>
+                            <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
                         <tbody>
