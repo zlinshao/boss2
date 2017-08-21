@@ -24,6 +24,7 @@
                         <li @click="selectDay(10)" :class="{'active' : isActive==10}">本年</li>
                         <li @click="selectDay(12)" :class="{'active' : isActive==10}">未来一个月</li>
                         <li @click="selectDay(13)" :class="{'active' : isActive==10}">未来一年</li>
+                        <li @click="selectDay(14)" :class="{'active' : isActive==10}">未来一百年</li>
                         <li @click="selectDay(11)" :class="{'active' : isActive==11}">自定义</li>
                     </ul>
                     <div v-show="isCustom">
@@ -290,6 +291,7 @@
                         '本年': [moment().subtract('days', this.yearDates), moment()],
                         '未来一个月': [moment(),moment().add('months', 1)],
                         '未来一年': [moment(),moment().add('years', 1)],
+                        '未来一百年': [moment(),moment().add('years', 100)],
                     },
                     locale: {
                         applyLabel: '确定',
@@ -419,6 +421,11 @@
                             // 未来一年
                             from = moment().format('YYYY-MM-DD');
                             to = moment().add('years', 1).format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 14) {
+                            // 未来一百年
+                            from = moment().format('YYYY-MM-DD');
+                            to = moment().add('years', 100).format('YYYY-MM-DD');
 //                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         }
                         date = from + "至" + to;

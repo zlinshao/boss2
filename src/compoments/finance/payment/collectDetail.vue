@@ -119,7 +119,7 @@
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
                             <div class="form-group" v-for="(item,index) in moreTime">
-                                <label class="col-sm-3 control-label">第{{index + 1}}收款时间</label>
+                                <label class="col-sm-3 control-label">第{{index + 1}}次收款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
                                         <input @click="remindData" placeholder="收款时间" readonly type="text"
