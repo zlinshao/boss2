@@ -196,9 +196,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">详情<span class="text-danger">*</span></label>
+                                <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="detailed">
+                                    <input type="text" class="form-control" v-model="detailed" readonly>
                                 </div>
                             </div>
 
@@ -451,7 +451,7 @@
                     subject_id: this.subject,                           //支付科目ID
                     customer_account_type: this.accountType,            //账户类型
                     customer_account_num: this.accountNumber,           //账户账号
-                    description: this.detailed,                         //详情
+//                    description: this.detailed,                         //详情
                     amount_payable: this.payable,                       //应付
                     remark: this.remarks                                //备注
                 }).then((res) => {
@@ -651,7 +651,8 @@
             getClient(data){
                 console.log(data);
                 this.cus_id = data.id;
-                this.cus_name = data.name
+                this.cus_name = data.name;
+                this.detailed = data.address;
 //                this.formData.customer = data;
                 /*this.$http.post('account/payable',this.formData)
                  .then()*/

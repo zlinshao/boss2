@@ -166,9 +166,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">详情<sup class="required">*</sup></label>
+                                <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="formData.description">
+                                    <input type="text" class="form-control" v-model="description" readonly>
                                 </div>
                             </div>
 
@@ -326,11 +326,11 @@
                 },
                 logName : '',
 
+                description:'',         // 详情
                 formData:{
                     customer_id : '',         // 客户id
 //                    customer : {},
                     pay_date:'',    // 收款时间
-                    description:'',         // 详情
                     subject_id: '',           // 科目id
                     amount_receivable: '',  // 应收金额
                     remark : ''        // 备注
@@ -412,7 +412,7 @@
         methods : {
             clearForm(){
                 this.chooseResult.customer_name = '';
-                this.formData.description = '';
+                this.description = '';
                 this.formData.customer_id = '';
                 this.formData.pay_date = '';
                 this.formData.subject_id = '';
@@ -574,6 +574,7 @@
                 console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
+                this.description = data.address;
             },
 
             save(){
