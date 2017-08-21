@@ -521,7 +521,7 @@
                     })
                 } else if (this.msgFlag === 'lock') {
                     this.$http.get('core/rent/unVillalock/house_id/' + this.houseId[0]).then((res) => {
-                        if (res.data.code === '70010') {
+                        if (res.data.code === '80010') {
                             this.search();
                             this.contractSeleted = [];
                             this.houseId = [];

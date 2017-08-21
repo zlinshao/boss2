@@ -424,7 +424,6 @@
             act : function () {
                 return this.$route.query.nameId
             }
-
         },
         watch : {
             act(val , oldVal){
