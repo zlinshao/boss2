@@ -63,7 +63,7 @@
                                 </div>
                                 <div>
                                     <span class="text-primary">付款方式：</span>
-                                    押{{item.bet}}付
+                                    押&nbsp;{{item.bet}}&nbsp;付
                                     <span v-if="item.pay.length !== 0">{{item.pay[0]}}
                                      </span>
                                     <span @click="changes('bet')" class="text-primary" v-if="item.pay.length > 1"
@@ -82,7 +82,7 @@
                                                 <button type="button" class="close" data-dismiss="modal">
                                                     <span>&times;</span>
                                                 </button>
-                                                <h4 class="modal-title" style="padding-bottom: 0;">提示信息</h4>
+                                                <h4 class="modal-title" style="padding: 0;">付款方式</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
@@ -118,7 +118,7 @@
                                                 <button type="button" class="close" data-dismiss="modal">
                                                     <span>&times;</span>
                                                 </button>
-                                                <h4 class="modal-title" style="padding-bottom: 0;">提示信息</h4>
+                                                <h4 class="modal-title" style="padding: 0;">月单价</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
