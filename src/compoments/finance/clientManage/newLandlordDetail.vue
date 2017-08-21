@@ -7,7 +7,7 @@
                     客户管理
                 </router-link>
             </li>
-            <li>客户管理详情</li>
+            <li>房东详情</li>
 
             <li class="pull-right" v-show="cus === 1">
                 <router-link :to="{path:'/newLandlord',query: { sea: seaLand, land: 1}}">

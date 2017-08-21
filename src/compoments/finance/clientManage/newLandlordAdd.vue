@@ -470,9 +470,7 @@
             },
 //            付款方式不固定
             changePayType(ev){
-                this.pay_type = [];
-                this.more_type = [];
-                if (ev.target.checked) {
+                if (ev.target.checked === true) {
                     if (this.months !== '') {
                         this.pay_typeChange = true;
                         let month = Math.ceil(this.months / 12);
@@ -481,6 +479,8 @@
                         }
                     }
                 } else {
+                    this.pay_type = [];
+                    this.more_type = [];
                     this.pay_typeChange = false;
                 }
             },
