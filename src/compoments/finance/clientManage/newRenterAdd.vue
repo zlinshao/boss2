@@ -86,11 +86,11 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">租房状态</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="rent_type">
-                                            <!--<select class="form-control" v-model="rent_type">-->
-                                                <!--<option :value="value" v-for="(key,value) in dict.rent_type">{{key}}-->
-                                                <!--</option>-->
-                                            <!--</select>-->
+                                            <!--<input type="text" class="form-control" v-model="rent_type">-->
+                                            <select class="form-control" v-model="rent_type">
+                                                <option :value="value" v-for="(key,value) in dict.rent_type">{{key}}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -589,7 +589,7 @@
                 house_name: '',                         //房屋地址
                 shared_house: 2,                        //租房类型
                 shared_part: 1,                         //房间类型
-                rent_type: '',                          //房屋状态
+                rent_type: 1,                          //房屋状态
 
                 months: '',                             //年限
                 bet: 1,                                 //押
@@ -866,7 +866,7 @@
                 this.house_name = '';                       //房屋地址
                 this.months = '';                           //年限
                 this.shared_house = 2;                      //租房类型
-                this.rent_type = '';                        //租房状态
+                this.rent_type = 1;                         //租房状态
                 this.shared_part = 1;                       //房间类型
                 this.bet = 1;                               //付款方式
                 this.one_type = '';                         //付款方式

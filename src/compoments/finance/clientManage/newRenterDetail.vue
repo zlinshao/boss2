@@ -50,35 +50,59 @@
                                     <span>{{item.customer_name}}</span>
                                 </div>
                                 <div>
+                                    <span class="text-primary">客户姓名：</span>
+                                    <span>{{item.contact}}</span>
+                                </div>
+                                <div>
                                     <span class="text-primary">房屋地址：</span>
                                     <span>{{item.address}}</span>
                                 </div>
-                                <!--<div>-->
-                                <!--<span class="text-primary">房型：</span>-->
-                                <!--<span>{{}}</span>-->
-                                <!--</div>-->
                                 <div>
                                     <span class="text-primary">收房月数：</span>
                                     <span>{{item.months}}</span>
                                 </div>
                                 <div>
-                                    <!--<span class="text-primary">付款方式：</span>-->
-                                    <!--<span v-if="item.pay_types.length !== 0">-->
-                                    <!--{{dictionary.pay_type[item.pay_types[0]]}}-->
-                                    <!--</span>-->
-                                    <!--<span class="text-primary" v-if="item.pay_types.length > 1">-->
-                                    <!--变化-->
-                                    <!--</span>-->
-                                    <!--<span v-if="item.pay_types.length === 0">-->
-                                    <!--—-->
-                                    <!--</span>-->
+                                    <span class="text-primary">付款方式：</span>
+                                    押{{item.bet}}付
+                                    <span v-if="item.pay.length !== 0">{{item.pay[0]}}
+                                     </span>
+                                    <span @click="changes('bet')" class="text-primary" v-if="item.pay.length > 1"
+                                          style="cursor: pointer;">
+                                        变化
+                                    </span>
+                                    <span v-if="item.pay.length === 0">
+                                         —
+                                    </span>
+                                </div>
+                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="item.pay.length > 1"
+                                     id="bet_change">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content roll">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" style="padding-bottom: 0;">提示信息</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
+                                                    v-for="(money,index) in item.pay">
+                                                    <span>第&nbsp;{{index + 1}}&nbsp;年&nbsp;押{{item.bet}}付{{money}}</span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer text-right col-xs-12">
+                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
+                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
                                     <span class="text-primary">月单价：</span>
                                     <span v-if="item.prices.length !== 0">
                                         {{item.prices[0]}}
                                     </span>
-                                    <span @click="changes" class="text-primary" v-if="item.prices.length > 1"
+                                    <span @click="changes('price')" class="text-primary" v-if="item.prices.length > 1"
                                           style="cursor: pointer;">
                                         变化
                                     </span>
@@ -119,6 +143,11 @@
                                     <!--<span v-if="item.shared_part === 0">—</span>-->
                                 </div>
                                 <div>
+                                    <span class="text-primary">租房状态：</span>
+                                    <span>{{dictionary.rent_type[item.rent_type]}}</span>
+                                    <!--<span v-if="item.shared_part === 0">—</span>-->
+                                </div>
+                                <div>
                                     <span class="text-primary">待签约日期：</span>
                                     <span>{{item.deal_date}}</span>
                                 </div>
@@ -126,18 +155,6 @@
                                     <span class="text-primary">补齐尾款时间：</span>
                                     <span>
                                         {{item.complete_date}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">操作人：</span>
-                                    <span v-if="item.operator !== null && item.operator !== undefined">
-                                        {{item.operator.real_name}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">签约人：</span>
-                                    <span v-if="item.staff !== null && item.staff !== undefined">
-                                        {{item.staff.real_name}}
                                     </span>
                                 </div>
                                 <div>
@@ -151,30 +168,6 @@
                         <div class="col-sm-4 col-xs-12">
                             <h5>&nbsp;</h5>
                             <div>
-                                <div>
-                                    <span class="text-primary">负责人：</span>
-                                    <span v-if="item.leader !== null && item.leader !== undefined">
-                                        {{item.leader.real_name}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">所属部门：</span>
-                                    <span>
-                                        {{dictionary.department_id[item.department_id]}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">房租科目：</span>
-                                    <span>
-                                        {{dictionary.account_subject[item.subject_id.rental]}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">押金科目：</span>
-                                    <span>
-                                        {{dictionary.account_subject[item.subject_id.deposit]}}
-                                    </span>
-                                </div>
                                 <div>
                                     <span class="text-primary">水费：</span>
                                     <span>
@@ -209,6 +202,42 @@
                                     <span class="text-primary">网络费：</span>
                                     <span>
                                         {{item.net_fee}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">负责人：</span>
+                                    <span v-if="item.leader !== null && item.leader !== undefined">
+                                        {{item.leader.real_name}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">所属部门：</span>
+                                    <span>
+                                        {{dictionary.department_id[item.department_id]}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">操作人：</span>
+                                    <span v-if="item.operator !== null && item.operator !== undefined">
+                                        {{item.operator.real_name}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">签约人：</span>
+                                    <span v-if="item.staff !== null && item.staff !== undefined">
+                                        {{item.staff.real_name}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">房租科目：</span>
+                                    <span>
+                                        {{dictionary.account_subject[item.subject_id.rental]}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">押金科目：</span>
+                                    <span>
+                                        {{dictionary.account_subject[item.subject_id.deposit]}}
                                     </span>
                                 </div>
                             </div>
@@ -330,10 +359,16 @@
         },
         methods: {
 //            变化
-            changes (){
-                $('#changes').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
+            changes (val){
+                if (val === 'price') {
+                    $('#changes').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                } else if (val === 'bet') {
+                    $('#bet_change').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
             },
 //            修改
             reviseLand (){
