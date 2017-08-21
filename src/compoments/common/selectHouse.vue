@@ -32,6 +32,7 @@
                                     <th>房型</th>
                                     <th>面积</th>
                                     <th>装修</th>
+                                    <th>负责人</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -47,6 +48,7 @@
                                     </td>
                                     <td>{{item.area}}㎡</td>
                                     <td>{{dictionary.decoration[item.decoration]}}</td>
+                                    <td>{{item.staff_id}}</td>
                                 </tr>
                                 <tr v-if="isShow">
                                     <td colspan="10" class="text-center text-muted">
@@ -210,17 +212,32 @@
             },
             search(){
                 if(this.keywords!==''){
-                    this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
-                        if(res.data.code === '20010'){
-                            this.houseList=res.data.data;
-                            this.isShow = false;
-                        }else {
-                            this.houseList=[];
-                            this.isShow = true;
-                            this.info.error = res.data.msg;
-                            this.info.state_error = true;
-                        }
-                    })
+                    if(this.isNewAddHouse == 1){
+                        this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
+                            if(res.data.code === '20010'){
+                                this.houseList=res.data.data;
+                                this.isShow = false;
+                            }else {
+                                this.houseList=[];
+                                this.isShow = true;
+                                this.info.error = res.data.msg;
+                                this.info.state_error = true;
+                            }
+                        })
+                    }else {
+                        this.$http.get('core/core_common/villacollect/keywords/'+encodeURI(this.keywords)).then((res) => {
+                            if(res.data.code === '20010'){
+                                this.houseList=res.data.data;
+                                this.isShow = false;
+                            }else {
+                                this.houseList=[];
+                                this.isShow = true;
+                                this.info.error = res.data.msg;
+                                this.info.state_error = true;
+                            }
+                        })
+                    }
+
                 }
             },
             chooseItem(ev,item){// 点击行选中
