@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" v-show="shared_house == 1">
+                                    <div class="form-group" v-if="shared_house == 1">
                                         <label class="col-sm-2 control-label">房间类型</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="shared_part">
@@ -83,15 +83,16 @@
                                         </div>
                                     </div>
 
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="col-sm-2 control-label">租房状态</label>-->
-                                    <!--<div class="col-sm-10">-->
-                                    <!--<select class="form-control">-->
-                                    <!--<option :value="value" v-for="(key,value) in dict.rent_type">{{key}}-->
-                                    <!--</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">租房状态</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="rent_type">
+                                            <!--<select class="form-control" v-model="rent_type">-->
+                                                <!--<option :value="value" v-for="(key,value) in dict.rent_type">{{key}}-->
+                                                <!--</option>-->
+                                            <!--</select>-->
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">租房月数</label>
@@ -116,43 +117,37 @@
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">付</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" v-model="one_type">
+                                                    <input type="text" class="form-control" v-model="one_type"
+                                                           :disabled="pay_typeChange">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 padding_0">
+                                            <label class="control-label">
+                                                <input type="checkbox" :checked="pay_typeChange"
+                                                       @click="changePayType($event)">付款方式变化</label>
+                                        </div>
+                                    </div>
+
+                                    <!--付款方式变化-->
+                                    <div class="form-group" v-for="(item,index) in more_type" v-if="pay_typeChange">
+                                        <label class="col-sm-2 control-label">第{{index + 1}}年<sup
+                                                class="required">*</sup></label>
+                                        <div class="col-sm-7" style="padding-right: 0">
+                                            <div class="col-sm-6 padding_0">
+                                                <label class="col-sm-2 control-label padding_0">押</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" readonly :value="bet">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 padding_0">
+                                                <label class="col-sm-2 control-label padding_0">付</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" v-model="more_type[index]">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="col-sm-2 control-label">付款方式</label>-->
-                                    <!--<div class="col-sm-10 padding_0">-->
-                                    <!--<div class="col-sm-8">-->
-                                    <!--<select class="form-control" v-model="one_type"-->
-                                    <!--:disabled="pay_typeChange">-->
-                                    <!--<option :value="value" v-for="(key,value) in dict.pay_type">-->
-                                    <!--{{key}} -->
-                                    <!--</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-sm-4">-->
-                                    <!--<label class="control-label">-->
-                                    <!--<input type="checkbox" :checked="pay_typeChange"-->
-                                    <!--@click="changePayType($event)">付款方式不固定</label>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-
-                                    <!--<div class="form-group" v-show="pay_typeChange">-->
-                                    <!--<div class="col-sm-6" v-for="(item,index) in more_type">-->
-                                    <!--<label class="col-sm-5 control-label">第{{index + 1}}年{{more_type[index]}}</label>-->
-                                    <!--<div class="col-sm-7">-->
-                                    <!--<select class="form-control" v-model="more_type[index]">-->
-
-                                    <!--<option :value="value" v-for="(key,value) in dict.pay_type">-->
-                                    <!--{{key}}-->
-                                    <!--</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
 
                                     <FlexBox :flexData="Math.ceil(months/12)" :datas="price" :change="put_type"
                                              :title="'租房月单价'" @sendData="getFlexData"></FlexBox>
@@ -344,13 +339,6 @@
                                                    v-model="complete_date">
                                         </div>
                                     </div>
-
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="col-sm-2 control-label">押金</label>-->
-                                    <!--<div class="col-sm-10">-->
-                                    <!--<input type="text" class="form-control" v-model="deposit">-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">待签约日期</label>
                                         <div class="col-sm-10">
@@ -359,20 +347,7 @@
                                                    class="form-control form_datetime" readonly>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="col-sm-2 control-label">空置期</label>-->
-                                    <!--<div class="col-sm-10">-->
-                                    <!--<input type="text" disabled class="form-control" v-model="vacancyPeriod">-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                    <!--<label class="col-sm-2 control-label">第一次房租日期</label>-->
-                                    <!--<div class="col-sm-10">-->
-                                    <!--<input @click="remindData" type="text" v-model="firstRemittance"-->
-                                    <!--placeholder="第一次房租日期"-->
-                                    <!--class="form-control form_datetime" readonly>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">备注</label>
                                         <div class="col-sm-10">
@@ -380,9 +355,51 @@
                                         </div>
                                     </div>
                                 </div>
+                                <h4 @click="show_false('mon')">费用</h4>
+                                <div v-if="mon_show">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">水费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="water_fee">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">电费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="elec_fee">
+                                        </div>
+                                    </div>
 
-                                <h4>客户信息</h4>
-                                <div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">燃气费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="gas_fee">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">物业费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="property_fee">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">管理费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="manage_fee">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">网络费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="net_fee">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 @click="show_false('cus')">客户信息</h4>
+                                <div v-if="cus_show">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">客户汇款方式</label>
                                         <div class="col-sm-10">
@@ -571,17 +588,18 @@
                 house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
                 shared_house: 2,                        //租房类型
-                shared_part: '',                        //房间类型
-//                rent_type: 1,                         //房屋状态
+                shared_part: 1,                         //房间类型
+                rent_type: '',                          //房屋状态
 
                 months: '',                             //年限
                 bet: 1,                                 //押
+                pay: [],                                //付
                 price: [],                              //价格
                 one_type: '',                           //付
-//                received_type: 1,                      //已收类型
-//                received_amount: 1,                    //已收金额
+//                received_type: 1,                     //已收类型
+//                received_amount: 1,                   //已收金额
 //                more_pay_way: 1,
-//                payments: [                             //付款方式
+//                payments: [                           //付款方式
 //                    {
 //                        payment_id: 1,
 //                        money: ''
@@ -617,9 +635,9 @@
 //                ],
                 complete_date: '',                      //尾款补齐时间
 //                deposit: '',                            //押金
-//                pay_typeChange: false,                 //付款方式不固定
-//                pay_type: [],                           //付款方式不固定显示选择
-//                more_type: [],                          //付款年份个数
+                pay_typeChange: false,                 //付款方式不固定
+                pay_type: [],                           //付款方式不固定显示选择
+                more_type: [],                          //付款年份个数
                 put_type: false,                        //收月单价
                 dict: {},                               //字典
                 coll: 1,                                //租客/业主/代理
@@ -634,7 +652,15 @@
                 account_owner: '',                      //收款人姓名/支付宝姓名
                 account_subbank: '',                    //支行
                 bank: 1,                                //开户行
-                account: '',                            // 账户
+                account: '',                            //账户
+
+                water_fee: '',                          // 水费
+                elec_fee: '',                           // 电费
+                gas_fee: '',                            // 燃气费
+                property_fee: '',                       // 物业费
+                manage_fee: '',                         // 管理费
+                net_fee: '',                            // 网络费
+
                 subject_id: {rental: '', deposit: ''},  //科目款项
                 rental_status: true,                    //房租款项状态
                 deposit_status: true,                   //科目款项状态
@@ -651,6 +677,8 @@
                     error: ''
                 },
                 oneAsk: '',                             //时间请求
+                cus_show: false,                        //客户展示
+                mon_show: false,                        //水电燃气费
             }
         },
         mounted (){
@@ -658,25 +686,25 @@
                 this.remindData();
                 this.dict = res.data
             });
-//            this.pay_type.push(this.one_type);
+            this.pay_type.push(this.one_type);
         },
         watch: {
-//            one_type(curVal, oldVal){
-//                if (curVal !== oldVal) {
-//                    if (!this.pay_typeChange) {
-//                        this.pay_type = [];
-//                        this.pay_type.push(curVal);
-//                    }
-//                }
-//            },
-//            pay_typeChange(curVal, oldVal){
-//                this.pay_type = [];
-//                if (curVal) {
-//                    this.pay_type = this.more_type;
-//                } else {
-//                    this.pay_type.push(this.one_type);
-//                }
-//            },
+            one_type(curVal, oldVal){
+                if (curVal !== oldVal) {
+                    if (!this.pay_typeChange) {
+                        this.pay_type = [];
+                        this.pay_type.push(curVal);
+                    }
+                }
+            },
+            pay_typeChange(curVal, oldVal){
+                this.pay_type = [];
+                if (curVal) {
+                    this.pay_type = this.more_type;
+                } else {
+                    this.pay_type.push(this.one_type);
+                }
+            },
             list (val){
                 if (JSON.stringify(val) === "{}") {
                     this.reviseStatus = 4;
@@ -698,8 +726,17 @@
                     this.house_id = val.house_id;                                       //房屋ID
                     this.house_name = val.address;                                      //房屋地址
                     this.months = val.months;                                           //年限
-                    this.one_type = val.pay;                                            //付款方式
+
+                    this.pay_type = val.pay;                                            //付款方式
+                    this.more_type = val.pay;                                           //付款年份个数
+                    if (val.pay.length > 1) {
+                        this.pay_typeChange = true;
+                    } else if (val.pay.length === 1) {
+                        this.pay_typeChange = false;
+                    }
+
                     this.shared_house = val.is_shared;                      //租房类型
+                    this.rent_type = val.rent_type;                      //租房状态
                     this.shared_part = val.shared_part;                        //房间类型
                     this.bet = val.bet;                                                 //付款方式
 
@@ -709,12 +746,17 @@
                     } else if (val.prices.length === 1) {
                         this.put_type = false;                        //月单价固定
                     }
-//                    this.more_type = val.pay_types;                                //付款年份个数
-                    this.pendingContract = val.deal_date;                  //待签约日期
+                    this.pendingContract = val.deal_date;                   //待签约日期
                     this.complete_date = val.complete_date;                 //待签约日期
-//                    this.vacancyPeriod = val.vacancy;                    //空置期
-//                    this.firstRemittance = val.first_pay_date;                  //第一次打款日期
+
                     this.remarks = val.remark;                              //备注
+
+                    this.water_fee = val.water_fee;                      //水费
+                    this.elec_fee = val.elec_fee;                        //电费
+                    this.gas_fee = val.gas_fee;                          //燃气费
+                    this.property_fee = val.property_fee;                //物业费
+                    this.manage_fee = val.manage_fee;                    //管理费
+                    this.net_fee = val.net_fee;                          //网络费
 
                     if (val.subject_id !== null && val.subject_id !== undefined) {
                         this.subject_id = val.subject_id;                            //房租款项
@@ -731,6 +773,14 @@
         },
 
         methods: {
+            show_false (val){
+                if (val === 'cus') {
+                    this.cus_show = !this.cus_show;
+                }
+                if (val === 'mon') {
+                    this.mon_show = !this.mon_show;
+                }
+            },
 //          付款方式
             addMorePayWay(){
                 // 增加付款方式
@@ -778,21 +828,21 @@
                 this.subject_id.deposit = val;
             },
 //            付款方式不固定
-//            changePayType(ev){
-//                this.pay_type = [];
-//                this.more_type = [];
-//                if (ev.target.checked) {
-//                    if (this.months !== '') {
-//                        this.pay_typeChange = true;
-//                        let month = Math.ceil(this.months / 12);
-//                        for (let i = 0; i < month; i++) {
-//                            this.more_type.push(1);
-//                        }
-//                    }
-//                } else {
-//                    this.pay_typeChange = false;
-//                }
-//            },
+            changePayType(ev){
+                this.pay_type = [];
+                this.pay = [];
+                if (ev.target.checked) {
+                    if (this.months !== '') {
+                        this.pay_typeChange = true;
+                        let month = Math.ceil(this.months / 12);
+                        for (let i = 0; i < month; i++) {
+                            this.more_type.push('');
+                        }
+                    }
+                } else {
+                    this.pay_typeChange = false;
+                }
+            },
 //            收房月单价
             getFlexData(data){
                 this.price = data;
@@ -815,18 +865,27 @@
                 this.house_name = '';                       //房屋地址
                 this.months = '';                           //年限
                 this.shared_house = 2;                      //租房类型
+                this.rent_type = '';                        //租房状态
                 this.shared_part = 1;                       //房间类型
                 this.bet = 1;                               //付款方式
                 this.one_type = '';                         //付款方式
 //                this.deposit = '';                          //押金
-//                this.pay_typeChange = false;                //付款方式不固定
+                this.pay_typeChange = false;                //付款方式不固定
 //                this.pay_type = [];                         //不固定显示选择
-//                this.more_type = [];                        //付款年份个数
+                this.more_type = [];                        //付款年份个数
                 this.pendingContract = '';                  //待签约日期
                 this.complete_date = '';                    //尾款日期
 //                this.vacancyPeriod = '';                    //空置期
 //                this.firstRemittance = '';                  //第一次打款日期
                 this.remarks = '';                          //备注
+
+                this.water_fee = '';                        //水费
+                this.elec_fee = '';                         //电费
+                this.gas_fee = '';                          //燃气费
+                this.property_fee = '';                     //物业费
+                this.manage_fee = '';                       //管理费
+                this.net_fee = '';                          //网络费
+
                 this.subject_id.rental = '';                //房租款项
                 this.rental_status = true;                  //房租款项
                 this.subject_id.deposit = '';               //科目款项
@@ -958,10 +1017,17 @@
                     customer_name: this.cus_name,               //客户
                     is_shared: this.shared_house,              //房屋类型
                     shared_part: this.shared_part,              //房间类型
+                    rent_type: this.rent_type,                  //房间状态
                     months: this.months,                        //收房月数
                     prices: this.price,                         //收房月单价
                     bet: this.bet,                              //押
-                    pay: this.one_type,                         //付
+                    pay: this.pay_type,                         //付
+                    water_fee: this.water_fee,                  // 水费
+                    elec_fee: this.elec_fee,                    // 电费
+                    gas_fee: this.gas_fee,                      // 燃气费
+                    property_fee: this.property_fee,            // 物业费
+                    manage_fee: this.manage_fee,                // 管理费
+                    net_fee: this.net_fee,                      // 网络费
                     deal_date: this.pendingContract,            //待签约日期
                     complete_date: this.complete_date,          //尾款日期
                     remark: this.remarks,                       //备注
@@ -1014,12 +1080,19 @@
                     leader_id: this.person_id,                  //负责人
                     house_id: this.house_id,                    //房屋
                     customer_name: this.cus_name,               //客户
-                    is_shared: this.shared_house,              //房屋类型
+                    is_shared: this.shared_house,               //房屋类型
                     shared_part: this.shared_part,              //房间类型
+                    rent_type: this.rent_type,                  //房间状态
                     months: this.months,                        //收房月数
                     prices: this.price,                         //收房月单价
                     bet: this.bet,                              //押
-                    pay: this.one_type,                         //付
+                    pay: this.pay_type,                         //付
+                    water_fee: this.water_fee,                  // 水费
+                    elec_fee: this.elec_fee,                    // 电费
+                    gas_fee: this.gas_fee,                      // 燃气费
+                    property_fee: this.property_fee,            // 物业费
+                    manage_fee: this.manage_fee,                // 管理费
+                    net_fee: this.net_fee,                      // 网络费
                     deal_date: this.pendingContract,            //待签约日期
                     complete_date: this.complete_date,          //尾款日期
                     remark: this.remarks,                       //备注

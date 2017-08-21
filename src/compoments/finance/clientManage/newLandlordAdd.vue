@@ -89,7 +89,7 @@
 
                                     <div class="form-group" v-show="pay_typeChange">
                                         <div class="col-sm-6" v-for="(item,index) in more_type">
-                                            <label class="col-sm-5 control-label">第{{index + 1}}年{{more_type[index]}}</label>
+                                            <label class="col-sm-5 control-label">第{{index + 1}}年</label>
                                             <div class="col-sm-7">
                                                 <select class="form-control" v-model="more_type[index]">
 
@@ -414,7 +414,7 @@
                     this.house_id = val.house_id;                                       //房屋ID
                     this.house_name = val.address;                                      //房屋地址
                     this.months = val.months;                                           //年限
-                    this.one_type = 1;                                                  //付款方式
+//                    this.one_type = 1;                                                  //付款方式
                     this.deposit = val.deposit;                                         //押金
 
                     this.pay_type = val.pay_types;                                      //付款方式
