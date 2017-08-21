@@ -257,7 +257,8 @@
                                                 <span>月单价：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     <span v-for="(price,index) in item.checkin_rent_id.price">
-                                                        第{{index+1}}期{{price}}元&nbsp;&nbsp;
+                                                        <span v-if="index>0">第{{index+1}}期</span>
+                                                        {{price}}元&nbsp;&nbsp;
                                                     </span>
                                                 </span>
                                             </div>
