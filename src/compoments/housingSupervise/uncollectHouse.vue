@@ -123,16 +123,16 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            <th class="text-center">地址</th>
-                            <th class="text-center">房屋类型</th>
-                            <th class="text-center">房型</th>
-                            <th class="text-center">面积</th>
-                            <th class="text-center">装修</th>
-                            <th class="text-center">建筑楼层</th>
-                            <th class="text-center">房屋特色</th>
-                            <th class="text-center">个人/中介</th>
-                            <th class="text-center">负责人</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center width100">地址</th>
+                            <th class="text-center width100">房屋类型</th>
+                            <th class="text-center width90">房型</th>
+                            <th class="text-center width80">面积</th>
+                            <th class="text-center width50">装修</th>
+                            <th class="text-center width100">建筑楼层</th>
+                            <th class="text-center width80">房屋特色</th>
+                            <th class="text-center width80">个人/中介</th>
+                            <th class="text-center width80">负责人</th>
+                            <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
                         <tbody>

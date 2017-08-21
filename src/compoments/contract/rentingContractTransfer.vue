@@ -96,14 +96,14 @@
                             <input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
                             <label for="allCheck"></label>
                         </th>
-                        <th class="text-center">合同编号</th>
-                        <th class="text-center">上传时间</th>
-                        <th class="text-center">租客姓名</th>
-                        <th class="text-center">地址</th>
-                        <th class="text-center">手机号码</th>
-                        <th class="text-center">开单人</th>
-                        <th class="text-center">负责人</th>
-                        <th class="text-center">所属部门</th>
+                        <th class="text-center width100">合同编号</th>
+                        <th class="text-center width100">上传时间</th>
+                        <th class="text-center width80">租客姓名</th>
+                        <th class="text-center width100">地址</th>
+                        <th class="text-center width100">手机号码</th>
+                        <th class="text-center width80">开单人</th>
+                        <th class="text-center width80">负责人</th>
+                        <th class="text-center width100">所属部门</th>
 
                     </tr>
                     </thead>

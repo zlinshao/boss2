@@ -50,14 +50,14 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">转账日期</th>
-                            <th class="text-center">转出账户</th>
-                            <th class="text-center">账户余额</th>
-                            <th class="text-center">转入账户</th>
-                            <th class="text-center">账户余额</th>
-                            <th class="text-center">转账金额</th>
-                            <th class="text-center">转账人员</th>
-                            <th class="text-center">备注</th>
+                            <th class="text-center width100">转账日期</th>
+                            <th class="text-center width90">转出账户</th>
+                            <th class="text-center width110">账户余额</th>
+                            <th class="text-center width90">转入账户</th>
+                            <th class="text-center width110">账户余额</th>
+                            <th class="text-center width110">转账金额</th>
+                            <th class="text-center width80">转账人员</th>
+                            <th class="text-center width130">备注</th>
                         </tr>
                         </thead>
                         <tbody>

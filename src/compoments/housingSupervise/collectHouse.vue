@@ -137,20 +137,20 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            <th class="text-center">地址</th>
-                            <th class="text-center">房型</th>
-                            <th class="text-center">面积</th>
-                            <th class="text-center">装修</th>
-                            <th class="text-center">房屋特色</th>
-                            <th class="text-center">参考租金</th>
-                            <th class="text-center">剩余空置期（天）</th>
-                            <th class="text-center">房屋状态</th>
-                            <th class="text-center">房屋所属</th>
-                            <th class="text-center">所属部门</th>
-                            <th class="text-center">负责人</th>
+                            <th class="text-center width100">地址</th>
+                            <th class="text-center width90">房型</th>
+                            <th class="text-center width80">面积</th>
+                            <th class="text-center width50">装修</th>
+                            <th class="text-center width80">房屋特色</th>
+                            <th class="text-center width100">参考租金</th>
+                            <th class="text-center width100">剩余空置期（天）</th>
+                            <th class="text-center width80">房屋状态</th>
+                            <th class="text-center width80">房屋所属</th>
+                            <th class="text-center width80">所属部门</th>
+                            <th class="text-center width80">负责人</th>
                             <!--<th class="text-center">锁定</th>-->
-                            <th class="text-center">置顶</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center width50">置顶</th>
+                            <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
                         <tbody>

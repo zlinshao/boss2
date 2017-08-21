@@ -50,6 +50,10 @@
                                     <span>{{item.customer_name}}</span>
                                 </div>
                                 <div>
+                                    <span class="text-primary">客户联系方式：</span>
+                                    <span>{{item.contact}}</span>
+                                </div>
+                                <div>
                                     <span class="text-primary">房屋地址：</span>
                                     <span>{{item.address}}</span>
                                 </div>
@@ -153,12 +157,10 @@
                                     <span>{{item.deposit}}</span>
                                 </div>
                                 <div>
-                                    <span class="text-primary">待签约日期：</span>
-                                    <span>{{item.deal_date}}</span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">空置期：</span>
-                                    <span>{{item.vacancy}}</span>
+                                    <span class="text-primary">备注：</span>
+                                    <span>
+                                        {{item.remark}}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -166,15 +168,17 @@
                             <h5>&nbsp;</h5>
                             <div>
                                 <div>
+                                    <span class="text-primary">待签约日期：</span>
+                                    <span>{{item.deal_date}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">空置期：</span>
+                                    <span>{{item.vacancy}}</span>
+                                </div>
+                                <div>
                                     <span class="text-primary">第一次付房租日期：</span>
                                     <span>
                                     {{item.first_pay_date}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">备注：</span>
-                                    <span>
-                                        {{item.remark}}
                                     </span>
                                 </div>
                                 <div>

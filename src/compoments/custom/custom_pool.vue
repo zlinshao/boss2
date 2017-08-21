@@ -116,18 +116,18 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            <th class="text-center">客户名称</th>
-                            <th class="text-center">尊称</th>
-                            <th class="text-center">手机号</th>
-                            <th class="text-center">客户意向</th>
-                            <th class="text-center">跟进进度</th>
-                            <th class="text-center">来源</th>
-                            <th class="text-center">客户状态</th>
-                            <th class="text-center">客户身份</th>
-                            <th class="text-center">个人/中介</th>
-                            <th class="text-center">客户所属</th>
-                            <th class="text-center">负责人</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center width80">客户名称</th>
+                            <th class="text-center width50">尊称</th>
+                            <th class="text-center width80">手机号</th>
+                            <th class="text-center width100">客户意向</th>
+                            <th class="text-center width80">跟进进度</th>
+                            <th class="text-center width90">来源</th>
+                            <th class="text-center width80">客户状态</th>
+                            <th class="text-center width80">客户身份</th>
+                            <th class="text-center width80">个人/中介</th>
+                            <th class="text-center width80">客户所属</th>
+                            <th class="text-center width80">负责人</th>
+                            <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
                         <tbody>

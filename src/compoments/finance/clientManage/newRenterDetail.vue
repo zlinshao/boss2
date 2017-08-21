@@ -50,7 +50,7 @@
                                     <span>{{item.customer_name}}</span>
                                 </div>
                                 <div>
-                                    <span class="text-primary">客户姓名：</span>
+                                    <span class="text-primary">客户联系方式：</span>
                                     <span>{{item.contact}}</span>
                                 </div>
                                 <div>

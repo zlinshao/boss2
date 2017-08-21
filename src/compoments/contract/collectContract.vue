@@ -124,7 +124,7 @@
         </section>
         <!--表格-->
         <div>
-            <section class="panel table table-responsive">
+            <section class="panel table table-responsive roll">
                 <table class="table table-striped table-advance table-hover">
                     <thead class="text-center">
                     <tr>
@@ -132,21 +132,21 @@
                             <input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
                             <label for="allCheck"></label>
                         </th>
-                        <th class="text-center">标记</th>
-                        <th class="text-center">合同编号</th>
-                        <th class="text-center">上传时间</th>
-                        <th class="text-center">开单人</th>
-                        <th class="text-center">业主姓名</th>
-                        <th class="text-center">地址</th>
-                        <th class="text-center">手机号码</th>
-                        <th class="text-center">合同到期时间</th>
-                        <th class="text-center">资料补齐时间</th>
-                        <th class="text-center">过期情况</th>
-                        <th class="text-center">回访情况</th>
-                        <th class="text-center">审核状态</th>
-                        <th class="text-center">锁定</th>
-                        <th class="text-center">置顶</th>
-                        <th class="text-center">详情</th>
+                        <th class="text-center width50">标记</th>
+                        <th class="text-center width100">合同编号</th>
+                        <th class="text-center width100">上传时间</th>
+                        <th class="text-center width80">开单人</th>
+                        <th class="text-center width80">业主姓名</th>
+                        <th class="text-center width110">地址</th>
+                        <th class="text-center width110">手机号码</th>
+                        <th class="text-center width100">合同到期时间</th>
+                        <th class="text-center width100">资料补齐时间</th>
+                        <th class="text-center width80">过期情况</th>
+                        <th class="text-center width80">回访情况</th>
+                        <th class="text-center width80">审核状态</th>
+                        <th class="text-center width50">锁定</th>
+                        <th class="text-center width50">置顶</th>
+                        <th class="text-center width50">详情</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">

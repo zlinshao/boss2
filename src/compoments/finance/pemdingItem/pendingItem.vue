@@ -64,19 +64,19 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">事项类型</th>
-                            <th class="text-center">开单人</th>
-                            <th class="text-center">房屋地址</th>
-                            <th class="text-center">客户姓名</th>
-                            <th class="text-center">合同开始时间</th>
-                            <th class="text-center">合同结束时间</th>
-                            <th class="text-center">应退</th>
-                            <th class="text-center">实际扣款</th>
-                            <th class="text-center">实际退款</th>
-                            <th class="text-center">结算账户</th>
-                            <th class="text-center">结算人</th>
-                            <th class="text-center">状态</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center width100">事项类型</th>
+                            <th class="text-center width80">开单人</th>
+                            <th class="text-center width110">房屋地址</th>
+                            <th class="text-center width80">客户姓名</th>
+                            <th class="text-center width100">合同开始时间</th>
+                            <th class="text-center width100">合同结束时间</th>
+                            <th class="text-center width100">应退</th>
+                            <th class="text-center width100">实际扣款</th>
+                            <th class="text-center width100">实际退款</th>
+                            <th class="text-center width150">结算账户</th>
+                            <th class="text-center width80">结算人</th>
+                            <th class="text-center width80">状态</th>
+                            <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
                         <tbody>
