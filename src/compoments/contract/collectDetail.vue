@@ -352,9 +352,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ownerInfo" v-if="item.relative_customer_id !== undefined"
+                                <div class="ownerInfo" v-if="item.relative_customer!== undefined && item.relative_customer!== null"
                                      v-for="relative in item.relative_customer">
-                                    <div v-if="item.relative_customer_id.name !== undefined">
+                                    <div v-if="relative.id !== undefined">
                                         <header>附属房东信息</header>
                                         <div class="infoContainer clearFix">
                                             <div class="col-lg-4">

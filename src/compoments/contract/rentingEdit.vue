@@ -7,7 +7,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeEdit">
+                        <button type="button" class="close" @click="closeEdit">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">编辑租房合同</h4>
@@ -542,7 +542,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeEdit">关闭</button>
+                        <button type="button" class="btn btn-default" @click="closeEdit">关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
@@ -633,7 +633,7 @@
                     pay: [],
                     bet: 0,
                     price: [],
-//                    staff_id :'',
+                    staff_id :'',
 //                    中介
                     cost_medi: '',
                     medi_account_type: 1,
@@ -859,6 +859,8 @@
                         }
                         this.staff = contractList.staff;
 
+                        this.contractEdit.staff_id = contractList.checkin_rent_id.staff_id;
+
 
                         // 清空
                         this.pay_typeChange = false;
@@ -875,7 +877,7 @@
 
                         }
                         if(contractList.checkin_rent_id !== null && contractList.checkin_rent_id !==undefined){
-//                            this.contractEdit.staff_id = contractList.checkin_rent_id.staff_id;
+
 
                             this.more_pay_way = contractList.checkin_rent_id.payment.length;
                             for (let i = 0; i < this.more_pay_way; i++) {
@@ -1071,7 +1073,7 @@
                         this.$http.post('core/rent/updatecontract',this.contractEdit).then((res) => {
                             if(res.data.code === "80010"){
                                 this.$emit('EditStatus','success');
-                                $('#rentingEdit').modal('hide');
+                                this.closeEdit();
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
@@ -1097,7 +1099,7 @@
                 }
             },
             reduceMore(){
-                if(this.more>1){
+                if(this.more > 0){
                     if(this.more === this.relative_customer.length ){
                         this.relative_customer.length--;
                         this.contractEdit.relative_customer_id.length--;
@@ -1107,7 +1109,11 @@
 
             },
             closeEdit(){
+                this.more  = 1;
+                this.relative_customer = [];
+                this.contractEdit.relative_customer_id = [];
                 this.$emit('EditStatus','error');
+                $('#rentingEdit').modal('hide');
             },
 
             //            修改租房状态
