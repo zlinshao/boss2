@@ -155,6 +155,12 @@
                                     <FlexBox :flexData="Math.ceil(months/12)" :datas="price" :change="put_type"
                                              :title="'租房月单价'" @sendData="getFlexData"></FlexBox>
 
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">已收</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="received_amount">
+                                        </div>
+                                    </div>
 
                                     <!--<div class="form-group">-->
                                     <!--<label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>-->
@@ -594,13 +600,14 @@
                 house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
                 shared_house: 2,                        //租房类型
-                shared_part: 1,                         //房间类型
-                rent_type: 1,                          //房屋状态
+                shared_part: 0,                         //房间类型
+                rent_type: 1,                           //房屋状态
 
                 months: '',                             //年限
                 bet: 1,                                 //押
                 pay: [],                                //付
                 price: [],                              //价格
+                received_amount: '',                    //已收
                 one_type: '',                           //付
 //                received_type: 1,                     //已收类型
 //                received_amount: 1,                   //已收金额
@@ -755,7 +762,7 @@
                     }
                     this.pendingContract = val.deal_date;                   //待签约日期
                     this.complete_date = val.complete_date;                 //待签约日期
-
+                    this.received_amount = val.received_amount;             //已收
                     this.remarks = val.remark;                              //备注
 
                     this.water_fee = val.water_fee;                      //水费
@@ -828,8 +835,10 @@
                 }
             },
             changeIsSgared(){
-                if (this.shared_house === 1) {
+                if (this.shared_house === '1') {
                     this.shared_part = 1;
+                }else if(this.shared_house === '2'){
+                    this.shared_part = 0;
                 }
             },
 
@@ -889,10 +898,11 @@
                 this.months = '';                           //年限
                 this.shared_house = 2;                      //租房类型
                 this.rent_type = 1;                         //租房状态
-                this.shared_part = 1;                       //房间类型
+                this.shared_part = 0;                       //房间类型
                 this.bet = 1;                               //付款方式
                 this.one_type = '';                         //付款方式
-//                this.deposit = '';                          //押金
+                this.received_amount = '';                  //已收
+//                this.deposit = '';                        //押金
                 this.pay_typeChange = false;                //付款方式不固定
 //                this.pay_type = [];                         //不固定显示选择
                 this.more_type = [];                        //付款年份个数
@@ -1045,6 +1055,7 @@
                     prices: this.price,                         //收房月单价
                     bet: this.bet,                              //押
                     pay: this.pay_type,                         //付
+                    received_amount: this.received_amount,      //已收
                     water_fee: this.water_fee,                  // 水费
                     elec_fee: this.elec_fee,                    // 电费
                     gas_fee: this.gas_fee,                      // 燃气费
@@ -1110,6 +1121,7 @@
                     prices: this.price,                         //收房月单价
                     bet: this.bet,                              //押
                     pay: this.pay_type,                         //付
+                    received_amount: this.received_amount,      //已收
                     water_fee: this.water_fee,                  // 水费
                     elec_fee: this.elec_fee,                    // 电费
                     gas_fee: this.gas_fee,                      // 燃气费

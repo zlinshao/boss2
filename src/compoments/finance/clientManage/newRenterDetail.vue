@@ -134,8 +134,20 @@
                                     </div>
                                 </div>
                                 <div>
+                                    <span class="text-primary">已收：</span>
+                                    <span>
+                                        {{item.received_amount}}
+                                    </span>
+                                </div>
+                                <div>
                                     <span class="text-primary">租房类型：</span>
                                     <span>{{dictionary.shared_house[item.is_shared]}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">房型：</span>
+                                    <span v-if="item.house !== null && item.house !== undefined">
+                                        {{item.house.rooms.rooms}}室/{{item.house.rooms.hall}}厅/{{item.house.rooms.toilet}}卫
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">房间类型：</span>
@@ -154,12 +166,6 @@
                                     <span class="text-primary">补齐尾款时间：</span>
                                     <span>
                                         {{item.complete_date}}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-primary">备注：</span>
-                                    <span>
-                                        {{item.remark}}
                                     </span>
                                 </div>
                             </div>
@@ -237,6 +243,12 @@
                                     <span class="text-primary">押金科目：</span>
                                     <span>
                                         {{dictionary.account_subject[item.subject_id.deposit]}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">备注：</span>
+                                    <span>
+                                        {{item.remark}}
                                     </span>
                                 </div>
                             </div>

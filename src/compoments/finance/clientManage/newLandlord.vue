@@ -7,25 +7,6 @@
         </ol>
         <section class="panel">
             <!--未选中-->
-            <!--<form class="form-inline clearFix" role="form">-->
-                <!--<div class="padd">-->
-                    <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
-                <!--</div>-->
-                <!---->
-                <!--<div class="input-group clearFix">-->
-                    <!--<input type="text" class="form-control" placeholder="搜索房屋地址"-->
-                           <!--v-model="params.search" @keydown.enter.prevent="search(1)">-->
-                    <!--<span class="input-group-btn">-->
-                        <!--<button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>-->
-                    <!--</span>-->
-                <!--</div>-->
-
-                <!--<div class="input-group pull-right">-->
-                    <!--<a class="btn btn-success" @click="disStatus"><i-->
-                            <!--class="fa fa-plus-square"></i>&nbsp;新增收房报备-->
-                    <!--</a>-->
-                <!--</div>-->
-            <!--</form>-->
             <div class="panel-body clearFix">
                 <div v-if="pitch.length === 0">
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px;">

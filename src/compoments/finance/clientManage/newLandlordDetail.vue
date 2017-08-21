@@ -53,10 +53,12 @@
                                     <span class="text-primary">房屋地址：</span>
                                     <span>{{item.address}}</span>
                                 </div>
-                                <!--<div>-->
-                                <!--<span class="text-primary">房型：</span>-->
-                                <!--<span>{{}}</span>-->
-                                <!--</div>-->
+                                <div>
+                                    <span class="text-primary">房型：</span>
+                                    <span v-if="item.house !== null && item.house !== undefined">
+                                        {{item.house.rooms.rooms}}室/{{item.house.rooms.hall}}厅/{{item.house.rooms.toilet}}卫
+                                    </span>
+                                </div>
                                 <div>
                                     <span class="text-primary">收房月数：</span>
                                     <span>{{item.months}}</span>
