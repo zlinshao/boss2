@@ -924,7 +924,7 @@
                 }
             },
             reduceMore(){
-                if(this.more>1){
+                if(this.more>0){
                     if(this.more === this.relative_customer.length ){
                         this.relative_customer.length--;
                         this.contractAdd.relative_customer_id.length--;
@@ -1009,6 +1009,10 @@
                 this.contractAdd.net_fee = 50;
                 this.contractAdd.water_fee = '';
                 this.contractAdd.gas_fee = '';
+
+                this.more  = 1;
+                this.relative_customer = [];
+                this.contractAdd.relative_customer_id = [];
             },
 
             //            修改租房状态

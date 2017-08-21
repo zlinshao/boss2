@@ -7,7 +7,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click = closeEdit>
+                        <button type="button" class="close" @click = closeEdit>
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">编辑收房合同</h4>
@@ -351,7 +351,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click = closeEdit>关闭</button>
+                        <button type="button" class="btn btn-default" @click = closeEdit>关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
@@ -445,7 +445,7 @@
                     price : [],
                     cost_deposit : '',
                     vacancy : '',
-//                    staff_id : '',
+                    staff_id : '',
                     //                    客户
                     customer_id : '',
                     payment : 1,
@@ -641,7 +641,7 @@
                                 this.gasPic.cus_idPhoto.push(i);
                                 this.contractEdit.gas_card_pic.push(i);
                             }
-
+                            this.contractEdit.staff_id = contractList.staff_id;
 
 
                             // 清空
@@ -660,8 +660,6 @@
                             }
                             if(contractList.checkin_collect_id !== null && contractList.checkin_collect_id !==undefined){
                                 this.checkCollectId = contractList.checkin_collect_id.id;
-
-//                                this.contractEdit.staff_id = contractList.checkin_collect_id.staff_id;
 
                                 this.contractEdit.months = contractList.checkin_collect_id.months;
                                 if(contractList.checkin_collect_id.pay_type !== null && contractList.checkin_collect_id.pay_type !==undefined){
@@ -722,7 +720,6 @@
                         this.relative_customer.splice(this.flag,1,val.name);
                     }
                 }else {
-                    console.log(val);
                     this.contractEdit.customer_id = val.id;
                     this.customer_name = val.name;
                 }
@@ -834,7 +831,7 @@
                         this.$http.post('core/collect/updatecontract',this.contractEdit).then((res) => {
                             if(res.data.code === "70010"){
                                 this.$emit('EditStatus','success');
-                                $('#contractEdit').modal('hide');
+                                this.closeEdit();
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
                                 this.info.state_success = true;
@@ -859,7 +856,7 @@
                 }
             },
             reduceMore(){
-                if(this.more>1){
+                if(this.more > 0){
                     if(this.more === this.relative_customer.length ){
                         this.relative_customer.length--;
                         this.contractEdit.relative_customer_id.length--;
@@ -870,6 +867,10 @@
             },
             closeEdit(){
                 this.$emit('EditStatus','error');
+                this.more  = 1;
+                this.relative_customer = [];
+                this.contractEdit.relative_customer_id = [];
+                $('#contractEdit').modal('hide');
             },
 
  //            付款方式不固定

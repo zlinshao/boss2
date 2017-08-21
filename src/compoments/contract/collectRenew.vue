@@ -753,7 +753,7 @@
                 }
             },
             reduceMore(){
-                if(this.more>1){
+                if(this.more>0){
                     if(this.more === this.relative_customer.length ){
                         this.relative_customer.length--;
                         this.contractRenew.relative_customer_id.length--;
@@ -806,6 +806,10 @@
                 this.contractRenew.medi_account_owner = '';
                 this.contractRenew.medi_account_bank = 1;
                 this.contractRenew.medi_account_subbank = 1;
+
+                this.more  = 1;
+                this.relative_customer = [];
+                this.contractRenew.relative_customer_id = [];
             },
 
             changePayType(ev){

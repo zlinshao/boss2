@@ -735,7 +735,7 @@
                 }
             },
             reduceMore(){
-                if(this.more>1){
+                if(this.more>0){
                     if(this.more === this.relative_customer.length ){
                         this.relative_customer.length--;
                         this.contractAdd.relative_customer_id.length--;
@@ -787,6 +787,10 @@
                 this.contractAdd.medi_account_owner = '';
                 this.contractAdd.medi_account_bank = 1;
                 this.contractAdd.medi_account_subbank = 1;
+
+                this.more  = 1;
+                this.relative_customer = [];
+                this.contractAdd.relative_customer_id = [];
             },
 
             changePayType(ev){
