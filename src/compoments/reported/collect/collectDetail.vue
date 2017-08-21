@@ -43,7 +43,7 @@
                                 <div><span class="text-primary">房屋地址：</span><span>{{msg.house.detailed_address}}</span></div>
                                 <div><span class="text-primary">房型：</span><span>{{msg.house.rooms.rooms}}室{{msg.house.rooms.hall}}厅{{msg.house.rooms.toilet}}</span></div>
                                 <div v-show="msg.hidden==2"><span class="text-primary">空置期：</span><span>{{msg.vacancy}}</span></div>
-                                <div v-show="msg.hidden==2"><span class="text-primary">年限：</span><span>{{msg.years}}</span></div>
+                                <div v-show="msg.hidden==2"><span class="text-primary">年限：</span><span>{{msg.months}}</span></div>
                                 <div v-show="msg.hidden==2"><span class="text-primary">付款方式：</span><span>{{dict.pay_type[msg.pay_type[0]]}}<a v-show="msg.pay_type.length>1" @click="showChange(1)">变化</a></span></div>
                                 <div v-show="msg.hidden==2"><span class="text-primary">月单价：</span><span>{{msg.price[0]}}<a v-show="msg.price.length>1" @click="showChange(2)">变化</a></span></div>
                             </div>
