@@ -812,14 +812,14 @@
                 }
             },
 //          付款方式
-            addMorePayWay(){
-                // 增加付款方式
-                if (this.more_pay_way === 7) {
-                    return;
-                } else {
-                    this.more_pay_way++;
-                }
-            },
+//            addMorePayWay(){
+//                // 增加付款方式
+//                if (this.more_pay_way === 7) {
+//                    return;
+//                } else {
+//                    this.more_pay_way++;
+//                }
+//            },
             minusMorePayWay(){
                 // 减少付款方式
                 if (this.more_pay_way === 1) {
@@ -860,11 +860,8 @@
 //            },
 //            付款方式不固定
             changePayType(ev){
-                this.pay_type = [];
-                this.more_type = [];
                 if (ev.target.checked) {
                     if (this.months !== '') {
-                        this.one_type = '';
                         this.pay_typeChange = true;
                         let month = Math.ceil(this.months / 12);
                         for (let i = 0; i < month; i++) {
@@ -872,6 +869,8 @@
                         }
                     }
                 } else {
+                    this.pay_type = [];
+                    this.more_type = [];
                     this.pay_typeChange = false;
                 }
             },
