@@ -207,16 +207,16 @@
                                         <!--</div>-->
                                     </div>
 
-                                    <!--<div class="form-group" v-if="deposit_status">-->
-                                        <!--<label class="col-sm-2 col-xs-12 control-label">押金科目</label>-->
-                                        <!--<div class="col-sm-9 col-xs-10">-->
-                                            <!--<SelectSubject @choose="depositSubject"-->
-                                                           <!--:current="subject_id.deposit"></SelectSubject>-->
-                                        <!--</div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-xs-12 control-label">押金科目</label>
+                                        <div class="col-sm-10">
+                                            <SelectSubject @choose="depositSubject"
+                                                           :current="subject_id.deposit"></SelectSubject>
+                                        </div>
                                         <!--<div class="col-sm-1 col-xs-2">-->
                                             <!--<span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -351,7 +351,7 @@
                 account_subbank: '',                    //支行
                 bank: 1,                                //开户行
                 account: '',                            // 账户
-                subject_id: {rental: ''},  //科目款项
+                subject_id: {rental: '',deposit:''},  //科目款项
 //                rental_status: true,                    //房租款项状态
 //                deposit_status: true,                   //科目款项状态
 
@@ -465,9 +465,9 @@
                 this.subject_id.rental = val;
             },
 //            押金科目
-//            depositSubject(val){
-//                this.subject_id.deposit = val;
-//            },
+            depositSubject(val){
+                this.subject_id.deposit = val;
+            },
 //            付款方式不固定
             changePayType(ev){
                 this.pay_type = [];
@@ -516,7 +516,7 @@
                 this.remarks = '';                          //备注
                 this.subject_id.rental = '';                //房租款项
 //                this.rental_status = true;                  //房租款项
-//                this.subject_id.deposit = '';               //科目款项
+                this.subject_id.deposit = '';               //科目款项
 //                this.deposit_status = true;                   //科目款项
 
 //                收款方式
