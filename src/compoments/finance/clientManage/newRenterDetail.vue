@@ -234,17 +234,17 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <span class="text-primary">房租科目：</span>
+                                    <span class="text-primary">科目：</span>
                                     <span>
                                         {{dictionary.account_subject[item.subject_id.rental]}}
                                     </span>
                                 </div>
-                                <div>
-                                    <span class="text-primary">押金科目：</span>
-                                    <span>
-                                        {{dictionary.account_subject[item.subject_id.deposit]}}
-                                    </span>
-                                </div>
+                                <!--<div>-->
+                                    <!--<span class="text-primary">押金科目：</span>-->
+                                    <!--<span>-->
+                                        <!--{{dictionary.account_subject[item.subject_id.deposit]}}-->
+                                    <!--</span>-->
+                                <!--</div>-->
                                 <div>
                                     <span class="text-primary">备注：</span>
                                     <span>
