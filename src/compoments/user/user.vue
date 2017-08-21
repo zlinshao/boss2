@@ -335,15 +335,15 @@
                             <table class="table table-striped table-advance table-hover">
                                 <thead class="text-center">
                                 <tr>
-                                    <th>员工</th>
-                                    <th>部门</th>
-                                    <th>职务</th>
-                                    <th>用户组</th>
-                                    <th class="text-center">人员状态</th>
-                                    <th class="text-center">手机号</th>
-                                    <th class="text-center">入职时间</th>
-                                    <th class="text-center">详情</th>
-                                    <th class="text-center">操作</th>
+                                    <th class="width100">员工</th>
+                                    <th class="width110">部门</th>
+                                    <th class="width80">职务</th>
+                                    <th class="width100">用户组</th>
+                                    <th class="text-center width80">人员状态</th>
+                                    <th class="text-center width100">手机号</th>
+                                    <th class="text-center width100">入职时间</th>
+                                    <th class="text-center width50">详情</th>
+                                    <th class="text-center width50">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="collectId">
