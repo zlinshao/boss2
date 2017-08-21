@@ -102,7 +102,7 @@
                         <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1" >
                             <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="simulate.indexOf('core/up_contract') > -1">
+                        <li class="operate" v-if="simulate.indexOf('core/up_contract') > -1 && contractSeleted.length ===1">
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>
                         <li class="operate" v-if="contractSeleted.length ===1">
@@ -556,7 +556,7 @@
                     })
                 } else if (this.msgFlag === 'cancel') {
                     this.$http.get('core/move_order/stopContract/type/collect/id/' + this.contractSeleted[0] ).then((res) => {
-                        if (res.data.code === '70010') {
+                        if (res.data.code === '70030') {
                             this.search();
                             this.houseId = [];
                             this.contractSeleted = [];
