@@ -21,11 +21,8 @@
                             </select>
                         </div>
 
-                        <div class="pro-sort padd">
-                            <!--<label>-->
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                        @sendDate="getDate"></DatePicker>
-                            <!--</label>-->
+                        <div class="input-group">
+                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate" :currentDate="currentDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
@@ -193,9 +190,10 @@
                     if(this.$route.query.Params !== undefined && this.$route.query.Params.page !== undefined){
                         this.params = this.$route.query.Params;
                         this.currentDate = [];
-//                        this.currentDate.push(this.params.range.split( 'to')[0]);
-//                        this.currentDate.push(this.params.range.split( 'to')[1]);
-                        this.currentDate = this.params.split('to');
+                        if (this.params.range !== '') {
+                            this.currentDate.push(this.params.range.split( 'to')[0]);
+                            this.currentDate.push(this.params.range.split( 'to')[1]);
+                        }
                         this.keepStatus = true;
                     }else {
                         this.keepStatus = false;
@@ -212,10 +210,6 @@
                     if(res.data.code === '18800'){
                         this.pendingList = res.data.data.data;
                         this.isShow = false;
-                        this.info.success =res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        console.log(this.pendingList)
                     }else {
                         this.pendingList = [];
                         this.isShow = true;
@@ -259,10 +253,10 @@
                 this.$http.post('account/pending/delete/' +  this.operId).then((res) =>{
                     if(res.data.code === '18810'){
                         this.operId = 0;
-                        this.searchList();
                         this.info.success =res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
+                        this.searchList();
                     }else {
                         this.info.error =res.data.msg;
                         //显示成功弹窗 ***
