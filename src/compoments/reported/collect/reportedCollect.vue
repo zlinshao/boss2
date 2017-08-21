@@ -81,7 +81,7 @@
                             <th></th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">月单价</th>
-                            <th class="text-center">收房年限</th>
+                            <th class="text-center">收房年限(月)</th>
                             <th class="text-center">付款方式</th>
                             <th class="text-center">空置期</th>
                             <th class="text-center">押金</th>
@@ -108,7 +108,7 @@
                                     {{item.price[0]}}<a class="change" v-show="item.price.length>1">变化</a>
                                 </span>
                             </td>
-                            <td>{{item.years}}</td>
+                            <td>{{item.months}}</td>
                             <td>
                                 <span  v-if="item.pay_type !== null && item.pay_type !== undefined">
                                     {{dict.pay_type[item.pay_type[0]]}}<a class="change" v-show="item.pay_type.length>1">变化</a>
