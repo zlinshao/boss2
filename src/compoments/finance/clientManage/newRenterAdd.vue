@@ -699,6 +699,7 @@
             },
             pay_typeChange(curVal, oldVal){
                 this.pay_type = [];
+//                this.more_type = [];
                 if (curVal) {
                     this.pay_type = this.more_type;
                 } else {
@@ -830,7 +831,7 @@
 //            付款方式不固定
             changePayType(ev){
                 this.pay_type = [];
-                this.pay = [];
+                this.more_type = [];
                 if (ev.target.checked) {
                     if (this.months !== '') {
                         this.pay_typeChange = true;
