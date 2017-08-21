@@ -3,7 +3,8 @@
         <div class="dropzone form-horizontal">
             <div @click="uploadPic(result)" :id="result">
                 <div v-for="(p, index) in idPhotos.cus_idPhotos"
-                     class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                     class="dz-preview dz-processing dz-image-preview dz-success dz-complete"
+                     v-if="p != '' && p.small !== null">
                     <div class="dz-image">
                         <img data-dz-thumbnail="" alt="" :src="p.small">
                     </div>

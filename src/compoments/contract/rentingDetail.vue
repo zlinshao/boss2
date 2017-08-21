@@ -23,28 +23,31 @@
                 <span class="label label-default" v-if="contract_pass === 2">{{dictionary.passed[contract_pass]}}</span>
                 <span class="label label-warning" v-if="contract_pass === 3">{{dictionary.passed[contract_pass]}}</span>
                 <span class="label label-warning" v-if="contract_pass === 4">{{dictionary.passed[contract_pass]}}</span>
+                <span class="cancel" v-if="contract_status == 1">
+                    <img src="../../assets/img/cancel.png" alt="">
+                </span>
                 <span class="remind" v-if="contract_pass > 4">审核已完成，部分资料已无法查看，请联系组长</span>
             </div>
             <div class="pull-right dropdown"  v-for="item in contractList">
-                <!--<span>-->
-                    <!--<i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>-->
-                    <!--<i class="fa fa-unlock"  v-if="item.villa_id.status ===1" title="已解锁"></i>-->
-                <!--</span>-->
-                <!--<button class="btn btn-primary" @click="compareContract">对比</button>-->
+                <span v-if="contract_status!=1">
+                    <i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>
+                    <i class="fa fa-unlock"  v-if="item.villa_id.status ===1" title="已解锁"></i>
+                </span>
                 <router-link class="btn btn-primary" :to="{path:'/comparecontract',query:{houseId : houseId}}">
                     对比
                 </router-link>
-                <button class="btn btn-primary" @click="inform">通知</button>
-                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2">
+                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1">通知</button>
+                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-warning" disabled v-if="item.reviewed ===1">
+                <button class="btn btn-warning" disabled v-if="item.reviewed ===1 && contract_status!=1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" @click="passContract" :disabled = " contract_pass===5 || contract_pass===1">
+                <button class="btn btn-primary" @click="passContract" v-if="contract_status!=1"
+                        :disabled = " contract_pass===5 || contract_pass===1">
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
-                <button class="btn btn-warning" v-if="contract_pass > 2" @click='overrule'>驳回</button>
+                <button class="btn btn-warning" v-if="contract_pass > 2&&contract_status!=1" @click='overrule'>驳回</button>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -52,22 +55,22 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <button class="btn btn-white btn-block" @click="editContract" :disabled="contract_pass>4">
+                            <button class="btn btn-white btn-block" @click="editContract" :disabled="contract_pass>4||contract_status==1">
                                 编辑
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(2)">
+                            <button class="btn btn-white btn-block" @click="renewContract(2)" :disabled="contract_status==1">
                                 续约
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(3)">
+                            <button class="btn btn-white btn-block" @click="renewContract(3)" :disabled="contract_status==1">
                                 转租
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-white btn-block" @click="renewContract(4)">
+                            <button class="btn btn-white btn-block" @click="renewContract(4)" :disabled="contract_status==1">
                                 调租
                             </button>
                         </li>
@@ -750,6 +753,7 @@
                 isEditRent : false,
                 villaId : '',
                 contract_pass:'',
+                contract_status : '', //是否作废
                 passDictionary:[],
                 confirmMsg:[],  //提示信息
                 msgFlag:'',
@@ -792,6 +796,7 @@
                         this.houseId = res.data.data.villa_id.id;
                         this.contract_num = res.data.data.contract_num;
                         this.contract_pass = res.data.data.passed;
+                        this.contract_status = res.data.data.status;
                         this.waiting = false;
                     }else {
                         this.contractList = [];
@@ -943,7 +948,7 @@
                     });
                 }else if(this.msgFlag === 'lock'){
                     this.$http.get('core/rent/unVillalock/house_id/' + this.houseId).then((res) => {
-                        if(res.data.code === '70010'){
+                        if(res.data.code === '80010'){
                             this.info.success =res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
@@ -1196,5 +1201,16 @@
         padding: 0 5px;
         color: #ccc;
         content: "";
+    }
+    .cancel{
+        display: inline-block;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+    }
+    .cancel>img{
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
     }
 </style>
