@@ -116,6 +116,7 @@
                                 <div>
                                     <span class="text-primary">房间类型：</span>
                                     <span>{{dictionary.shared_part[item.shared_part]}}</span>
+                                    <!--<span v-if="item.shared_part === 0">—</span>-->
                                 </div>
                                 <div>
                                     <span class="text-primary">待签约日期：</span>
