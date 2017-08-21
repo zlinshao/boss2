@@ -54,7 +54,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">收房年限<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label">收房月数<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="formData.years">
                                         </div>
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
 
-                                    <FlexBox :flexData="formData.years" :datas="formData.price" :change="false" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
+                                    <FlexBox :flexData="Math.ceil(formData.years/12)" :datas="formData.price" :change="false" :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">押金<sup class="required">*</sup></label>
