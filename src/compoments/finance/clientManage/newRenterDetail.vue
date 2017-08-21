@@ -64,13 +64,13 @@
                                 <div>
                                     <!--<span class="text-primary">付款方式：</span>-->
                                     <!--<span v-if="item.pay_types.length !== 0">-->
-                                        <!--{{dictionary.pay_type[item.pay_types[0]]}}-->
+                                    <!--{{dictionary.pay_type[item.pay_types[0]]}}-->
                                     <!--</span>-->
                                     <!--<span class="text-primary" v-if="item.pay_types.length > 1">-->
-                                        <!--变化-->
+                                    <!--变化-->
                                     <!--</span>-->
                                     <!--<span v-if="item.pay_types.length === 0">-->
-                                        <!--—-->
+                                    <!--—-->
                                     <!--</span>-->
                                 </div>
                                 <div>
@@ -78,12 +78,36 @@
                                     <span v-if="item.prices.length !== 0">
                                         {{item.prices[0]}}
                                     </span>
-                                    <span class="text-primary" v-if="item.prices.length > 1">
+                                    <span @click="changes" class="text-primary" v-if="item.prices.length > 1"
+                                          style="cursor: pointer;">
                                         变化
                                     </span>
                                     <span v-if="item.prices.length === 0">
                                         —
                                     </span>
+                                </div>
+                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="item.prices.length > 1"
+                                     id="changes">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content roll">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" style="padding-bottom: 0;">提示信息</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
+                                                    v-for="(money,index) in item.prices">
+                                                    <span>第&nbsp;{{index + 1}}&nbsp;年--{{money}}</span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer text-right col-xs-12">
+                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
+                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
                                     <span class="text-primary">租房类型：</span>
@@ -103,17 +127,6 @@
                                         {{item.complete_date}}
                                     </span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-xs-12">
-                            <h5>&nbsp;</h5>
-                            <div>
-                                <div>
-                                    <span class="text-primary">备注：</span>
-                                    <span>
-                                        {{item.remark}}
-                                    </span>
-                                </div>
                                 <div>
                                     <span class="text-primary">操作人：</span>
                                     <span v-if="item.operator !== null && item.operator !== undefined">
@@ -126,6 +139,17 @@
                                         {{item.staff.real_name}}
                                     </span>
                                 </div>
+                                <div>
+                                    <span class="text-primary">备注：</span>
+                                    <span>
+                                        {{item.remark}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <h5>&nbsp;</h5>
+                            <div>
                                 <div>
                                     <span class="text-primary">负责人：</span>
                                     <span v-if="item.leader !== null && item.leader !== undefined">
@@ -148,6 +172,42 @@
                                     <span class="text-primary">押金科目：</span>
                                     <span>
                                         {{dictionary.account_subject[item.subject_id.deposit]}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">水费：</span>
+                                    <span>
+                                        {{item.water_fee}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">电费：</span>
+                                    <span>
+                                        {{item.elec_fee}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">燃气费：</span>
+                                    <span>
+                                        {{item.gas_fee}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">物业费：</span>
+                                    <span>
+                                        {{item.property_fee}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">管理费：</span>
+                                    <span>
+                                        {{item.manage_fee}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">网络费：</span>
+                                    <span>
+                                        {{item.net_fee}}
                                     </span>
                                 </div>
                             </div>
@@ -268,6 +328,12 @@
             this.getDictionary();
         },
         methods: {
+//            变化
+            changes (){
+                $('#changes').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
 //            修改
             reviseLand (){
                 $('#newRenterAdd').modal({
@@ -302,11 +368,11 @@
             },
 //            删除回调
             getConfirm(){
-                this.$http.post('finance/customer/rent/delete',{
+                this.$http.post('finance/customer/rent/delete', {
                     ids: this.myLandlordId
                 }).then((res) => {
-                    if(res.data.code === '90010'){
-                        this.$router.replace({ path: '/newRenter'});
+                    if (res.data.code === '90010') {
+                        this.$router.replace({path: '/newRenter'});
                     }
                 })
             },
@@ -318,7 +384,7 @@
 <style scoped>
     h4 {
         border-bottom: 1px solid #aaaaaa;
-        padding: 0 30px 8px;
+        padding: 0 30px 10px;
     }
 
     h4 > a {
@@ -388,4 +454,9 @@
         content: "";
     }
 
+    .modal-header h4, .modal-body h4 {
+        border: 0;
+        max-height: 400px;
+        overflow: auto;
+    }
 </style>

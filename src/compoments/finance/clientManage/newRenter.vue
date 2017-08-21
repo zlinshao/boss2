@@ -89,7 +89,16 @@
                     <td class="text-center">{{item.customer_name}}</td>
                     <td class="text-center">{{item.months}}</td>
                     <td class="text-center">
-                        {{item.bet}}/{{item.pay}}
+                        {{item.bet}}/
+                        <span v-if="item.pay.length !== 0">
+                            {{item.pay[0]}}
+                        </span>
+                        <span class="text-primary" v-if="item.pay.length > 1">
+                            变化
+                        </span>
+                        <span v-if="item.pay.length === 0">
+                            —
+                        </span>
                     </td>
                     <td class="text-center">
                         <span v-if="item.prices.length !== 0">

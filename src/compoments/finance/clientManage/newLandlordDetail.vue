@@ -66,9 +66,34 @@
                                     <span v-if="item.pay_types.length !== 0">
                                         {{dictionary.pay_type[item.pay_types[0]]}}
                                     </span>
-                                    <span class="text-primary" v-if="item.pay_types.length > 1">
+                                    <span class="text-primary" @click="changes(1)" v-if="item.pay_types.length > 1">
                                         变化
                                     </span>
+                                    <div role="dialog" class="modal fade bs-example-modal-sm"
+                                         v-if="item.pay_types.length > 1"
+                                         id="pay_change">
+                                        <div class="modal-dialog ">
+                                            <div class="modal-content roll">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span>&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" style="padding-bottom: 0;">提示信息</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
+                                                        v-for="(money,index) in item.pay_types">
+                                                        <span>第&nbsp;{{index + 1}}&nbsp;年--{{dictionary.pay_type[money]}}</span>
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-footer text-right col-xs-12">
+                                                    <button data-dismiss="modal" class="btn btn-primary btn-md">确定
+                                                    </button>
+                                                    <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <span v-if="item.pay_types.length === 0">
                                         —
                                     </span>
@@ -78,12 +103,36 @@
                                     <span v-if="item.prices.length !== 0">
                                         {{item.prices[0]}}
                                     </span>
-                                    <span class="text-primary" v-if="item.prices.length > 1">
+                                    <span @click="changes(2)" class="text-primary" v-if="item.prices.length > 1"
+                                          style="cursor: pointer;">
                                         变化
                                     </span>
                                     <span v-if="item.prices.length === 0">
                                         —
                                     </span>
+                                </div>
+                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="item.prices.length > 1"
+                                     id="changes">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content roll">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" style="padding-bottom: 0;">提示信息</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
+                                                    v-for="(money,index) in item.prices">
+                                                    <span>第&nbsp;{{index + 1}}&nbsp;年--{{money}}</span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer text-right col-xs-12">
+                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
+                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
                                     <span class="text-primary">押金：</span>
@@ -268,6 +317,19 @@
             this.getDictionary();
         },
         methods: {
+//            变化
+            changes (val){
+                if (val === 1) {
+                    $('#pay_change').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
+                if (val === 2) {
+                    $('#changes').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
+            },
 //            修改
             reviseLand (){
                 $('#newClientAdd').modal({
@@ -302,11 +364,11 @@
             },
 //            删除回调
             getConfirm(){
-                this.$http.post('finance/customer/collect/delete',{
+                this.$http.post('finance/customer/collect/delete', {
                     ids: this.myLandlordId
                 }).then((res) => {
-                    if(res.data.code === '90010'){
-                        this.$router.replace({ path: '/newLandlord'});
+                    if (res.data.code === '90010') {
+                        this.$router.replace({path: '/newLandlord'});
                     }
                 })
             },
@@ -318,7 +380,7 @@
 <style scoped>
     h4 {
         border-bottom: 1px solid #aaaaaa;
-        padding: 0 30px 8px;
+        padding: 0 30px 10px;
     }
 
     h4 > a {
@@ -388,4 +450,9 @@
         content: "";
     }
 
+    .modal-header h4, .modal-body h4 {
+        border: 0;
+        max-height: 400px;
+        overflow: auto;
+    }
 </style>
