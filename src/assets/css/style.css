@@ -6272,5 +6272,6 @@ sup.required{
 }
 div.padd {
     display: inline-block;
+    width: 250px;
     /*padding: 0 15px 0 0;*/
 }
