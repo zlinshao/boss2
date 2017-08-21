@@ -143,7 +143,7 @@
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">付</label>
                                                 <div class="col-sm-10">
-                                                    <input @blur="more_pay" type="text" class="form-control" v-model="more_type[index]">
+                                                    <input @blur="more_pay(index)" type="text" class="form-control" v-model="more_type[index]">
                                                 </div>
                                             </div>
                                         </div>
@@ -778,7 +778,7 @@
         },
 
         methods: {
-            more_pay (){
+            more_pay (val){
                 this.$http.post('finance/customer/rent/remain',{
                     months: this.months,
                     pays: this.pay_type,
@@ -786,6 +786,7 @@
                     if(res.data.code === '90000'){
                         this.surplus = res.data.data;
                     }else{
+                        this.more_type.splice(val,1,'');
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
