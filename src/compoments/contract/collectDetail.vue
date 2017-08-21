@@ -258,7 +258,8 @@
                                             <div class="infoList" v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                 <span>付款方式：</span>
                                                 <span v-for="(pay,index) in item.checkin_collect_id.pay_type">
-                                                   第{{index+1}}期{{dictionary.pay_type[pay]}}&nbsp;
+                                                    <span v-if="index>0">第{{index+1}}期</span>
+                                                    {{dictionary.pay_type[pay]}}&nbsp;
                                                 </span>
                                             </div>
                                             <div class="infoList">
