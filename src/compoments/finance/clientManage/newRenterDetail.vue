@@ -145,7 +145,6 @@
                                 <div>
                                     <span class="text-primary">租房状态：</span>
                                     <span>{{dictionary.rent_type[item.rent_type]}}</span>
-                                    <!--<span v-if="item.shared_part === 0">—</span>-->
                                 </div>
                                 <div>
                                     <span class="text-primary">待签约日期：</span>
