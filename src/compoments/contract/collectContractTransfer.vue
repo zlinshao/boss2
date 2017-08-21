@@ -19,11 +19,11 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="pro-sort">
-                            <label>
-                                <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                            @sendDate="getDate"></DatePicker>
-                            </label>
+                        <div class="pro-sort padd">
+                            <!--<label>-->
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                        @sendDate="getDate"></DatePicker>
+                            <!--</label>-->
                         </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 5px">
                             <div class="input-group">

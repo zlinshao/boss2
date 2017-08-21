@@ -21,8 +21,11 @@
                             </select>
                         </div>
 
-                        <div class="input-group">
-                            <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate" :currentDate="currentDate"></DatePicker>
+                        <div class="pro-sort padd">
+                            <!--<label>-->
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                        @sendDate="getDate"></DatePicker>
+                            <!--</label>-->
                         </div>
 
                         <div class="input-group">
@@ -190,8 +193,9 @@
                     if(this.$route.query.Params !== undefined && this.$route.query.Params.page !== undefined){
                         this.params = this.$route.query.Params;
                         this.currentDate = [];
-                        this.currentDate.push(this.params.range.split( 'to')[0]);
-                        this.currentDate.push(this.params.range.split( 'to')[1]);
+//                        this.currentDate.push(this.params.range.split( 'to')[0]);
+//                        this.currentDate.push(this.params.range.split( 'to')[1]);
+                        this.currentDate = this.params.split('to');
                         this.keepStatus = true;
                     }else {
                         this.keepStatus = false;

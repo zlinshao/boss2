@@ -18,11 +18,11 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="pro-sort">
-                            <label>
-                                <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                            @sendDate="getDate"></DatePicker>
-                            </label>
+                        <div class="pro-sort padd">
+                            <!--<label>-->
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                        @sendDate="getDate"></DatePicker>
+                            <!--</label>-->
                         </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 5px">
                             <div class="input-group">
@@ -102,6 +102,9 @@
                         <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1" >
                             <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
+                        <li class="operate" v-if="simulate.indexOf('core/up_contract') > -1">
+                            <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
+                        </li>
                         <li class="operate" v-if="contractSeleted.length ===1">
                             <!--<i class="fa fa-eye"> 查看回访记录</i>&nbsp;-->
                             <router-link tag="i" class="fa fa-eye" :to="{path:'/contractDetail',
@@ -114,6 +117,7 @@
                         <li class="operate" @click="distributionDpm">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -154,6 +158,9 @@
                         </td>
                         <td class=" myIcon">
                             <i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>
+                            <i class="cancel" v-if="item.contract_status == 1">
+                                <img src="../../assets/img/cancel.png" alt="">
+                            </i>
                         </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
@@ -512,6 +519,11 @@
                 this.msgFlag = 'lock';
 
             },
+            cancel(){
+                this.confirmMsg = {msg: '您确定作废吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'cancel';
+            },
             getConfirm(){
                 if (this.msgFlag === 'delete') {
                     this.$http.get('core/collect/delete/id/' + this.contractSeleted[0]).then((res) => {
@@ -529,6 +541,21 @@
                     })
                 } else if (this.msgFlag === 'lock') {
                     this.$http.get('core/collect/unVillalock/house_id/' + this.houseId[0]).then((res) => {
+                        if (res.data.code === '70010') {
+                            this.search();
+                            this.houseId = [];
+                            this.contractSeleted = [];
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        } else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                } else if (this.msgFlag === 'cancel') {
+                    this.$http.get('core/move_order/stopContract/type/collect/id/' + this.contractSeleted[0] ).then((res) => {
                         if (res.data.code === '70010') {
                             this.search();
                             this.houseId = [];
@@ -647,5 +674,16 @@
 
     .selected {
         background: #fffcd9 !important;
+    }
+    .cancel{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+    .cancel>img{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
     }
 </style>
