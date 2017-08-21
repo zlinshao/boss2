@@ -66,7 +66,8 @@
                                     <span v-if="item.pay_types.length !== 0">
                                         {{dictionary.pay_type[item.pay_types[0]]}}
                                     </span>
-                                    <span class="text-primary" @click="changes(1)" v-if="item.pay_types.length > 1">
+                                    <span class="text-primary" style="cursor: pointer;"
+                                          @click="changes(1)" v-if="item.pay_types.length > 1">
                                         变化
                                     </span>
                                     <div role="dialog" class="modal fade bs-example-modal-sm"

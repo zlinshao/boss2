@@ -89,7 +89,7 @@
                     <td class="text-center">{{item.customer_name}}</td>
                     <td class="text-center">{{item.months}}</td>
                     <td class="text-center">
-                        {{item.bet}}/
+                        押{{item.bet}}付
                         <span v-if="item.pay.length !== 0">
                             {{item.pay[0]}}
                         </span>
