@@ -8,7 +8,7 @@
 
             <div class="input-group mobileTimePicker" v-show="!isPC">
                 <input type="text" class="form-control" placeholder="选择日期" v-model="mobilePickerDate"
-                       @click="showToggle" readonly>
+                       @click="showPicker = !showPicker" readonly>
                 <div class="mobileTime" v-show="showPicker">
                     <ul>
                         <li @click="selectDay(0)">清空</li>
@@ -43,24 +43,15 @@
                     </div>
                 </div>
             </div>
-            <!--
-                    <div class="input-group" v-show="!isPC">
-                        <input type="date" class="form-control" @change="sendDate" v-model="to">
-                    </div>-->
         </div>
-        <div class="datePickerContainer" v-else="range" style="padding-left: 15px; padding-right: 15px;">
-            <div class="input-group" v-show="hour">
-                <label>
-                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择时间" v-model="date"
-                           class="form-control" :class="dateId" readonly>
-                </label>
-            </div>
-            <div class="input-group" v-show="!hour">
-                <label>
-                    <input @focus="remindData" type="text" name="addtime" value="" placeholder="选择日期" v-model="date"
-                           class="form-control" :class="dateId" readonly>
-                </label>
-            </div>
+        <div v-else="range">
+            <!--<div class="input-group">-->
+            <!--<label>-->
+            <input @focus="remindData" type="text" name="addtime" placeholder="选择时间" v-model="date"
+                   :id="idName"
+                   class="form-control" readonly>
+            <!--</label>-->
+            <!--</div>-->
         </div>
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -68,7 +59,7 @@
 </template>
 <style scoped>
     #reservation {
-        width: 250px;
+        width: 100%;
         border-radius: 4px;
     }
 
@@ -78,6 +69,7 @@
     .datePickerContainer {
         padding-top: 0;
         display: inline-block;
+        width: 100%;
     }
 
     .mobileTimePicker {
@@ -160,7 +152,7 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props: ['dateConfigure', 'currentDate'],
+        props: ['dateConfigure', 'currentDate','idName'],
         data(){
             return {
                 dateId: '',
@@ -236,7 +228,7 @@
         },
         methods: {
             remindData (){
-                $('.' + this.dateId).datetimepicker({
+                $('#' + this.idName).datetimepicker({
                     minView: this.hour?'day':'month',                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
                     format: this.hour?'yyyy-mm-dd hh:00':'yyyy-mm-dd',
