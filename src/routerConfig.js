@@ -197,11 +197,11 @@ export default[
         name: 'details',
         component: Details
     },
-    // {
-    //     path: '/collectDetail',     //客户详情
-    //     name: 'collectDetail',
-    //     component: CollectDetail
-    // },
+    {
+        path: '/collectDetail',     //公司房源详情
+        name: 'collectDetail',
+        component: CollectDetail
+    },
     {
         path: '/collectMore',       //客户详情
         name: 'collectMore',
