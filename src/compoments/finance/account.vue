@@ -324,15 +324,18 @@
             margin-bottom: 5px;
         }
     }
-    .recordList{
+
+    .recordList {
         line-height: 40px;
     }
-    .recordList .name{
+
+    .recordList .name {
         display: inline-block;
         width: 50%;
         color: #59ace2;
     }
-    .con{
+
+    .con {
         border-top: 1px solid #ddd;
     }
 </style>
@@ -390,19 +393,15 @@
                     status: ''
                 },
 
-                record:{},
+                record: {},
             }
         },
         mounted (){
-            this.$http.get('revenue/glee_collect/dict')
-                .then(
-//                    console.log
-                    (res) => {
-                        this.dict = res.data;
-                        this.accountList();
-                    }
-                );
-
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                    this.dict = res.data;
+                    this.accountList();
+                }
+            );
         },
         watch: {
             'formData.cate': {
@@ -684,9 +683,9 @@
 
             // 充值归零记录
             showRecord(){
-                this.$http.get('account/manage/'+this.operId).then((res)=>{
+                this.$http.get('account/manage/' + this.operId).then((res) => {
 //                    console.log(res.data);
-                    if (res.data.code==18400){
+                    if (res.data.code == 18400) {
                         // 成功
                         this.record = res.data.data;
                         $('#record').modal('show');

@@ -49,12 +49,12 @@
 
                 <div v-show="pitch.length>0" class="col-lg-12 remind">
                     <ul>
-                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
                         <li v-show="statusId != 3&&pitch.length==1">
-                            <h5><a data-toggle="modal" data-target="#payFor"><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
+                            <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
                         <li v-show="pitch.length==1">
@@ -576,19 +576,22 @@
                         this.pitch.push(this.myData[i].id);
                     }
                 }
-
-//                console.log(this.pitch);
             },
-            changeIndex(ev, id, status){
+//            应付入账
+            payables (){
+                $('#payFor').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.select_info = res.data;
 
-                    this.$http.get('account/payable/' + id).then((res) => {
+                    this.$http.get('account/payable/' + this.operId).then((res) => {
                         this.details_info = [];
                         this.details_info.push(res.data.data);
                     });
                 });
-//                console.log("一开始"+this.operId);
+            },
+            changeIndex(ev, id, status){
                 if (ev.target.checked) {
                     this.pitch.push(id);
                     this.operId = id;
