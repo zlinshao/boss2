@@ -353,7 +353,7 @@
     }
 
     .selected {
-        background: #fffcd9 !important;
+        background: #FFFF6F !important;
     }
 
 </style>

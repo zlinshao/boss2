@@ -655,6 +655,7 @@
                     subject_id: this.subject_id,
                 }).then((res) => {
                     if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate') {
+                        this.closeModal();
                         $('#newClientAdd').modal('hide');
                         this.$emit('success_');
                         //成功信息 ***
@@ -664,6 +665,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                     } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate') {
+                        this.closeModal();
                         this.$emit('success_');
                         $('#clientAdd1').modal('hide');
                         $('#newClientAdd').modal('hide');
@@ -712,6 +714,7 @@
                 }).then((res) => {
                     if (res.data.code === '90000') {
                         this.$emit('success_');
+                        this.closeModal();
                         $('#newClientAdd').modal('hide');
                         //成功信息 ***
                         this.info.success = res.data.msg;
