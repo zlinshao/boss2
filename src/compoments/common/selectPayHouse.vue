@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <a class="btn btn-success" @click="search">搜索</a>
-                                <a class="btn btn-success" @click="newAddHouse" v-if="isNewAddHouse != 1">新增</a>
+                                <a class="btn btn-success" @click="newAddHouse">新增</a>
                             </div>
                         </div>
                         <div class="table table-responsive roll">
@@ -148,7 +148,7 @@
             Status,
             ChooseAddress
         },
-        props: ['msg','isNewAddHouse'],
+        props: ['msg'],
         watch: {
             msg (val){
                 this.houseAdd.salesman = val
@@ -212,32 +212,17 @@
             },
             search(){
                 if(this.keywords!==''){
-                    if(this.isNewAddHouse == 1){
-                        this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
-                            if(res.data.code === '20010'){
-                                this.houseList=res.data.data;
-                                this.isShow = false;
-                            }else {
-                                this.houseList=[];
-                                this.isShow = true;
-                                this.info.error = res.data.msg;
-                                this.info.state_error = true;
-                            }
-                        })
-                    }else {
-                        this.$http.get('core/core_common/villacollect/keywords/'+encodeURI(this.keywords)).then((res) => {
-                            if(res.data.code === '20010'){
-                                this.houseList=res.data.data;
-                                this.isShow = false;
-                            }else {
-                                this.houseList=[];
-                                this.isShow = true;
-                                this.info.error = res.data.msg;
-                                this.info.state_error = true;
-                            }
-                        })
-                    }
-
+                    this.$http.get('core/financial_villa/searchFinancialVilla/keywords/'+encodeURI(this.keywords)).then((res) => {
+                        if(res.data.code === '80010'){
+                            this.houseList=res.data.data;
+                            this.isShow = false;
+                        }else {
+                            this.houseList=[];
+                            this.isShow = true;
+                            this.info.error = res.data.msg;
+                            this.info.state_error = true;
+                        }
+                    })
                 }
             },
             chooseItem(ev,item){// 点击行选中
@@ -277,7 +262,7 @@
                 if(this.isNewHouse === false){
                     this.addHouse();
                 }else {
-                    this.$http.post('core/villa/savevilla',this.houseAdd).then((res) => {
+                    this.$http.post('core/financial_villa/savevilla',this.houseAdd).then((res) => {
                         if(res.data.code==='80010'){
                             console.log(res.data.data)
                             this.houseAddress.id=res.data.data.id;
