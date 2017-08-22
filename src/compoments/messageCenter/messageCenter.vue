@@ -705,6 +705,7 @@
             selectDateSendAdd(data){
                 this.params.staff = data.staff[0].name;
                 this.params.staffId = data.staff[0].id;
+                this.new2(1);
             },
 //            时间搜索
             remindData (){
@@ -720,9 +721,11 @@
                     if (ev.target.placeholder === '开始时间') {
                         this.time_status = false;
                         this.params.start_time = ev.target.value;
+                        this.new2(1);
                     } else {
                         this.time_status = false;
                         this.params.end_time = ev.target.value;
+                        this.new2(1);
                     }
                 });
             },
@@ -732,6 +735,7 @@
                 this.params.end_time = '';
                 this.params.staffId = '';
                 this.params.staff = '';
+                this.new2(1);
             },
 //            部门发件
             new2(val){

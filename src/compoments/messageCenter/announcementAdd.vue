@@ -78,7 +78,7 @@
         },
         methods: {
             selectDep(){
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(1)').modal('show');
                 this.configure = {type: 'department', class: 'selectType'};
             },
             selectedDpm(val){
