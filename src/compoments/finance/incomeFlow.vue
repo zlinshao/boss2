@@ -63,8 +63,8 @@
                             <th class="text-center width50">类型</th>
                             <th class="text-center width100">收/汇款方式</th>
                             <th class="text-center width150">收/汇款账户</th>
-                            <th class="text-center width110">应付/收金额</th>
-                            <th class="text-center width110">实付/收金额</th>
+                            <th class="text-center width110">实收金额</th>
+                            <th class="text-center width110">实付金额</th>
                             <th class="text-center width150">账户余额</th>
                             <th class="text-center phone" style="min-width: 360px;">详细信息</th>
                             <th class="text-center width110">收/付款人员</th>
@@ -83,17 +83,12 @@
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{dict.account_cate[item.account_cate]}}</td>
                             <td>{{item.account_num}}</td>
-                            <td>{{item.cate==1?item.amount_receivable:item.amount_payable}}</td>
-                            <td>{{item.cate==1?item.amount_received:item.amount_paid}}</td>
+                            <td>{{item.amount_received}}</td>
+                            <td>{{item.amount_paid}}</td>
+                            <!--<td>{{item.cate==1?item.amount_receivable:item.amount_payable}}</td>-->
+                            <!--<td>{{item.cate==1?item.amount_received:item.amount_paid}}</td>-->
                             <td>{{item.amount_remain}}</td>
-                            <td>
-                                {{item.info}}
-                                <!--{{item.info=='-'||item.info==undefined?'':item.info.address+'/'+dict.pay_type[item.info.pay_type]+'/'+item.info.price+'/'+item.info.staff_name}}-->
-                                <!--{{item.info.address}}/
-                                {{dict.pay_type[item.info.pay_type]}}/
-                                {{item.info.price}}/
-                                {{item.info.staff_name}}-->
-                            </td>
+                            <td>{{item.info}}</td>
                             <td>{{item.operator_name}}</td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
