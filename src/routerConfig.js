@@ -89,6 +89,7 @@ import ClientManageDetail from './compoments/finance/clientManage/clientManageDe
 
 import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'            // 办公用品管理
 import OfficeApply from './compoments/office/officeApply/personalRecord.vue'            // 办公用品申领
+import BatchApply from './compoments/office/batchApply.vue'            // 办公用品批量申领
 
 export default[
     {
@@ -480,5 +481,10 @@ export default[
         path: '/officeApply',
         name: 'OfficeApply',
         component: OfficeApply
+    },
+    {
+        path: '/batchApply',
+        name: 'BatchApply',
+        component: BatchApply
     },
 ]
