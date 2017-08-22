@@ -75,7 +75,7 @@
             </div>
         </section>
 
-        <!--增加/查看 备注-->
+        <!-- 增加/查看 备注 -->
         <div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
