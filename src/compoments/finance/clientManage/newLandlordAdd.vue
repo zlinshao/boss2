@@ -472,15 +472,15 @@
             changePayType(ev){
                 if (ev.target.checked === true) {
                     if (this.months !== '') {
+                        this.pay_type = [];
+                        this.more_type = [];
                         this.pay_typeChange = true;
                         let month = Math.ceil(this.months / 12);
                         for (let i = 0; i < month; i++) {
-                            this.more_type.push(1);
+                            this.more_type.push('1');
                         }
                     }
                 } else {
-                    this.pay_type = [];
-                    this.more_type = [];
                     this.pay_typeChange = false;
                 }
             },

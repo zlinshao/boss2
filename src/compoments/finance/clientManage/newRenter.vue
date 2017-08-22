@@ -56,7 +56,7 @@
                 </div>
             </div>
         </section>
-        <section class="panel table table-responsive">
+        <section class="panel table table-responsive roll">
             <table class="table table-striped table-advance table-hover">
                 <thead class="text-center">
                 <tr>

@@ -711,7 +711,6 @@
             },
             pay_typeChange(curVal, oldVal){
                 this.pay_type = [];
-//                this.more_type = [];
                 if (curVal) {
                     this.pay_type = this.more_type;
                 } else {
@@ -862,6 +861,8 @@
             changePayType(ev){
                 if (ev.target.checked) {
                     if (this.months !== '') {
+                        this.pay_type = [];
+                        this.more_type = [];
                         this.pay_typeChange = true;
                         let month = Math.ceil(this.months / 12);
                         for (let i = 0; i < month; i++) {
@@ -869,8 +870,6 @@
                         }
                     }
                 } else {
-                    this.pay_type = [];
-                    this.more_type = [];
                     this.pay_typeChange = false;
                 }
             },
