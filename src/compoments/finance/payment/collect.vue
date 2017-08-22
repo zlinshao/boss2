@@ -60,11 +60,11 @@
                         <li v-show="statusId==1&&pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
-                        <li>
-                            <h5 data-toggle="modal" data-target="#modifyTime">
-                                <a><i class="fa fa-pencil"></i> 修改付款时间</a>
-                            </h5>
-                        </li>
+                        <!--<li>-->
+                            <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
+                                <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
+                            <!--</h5>-->
+                        <!--</li>-->
                         <li v-show="pitch.length == 1">
                             <h5 @click="remark_show">
                                 <a><i class="fa fa-book"></i>&nbsp;新增备注</a>
