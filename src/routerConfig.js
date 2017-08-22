@@ -355,11 +355,11 @@ export default[
         name: 'GeneralOperation',
         component: GeneralOperation
     },
-    {
-        path: '/generalRecord',
-        name: 'GeneralRecord',
-        component: GeneralRecord
-    },
+    // {
+    //     path: '/generalRecord',
+    //     name: 'GeneralRecord',
+    //     component: GeneralRecord
+    // },
     {
         path: '/logRecord',
         name: 'LogRecord',

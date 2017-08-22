@@ -444,11 +444,11 @@
                                     <span>收支流水</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 29}" @click='pitch_on(29)'>
-                                <router-link to="/generalRecord">
-                                    <span>转账操作记录</span>
-                                </router-link>
-                            </li>
+                            <!--<li :class="{'active': isActive == 29}" @click='pitch_on(29)'>-->
+                                <!--<router-link to="/generalRecord">-->
+                                    <!--<span>转账操作记录</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
                             <li :class="{'active': isActive == 30}" @click='pitch_on(30)'>
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
