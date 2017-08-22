@@ -673,12 +673,6 @@
                             <span>办公用品</span>
                         </a>
                         <ul class="sub">
-                            &lt;!&ndash;<li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>&ndash;&gt;
-                            &lt;!&ndash;<router-link to="/clientManage">&ndash;&gt;
-                            &lt;!&ndash;<router-link to="/clientManage">&ndash;&gt;
-                            &lt;!&ndash;<span>客户管理</span>&ndash;&gt;
-                            &lt;!&ndash;</router-link>&ndash;&gt;
-                            &lt;!&ndash;</li>&ndash;&gt;
                             <li class="sub-menu">
                                 <router-link to="/officeSupplies">
                                     <span>办公用品管理</span>
@@ -687,6 +681,11 @@
                             <li class="sub-menu">
                                 <router-link to="/officeApply">
                                     <span>办公用品申领</span>
+                                </router-link>
+                            </li>
+                            <li class="sub-menu">
+                                <router-link to="/batchApply">
+                                    <span>办公用品批量申领</span>
                                 </router-link>
                             </li>
                         </ul>

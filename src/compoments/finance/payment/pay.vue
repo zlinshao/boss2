@@ -57,7 +57,7 @@
                             <h5><a data-toggle="modal" data-target="#payFor"><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="statusId==1&&pitch.length==1">
+                        <li v-show="pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                         <!--<li>-->
@@ -674,6 +674,7 @@
             },
             filter(val){
                 this.operId = 0;
+                this.pitch.splice(0,this.pitch);
                 this.beforePage = val;
                 this.$http.get('account/payable?page=' + val, {
                     params: this.params
