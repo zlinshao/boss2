@@ -24,7 +24,7 @@
                             <div><span class="text-primary">房屋地址：</span><span>{{item.detailed_address}}</span></div>
                             <div>
                                 <span class="text-primary">房型：</span>
-                                <span v-if="item.rooms!==null && rooms!==undefined">
+                                <span v-if="item.rooms!==null && item.rooms!==undefined">
                                     {{item.rooms.rooms}}室{{item.rooms.hall}}厅{{item.rooms.toilet}}卫
                                 </span>
                             </div>
