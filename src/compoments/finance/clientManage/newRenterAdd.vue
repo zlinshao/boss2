@@ -574,7 +574,7 @@
     import SelectHouse from '../../common/selectHouse.vue'
     import FlexBox from '../../common/flexBox.vue'
     import Status from '../../common/status.vue';
-    import SelectClient from '../../common/selectClient.vue'        // 选择客户
+    import SelectClient from '../../common/selectPayHouse.vue'        // 选择客户
 
     export default{
         components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject},
