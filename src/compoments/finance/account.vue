@@ -46,6 +46,9 @@
                             </h5>
                         </li>
                         <li>
+                            <h5 @click="showRecord"><a><i class="fa fa-book"></i>&nbsp;充值归零记录</a></h5>
+                        </li>
+                        <li>
                             <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li>
@@ -232,6 +235,70 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+
+        <!--记录-->
+        <div class="modal fade bs-example-modal-lg" id="record">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">充值归零记录</h5>
+                    </div>
+                    <div class="modal-body clearFix">
+                        <div class="col-md-6">
+                            <div>
+                                <div class="recordList">
+                                    <span class="name">上次充值日期</span>
+                                    <span>{{record.last_recharge_date}}</span>
+                                </div>
+                                <div class="recordList">
+                                    <span class="name">上次充值操作人</span>
+                                    <span>{{dict.staff_id[record.last_recharge_operator]}}</span>
+                                </div>
+                            </div>
+                            <div class="con">
+                                <div class="recordList">
+                                    <span class="name">上次归零日期</span>
+                                    <span>{{record.last_zero_date}}</span>
+                                </div>
+                                <div class="recordList">
+                                    <span class="name">上次归零操作人</span>
+                                    <span>{{dict.staff_id[record.last_zero_operator]}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div>
+                                <div class="recordList">
+                                    <span class="name">上上次充值日期</span>
+                                    <span>{{record.llast_recharge_date}}</span>
+                                </div>
+                                <div class="recordList">
+                                    <span class="name">上次充值操作人</span>
+                                    <span>{{dict.staff_id[record.llast_recharge_operator]}}</span>
+                                </div>
+                            </div>
+                            <div class="con">
+                                <div class="recordList">
+                                    <span class="name">上上次归零日期</span>
+                                    <span>{{record.llast_zero_date}}</span>
+                                </div>
+                                <div class="recordList">
+                                    <span class="name">上上次归零操作人</span>
+                                    <span>{{dict.staff_id[record.llast_zero_operator]}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <!--分页-->
@@ -256,6 +323,17 @@
         .panel-body .form-inline .input-group {
             margin-bottom: 5px;
         }
+    }
+    .recordList{
+        line-height: 40px;
+    }
+    .recordList .name{
+        display: inline-block;
+        width: 50%;
+        color: #59ace2;
+    }
+    .con{
+        border-top: 1px solid #ddd;
     }
 </style>
 <script>
@@ -311,6 +389,8 @@
                     msg: '',
                     status: ''
                 },
+
+                record:{},
             }
         },
         mounted (){
@@ -600,6 +680,19 @@
                             }
                         }
                     )
+            },
+
+            // 充值归零记录
+            showRecord(){
+                this.$http.get('account/manage/'+this.operId).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==18400){
+                        // 成功
+                        this.record = res.data.data;
+                        $('#record').modal('show');
+                    }
+                });
+
             }
 
         }

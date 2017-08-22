@@ -665,6 +665,32 @@
                             <span>打卡记录</span>
                         </router-link>
                     </li>
+
+                    <!--<li class="sub-menu">
+                        &lt;!&ndash;<li class="sub-menu">&ndash;&gt;
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>办公用品</span>
+                        </a>
+                        <ul class="sub">
+                            &lt;!&ndash;<li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>&ndash;&gt;
+                            &lt;!&ndash;<router-link to="/clientManage">&ndash;&gt;
+                            &lt;!&ndash;<router-link to="/clientManage">&ndash;&gt;
+                            &lt;!&ndash;<span>客户管理</span>&ndash;&gt;
+                            &lt;!&ndash;</router-link>&ndash;&gt;
+                            &lt;!&ndash;</li>&ndash;&gt;
+                            <li class="sub-menu">
+                                <router-link to="/officeSupplies">
+                                    <span>办公用品管理</span>
+                                </router-link>
+                            </li>
+                            <li class="sub-menu">
+                                <router-link to="/officeApply">
+                                    <span>办公用品申领</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>-->
                 </ul>
                 <!-- sidebar menu end-->
             </div>

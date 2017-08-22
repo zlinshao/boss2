@@ -87,6 +87,9 @@ import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDeta
 
 import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
 
+import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'            // 办公用品管理
+import OfficeApply from './compoments/office/officeApply/personalRecord.vue'            // 办公用品申领
+
 export default[
     {
         path: '/',             //重定向主页
@@ -467,5 +470,15 @@ export default[
         path: '/collectContractTransfer',
         name: 'CollectContractTransfer',
         component: CollectContractTransfer
+    },
+    {
+        path: '/officeSupplies',
+        name: 'OfficeSupplies',
+        component: OfficeSupplies
+    },
+    {
+        path: '/officeApply',
+        name: 'OfficeApply',
+        component: OfficeApply
     },
 ]
