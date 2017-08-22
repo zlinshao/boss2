@@ -498,8 +498,9 @@
                     content: this.addRemark,
                 }).then((res) => {
                     if (res.data.code === '18410') {
+                        this.pitch = [];
                         $('#addRemarks').modal('hide');
-                        this.payFlowList();
+                        this.search(this.beforePage);
                     }
                 })
             },

@@ -709,7 +709,7 @@
                     }
                 }
             },
-            pay_typeChange(curVal, oldVal){
+            pay_typeChange(curVal, oldVal){ 
                 this.pay_type = [];
                 if (curVal) {
                     this.pay_type = this.more_type;

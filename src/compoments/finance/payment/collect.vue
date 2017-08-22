@@ -75,7 +75,7 @@
             </div>
         </section>
 
-        <!-- 增加/查看 备注 -->
+        <!--增加/查看 备注-->
         <div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -492,8 +492,9 @@
                     content: this.addRemark,
                 }).then((res) => {
                     if (res.data.code === '18510') {
+                        this.pitch = [];
                         $('#addRemarks').modal('hide');
-                        this.payFlowList();
+                        this.search(this.beforePage);
                     }
                 })
             },
@@ -566,7 +567,6 @@
                 })
             },
             remindData (){
-
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
