@@ -60,16 +60,56 @@
                         <li v-show="statusId==1&&pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
-                        <!--<li>
-                            <h5 data-toggle="modal" data-target="#modifyTime">
-                                <a><i class="fa fa-pencil"></i> 修改付款时间</a>
+                        <!--<li>-->
+                            <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
+                                <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
+                            <!--</h5>-->
+                        <!--</li>-->
+                        <li v-show="pitch.length == 1">
+                            <h5 @click="remark_show">
+                                <a><i class="fa fa-book"></i>&nbsp;新增备注</a>
                             </h5>
-                        </li>-->
+                        </li>
                     </ul>
                 </div>
             </div>
         </section>
+        <!--增加/查看 备注-->
+        <div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" v-if="remarks_status === 1">新增备注</h4>
+                        <h4 class="modal-title" v-if="remarks_status === 2">查看备注</h4>
+                    </div>
+
+                    <div class="modal-body" v-if="remarks_status === 1">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <textarea class="form-control" v-model="addRemark"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-body" v-if="remarks_status === 2">
+                        {{look_remark}}
+                    </div>
+
+                    <div class="modal-footer" v-if="remarks_status === 1">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                        <button class="btn btn-success" type="button" @click="addRem"> 确定</button>
+                    </div>
+                    <div class="modal-footer" v-if="remarks_status === 2">
+                        <button data-dismiss="modal" class="btn btn-success" type="button">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="panel tips">
             <ul class="clearFix">
                 <li class="col-md-4">
@@ -111,6 +151,7 @@
                             <th class="text-center width100">补齐时间</th>
                             <th class="text-center phone" style="min-width: 360px;">详细信息</th>
                             <th class="text-center width80">状态</th>
+                            <th class="text-center width80">备注</th>
                             <th class="text-center width50">详情</th>
 
                         </tr>
@@ -140,6 +181,10 @@
                                 <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
                                     {{dict.account_should_status[item.status]}}
                                 </label>
+                            </td>
+                            <td>
+                                <span v-if="item.tag === ''"></span>
+                                <span @click="look_tag(item.tag)" v-if="item.tag !== ''" class="fa fa-book"></span>
                             </td>
                             <td>
                                 <router-link
@@ -196,9 +241,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">详情</label>
+                                <label class="col-sm-2 control-label">详情<span class="text-danger">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="detailed" readonly>
+                                    <input type="text" class="form-control" v-model="detailed">
                                 </div>
                             </div>
 
@@ -318,7 +363,9 @@
         data(){
             return {
                 pitch: [],                  //选中id
-
+                look_remark: '',              //备注内容
+                remarks_status: '',          //新增/查看
+                addRemark: '',               //新增备注
                 accountType: '',                    //账户类型
                 accountNumber: '',                  //账户账号
                 details_info: [],                   //应入
@@ -437,6 +484,33 @@
                 );
         },
         methods: {
+//            新增备注
+            remark_show (){
+                this.remarks_status = 1;
+                this.addRemark = '';
+                $('#addRemarks').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+//            新增备注
+            addRem (){
+                this.$http.post('account/payable/tag/' + this.pitch[0], {
+                    content: this.addRemark,
+                }).then((res) => {
+                    if (res.data.code === '18410') {
+                        $('#addRemarks').modal('hide');
+                        this.payFlowList();
+                    }
+                })
+            },
+//            查看备注
+            look_tag (val){
+                this.look_remark = val;
+                this.remarks_status = 2;
+                $('#addRemarks').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
 //            新增入账模态框
             addPay (){
                 $('#addPay').modal({
@@ -451,7 +525,7 @@
                     subject_id: this.subject,                           //支付科目ID
                     customer_account_type: this.accountType,            //账户类型
                     customer_account_num: this.accountNumber,           //账户账号
-//                    description: this.detailed,                         //详情
+                    description: this.detailed,                         //详情
                     amount_payable: this.payable,                       //应付
                     remark: this.remarks                                //备注
                 }).then((res) => {
@@ -651,8 +725,7 @@
             getClient(data){
                 console.log(data);
                 this.cus_id = data.id;
-                this.cus_name = data.name;
-                this.detailed = data.address;
+                this.cus_name = data.name
 //                this.formData.customer = data;
                 /*this.$http.post('account/payable',this.formData)
                  .then()*/

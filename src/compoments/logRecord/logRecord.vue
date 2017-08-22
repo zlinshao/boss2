@@ -62,19 +62,19 @@
 
         <!--表格-->
         <div>
-            <section class="panel table table-responsive">
+            <section class="panel table table-responsive roll">
                 <table class="table table-striped table-advance table-hover">
                     <thead>
                         <tr>
-                            <th class="text-center">操作人</th>
-                            <th class="text-center">所在部门</th>
-                            <th class="text-center">操作时间</th>
-                            <th class="text-center">操作平台</th>
-                            <th class="text-center">IP地址</th>
-                            <th class="text-center">操作浏览器</th>
-                            <th class="text-center">操作模块</th>
-                            <th class="text-center">操作类型</th>
-                            <th class="text-center">操作结果</th>
+                            <th class="text-center width80">操作人</th>
+                            <th class="text-center width100">所在部门</th>
+                            <th class="text-center width100">操作时间</th>
+                            <th class="text-center width80">操作平台</th>
+                            <th class="text-center width120">IP地址</th>
+                            <th class="text-center width80">操作浏览器</th>
+                            <th class="text-center width80">操作模块</th>
+                            <th class="text-center width80">操作类型</th>
+                            <th class="text-center width80">操作结果</th>
                             <th class="text-center">操作描述</th>
                         </tr>
                     </thead>
@@ -89,7 +89,7 @@
                             <td class="text-center">{{item.module}}</td>
                             <td class="text-center">{{dictionary.operation[item.operation]}}</td>
                             <td class="text-center">{{dictionary.results[item.results]}}</td>
-                            <td class="text-center" v-html="item.description"></td>
+                            <td class="text-center phone" style="min-width: 300px" v-html="item.description"></td>
                             <!--<td class="text-center">-->
                                 <!--<button class="btn btn-default detail" data-toggle="popover" data-html="true"-->
                                         <!--data-placement="bottom" :data-content='item.description' @mouseenter="detail">-->
@@ -157,9 +157,9 @@
             this.getDictionary();
             this.IsPC();
         },
-        updated(){
-            this.remindData ();
-        },
+//        updated(){
+//            this.remindData ();
+//        },
         watch:{
           'params.start_time':{
               deep:true,
@@ -196,6 +196,7 @@
             getDictionary(){
               this.$http.get('log/log/dict').then((res)=>{
                   this.dictionary=res.data;
+                  this.remindData();
                   this.search();
               })
             },

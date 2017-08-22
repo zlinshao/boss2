@@ -57,11 +57,16 @@
                         <li v-show="statusId==1&&pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
-                        <!--<li>
+                        <li>
                             <h5 data-toggle="modal" data-target="#modifyTime">
                                 <a><i class="fa fa-pencil"></i> 修改付款时间</a>
                             </h5>
-                        </li>-->
+                        </li>
+                        <li v-show="pitch.length == 1">
+                            <h5 @click="remark_show">
+                                <a><i class="fa fa-book"></i>&nbsp;新增备注</a>
+                            </h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -166,9 +171,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">详情</label>
+                                <label class="col-sm-2 control-label">详情<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="description" readonly>
+                                    <input type="text" class="form-control" v-model="formData.description">
                                 </div>
                             </div>
 
@@ -412,7 +417,7 @@
         methods : {
             clearForm(){
                 this.chooseResult.customer_name = '';
-                this.description = '';
+                this.formData.description = '';
                 this.formData.customer_id = '';
                 this.formData.pay_date = '';
                 this.formData.subject_id = '';
@@ -574,7 +579,6 @@
                 console.log(data);
                 this.formData.customer_id = data.id;
                 this.chooseResult.customer_name = data.name;
-                this.description = data.address;
             },
 
             save(){
