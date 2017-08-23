@@ -691,7 +691,6 @@
                 myIsEditRent : false,
 
                 house_name: '',
-                staff_id : '',
                 customer_name: '',
                 rentClientType : '',
                 staff_name :'',

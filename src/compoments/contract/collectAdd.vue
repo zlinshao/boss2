@@ -782,15 +782,33 @@
                 this.contractAdd.account_subbank = '';
 
                 this.contractAdd.cost_medi = 0;
-                this.contractAdd.medi_account_type = 1;
+                this.contractAdd.medi_account_type = '';
                 this.contractAdd.medi_account_num = '';
                 this.contractAdd.medi_account_owner = '';
                 this.contractAdd.medi_account_bank = 1;
-                this.contractAdd.medi_account_subbank = 1;
+                this.contractAdd.medi_account_subbank = '';
+
+
+                this.contractAdd.bank_pic = [];
+
+                this.contractAdd.contract_pic = [];
+
+                this.contractAdd.proxy_pic = [];
+
+                this.contractAdd.handover_pic = [];
+
+                this.contractAdd.receipt_pic = [];
+
+                this.contractAdd.water_card_pic = [];
+
+                this.contractAdd.elec_card_pic = [];
+
+                this.contractAdd.gas_card_pic = [];
 
                 this.more  = 1;
                 this.relative_customer = [];
                 this.contractAdd.relative_customer_id = [];
+                this.staff_name = ''
             },
 
             changePayType(ev){

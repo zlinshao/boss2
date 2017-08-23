@@ -1010,6 +1010,23 @@
                 this.contractAdd.water_fee = '';
                 this.contractAdd.gas_fee = '';
 
+                this.contractAdd.relative_customer_id = [];
+
+                this.contractAdd.contract_pic =[];
+
+                this.contractAdd.handover_pic =[];
+
+                this.contractAdd.receipt_pic = [];
+
+                this.contractAdd.water_card_pic = [];
+
+                this.contractAdd.elec_card_pic = [];
+
+                this.contractAdd.gas_card_pic = [];
+
+                this.contractAdd.payment_pic = [];
+
+
                 this.more  = 1;
                 this.relative_customer = [];
                 this.contractAdd.relative_customer_id = [];
