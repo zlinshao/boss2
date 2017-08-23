@@ -293,9 +293,12 @@
                             this.houseAdd.amap_json.address='';
                             this.houseAdd.amap_json.id='';
                             this.houseAdd.amap_json.location='';
-                            this.houseAdd.building='1';
-                            this.houseAdd.unit='1';
-                            this.houseAdd.house_number='1';
+                            this.houseAdd.building='';
+                            this.houseAdd.unit='';
+                            this.houseAdd.house_number='';
+                            this.houseAdd.rooms.rooms = '1';
+                            this.houseAdd.rooms.hall = '1';
+                            this.houseAdd.rooms.toilet = '1';
                         }else{
                             this.info.error =res.data.msg;
                             //显示成功弹窗 ***
