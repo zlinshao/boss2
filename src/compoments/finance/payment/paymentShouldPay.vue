@@ -207,6 +207,7 @@
                     remark: this.remarks
                 }).then((res) => {
                     if (res.data.code === '18410') {
+                        this.revise();
                         $('#payFor').modal('hide');
                         this.$emit('pay_succ',1);
 //                        this.$emit('pay');
