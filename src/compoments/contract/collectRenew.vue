@@ -472,7 +472,7 @@
                     medi_account_subbank : '',   // 支行
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
-                    staff : '',
+                    staff_id : '',
                 },
                 staff_name:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -801,15 +801,16 @@
                 this.contractRenew.account_subbank = '';
 
                 this.contractRenew.cost_medi = 0;
-                this.contractRenew.medi_account_type = 1;
+                this.contractRenew.medi_account_type = '';
                 this.contractRenew.medi_account_num = '';
                 this.contractRenew.medi_account_owner = '';
                 this.contractRenew.medi_account_bank = 1;
-                this.contractRenew.medi_account_subbank = 1;
+                this.contractRenew.medi_account_subbank = '';
 
                 this.more  = 1;
                 this.relative_customer = [];
                 this.contractRenew.relative_customer_id = [];
+                this.staff_name = '',
             },
 
             changePayType(ev){
