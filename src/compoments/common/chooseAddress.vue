@@ -189,10 +189,6 @@
 <script>
     import Status from './status.vue';
 
-    let addr="//restapi.amap.com/v3/assistant/inputtips?key=181a17662347392d30ce7962d0deb60a&datatype=poi&types=120300";
-//    let addr="//restapi.amap.com/v3/assistant/inputtips?key=3834fe3d734950926dbe78c69b28159f&datatype=poi&types=120300";
-    let cityAddr = '//restapi.amap.com/v3/ip?key=181a17662347392d30ce7962d0deb60a&ip=';
-//    let cityAddr = '//restapi.amap.com/v3/ip?key=3834fe3d734950926dbe78c69b28159f&ip=';
     export default{
 
         data(){
@@ -223,6 +219,15 @@
                     //失败信息 ***
                     error: ''
                 },
+                keyArr : [
+                    '2091def5622c2e6830665147aac3f3a5',
+                    '181a17662347392d30ce7962d0deb60a',
+                    '3834fe3d734950926dbe78c69b28159f',
+                    'bd7f6e8277a9230aaf2cc88ab90acfea',
+                    '7ce699d57e8f29b95bd18a5e5972cbfb',
+                    '54a10912e634392fdb93a10ea3cd2eaa'
+                ],
+                index : 0
             }
         },
         components: {Status},
@@ -243,6 +248,9 @@
 //        },
         methods : {
             search(){
+                this.index = Math.floor(Math.random()*this.keyArr.length);
+                let addr="//restapi.amap.com/v3/assistant/inputtips?key="+this.keyArr[this.index]+"&datatype=poi&types=120300";
+                console.log(addr);
                 this.$http.defaults.withCredentials = false;
                 this.$http.defaults.headers = {};
                 this.$http.get(addr+'&keywords='+this.searchInfo+'&city='+this.chooseCity)
@@ -257,6 +265,8 @@
                                     this.villages = [];
                                     this.isShow = true;
                                 }
+                            } else {
+                                this.search();
                             }
 
 
@@ -266,9 +276,11 @@
 //                this.$http.defaults.headers.common['Env'] = globalConfig.env;
             },
             searchVillage(){// 搜索小区
-                if (this.searchInfo.length >= 2){
-                    this.search();
+                if (this.searchInfo.length == 0){
+                    this.villages.splice(0,this.villages.length);
+                    return;
                 }
+                    this.search();
             },
             clearInfo(){
                 this.searchInfo = '';
@@ -324,6 +336,8 @@
             getCurrentCity(){
                 this.$http.defaults.withCredentials = false;
                 this.$http.defaults.headers = {};
+                this.index = Math.floor(Math.random()*this.keyArr.length);
+                let cityAddr = '//restapi.amap.com/v3/ip?key='+this.keyArr[this.index]+'&ip=';
                 this.$http.get(cityAddr+this.ip)
                     .then(
                         (res) => {
