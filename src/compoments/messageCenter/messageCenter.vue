@@ -458,11 +458,22 @@
                 }
             }
         },
-        created (){
-            this.System(1);
+        mounted (){
+            if (this.act === 'sys_mess') {
+                this.System(1);
+            }
+            if (this.act === 'appr_mess') {
+                this.Examine(1);
+            }
+            if (this.act === 'remind_mess') {
+                this.Substitute(1);
+            }
+            if (this.act === 'secre_mess') {
+                this.Secretary(1);
+            }
         },
         computed :{
-          act : function () {
+          act () {
               return this.$route.query.nameId;
           }
         },
@@ -612,7 +623,6 @@
             Examine(val){
                 this.paging = '';
                 this.$http.get('core/customer/dict').then((res) => {
-                    console.log(res.data);
                     this.select_list = res.data;
 
                     this.$http.post('message/approval/index/pages/' + val).then((res) => {
