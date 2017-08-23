@@ -666,8 +666,8 @@
                         </router-link>
                     </li>
 
-                    <!--<li class="sub-menu">
-                        &lt;!&ndash;<li class="sub-menu">&ndash;&gt;
+                    <li class="sub-menu">
+                        <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>办公用品</span>
@@ -689,7 +689,7 @@
                                 </router-link>
                             </li>
                         </ul>
-                    </li>-->
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
