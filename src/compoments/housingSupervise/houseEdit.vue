@@ -41,7 +41,7 @@
                                             <label class="col-sm-2 control-label">小区地址</label>
                                             <div class="col-sm-10">
                                                 <input title="请点击选择" type="text" class="form-control"
-                                                       v-model="houseEdit.village_name" readonly  data-toggle="modal" data-target="#myModal1">
+                                                       v-model="detailed_address" readonly  data-toggle="modal" data-target="#myModal1">
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                         <label class="col-sm-2 control-label">小区地址</label>
                                         <div class="col-sm-10">
                                             <input title="请点击选择" type="text" class="form-control"
-                                                   v-model="houseEdit.village_name" readonly  data-toggle="modal" data-target="#myModal1">
+                                                   v-model="detailed_address" readonly  data-toggle="modal" data-target="#myModal1">
                                         </div>
                                     </div>
                                 </div>
@@ -352,6 +352,7 @@
                     error: ''
                 },
                 staff_id:'',  //负责人
+                detailed_address : '',
             }
         },
         watch:{
@@ -367,7 +368,8 @@
                     this.complete_ok='ok';
                     this.reviseHouseId=val.id;
 
-                    this.houseEdit.village_name =val.detailed_address;
+                    this.houseEdit.village_name =val.village_name;
+                    this.detailed_address =val.detailed_address;
                     this.staff_id = val.staff_id;
                     if(val.amap_json !==null && val.amap_json !==undefined){
                         val.amap_json.villageAddress ===''? this.houseEdit.is_amap = false : this.houseEdit.is_amap = true;
@@ -472,6 +474,7 @@
                 this.houseEdit.amap_json.location='';
                 if(val.villageAddress ===undefined){
                     this.houseEdit.village_name = val.villageName;
+                    this.detailed_address = val.villageName;
                     this.houseEdit.is_amap = false;
                 }else {
                     this.houseEdit.is_amap = true;
