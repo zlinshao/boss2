@@ -213,7 +213,6 @@
             }else{
                 this.getLandlordList(1);
             }
-            console.log(1)
         },
         methods: {
 //            选中

@@ -508,7 +508,7 @@
                 this.one_type = 1;                          //付款方式
                 this.deposit = '';                          //押金
                 this.pay_typeChange = false;                //付款方式不固定
-                this.pay_type = [];                         //不固定显示选择
+                this.pay_type = ['1'];                      //不固定显示选择
                 this.more_type = [];                        //付款年份个数
                 this.pendingContract = '';                  //待签约日期
                 this.vacancyPeriod = '';                    //空置期
