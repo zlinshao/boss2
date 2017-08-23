@@ -54,11 +54,11 @@
                                     <label class="col-sm-2 control-label">申请数量<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <!--<input type="text" class="form-control" readonly>-->
-                                        <button type="button" class="col-sm-2 btn btn-default minus" @click="minus">-</button>
+                                        <button type="button" class="col-sm-2 btn btn-primary minus" @click="minus">-</button>
                                         <div class="col-sm-8" style="padding-left: 0;padding-right: 0">
                                             <input type="text" class="form-control" v-model="formData.num" @blur="isNum">
                                         </div>
-                                        <button type="button" class="col-sm-2 btn btn-default add" @click="add">+</button>
+                                        <button type="button" class="col-sm-2 btn btn-primary add" @click="add">+</button>
                                     </div>
                                 </div>
                                 <div class="form-group">
