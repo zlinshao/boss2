@@ -7,7 +7,9 @@
             </li>
             <li class="active">应收款项详情</li>
             <li class="pull-right" v-show="typeof params!='string'">
-                <router-link :to="{path:'/CollectPayment',query:{myParam:params,page:page,selected:selected}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+                <router-link :to="{path:'/CollectPayment',query:{myParam:params,page:page,selected:selected}}"><i
+                        class="fa fa-angle-double-left"></i> 返回上一步
+                </router-link>
             </li>
         </ol>
 
@@ -40,32 +42,118 @@
                     <div>
                         <div class="col-md-12" v-if="msg!=''">
                             <div class="col-md-6">
-                                <div><span
-                                        class="text-primary">客户姓名：</span><span>{{msg.customer == null ? '客户已删除' : msg.customer.name}}</span>
+                                <div>
+                                    <span class="text-primary">客户姓名：</span>
+                                    <span>{{msg.customer == null ? '客户已删除' : msg.customer.name}}</span>
                                 </div>
-                                <div><span class="text-primary">详情：</span><span>{{msg.description}}</span></div>
-                                <div><span class="text-primary">收款时间：</span>
+                                <div>
+                                    <span class="text-primary">详情：</span>
+                                    <span>{{msg.description}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">收款方式：</span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
+                                        押&nbsp;{{msg.customer.bet}}&nbsp;付
+                                        <span v-if="msg.customer.pay.length !== 0">{{msg.customer.pay[0]}}</span>
+                                        <span class="text-primary" v-if="msg.customer.pay.length > 1"
+                                              @click="changes('bet')" style="cursor: pointer;">
+                                            变化
+                                        </span>
+                                    <span v-if="msg.customer.pay.length === 0">
+                                         —
+                                    </span>
+                                    </span>
+                                </div>
+                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="msg.customer.pay.length > 1"
+                                     id="bet_change">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content roll">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" style="padding: 0;">付款方式</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
+                                                    v-for="(money,index) in msg.customer.pay">
+                                                    <span>第&nbsp;{{index + 1}}&nbsp;年&nbsp;押{{msg.customer.bet}}付{{money}}</span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer text-right col-xs-12">
+                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
+                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-primary">月单价：</span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
+                                        <span v-if="msg.customer.prices.length !== 0">
+                                            {{msg.customer.prices[0]}}
+                                        </span>
+                                        <span class="text-primary" v-if="msg.customer.prices.length > 1"
+                                              @click="changes('price')" style="cursor: pointer;">
+                                            变化
+                                        </span>
+                                    <span v-if="msg.customer.prices.length === 0">
+                                        —
+                                    </span>
+                                    </span>
+                                </div>
+                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="msg.customer.prices.length > 1"
+                                     id="changes">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content roll">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" style="padding: 0;">月单价</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
+                                                    v-for="(money,index) in msg.customer.prices">
+                                                    <span>第&nbsp;{{index + 1}}&nbsp;年--{{money}}</span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer text-right col-xs-12">
+                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
+                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-primary">应收金额：</span>
+                                    <span>{{msg.amount_receivable}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">实收金额：</span>
+                                    <span>{{msg.amount_received}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <span class="text-primary">剩余款项：</span>
+                                    <span>{{msg.balance}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">收款时间：</span>
                                     <span>
                                         {{msg.current_pay_date}}
                                         <a data-toggle="modal" data-target="#moreTime">更多</a>
                                     </span>
                                 </div>
-                                <div><span class="text-primary">收入科目：</span><span>{{dict.account_subject[msg.subject_id]}}</span>
-                                </div>
-                                <div><span class="text-primary">收款方式：</span><span>{{msg.customer==null?'':msg.customer.pay_type}}</span></div>
-                                <div><span class="text-primary">月单价：</span><span>{{msg.customer==null?'':msg.customer.price}}</span></div>
-                                <div><span class="text-primary">应收金额：</span><span>{{msg.amount_receivable}}</span></div>
-                                <div><span class="text-primary">实收金额：</span><span>{{msg.amount_received}}</span></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div><span class="text-primary">剩余款项：</span><span>{{msg.balance}}</span></div>
                                 <div><span class="text-primary">补齐时间：</span>
                                     <span>
                                         <span v-if="!changeCompleteDate">{{msg.complete_date}}</span>
                                         <span v-else="!changeCompleteDate">
                                             <input @click="remindData" placeholder="补齐时间" readonly type="text"
                                                    class="form-control form_datetime" style="max-width: 200px;
-    display: inline-block;" v-show="changeCompleteDate" v-model="changeComplete">
+    display: inline-block;"
+                                                   v-show="changeCompleteDate" v-model="changeComplete">
                                         </span>
                                         <a @click="operCompleteDate" v-show="!changeCompleteDate&&msg.status==2">编辑</a>
                                         <button v-show="changeCompleteDate" type="button" class="btn btn-sm btn-success"
@@ -73,6 +161,14 @@
                                         <button v-show="changeCompleteDate" type="button" class="btn btn-sm btn-primary"
                                                 @click="cancelModify">取消</button>
                                     </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">收入科目：</span>
+                                    <span>{{dict.account_subject[msg.subject_id]}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">备注：</span>
+                                    <span>{{msg.remark}}</span>
                                 </div>
                                 <!--<div><span class="text-primary">截图凭证：</span>
                                     <span v-if="msg.album==undefined">
@@ -83,7 +179,6 @@
                                              @click="showLargePic(index)">
                                     </span>
                                 </div>-->
-                                <div><span class="text-primary">备注：</span><span>{{msg.remark}}</span></div>
                             </div>
                             <div class="col-xs-12">
                                 <span class="text-primary">历史收款记录：</span>
@@ -174,7 +269,7 @@
     import PicModal from '../../common/largePic.vue'
 
     export default{
-        components: {Status, ShouldCollect, SelectHouse, SelectClient, PicModal,Confirm},
+        components: {Status, ShouldCollect, SelectHouse, SelectClient, PicModal, Confirm},
         data(){
             return {
                 dict: {},
@@ -212,9 +307,9 @@
                     msg: ''
                 },
 
-                params : {},
-                page : '',
-                selected : [],
+                params: {},
+                page: '',
+                selected: [],
             }
         },
         updated (){
@@ -243,6 +338,18 @@
 
         },
         methods: {
+//            变化
+            changes (val){
+                if (val === 'price') {
+                    $('#changes').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                } else if (val === 'bet') {
+                    $('#bet_change').modal({
+                        backdrop: 'static',         //空白处模态框不消失
+                    });
+                }
+            },
             getDetails(){
                 this.$http.get('account/receivable/' + this.id)
                     .then((res) => {
@@ -269,7 +376,7 @@
 //                        console.log(this.msg)
                     });
 
-                if (this.currentIndex!=-1){
+                if (this.currentIndex != -1) {
                     this.cancel(this.currentIndex);
                 }
             },
@@ -358,7 +465,7 @@
                             this.times.splice(index, 1, this.moreTime[index]);
                         } else {
                             // 失败
-                            this.info.error = res.data.msg  ;
+                            this.info.error = res.data.msg;
                             //显示失败弹窗 ***
                             this.info.state_error = true;
                             //一秒自动关闭失败信息弹窗 ***
@@ -468,10 +575,10 @@
                 $('#confirm').modal('show');
             },
             getConfirm(){
-                this.$http.post('account/receivable/delete/'+this.id)
-                    .then((res) =>{
+                this.$http.post('account/receivable/delete/' + this.id)
+                    .then((res) => {
 //                    console.log(res.data)
-                        if (res.data.code==18510){
+                        if (res.data.code == 18510) {
                             // 成功
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
@@ -527,7 +634,7 @@
         margin-bottom: 20px;
     }
 
-    .client_info > div > div > div span.text-primary {
+    .client_info > div > div > div span.text-primary:first-child {
         display: inline-block;
         padding-right: 20px;
         text-align: right;
@@ -563,6 +670,7 @@
     .panel-body button {
         vertical-align: inherit;
     }
+
     .breadcrumb > li:last-child:before {
         padding: 0 5px;
         color: #ccc;
