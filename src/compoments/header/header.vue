@@ -673,17 +673,22 @@
                             <span>办公用品</span>
                         </a>
                         <ul class="sub">
-                            <li class="sub-menu">
+                            <li>
+                                <router-link to="/officeLibrary">
+                                    <span>办公用品类型管理</span>
+                                </router-link>
+                            </li>
+                            <li>
                                 <router-link to="/officeSupplies">
                                     <span>办公用品管理</span>
                                 </router-link>
                             </li>
-                            <li class="sub-menu">
+                            <li>
                                 <router-link to="/officeApply">
                                     <span>办公用品申领</span>
                                 </router-link>
                             </li>
-                            <li class="sub-menu">
+                            <li>
                                 <router-link to="/batchApply">
                                     <span>办公用品批量申领</span>
                                 </router-link>

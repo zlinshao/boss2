@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">等级类型<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">登记类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control">
                                             <option value="">cdsd</option>
