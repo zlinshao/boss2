@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">规格型号<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">规格型号</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control">
                                     </div>
