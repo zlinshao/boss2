@@ -157,7 +157,7 @@
         margin-bottom: 0;
     }
     .submit{
-        width: 50%;
+        width: 40%;
         margin: 20px auto;
     }
 </style>

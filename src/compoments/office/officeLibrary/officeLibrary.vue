@@ -94,10 +94,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">所属库</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control">
+                                        <select class="form-control" style="margin-bottom: 8px">
                                             <option value="">--请选择--</option>
                                             <option value="1">ddd</option>
                                         </select>
+                                        <span class="tip">新增所属库时只填写名称即可</span>
                                     </div>
                                 </div>
 
@@ -169,5 +170,10 @@
     }
     textarea {
         max-width: 100%;
+    }
+    span.tip{
+        color: #667fa0;
+        /*display: block;*/
+        /*text-align: center;*/
     }
 </style>

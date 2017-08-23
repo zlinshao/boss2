@@ -66,7 +66,7 @@
                             <th class="text-center">登记类型</th>
                             <th class="text-center">申请数量</th>
                             <th class="text-center">操作日期</th>
-                            <th class="text-center">部门审批人</th>
+                            <th class="text-center">审批人</th>
                             <th class="text-center">备注</th>
                             <th class="text-center">状态</th>
                         </tr>
