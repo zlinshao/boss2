@@ -447,7 +447,7 @@
                             setTimeout(() => {
                                 this.info.state_success = false;
                             }, 2000);
-                            this.getDetails();
+                            this.$router.replace({ path: '/collectPayment'});
                         } else {
                         }
                         // 失败

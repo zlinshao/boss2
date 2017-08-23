@@ -443,7 +443,8 @@
                         setTimeout(() => {
                             this.info.state_success = false;
                         }, 2000);
-                        this.details(this.should_id);
+//                        this.details(this.should_id);
+                        this.$router.replace({ path: '/payPayment'});
                     } else {}
                         // 失败
                         this.info.error = res.data.msg;
