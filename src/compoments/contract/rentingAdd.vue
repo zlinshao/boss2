@@ -7,7 +7,7 @@
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="closeModal">
+                        <button type="button" class="close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">新增租房合同</h4>
@@ -543,7 +543,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">关闭</button>
+                        <button type="button" class="btn btn-default" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="editContract">确认</button>
                     </div>
                 </div>
@@ -1011,19 +1011,19 @@
                 this.contractAdd.gas_fee = '';
 
                 this.contractAdd.relative_customer_id = [];
-
+                this.contractPic.cus_idPhoto = [];
                 this.contractAdd.contract_pic =[];
-
+                this.handoverPic.cus_idPhoto = [];
                 this.contractAdd.handover_pic =[];
-
+                this.receiptPic.cus_idPhoto = [];
                 this.contractAdd.receipt_pic = [];
-
+                this.waterPic.cus_idPhoto = [];
                 this.contractAdd.water_card_pic = [];
-
+                this.elePic.cus_idPhoto = [];
                 this.contractAdd.elec_card_pic = [];
-
+                this.gasPic.cus_idPhoto = [];
                 this.contractAdd.gas_card_pic = [];
-
+                this.paymentPic.cus_idPhoto = [];
                 this.contractAdd.payment_pic = [];
 
 
