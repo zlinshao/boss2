@@ -98,6 +98,7 @@
 
                                 <div class="col-sm-3">
                                     <select class="form-control" v-model="houseAdd.rooms.rooms">
+                                        <option value="0">0室</option>
                                         <option value="1">一室</option>
                                         <option value="2">二室</option>
                                         <option value="3">三室</option>
@@ -110,6 +111,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <select class="form-control" v-model="houseAdd.rooms.hall">
+                                        <option value="0">0厅</option>
                                         <option value="1">一厅</option>
                                         <option value="2">二厅</option>
                                         <option value="3">三厅</option>
@@ -119,6 +121,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <select class="form-control" v-model="houseAdd.rooms.toilet">
+                                        <option value="0">0卫</option>
                                         <option value="1">一卫</option>
                                         <option value="2">二卫</option>
                                         <option value="3">三卫</option>
@@ -193,9 +196,9 @@
                     unit: '',
                     house_number: '',
                     rooms:{
-                        rooms:'1',
-                        hall:'1',
-                        toilet:'1'
+                        rooms:'0',
+                        hall:'0',
+                        toilet:'0'
                     },
                 },
 
@@ -296,9 +299,9 @@
                             this.houseAdd.building='';
                             this.houseAdd.unit='';
                             this.houseAdd.house_number='';
-                            this.houseAdd.rooms.rooms = '1';
-                            this.houseAdd.rooms.hall = '1';
-                            this.houseAdd.rooms.toilet = '1';
+                            this.houseAdd.rooms.rooms = '0';
+                            this.houseAdd.rooms.hall = '0';
+                            this.houseAdd.rooms.toilet = '0';
                         }else{
                             this.info.error =res.data.msg;
                             //显示成功弹窗 ***
