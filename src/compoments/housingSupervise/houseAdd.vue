@@ -53,34 +53,34 @@
                                     <div class="col-sm-3">
                                         <select class="form-control" v-model="houseAdd.rooms.rooms">
                                             <option value="0">0室</option>
-                                            <option value="1">一室</option>
-                                            <option value="2">二室</option>
-                                            <option value="3">三室</option>
-                                            <option value="4">四室</option>
-                                            <option value="5">五室</option>
-                                            <option value="6">六室</option>
-                                            <option value="7">七室</option>
-                                            <option value="8">八室</option>
+                                            <option value="1">1室</option>
+                                            <option value="2">2室</option>
+                                            <option value="3">3室</option>
+                                            <option value="4">4室</option>
+                                            <option value="5">5室</option>
+                                            <option value="6">6室</option>
+                                            <option value="7">7室</option>
+                                            <option value="8">8室</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
                                         <select class="form-control" v-model="houseAdd.rooms.hall">
                                             <option value="0">0厅</option>
-                                            <option value="1">一厅</option>
-                                            <option value="2">二厅</option>
-                                            <option value="3">三厅</option>
-                                            <option value="4">四厅</option>
-                                            <option value="5">五厅</option>
+                                            <option value="1">1厅</option>
+                                            <option value="2">2厅</option>
+                                            <option value="3">3厅</option>
+                                            <option value="4">4厅</option>
+                                            <option value="5">5厅</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
                                         <select class="form-control" v-model="houseAdd.rooms.toilet">
                                             <option value="0">0卫</option>
-                                            <option value="1">一卫</option>
-                                            <option value="2">二卫</option>
-                                            <option value="3">三卫</option>
-                                            <option value="4">四卫</option>
-                                            <option value="4">五卫</option>
+                                            <option value="1">1卫</option>
+                                            <option value="2">2卫</option>
+                                            <option value="3">3卫</option>
+                                            <option value="4">4卫</option>
+                                            <option value="4">5卫</option>
                                         </select>
                                     </div>
                                 </div>
