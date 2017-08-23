@@ -810,7 +810,7 @@
                 this.more  = 1;
                 this.relative_customer = [];
                 this.contractRenew.relative_customer_id = [];
-                this.staff_name = '',
+                this.staff_name = '';
             },
 
             changePayType(ev){
