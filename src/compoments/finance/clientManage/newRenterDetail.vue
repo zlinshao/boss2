@@ -146,17 +146,16 @@
                                 <div>
                                     <span class="text-primary">房型：</span>
                                     <span v-if="item.house !== null && item.house !== undefined">
-                                        <span v-if="item.house.rooms !== null && item.house.rooms !== undefined">
+                                        <span v-if="item.house.rooms !== null && item.house.rooms.rooms !== undefined">
                                             {{item.house.rooms.rooms}}
                                         </span>室/
-                                        <span v-if="item.house.hall !== null && item.house.hall !== undefined">
+                                        <span v-if="item.house.rooms.hall !== null && item.house.rooms.hall !== undefined">
                                             {{item.house.rooms.hall}}
                                         </span>
                                         厅/
-                                        <span v-if="item.house.toilet !== null && item.house.toilet !== undefined">
+                                        <span v-if="item.house.rooms.toilet !== null && item.house.rooms.toilet !== undefined">
                                             {{item.house.rooms.toilet}}
                                         </span>
-
                                         卫
                                     </span>
                                 </div>
