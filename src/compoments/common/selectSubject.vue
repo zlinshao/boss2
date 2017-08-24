@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="selectSubject">
-            <input type="text" class="form-control" readonly @click="getBaseSubject" v-model="Superior_name" />
+            <input type="text" class="form-control" style="margin-bottom: 0;" readonly @click="getBaseSubject" v-model="Superior_name" :placeholder="msg"/>
             <div class="subjectList" v-show="showChooseSubject">
                 <ul>
                     <li @click="changeCurId(value,key)" :class="{'active':curSuperior_id == value}" v-for="(key,value) in subjectData">{{key}}</li>
@@ -19,7 +19,7 @@
 
 <script>
     export default{
-        props : ['current'],
+        props : ['current','msg'],
         components: {},
         data(){
             return {

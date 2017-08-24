@@ -19,9 +19,16 @@
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
-
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="搜索房屋地址" v-model="params.search"  @keydown.enter.prevent="search(1)">
+                            <SelectSubject @choose="houseSubject" :current="params.subject_id"
+                                           :msg="'科目搜索'"></SelectSubject>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" id="Subject" type="button" @click="search_empty(1)">清空</button>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="搜索房屋地址" v-model="params.search"
+                                   @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
@@ -78,7 +85,7 @@
                             </td>
                             <td>{{item.id}}</td>
                             <td>{{item.update_time}}</td>
-                            <td>{{item.customer==undefined?'':item.customer.address}}</td>
+                            <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
                             <td>{{item.subject}}</td>
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{dict.account_cate[item.account_cate]}}</td>
@@ -109,38 +116,41 @@
 </template>
 
 <script>
+    import SelectSubject from '../common/selectSubject.vue'
     import Page from '../common/page.vue'
     import DatePicker from '../common/datePicker.vue'
 
     export default{
-        components: {Page,DatePicker},
+        components: {Page, DatePicker, SelectSubject},
 
         data(){
             return {
-                beforePage:1,
-                dict : {},
-                isShow :false,
 
-                paging : '',
-                page : 1,                  // 当前页数
+                beforePage: 1,
+                dict: {},
+                isShow: false,
 
-                dateConfigure : [
+                paging: '',
+                page: 1,                  // 当前页数
+
+                dateConfigure: [
                     {
-                        range : true,
-                        needHour : true
+                        range: true,
+                        needHour: true
                     }
                 ],
 
                 myData: [],      //列表数据
 
-                params : {
-                    department_id : [],
-                    staff_id : [],
-                    range : '',
-                    search : '',
-                    cate : 3
+                params: {
+                    subject_id: '',  //科目款项
+                    department_id: [],
+                    staff_id: [],
+                    range: '',
+                    search: '',
+                    cate: 3
                 },
-                tips : {
+                tips: {
                     expend_sum: 0,                           // 总支出
                     receive_sum: 0,                     // 总收入
                     diff_sum: 0,                       // 收支差额
@@ -148,65 +158,68 @@
             }
         },
         mounted () {
-            this.$http.get('revenue/glee_collect/dict')
-                .then(
-//                    console.log
-                    (res) => {
-                        this.dict = res.data;
-                        this.payFlowList();
-                    }
-                );
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                    this.dict = res.data;
+                    this.payFlowList();
+                }
+            );
         },
-        methods : {
+        methods: {
+//            房款科目
+            houseSubject(val){
+                this.params.subject_id = val;
+                this.search(1);
+            },
             payFlowList(){
                 this.$http.get('account/running').then((res) => {
-                    if (res.data.code==18700){
+                    if (res.data.code == 18700) {
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
-                        this.setTips(res.data.data,true);
+                        this.setTips(res.data.data, true);
                         this.isShow = false;
                     } else {
                         this.isShow = true;
-                        this.setTips({},false);
+                        this.setTips({}, false);
                     }
-                 })
+                })
             },
-
+//            清空
+            search_empty (val){
+                this.params.subject_id = '';
+                this.filter(val);
+            },
             search(val){
-//                console.log(this.params);
                 this.filter(val);
             },
             getDate(data){
                 // 时间
-                console.log(data);
                 this.params.range = data;
                 this.search(1);
             },
 
             filter(val){
                 this.beforePage = val;
-                this.$http.get('account/running?page='+val,{
-                    params : this.params
-                }).then(
-                    (res) =>{
-                        if (res.data.code == 18700){
+                this.$http.get('account/running?page=' + val, {
+                    params: this.params
+                }).then((res) => {
+                        if (res.data.code == 18700) {
                             // 成功
                             this.paging = res.data.data.pages;
                             this.myData = res.data.data.data;
-                            this.setTips(res.data.data,true);
+                            this.setTips(res.data.data, true);
                             this.isShow = false;
                         } else {
                             this.isShow = true;
                             this.myData = [];
                             this.paging = 0;
                             this.page = 1;
-                            this.setTips({},false);
+                            this.setTips({}, false);
                         }
                     }
                 )
             },
-            setTips(val,bool){
-                if (bool){
+            setTips(val, bool){
+                if (bool) {
                     this.tips.receive_sum = val.receive_sum;
                     this.tips.expend_sum = val.expend_sum;
                     this.tips.diff_sum = val.diff_sum;
@@ -226,7 +239,8 @@
     div.padd {
         display: inline-block;
     }
-    .tips{
+
+    .tips {
         line-height: 30px;
         /*padding-left: 12px;*/
         padding-bottom: 5px;
@@ -234,36 +248,48 @@
         /*margin-top: 20px;*/
         /*width: 100%;*/
     }
-    .tips ul{
+
+    .tips ul {
         margin: 0;
         padding: 12px 0;
     }
-    .tips ul li{
+
+    .tips ul li {
         /*float: left;*/
         padding: 0 50px;
         box-sizing: border-box;
     }
-    .tips ul li+li{
+
+    .tips ul li + li {
         /*margin-left: 30px;*/
         border-left: 1px solid #ddd;
 
     }
-    .tips ul li span{
+
+    .tips ul li span {
         font-size: 18px;
         /*padding-left: 8px;*/
         /*font-weight: bold;*/
     }
-    .tips ul li span.green,td.green{
+
+    .tips ul li span.green, td.green {
         color: #66CC33;
     }
-    .tips ul li span.red,td.red{
+
+    .tips ul li span.red, td.red {
         color: #FF6666;
     }
-    .tips ul li span.yellow{
+
+    .tips ul li span.yellow {
         color: #FF9A02;
     }
+
     @media (max-width: 798px) {
-        .panel-body .form-inline .input-group{
+        .panel-body .form-inline .input-group {
+            margin-bottom: 5px;
+        }
+
+        .panel-body .form-inline .form-group {
             margin-bottom: 5px;
         }
     }
