@@ -88,9 +88,10 @@ import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDeta
 import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
 
 import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'            // 办公用品管理
-import OfficeApply from './compoments/office/officeApply/personalRecord.vue'            // 办公用品申领
+import OfficeApply from './compoments/office/officeApply/officeApply.vue'            // 办公用品申领
 import BatchApply from './compoments/office/batchApply.vue'            // 办公用品批量申领
 import OfficeLibrary from './compoments/office/officeLibrary/officeLibrary.vue'            // 办公用品库管理
+import OfficeDetail from './compoments/office/officeManage/officeDetail.vue'            // 办公用品详情
 
 export default[
     {
@@ -492,5 +493,10 @@ export default[
         path: '/officeLibrary',
         name: 'OfficeLibrary',
         component: OfficeLibrary
+    },
+    {
+        path: '/officeDetail',
+        name: 'OfficeDetail',
+        component: OfficeDetail
     },
 ]

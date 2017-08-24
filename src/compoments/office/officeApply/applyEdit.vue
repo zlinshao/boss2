@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right" id="applySupply" tabindex="-1" role="dialog" data-backdrop="static"
+        <div class="modal fade full-width-modal-right" id="editApply" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" @click="clearForm" aria-hidden="true">×</button>
-                            <h4 class="modal-title">新建办公用品申领</h4>
+                            <h4 class="modal-title">编辑办公用品申领</h4>
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
@@ -76,7 +76,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" @click="clearForm">取消</button>
-                            <button type="button" class="btn btn-primary" @click="apply">申领</button>
+                            <button type="button" class="btn btn-primary" @click="modify">修改</button>
                         </div>
                     </div>
                 </div>
@@ -89,9 +89,9 @@
 </template>
 
 <script>
-    import Status from '../common/status.vue';
+    import Status from '../../common/status.vue';
     export default{
-        props : ['officeId'],
+        props : ['applyId'],
         components: {Status},
         data(){
             return {
@@ -131,11 +131,10 @@
             this.getLibrarys();
         },
         watch :{
-            officeId(val){
+            applyId(val){
                 console.log(val);
-                this.getOfficeDetail();
+                this.getDetail();
             },
-
             library_id(val){
                 this.category_id = '';
                 this.formData.inventory_id = '';
@@ -199,23 +198,28 @@
             }
         },
         methods: {
-            getOfficeDetail(){
+            getDetail(){
 //                console.log(this.officeId)
-                if (this.officeId==undefined){
+                if (this.applyId==undefined){
                     return;
                 }
-                this.$http.post('manager/management/inventory_details?id='+this.officeId).then((res)=>{
+                this.$http.post('manager/management/receive_details?id='+this.applyId).then((res)=>{
                     console.log(res.data);
                     let val =res.data.data.data;
                     let _this = this;
                     this.formData.register_type = val.register_type;
-                    this.library_id = val.library_id;
+                    this.library_id = val.parent_id;
                     setTimeout(function () {
                         _this.category_id = val.category_id
                     },500);
                     setTimeout(function () {
-                        _this.formData.inventory_id = val.id
+                        _this.formData.inventory_id = val.inventory_id
                     },1000);
+                    setTimeout(function () {
+                        _this.formData.num = val.num;
+                    },1500);
+
+                    this.formData.remarks = val.remarks;
                 })
             },
 
@@ -233,13 +237,13 @@
                 this.formData.num = 0;
                 this.formData.remarks = '';
 
-                this.getOfficeDetail();
-                $('#applySupply').modal('hide');
+                this.getDetail();
+                $('#editApply').modal('hide');
             },
             // 获取所有库
             getLibrarys(){
                 this.$http.post('manager/management/library_all').then((res)=>{
-//                    console.log(res);
+                    console.log(res);
                     if (res.data.code==10010){
                         // 成功
                         this.allLibrary = res.data.data.data;
@@ -272,11 +276,11 @@
                     }
                 }
             },
-            // 申领
-            apply(){
-                this.$http.post('manager/management/receive_insert',this.formData).then((res)=>{
+            // 修改
+            modify(){
+                this.$http.post('manager/management/receive_update?id='+this.applyId,this.formData).then((res)=>{
                     console.log(res.data);
-                    if (res.data.code==10061){
+                    if (res.data.code==10071){
                         // 成功
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
