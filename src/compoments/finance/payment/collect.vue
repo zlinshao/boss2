@@ -298,8 +298,10 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
+
         <!--应收入账-->
         <ShouldCollect :id="shouldCollectId" @success="filter"></ShouldCollect>
+
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
@@ -403,6 +405,7 @@
 
                 formData: {
                     customer_id: '',         // 客户id
+                    identity: '',           // 客户身份
 //                    customer : {},
                     pay_date: '',    // 收款时间
                     description: '',         // 详情
@@ -669,6 +672,7 @@
             getClient(data){
                 console.log(data);
                 this.formData.customer_id = data.id;
+                this.formData.identity = data.identity;
                 this.chooseResult.customer_name = data.name;
             },
 

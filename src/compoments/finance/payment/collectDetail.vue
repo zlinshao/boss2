@@ -50,81 +50,90 @@
                                     <span class="text-primary">详情：</span>
                                     <span>{{msg.description}}</span>
                                 </div>
-                                <div>
-                                    <span class="text-primary">收款方式：</span>
-                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
-                                        押&nbsp;{{msg.customer.bet}}&nbsp;付
-                                        <span v-if="msg.customer.pay.length !== 0">{{msg.customer.pay[0]}}</span>
-                                        <span class="text-primary" v-if="msg.customer.pay.length > 1"
-                                              @click="changes('bet')" style="cursor: pointer;">
-                                            变化
-                                        </span>
-                                    <span v-if="msg.customer.pay.length === 0">
-                                         —
-                                    </span>
-                                    </span>
-                                </div>
-                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="msg.customer.pay.length > 1"
-                                     id="bet_change">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content roll">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">
-                                                    <span>&times;</span>
-                                                </button>
-                                                <h4 class="modal-title" style="padding: 0;">付款方式</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
-                                                    v-for="(money,index) in msg.customer.pay">
-                                                    <span>第&nbsp;{{index + 1}}&nbsp;年&nbsp;押{{msg.customer.bet}}付{{money}}</span>
-                                                </h4>
-                                            </div>
-                                            <div class="modal-footer text-right col-xs-12">
-                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
-                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="text-primary">月单价：</span>
-                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
-                                        <span v-if="msg.customer.prices.length !== 0">
-                                            {{msg.customer.prices[0]}}
-                                        </span>
-                                        <span class="text-primary" v-if="msg.customer.prices.length > 1"
-                                              @click="changes('price')" style="cursor: pointer;">
-                                            变化
-                                        </span>
-                                    <span v-if="msg.customer.prices.length === 0">
-                                        —
-                                    </span>
-                                    </span>
-                                </div>
-                                <div role="dialog" class="modal fade bs-example-modal-sm" v-if="msg.customer.prices.length > 1"
-                                     id="changes">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content roll">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">
-                                                    <span>&times;</span>
-                                                </button>
-                                                <h4 class="modal-title" style="padding: 0;">月单价</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h4 class="modal-title col-xs-6" style="padding: 10px 0;"
-                                                    v-for="(money,index) in msg.customer.prices">
-                                                    <span>第&nbsp;{{index + 1}}&nbsp;年--{{money}}</span>
-                                                </h4>
-                                            </div>
-                                            <div class="modal-footer text-right col-xs-12">
-                                                <button data-dismiss="modal" class="btn btn-primary btn-md">确定</button>
-                                                <!--<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--<div>-->
+                                    <!--<span class="text-primary">收款方式：</span>-->
+                                    <!--<span v-if="msg.customer !== null && msg.customer !== undefined">-->
+                                        <!--押&nbsp;{{msg.customer.bet}}&nbsp;付-->
+                                        <!--<span v-if="msg.customer.pay.length !== 0">{{msg.customer.pay[0]}}</span>-->
+                                        <!--<span class="text-primary" v-if="msg.customer.pay.length > 1"-->
+                                              <!--@click="changes('bet')" style="cursor: pointer;">-->
+                                            <!--变化-->
+                                        <!--</span>-->
+                                    <!--<span v-if="msg.customer.pay.length === 0">-->
+                                         <!--—-->
+                                    <!--</span>-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                                <!--<div v-if="msg.customer !== null && msg.customer !== undefined">-->
+                                    <!--<div role="dialog" class="modal fade bs-example-modal-sm"-->
+                                         <!--v-if="msg.customer.pay.length > 1"-->
+                                         <!--id="bet_change">-->
+                                        <!--<div class="modal-dialog ">-->
+                                            <!--<div class="modal-content roll">-->
+                                                <!--<div class="modal-header">-->
+                                                    <!--<button type="button" class="close" data-dismiss="modal">-->
+                                                        <!--<span>&times;</span>-->
+                                                    <!--</button>-->
+                                                    <!--<h4 class="modal-title" style="padding: 0;">付款方式</h4>-->
+                                                <!--</div>-->
+                                                <!--<div class="modal-body">-->
+                                                    <!--<h4 class="modal-title col-xs-6" style="padding: 10px 0;"-->
+                                                        <!--v-for="(money,index) in msg.customer.pay">-->
+                                                        <!--<span>第&nbsp;{{index + 1}}&nbsp;年&nbsp;押{{msg.customer.bet}}付{{money}}</span>-->
+                                                    <!--</h4>-->
+                                                <!--</div>-->
+                                                <!--<div class="modal-footer text-right col-xs-12">-->
+                                                    <!--<button data-dismiss="modal" class="btn btn-primary btn-md">确定-->
+                                                    <!--</button>-->
+                                                    <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>&ndash;&gt;-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div>-->
+                                    <!--<span class="text-primary">月单价：</span>-->
+                                    <!--<span v-if="msg.customer !== null && msg.customer !== undefined">-->
+                                        <!--<span v-if="msg.customer.prices.length !== 0">-->
+                                            <!--{{msg.customer.prices[0]}}-->
+                                        <!--</span>-->
+                                        <!--<span class="text-primary" v-if="msg.customer.prices.length > 1"-->
+                                              <!--@click="changes('price')" style="cursor: pointer;">-->
+                                            <!--变化-->
+                                        <!--</span>-->
+                                    <!--<span v-if="msg.customer.prices.length === 0">-->
+                                        <!--—-->
+                                    <!--</span>-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                                <!--<div v-if="msg.customer !== null && msg.customer !== undefined">-->
+                                    <!--<div role="dialog" class="modal fade bs-example-modal-sm"-->
+                                         <!--v-if="msg.customer.prices.length > 1"-->
+                                         <!--id="changes">-->
+                                        <!--<div class="modal-dialog ">-->
+                                            <!--<div class="modal-content roll">-->
+                                                <!--<div class="modal-header">-->
+                                                    <!--<button type="button" class="close" data-dismiss="modal">-->
+                                                        <!--<span>&times;</span>-->
+                                                    <!--</button>-->
+                                                    <!--<h4 class="modal-title" style="padding: 0;">月单价</h4>-->
+                                                <!--</div>-->
+                                                <!--<div class="modal-body">-->
+                                                    <!--<h4 class="modal-title col-xs-6" style="padding: 10px 0;"-->
+                                                        <!--v-for="(money,index) in msg.customer.prices">-->
+                                                        <!--<span>第&nbsp;{{index + 1}}&nbsp;年&#45;&#45;{{money}}</span>-->
+                                                    <!--</h4>-->
+                                                <!--</div>-->
+                                                <!--<div class="modal-footer text-right col-xs-12">-->
+                                                    <!--<button data-dismiss="modal" class="btn btn-primary btn-md">确定-->
+                                                    <!--</button>-->
+                                                    <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>&ndash;&gt;-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div>
                                     <span class="text-primary">应收金额：</span>
                                     <span>{{msg.amount_receivable}}</span>
@@ -554,7 +563,7 @@
                             setTimeout(() => {
                                 this.info.state_success = false;
                             }, 2000);
-                            this.$router.replace({ path: '/collectPayment'});
+                            this.$router.replace({path: '/collectPayment'});
                         } else {
                         }
                         // 失败

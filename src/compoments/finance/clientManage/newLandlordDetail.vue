@@ -381,8 +381,10 @@
             },
 //            删除回调
             getConfirm(){
+                let ids = [];   
+                ids.push(this.myLandlordId);
                 this.$http.post('finance/customer/collect/delete', {
-                    ids: this.myLandlordId
+                    ids: ids
                 }).then((res) => {
                     if (res.data.code === '90010') {
                         this.$router.replace({path: '/newLandlord'});

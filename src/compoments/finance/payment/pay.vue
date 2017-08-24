@@ -373,6 +373,7 @@
                 pay_time: '',                       //付款日期
                 cus_id: '',                         //客户ID
                 cus_name: '',                       //客户姓名
+                identity: '',                       //客户身份
                 detailed: '',                       //详情
                 subject: '',                        //支付科目
                 payable: '',                        //应付金额
@@ -522,6 +523,7 @@
             new_addPay(){
                 this.$http.post('account/payable', {
                     customer_id: this.cus_id,                           //客户ID
+                    identity: this.identity,                            //客户身份
                     pay_date: this.pay_time,                            //付款日期
                     subject_id: this.subject,                           //支付科目ID
                     customer_account_type: this.accountType,            //账户类型
@@ -730,6 +732,7 @@
             getClient(data){
                 console.log(data);
                 this.cus_id = data.id;
+                this.identity = data.identity;
                 this.cus_name = data.name
 //                this.formData.customer = data;
                 /*this.$http.post('account/payable',this.formData)

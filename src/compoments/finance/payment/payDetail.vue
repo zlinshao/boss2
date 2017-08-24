@@ -7,7 +7,9 @@
             </li>
             <li class="active">应付款项详情</li>
             <li class="pull-right" v-show="typeof params!='string'">
-                <router-link :to="{path:'/payPayment',query:{myParam:params,page:page,selected:selected}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+                <router-link :to="{path:'/payPayment',query:{myParam:params,page:page,selected:selected}}"><i
+                        class="fa fa-angle-double-left"></i> 返回上一步
+                </router-link>
             </li>
         </ol>
 
@@ -145,7 +147,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="details(should_id)"><span
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                @click="details(should_id)"><span
                                 aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">编辑付款时间</h4>
                     </div>
@@ -160,7 +163,8 @@
                                                v-model="moreTime[index].pay_date">
                                     </div>
                                     <div class="col-sm-5">
-                                        <button type="button" class="btn btn-sm btn-success" @click="operTime(index,item.id)">
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                @click="operTime(index,item.id)">
                                             确定
                                         </button>
                                         <button type="button" class="btn btn-sm btn-primary" @click="cancel(index)">取消
@@ -205,7 +209,7 @@
     import SelectClient from '../../common/selectClient.vue'
 
     export default{
-        components: {Status, ShouldPay, SelectHouse, SelectClient,Confirm},
+        components: {Status, ShouldPay, SelectHouse, SelectClient, Confirm},
         data(){
             return {
                 changeCompleteDate: true,       //修改补齐时间
@@ -233,15 +237,15 @@
                     error: ''
                 },
 
-                pendable : '',
+                pendable: '',
 
                 confirmMsg: {
                     id: '',
                     msg: ''
                 },
-                params : {},
-                page : '',
-                selected : [],
+                params: {},
+                page: '',
+                selected: [],
             }
         },
         updated (){
@@ -293,7 +297,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }else{
+                    } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -314,7 +318,9 @@
                         this.moreTime = [];
                         this.details_info.push(res.data.data);
                         this.status = res.data.data.status;
-                        this.address = res.data.data.address;
+                        if (res.data.data.customer !== null && res.data.data.customer !== undefined) {
+                            this.address = res.data.data.customer.address;
+                        }
                         this.complete_date = res.data.data.complete_date;
                         this.pendable = res.data.data.pendable;
                         if (res.data.data.balance === '0.00') {
@@ -324,14 +330,14 @@
                         }
                         this.descriptions = res.data.data.description.split('/');
 
-                        for (let i = 0; i<res.data.data.pay_date.length; i++){
+                        for (let i = 0; i < res.data.data.pay_date.length; i++) {
                             this.moreTime.push(res.data.data.pay_date[i]);
                         }
-                        for (let i = 0; i<res.data.data.pay_date.length; i++){
+                        for (let i = 0; i < res.data.data.pay_date.length; i++) {
                             this.times.push(res.data.data.pay_date[i]);
                         }
 //                        console.log(this.moreTime);
-                        for (let i = 0 ; i<this.moreTime.length ; i++){
+                        for (let i = 0; i < this.moreTime.length; i++) {
                             this.showOper.push(false);
                         }
 
@@ -355,9 +361,9 @@
                     if (ev.target.placeholder === '付款时间') {
                         // 编辑中的付款时间
                     } else {
-                        this.moreTime.splice(this.currentIndex,1,{
-                            id : this.moreTime[this.currentIndex].id,
-                            pay_date : ev.target.value
+                        this.moreTime.splice(this.currentIndex, 1, {
+                            id: this.moreTime[this.currentIndex].id,
+                            pay_date: ev.target.value
                         });
                     }
 //                    console.log(ev.target.value);
@@ -372,9 +378,9 @@
 //                    clearBtn: true,                     //清除按钮
                     pickerPosition: 'top-left'
                 }).on('changeDate', function (ev) {
-                    this.moreTime.splice(this.currentIndex,1,{
-                        id : this.moreTime[this.currentIndex].id,
-                        pay_date : ev.target.value
+                    this.moreTime.splice(this.currentIndex, 1, {
+                        id: this.moreTime[this.currentIndex].id,
+                        pay_date: ev.target.value
                     });
                 }.bind(this));
             },
@@ -395,11 +401,11 @@
 //                console.log(this.currentIndex);
 
             },
-            operTime(index,id){
-                this.$http.post('account/payable/scheduler/'+this.moreTime[index].id,{pay_date:this.moreTime[index].pay_date})
-                    .then((res)=>{
+            operTime(index, id){
+                this.$http.post('account/payable/scheduler/' + this.moreTime[index].id, {pay_date: this.moreTime[index].pay_date})
+                    .then((res) => {
                         console.log(res);
-                        if (res.data.code === '18410'){
+                        if (res.data.code === '18410') {
                             // 成功
                             this.info.success = res.data.msg;
                             //显示失败弹窗 ***
@@ -409,8 +415,8 @@
                                 this.info.state_success = false;
                             }, 2000);
                             this.currentIndex = -1;
-                            this.showOper.splice(index,1,false);
-                            this.times.splice(index,1,this.moreTime[index]);
+                            this.showOper.splice(index, 1, false);
+                            this.times.splice(index, 1, this.moreTime[index]);
                         } else {
                             // 失败
                             this.info.error = res.data.msg;
@@ -431,21 +437,22 @@
             },
 
             pendingItem(){
-                this.$http.post('account/pending/payable/'+this.should_id)
-                    .then((res)=>{
-                    console.log(res);
-                    if (res.data.code === '18810'){
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        }, 2000);
+                this.$http.post('account/pending/payable/' + this.should_id)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.data.code === '18810') {
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            //一秒自动关闭失败信息弹窗 ***
+                            setTimeout(() => {
+                                this.info.state_success = false;
+                            }, 2000);
 //                        this.details(this.should_id);
-                        this.$router.replace({ path: '/payPayment'});
-                    } else {}
+                            this.$router.replace({path: '/payPayment'});
+                        } else {
+                        }
                         // 失败
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -464,10 +471,10 @@
                 $('#confirm').modal('show');
             },
             getConfirm(){
-                this.$http.post('account/payable/delete/'+this.should_id)
-                    .then((res) =>{
+                this.$http.post('account/payable/delete/' + this.should_id)
+                    .then((res) => {
 //                    console.log(res.data)
-                        if (res.data.code === '18410'){
+                        if (res.data.code === '18410') {
                             // 成功
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
@@ -510,11 +517,13 @@
         border: 0;
         cursor: auto;
     }
-    .status1 button{
+
+    .status1 button {
         color: #FFFFFF;
         border: 0;
         cursor: auto;
     }
+
     header h4 {
         border-bottom: 1px solid #aaaaaa;
         padding: 0 30px 8px;
