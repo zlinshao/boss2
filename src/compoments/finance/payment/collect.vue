@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <ol class="breadcrumb">
             <li>财务账本</li>
             <li>应收款项</li>
@@ -54,10 +53,10 @@
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="statusId!=3&&pitch.length==1">
+                        <li v-show="pitch.length==1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
-                        <li v-show="statusId!=3&&pitch.length==1">
+                        <li v-show="pitch.length==1">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li v-show="pitch.length==1">
@@ -117,17 +116,21 @@
 
         <div class="panel tips">
             <ul class="clearFix">
-                <li class="col-md-4">
+                <li class="col-md-3">
                     应收金额(元) <br>
                     <span class="green">{{tips.receivable_sum}}</span>
                 </li>
-                <li class="col-md-4">
+                <li class="col-md-3">
                     实收金额(元) <br>
                     <span class="green">{{tips.received_sum}}</span>
                 </li>
-                <li class="col-md-4">
+                <li class="col-md-3">
                     剩余款项(元) <br>
                     <span class="yellow">{{tips.balance_sum}}</span>
+                </li>
+                <li class="col-md-3" @click="playback" style="cursor: pointer;">
+                    <span style="float: left; font-size: 60px;" class="text-danger fa fa-trash-o"></span>
+                    <span style="float: left; font-size: 30px;margin: 14px 0 0 10px;">回收站</span>
                 </li>
             </ul>
         </div>
@@ -139,26 +142,27 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">
+                            <th class="text-center" v-if="recycle_bin">
                                 <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
                                        @click="chooseAll($event)">
                             </th>
-                            <th class="text-center width100">收款时间</th>
-                            <th class="text-center width80">客户姓名</th>
-                            <th class="text-center width80">收入科目</th>
-                            <th class="text-center width100">应收金额</th>
-                            <th class="text-center width100">实收金额</th>
-                            <th class="text-center width100">剩余款项</th>
-                            <th class="text-center width100">补齐时间</th>
-                            <th class="text-center phone" style="min-width: 360px;">详细信息</th>
-                            <th class="text-center width80">状态</th>
-                            <th class="text-center width50">备注</th>
-                            <th class="text-center width50">详情</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">收入科目</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">应收金额</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">实收金额</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
+                            <th class="text-center phone" :class="{red: !recycle_bin}" style="min-width: 360px;">详细信息
+                            </th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">状态</th>
+                            <th class="text-center width50" :class="{red: !recycle_bin}">备注</th>
+                            <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
-                            <td>
+                            <td v-if="recycle_bin">
                                 <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
                                        @click="changeIndex($event,item.id,item.status)">
                             </td>
@@ -181,7 +185,7 @@
                                 <span v-if="item.tag === ''"></span>
                                 <span @click="look_tag(item.tag)" v-if="item.tag !== ''" class="fa fa-book"></span>
                             </td>
-                            <td>
+                            <td v-if="recycle_bin">
                                 <router-link
                                         :to="{path:'/collectPaymentDetail',query: {collectId: item.id,page:beforePage,myParams:params,selected:selected}}">
                                     详情
@@ -365,6 +369,7 @@
 
         data(){
             return {
+                recycle_bin: true,            //回收站
                 look_remark: '',              //备注内容
                 remarks_status: '',          //新增/查看
                 addRemark: '',               //新增备注
@@ -476,7 +481,6 @@
                             // this.currentDate = params.range.split('to');
                             // console.log(this.currentDate)
                             this.params = params;
-                            console.log(this.params);
 //                                alert(this.beforePage)
                         }
 //                            alert(selected);
@@ -494,7 +498,7 @@
             this.$http.get('staff/info').then((res) => {
                     this.logName = res.data.name;
                 }
-            )
+            );
         },
         watch: {
             pitch(val){
@@ -505,7 +509,78 @@
                 }
             }
         },
+
         methods: {
+//            清空
+            clear_info (){
+                this.params.department_id = [];
+                this.params.name = [];
+                this.params.staff_id = [];
+                this.params.name = [];
+                this.params.status = '';
+                this.params.range = '';
+                this.params.search = '';
+                this.selected = [];
+            },
+//            切换
+            playback (){
+                this.recycle_bin = !this.recycle_bin;
+                if (this.recycle_bin === false) {
+                    this.clear_info();
+                    this.playbacks(this.beforePage);
+                } else if (this.recycle_bin === true) {
+                    this.clear_info();
+                    this.filter(this.beforePage);
+                }
+            },
+            search(val){
+                if (this.recycle_bin === false) {
+                    this.playbacks(val);
+                } else if (this.recycle_bin === true) {
+                    this.filter(val);
+                }
+
+            },
+            playbacks(val){
+                this.beforePage = val;
+                this.paging = '';
+                this.$http.get('account/receivable/trashed?page=' + val, {
+                    params: this.params
+                }).then((res) => {
+                    this.myData = [];
+                    if (res.data.code === '18500') {
+                        this.isShow = false;
+                        this.paging = res.data.data.pages;
+                        this.myData = res.data.data.data;
+                    } else {
+                        this.isShow = true;
+                    }
+                })
+            },
+
+            filter(val){
+                this.operId = 0;
+                this.pitch.splice(0, this.pitch);
+                this.beforePage = val;
+                this.$http.get('account/receivable?page=' + val, {
+                    params: this.params
+                }).then((res) => {
+                    this.myData = [];
+                    if (res.data.code == 18500) {
+                        // 成功
+                        this.paging = res.data.data.pages;
+                        this.myData = res.data.data.data;
+                        this.setTips(res.data.data, true);
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.paging = 0;
+                        this.page = 1;
+                        this.setTips({}, false);
+                    }
+                })
+            },
+
 //            回滚
             Rollback_show(){
                 $('#Rollback').modal({
@@ -608,7 +683,6 @@
             payFlowList(){
                 this.$http.get('account/receivable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-                    console.log(res.data);
                     if (res.data.code == 18500) {
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
@@ -665,14 +739,8 @@
                 this.selected = [];
                 this.search(1);
             },
-
-            search(val){
-                console.log(this.params);
-                this.filter(val);
-            },
             getDate(data){
                 // 时间
-                console.log(data);
                 this.params.range = data;
                 this.search(1);
 
@@ -689,31 +757,6 @@
                     this.tips.balance_sum = 0.00;
                 }
 
-            },
-
-            filter(val){
-                this.operId = 0;
-                this.pitch.splice(0, this.pitch);
-                this.beforePage = val;
-                this.$http.get('account/receivable?page=' + val, {
-                    params: this.params
-                }).then(
-                    (res) => {
-                        if (res.data.code == 18500) {
-                            // 成功
-                            this.paging = res.data.data.pages;
-                            this.myData = res.data.data.data;
-                            this.setTips(res.data.data, true);
-                            this.isShow = false;
-                        } else {
-                            this.isShow = true;
-                            this.myData = [];
-                            this.paging = 0;
-                            this.page = 1;
-                            this.setTips({}, false);
-                        }
-                    }
-                )
             },
 
             // 选择客户
@@ -807,7 +850,6 @@
             getConfirm(){
                 this.$http.post('account/receivable/delete/' + this.operId)
                     .then((res) => {
-//                    console.log(res.data)
                         if (res.data.code == 18510) {
                             this.pitch = [];
                             // 成功
@@ -836,12 +878,10 @@
 
 //            编辑付款时间
             modifyTime(val){
-                console.log(val);
                 this.$http.post('account/receivable/batch', {
                     ids: this.pitch,
                     pay_date: val
                 }).then((res) => {
-                    console.log(res);
                     if (res.data.code == 18510) {
                         // 成功
                         this.info.success = res.data.msg;
@@ -942,5 +982,9 @@
 
     .table-striped > tbody > tr.reds {
         background-color: #FFCECE;
+    }
+
+    th.red {
+        color: #e4393c;
     }
 </style>
