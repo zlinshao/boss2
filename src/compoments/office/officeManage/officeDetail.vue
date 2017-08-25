@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">单价</label>
+                                    <label class="col-sm-2 control-label">单价<sup class="required">*</sup></label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" v-model="formData.price">
                                     </div>
@@ -148,7 +148,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">当前库存</label>
+                                    <label class="col-sm-2 control-label">当前库存<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.inventory">
                                     </div>
