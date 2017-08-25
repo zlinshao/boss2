@@ -16,6 +16,20 @@
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
                             </span>
                         </div>
+                        <!--<div class="input-group">
+                            <input type="text" class="form-control" placeholder="点击选择部门"
+                                   v-model="department" @click='selectOne(1)' readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearSelectOne(1)">清空</button>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="点击选择员工"
+                                   v-model="staff" @click='selectOne(2)' readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearSelectOne(2)">清空</button>
+                            </span>
+                        </div>-->
                         <div class="input-group">
                             <select class="form-control" @change="search(1)" v-model="params.library_id">
                                 <option value="">办公用品库</option>
@@ -117,7 +131,7 @@
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="7" class="text-center text-muted">
+                            <td colspan="9" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -182,13 +196,19 @@
                     operName : '',
                     msg: '',
                 },
+
+                department : '',
+                staff : '',
+
                 selected: [],
                 allLibrary : [],
                 types : [],
 
                 params : {
                     department_id : [],
+//                    department_id : '',
                     staff_id : [],
+//                    staff_id : '',
                     library_id : '',
                     category_id : '',
                     register_type : '',
@@ -223,6 +243,7 @@
             status(val){
 //                console.log(val)
                 if (val.length == 1) {
+//                    alert(val[0])
                     this.statusId = val[0];
                 } else {
                     this.statusId = 0;
@@ -238,7 +259,7 @@
         methods: {
             getList(){
                 this.$http.post('manager/management/receive_index').then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
                     if (res.data.code==10050){
                         // 成功
                         this.paging = res.data.data.pages;
@@ -282,7 +303,7 @@
                     if (index > -1) {
                         this.pitch.splice(index, 1);
                     }
-                    let index1 = this.status.indexOf(id);
+                    let index1 = this.status.indexOf(status);
                     if (index1 > -1) {
                         this.status.splice(index1, 1);
                     }
@@ -338,6 +359,15 @@
                 }
                 this.search(1);
             },
+
+            /*selectOne(num){
+                if (num==1){
+                    // 部门
+
+                } else {
+                    // 员工
+                }
+            },*/
             clearSelect(){
                 if (this.selected.length == 0) {
                     return;
@@ -347,6 +377,17 @@
                 this.selected = [];
                 this.search(1);
             },
+            /*clearSelectOne(num){
+                if (num==1){
+                    // 部门
+                    this.department = '';
+                    this.params.department_id = '';
+                } else {
+                    // 员工
+                    this.staff = '';
+                    this.params.staff_id = '';
+                }
+            },*/
 
             oper(){
                 this.applyId = this.operId;
@@ -363,7 +404,7 @@
                 this.pitch = [];
                 this.status = [];
                 this.$http.post('manager/management/receive_index?pages='+this.beforePage,this.params).then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
                     if (res.data.code==10050){
                         // 成功
                         this.paging = res.data.data.pages;
@@ -373,6 +414,8 @@
                         // 失败
                         this.myData = [];
                         this.isShow = true;
+                        this.paging = 0;
+                        this.page = 1;
                     }
                 })
             },

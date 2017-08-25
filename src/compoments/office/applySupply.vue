@@ -123,19 +123,21 @@
                 },
             }
         },
+        created(){
+            this.getLibrarys();
+        },
         mounted (){
             this.$http.get('manager/management/dict').then((res)=>{
 //                    console.log(res);
                 this.dict = res.data.management;
             });
-            this.getLibrarys();
+
         },
         watch :{
             officeId(val){
                 console.log(val);
                 this.getOfficeDetail();
             },
-
             library_id(val){
                 this.category_id = '';
                 this.formData.inventory_id = '';
@@ -169,9 +171,9 @@
                     } else {
                         // 失败
                         this.allSupply = [];
-                        this.info.error = '该类别下没有用品';
+                        /*this.info.error = '该类别下没有用品';
                         //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.info.state_error = true;*/
                     }
                 })
             },
@@ -199,9 +201,14 @@
             }
         },
         methods: {
+           /* openModal(){
+                $('#applySupply').on('show.bs.modal', function (e) {
+                    this.getOfficeDetail()
+                })
+            },*/
             getOfficeDetail(){
 //                console.log(this.officeId)
-                if (this.officeId==undefined){
+                if (this.officeId==undefined||this.officeId==''){
                     return;
                 }
                 this.$http.post('manager/management/inventory_details?id='+this.officeId).then((res)=>{
@@ -209,19 +216,22 @@
                     let val =res.data.data.data;
                     let _this = this;
                     this.formData.register_type = val.register_type;
-                    this.library_id = val.library_id;
+                    setTimeout(function () {
+                        _this.library_id = val.library_id;
+                    },300);
+
                     setTimeout(function () {
                         _this.category_id = val.category_id
-                    },500);
+                    },800);
                     setTimeout(function () {
                         _this.formData.inventory_id = val.id
-                    },1000);
+                    },1500);
                 })
             },
 
             clearForm(){
                 this.price = '';
-                this.allLibrary = [];
+//                this.allLibrary = [];
                 this.allType = [];
                 this.allSupply = [];
                 this.maxNum = 0;
@@ -233,7 +243,8 @@
                 this.formData.num = 0;
                 this.formData.remarks = '';
 
-                this.getOfficeDetail();
+                setTimeout(this.getOfficeDetail(),2000);
+//                this.getOfficeDetail();
                 $('#applySupply').modal('hide');
             },
             // 获取所有库
@@ -247,6 +258,7 @@
                         // 失败
                         this.allLibrary = [];
                     }
+//                    this.getOfficeDetail()
                 })
             },
             minus(){

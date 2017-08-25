@@ -246,6 +246,8 @@
                         // 失败
                         this.myData = [];
                         this.isShow = true;
+                        this.paging = 0;
+                        this.page = 1;
                     }
                 })
             },

@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">单价</label>
+                                    <label class="col-sm-2 control-label">单价<sup class="required">*</sup></label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" v-model="formData.price">
                                     </div>
@@ -184,7 +184,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">当前库存</label>
+                                    <label class="col-sm-2 control-label">当前库存<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" v-model="formData.inventory">
                                     </div>
@@ -331,12 +331,14 @@
                 }
             }
         },
+        created(){
+            this.getLibrarys();
+        },
         mounted () {
             this.$http.get('manager/management/dict').then((res)=>{
 //                    console.log(res);
                 this.dict = res.data.management;
             });
-            this.getLibrarys();
             this.getList();
             this.getStaff();
         },
@@ -349,7 +351,12 @@
             'params.library_id':{
                 handler(val){
                     this.params.category_id = '';
-                    this.$http.post('manager/management/type_all?parent_id='+this.params.library_id).then((res)=>{
+                    if (val==''){
+                        this.types = [];
+                        return;
+                    }
+                    this.changeLibrary();
+                    /*this.$http.post('manager/management/type_all?parent_id='+this.params.library_id).then((res)=>{
 //                    console.log(res.data.data.data);
                         if (res.data.code==10010){
                             // 成功
@@ -358,7 +365,7 @@
                             // 失败
                             this.types = [];
                         }
-                    })
+                    })*/
                 }
             }
         },
@@ -404,6 +411,8 @@
                         // 失败
                         this.myData = [];
                         this.isShow = true;
+                        this.paging = 0;
+                        this.page = 1;
                     }
                 })
             },
@@ -421,7 +430,7 @@
                 let params = this.$route.query.myParam;
                 let page = this.$route.query.page;
                 this.$http.post('manager/management/library_all').then((res)=>{
-//                    console.log(res);
+                    console.log(res.data);
                     if (res.data.code==10010){
                         // 成功
                         this.allLibrary = res.data.data.data;
@@ -447,11 +456,16 @@
             },
             selectLibrary(){
                 this.formData.category_id = '';
+                if (this.form.parent_id==''){
+                    this.form.types = [];
+                    return;
+                }
                 this.$http.post('manager/management/type_all?parent_id='+this.form.parent_id).then((res)=>{
-//                    console.log(res.data.data.data);
+                    console.log(res.data.data.data);
                     if (res.data.code==10010){
                         // 成功
                         this.form.types = res.data.data.data;
+//                        alert(2)
                     } else {
                         // 失败
                         this.form.types = [];
@@ -490,25 +504,28 @@
                         let val = res.data.data.data;
 //                        console.log(val);
                         this.form.parent_id = val.library_id;
+//                        alert(1);
+                        this.formData.name = val.name;
+                        this.formData.type_num = val.type_num;
+                        this.formData.register_type = val.register_type;
+                        this.formData.measurement_unit = val.measurement_unit;
+                        this.formData.price = val.price;
+                        this.formData.code = val.code;
+                        this.formData.supplier = val.supplier;
+                        this.formData.inventory = val.inventory;
+                        this.formData.alert_inventory = val.alert_inventory;
+                        this.formData.highest_inventory = val.highest_inventory;
+                        this.formData.remarks = val.remarks;
 
                         let _this = this;
                         setTimeout(function () {
-                            _this.formData.name = val.name;
-                            _this.formData.type_num = val.type_num;
-                            _this.formData.register_type = val.register_type;
-                            _this.formData.measurement_unit = val.measurement_unit;
                             _this.formData.category_id = val.category_id;
-                            _this.formData.price = val.price;
-                            _this.formData.code = val.code;
-                            _this.formData.supplier = val.supplier;
-                            _this.formData.inventory = val.inventory;
-                            _this.formData.alert_inventory = val.alert_inventory;
-                            _this.formData.highest_inventory = val.highest_inventory;
 //                        this.formData.scrap_number = val.scrap_number;
-                            _this.formData.remarks = val.remarks;
 
                             $('#myModal').modal('show');
-                        },200)
+                        },500)
+
+                        console.log(_this.formData)
 
 
                     } else {
@@ -529,7 +546,8 @@
                 this.formData.type_num = '';
                 this.formData.register_type = '';
                 this.formData.measurement_unit = '';
-                this.formData.category_id = '';
+                this.form.parent_id = '';
+//                this.formData.category_id = '';
                 this.formData.price = '';
                 this.formData.code = '';
                 this.formData.supplier = '';
@@ -539,7 +557,6 @@
 //                this.formData.scrap_number = '';
                 this.formData.remarks = '';
 
-                this.form.parent_id = '';
                 $('#myModal').modal('hide');
             },
             saveAdd(){
