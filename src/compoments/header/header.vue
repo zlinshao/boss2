@@ -666,7 +666,7 @@
                         </router-link>
                     </li>
 
-                    <li class="sub-menu" v-if="simulate.indexOf('manager/management') > -1">
+                    <li class="sub-menu" v-show="simulate.indexOf('manager/management') > -1">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>

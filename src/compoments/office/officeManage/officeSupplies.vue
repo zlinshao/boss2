@@ -11,7 +11,7 @@
                     <form class="form-inline clearFix" role="form">
 
                         <div class="input-group">
-                            <select class="form-control" @change="search(1)" v-model="params.library_id">
+                            <select class="form-control" v-model="params.library_id" @change="changeLibrary">
                                 <option value="">办公用品库</option>
                                 <option :value="item.id" v-for="item in allLibrary">{{item.name}}</option>
                             </select>
@@ -45,7 +45,7 @@
                             <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li>
-                            <h5 @click="apply"><a><i class="fa fa-pencil"></i>&nbsp;申领</a></h5>
+                            <h5 @click="apply"><a><i class="fa fa-file-text-o"></i>&nbsp;申领</a></h5>
                         </li>
                         <li>
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
@@ -140,7 +140,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品库<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="form.parent_id">
+                                        <select class="form-control" v-model="form.parent_id" @change="selectLibrary">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allLibrary">{{item.name}}</option>
                                         </select>
@@ -343,12 +343,12 @@
             this.getStaff();
         },
         watch:{
-            'form.parent_id':{
+            /*'form.parent_id':{
                 handler(val){
                     this.selectLibrary();
                 }
-            },
-            'params.library_id':{
+            },*/
+            /*'params.library_id':{
                 handler(val){
                     this.params.category_id = '';
                     if (val==''){
@@ -356,7 +356,7 @@
                         return;
                     }
                     this.changeLibrary();
-                    /*this.$http.post('manager/management/type_all?parent_id='+this.params.library_id).then((res)=>{
+                    /!*this.$http.post('manager/management/type_all?parent_id='+this.params.library_id).then((res)=>{
 //                    console.log(res.data.data.data);
                         if (res.data.code==10010){
                             // 成功
@@ -365,9 +365,9 @@
                             // 失败
                             this.types = [];
                         }
-                    })*/
+                    })*!/
                 }
-            }
+            }*/
         },
         methods: {
             getList(){
@@ -456,13 +456,13 @@
             },
             selectLibrary(){
                 this.formData.category_id = '';
-                if (this.form.parent_id==''){
+                if (this.formData.parent_id==''){
                     this.form.types = [];
                     return;
                 }
                 this.$http.post('manager/management/type_all?parent_id='+this.form.parent_id).then((res)=>{
-                    console.log(res.data.data.data);
                     if (res.data.code==10010){
+                        console.log(res.data.data.data);
                         // 成功
                         this.form.types = res.data.data.data;
 //                        alert(2)
@@ -474,6 +474,10 @@
             },
             changeLibrary(){
                 this.params.category_id = '';
+                if (this.params.library_id==''){
+                    this.types = [];
+                    return;
+                }
                 this.$http.post('manager/management/type_all?parent_id='+this.params.library_id).then((res)=>{
 //                    console.log(res.data.data.data);
                     if (res.data.code==10010){
@@ -505,6 +509,8 @@
 //                        console.log(val);
                         this.form.parent_id = val.library_id;
 //                        alert(1);
+                        this.allLibrary = res.data.data.library;
+                        this.form.types = res.data.data.type;
                         this.formData.name = val.name;
                         this.formData.type_num = val.type_num;
                         this.formData.register_type = val.register_type;
@@ -516,16 +522,11 @@
                         this.formData.alert_inventory = val.alert_inventory;
                         this.formData.highest_inventory = val.highest_inventory;
                         this.formData.remarks = val.remarks;
+                        this.formData.category_id = val.category_id;
 
-                        let _this = this;
-                        setTimeout(function () {
-                            _this.formData.category_id = val.category_id;
-//                        this.formData.scrap_number = val.scrap_number;
 
-                            $('#myModal').modal('show');
-                        },500)
-
-                        console.log(_this.formData)
+                        $('#myModal').modal('show');
+                        console.log(this.formData)
 
 
                     } else {

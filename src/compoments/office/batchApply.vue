@@ -62,7 +62,6 @@
         <div class="submit">
             <button class="btn btn-primary btn-lg btn-block" type="button" @click="submitAll">提交</button>
         </div>
-
         <!--提示信息-->
         <Status :state='info'></Status>
     </div>
@@ -153,6 +152,8 @@
                 if (a>max){
                     this.submitData[index1].inventory[index2].num = ev.target.max;
                 }
+
+                this.submitData[index1].inventory[index2].num = Math.floor(this.submitData[index1].inventory[index2].num);
 
 
             },
