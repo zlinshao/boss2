@@ -10,7 +10,14 @@
             <div class="panel-body">
                 <div>
                     <form class="form-inline clearFix" role="form">
-                        <div class="input-group">
+
+                        <div class="form-group">
+                            <select class="form-control" v-model="params.cate" @change="search(1)">
+                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <select class="form-control" v-model="params.cate" @change="search(1)">
                                 <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
                             </select>
@@ -19,6 +26,7 @@
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>
                         </div>
+
                         <div class="input-group">
                             <SelectSubject @choose="houseSubject" :current="params.subject_id"
                                            :msg="'科目搜索'"></SelectSubject>
@@ -26,6 +34,7 @@
                                 <button class="btn btn-warning" id="Subject" type="button" @click="search_empty(1)">清空</button>
                             </span>
                         </div>
+
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="搜索房屋地址" v-model="params.search"
                                    @keydown.enter.prevent="search(1)">
@@ -33,6 +42,7 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -151,9 +161,9 @@
                     cate: 3
                 },
                 tips: {
-                    expend_sum: 0,                           // 总支出
+                    expend_sum: 0,                      // 总支出
                     receive_sum: 0,                     // 总收入
-                    diff_sum: 0,                       // 收支差额
+                    diff_sum: 0,                        // 收支差额
                 },
             }
         },
@@ -282,6 +292,10 @@
 
     .tips ul li span.yellow {
         color: #FF9A02;
+    }
+
+    .form-control{
+        margin-bottom: 0;
     }
 
     @media (max-width: 798px) {

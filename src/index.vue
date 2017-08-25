@@ -186,7 +186,6 @@
                 <!--</div>-->
             </div>
             <div class="col-md-3">
-
                 <section class="panel">
                     <header class="panel-heading">
                         龙虎榜
@@ -229,38 +228,8 @@
                         </div>
                     </div>
                 </section>
-                <!--<section class="panel" style="height: 347px;">-->
-                <!--<header class="panel-heading">-->
-                <!--公告-->
-                <!--</header>-->
-                <!--<div class="panel-body" style="padding-top: 0;">-->
-                <!--<div class="row">-->
-                <!--<div class="col-md-12">-->
-                <!--<section class="panel table-responsive roll">-->
-                <!--<table class="table table-advance table-hover">-->
-                <!--<thead>-->
-                <!--<tr>-->
-                <!--<th>标题</th>-->
-                <!--<th>时间</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr v-for="(mess, index) in main_message" v-show="index < 6">-->
-                <!--<td style="min-width: 100px;" class="more_info">-->
-                <!--<router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">-->
-                <!--{{mess.data.title}}-->
-                <!--</router-link>-->
-                <!--</td>-->
-                <!--<td style="min-width: 160px;">{{mess.create_time}}</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-                <!--</table>-->
-                <!--</section>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</section>-->
             </div>
+
         </div>
     </div>
 </template>
@@ -363,7 +332,7 @@
                     }
                 });
             },
-//            读
+//            已读
             receive (val, read){
                 if (read === '未读') {
                     this.$http.post('message/message/read_mess', {
@@ -383,7 +352,6 @@
 //                        this.bulletin_suzhou = res.data.data.bulletin.suzhou;           //简报苏州
                         this.main_birthday = res.data.data.birthday;                    //寿星
 //                        this.main_ranking = res.data.data.ranking;                      //龙虎榜
-//                        this.main_message = res.data.data.message;                      //公告
 //                        this.check_inData = res.data.data.uprate;                       //入住率
 //                        this.collect_rentsData = res.data.data.collect_rent;            //收房比列
 //                        this.main_customer = res.data.data.customer;                    //客户来源

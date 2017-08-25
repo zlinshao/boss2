@@ -109,8 +109,8 @@
                             —
                         </span>
                     </td>
-                    <td class="text-center">{{item.months}}</td>
-                    <td class="text-center">{{item.months}}</td>
+                    <td class="text-center">{{LandlordDict.shared_house[item.is_shared]}}</td>
+                    <td class="text-center">{{LandlordDict.rent_type[item.rent_type]}}</td>
                     <td class="text-center">{{item.deal_date}}</td>
                     <td class="text-center">
                         <span v-if="item.staff != null">{{item.staff.real_name}}</span>
