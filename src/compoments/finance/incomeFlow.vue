@@ -18,8 +18,9 @@
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" v-model="params.cate" @change="search(1)">
-                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
+                            <select class="form-control" v-model="params.account_id" @change="search(1)">
+                                <option value="">请选择银行</option>
+                                <option :value="value" v-for="(key,value) in dict.account">{{key}}</option>
                             </select>
                         </div>
 
@@ -153,7 +154,8 @@
                 myData: [],      //列表数据
 
                 params: {
-                    subject_id: '',  //科目款项
+                    account_id: '',             //银行
+                    subject_id: '',             //科目款项
                     department_id: [],
                     staff_id: [],
                     range: '',

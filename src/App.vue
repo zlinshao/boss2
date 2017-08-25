@@ -29,6 +29,11 @@
                     </li>
                 </ul>
             </div>
+            <div class="btn-group" id="custom_ser">
+                <a href="#" type="button" class="btn btn-default">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+            </div>
         </section>
         <!--快捷入口-->
         <div class="modal fade bs-example-modal-sm" id="shortcut" tabindex="-1" role="dialog"
@@ -238,6 +243,17 @@
 </script>
 
 <style scoped>
+    #custom_ser{
+        position: fixed;
+        bottom: 50px;
+        right: 10px;
+        z-index: 100;
+    }
+    #custom_ser > a{
+        opacity: .4;
+        border: 0
+    }
+
     #custom_service{
         position: fixed;
         bottom: 10px;
