@@ -102,6 +102,7 @@
                             <th class="text-center">办公用品名称</th>
                             <th class="text-center">登记类型</th>
                             <th class="text-center">申请数量</th>
+                            <th class="text-center">申领人</th>
                             <th class="text-center">申请日期</th>
                             <th class="text-center">审批日期</th>
                             <th class="text-center">审批人</th>
@@ -118,6 +119,7 @@
                             <td>{{item.inventory_name}}</td>
                             <td>{{dict.register_type[item.register_type]}}</td>
                             <td>{{item.num}}</td>
+                            <td>{{item.staff_name}}</td>
                             <td>{{item.create_time}}</td>
                             <td>{{item.approver_time}}</td>
                             <td>{{item.approver_name}}</td>
