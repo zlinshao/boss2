@@ -558,7 +558,7 @@
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
         <!--房屋选择-->
-        <SelectHouse @House="getHouse" :msg="staffId"></SelectHouse>
+        <SelectHouse @House="getHouse" :msg="staffId" :isNewAddHouse="1"></SelectHouse>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -748,9 +748,9 @@
                     }
 
                     this.shared_house = val.is_shared;                      //租房类型
-                    this.rent_type = val.rent_type;                      //租房状态
-                    this.shared_part = val.shared_part;                        //房间类型
-                    this.bet = val.bet;                                                 //付款方式
+                    this.rent_type = val.rent_type;                         //租房状态
+                    this.shared_part = val.shared_part;                     //房间类型
+                    this.bet = val.bet;                                     //付款方式
 
                     this.price = val.prices;                          //月单价
                     if (val.prices.length > 1) {

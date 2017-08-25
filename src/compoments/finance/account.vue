@@ -68,14 +68,14 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-center">账户名称</th>
-                            <th class="text-center">账户类型</th>
-                            <th class="text-center">账号</th>
-                            <th class="text-center">开户银行</th>
-                            <th class="text-center">支行</th>
-                            <th class="text-center">初始金额</th>
-                            <th class="text-center">当前余额</th>
-                            <th class="text-center">备注</th>
+                            <th class="text-center width150">账户名称</th>
+                            <th class="text-center width80">账户类型</th>
+                            <th class="text-center width150">账号</th>
+                            <th class="text-center width80">开户银行</th>
+                            <th class="text-center width100">支行</th>
+                            <th class="text-center width100">初始金额</th>
+                            <th class="text-center width100">当前余额</th>
+                            <th class="text-center width150">备注</th>
                         </tr>
                         </thead>
                         <tbody>
