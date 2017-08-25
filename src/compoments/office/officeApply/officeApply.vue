@@ -58,7 +58,7 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
-                        <div class="form-group pull-right" data-toggle="modal" data-target="#applySupply">
+                        <div class="form-group pull-right" data-toggle="modal" data-target="#applySupply" v-if="simulate.indexOf('manager/management') > -1">
                             <a class="btn btn-success">
                                 <i class="fa fa-plus-square"></i>&nbsp;申领办公用品
                             </a>
