@@ -10,20 +10,13 @@
                 <div v-show="operId==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <select class="form-control" v-model="params.parent_id" @change="selectLibrary">
-                                <option value="0">所有库</option>
+                            <select class="form-control" v-model="params.parent_id" @change="search(1)">
+                                <option value="0">办公用品库</option>
                                 <option :value="item.id" v-for="item in allLibrary">{{item.name}}</option>
                             </select>
                         </div>
-                        <div class="input-group" v-show="params.parent_id!=0">
-                            <select name="" class="form-control" v-model="params.type">
-                                <option value="">所有类型</option>
-                                <option :value="item.id" v-for="item in types">{{item.name}}</option>
-                                <!--<option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>-->
-                            </select>
-                        </div>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="类型名称"  @keydown.enter.prevent="search(1)">
+                            <input type="text" class="form-control" placeholder="类型名称" v-model="params.name" @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
@@ -178,7 +171,7 @@
 
                 params:{
                     parent_id : 0,
-                    type : '',
+                    name : '',
                 },
                 types : [],
                 confirmMsg: {
@@ -223,7 +216,7 @@
                 }
             },
 
-            selectLibrary(){
+            /*selectLibrary(){
                 this.params.type = '';
                 this.$http.post('manager/management/type_all?parent_id='+this.params.parent_id).then((res)=>{
 //                    console.log(res.data.data.data);
@@ -235,13 +228,28 @@
                         this.types = [];
                     }
                 })
-            },
+            },*/
             search(val){
                 this.filter(val);
             },
             filter(val){
                 this.beforePage = val;
                 this.operId = 0;
+                this.$http.post('manager/management/category_index?pages='+this.beforePage,this.params).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.code==10000){
+                        // 成功
+                        this.paging = res.data.data.pages;
+                        this.myData = res.data.data.data;
+                        this.isShow = false;
+                    } else {
+                        // 失败
+                        this.myData = [];
+                        this.isShow = true;
+                        this.paging = 0;
+                        this.page = 1;
+                    }
+                })
             },
 
             // 获取所有库
@@ -310,7 +318,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         this.clearForm();
-                        this.getList();
+                        this.filter(this.beforePage);
                     } else {
                         // 失败
                         this.info.error = res.data.msg;
@@ -352,8 +360,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         this.clearForm();
-                        this.getList();
-                        this.operId = 0;
+                        this.filter(this.beforePage);
 //                        this.pitch.splice(0,this.pitch.length);
                     } else {
                         // 失败

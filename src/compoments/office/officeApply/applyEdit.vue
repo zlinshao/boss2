@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="modal fade full-width-modal-right" id="applySupply" tabindex="-1" role="dialog" data-backdrop="static"
+        <div class="modal fade full-width-modal-right" id="editApply" tabindex="-1" role="dialog" data-backdrop="static"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" @click="clearForm" aria-hidden="true">×</button>
-                            <h4 class="modal-title">新建办公用品申领</h4>
+                            <h4 class="modal-title">编辑办公用品申领</h4>
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="formData.inventory_id" @change="changeInventory">
+                                        <select class="form-control" v-model="formData.inventory_id">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allSupply">{{item.name}}</option>
                                         </select>
@@ -76,7 +76,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" @click="clearForm">取消</button>
-                            <button type="button" class="btn btn-primary" @click="apply">申领</button>
+                            <button type="button" class="btn btn-primary" @click="modify">修改</button>
                         </div>
                     </div>
                 </div>
@@ -89,9 +89,9 @@
 </template>
 
 <script>
-    import Status from '../common/status.vue';
+    import Status from '../../common/status.vue';
     export default{
-        props : ['officeId'],
+        props : ['applyId'],
         components: {Status},
         data(){
             return {
@@ -123,7 +123,6 @@
                 },
             }
         },
-
         mounted (){
             this.$http.get('manager/management/dict').then((res)=>{
 //                    console.log(res);
@@ -132,11 +131,11 @@
             this.getLibrarys();
         },
         watch :{
-            officeId(val){
+            applyId(val){
                 console.log(val);
-                this.getOfficeDetail();
+                this.getDetail();
             },
-            /*library_id(val){
+           /* library_id(val){
                 this.category_id = '';
                 this.formData.inventory_id = '';
                 if (val==''){
@@ -154,8 +153,8 @@
                         this.allType = [];
                     }
                 })
-            },*/
-            /*category_id(val){
+            },
+            category_id(val){
                 this.formData.inventory_id = '';
                 if (val==''){
                     this.allSupply = [];
@@ -169,13 +168,13 @@
                     } else {
                         // 失败
                         this.allSupply = [];
-                        /!*this.info.error = '该类别下没有用品';
+                        this.info.error = '该类别下没有用品';
                         //显示失败弹窗 ***
-                        this.info.state_error = true;*!/
+                        this.info.state_error = true;
                     }
                 })
             },*/
-            /*'formData.inventory_id':{
+            'formData.inventory_id':{
                 handler(val){
 //                    console.log(val);
                     this.formData.num = 0;
@@ -196,32 +195,31 @@
 //                        console.log(this.maxNum)
                     }
                 }
-            }*/
+            }
         },
         methods: {
-           /* openModal(){
-                $('#applySupply').on('show.bs.modal', function (e) {
-                    this.getOfficeDetail()
-                })
-            },*/
-            getOfficeDetail(){
+            getDetail(){
 //                console.log(this.officeId)
-                if (this.officeId==undefined||this.officeId==''){
+                if (this.applyId==undefined){
                     return;
                 }
-                this.$http.post('manager/management/inventory_details?id='+this.officeId).then((res)=>{
+                this.$http.post('manager/management/receive_details?id='+this.applyId).then((res)=>{
                     console.log(res.data);
                     let val =res.data.data.data;
                     this.allLibrary = res.data.data.library;
                     this.allType = res.data.data.type;
                     this.allSupply = res.data.data.inventory;
-
+                    let _this = this;
                     this.formData.register_type = val.register_type;
-                    this.library_id = val.library_id;
+                    this.library_id = val.parent_id;
                     this.category_id = val.category_id;
                     this.formData.inventory_id = val.id
-                    this.changeInventory();
 
+                    setTimeout(function () {
+                        _this.formData.num = val.num;
+                    },1500);
+
+                    this.formData.remarks = val.remarks;
                 })
             },
 
@@ -264,29 +262,9 @@
                     }
                 })
             },
-
-            changeInventory(){
-                this.formData.num = 0;
-                if (this.formData.inventory_id==''){
-                    this.price = '';
-                    this.maxNum = 0;
-                    return;
-                }
-                let index = -1;
-                for (let i = 0 ; i < this.allSupply.length ; i++){
-                    if (this.formData.inventory_id==this.allSupply[i].id){
-                        index = i;
-                    }
-                }
-                if (index!=-1){
-                    this.price = this.allSupply[index].price;
-                    this.maxNum = this.allSupply[index].existing_inventory;
-//                        console.log(this.maxNum)
-                }
-            },
             clearForm(){
                 this.price = '';
-//                this.allLibrary = [];
+                this.allLibrary = [];
                 this.allType = [];
                 this.allSupply = [];
                 this.maxNum = 0;
@@ -298,14 +276,13 @@
                 this.formData.num = 0;
                 this.formData.remarks = '';
 
-                setTimeout(this.getOfficeDetail(),2000);
-//                this.getOfficeDetail();
-                $('#applySupply').modal('hide');
+                this.getDetail();
+                $('#editApply').modal('hide');
             },
             // 获取所有库
             getLibrarys(){
                 this.$http.post('manager/management/library_all').then((res)=>{
-//                    console.log(res);
+                    console.log(res);
                     if (res.data.code==10010){
                         // 成功
                         this.allLibrary = res.data.data.data;
@@ -313,7 +290,6 @@
                         // 失败
                         this.allLibrary = [];
                     }
-//                    this.getOfficeDetail()
                 })
             },
             minus(){
@@ -339,11 +315,11 @@
                     }
                 }
             },
-            // 申领
-            apply(){
-                this.$http.post('manager/management/receive_insert',this.formData).then((res)=>{
+            // 修改
+            modify(){
+                this.$http.post('manager/management/receive_update?id='+this.applyId,this.formData).then((res)=>{
                     console.log(res.data);
-                    if (res.data.code==10061){
+                    if (res.data.code==10071){
                         // 成功
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***

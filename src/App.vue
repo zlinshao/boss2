@@ -2,7 +2,7 @@
     <div id="app">
         <section id="container">
             <!--header-->
-            <HeaderVue :Name="urlName" :Card="urlCard"></HeaderVue>
+            <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates"></HeaderVue>
             <!--router-->
             <section id="main-content">
                 <section class="wrapper">

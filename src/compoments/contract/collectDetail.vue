@@ -57,7 +57,8 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <button class="btn btn-white btn-block" @click="editContract" :disabled="contract_pass>4||contract_status==1">
+                            <button class="btn btn-white btn-block" @click="editContract"
+                                    :disabled="(contract_pass>4||contract_status==1) && simulate.indexOf('core/cmo') == -1" >
                                 编辑
                             </button>
                         </li>
@@ -710,6 +711,7 @@
 
     import Convenient from './collectSimpleConvenient.vue'
     export default{
+        props : ['simulate'],
         components: {
             Transfer,   //转账
             Contract,   //合同信息

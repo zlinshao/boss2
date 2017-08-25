@@ -1060,6 +1060,23 @@
                 this.more  = 1;
                 this.relative_customer = [];
                 this.contractRenew.relative_customer_id = [];
+
+
+                this.contractRenew.relative_customer_id = [];
+                this.contract_Pic.cus_idPhoto = [];
+                this.contractRenew.contract_pic =[];
+                this.handover_Pic.cus_idPhoto = [];
+                this.contractRenew.handover_pic =[];
+                this.receipt_Pic.cus_idPhoto = [];
+                this.contractRenew.receipt_pic = [];
+                this.water_Pic.cus_idPhoto = [];
+                this.contractRenew.water_card_pic = [];
+                this.ele_Pic.cus_idPhoto = [];
+                this.contractRenew.elec_card_pic = [];
+                this.gas_Pic.cus_idPhoto = [];
+                this.contractRenew.gas_card_pic = [];
+                this.payment_Pic.cus_idPhoto = [];
+                this.contractRenew.payment_pic = [];
             },
 
             //            修改租房状态

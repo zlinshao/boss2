@@ -811,6 +811,23 @@
                 this.relative_customer = [];
                 this.contractRenew.relative_customer_id = [];
                 this.staff_name = '';
+
+                this.bank_pic.cus_idPhoto = [];
+                this.contractRenew.bank_pic = [];
+                this.contract_pic.cus_idPhoto = [];
+                this.contractRenew.contract_pic = [];
+                this.proxy_pic.cus_idPhoto = [];
+                this.contractRenew.proxy_pic = [];
+                this.handover_pic.cus_idPhoto = [];
+                this.contractRenew.handover_pic = [];
+                this.receipt_pic.cus_idPhoto = [];
+                this.contractRenew.receipt_pic = [];
+                this.water_pic.cus_idPhoto = [];
+                this.contractRenew.water_card_pic = [];
+                this.ele_pic.cus_idPhoto = [];
+                this.contractRenew.elec_card_pic = [];
+                this.gas_pic.cus_idPhoto = [];
+                this.contractRenew.gas_card_pic = [];
             },
 
             changePayType(ev){

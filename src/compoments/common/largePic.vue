@@ -131,6 +131,8 @@
                 for (let i = 0;i<transPic.length;i++){
                     transPic[i].style.transform = 'rotate('+this.current+'deg)';
                 }
+
+                console.log(this.current)
 //                document.getElementsByClassName('transPic').style.transform = 'rotate('+this.current+'deg)';
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
 //                console.log(this.current)
@@ -143,6 +145,8 @@
                 for (let i = 0;i<transPic.length;i++){
                     transPic[i].style.transform = 'rotate('+this.current+'deg)';
                 }
+                console.log(this.current)
+
 //                document.getElementById('transPic').style.transform = 'rotate('+this.current+'deg)';
 //                $(ev.currentTarget).css('transform' , 'rotate(90deg)');
                 this.closePosition();
@@ -192,22 +196,22 @@
             },
             closePosition(){
                 let close = $('.close');
-                if (this.current==0){
+                if (this.current==0||this.current==-0){
                     close.css('top','12px');
                     close.css('right','23px');
                     close.css('bottom','auto');
                     close.css('left','auto');
-                } else if (this.current==90){
+                } else if (this.current==90||this.current==-270){
                     close.css('top','12px');
                     close.css('right','auto');
                     close.css('bottom','auto');
                     close.css('left','23px');
-                } else if (this.current==180){
+                } else if (this.current==180||this.current==-180){
                     close.css('top','auto');
                     close.css('right','auto');
                     close.css('bottom','26px');
                     close.css('left','23px');
-                } else if (this.current==270){
+                } else if (this.current==270||this.current==-90){
                     close.css('top','auto');
                     close.css('right','23px');
                     close.css('bottom','26px');
