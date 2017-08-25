@@ -79,8 +79,8 @@
                             <th class="text-center width80">客户姓名</th>
                             <th class="text-center width80">科目名称</th>
                             <th class="text-center width50">类型</th>
-                            <th class="text-center width100">收/汇款方式</th>
-                            <th class="text-center width150">收/汇款账户</th>
+                            <th class="text-center width100">账户名称</th>
+                            <th class="text-center width150">卡号</th>
                             <th class="text-center width110">实收金额</th>
                             <th class="text-center width110">实付金额</th>
                             <th class="text-center width150">账户余额</th>
@@ -99,7 +99,7 @@
                             <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
                             <td>{{item.subject}}</td>
                             <td>{{dict.er_type[item.cate]}}</td>
-                            <td>{{dict.account_cate[item.account_cate]}}</td>
+                            <td>{{item.account_name}}</td>
                             <td>{{item.account_num}}</td>
                             <td>{{item.amount_received}}</td>
                             <td>{{item.amount_paid}}</td>
