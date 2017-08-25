@@ -6,7 +6,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" @click="clearForm" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
+                                aria-hidden="true" @click="clearForm">&times;</span></button>
                         <h4 class="modal-title">应收入账</h4>
                     </div>
                     <div class="modal-body clearFix" v-if="msg!=''">
@@ -64,8 +64,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">实收金额<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="formData.amount_received"
-                                           @blur="getBalance">
+                                    <input type="text" class="form-control" v-model="formData.amount_received">
                                 </div>
                             </div>
 
@@ -309,18 +308,18 @@
             },
 
 //            计算剩余款项
-            getBalance(){
-                console.log(this.formData.amount_received);
-                console.log(this.msg.balance)
-                console.log(this.msg.balance - this.formData.amount_received)
-                if (this.formData.amount_received != '' && (this.msg.balance - this.formData.amount_received) >= 0) {
-                    this.msg.balance = this.msg.balance - this.formData.amount_received;
-                } else {
-                    this.formData.amount_received = '';
-                    this.msg.balance = this.beforeBalance;
-
-                }
-            }
+//            getBalance(){
+//                console.log(this.formData.amount_received);
+//                console.log(this.msg.balance)
+//                console.log(this.msg.balance - this.formData.amount_received)
+//                if (this.formData.amount_received != '' && (this.msg.balance - this.formData.amount_received) >= 0) {
+//                    this.msg.balance = this.msg.balance - this.formData.amount_received;
+//                } else {
+//                    this.formData.amount_received = '';
+//                    this.msg.balance = this.beforeBalance;
+//
+//                }
+//            }
         }
     }
 </script>
