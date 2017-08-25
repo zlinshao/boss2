@@ -1,11 +1,9 @@
 <template>
     <div>
-
         <ol class="breadcrumb">
             <li>财务账本</li>
             <li>应付款项</li>
         </ol>
-
         <section class="panel">
             <div class="panel-body">
                 <div v-show="pitch.length==0">
@@ -64,9 +62,9 @@
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                         <!--<li>-->
-                            <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
-                                <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
-                            <!--</h5>-->
+                        <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
+                        <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
+                        <!--</h5>-->
                         <!--</li>-->
                         <li v-show="pitch.length == 1">
                             <h5 @click="remark_show">
@@ -115,17 +113,21 @@
         </div>
         <div class="panel tips">
             <ul class="clearFix">
-                <li class="col-md-4">
+                <li class="col-md-3">
                     应付金额(元) <br>
                     <span class="red">{{tips.payable_sum}}</span>
                 </li>
-                <li class="col-md-4">
+                <li class="col-md-3">
                     实付金额(元) <br>
                     <span class="red">{{tips.paid_sum}}</span>
                 </li>
-                <li class="col-md-4">
+                <li class="col-md-3">
                     剩余款项(元) <br>
                     <span class="yellow">{{tips.balance_sum}}</span>
+                </li>
+                <li class="col-md-3" @click="playback" style="cursor: pointer;">
+                    <span style="float: left; font-size: 60px;" class="text-danger fa fa-trash-o"></span>
+                    <span style="float: left; font-size: 30px;margin: 14px 0 0 10px;">回收站</span>
                 </li>
             </ul>
         </div>
@@ -137,31 +139,32 @@
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">
+                            <th class="text-center" v-if="recycle_bin">
                                 <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
                                        @click="chooseAll($event)">
                             </th>
-                            <th class="text-center width100">付款时间</th>
-                            <th class="text-center width80">客户姓名</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">付款时间</th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <!--<th class="text-center">签约人</th>-->
                             <!--<th class="text-center">房屋地址</th>-->
                             <!--<th class="text-center">付款方式</th>-->
                             <!--<th class="text-center">月单价</th>-->
-                            <th class="text-center width80">支出科目</th>
-                            <th class="text-center width110">应付金额</th>
-                            <th class="text-center width110">实付金额</th>
-                            <th class="text-center width100">剩余款项</th>
-                            <th class="text-center width100">补齐时间</th>
-                            <th class="text-center phone" style="min-width: 360px;">详细信息</th>
-                            <th class="text-center width80">状态</th>
-                            <th class="text-center width80">备注</th>
-                            <th class="text-center width50">详情</th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">支出科目</th>
+                            <th class="text-center width110" :class="{red: !recycle_bin}">应付金额</th>
+                            <th class="text-center width110" :class="{red: !recycle_bin}">实付金额</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
+                            <th class="text-center phone" :class="{red: !recycle_bin}" style="min-width: 360px;">详细信息
+                            </th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">状态</th>
+                            <th class="text-center width80" :class="{red: !recycle_bin}">备注</th>
+                            <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
 
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
-                            <td>
+                            <td v-if="recycle_bin">
                                 <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
                                        @click="changeIndex($event,item.id,item.status)">
                             </td>
@@ -189,7 +192,7 @@
                                 <span v-if="item.tag === ''"></span>
                                 <span @click="look_tag(item.tag)" v-if="item.tag !== ''" class="fa fa-book"></span>
                             </td>
-                            <td>
+                            <td v-if="recycle_bin">
                                 <router-link
                                         :to="{path:'/payPaymentDetail',query: {payId: item.id,page:beforePage,myParams:params,selected:selected}}">
                                     详情
@@ -326,7 +329,7 @@
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
-                        <button  class="btn btn-danger btn-md" @click="rollback">确认</button>
+                        <button class="btn btn-danger btn-md" @click="rollback">确认</button>
                     </div>
                 </div>
             </div>
@@ -385,6 +388,7 @@
 
         data(){
             return {
+                recycle_bin: true,            //回收站
                 pitch: [],                  //选中id
                 look_remark: '',              //备注内容
                 remarks_status: '',          //新增/查看
@@ -478,34 +482,100 @@
             let params = this.$route.query.myParam;
             let page = this.$route.query.page;
             let selected = this.$route.query.selected;
-            this.$http.get('revenue/glee_collect/dict')
-                .then(
-                    (res) => {
-                        this.dict = res.data;
-                        if (page != undefined) {
-                            this.page = page;
-                            this.beforePage = page;
-                            if (params != undefined && typeof params != 'string') {
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                this.dict = res.data;
+                if (page != undefined) {
+                    this.page = page;
+                    this.beforePage = page;
+                    if (params != undefined && typeof params != 'string') {
 //                                this.currentDate = [];
-                                this.currentDate = params.range.split('to');
-                                // this.currentDate = params.range.split('to');
-                                // console.log(this.currentDate)
-                                this.params = params;
-                                console.log(this.params);
+                        this.currentDate = params.range.split('to');
+                        // this.currentDate = params.range.split('to');
+                        // console.log(this.currentDate)
+                        this.params = params;
+                        console.log(this.params);
 //                                alert(this.beforePage)
-                            }
-//                            alert(selected);
-                            if (selected != undefined) {
-                                this.selected = selected;
-                            }
-                            this.filter(this.beforePage);
-                        } else {
-                            this.payFlowList();
-                        }
                     }
-                );
+//                            alert(selected);
+                    if (selected != undefined) {
+                        this.selected = selected;
+                    }
+                    this.filter(this.beforePage);
+                } else {
+                    this.payFlowList();
+                }
+            });
         },
         methods: {
+//            清空
+            clear_info (){
+                this.params.department_id = [];
+                this.params.name = [];
+                this.params.staff_id = [];
+                this.params.name = [];
+                this.params.status = '';
+                this.params.range = '';
+                this.params.search = '';
+                this.selected = [];
+            },
+            search(val){
+                if (this.recycle_bin === false) {
+                    this.playbacks(val);
+                } else if (this.recycle_bin === true) {
+                    this.filter(val);
+                }
+            },
+
+//            回收站列表/列表
+            playback (){
+                this.recycle_bin = !this.recycle_bin;
+                if (this.recycle_bin === false) {
+                    this.clear_info();
+                    this.playbacks(this.beforePage);
+                } else if (this.recycle_bin === true) {
+                    this.clear_info();
+                    this.filter(this.beforePage);
+                }
+            },
+            playbacks (val){
+                this.paging = '';
+                this.beforePage = val;
+                this.$http.get('account/payable/trashed?page=' + val,{
+                    params: this.params
+                }).then((res) => {
+                    this.myData = [];
+                    if (res.data.code === '18400') {
+                        this.isShow = false;
+                        this.paging = res.data.data.paging;
+                        this.myData = res.data.data.data;
+                    } else {
+                        this.isShow = true;
+                    }
+                })
+            },
+
+            filter(val){
+                this.operId = 0;
+                this.pitch.splice(0, this.pitch);
+                this.beforePage = val;
+                this.$http.get('account/payable?page=' + val, {
+                    params: this.params
+                }).then((res) => {
+                    this.myData = [];
+                    if (res.data.code === '18400') {
+                        // 成功
+                        this.paging = res.data.data.pages;
+                        this.myData = res.data.data.data;
+                        this.setTips(res.data.data, true);
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.paging = 0;
+                        this.page = 1;
+                        this.setTips({}, false);
+                    }
+                })
+            },
 //            回滚
             Rollback_show(){
                 $('#Rollback').modal({
@@ -515,7 +585,7 @@
 //            回滚
             rollback (){
                 this.$http.post('account/payable/revert/' + this.pitch[0]).then((res) => {
-                    if(res.data.code === '18410'){
+                    if (res.data.code === '18410') {
                         this.search(this.beforePage);
                         $('#Rollback').modal('hide');
                         //成功信息 ***
@@ -715,33 +785,6 @@
                 this.search(1);
             },
 
-            search(val){
-                this.filter(val);
-            },
-            filter(val){
-                this.operId = 0;
-                this.pitch.splice(0,this.pitch);
-                this.beforePage = val;
-                this.$http.get('account/payable?page=' + val, {
-                    params: this.params
-                }).then(
-                    (res) => {
-                        if (res.data.code === '18400') {
-                            // 成功
-                            this.paging = res.data.data.pages;
-                            this.myData = res.data.data.data;
-                            this.setTips(res.data.data, true);
-                            this.isShow = false;
-                        } else {
-                            this.isShow = true;
-                            this.myData = [];
-                            this.paging = 0;
-                            this.page = 1;
-                            this.setTips({}, false);
-                        }
-                    }
-                )
-            },
             getDate(data){
                 // 时间
                 this.params.range = data;
@@ -933,5 +976,9 @@
 
     .table-striped > tbody > tr.reds {
         background-color: #FFCECE;
+    }
+
+    th.red {
+        color: #e4393c;
     }
 </style>
