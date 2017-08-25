@@ -57,6 +57,9 @@
                         <li v-show="statusId!=3&&pitch.length==1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
+                        <li v-show="statusId!=3&&pitch.length==1">
+                            <h5 @click="rollback"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
+                        </li>
                         <li v-show="pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
@@ -424,6 +427,7 @@
                     //失败信息 ***
                     error: ''
                 },
+
                 confirmMsg: {
                     id: '',
                     msg: ''
@@ -477,10 +481,28 @@
                 } else {
                     this.operId = 0;
                 }
-//                console.log(this.operId);
             }
         },
         methods: {
+//            回滚
+            rollback (){
+                this.$http.post('account/receivable/revert/' + this.pitch[0]).then((res) => {
+                    if(res.data.code === '18510'){
+                        this.search(this.beforePage);
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
 //            新增备注
             remark_show (){
                 this.remarks_status = 1;

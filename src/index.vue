@@ -185,7 +185,61 @@
                 <!--</div>-->
                 <!--</div>-->
             </div>
+
             <div class="col-md-3">
+                <!--在线人数-->
+                <section class="panel">
+                    <header class="panel-heading">
+                        在线人数&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>
+                            共&nbsp;<span class="text-danger">{{allLine}}</span>&nbsp;人
+                        </span>
+                        <a class="pull-right" @click="click_more" v-if="mores > 9 && more_status">
+                            更多>>
+                        </a>
+                        <a class="pull-right" @click="click_more" v-if="mores > 9 && !more_status">
+                            收起>>
+                        </a>
+                    </header>
+                    <div class="panel-body" style="padding-top: 0;padding-bottom: 0;">
+                        <div class="row">
+                            <div class="col-md-12" style="padding: 0;">
+                                <section class="panel table-responsive roll" style="height: 580px;">
+                                    <table class="table table-advance table-hover" id="panel">
+                                        <thead>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th>部门</th>
+                                            <th>操作时间</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(line, index) in onlines" v-if="index < more">
+                                            <td  class="width120" style="text-align: left;">
+                                                <img src="./assets/img/head.png" v-if="line.avatar === ''"
+                                                     style="width: 35px;height: 35px;border-radius:50%;"/>
+
+                                                <img :src="line.avatar" alt="" v-if="line.avatar != ''"
+                                                     style="width: 35px;height: 35px;border-radius:50%;">
+                                                {{line.real_name}}
+                                            </td>
+                                            <td class="width80">{{line.department_name}}</td>
+                                            <td class="width100">{{line.operating_time}}</td>
+                                        </tr>
+                                        <tr v-show="onlines.length === 0">
+                                            <td colspan="7" class="text-center text-muted">
+                                                <h4>暂无数据....</h4>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!--龙虎榜-->
                 <section class="panel">
                     <header class="panel-heading">
                         龙虎榜
@@ -205,16 +259,16 @@
                                         </thead>
                                         <tbody>
                                         <!--<tr v-for="(ran, index) in main_ranking">-->
-                                            <!--<td style="min-width: 60px;">{{index + 1}}</td>-->
-                                            <!--<td style="min-width: 80px;">{{ran.name}}</td>-->
-                                            <!--<td style="min-width: 110px;">{{ran.department}}</td>-->
-                                            <!--<td style="min-width: 100px;">-->
-                                                <!--{{ran.money}}-->
-                                                <!--&lt;!&ndash;<span class="text-danger" v-if="ran.rank_id === 1"><i&ndash;&gt;-->
-                                                <!--&lt;!&ndash;class="fa fa-arrow-up"></i></span>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<span class="text-success" v-if="ran.rank_id === 2"><i&ndash;&gt;-->
-                                                <!--&lt;!&ndash;class="fa  fa-arrow-down"></i></span>&ndash;&gt;-->
-                                            <!--</td>-->
+                                        <!--<td style="min-width: 60px;">{{index + 1}}</td>-->
+                                        <!--<td style="min-width: 80px;">{{ran.name}}</td>-->
+                                        <!--<td style="min-width: 110px;">{{ran.department}}</td>-->
+                                        <!--<td style="min-width: 100px;">-->
+                                        <!--{{ran.money}}-->
+                                        <!--&lt;!&ndash;<span class="text-danger" v-if="ran.rank_id === 1"><i&ndash;&gt;-->
+                                        <!--&lt;!&ndash;class="fa fa-arrow-up"></i></span>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<span class="text-success" v-if="ran.rank_id === 2"><i&ndash;&gt;-->
+                                        <!--&lt;!&ndash;class="fa  fa-arrow-down"></i></span>&ndash;&gt;-->
+                                        <!--</td>-->
                                         <!--</tr>-->
                                         <tr v-show="main_ranking.length === 0">
                                             <td colspan="7" class="text-center text-muted">
@@ -238,6 +292,11 @@
     export default {
         data (){
             return {
+                more: 9,
+                mores: '',
+                more_status: true,
+                onlines: [],
+                allLine: '',
 //                screenWidth: document.body.clientWidth,      // 页面宽度
                 systems: [],                    //公告
                 isSystem_s: false,
@@ -295,12 +354,32 @@
 //        },
         created (){
             this.home_index();
-            this.home_system()
+            this.home_system();
+            this.online();
         },
         methods: {
+
+//            更多
+            click_more (){
+                $('#panel').scroll();
+                if(this.more === 9){
+                    this.more = this.mores;
+                }else{
+                    this.more = 9;
+                }
+                this.more_status = !this.more_status
+            },
 //            详细内容
             more_content (val){
                 this.isActive = val;
+            },
+//            在线人数
+            online (){
+                this.$http.post('log/log/member').then((res) => {
+                    this.onlines = res.data.data.data;
+                    this.mores = res.data.data.data.length;
+                    this.allLine = res.data.data.count;
+                });
             },
 //            系统公告
             home_system (){
