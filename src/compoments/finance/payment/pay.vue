@@ -311,8 +311,6 @@
             </div>
         </div>
 
-        <!--应付入账-->
-
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
@@ -326,6 +324,7 @@
 
         <!--应付入账-->
         <ShouldPay @pay_succ="search" :details="details_info"></ShouldPay>
+
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
@@ -553,15 +552,8 @@
                     remark: this.remarks                                //备注
                 }).then((res) => {
                     if (res.data.code === '18410') {
-                        $('#addPay').modal('hide');
+                        this.clearForm();
                         this.search(1);
-                        this.pay_time = '';                       //付款日期
-                        this.cus_id = '';                         //客户ID
-                        this.cus_name = '';                       //客户姓名
-                        this.detailed = '';                       //详情
-                        this.subject = '';                        //支付科目
-                        this.payable = '';                        //应付金额
-                        this.remarks = '';                        //备注
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
