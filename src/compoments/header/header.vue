@@ -666,29 +666,29 @@
                         </router-link>
                     </li>
 
-                    <li class="sub-menu">
+                    <li class="sub-menu" v-if="simulate.indexOf('manager/management') > -1">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>办公用品</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li :class="{'active': isActive == 'officeLibrary'}" @click='pitch_on("officeLibrary")' v-if="simulate.indexOf('manager/approver') > -1">
                                 <router-link to="/officeLibrary">
                                     <span>办公用品类型管理</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 'officeSupplies'}" @click='pitch_on("officeSupplies")' v-if="simulate.indexOf('manager/approver') > -1">
                                 <router-link to="/officeSupplies">
                                     <span>办公用品管理</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 'officeApply'}" @click='pitch_on("officeApply")'>
                                 <router-link to="/officeApply">
                                     <span>办公用品申领</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li :class="{'active': isActive == 'batchApply'}" @click='pitch_on("batchApply")'>
                                 <router-link to="/batchApply">
                                     <span>办公用品批量申领</span>
                                 </router-link>
@@ -897,7 +897,7 @@
     import Status from '../common/status.vue';
     export default {
         components: {AddRemind, Status, LookRemind},
-        props: ['Name', 'Card'],
+        props: ['Name', 'Card','simulate'],
         data(){
             return {
                 account_book: '',           //账本
