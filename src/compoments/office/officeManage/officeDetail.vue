@@ -234,6 +234,7 @@
                 page : '',
                 dict : {},
                 msg : '',
+                resData : '',
                 confirmMsg: {
                     msg: '',
                 },
@@ -284,19 +285,20 @@
             })
         },
         watch:{
-            'form.parent_id':{
+            /*'form.parent_id':{
                 handler(val){
                     this.selectLibrary();
                 }
-            }
+            }*/
         },
         methods: {
             getDetails(){
                 this.$http.post('manager/management/inventory_details?id='+this.id).then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
 //                    if (res.data.code==10020){
                         // 成功
                     this.msg = res.data.data.data;
+                    this.resData = res.data.data;
 //                    }
                 })
             },
@@ -322,40 +324,42 @@
             },
             selectLibrary(){
                 this.formData.category_id = '';
+                if (this.formData.parent_id==''){
+                    this.form.types = [];
+                    return;
+                }
                 this.$http.post('manager/management/type_all?parent_id='+this.form.parent_id).then((res)=>{
-//                    console.log(res.data.data.data);
                     if (res.data.code==10010){
+                        console.log(res.data.data.data);
                         // 成功
                         this.form.types = res.data.data.data;
+//                        alert(2)
                     } else {
                         // 失败
                         this.form.types = [];
                     }
                 })
             },
-
             oper(){
 //                        console.log(val);
                 this.form.parent_id = this.msg.library_id;
 
-                let _this = this;
-                setTimeout(function () {
-                    _this.formData.name = _this.msg.name;
-                    _this.formData.type_num = _this.msg.type_num;
-                    _this.formData.register_type = _this.msg.register_type;
-                    _this.formData.measurement_unit = _this.msg.measurement_unit;
-                    _this.formData.category_id = _this.msg.category_id;
-                    _this.formData.price = _this.msg.price;
-                    _this.formData.code = _this.msg.code;
-                    _this.formData.supplier = _this.msg.supplier;
-                    _this.formData.inventory = _this.msg.inventory;
-                    _this.formData.alert_inventory = _this.msg.alert_inventory;
-                    _this.formData.highest_inventory = _this.msg.highest_inventory;
+                this.allLibrary = this.resData.library;
+                this.form.types = this.resData.type;
+                this.formData.name = this.msg.name;
+                this.formData.type_num = this.msg.type_num;
+                this.formData.register_type = this.msg.register_type;
+                this.formData.measurement_unit = this.msg.measurement_unit;
+                this.formData.category_id = this.msg.category_id;
+                this.formData.price = this.msg.price;
+                this.formData.code = this.msg.code;
+                this.formData.supplier = this.msg.supplier;
+                this.formData.inventory = this.msg.inventory;
+                this.formData.alert_inventory = this.msg.alert_inventory;
+                this.formData.highest_inventory = this.msg.highest_inventory;
 //                        this.formData.scrap_number = val.scrap_number;
-                    _this.formData.remarks = _this.msg.remarks;
-
-                    $('#edit').modal('show');
-                },200)
+                this.formData.remarks = this.msg.remarks;
+                $('#edit').modal('show');
             },
             clearForm(){
                 this.formData.name = '';

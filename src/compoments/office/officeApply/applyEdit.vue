@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品库<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="library_id">
+                                        <select class="form-control" v-model="library_id" @change="changeLibrary">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allLibrary">{{item.name}}</option>
                                         </select>
@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品类别<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="category_id">
+                                        <select class="form-control" v-model="category_id" @change="changeCategory">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allType">{{item.name}}</option>
                                         </select>
@@ -135,7 +135,7 @@
                 console.log(val);
                 this.getDetail();
             },
-            library_id(val){
+           /* library_id(val){
                 this.category_id = '';
                 this.formData.inventory_id = '';
                 if (val==''){
@@ -173,7 +173,7 @@
                         this.info.state_error = true;
                     }
                 })
-            },
+            },*/
             'formData.inventory_id':{
                 handler(val){
 //                    console.log(val);
@@ -206,15 +206,15 @@
                 this.$http.post('manager/management/receive_details?id='+this.applyId).then((res)=>{
                     console.log(res.data);
                     let val =res.data.data.data;
+                    this.allLibrary = res.data.data.library;
+                    this.allType = res.data.data.type;
+                    this.allSupply = res.data.data.inventory;
                     let _this = this;
                     this.formData.register_type = val.register_type;
                     this.library_id = val.parent_id;
-                    setTimeout(function () {
-                        _this.category_id = val.category_id
-                    },500);
-                    setTimeout(function () {
-                        _this.formData.inventory_id = val.inventory_id
-                    },1000);
+                    this.category_id = val.category_id;
+                    this.formData.inventory_id = val.id
+
                     setTimeout(function () {
                         _this.formData.num = val.num;
                     },1500);
@@ -223,6 +223,45 @@
                 })
             },
 
+            changeLibrary(){
+                this.category_id = '';
+                this.formData.inventory_id = '';
+                if (this.library_id==''){
+                    this.allType = [];
+                    this.allSupply = [];
+                    return;
+                }
+                this.$http.post('manager/management/type_all?parent_id='+this.library_id).then((res)=>{
+//                    console.log(res.data.data.data);
+                    if (res.data.code==10010){
+                        // 成功
+                        this.allType = res.data.data.data;
+                    } else {
+                        // 失败
+                        this.allType = [];
+                    }
+                })
+            },
+            changeCategory(){
+                this.formData.inventory_id = '';
+                if (this.category_id==''){
+                    this.allSupply = [];
+                    return;
+                }
+                this.$http.post('manager/management/inventory_all?category_id='+this.category_id).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.code==10010){
+                        // 成功
+                        this.allSupply = res.data.data.data;
+                    } else {
+                        // 失败
+                        this.allSupply = [];
+                        /*this.info.error = '该类别下没有用品';
+                         //显示失败弹窗 ***
+                         this.info.state_error = true;*/
+                    }
+                })
+            },
             clearForm(){
                 this.price = '';
                 this.allLibrary = [];

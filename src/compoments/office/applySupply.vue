@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品库<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="library_id">
+                                        <select class="form-control" v-model="library_id" @change="changeLibrary">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allLibrary">{{item.name}}</option>
                                         </select>
@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品类别<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="category_id">
+                                        <select class="form-control" v-model="category_id" @change="changeCategory">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allType">{{item.name}}</option>
                                         </select>
@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">办公用品<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" v-model="formData.inventory_id">
+                                        <select class="form-control" v-model="formData.inventory_id" @change="changeInventory">
                                             <option value="">--请选择--</option>
                                             <option :value="item.id" v-for="item in allSupply">{{item.name}}</option>
                                         </select>
@@ -123,22 +123,20 @@
                 },
             }
         },
-        created(){
-            this.getLibrarys();
-        },
+
         mounted (){
             this.$http.get('manager/management/dict').then((res)=>{
 //                    console.log(res);
                 this.dict = res.data.management;
             });
-
+            this.getLibrarys();
         },
         watch :{
             officeId(val){
                 console.log(val);
                 this.getOfficeDetail();
             },
-            library_id(val){
+            /*library_id(val){
                 this.category_id = '';
                 this.formData.inventory_id = '';
                 if (val==''){
@@ -156,8 +154,8 @@
                         this.allType = [];
                     }
                 })
-            },
-            category_id(val){
+            },*/
+            /*category_id(val){
                 this.formData.inventory_id = '';
                 if (val==''){
                     this.allSupply = [];
@@ -171,13 +169,13 @@
                     } else {
                         // 失败
                         this.allSupply = [];
-                        /*this.info.error = '该类别下没有用品';
+                        /!*this.info.error = '该类别下没有用品';
                         //显示失败弹窗 ***
-                        this.info.state_error = true;*/
+                        this.info.state_error = true;*!/
                     }
                 })
-            },
-            'formData.inventory_id':{
+            },*/
+            /*'formData.inventory_id':{
                 handler(val){
 //                    console.log(val);
                     this.formData.num = 0;
@@ -198,7 +196,7 @@
 //                        console.log(this.maxNum)
                     }
                 }
-            }
+            }*/
         },
         methods: {
            /* openModal(){
@@ -214,21 +212,78 @@
                 this.$http.post('manager/management/inventory_details?id='+this.officeId).then((res)=>{
                     console.log(res.data);
                     let val =res.data.data.data;
-                    let _this = this;
-                    this.formData.register_type = val.register_type;
-                    setTimeout(function () {
-                        _this.library_id = val.library_id;
-                    },300);
+                    this.allLibrary = res.data.data.library;
+                    this.allType = res.data.data.type;
+                    this.allSupply = res.data.data.inventory;
 
-                    setTimeout(function () {
-                        _this.category_id = val.category_id
-                    },800);
-                    setTimeout(function () {
-                        _this.formData.inventory_id = val.id
-                    },1500);
+                    this.formData.register_type = val.register_type;
+                    this.library_id = val.library_id;
+                    this.category_id = val.category_id;
+                    this.formData.inventory_id = val.id
+                    this.changeInventory();
+
                 })
             },
 
+            changeLibrary(){
+                this.category_id = '';
+                this.formData.inventory_id = '';
+                if (this.library_id==''){
+                    this.allType = [];
+                    this.allSupply = [];
+                    return;
+                }
+                this.$http.post('manager/management/type_all?parent_id='+this.library_id).then((res)=>{
+//                    console.log(res.data.data.data);
+                    if (res.data.code==10010){
+                        // 成功
+                        this.allType = res.data.data.data;
+                    } else {
+                        // 失败
+                        this.allType = [];
+                    }
+                })
+            },
+            changeCategory(){
+                this.formData.inventory_id = '';
+                if (this.category_id==''){
+                    this.allSupply = [];
+                    return;
+                }
+                this.$http.post('manager/management/inventory_all?category_id='+this.category_id).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.code==10010){
+                        // 成功
+                        this.allSupply = res.data.data.data;
+                    } else {
+                        // 失败
+                        this.allSupply = [];
+                        /*this.info.error = '该类别下没有用品';
+                         //显示失败弹窗 ***
+                         this.info.state_error = true;*/
+                    }
+                })
+            },
+
+            changeInventory(){
+                this.formData.num = 0;
+                if (this.formData.inventory_id==''){
+                    this.price = '';
+                    this.maxNum = 0;
+                    return;
+                }
+                let index = -1;
+                for (let i = 0 ; i < this.allSupply.length ; i++){
+                    if (this.formData.inventory_id==this.allSupply[i].id){
+                        index = i;
+                    }
+                }
+                if (index!=-1){
+                    this.price = this.allSupply[index].price;
+                    this.maxNum = this.allSupply[index].existing_inventory;
+//                        console.log(this.maxNum)
+                }
+            },
             clearForm(){
                 this.price = '';
 //                this.allLibrary = [];

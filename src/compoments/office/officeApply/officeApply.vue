@@ -74,7 +74,7 @@
                         </li>
                         <li v-if="simulate.indexOf('manager/approver') > -1">
                             <h5 data-toggle="dropdown">
-                                <a><i class="fa fa-send-o"></i> 审核</a>
+                                <a><i class="fa fa-check-square-o"></i> 审核</a>
                             </h5>
                             <ul class="dropdown-menu" aria-labelledby="dLabel">
                                 <li v-for="(key,value) in dict.status" @click="review(value)" v-if="value!=1&&value!=5&&value!=6">{{key}}</li>
