@@ -226,9 +226,10 @@
             },
 
             changeLibrary(){
+//                alert(1)
                 this.category_id = '';
                 this.formData.inventory_id = '';
-                if (this.library_id==''){
+                if (this.library_id==''||this.library_id==undefined){
                     this.allType = [];
                     this.allSupply = [];
                     return;
@@ -246,7 +247,7 @@
             },
             changeCategory(){
                 this.formData.inventory_id = '';
-                if (this.category_id==''){
+                if (this.category_id==''||this.category_id==undefined){
                     this.allSupply = [];
                     return;
                 }
