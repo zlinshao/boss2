@@ -58,7 +58,7 @@
                             </h5>
                         </li>
                         <li v-show="statusId!=3&&pitch.length==1">
-                            <h5 @click="rollback"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
+                            <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li v-show="pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
@@ -311,6 +311,27 @@
             </div>
         </div>
 
+        <!--回滚-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="Rollback">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>确定回滚吗？</h5>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
+                        <button  class="btn btn-danger btn-md" @click="rollback">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
@@ -486,10 +507,17 @@
         },
         methods: {
 //            回滚
+            Rollback_show(){
+                $('#Rollback').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+//            回滚
             rollback (){
                 this.$http.post('account/payable/revert/' + this.pitch[0]).then((res) => {
                     if(res.data.code === '18410'){
                         this.search(this.beforePage);
+                        $('#Rollback').modal('hide');
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
