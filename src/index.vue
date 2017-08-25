@@ -190,21 +190,19 @@
                 <!--在线人数-->
                 <section class="panel">
                     <header class="panel-heading">
-                        在线人数&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>
-                            共&nbsp;<span class="text-danger">{{allLine}}</span>&nbsp;人
-                        </span>
-                        <a class="pull-right" @click="click_more" v-if="mores > 9 && more_status">
-                            更多>>
+                        在线人数
+
+                        <a style="font-size: 12px;color: #000" class="pull-right" @click="click_more" v-if="mores > 9 && more_status">
+                            展开({{allLine}})
                         </a>
-                        <a class="pull-right" @click="click_more" v-if="mores > 9 && !more_status">
-                            收起>>
+                        <a style="font-size: 12px;color: #000" class="pull-right" @click="click_more" v-if="mores > 9 && !more_status">
+                            收起({{allLine}})
                         </a>
                     </header>
                     <div class="panel-body" style="padding-top: 0;padding-bottom: 0;">
                         <div class="row">
                             <div class="col-md-12" style="padding: 0;">
-                                <section class="panel table-responsive roll" style="height: 580px;">
+                                <section class="panel table-responsive roll" style="height: 580px; overflow: auto">
                                     <table class="table table-advance table-hover" id="panel">
                                         <thead>
                                         <tr>
