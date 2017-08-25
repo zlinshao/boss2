@@ -9,7 +9,7 @@
             <div class="panel-body">
                 <div v-show="pitch.length==0">
                     <form class="form-inline clearFix" role="form">
-                        <div class="input-group">
+                        <div class="input-group" v-if="simulate.indexOf('manager/approver') > -1">
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
                                    v-model="selected" @click='select' readonly>
                             <span class="input-group-btn">
@@ -72,7 +72,7 @@
                         <li>
                             <h5 v-if="pitch.length==1" v-show="statusId==1||statusId==2" @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('manager/approver') > -1">
                             <h5 data-toggle="dropdown">
                                 <a><i class="fa fa-send-o"></i> 审核</a>
                             </h5>
@@ -80,7 +80,7 @@
                                 <li v-for="(key,value) in dict.status" @click="review(value)" v-if="value!=1&&value!=5&&value!=6">{{key}}</li>
                             </ul>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('manager/approver') > -1">
                             <h5 @click="returnBack"><a><i class="fa fa-mail-reply"></i>&nbsp;归还</a></h5>
                         </li>
                     </ul>
@@ -168,6 +168,7 @@
     import EditApply from './applyEdit.vue'
     import Confirm from '../../common/confirm.vue'
     export default{
+        props:['simulate'],
         components: {Page,Status,DatePicker,ApplySupply,STAFF,EditApply,Confirm},
         data(){
             return {
