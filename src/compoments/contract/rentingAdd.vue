@@ -735,21 +735,20 @@
             dictionary(val){
                 this.myDictionary = val;
 
-                this.contractAdd.relative_customer_id = [];
                 this.contractPic.cus_idPhotos = [];
-                this.contractAdd.contract_pic =[];
+
                 this.handoverPic.cus_idPhotos = [];
-                this.contractAdd.handover_pic =[];
+
                 this.receiptPic.cus_idPhotos = [];
-                this.contractAdd.receipt_pic = [];
+
                 this.waterPic.cus_idPhotos = [];
-                this.contractAdd.water_card_pic = [];
+
                 this.elePic.cus_idPhotos = [];
-                this.contractAdd.elec_card_pic = [];
+
                 this.gasPic.cus_idPhotos = [];
-                this.contractAdd.gas_card_pic = [];
+
                 this.paymentPic.cus_idPhotos = [];
-                this.contractAdd.payment_pic = [];
+
             },
         },
         methods : {
@@ -990,7 +989,7 @@
                 this.contractAdd.medi_account_num = '';
                 this.contractAdd.medi_account_owner = '';
                 this.contractAdd.medi_account_bank = 1;
-                this.contractAdd.medi_account_subbank = 1;
+                this.contractAdd.medi_account_subbank = '';
                 this.contractAdd.cost_deposit = '';
                 this.contractAdd.payment = [];
                 this.contractAdd.deal_time = '';
