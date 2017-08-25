@@ -64,9 +64,9 @@
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                         <!--<li>-->
-                            <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
-                                <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
-                            <!--</h5>-->
+                        <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
+                        <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
+                        <!--</h5>-->
                         <!--</li>-->
                         <li v-show="pitch.length == 1">
                             <h5 @click="remark_show">
@@ -278,7 +278,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">备注</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" v-model="formData.remark"></textarea>
                                 </div>
                             </div>
 
@@ -407,14 +407,14 @@
                 logName: '',
 
                 formData: {
-                    customer_id: '',         // 客户id
-                    identity: '',           // 客户身份
+                    customer_id: '',            // 客户id
+                    identity: '',               // 客户身份
 //                    customer : {},
-                    pay_date: '',    // 收款时间
-                    description: '',         // 详情
-                    subject_id: '',           // 科目id
-                    amount_receivable: '',  // 应收金额
-                    remark: ''        // 备注
+                    pay_date: '',               // 收款时间
+                    description: '',            // 详情
+                    subject_id: '',             // 科目id
+                    amount_receivable: '',      // 应收金额
+                    remark: ''                  // 备注
                 },
 
                 info: {
@@ -487,7 +487,7 @@
 //            回滚
             rollback (){
                 this.$http.post('account/receivable/revert/' + this.pitch[0]).then((res) => {
-                    if(res.data.code === '18510'){
+                    if (res.data.code === '18510') {
                         this.search(this.beforePage);
                         //成功信息 ***
                         this.info.success = res.data.msg;
@@ -538,7 +538,7 @@
                 this.formData.pay_date = '';
                 this.formData.subject_id = '';
                 this.formData.amount_receivable = '';
-                this.formData.remark = '';
+                this.formData.remark = "";
 
                 $('#addCollect').modal('hide');
             },
@@ -664,7 +664,7 @@
 
             filter(val){
                 this.operId = 0;
-                this.pitch.splice(0,this.pitch);
+                this.pitch.splice(0, this.pitch);
                 this.beforePage = val;
                 this.$http.get('account/receivable?page=' + val, {
                     params: this.params
@@ -692,15 +692,13 @@
                 $('.selectClient:eq(0)').modal('show');
             },
             getClient(data){
-                console.log(data);
                 this.formData.customer_id = data.id;
                 this.formData.identity = data.identity;
                 this.chooseResult.customer_name = data.name;
             },
 
             save(){
-                this.$http.post('account/receivable', this.formData).then(
-                    (res) => {
+                this.$http.post('account/receivable', this.formData).then((res) => {
                         if (res.data.code == 18510) {
                             // 成功
                             this.info.success = res.data.msg;
