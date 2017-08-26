@@ -558,7 +558,7 @@
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
         <!--房屋选择-->
-        <SelectHouse @House="getHouse" :msg="staffId" :isNewAddHouse="1"></SelectHouse>
+        <SelectHouse @House="getHouse" :msg="staffId"></SelectHouse>
 
         <!--提示信息-->
         <Status :state='info'></Status>
