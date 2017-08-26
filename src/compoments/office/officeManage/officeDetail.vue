@@ -19,7 +19,7 @@
                     <span>{{msg.name}}</span>
                     <div class="pull-right">
                         <button class="btn btn-primary" @click="dele">删除</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#applySupply">申领</button>
+                        <!--<button class="btn btn-primary" data-toggle="modal" data-target="#applySupply">申领</button>-->
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">登记类型<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">登记类型</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"  v-model="formData.register_type">
                                             <option value="">--请选择--</option>
@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">计量单位</label>
+                                    <label class="col-sm-2 control-label">计量单位<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.measurement_unit">
                                             <option value="">--请选择--</option>

@@ -213,7 +213,7 @@
                     this.formData.register_type = val.register_type;
                     this.library_id = val.parent_id;
                     this.category_id = val.category_id;
-                    this.formData.inventory_id = val.id
+                    this.formData.inventory_id = val.inventory_id
 
                     setTimeout(function () {
                         _this.formData.num = val.num;

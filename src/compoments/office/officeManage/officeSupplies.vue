@@ -44,9 +44,9 @@
                         <li>
                             <h5 @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
-                        <li>
+                        <!--<li>
                             <h5 @click="apply"><a><i class="fa fa-file-text-o"></i>&nbsp;申领</a></h5>
-                        </li>
+                        </li>-->
                         <li>
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
@@ -66,6 +66,8 @@
                             <th class="text-center">办公用品名称</th>
                             <th class="text-center">办公用品类别</th>
                             <th class="text-center">办公用品所属库</th>
+                            <th class="text-center">总库存</th>
+                            <th class="text-center">现有库存</th>
                             <th class="text-center">备注</th>
                             <th class="text-center">详情</th>
                         </tr>
@@ -79,6 +81,8 @@
                             <td>{{item.name}}</td>
                             <td>{{item.category_name}}</td>
                             <td>{{item.library_name}}</td>
+                            <td>{{item.inventory}}</td>
+                            <td>{{item.existing_inventory}}</td>
                             <td>{{item.remarks}}</td>
                             <td>
                                 <router-link :to="{path:'/officeDetail',query: {officeId: item.id,page:beforePage,myParams:params}}">详情</router-link>
@@ -122,7 +126,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">登记类型<sup class="required">*</sup></label>
+                                    <label class="col-sm-2 control-label">登记类型</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"  v-model="formData.register_type">
                                             <option value="">--请选择--</option>
@@ -147,7 +151,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">计量单位</label>
+                                    <label class="col-sm-2 control-label">计量单位<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="formData.measurement_unit">
                                             <option value="">--请选择--</option>
@@ -513,7 +517,12 @@
                         this.form.types = res.data.data.type;
                         this.formData.name = val.name;
                         this.formData.type_num = val.type_num;
-                        this.formData.register_type = val.register_type;
+
+                        if (val.register_type==0){
+                            this.formData.register_type = '';
+                        } else {
+                            this.formData.register_type = val.register_type;
+                        }
                         this.formData.measurement_unit = val.measurement_unit;
                         this.formData.price = val.price;
                         this.formData.code = val.code;
