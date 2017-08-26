@@ -685,7 +685,7 @@
                             </li>
                             <li :class="{'active': isActive == 'officeApply'}" @click='pitch_on("officeApply")' v-if="simulate.indexOf('manager/approver') > -1||simulate.indexOf('manager/management') > -1">
                                 <router-link to="/officeApply">
-                                    <span>办公用品申领</span>
+                                    <span>申领记录</span>
                                 </router-link>
                             </li>
                             <li :class="{'active': isActive == 'batchApply'}" @click='pitch_on("batchApply")' v-if="simulate.indexOf('manager/management') > -1">
