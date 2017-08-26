@@ -70,7 +70,7 @@
                     <ul>
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
                         <li>
-                            <h5 v-if="pitch.length==1" v-show="statusId==1||statusId==2" @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
+                            <h5 v-if="pitch.length==1&&simulate.indexOf('manager/management')>-1" v-show="statusId==1||statusId==2" @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li v-if="simulate.indexOf('manager/approver') > -1">
                             <h5 data-toggle="dropdown">
