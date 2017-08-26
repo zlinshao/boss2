@@ -513,7 +513,7 @@
                 }
 //                alert(flag)
                 if (flag){
-                    this.info.error = '只有已归还状态才可归还';
+                    this.info.error = '只有已完成状态才可归还';
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                 } else {
