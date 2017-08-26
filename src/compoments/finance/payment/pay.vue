@@ -45,20 +45,20 @@
                     </form>
                 </div>
 
-                <div v-show="pitch.length>0" class="col-lg-12 remind">
+                <div v-show="pitch.length > 0" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="statusId != 3 && statusId != 4 && pitch.length == 1">
+                        <li v-show="status != 3 && status != 4 && pitch.length == 1">
                             <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="pitch.length==1">
-                            <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚{{status}}</a></h5>
+                        <li v-show="pitch.length == 1">
+                            <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
-                        <li v-show="pitch.length==1">
+                        <li v-show="pitch.length == 1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                         <!--<li>-->
@@ -141,7 +141,7 @@
                         <tr>
                             <th class="text-center" v-if="recycle_bin">
                                 <!--<input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"-->
-                                       <!--@click="chooseAll($event)">-->
+                                <!--@click="chooseAll($event)">-->
                             </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">付款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
@@ -342,7 +342,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
-        <SelectHouse @House="getHouse"></SelectHouse>
+        <!--<SelectHouse @House="getHouse"></SelectHouse>-->
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
@@ -390,7 +390,7 @@
             return {
                 recycle_bin: true,            //回收站
                 pitch: [],                  //选中id
-                status : [],                // 选中状态
+                status: [],                // 选中状态
                 look_remark: '',              //备注内容
                 remarks_status: '',          //新增/查看
                 addRemark: '',               //新增备注
@@ -409,8 +409,6 @@
                 pay_man: '',                        //付款人员
 
                 beforePage: 1,
-                operId: 0,
-                statusId: 0,
                 paging: '',
 
                 dict: {},
@@ -477,20 +475,17 @@
             let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.dict = res.data;
-                if (page != undefined) {
+                if (page !== undefined) {
                     this.page = page;
                     this.beforePage = page;
-                    if (params != undefined && typeof params != 'string') {
-//                                this.currentDate = [];
+                    if (params !== undefined && typeof params !== 'string') {
+//                        this.currentDate = [];
                         this.currentDate = params.range.split('to');
-                        // this.currentDate = params.range.split('to');
-                        // console.log(this.currentDate)
+//                        this.currentDate = params.range.split('to');
                         this.params = params;
                         console.log(this.params);
-//                                alert(this.beforePage)
                     }
-//                            alert(selected);
-                    if (selected != undefined) {
+                    if (selected !== undefined) {
                         this.selected = selected;
                     }
                     this.filter(this.beforePage);
@@ -513,8 +508,12 @@
             },
             search(val){
                 if (this.recycle_bin === false) {
+                    this.pitch = [];
+                    this.status = [];
                     this.playbacks(val);
                 } else if (this.recycle_bin === true) {
+                    this.pitch = [];
+                    this.status = [];
                     this.filter(val);
                 }
             },
@@ -533,7 +532,7 @@
             playbacks (val){
                 this.paging = '';
                 this.beforePage = val;
-                this.$http.get('account/payable/trashed?page=' + val,{
+                this.$http.get('account/payable/trashed?page=' + val, {
                     params: this.params
                 }).then((res) => {
                     this.myData = [];
@@ -548,8 +547,7 @@
             },
 
             filter(val){
-                this.operId = 0;
-                this.pitch.splice(0, this.pitch);
+                this.paging = '';
                 this.beforePage = val;
                 this.$http.get('account/payable?page=' + val, {
                     params: this.params
@@ -563,7 +561,6 @@
                         this.isShow = false;
                     } else {
                         this.isShow = true;
-                        this.paging = 0;
                         this.page = 1;
                         this.setTips({}, false);
                     }
@@ -577,8 +574,7 @@
             },
 //            回滚
             rollback (){
-
-                this.$http.post('account/payable/revert/' + this.pitch[0]).then((res) => {
+                this.$http.post('account/payable/revert/' + this.pitch).then((res) => {
                     if (res.data.code === '18410') {
                         this.search(this.beforePage);
                         $('#Rollback').modal('hide');
@@ -606,7 +602,7 @@
             },
 //            新增备注
             addRem (){
-                this.$http.post('account/payable/tag/' + this.pitch[0], {
+                this.$http.post('account/payable/tag/' + this.pitch, {
                     content: this.addRemark,
                 }).then((res) => {
                     if (res.data.code === '18410') {
@@ -691,7 +687,7 @@
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.select_info = res.data;
 
-                    this.$http.get('account/payable/' + this.operId).then((res) => {
+                    this.$http.get('account/payable/' + this.pitch).then((res) => {
                         this.details_info = [];
                         this.details_info.push(res.data.data);
                     });
@@ -703,8 +699,6 @@
                 if (ev.target.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
-                    this.operId = id;
-                    this.statusId = status;
                 } else {
                     let index = this.pitch.indexOf(id);
                     if (index > -1) {
@@ -726,7 +720,6 @@
 
                     this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-//                    console.log(res.data.data);
                         if (res.data.code === '18400') {
                             this.myData = res.data.data.data;
                             this.paging = res.data.data.pages;
@@ -750,11 +743,7 @@
                 }).on('changeDate', function (ev) {
                     if (ev.target.placeholder === '付款时间') {
                         this.pay_time = ev.target.value
-                    } else {
-
                     }
-//                    console.log(ev.target.value);
-//                    console.log(ev.target.placeholder);
                 }.bind(this));
             },
 
@@ -765,7 +754,6 @@
 //                this.configure={length:2,class:'amount'};
             },
             selectDateSend(val){
-//                console.log(val);
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
@@ -788,10 +776,6 @@
                 this.params.range = data;
                 this.search(1);
             },
-
-            getHouse(data){
-            },
-
 
             setTips(val, bool){
                 if (bool) {
@@ -825,67 +809,55 @@
 
             // 删除
             dele(){
-                this.confirmMsg.id = this.operId;
+                this.confirmMsg.id = this.pitch;
                 this.confirmMsg.msg = '确定删除该条应付款项吗？';
                 $('#confirm').modal('show');
             },
             getConfirm(){
-                this.$http.post('account/payable/delete/' + this.operId)
-                    .then((res) => {
-//                    console.log(res.data)
-                        if (res.data.code == 18410) {
-                            this.pitch = [];
-                            // 成功
-                            this.info.success = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-                            this.operId = 0;
-                            this.filter(this.beforePage);
-                        } else {
-                            // 失败
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            }, 2000);
-                        }
-                    })
-            },
-
-//            编辑付款时间
-            modifyTime(val){
-                console.log(val);
-                this.$http.post('account/payable/batch', {
-                    ids: this.pitch,
-                    pay_date: val
-                }).then((res) => {
-                    console.log(res);
-                    if (res.data.code == 18410) {
+                this.$http.post('account/payable/delete/' + this.pitch).then((res) => {
+                    if (res.data.code === '18410') {
+                        this.pitch = [];
                         // 成功
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        }, 2000);
-                        this.pitch.splice(0, this.pitch.length);
-                        this.filter(this.beforePage);
+                        this.info.state_success = false;
+                        this.pitch = 0;
+                        this.search(this.beforePage);
                     } else {
                         // 失败
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                         //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
+                        this.info.state_error = false;
+                    }
+                })
+            },
+
+//            编辑付款时间
+            modifyTime(val){
+                this.$http.post('account/payable/batch', {
+                    ids: this.pitch,
+                    pay_date: val
+                }).then((res) => {
+                    if (res.data.code === '18410') {
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_success = false;
+                        this.pitch.splice(0, this.pitch.length);
+                        this.search(this.beforePage);
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_error = false;
                     }
                 })
             }
@@ -972,7 +944,7 @@
         background-color: #78CD51;
     }
 
-    .status.jingdong{
+    .status.jingdong {
         background-color: #e4393c;
     }
 

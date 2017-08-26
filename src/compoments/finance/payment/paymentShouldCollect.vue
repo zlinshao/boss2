@@ -293,7 +293,7 @@
                             }, 2000);
                             this.operId = 0;
                             this.clearForm();
-                            this.$emit('success');
+                            this.$emit('success',1);
                         } else {
                             // 错误
                             this.info.error = res.data.msg;
