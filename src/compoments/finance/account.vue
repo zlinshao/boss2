@@ -246,26 +246,26 @@
                         </button>
                         <h5 class="modal-title">充值归零记录</h5>
                     </div>
-                    <div class="modal-body clearFix">
+                    <div class="modal-body clearFix" v-for="list in record">
                         <div class="col-md-6">
                             <div>
                                 <div class="recordList">
                                     <span class="name">上次充值日期</span>
-                                    <span>{{record.last_recharge_date}}</span>
+                                    <span>{{list.last_recharge_date}}</span>
                                 </div>
                                 <div class="recordList">
                                     <span class="name">上次充值操作人</span>
-                                    <span>{{dict.staff_id[record.last_recharge_operator]}}</span>
+                                    <span>{{dict.staff_id[list.last_recharge_operator]}}</span>
                                 </div>
                             </div>
                             <div class="con">
                                 <div class="recordList">
                                     <span class="name">上次归零日期</span>
-                                    <span>{{record.last_zero_date}}</span>
+                                    <span>{{list.last_zero_date}}</span>
                                 </div>
                                 <div class="recordList">
                                     <span class="name">上次归零操作人</span>
-                                    <span>{{dict.staff_id[record.last_zero_operator]}}</span>
+                                    <span>{{dict.staff_id[list.last_zero_operator]}}</span>
                                 </div>
                             </div>
                         </div>
@@ -274,21 +274,21 @@
                             <div>
                                 <div class="recordList">
                                     <span class="name">上上次充值日期</span>
-                                    <span>{{record.llast_recharge_date}}</span>
+                                    <span>{{list.llast_recharge_date}}</span>
                                 </div>
                                 <div class="recordList">
-                                    <span class="name">上次充值操作人</span>
-                                    <span>{{dict.staff_id[record.llast_recharge_operator]}}</span>
+                                    <span class="name">上上次充值操作人</span>
+                                    <span>{{dict.staff_id[list.llast_recharge_operator]}}</span>
                                 </div>
                             </div>
                             <div class="con">
                                 <div class="recordList">
                                     <span class="name">上上次归零日期</span>
-                                    <span>{{record.llast_zero_date}}</span>
+                                    <span>{{list.llast_zero_date}}</span>
                                 </div>
                                 <div class="recordList">
                                     <span class="name">上上次归零操作人</span>
-                                    <span>{{dict.staff_id[record.llast_zero_operator]}}</span>
+                                    <span>{{dict.staff_id[list.llast_zero_operator]}}</span>
                                 </div>
                             </div>
                         </div>
@@ -393,7 +393,7 @@
                     status: ''
                 },
 
-                record: {},
+                record: [],
             }
         },
         mounted (){
@@ -684,10 +684,11 @@
             // 充值归零记录
             showRecord(){
                 this.$http.get('account/manage/' + this.operId).then((res) => {
+                    this.record = [];
 //                    console.log(res.data);
                     if (res.data.code == 18400) {
                         // 成功
-                        this.record = res.data.data;
+                        this.record.push(res.data.data);
                         $('#record').modal('show');
                     }
                 });
