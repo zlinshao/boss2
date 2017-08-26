@@ -798,10 +798,8 @@
                 console.log(data);
                 this.cus_id = data.id;
                 this.identity = data.identity;
-                this.cus_name = data.name
+                this.cus_name = data.address
 //                this.formData.customer = data;
-                /*this.$http.post('account/payable',this.formData)
-                 .then()*/
             },
             getSubject(val){
                 this.subject = val;
