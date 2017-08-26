@@ -58,7 +58,7 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
-                        <div class="form-group pull-right" data-toggle="modal" data-target="#applySupply">
+                        <div class="form-group pull-right" data-toggle="modal" data-target="#applySupply" v-if="simulate.indexOf('manager/management') > -1">
                             <a class="btn btn-success">
                                 <i class="fa fa-plus-square"></i>&nbsp;申领办公用品
                             </a>
@@ -70,7 +70,7 @@
                     <ul>
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
                         <li>
-                            <h5 v-if="pitch.length==1" v-show="statusId==1||statusId==2" @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
+                            <h5 v-if="pitch.length==1&&simulate.indexOf('manager/management')>-1" v-show="statusId==1||statusId==2" @click="oper"><a><i class="fa fa-pencil"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li v-if="simulate.indexOf('manager/approver') > -1">
                             <h5 data-toggle="dropdown">
@@ -513,7 +513,7 @@
                 }
 //                alert(flag)
                 if (flag){
-                    this.info.error = '只有已归还状态才可归还';
+                    this.info.error = '只有已完成状态才可归还';
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                 } else {

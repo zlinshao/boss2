@@ -55,6 +55,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">现有库存</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" readonly v-model="existing_inventory">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label">申请数量<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <!--<input type="text" class="form-control" readonly>-->
@@ -97,6 +103,7 @@
             return {
                 dict : {},
                 price : '',
+                existing_inventory : '',
                 allLibrary : [],
                 allType : [],
                 allSupply : [],
@@ -226,9 +233,10 @@
             },
 
             changeLibrary(){
+//                alert(1)
                 this.category_id = '';
                 this.formData.inventory_id = '';
-                if (this.library_id==''){
+                if (this.library_id==''||this.library_id==undefined){
                     this.allType = [];
                     this.allSupply = [];
                     return;
@@ -246,7 +254,7 @@
             },
             changeCategory(){
                 this.formData.inventory_id = '';
-                if (this.category_id==''){
+                if (this.category_id==''||this.category_id==undefined){
                     this.allSupply = [];
                     return;
                 }
@@ -280,6 +288,7 @@
                 }
                 if (index!=-1){
                     this.price = this.allSupply[index].price;
+                    this.existing_inventory = this.allSupply[index].existing_inventory;
                     this.maxNum = this.allSupply[index].existing_inventory;
 //                        console.log(this.maxNum)
                 }
