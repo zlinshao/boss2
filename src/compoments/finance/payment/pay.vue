@@ -51,12 +51,12 @@
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="statusId != 3&&pitch.length==1">
+                        <li v-show="statusId != 3 && statusId != 4 && pitch.length == 1">
                             <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="statusId!=3&&pitch.length==1">
-                            <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
+                        <li v-show="pitch.length==1">
+                            <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚{{status}}</a></h5>
                         </li>
                         <li v-show="pitch.length==1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
@@ -140,8 +140,8 @@
                         <thead>
                         <tr>
                             <th class="text-center" v-if="recycle_bin">
-                                <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
-                                       @click="chooseAll($event)">
+                                <!--<input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"-->
+                                       <!--@click="chooseAll($event)">-->
                             </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">付款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
@@ -390,6 +390,7 @@
             return {
                 recycle_bin: true,            //回收站
                 pitch: [],                  //选中id
+                status : [],                // 选中状态
                 look_remark: '',              //备注内容
                 remarks_status: '',          //新增/查看
                 addRemark: '',               //新增备注
@@ -469,15 +470,7 @@
             this.remindData();
 //            时间选择
         },
-        watch: {
-            pitch(val){
-                if (val.length == 1) {
-                    this.operId = val[0];
-                } else {
-                    this.operId = 0;
-                }
-            }
-        },
+
         mounted (){
             let params = this.$route.query.myParam;
             let page = this.$route.query.page;
@@ -584,6 +577,7 @@
             },
 //            回滚
             rollback (){
+
                 this.$http.post('account/payable/revert/' + this.pitch[0]).then((res) => {
                     if (res.data.code === '18410') {
                         this.search(this.beforePage);
@@ -704,18 +698,22 @@
                 });
             },
             changeIndex(ev, id, status){
+                this.pitch = [];
+                this.status = [];
                 if (ev.target.checked) {
                     this.pitch.push(id);
+                    this.status.push(status);
                     this.operId = id;
                     this.statusId = status;
-//                    console.log(this.operId);
                 } else {
                     let index = this.pitch.indexOf(id);
                     if (index > -1) {
                         this.pitch.splice(index, 1);
                     }
-                    this.operId = 0;
-                    this.statusId = 0;
+                    let index1 = this.status.indexOf(status);
+                    if (index1 > -1) {
+                        this.status.splice(index1, 1);
+                    }
                 }
             },
 
@@ -973,6 +971,7 @@
     .status.green {
         background-color: #78CD51;
     }
+
     .status.jingdong{
         background-color: #e4393c;
     }
