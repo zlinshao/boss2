@@ -151,7 +151,7 @@
         components: {PicModal, Status},
         data(){
             return {
-                dict : {},
+                dict: {},
                 msg: '',
                 currentId: '',
                 largePic: [],
@@ -178,7 +178,6 @@
                     //失败信息 ***
                     error: ''
                 }
-
             }
         },
         updated (){
@@ -193,23 +192,14 @@
             }
         },
         mounted (){
-            this.$http.get('revenue/glee_collect/dict')
-                .then(
-//                    console.log
-                    (res) => {
-                        this.dict = res.data;
-
-                    }
-                );
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                this.dict = res.data;
+            });
 
             // 获取当前登录人的姓名
-            this.$http.get('staff/info')
-                .then(
-                    (res) => {
-//                        console.log(res.data);
-                        this.logName = res.data.name;
-                    }
-                )
+            this.$http.get('staff/info').then((res) => {
+                this.logName = res.data.name;
+            })
         },
         methods: {
             clearForm(){
@@ -232,9 +222,9 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
-                    pickerPosition : 'top-right'
+                    pickerPosition: 'top-right'
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '补齐时间') {
+                    if (ev.target.placeholder === '补齐时间') {
                         this.formData.complete_date = ev.target.value;
                     }
 //                    console.log(ev.target.value);
@@ -243,19 +233,14 @@
             },
 
             getDetails(){
-                this.$http.get('account/receivable/' + this.currentId)
-                    .then((res) => {
-//                        console.log(res.data);
-                        this.msg = res.data.data;
-//                        console.log(this.msg)
-//                        console.log(this.msg.album)
+                this.$http.get('account/receivable/' + this.currentId).then((res) => {
+                    this.msg = res.data.data;
+                    if (res.data.data.album !== undefined) {
+                        this.srcs = this.msg.album.receipt_pic;
+                    }
+                    this.beforeBalance = this.msg.balance;
 
-                        if (res.data.data.album!=undefined) {
-                            this.srcs = this.msg.album.receipt_pic;
-                        }
-                        this.beforeBalance = this.msg.balance;
-
-                    })
+                })
             },
 
             // 查看大图
@@ -264,15 +249,12 @@
                     src: this.srcs,
                     i: num
                 }];
-//                alert(this.largePic[0].src[10705].raw)
-                console.log(this.largePic)
                 $('.largePic:eq(0)').modal('show');
             },
 
 //            根据收款方式获取收款账户
             getAccount(){
                 this.$http.get('account/manage/readbycate/' + this.cate).then((res) => {
-//                    console.log(res.data);
                     this.accounts = res.data;
                     this.formData.account_id = '';
                 })
@@ -282,27 +264,23 @@
             save(){
                 this.$http.post('account/receivable/receive/' + this.currentId, this.formData)
                     .then((res) => {
-                        if (res.data.code == 18510) {
+                        if (res.data.code === '18510') {
                             // 成功
                             this.info.success = res.data.msg;
                             //显示失败弹窗 ***
                             this.info.state_success = true;
                             //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
+                            this.info.state_success = false;
                             this.operId = 0;
                             this.clearForm();
-                            this.$emit('success',1);
+                            this.$emit('success', 1);
                         } else {
                             // 错误
                             this.info.error = res.data.msg;
                             //显示失败弹窗 ***
                             this.info.state_error = true;
                             //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            }, 2000);
+                            this.info.state_error = false;
                         }
                     })
             },

@@ -741,7 +741,7 @@
             getClient(data){
                 this.formData.customer_id = data.id;
                 this.formData.identity = data.identity;
-                this.chooseResult.customer_name = data.name;
+                this.chooseResult.customer_name = data.address;
             },
 
             save(){

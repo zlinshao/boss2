@@ -32,6 +32,7 @@
                     <button class="btn btn-warning" v-if="status === 1">待入帐</button>
                     <button class="btn" v-if="status === 2" style="background-color: #FF9999;">待结清</button>
                     <button class="btn btn-success" v-if="status === 3">已结清</button>
+                    <button class="btn" v-if="status === 4" style="background-color: #e4393c;">已超出</button>
                 </div>
             </div>
         </section>
@@ -154,7 +155,7 @@
                     </div>
                     <div class="modal-body clearFix">
                         <form class="form-horizontal" role="form">
-                            <div class="form-group" v-for="(item,index) in moreTime">
+                            <div class="form-group" v-for="(item, index) in moreTime">
                                 <label class="col-sm-3 control-label">第{{index + 1}}次付款时间</label>
                                 <div class="col-sm-9" v-if="showOper[index]">
                                     <div class="col-sm-7">
@@ -193,9 +194,9 @@
         <!--应付入账-->
         <ShouldPay @pay_succ="pay_success" :details="details_info"></ShouldPay>
 
-        <SelectHouse @House="getHouse"></SelectHouse>
+        <!--<SelectHouse @House="getHouse"></SelectHouse>-->
 
-        <SelectClient @clientAdd="getClient"></SelectClient>
+        <!--<SelectClient @clientAdd="getClient"></SelectClient>-->
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
@@ -257,13 +258,11 @@
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
             this.selected = this.$route.query.selected;
-            this.details(this.should_id);
+            this.details(this.$route.query.payId);
             for (let i = 0; i < this.moreTime.length; i++) {
                 this.showOper.push(false);
             }
 //            this.times = this.moreTime;
-//            console.log(this.moreTime)
-//            console.log(this.showOper)
         },
         methods: {
 //            资料补齐时间
@@ -317,6 +316,7 @@
                         this.details_info = [];
                         this.moreTime = [];
                         this.details_info.push(res.data.data);
+                        console.log(status);
                         this.status = res.data.data.status;
                         if (res.data.data.customer !== null && res.data.data.customer !== undefined) {
                             this.address = res.data.data.customer.address;
@@ -336,7 +336,6 @@
                         for (let i = 0; i < res.data.data.pay_date.length; i++) {
                             this.times.push(res.data.data.pay_date[i]);
                         }
-//                        console.log(this.moreTime);
                         for (let i = 0; i < this.moreTime.length; i++) {
                             this.showOper.push(false);
                         }
@@ -347,7 +346,6 @@
             oper(){
                 $('#edit').modal('show');
             },
-
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -385,83 +383,61 @@
                 }.bind(this));
             },
 
-            getHouse(data){
-            },
-            getClient(data){
-            },
-
             changeShow(index){
-//                console.log(this.currentIndex);
                 if (this.currentIndex === -1) {
                     this.currentIndex = index;
 //                this.showOper[index] = true;
                     this.showOper.splice(index, 1, true);
-//                    console.log(this.showOper)
                 }
-//                console.log(this.currentIndex);
-
             },
             operTime(index, id){
-                this.$http.post('account/payable/scheduler/' + this.moreTime[index].id, {pay_date: this.moreTime[index].pay_date})
-                    .then((res) => {
-                        console.log(res);
-                        if (res.data.code === '18410') {
-                            // 成功
-                            this.info.success = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-                            this.currentIndex = -1;
-                            this.showOper.splice(index, 1, false);
-                            this.times.splice(index, 1, this.moreTime[index]);
-                        } else {
-                            // 失败
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            }, 2000);
-                        }
-                    })
-            },
-            cancel(index){
-                this.currentIndex = -1;
-                this.showOper.splice(index, 1, false);
-                this.moreTime.splice(index, 1, this.times[index]);
-//                console.log(this.moreTime);
-            },
-
-            pendingItem(){
-                this.$http.post('account/pending/payable/' + this.should_id)
-                    .then((res) => {
-                        console.log(res);
-                        if (res.data.code === '18810') {
-                            // 成功
-                            this.info.success = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-//                        this.details(this.should_id);
-                            this.$router.replace({path: '/payPayment'});
-                        } else {
-                        }
+                this.$http.post('account/payable/scheduler/' + this.moreTime[index].id, {pay_date: this.moreTime[index].pay_date}).then((res) => {
+                    if (res.data.code === '18410') {
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_success = false;
+                        this.currentIndex = -1;
+                        this.showOper.splice(index, 1, false);
+                        this.times.splice(index, 1, this.moreTime[index]);
+                    } else {
                         // 失败
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                         //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    })
+                        this.info.state_error = false;
+                    }
+                })
+            },
+            cancel(index){
+                this.currentIndex = -1;
+                this.showOper.splice(index, 1, false);
+                this.moreTime.splice(index, 1, this.times[index]);
+            },
+
+            pendingItem(){
+                this.$http.post('account/pending/payable/' + this.should_id).then((res) => {
+                    if (res.data.code === '18810') {
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_success = false;
+//                        this.details(this.should_id);
+                        this.$router.replace({path: '/payPayment'});
+                    } else {
+                    }
+                    // 失败
+                    this.info.error = res.data.msg;
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                    //一秒自动关闭失败信息弹窗 ***
+                    this.info.state_error = false;
+                })
             },
 
             // 删除
@@ -471,32 +447,25 @@
                 $('#confirm').modal('show');
             },
             getConfirm(){
-                this.$http.post('account/payable/delete/' + this.should_id)
-                    .then((res) => {
-//                    console.log(res.data)
-                        if (res.data.code === '18410') {
-                            // 成功
-                            this.info.success = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-                            this.$router.push({path: '/payPayment'});
-                        } else {
-                            // 失败
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            }, 2000);
-                        }
-                    })
+                this.$http.post('account/payable/delete/' + this.should_id).then((res) => {
+                    if (res.data.code === '18410') {
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_success = false;
+                        this.$router.push({path: '/payPayment'});
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_error = false;
+                    }
+                })
             }
-
         }
     }
 </script>

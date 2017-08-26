@@ -18,7 +18,7 @@
                 <div v-if="msg!=''">
                     <span>房屋地址</span>
                     <span>{{msg.customer == undefined ? '' : msg.customer.address}}</span>
-                    <span :class="{'status':true,'btn':true,'status':true,'yellow':msg.status===1,'red':msg.status===2,'green':msg.status===3}">
+                    <span :class="{'status':true,'btn':true,'yellow':msg.status===1,'red':msg.status===2,'green':msg.status===3,'jingdong':msg.status===4}">
                         {{dict.account_should_status[msg.status]}}
                     </span>
                     <div class="pull-right">
@@ -51,88 +51,88 @@
                                     <span>{{msg.description}}</span>
                                 </div>
                                 <!--<div>-->
-                                    <!--<span class="text-primary">收款方式：</span>-->
-                                    <!--<span v-if="msg.customer !== null && msg.customer !== undefined">-->
-                                        <!--押&nbsp;{{msg.customer.bet}}&nbsp;付-->
-                                        <!--<span v-if="msg.customer.pay.length !== 0">{{msg.customer.pay[0]}}</span>-->
-                                        <!--<span class="text-primary" v-if="msg.customer.pay.length > 1"-->
-                                              <!--@click="changes('bet')" style="cursor: pointer;">-->
-                                            <!--变化-->
-                                        <!--</span>-->
-                                    <!--<span v-if="msg.customer.pay.length === 0">-->
-                                         <!--—-->
-                                    <!--</span>-->
-                                    <!--</span>-->
+                                <!--<span class="text-primary">收款方式：</span>-->
+                                <!--<span v-if="msg.customer !== null && msg.customer !== undefined">-->
+                                <!--押&nbsp;{{msg.customer.bet}}&nbsp;付-->
+                                <!--<span v-if="msg.customer.pay.length !== 0">{{msg.customer.pay[0]}}</span>-->
+                                <!--<span class="text-primary" v-if="msg.customer.pay.length > 1"-->
+                                <!--@click="changes('bet')" style="cursor: pointer;">-->
+                                <!--变化-->
+                                <!--</span>-->
+                                <!--<span v-if="msg.customer.pay.length === 0">-->
+                                <!--—-->
+                                <!--</span>-->
+                                <!--</span>-->
                                 <!--</div>-->
                                 <!--<div v-if="msg.customer !== null && msg.customer !== undefined">-->
-                                    <!--<div role="dialog" class="modal fade bs-example-modal-sm"-->
-                                         <!--v-if="msg.customer.pay.length > 1"-->
-                                         <!--id="bet_change">-->
-                                        <!--<div class="modal-dialog ">-->
-                                            <!--<div class="modal-content roll">-->
-                                                <!--<div class="modal-header">-->
-                                                    <!--<button type="button" class="close" data-dismiss="modal">-->
-                                                        <!--<span>&times;</span>-->
-                                                    <!--</button>-->
-                                                    <!--<h4 class="modal-title" style="padding: 0;">付款方式</h4>-->
-                                                <!--</div>-->
-                                                <!--<div class="modal-body">-->
-                                                    <!--<h4 class="modal-title col-xs-6" style="padding: 10px 0;"-->
-                                                        <!--v-for="(money,index) in msg.customer.pay">-->
-                                                        <!--<span>第&nbsp;{{index + 1}}&nbsp;年&nbsp;押{{msg.customer.bet}}付{{money}}</span>-->
-                                                    <!--</h4>-->
-                                                <!--</div>-->
-                                                <!--<div class="modal-footer text-right col-xs-12">-->
-                                                    <!--<button data-dismiss="modal" class="btn btn-primary btn-md">确定-->
-                                                    <!--</button>-->
-                                                    <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>&ndash;&gt;-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
+                                <!--<div role="dialog" class="modal fade bs-example-modal-sm"-->
+                                <!--v-if="msg.customer.pay.length > 1"-->
+                                <!--id="bet_change">-->
+                                <!--<div class="modal-dialog ">-->
+                                <!--<div class="modal-content roll">-->
+                                <!--<div class="modal-header">-->
+                                <!--<button type="button" class="close" data-dismiss="modal">-->
+                                <!--<span>&times;</span>-->
+                                <!--</button>-->
+                                <!--<h4 class="modal-title" style="padding: 0;">付款方式</h4>-->
+                                <!--</div>-->
+                                <!--<div class="modal-body">-->
+                                <!--<h4 class="modal-title col-xs-6" style="padding: 10px 0;"-->
+                                <!--v-for="(money,index) in msg.customer.pay">-->
+                                <!--<span>第&nbsp;{{index + 1}}&nbsp;年&nbsp;押{{msg.customer.bet}}付{{money}}</span>-->
+                                <!--</h4>-->
+                                <!--</div>-->
+                                <!--<div class="modal-footer text-right col-xs-12">-->
+                                <!--<button data-dismiss="modal" class="btn btn-primary btn-md">确定-->
+                                <!--</button>-->
+                                <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>&ndash;&gt;-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
                                 <!--</div>-->
 
                                 <!--<div>-->
-                                    <!--<span class="text-primary">月单价：</span>-->
-                                    <!--<span v-if="msg.customer !== null && msg.customer !== undefined">-->
-                                        <!--<span v-if="msg.customer.prices.length !== 0">-->
-                                            <!--{{msg.customer.prices[0]}}-->
-                                        <!--</span>-->
-                                        <!--<span class="text-primary" v-if="msg.customer.prices.length > 1"-->
-                                              <!--@click="changes('price')" style="cursor: pointer;">-->
-                                            <!--变化-->
-                                        <!--</span>-->
-                                    <!--<span v-if="msg.customer.prices.length === 0">-->
-                                        <!--—-->
-                                    <!--</span>-->
-                                    <!--</span>-->
+                                <!--<span class="text-primary">月单价：</span>-->
+                                <!--<span v-if="msg.customer !== null && msg.customer !== undefined">-->
+                                <!--<span v-if="msg.customer.prices.length !== 0">-->
+                                <!--{{msg.customer.prices[0]}}-->
+                                <!--</span>-->
+                                <!--<span class="text-primary" v-if="msg.customer.prices.length > 1"-->
+                                <!--@click="changes('price')" style="cursor: pointer;">-->
+                                <!--变化-->
+                                <!--</span>-->
+                                <!--<span v-if="msg.customer.prices.length === 0">-->
+                                <!--—-->
+                                <!--</span>-->
+                                <!--</span>-->
                                 <!--</div>-->
                                 <!--<div v-if="msg.customer !== null && msg.customer !== undefined">-->
-                                    <!--<div role="dialog" class="modal fade bs-example-modal-sm"-->
-                                         <!--v-if="msg.customer.prices.length > 1"-->
-                                         <!--id="changes">-->
-                                        <!--<div class="modal-dialog ">-->
-                                            <!--<div class="modal-content roll">-->
-                                                <!--<div class="modal-header">-->
-                                                    <!--<button type="button" class="close" data-dismiss="modal">-->
-                                                        <!--<span>&times;</span>-->
-                                                    <!--</button>-->
-                                                    <!--<h4 class="modal-title" style="padding: 0;">月单价</h4>-->
-                                                <!--</div>-->
-                                                <!--<div class="modal-body">-->
-                                                    <!--<h4 class="modal-title col-xs-6" style="padding: 10px 0;"-->
-                                                        <!--v-for="(money,index) in msg.customer.prices">-->
-                                                        <!--<span>第&nbsp;{{index + 1}}&nbsp;年&#45;&#45;{{money}}</span>-->
-                                                    <!--</h4>-->
-                                                <!--</div>-->
-                                                <!--<div class="modal-footer text-right col-xs-12">-->
-                                                    <!--<button data-dismiss="modal" class="btn btn-primary btn-md">确定-->
-                                                    <!--</button>-->
-                                                    <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>&ndash;&gt;-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
+                                <!--<div role="dialog" class="modal fade bs-example-modal-sm"-->
+                                <!--v-if="msg.customer.prices.length > 1"-->
+                                <!--id="changes">-->
+                                <!--<div class="modal-dialog ">-->
+                                <!--<div class="modal-content roll">-->
+                                <!--<div class="modal-header">-->
+                                <!--<button type="button" class="close" data-dismiss="modal">-->
+                                <!--<span>&times;</span>-->
+                                <!--</button>-->
+                                <!--<h4 class="modal-title" style="padding: 0;">月单价</h4>-->
+                                <!--</div>-->
+                                <!--<div class="modal-body">-->
+                                <!--<h4 class="modal-title col-xs-6" style="padding: 10px 0;"-->
+                                <!--v-for="(money,index) in msg.customer.prices">-->
+                                <!--<span>第&nbsp;{{index + 1}}&nbsp;年&#45;&#45;{{money}}</span>-->
+                                <!--</h4>-->
+                                <!--</div>-->
+                                <!--<div class="modal-footer text-right col-xs-12">-->
+                                <!--<button data-dismiss="modal" class="btn btn-primary btn-md">确定-->
+                                <!--</button>-->
+                                <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-danger btn-md">确认</button>&ndash;&gt;-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
                                 <!--</div>-->
                                 <div>
                                     <span class="text-primary">应收金额：</span>
@@ -259,7 +259,6 @@
         <SelectHouse @House="getHouse"></SelectHouse>
         <SelectClient @clientAdd="getClient"></SelectClient>
 
-
         <!--应收入账-->
         <ShouldCollect :id="currentId" @success="getDetails"></ShouldCollect>
 
@@ -330,21 +329,11 @@
             this.page = this.$route.query.page;
             this.selected = this.$route.query.selected;
 
-//            alert(typeof this.params)
-
-            this.$http.get('revenue/glee_collect/dict')
-                .then(
-//                    console.log
-                    (res) => {
-                        this.dict = res.data;
-                        this.getDetails();
-                    }
-                );
-
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                this.dict = res.data;
+                this.getDetails();
+            });
 //            this.times = this.moreTime;
-//            console.log(this.moreTime)
-//            console.log(this.showOper)
-
         },
         methods: {
 //            变化
@@ -360,32 +349,27 @@
                 }
             },
             getDetails(){
-                this.$http.get('account/receivable/' + this.id)
-                    .then((res) => {
-                        this.moreTime = [];
-//                        console.log(res.data);
-                        this.msg = res.data.data;
-                        if (this.msg.album != undefined) {
-                            this.srcs = this.msg.album.receipt_pic;
-                        }
-                        for (let i = 0; i < res.data.data.pay_date.length; i++) {
-                            this.moreTime.push(res.data.data.pay_date[i]);
-                        }
-                        for (let i = 0; i < res.data.data.pay_date.length; i++) {
-                            this.times.push(res.data.data.pay_date[i]);
-                        }
+                this.$http.get('account/receivable/' + this.id).then((res) => {
+                    this.moreTime = [];
+                    this.msg = res.data.data;
+                    if (this.msg.album !== undefined) {
+                        this.srcs = this.msg.album.receipt_pic;
+                    }
+                    for (let i = 0; i < res.data.data.pay_date.length; i++) {
+                        this.moreTime.push(res.data.data.pay_date[i]);
+                    }
+                    for (let i = 0; i < res.data.data.pay_date.length; i++) {
+                        this.times.push(res.data.data.pay_date[i]);
+                    }
 //                        this.moreTime = res.data.data.pay_date;
 //                        this.times = res.data.data.pay_date;
-//                        console.log(this.moreTime);
-//                        console.log(this.times);
-                        for (let i = 0; i < this.moreTime.length; i++) {
-                            this.showOper.push(false);
-                        }
-                        this.beforeComplete = this.msg.complete_date;
-//                        console.log(this.msg)
-                    });
+                    for (let i = 0; i < this.moreTime.length; i++) {
+                        this.showOper.push(false);
+                    }
+                    this.beforeComplete = this.msg.complete_date;
+                });
 
-                if (this.currentIndex != -1) {
+                if (this.currentIndex !== -1) {
                     this.cancel(this.currentIndex);
                 }
             },
@@ -404,7 +388,7 @@
                     clearBtn: true,                     //清除按钮
 //                    pickerPosition : 'top-left'
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '收款时间') {
+                    if (ev.target.placeholder === '收款时间') {
                         // 编辑中的付款时间
                         this.moreTime.splice(this.currentIndex, 1, {
                             id: this.moreTime[this.currentIndex].id,
@@ -412,11 +396,9 @@
                         });
                         console.log(this.moreTime[this.currentIndex])
                         console.log(this.times[this.currentIndex])
-                    } else if (ev.target.placeholder == '补齐时间') {
+                    } else if (ev.target.placeholder === '补齐时间') {
                         this.changeComplete = ev.target.value;
                     }
-//                    console.log(ev.target.value);
-//                    console.log(ev.target.placeholder);
                 }.bind(this));
                 $('.form_datetime2').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -427,14 +409,13 @@
                     clearBtn: true,                     //清除按钮
                     pickerPosition: 'top-left'
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder == '收款时间') {
+                    if (ev.target.placeholder === '收款时间') {
                         // 编辑中的收款时间
                         this.moreTime.splice(this.currentIndex, 1, {
                             id: this.moreTime[this.currentIndex].id,
                             pay_date: ev.target.value
                         });
                     }
-//                    console.log(ev.target.value);
                 }.bind(this));
             },
 
@@ -444,54 +425,38 @@
             },
 
             changeShow(index){
-//                console.log(this.currentIndex);
-                if (this.currentIndex == -1) {
+                if (this.currentIndex === -1) {
                     this.currentIndex = index;
 //                this.showOper[index] = true;
                     this.showOper.splice(index, 1, true);
-//                    console.log(this.showOper)
                 }
-//                console.log(this.currentIndex);
-
             },
             operTime(index, id){
-//                console.log(this.moreTime[index]);
-//                console.log(this.times[index]);
-                this.$http.post('account/receivable/scheduler/' + this.moreTime[index].id, {pay_date: this.moreTime[index].pay_date})
-                    .then((res) => {
-                        console.log(res);
-                        if (res.data.code == 18510) {
-                            // 成功
-                            this.info.success = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-                            this.currentIndex = -1;
-                            this.showOper.splice(index, 1, false);
-                            this.times.splice(index, 1, this.moreTime[index]);
-                        } else {
-                            // 失败
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_error = false;
-                            }, 2000);
-                        }
-                    })
-
-
+                this.$http.post('account/receivable/scheduler/' + this.moreTime[index].id, {pay_date: this.moreTime[index].pay_date}).then((res) => {
+                    if (res.data.code === '18510') {
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_success = false;
+                        this.currentIndex = -1;
+                        this.showOper.splice(index, 1, false);
+                        this.times.splice(index, 1, this.moreTime[index]);
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_error = false;
+                    }
+                })
             },
             cancel(index){
                 this.currentIndex = -1;
                 this.showOper.splice(index, 1, false);
-//                console.log(this.times[index]);
                 this.moreTime.splice(index, 1, this.times[index]);
-//                console.log(this.moreTime);
             },
 
             // 查看大图
@@ -500,7 +465,6 @@
                     src: this.srcs,
                     i: num
                 }];
-                console.log(this.largePic);
                 $('.largePic:eq(1)').modal('show');
             },
 //            应收入账
@@ -509,7 +473,6 @@
 //                data-toggle="modal" data-target="#collectFor"
                 $('#collectFor').modal('show');
             },
-
 
 //            带结清状态编辑补齐时间
             operCompleteDate(){
@@ -521,15 +484,13 @@
                 this.$http.put('account/receivable/' + this.id, {
                     complete_date: this.changeComplete
                 }).then((res) => {
-                    if (res.data.code == 18510) {
+                    if (res.data.code === '18510') {
                         // 成功
                         this.info.success = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_success = true;
                         //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        }, 2000);
+                        this.info.state_success = false;
                         this.changeCompleteDate = false;
                         this.getDetails();
                     } else {
@@ -538,9 +499,7 @@
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                         //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
+                        this.info.state_error = false;
                     }
                 })
             },
@@ -551,30 +510,25 @@
 
             // 转为待处理项
             pendingItem(){
-                this.$http.post('account/pending/receivable/' + this.id)
-                    .then((res) => {
-                        console.log(res);
-                        if (res.data.code == 18810) {
-                            // 成功
-                            this.info.success = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            setTimeout(() => {
-                                this.info.state_success = false;
-                            }, 2000);
-                            this.$router.replace({path: '/collectPayment'});
-                        } else {
-                        }
+                this.$http.post('account/pending/receivable/' + this.id).then((res) => {
+                    console.log(res);
+                    if (res.data.code === '18810') {
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_success = true;
+                        //一秒自动关闭失败信息弹窗 ***
+                        this.info.state_success = false;
+                        this.$router.replace({path: '/collectPayment'});
+                    } else {
                         // 失败
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                         //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
-                    })
+                        this.info.state_error = false;
+                    }
+                })
             },
 
             // 删除
@@ -586,8 +540,7 @@
             getConfirm(){
                 this.$http.post('account/receivable/delete/' + this.id)
                     .then((res) => {
-//                    console.log(res.data)
-                        if (res.data.code == 18510) {
+                        if (res.data.code === '18510') {
                             // 成功
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
@@ -678,6 +631,10 @@
 
     .panel-body button {
         vertical-align: inherit;
+    }
+
+    .status.jingdong {
+        background-color: #e4393c;
     }
 
     .breadcrumb > li:last-child:before {
