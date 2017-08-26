@@ -275,7 +275,7 @@
                         '昨天': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
                         '最近7天': [moment().subtract('days', 6), moment()],
                         '最近30天': [moment().subtract('days', 29), moment()],
-                        '上月': [moment().subtract('days', this.lastMonthDays + this.monthDates), moment().subtract('days', this.monthDates + 1)],
+                        '上月': [moment().subtract('days', this.lastMonthDays + this.monthDates), moment().subtract('days', this.monthDates+1)],
                         '本月': [moment().subtract('days', this.monthDates), moment()],
                         '上季度': [moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates), moment().subtract('days', this.quarterlyDates + 1)],
                         '本季度': [moment().subtract('days', this.quarterlyDates), moment()],
@@ -493,13 +493,17 @@
                 let thisDay = moment([year, month, day]);
 
                 let lastMonth = moment([year, month - 1, 1]);
+                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
                 let thisMonth = moment([year, month, 1]);
+                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
 
                 let lastYear = moment([year - 1, 1, 1]);
                 let thisYear = moment([year, 1, 1]);
 
                 this.monthDates = thisDay.diff(thisMonth, 'days');
-                this.lastMonthDays = thisMonth.diff(lastMonth, 'days') - 1;
+                console.log('this.monthDates====='+this.monthDates)
+                this.lastMonthDays = thisMonth.diff(lastMonth, 'days');
+                console.log('this.lastMonthDays====='+this.lastMonthDays)
 
                 this.quarterlyDates = thisDay.diff(thisQuarterlyStart, 'days');
                 this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd, 'days') - 1;
