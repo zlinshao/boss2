@@ -326,11 +326,6 @@
 //                })()
 //            }
 //        },
-        updated (){
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            })
-        },
 //        watch: {
 //            screenWidth (val) {
 //                if (!this.timer) {
@@ -356,7 +351,6 @@
             this.online();
         },
         methods: {
-
 //            更多
             click_more (){
                 $('#panel').scroll();
@@ -373,7 +367,7 @@
             },
 //            在线人数
             online (){
-                this.$http.post('log/log/member').then((res) => {
+                this.$http.post('clock/memo/member').then((res) => {
                     this.onlines = res.data.data.data;
                     this.mores = res.data.data.data.length;
                     this.allLine = res.data.data.count;

@@ -81,7 +81,7 @@
                             <th class="text-center width50">类型</th>
                             <th class="text-center width100">账户名称</th>
                             <th class="text-center width150">卡号</th>
-                            <th class="text-center width110">实收金额</th>
+                            <th class="text-center width130">实收金额</th>
                             <th class="text-center width110">实付金额</th>
                             <th class="text-center width150">账户余额</th>
                             <th class="text-center phone" style="min-width: 360px;">详细信息</th>
@@ -101,10 +101,19 @@
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{item.account_name}}</td>
                             <td>{{item.account_num}}</td>
-                            <td>{{item.amount_received}}</td>
-                            <td>{{item.amount_paid}}</td>
-                            <!--<td>{{item.cate==1?item.amount_receivable:item.amount_payable}}</td>-->
-                            <!--<td>{{item.cate==1?item.amount_received:item.amount_paid}}</td>-->
+                            <td @mouseenter="enter_payable(item.id)" @mouseleave="leave_payable" style="cursor: pointer;">
+                                {{item.amount_received}}<br>
+                                <span v-if="item.id === isActive" style="color: #aaaaaa;">
+                                    应收:&nbsp;{{item.amount_receivable}}
+                                </span>
+                            </td>
+                            <td @mouseenter="enter_payable(item.id)" @mouseleave="leave_payable" style="cursor: pointer;">
+                                {{item.amount_paid}}<br>
+                                <span v-if="item.id === isActive" style="color: #aaaaaa;">
+                                    应付:&nbsp;{{item.amount_payable}}
+                                </span>
+                            </td>
+
                             <td>{{item.amount_remain}}</td>
                             <td>{{item.info}}</td>
                             <td>{{item.operator_name}}</td>
@@ -136,7 +145,7 @@
 
         data(){
             return {
-
+                isActive: '',
                 beforePage: 1,
                 dict: {},
                 isShow: false,
@@ -177,6 +186,12 @@
             );
         },
         methods: {
+            enter_payable (val){
+                this.isActive = val;
+            },
+            leave_payable (){
+                this.isActive = '';
+            },
 //            房款科目
             houseSubject(val){
                 this.params.subject_id = val;

@@ -184,7 +184,7 @@
                                 {{item.description}}
                             </td>
                             <td>
-                                <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3}">
+                                <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3,'jingdong':item.status===4}">
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
@@ -972,6 +972,9 @@
 
     .status.green {
         background-color: #78CD51;
+    }
+    .status.jingdong{
+        background-color: #e4393c;
     }
 
     .table-striped > tbody > tr.reds {
