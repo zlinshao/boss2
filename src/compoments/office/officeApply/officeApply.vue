@@ -126,8 +126,8 @@
                             <td>{{item.remarks}}</td>
                             <td>
                                 <label :class="{'label':true,'status':true,
-                                'yellow':item.status===1||item.status===2,
-                                'green':item.status===3||item.status===4||item.status===5,'orange':item.status===6}">
+                                'yellow':item.status===1||item.status===6,'gray':item.status===2||item.status===5,'pink':item.status===3,
+                                'green':item.status===4}">
                                     {{dict.status[item.status]}}
                                 </label>
                             </td>
@@ -528,6 +528,19 @@
     }
 </script>
 <style scoped>
+    .status.pink{
+        background-color: #FF9999;
+    }
+
+    .status.gray{
+        background-color: #C1C1C1;
+    }
+    .status.blue{
+        background-color: #7cc0ec;
+    }
+    .status.purple{
+        background-color: #c4a6f1;
+    }
     thead tr input[type=checkbox]{
         vertical-align: bottom;
     }
