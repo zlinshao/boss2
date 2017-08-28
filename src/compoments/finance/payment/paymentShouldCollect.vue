@@ -265,22 +265,20 @@
                 this.$http.post('account/receivable/receive/' + this.currentId, this.formData)
                     .then((res) => {
                         if (res.data.code === '18510') {
-                            // 成功
+                            //成功信息 ***
                             this.info.success = res.data.msg;
-                            //显示失败弹窗 ***
+                            //关闭失败弹窗 ***
+                            this.info.state_error = false;
+                            //显示成功弹窗 ***
                             this.info.state_success = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            this.info.state_success = false;
                             this.operId = 0;
                             this.clearForm();
                             this.$emit('success', 1);
                         } else {
-                            // 错误
+                            //失败信息 ***
                             this.info.error = res.data.msg;
                             //显示失败弹窗 ***
                             this.info.state_error = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            this.info.state_error = false;
                         }
                     })
             },
