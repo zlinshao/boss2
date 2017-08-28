@@ -189,6 +189,8 @@
 <script>
     import Status from './status.vue';
 
+    var addr="//restapi.amap.com/v3/assistant/inputtips?key=2cafb0027aa13d1c6b13542462b3c94f&datatype=poi&types=120300";
+    var cityAddr = '//restapi.amap.com/v3/ip?key=2cafb0027aa13d1c6b13542462b3c94f&ip=';
     export default{
 
         data(){
@@ -218,16 +220,7 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                },
-                keyArr : [
-                    '2091def5622c2e6830665147aac3f3a5',
-                    '181a17662347392d30ce7962d0deb60a',
-                    '3834fe3d734950926dbe78c69b28159f',
-                    'bd7f6e8277a9230aaf2cc88ab90acfea',
-                    '7ce699d57e8f29b95bd18a5e5972cbfb',
-                    '54a10912e634392fdb93a10ea3cd2eaa'
-                ],
-                index : 0
+                }
             }
         },
         components: {Status},
@@ -253,8 +246,8 @@
                 for(let i = 0;i<a.length;i++){
                     a[i].checked = false
                 }
-                this.index = Math.floor(Math.random()*this.keyArr.length);
-                let addr="//restapi.amap.com/v3/assistant/inputtips?key="+this.keyArr[this.index]+"&datatype=poi&types=120300";
+//                this.index = Math.floor(Math.random()*this.keyArr.length);
+//                let addr="//restapi.amap.com/v3/assistant/inputtips?key="+this.keyArr[this.index]+"&datatype=poi&types=120300";
 //                console.log(addr);
                 this.$http.defaults.withCredentials = false;
                 this.$http.defaults.headers = {};
@@ -341,8 +334,8 @@
             getCurrentCity(){
                 this.$http.defaults.withCredentials = false;
                 this.$http.defaults.headers = {};
-                this.index = Math.floor(Math.random()*this.keyArr.length);
-                let cityAddr = '//restapi.amap.com/v3/ip?key='+this.keyArr[this.index]+'&ip=';
+//                this.index = Math.floor(Math.random()*this.keyArr.length);
+//                let cityAddr = '//restapi.amap.com/v3/ip?key='+this.keyArr[this.index]+'&ip=';
                 this.$http.get(cityAddr+this.ip)
                     .then(
                         (res) => {
