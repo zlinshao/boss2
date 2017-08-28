@@ -223,7 +223,6 @@
                         this.complete_time = '';      //补齐时间
                         this.remarks = '';            //备注
                     } else {
-                        this.info.state_success = false;
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***

@@ -454,7 +454,7 @@
                                         <label v-if="payment == 2" class="col-sm-2 control-label">支付宝账号</label>
                                         <label v-if="payment == 3" class="col-sm-2 control-label">微信账号</label>
                                         <label v-if="payment == 4" class="col-sm-2 control-label">存折账号</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10" v-if="payment != 5">
                                             <input type="text" class="form-control" v-model="account">
                                         </div>
                                     </div>
