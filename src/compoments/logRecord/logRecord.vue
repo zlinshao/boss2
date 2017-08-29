@@ -25,13 +25,9 @@
                         </select>
                     </div>
 
-                    <div class="form-group datetime">
-                        <label>
-                            <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time" class="form-control form_datetime">
-                        </label>
-                        <label>
-                            <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time" class="form-control form_datetime">
-                        </label>
+                    <div class="form-group datetime" style="padding: 0;">
+                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                    @sendDate="getDate"></DatePicker>
                     </div>
                     <div class="input-group bootstrap-timepicker" style="margin-bottom: 0;">
                         <input type="text" class="form-control" id="search_info" placeholder="请点击选择操作人" readonly
@@ -118,10 +114,17 @@
     import Page from '../common/page.vue'
     import Staff from '../common/organization/selectStaff.vue'
     import Status from '../common/status.vue';                          //提示信息
+    import DatePicker from '../common/datePicker.vue'
     export default{
-        components: {Page,Staff,Status},
+        components: {Page,Staff,Status,DatePicker},
         data(){
             return {
+                dateConfigure: [{
+                    range: true, // 是否选择范围
+                    needHour: false // 是否需要选择小时
+                }],
+                currentDate: [],
+
                 flag: true,
                 flag1: false,
                 pages: 1,     //总页数
@@ -129,8 +132,7 @@
                 params : {
                     module : 0,
                     operation : 0,
-                    start_time : '',
-                    end_time : '',
+                    time: '',
                     staff_id : '',
                     page:1
                 },
@@ -175,6 +177,10 @@
             },
         },
         methods: {
+            getDate(val){
+               this.params.time = val;
+                this.search();
+            },
             showFlag (){
                 this.flag = !this.flag;
             },
@@ -201,7 +207,7 @@
               })
             },
             search(){
-                this.params.page = 1
+                this.params.page = 1;
                 this.getList();
             },
             getList(){

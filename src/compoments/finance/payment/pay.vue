@@ -545,7 +545,7 @@
                     }
                 })
             },
-
+//            应付列表
             filter(val){
                 this.paging = '';
                 this.beforePage = val;
@@ -626,7 +626,7 @@
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
-//            确认新增
+//            确认新增入账
             new_addPay(){
                 this.$http.post('account/payable', {
                     customer_id: this.cus_id,                           //客户ID
@@ -693,6 +693,7 @@
                     });
                 });
             },
+//            多选框
             changeIndex(ev, id, status){
                 this.pitch = [];
                 this.status = [];
@@ -732,6 +733,7 @@
                     })
                 });
             },
+//            时间控件
             remindData (){
                 $('.form_datetime').datetimepicker({
                     minView: "month",                     //选择日期后，不会再跳转去选择时分秒
@@ -746,13 +748,14 @@
                     }
                 }.bind(this));
             },
-
+//            人资
             select(){
                 this.configure = {type: 'all', class: 'selectType'};
                 $('#selectCustom').modal('show');
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },
+//            人资
             selectDateSend(val){
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
@@ -764,6 +767,7 @@
                 }
                 this.search(1);
             },
+//            清除搜索
             clearSelect(){
                 this.params.department_id = [];
                 this.params.staff_id = [];
@@ -833,7 +837,6 @@
                     }
                 })
             },
-
 //            编辑付款时间
             modifyTime(val){
                 this.$http.post('account/payable/batch', {
@@ -876,11 +879,8 @@
 
     .tips {
         line-height: 30px;
-        /*padding-left: 12px;*/
         padding-bottom: 5px;
         font-size: 15px;
-        /*margin-top: 20px;*/
-        /*width: 100%;*/
     }
 
     .tips ul {
@@ -889,13 +889,11 @@
     }
 
     .tips ul li {
-        /*float: left;*/
         padding: 0 50px;
         box-sizing: border-box;
     }
 
     .tips ul li + li {
-        /*margin-left: 30px;*/
         border-left: 1px solid #ddd;
 
     }
@@ -927,7 +925,6 @@
 
     tbody tr td .status {
         color: white;
-        /*font-weight: bold;*/
     }
 
     .status.yellow {

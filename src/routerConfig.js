@@ -1,7 +1,7 @@
-import Power from "./compoments/power/power.vue";                       //权限管理
-import Index from "./index.vue";                       //权限管理
-import User from "./compoments/user/user.vue";                          //用户管理
-import Role from "./compoments/role/role.vue";                          //角色
+import Power from "./compoments/power/power.vue";                                               //权限管理
+import Index from "./index.vue";                                                                //权限管理
+import User from "./compoments/user/user.vue";                                                  //用户管理
+import Role from "./compoments/role/role.vue";                                                  //角色
 // import Village from "./compoments/village/village.vue";
 // import VillageDetail from "./compoments/village/villageDetail.vue";
 import CACollect from './compoments/achievement/companyAchievement/CACollect.vue'
@@ -14,88 +14,88 @@ import PeriodicForPeople from './compoments/achievement/periodic/periodicForPeop
 import PeriodicPeopleDetail from './compoments/achievement/periodic/peopleDetail.vue'
 import WACollect from './compoments/achievement/wagesAchievement/WACollect.vue'
 import WARenting from './compoments/achievement/wagesAchievement/WARenting.vue'
-import Compare from './compoments/achievement/companyAchievement/compare.vue'   // 公司业绩收租房对比
-import Calc from './compoments/achievement/wagesAchievement/calc.vue'       // 计算详情
-import Dream from './compoments/achievement/salemanSalary/dream.vue'        // 梦想包
-import Drumstick from './compoments/achievement/salemanSalary/drumstick.vue'    // 鸡腿包
-import AFACollect from './compoments/achievement/agencyFeeAplicarion/AFACollect.vue'    // 收房中介费
-import AFARenting from './compoments/achievement/agencyFeeAplicarion/AFARenting.vue'    // 租房中介费
+import Compare from './compoments/achievement/companyAchievement/compare.vue'                   // 公司业绩收租房对比
+import Calc from './compoments/achievement/wagesAchievement/calc.vue'                           // 计算详情
+import Dream from './compoments/achievement/salemanSalary/dream.vue'                            // 梦想包
+import Drumstick from './compoments/achievement/salemanSalary/drumstick.vue'                    // 鸡腿包
+import AFACollect from './compoments/achievement/agencyFeeAplicarion/AFACollect.vue'            // 收房中介费
+import AFARenting from './compoments/achievement/agencyFeeAplicarion/AFARenting.vue'            // 租房中介费
 
-import Custom from "./compoments/custom/custom.vue";                        //客户
-import Details from "./compoments/custom/custom_more.vue";                  //客户详情
-import CustomerPool from "./compoments/custom/custom_pool.vue";             //客户池
-import LeadingOut from "./compoments/leadingOut/cus_leadingOut.vue";        //客户导出
-import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                     //已收房源
-import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";           //已收房源更多
-import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                   //未收房源
-import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";          //未收房源更多
-import CollectContract from "./compoments/contract/collectContract.vue";         //收房合同
-import RentingContract from "./compoments/contract/rentingContract.vue";         //租房合同
-import ContractDetail from './compoments/contract/collectDetail.vue'           // 收房合同详情
-import RentingDetail from './compoments/contract/rentingDetail.vue'           // 租房合同详情
-import  Memorandum from  './compoments/contract/searchMemorandum.vue'          //查看备忘录
+import Custom from "./compoments/custom/custom.vue";                                            //客户
+import Details from "./compoments/custom/custom_more.vue";                                      //客户详情
+import CustomerPool from "./compoments/custom/custom_pool.vue";                                 //客户池
+import LeadingOut from "./compoments/leadingOut/cus_leadingOut.vue";                            //客户导出
+import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                         //已收房源
+import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";               //已收房源更多
+import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                       //未收房源
+import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";              //未收房源更多
+import CollectContract from "./compoments/contract/collectContract.vue";                        //收房合同
+import RentingContract from "./compoments/contract/rentingContract.vue";                        //租房合同
+import ContractDetail from './compoments/contract/collectDetail.vue'                            // 收房合同详情
+import RentingDetail from './compoments/contract/rentingDetail.vue'                             // 租房合同详情
+import  Memorandum from  './compoments/contract/searchMemorandum.vue'                           //查看备忘录
 
-import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";         //收房合同
-import RentingContractTransfer from "./compoments/contract/rentingContractTransfer.vue";         //租房合同
+import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";        //收房合同
+import RentingContractTransfer from "./compoments/contract/rentingContractTransfer.vue";        //租房合同
 
 
 import  Comparecontract from  './compoments/contract/Compare.vue'
 
 // 账本
-import Account from './compoments/finance/account.vue'                          // 账号管理
-import Subject from './compoments/finance/subject/subject.vue'                          // 科目管理
-import Classify from './compoments/finance/subject/classify.vue'                          // 科目管理
-import Jurisdiction from './compoments/finance/jurisdiction.vue'                          // 科目管理
-import CollectPayment from './compoments/finance/payment/collect.vue'           // 应收款项
-import PayPayment from './compoments/finance/payment/pay.vue'                    // 应付款项
-import IncomeFlow from './compoments/finance/incomeFlow.vue'                    // 收支流水
-import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'         // 收支流水
-import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'         // 收支流水
-import PendingItem from './compoments/finance/pemdingItem/pendingItem.vue'                  // 待处理项
+import Account from './compoments/finance/account.vue'                                          // 账号管理
+import Subject from './compoments/finance/subject/subject.vue'                                  // 科目管理
+import Classify from './compoments/finance/subject/classify.vue'                                // 科目管理
+import Jurisdiction from './compoments/finance/jurisdiction.vue'                                // 科目管理
+import CollectPayment from './compoments/finance/payment/collect.vue'                           // 应收款项
+import PayPayment from './compoments/finance/payment/pay.vue'                                   // 应付款项
+import IncomeFlow from './compoments/finance/incomeFlow.vue'                                    // 收支流水
+import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'                       // 收支流水
+import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'               // 收支流水
+import PendingItem from './compoments/finance/pemdingItem/pendingItem.vue'                      // 待处理项
 import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'                  // 待处理项详情
-import GeneralOperation from './compoments/finance/generalOperation.vue'        // 总账操作
-import GeneralRecord from './compoments/finance/generalRecord.vue'              // 总账操作记录
+import GeneralOperation from './compoments/finance/generalOperation.vue'                        // 总账操作
+// import GeneralRecord from './compoments/finance/generalRecord.vue'                              // 总账操作记录
 import Chart from './compoments/finance/chart/chart.vue'
-import LogRecord from './compoments/logRecord/logRecord.vue'                    // 日志操作记录
-import MessageCenter from  './compoments/messageCenter/messageCenter.vue'
-import CollectOrder from './compoments/user/collectOrder.vue'    //收房订单管理
-import Country from './compoments/common/country.vue'           //国家
-import RentingOrder from './compoments/user/rentingOrder.vue'    //租房订单管理
+import LogRecord from './compoments/logRecord/logRecord.vue'                                    // 日志操作记录
+import MessageCenter from  './compoments/messageCenter/messageCenter.vue'                       //消息中心
+import CollectOrder from './compoments/user/collectOrder.vue'                                   //收房订单管理
+import Country from './compoments/common/country.vue'                                           //国家
+import RentingOrder from './compoments/user/rentingOrder.vue'                                   //租房订单管理
 
-import CheckIn from './compoments/checkIn/checkIn.vue'    //定位签到
+import CheckIn from './compoments/checkIn/checkIn.vue'                                          //定位签到
 
-// import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'    //收房报备
-// import ReopetedCollectDetail from './compoments/reported/collect/collectDetail.vue'// 收房报备详情
+// import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'                 //收房报备
+// import ReopetedCollectDetail from './compoments/reported/collect/collectDetail.vue'             //收房报备详情
 
-// import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'    //租房报备
-// import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'// 租房报备详情
+// import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'                    //租房报备
+// import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'                      // 租房报备详情
 
-// import ReportedOther from './compoments/reported/other/reportedOther.vue'    //其余款项报备
-// import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'    //其余款项报备
+// import ReportedOther from './compoments/reported/other/reportedOther.vue'                       //其余款项报备
+// import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'                   //其余款项报备
 
-import lockScreen from './compoments/lock_screen/lock_screen.vue'     //锁屏
-import MyAchievement from './compoments/myAchievement/myAchievement.vue'     //我的业绩
-import UserDetail from './compoments/user/userDetail.vue'           //用户详情页
-import PunchRecord from './compoments/punchRecord/punchRecord.vue'           //打卡记录
-import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'           //备忘录
-import ClientManage from './compoments/finance/clientManage/clientManageList.vue'     //财务客户管理
+import lockScreen from './compoments/lock_screen/lock_screen.vue'                               //锁屏
+import MyAchievement from './compoments/myAchievement/myAchievement.vue'                        //我的业绩
+import UserDetail from './compoments/user/userDetail.vue'                                       //用户详情页
+import PunchRecord from './compoments/punchRecord/punchRecord.vue'                              //打卡记录
+import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
+// import ClientManage from './compoments/finance/clientManage/clientManageList.vue'               //财务客户管理
 
-import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'     //财务房东管理
-import NewRenter from './compoments/finance/clientManage/newRenter.vue'     //财务房东管理
-import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'     //财务房东管理
-import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDetail.vue'     //财务n房东管理
+import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'                     //财务房东管理
+import NewRenter from './compoments/finance/clientManage/newRenter.vue'                         //财务租客管理
+import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'             //财务房东管理详情
+import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDetail.vue'         //财务租客管理详情
 
-import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'     //财务客户管理
+import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'       //财务客户管理
 
-import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'            // 办公用品管理
-import OfficeApply from './compoments/office/officeApply/officeApply.vue'            // 办公用品申领
-import BatchApply from './compoments/office/batchApply.vue'            // 办公用品批量申领
-import OfficeLibrary from './compoments/office/officeLibrary/officeLibrary.vue'            // 办公用品库管理
-import OfficeDetail from './compoments/office/officeManage/officeDetail.vue'            // 办公用品详情
+import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'                // 办公用品管理
+import OfficeApply from './compoments/office/officeApply/officeApply.vue'                       // 办公用品申领
+import BatchApply from './compoments/office/batchApply.vue'                                     // 办公用品批量申领
+import OfficeLibrary from './compoments/office/officeLibrary/officeLibrary.vue'                 // 办公用品库管理
+import OfficeDetail from './compoments/office/officeManage/officeDetail.vue'                    // 办公用品详情
 
 export default[
     {
-        path: '/',             //重定向主页
+        path: '/',                  //重定向主页
         redirect: '/index',
     },
     {
@@ -179,68 +179,68 @@ export default[
         component: WARenting
     },
     {
-        path: '/custom',            //客户
+        path: '/custom',                        //客户
         name: 'custom',
         component: Custom
     },
     {
-        path: '/customerPool',      //客户池
+        path: '/customerPool',                  //客户池
         name: 'customerPool',
         component: CustomerPool
     },
     {
-        path: '/OkCollect',         //公司房源
+        path: '/OkCollect',                     //公司房源
         name: 'OkCollect',
         component: OkCollect
     },
     {
-        path: '/noCollect',         //待收房源
+        path: '/noCollect',                     //待收房源
         name: 'noCollect',
         component: NoCollect
     },
     {
-        path: '/details',         //客户详情
+        path: '/details',                       //客户详情
         name: 'details',
         component: Details
     },
     {
-        path: '/collectDetail',     //公司房源详情
+        path: '/collectDetail',                 //公司房源详情
         name: 'collectDetail',
         component: CollectDetail
     },
     {
-        path: '/collectMore',       //客户详情
+        path: '/collectMore',                   //客户详情
         name: 'collectMore',
         component: Collect_More
     },
     {
-        path: '/leadingOut',       //客户导出
+        path: '/leadingOut',                    //客户导出
         name: 'leadingOut',
         component: LeadingOut
     },
     {
-        path: '/myAchievement',       //客户导出
+        path: '/myAchievement',                 //客户导出
         name: 'myAchievement',
         component: MyAchievement
     },
     {
         path: '/newLandlord',
-        name: 'newLandlord',            //财务房东管理
+        name: 'newLandlord',                    //财务房东管理
         component: NewLandlord
     },
     {
         path: '/newLandlordDetail',
-        name: 'newLandlordDetail',            //财务房东管理详情
+        name: 'newLandlordDetail',              //财务房东管理详情
         component: NewLandlordDetail
     },
     {
         path: '/newRenter',
-        name: 'newRenter',            //财务租房管理
+        name: 'newRenter',                      //财务租房管理
         component: NewRenter
     },
     {
         path: '/newRenterDetail',
-        name: 'newRenterDetail',            //财务租房管理
+        name: 'newRenterDetail',                //财务租房管理
         component: NewRenterDetail
     },
     {
@@ -430,7 +430,7 @@ export default[
         component: Country
     },
     {
-        path: '/userDetail',             //用户详情页
+        path: '/userDetail',                    //用户详情页
         name: 'UserDetail',
         component: UserDetail
     },
@@ -446,12 +446,12 @@ export default[
     },
     {
         path: '/punchRecord',
-        name: 'punchRecord',                //打卡记录
+        name: 'punchRecord',                    //打卡记录
         component: PunchRecord
     },
     {
         path: '/HeaderMemorandum',
-        name: 'HeaderMemorandum',           //备忘录
+        name: 'HeaderMemorandum',               //备忘录
         component: HeaderMemorandum
     },
     // {

@@ -24,18 +24,8 @@
                                placeholder="请选择部门" readonly>
                     </div>
                     <div class="pro-sort">
-                        <input @click="remindTimes()" type="text" placeholder="开始时间"
-                               v-model="startTimes" class="form-control remindTime" readonly>
-                        <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
-                    </div>
-
-                    <div class="pro-sort">
-                        <input @click="remindTimes()" type="text" placeholder="结束时间"
-                               v-model="endTime" class="form-control remindTime" readonly>
-                        <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
-                    </div>
-                    <div class="pro-sort">
-                        <button class="btn btn-success" type="button" @click="punch_record(1,'resetting')">重置</button>
+                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                    @sendDate="getDate"></DatePicker>
                     </div>
                 </div>
             </div>
@@ -116,15 +106,12 @@
         components: {Page, SelectStaff, DatePicker, Status},
         data (){
             return {
-//                dateConfigure: [
-//                    {
-//                        range: true,
-//                        needHour: true
-//                    }
-//                ],
-//                range: '',                    //日期
-                startTimes: '',                 //开始时间
-                endTime: '',                    //结束时间
+                dateConfigure: [{
+                    range: true, // 是否选择范围
+                    needHour: false // 是否需要选择小时
+                }],
+                currentDate: [],
+                time: '',
                 isActive: '',                   //详情
                 isShow: '',                     //暂无数据
                 beforePage: 1,                  //当前页数
@@ -170,43 +157,9 @@
         },
         methods: {
 //            时间
-//            getDate(data){
-//                this.range = data;
-//                console.log(data);
-//                this.punch_record(1);
-//            },
-//            开始时间
-            remindTimes (){
-                $('.remindTime').datetimepicker({
-                    minView: 'month',                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    initialDate: new Date(),
-                    pickerPosition: 'bottom-left',
-                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '开始时间') {
-                        this.startTimes = ev.target.value;
-                        if (this.endTime < this.startTimes && this.endTime !== '') {
-                            this.endTime = '';
-                            //失败信息 ***
-                            this.info.error = '结束时间不能小于开始时间';
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        }
-                    } else {
-                        this.endTime = ev.target.value;
-                        if (this.endTime < this.startTimes) {
-                            this.endTime = '';
-                            //失败信息 ***
-                            this.info.error = '结束时间不能小于开始时间';
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        }
-                    }
-                }.bind(this));
+            getDate(data){
+                this.time = data;
+                this.punch_record(1);
             },
 
 //            组织架构员工
@@ -261,8 +214,6 @@
 //            打卡记录
             punch_record (val, pun){
                 if (pun === 'resetting') {
-                    this.startTimes = '';                 //开始时间
-                    this.endTime = '';                    //结束时间
                     this.staff_man = [];
                     this.staff_id = [];
                     this.department_branch = [];
@@ -275,8 +226,7 @@
                     this.$http.post('clock/index/index/pages/' + val, {
                         staff_id: String(this.staff_id),
                         department_id: String(this.department_id),
-                        start_time: this.startTimes,
-                        end_time: this.endTime,
+                        time: this.time
                     }).then((res) => {
                         this.paging = '';
                         if (res.data.code === '30000') {

@@ -72,25 +72,19 @@
                                     </button>
                                 </div>
                             </form>
-                            <div v-if="isNew2" class="pro-sort pull-right col-xs-12 col-md-4 col-lg-2"
-                                 style="padding: 0;margin-top: 4px;">
-                                <div class="input-group pull-right">
-                                    <input title="请点击选择" type="text" class="form-control" readonly
+                            <div v-if="isNew2" class="pull-right col-xs-12 col-md-4 col-lg-2"
+                                 style="margin-top: 4px;">
+                                <div class="form-group pull-right" style="margin-bottom: 0;">
+                                    <input title="请点击选择" type="text" class="form-control" readonly style="margin-bottom: 0;"
                                            v-model="params.staff" @click="selectStaff" placeholder='选择收件人'>
                                 </div>
                             </div>
-                            <div v-if="isNew2" class="pro-sort pull-right col-xs-12 col-md-4 col-lg-2"
-                                 style="padding: 0;margin-top: 4px;">
-                                <div class="input-group pull-right">
-                                    <input @click="remindData" readonly placeholder="结束时间" v-model="params.end_time"
-                                           class="form-control form_datetime">
-                                </div>
-                            </div>
-                            <div v-if="isNew2" class="pro-sort pull-right col-xs-12 col-md-4 col-lg-2"
-                                 style="padding: 0;margin-top: 4px;">
-                                <div class="input-group pull-right">
-                                    <input @click="remindData" readonly placeholder="开始时间" v-model="params.start_time"
-                                           class="form-control form_datetime">
+
+                            <div v-if="isNew2" class="pull-right col-xs-12 col-md-4"
+                                 style="margin-top: 4px;">
+                                <div class="form-group">
+                                    <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                                @sendDate="getDate"></DatePicker>
                                 </div>
                             </div>
                         </div>
@@ -390,16 +384,24 @@
     import AnnouncementAdd from './announcementAdd.vue'
     import AnnouncementDetail from './announcemeDetail.vue'
     import STAFF from  '../common/organization/selectStaff.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default{
         components: {
             AnnouncementAdd,
             AnnouncementDetail,
             Status,
             Page,
-            STAFF
+            STAFF,
+            DatePicker
         },
         data(){
             return {
+                dateConfigure: [{
+                    range: true, // 是否选择范围
+                    needHour: false // 是否需要选择小时
+                }],
+                currentDate: [],
+                time: '',
                 select_list: {},
                 isActive: 1,
                 beforePage: 1,
@@ -437,11 +439,11 @@
                 New2: false,                //新增2暂无数据
                 configure: [],              //人资
                 time_status: true,
-                params : {
+                params: {
                     staff: '',                  //收件人
                     staffId: '',                //收件人ID
-                    start_time : '',            //开始时间
-                    end_time : '',              //结束时间
+                    start_time: '',            //开始时间
+                    end_time: '',              //结束时间
                 },
                 message: '',
                 fa: 'fa',
@@ -459,7 +461,7 @@
             }
         },
         mounted (){
-            if (this.act === 'sys_mess') {
+            if (this.act === 'sys_mess' || this.act === undefined) {
                 this.System(1);
             }
             if (this.act === 'appr_mess') {
@@ -472,25 +474,25 @@
                 this.Secretary(1);
             }
         },
-        computed :{
-          act () {
-              return this.$route.query.nameId;
-          }
+        computed: {
+            act () {
+                return this.$route.query.nameId;
+            }
         },
         watch: {
-            'params.start_time':{
-                deep:true,
-                handler(val,oldVal){
+            'params.start_time': {
+                deep: true,
+                handler(val, oldVal){
                     this.new2(1);
                 }
             },
-            'params.end_time':{
-                deep:true,
-                handler(val,oldVal){
+            'params.end_time': {
+                deep: true,
+                handler(val, oldVal){
                     this.new2(1);
                 }
             },
-            act(val , oldVal){
+            act(val, oldVal){
                 if (val === 'sys_mess') {
                     this.System(1);
                 }
@@ -739,24 +741,10 @@
                 this.new2(1);
             },
 //            时间搜索
-            remindData (){
-                this.time_status = true;
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                   //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '开始时间') {
-                        this.time_status = false;
-                        this.params.start_time = ev.target.value;
-                    } else {
-                        this.time_status = false;
-                        this.params.end_time = ev.target.value;
-                    }
-                });
+            getDate(val){
+                console.log(val);
+                this.time = val;
+                this.new2(1);
             },
 //            重置
             resetting (){
@@ -770,11 +758,9 @@
             new2(val){
                 this.paging = '';
                 this.$http.post('message/message/department_message/pages/' + val, {
-                    create_time: this.params.start_time,
-                    end_time: this.params.end_time,
+                    time: this.time,
                     receive_id: this.params.staffId,
                 }).then((res) => {
-                    this.remindData();
                     if (res.data.code === '100080') {
                         this.news2 = res.data.data.data;
                         this.paging = res.data.data.pages;
