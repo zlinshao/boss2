@@ -159,9 +159,7 @@
             this.getDictionary();
             this.IsPC();
         },
-//        updated(){
-//            this.remindData ();
-//        },
+
         watch:{
           'params.start_time':{
               deep:true,
@@ -202,7 +200,6 @@
             getDictionary(){
               this.$http.get('log/log/dict').then((res)=>{
                   this.dictionary=res.data;
-                  this.remindData();
                   this.search();
               })
             },
@@ -235,21 +232,7 @@
 
                 })
             },
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '开始时间'){
-                        this.params.start_time = ev.target.value;
-                    } else {
-                        this.params.end_time = ev.target.value;
-                    }
-                });
-            },
+
             selete(){
                 $('#selectCustom').modal('show');
                 this.configure={length:1,class:'amount'};

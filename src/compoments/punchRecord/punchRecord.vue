@@ -23,7 +23,7 @@
                                class="form-control" v-model="department_branch"
                                placeholder="请选择部门" readonly>
                     </div>
-                    <div class="pro-sort">
+                    <div class="pro-sort col-lg-3 col-md-4 col-sm-5 col-xs-12">
                         <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                     @sendDate="getDate"></DatePicker>
                     </div>
@@ -137,9 +137,6 @@
         },
         mounted (){
             this.punch_record(1);
-        },
-        updated (){
-            this.remindTimes();
         },
         watch: {
             'startTimes': {
