@@ -13,7 +13,8 @@
             <loading v-show="loading"></loading>
 
             <div class="btn-group dropup" id="custom_service">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                     <span class="fa fa-question-circle-o"></span>
                     <span class="sr-only">咨询</span>
                 </button>
@@ -48,18 +49,36 @@
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/custom">客户</router-link>                    <!--客户-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/customerPool">客户池</router-link>            <!--客户池-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/OkCollect">公司房源</router-link>             <!--公司房源-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/noCollect">待收房源</router-link>             <!--待收房源-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedRenting">租房报备</router-link>       <!--租房报备-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedCollect">收房报备</router-link>       <!--收房报备-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/user">员工管理</router-link>                  <!--用户管理-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGcompany">公司业绩</router-link>   <!--公司业绩-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGroup">小组业绩</router-link>      <!--小组业绩-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForPeople">个人业绩</router-link>     <!--个人业绩-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/leadingOut">客户导出</router-link>            <!--客户导出-->
-                                <router-link  data-dismiss="modal" class="btn btn-link col-xs-6" to="/messageCenter">消息中心</router-link>         <!--消息中心-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/custom">客户
+                                </router-link>                    <!--客户-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/customerPool">客户池
+                                </router-link>            <!--客户池-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/OkCollect">公司房源
+                                </router-link>             <!--公司房源-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/noCollect">待收房源
+                                </router-link>             <!--待收房源-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedRenting">
+                                    租房报备
+                                </router-link>       <!--租房报备-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedCollect">
+                                    收房报备
+                                </router-link>       <!--收房报备-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/user">员工管理
+                                </router-link>                  <!--用户管理-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6"
+                                             to="/periodicForGcompany">公司业绩
+                                </router-link>   <!--公司业绩-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGroup">
+                                    小组业绩
+                                </router-link>      <!--小组业绩-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForPeople">
+                                    个人业绩
+                                </router-link>     <!--个人业绩-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/leadingOut">客户导出
+                                </router-link>            <!--客户导出-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/messageCenter">
+                                    消息中心
+                                </router-link>         <!--消息中心-->
                             </div>
                         </section>
                     </div>
@@ -169,22 +188,21 @@
         created (){
             this.login_status();            //登陆状态
             this.lock_screen();             //锁屏
-
         },
         methods: {
 //            锁屏
             lock_screen (){
                 let url = window.location.href;
                 let url_index = url.split("lock")[1];
-                if (url_index != 'Screen') {
+                if (url_index !== 'Screen') {
                     this.$http.get('auth/auth/lock_status').then((res) => {
                         if (res.data.code === '80080018') {
-                            this.$router.push({ path: 'lockScreen' });
+                            this.$router.push({path: 'lockScreen'});
                         }
                     });
                 }
             },
-//            登陆状态
+//            登陆状态/权限列表
             login_status (){
                 this.$http.get('staff/info').then((res) => {
                     if (res.data.code === 80019) {
@@ -199,39 +217,29 @@
                     }
                 });
             },
-//            show(){
-//                $('#custom_service ul').show()
-//            },
-//            hide(){
-//                $('#custom_service ul').hide()
-//            },
+//            帮助建议
             sendSuggest(){
-//                console.log(this.$route.name);
                 this.suggestMsg.feedback_url = this.$route.fullPath;
-//                console.log(this.suggestMsg);
-                this.$http.post('feedback/index', this.suggestMsg)
-                    .then(
-                        (res) => {
-                            if (res.data.code == 10020) {
-                                // 成功
-                                $('#suggest').modal('hide');
-                                this.clear();
-                                this.info.success = res.data.msg;
-                                //关闭失败弹窗 ***
-                                this.info.state_error = false;
-                                //显示成功弹窗 ***
-                                this.info.state_success = true;
-                            } else {
-                                this.info.error = res.data.msg;
-                                //关闭失败弹窗 ***
-                                this.info.state_error = true;
-                                //显示成功弹窗 ***
-                                this.info.state_success = false;
-                            }
-                        }
-                    )
-//                $('#suggest').modal('hide');
+                this.$http.post('feedback/index', this.suggestMsg).then((res) => {
+                    if (res.data.code === '10020') {
+                        // 成功
+                        $('#suggest').modal('hide');
+                        this.clear();
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        this.info.error = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = true;
+                        //显示成功弹窗 ***
+                        this.info.state_success = false;
+                    }
+                })
             },
+//            清除建议
             clear(){
                 this.suggestMsg = {
                     problem: '',
@@ -243,87 +251,39 @@
 </script>
 
 <style scoped>
-    #custom_ser{
+    #custom_ser {
         position: fixed;
         bottom: 50px;
         right: 10px;
         z-index: 100;
     }
-    #custom_ser > a{
+
+    #custom_ser > a {
         opacity: .4;
         border: 0
     }
 
-    #custom_service{
+    #custom_service {
         position: fixed;
         bottom: 10px;
         right: 10px;
         z-index: 100;
     }
-    #custom_service > button{
+
+    #custom_service > button {
         width: 36px;
         height: 36px;
         border-radius: 6px;
         border: 0;
         background-color: #E7EAF1;
     }
-    #custom_service > button > .fa-question-circle-o{
+
+    #custom_service > button > .fa-question-circle-o {
         font-size: 26px;
         margin-left: -5px;
         margin-top: 0;
         color: #9AABBE;
     }
-    /*#custom_service {*/
-        /*position: fixed;*/
-        /*bottom: 10px;*/
-        /*right: 10px;*/
-        /*font-size: 20px;*/
-        /*width: 50px;*/
-        /*height: 50px;*/
-        /*!*background: #00C1DE;*!*/
-        /*background-color: white;*/
-        /*z-index: 100;*/
-        /*border: 0;*/
-        /*border-radius: 50%;*/
-        /*text-align: center;*/
-    /*}*/
-
-    /*#custom_service i{*/
-        /*line-height: 50px;*/
-        /*font-size: 30px;*/
-    /*}*/
-
-    /*#custom_service ul {*/
-        /*background-color: white;*/
-        /*padding: 0 10px;*/
-        /*margin: 0;*/
-        /*position: absolute;*/
-        /*top: -86px;*/
-        /*right: 0;*/
-        /*border-radius: 5px;*/
-        /*border: 1px solid #000;*/
-        /*font-size: 16px;*/
-        /*display: none;*/
-    /*}*/
-
-    /*#custom_service ul li {*/
-        /*padding: 10px 12px;*/
-        /*text-align: center;*/
-        /*width: 140px;*/
-        /*cursor: pointer;*/
-    /*}*/
-
-    /*#custom_service ul li:hover {*/
-        /*color: #000;*/
-    /*}*/
-
-    /*#custom_service ul li i {*/
-        /*margin-right: 12px;*/
-    /*}*/
-
-    /*#custom_service ul li + li {*/
-        /*border-top: 1px solid #ddd;*/
-    /*}*/
 
     #contact .modal-body {
         padding: 0 30px;

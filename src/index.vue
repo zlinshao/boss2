@@ -375,10 +375,6 @@
             },
 //            系统公告
             home_system (){
-//                this.$http.get('index/index/index').then((res) => {
-//                        console.log(JSON.parse(res.data));
-//
-//                });
                 this.$http.post('message/system/index/pages/1').then((res) => {
                     if (res.data.code === '100000') {
                         this.systems = res.data.data.list;
@@ -388,18 +384,13 @@
                     }
                 });
             },
+//            阅读公告
             isCollect(val,){
                 this.$http.post('message/message/favourite', {
                     mess_id: val
                 }).then((res) => {
                     if (res.data.code === '100054' || res.data.code === '100052') {
                         this.home_system()
-                        //成功信息 ***
-//                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-//                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-//                        this.info.state_success = true;
                     }
                 });
             },

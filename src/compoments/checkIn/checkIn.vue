@@ -116,8 +116,7 @@
                 params :{
                     department_id : '',
                     staff_id : '',
-                    start_time :'',
-                    end_time : '',
+                    time: '',
 //                    offset : 0,
 //                    size : 5,
 //                    order : 'asc'
@@ -227,8 +226,9 @@
 //                if (data!=this.params.date_range){
 //                    alert(1)
 //                }
-                this.params.start_time = data.split('to')[0];
-                this.params.end_time = data.split('to')[1];
+//                this.params.start_time = data.split('to')[0];
+//                this.params.end_time = data.split('to')[1];
+                this.params.time = data;
                 this.search();
             },
             selectDepartment(){

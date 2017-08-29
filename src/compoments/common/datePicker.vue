@@ -47,7 +47,7 @@
         <div v-else="range">
             <!--<div class="input-group">-->
             <!--<label>-->
-            <input @focus="remindData" type="text" name="addtime" placeholder="选择时间" v-model="date"
+            <input @click="remindData" type="text" name="addtime" placeholder="选择时间" v-model="date"
                    :id="idName"
                    class="form-control" readonly>
             <!--</label>-->
@@ -57,98 +57,7 @@
         <Status :state='info'></Status>
     </div>
 </template>
-<style scoped>
-    #reservation {
-        width: 100%;
-        border-radius: 4px;
-    }
 
-    /*input.form_datetimeNeedHour, input.form_datetime{
-        margin-bottom: -6px;
-    }*/
-    .datePickerContainer {
-        padding-top: 0;
-        display: inline-block;
-        width: 100%;
-    }
-
-    .mobileTimePicker {
-        width: 250px;
-        position: relative;
-        /*padding-left: 13px;*/
-    }
-
-    .mobileTime {
-        padding: 12px;
-        position: absolute;
-        width: 200px;
-        background: white;
-        z-index: 10;
-        border-radius: 4px;
-        top: 35px;
-        left: 0;
-        border: 1px solid #ddd;
-        box-shadow: 1px 1px 2px #ddd;
-    }
-
-    .mobileTime:before {
-        position: absolute;
-        top: -7px;
-        left: 9px;
-        display: inline-block;
-        border-right: 7px solid transparent;
-        border-bottom: 7px solid rgba(0, 0, 0, 0.2);
-        border-left: 7px solid transparent;
-        /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
-        content: '';
-    }
-
-    .mobileTime:after {
-        position: absolute;
-        top: -6px;
-        left: 10px;
-        display: inline-block;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid #fff;
-        border-left: 6px solid transparent;
-        content: '';
-    }
-
-    .mobileTime ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    .mobileTime ul li {
-        font-size: 13px;
-        background: #f5f5f5;
-        border: 1px solid #f5f5f5;
-        color: #08c;
-        padding: 3px 12px;
-        margin-bottom: 8px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .control-label {
-        padding-left: 12px;
-        /*margin-top: 8px;*/
-    }
-
-    div.btns {
-        /*text-align: right;*/
-        margin-top: 10px;
-    }
-
-    .mobileTime ul li.active {
-        background: #08c;
-        border: 1px solid #08c;
-        color: #fff;
-    }
-
-</style>
 <script>
     import Status from '../common/status.vue'
     export default{
@@ -187,36 +96,28 @@
                 },
             }
         },
-        components: {Status},
+        components: { Status },
         created () {
 //            判断是否pc
-//            console.log(this.IsPC());
             this.isPC = this.IsPC();
-//            console.log(this.dateConfigure[0]);
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
             this.dateId = this.dateConfigure[0].date_id;
-//            console.log(this.hour);
             this.setDate();
 //            this.ifNeedHour();
-
         },
         watch: {
             dateConfigure(val){
                 console.log(val[0]);
                 this.range = val[0].range;
                 this.hour = val[0].needHour;
-//                console.log(val[0].currentDate);
-//                console.log(this.hour);
 //                this.ifNeedHour();
             },
             currentDate(val){
                 console.log(val);
                 this.setDate();
             },
-
             date(val){
-//                console.log(val)
 //                document.getElementsByClassName('form_datetime').value = val;
 //                document.getElementsByClassName('form_datetimeNeedHour').value = val;
 //                $('.form_datetime').val(val);
@@ -240,7 +141,6 @@
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
                     this.$emit('sendDate', ev.target.value);
-//                    console.log(this.startDataTime);
                 }.bind(this));
 
                 /*$('.' + this.dateId).datetimepicker({
@@ -302,9 +202,6 @@
 //                    "startDate": "07/11/2017",
 //                    "endDate": "07/17/2017"
                 }, function (start, end, label) {
-//                    console.log('start-------'+start.format('YYYY-MM-DD'));
-//                    console.log('end-------'+end);
-//                    console.log('label-------'+label);
                     if (start.format('YYYY-MM-DD') == 'Invalid date') {
 //                        alert(1)
                         _this.dateRange = '';
@@ -314,8 +211,6 @@
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
                         _this.$emit('sendDate', start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
                     }
-
-//                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
                 });
             },
             IsPC(){
@@ -331,7 +226,6 @@
                 return flag;
             },
             sendDate(){
-//                alert(this.from+'&&'+this.to);
                 this.$emit('sendDate', this.from + 'to' + this.to);
             },
             selectDay(num){
@@ -426,8 +320,6 @@
                     this.mobilePickerDate = date;
                     this.showPicker = false;
                 }
-
-
             },
             saveMobilePicker(){
 //                console.log(this.from+'to'+this.to);
@@ -470,8 +362,6 @@
                 let month = currentDate.getMonth() + 1;
                 let day = currentDate.getDate();
 
-//                console.log('year:'+year+'month:'+month+'day:'+day);
-
                 let lastQuarterlyEnd;  // 上季度初
                 let thisQuarterlyStart;  // 上季度末
                 if (month <= 3) {
@@ -487,7 +377,6 @@
                     lastQuarterlyEnd = moment([year, 7, 1]);
                     thisQuarterlyStart = moment([year, 10, 1]);
                 }
-
 //                let thisQuarterlyStart = moment([year,])
 
                 let thisDay = moment([year, month, day]);
@@ -506,19 +395,8 @@
 
                 this.yearDates = thisDay.diff(thisYear, 'days');
                 this.lastYearDays = thisYear.diff(lastYear, 'days');
-
-                /*console.log("this.monthDates--"+this.monthDates);       //17
-                 console.log("this.lastMonthDays--"+this.lastMonthDays); //30
-                 console.log("this.quarterlyDates--"+this.quarterlyDates);//167
-                 console.log("this.lastQuarterlyDays--"+this.lastQuarterlyDays);//89
-                 console.log("this.yearDates--"+this.yearDates);         //167
-                 console.log("this.lastYearDays--"+this.lastYearDays);   //366*/
-
             },
             setDate(){
-
-//                console.log(this.currentDate!=undefined)
-
                 if (this.currentDate != undefined) {
                     if (this.currentDate.length == 1) {
                         this.date = this.currentDate[0];
@@ -535,3 +413,96 @@
         }
     }
 </script>
+
+<style scoped>
+    #reservation {
+        width: 100%;
+        border-radius: 4px;
+    }
+
+    /*input.form_datetimeNeedHour, input.form_datetime{
+        margin-bottom: -6px;
+    }*/
+    .datePickerContainer {
+        padding-top: 0;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .mobileTimePicker {
+        width: 250px;
+        position: relative;
+        /*padding-left: 13px;*/
+    }
+
+    .mobileTime {
+        padding: 12px;
+        position: absolute;
+        width: 200px;
+        background: white;
+        z-index: 10;
+        border-radius: 4px;
+        top: 35px;
+        left: 0;
+        border: 1px solid #ddd;
+        box-shadow: 1px 1px 2px #ddd;
+    }
+
+    .mobileTime:before {
+        position: absolute;
+        top: -7px;
+        left: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+        border-left: 7px solid transparent;
+        /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
+        content: '';
+    }
+
+    .mobileTime:after {
+        position: absolute;
+        top: -6px;
+        left: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #fff;
+        border-left: 6px solid transparent;
+        content: '';
+    }
+
+    .mobileTime ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .mobileTime ul li {
+        font-size: 13px;
+        background: #f5f5f5;
+        border: 1px solid #f5f5f5;
+        color: #08c;
+        padding: 3px 12px;
+        margin-bottom: 8px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .control-label {
+        padding-left: 12px;
+        /*margin-top: 8px;*/
+    }
+
+    div.btns {
+        /*text-align: right;*/
+        margin-top: 10px;
+    }
+
+    .mobileTime ul li.active {
+        background: #08c;
+        border: 1px solid #08c;
+        color: #fff;
+    }
+
+</style>

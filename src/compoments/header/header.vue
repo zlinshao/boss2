@@ -504,6 +504,22 @@
                             <span>业绩管理</span>
                         </a>
                         <ul class="sub">
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <span>周期表</span>
+                                </a>
+                                <ul class="sub">
+                                    <li :class="{'active': isActive == 38}" @click='pitch_on(38)'>
+                                        <router-link to="/periodicForGcompany">公司</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
+                                        <router-link to="/periodicForGroup">小组</router-link>
+                                    </li>
+                                    <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
+                                        <router-link to="/periodicForPeople">个人</router-link>
+                                    </li>
+                                </ul>
+                            </li>
                             <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>喜报管理</span>
@@ -543,22 +559,6 @@
                                     </li>
                                 </ul>
                             </li>-->
-                            <li class="sub-menu">
-                                <a href="javascript:;">
-                                    <span>周期表</span>
-                                </a>
-                                <ul class="sub">
-                                    <li :class="{'active': isActive == 38}" @click='pitch_on(38)'>
-                                        <router-link to="/periodicForGcompany">公司</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 18}" @click='pitch_on(18)'>
-                                        <router-link to="/periodicForGroup">小组</router-link>
-                                    </li>
-                                    <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
-                                        <router-link to="/periodicForPeople">个人</router-link>
-                                    </li>
-                                </ul>
-                            </li>
                             <!--<li class="sub-menu">
                                 <a href="javascript:;">
                                     <span>每单工资</span>
@@ -596,6 +596,12 @@
                             <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
                                 <router-link to='/user'>用户管理</router-link>
                             </li>
+                            <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
+                                <router-link to='/role'>角色管理</router-link>
+                            </li>
+                            <li :class="{'active': isActive == 10}" @click='pitch_on(10)'>
+                                <router-link to='/power'>权限管理</router-link>
+                            </li>
                             <!--<li class="sub-menu">-->
                                 <!--<a href="javascript:;">-->
                                     <!--<span>订单迁移</span>-->
@@ -609,12 +615,6 @@
                                     <!--</li>-->
                                 <!--</ul>-->
                             <!--</li>-->
-                            <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
-                                <router-link to='/role'>角色管理</router-link>
-                            </li>
-                            <li :class="{'active': isActive == 10}" @click='pitch_on(10)'>
-                                <router-link to='/power'>权限管理</router-link>
-                            </li>
                         </ul>
                     </li>
                     <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
@@ -623,7 +623,6 @@
                     <!--<span>小区管理</span>-->
                     <!--</router-link>-->
                     <!--</li>-->
-
 
                     <li class="sub-menu">
                         <a href="javascript:;">
@@ -1127,8 +1126,6 @@
 
                 function onError(data) {
                     alert('定位失败');
-//                    alert(data);
-//                    console.log(data);
                 }
             },
             IsPC(){
