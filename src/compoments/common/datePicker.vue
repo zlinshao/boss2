@@ -210,7 +210,6 @@
                 }, function (start, end, label) {
 //                    console.log('start-------'+start.format('YYYY-MM-DD'));
 //                    console.log('end-------'+end);
-//                    console.log('label-------'+label);
                     if (start.format('YYYY-MM-DD') === 'Invalid date') {
                         _this.dateRange = '';
                         $('.reservation').val('');
