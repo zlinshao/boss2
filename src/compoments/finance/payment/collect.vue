@@ -48,6 +48,9 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+                        <div class="form-group" style="height: 39px;">
+                            <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
+                        </div>
                         <div class="form-group pull-right">
                             <a class="btn btn-success" data-toggle="modal" data-target="#addCollect">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应收款项
@@ -354,6 +357,8 @@
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
+        <SelectHouse @House="getHouse" :house_status="'1'"></SelectHouse>
+
         <!--应收入账-->
         <ShouldCollect :id="shouldCollectId" @success="search"></ShouldCollect>
 
@@ -377,6 +382,7 @@
     import SelectSubject from '../../common/selectSubject.vue'
     import Confirm from '../../common/confirm.vue'
     import ModifyTime from './modifyPayTime.vue'
+    import SelectHouse from '../../common/selectPayHouse.vue'
 
     export default{
         components: {
@@ -389,6 +395,7 @@
             SelectClient,
             ShouldCollect,
             SelectSubject,
+            SelectHouse,
             Confirm,
             ModifyTime
         },
@@ -523,6 +530,15 @@
         },
 
         methods: {
+//              选择房屋
+            selectHouse(){
+                $('.selectHouse:eq(0)').modal('show');
+            },
+//              房屋信息
+            getHouse(data){
+                this.params.search = data.address;
+                this. search(1);
+            },
 //            清空科目
             search_empty (val){
                 this.params.subject_id = '';
