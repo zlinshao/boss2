@@ -391,7 +391,7 @@
                             <!--</li>-->
                         <!--</ul>-->
                     <!--</li>-->
-                    <li class="sub-menu">
+                    <li class="sub-menu" v-show="account_book">
                     <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
