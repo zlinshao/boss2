@@ -23,7 +23,7 @@
                         <i class="fa fa-user"></i> &nbsp;客户信息
                         <div class="btn-group pull-right">
                             <a class="fa fa-gear dropdown-toggle" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
+                               aria-haspopup="true" aria-expanded="false" v-if="freeze !== 1 && freeze !== '1'">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <li>
@@ -43,7 +43,7 @@
                 <div class="panel-body table-responsive client_info">
                     <div class="row" v-for="item in myLandlordList">
                         <div class="col-sm-4 col-xs-12">
-                            <h5>基本信息</h5>
+                            <h5>基本信息&nbsp;<span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span></h5></h5>
                             <div>
                                 <div>
                                     <span class="text-primary">客户姓名：</span>
@@ -305,6 +305,7 @@
         components: {Confirm, Status, NewClientAdd},
         data(){
             return {
+                freeze: '',
                 cus: '',
                 seaLand: {},                   //返回上一页
                 confirmMsg: '',                //删除信息
@@ -331,6 +332,7 @@
             this.myLandlordId = this.$route.query.nameId;
             this.seaLand = this.$route.query.sea;
             this.cus = this.$route.query.cus;
+            this.freeze = this.$route.query.freeze;
             this.getDictionary();
         },
         methods: {

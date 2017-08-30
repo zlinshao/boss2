@@ -14,7 +14,7 @@
 
             <div class="btn-group dropup" id="custom_service">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                        aria-haspopup="true" aria-expanded="false" style="opacity: .7;">
                     <span class="fa fa-question-circle-o"></span>
                     <span class="sr-only">咨询</span>
                 </button>
@@ -49,36 +49,18 @@
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/custom">客户
-                                </router-link>                    <!--客户-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/customerPool">客户池
-                                </router-link>            <!--客户池-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/OkCollect">公司房源
-                                </router-link>             <!--公司房源-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/noCollect">待收房源
-                                </router-link>             <!--待收房源-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedRenting">
-                                    租房报备
-                                </router-link>       <!--租房报备-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedCollect">
-                                    收房报备
-                                </router-link>       <!--收房报备-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/user">员工管理
-                                </router-link>                  <!--用户管理-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6"
-                                             to="/periodicForGcompany">公司业绩
-                                </router-link>   <!--公司业绩-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGroup">
-                                    小组业绩
-                                </router-link>      <!--小组业绩-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForPeople">
-                                    个人业绩
-                                </router-link>     <!--个人业绩-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/leadingOut">客户导出
-                                </router-link>            <!--客户导出-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/messageCenter">
-                                    消息中心
-                                </router-link>         <!--消息中心-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/custom">客户</router-link>                    <!--客户-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/customerPool">客户池</router-link>            <!--客户池-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/OkCollect">公司房源</router-link>             <!--公司房源-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/noCollect">待收房源</router-link>             <!--待收房源-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedRenting">租房报备</router-link>       <!--租房报备-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedCollect">收房报备</router-link>       <!--收房报备-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/user">员工管理</router-link>                  <!--用户管理-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGcompany">公司业绩</router-link>   <!--公司业绩-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGroup">小组业绩</router-link>      <!--小组业绩-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForPeople">个人业绩</router-link>     <!--个人业绩-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/leadingOut">客户导出</router-link>            <!--客户导出-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/messageCenter">消息中心</router-link>         <!--消息中心-->
                             </div>
                         </section>
                     </div>
