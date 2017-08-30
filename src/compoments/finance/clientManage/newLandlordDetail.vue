@@ -175,9 +175,15 @@
                                     <span>{{item.vacancy}}</span>
                                 </div>
                                 <div>
-                                    <span class="text-primary">第一次付房租日期：</span>
+                                    <span class="text-primary">第一次打房租日期：</span>
                                     <span>
                                     {{item.first_pay_date}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">第二次打房租日期：</span>
+                                    <span>
+                                    {{item.second_pay_date}}
                                     </span>
                                 </div>
                                 <div>
