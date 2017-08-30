@@ -142,12 +142,14 @@
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">付</label>
                                                 <div class="col-sm-10">
-                                                    <input @blur="more_pay(index)" type="text" class="form-control" v-model="more_type[index]">
+                                                    <input @blur="more_pay(index)" type="text" class="form-control"
+                                                           v-model="more_type[index]">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3" style="text-align: right;padding-right: 30px;">
-                                            <label class="control-label">还剩&nbsp;<span class="text-danger">{{surplus}}</span>&nbsp;月</label>
+                                            <label class="control-label">还剩&nbsp;<span
+                                                    class="text-danger">{{surplus}}</span>&nbsp;月</label>
                                         </div>
                                     </div>
 
@@ -471,19 +473,19 @@
                                                            :current="subject_id.rental"></SelectSubject>
                                         </div>
                                         <!--<div class="col-sm-1 col-xs-2">-->
-                                            <!--<span @click="subject_empty" class="fa fa-times-circle cha"></span>-->
+                                        <!--<span @click="subject_empty" class="fa fa-times-circle cha"></span>-->
                                         <!--</div>-->
                                     </div>
 
                                     <!--<div class="form-group" v-if="deposit_status">-->
-                                        <!--<label class="col-sm-2 col-xs-12 control-label">押金科目</label>-->
-                                        <!--<div class="col-sm-9 col-xs-10">-->
-                                            <!--<SelectSubject @choose="depositSubject"-->
-                                                           <!--:current="subject_id.deposit"></SelectSubject>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-sm-1 col-xs-2">-->
-                                            <!--<span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>-->
-                                        <!--</div>-->
+                                    <!--<label class="col-sm-2 col-xs-12 control-label">押金科目</label>-->
+                                    <!--<div class="col-sm-9 col-xs-10">-->
+                                    <!--<SelectSubject @choose="depositSubject"-->
+                                    <!--:current="subject_id.deposit"></SelectSubject>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-1 col-xs-2">-->
+                                    <!--<span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                 </div>
                             </form>
@@ -497,7 +499,8 @@
                                         @click="save(2,'finance/customer/rent/freeze')">不生成后续款项
                                 </button>
                                 <button type="button" class="btn btn-warning"
-                                        @click="save(3,'finance/customer/rent/generate')">生成后续款项</button>
+                                        @click="save(3,'finance/customer/rent/generate')">生成后续款项
+                                </button>
                             </div>
                         </div>
                         <div class="modal-footer" v-if="reviseStatus === 2 || reviseStatus === 3">
@@ -516,7 +519,8 @@
                                         @click="save(2,'finance/customer/rent/freeze')">不生成后续款项
                                 </button>
                                 <button type="button" class="btn btn-warning"
-                                        @click="save(3,'finance/customer/rent/generate')">生成后续款项</button>
+                                        @click="save(3,'finance/customer/rent/generate')">生成后续款项
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -525,36 +529,36 @@
         </div>
 
         <!--<div class="modal fade" id="clientAdd1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-             <!--aria-hidden="true">-->
-            <!--<div class="modal-dialog">-->
-                <!--<div class="modal-content">-->
+        <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
 
-                    <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                        <!--<h4 class="modal-title">生成款项</h4>-->
-                    <!--</div>-->
+        <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+        <!--<h4 class="modal-title">生成款项</h4>-->
+        <!--</div>-->
 
-                    <!--<div class="modal-body">-->
-                        <!--<form class="form-horizontal" role="form">-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-sm-3 control-label">您生成的科目有：</label>-->
-                                <!--<div class="col-lg-9" style="padding-top: 8px;">-->
-                                    <!--<span class="col-xs-4" v-if="this.subject_id.rental != ''">房屋科目</span>-->
-                                    <!--<span v-if="this.subject_id.deposit != ''">押金科目</span>-->
-                                    <!--<span v-if="this.subject_id.rental === '' && this.subject_id.deposit === ''">无</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</form>-->
-                    <!--</div>-->
+        <!--<div class="modal-body">-->
+        <!--<form class="form-horizontal" role="form">-->
+        <!--<div class="form-group">-->
+        <!--<label class="col-sm-3 control-label">您生成的科目有：</label>-->
+        <!--<div class="col-lg-9" style="padding-top: 8px;">-->
+        <!--<span class="col-xs-4" v-if="this.subject_id.rental != ''">房屋科目</span>-->
+        <!--<span v-if="this.subject_id.deposit != ''">押金科目</span>-->
+        <!--<span v-if="this.subject_id.rental === '' && this.subject_id.deposit === ''">无</span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>-->
+        <!--</div>-->
 
-                    <!--<div class="modal-footer">-->
-                        <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
-                        <!--<button class="btn btn-success" type="button"-->
-                                <!--@click="save(3,'finance/customer/rent/generate')"> 确定-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--<div class="modal-footer">-->
+        <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
+        <!--<button class="btn btn-success" type="button"-->
+        <!--@click="save(3,'finance/customer/rent/generate')"> 确定-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
         <!--签约人-->
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
@@ -658,8 +662,7 @@
                 coll: 1,                                //租客/业主/代理
 
                 pendingContract: '',                    //待签约日期
-                vacancyPeriod: '',                      //空置期
-                firstRemittance: '',                    //第一次房租日期
+//                firstRemittance: '',                    //第一次房租日期
                 remarks: '',                            //备注
 
                 //客户
@@ -691,7 +694,7 @@
                     //失败信息 ***
                     error: ''
                 },
-                oneAsk: '',                             //时间请求
+//                oneAsk: '',                             //时间请求
                 cus_show: false,                        //客户展示
                 mon_show: false,                        //水电燃气费
                 dateConfigure : [
@@ -719,7 +722,7 @@
                     }
                 }
             },
-            pay_typeChange(curVal, oldVal){ 
+            pay_typeChange(curVal, oldVal){
                 this.pay_type = [];
                 if (curVal) {
                     this.pay_type = this.more_type;
@@ -796,14 +799,14 @@
 
         methods: {
             more_pay (val){
-                this.$http.post('finance/customer/rent/remain',{
+                this.$http.post('finance/customer/rent/remain', {
                     months: this.months,
                     pays: this.pay_type,
                 }).then((res) => {
-                    if(res.data.code === '90000'){
+                    if (res.data.code === '90000') {
                         this.surplus = res.data.data;
-                    }else{
-                        this.more_type.splice(val,1,'');
+                    } else {
+                        this.more_type.splice(val, 1, '');
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -845,7 +848,7 @@
             changeIsSgared(){
                 if (this.shared_house === '1') {
                     this.shared_part = 1;
-                }else if(this.shared_house === '2'){
+                } else if (this.shared_house === '2') {
                     this.shared_part = 0;
                 }
             },
@@ -916,7 +919,6 @@
                 this.more_type = [];                        //付款年份个数
                 this.pendingContract = '';                  //待签约日期
                 this.complete_date = '';                    //尾款日期
-//                this.vacancyPeriod = '';                    //空置期
 //                this.firstRemittance = '';                  //第一次打款日期
                 this.remarks = '';                          //备注
 
@@ -941,7 +943,6 @@
             },
 //            日期
             remindData (){
-                this.oneAsk = true;
                 $('.form_datetime').datetimepicker({
                     minView: 'month',                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
@@ -951,65 +952,35 @@
                     clearBtn: true,                     //清除按钮
                     pickerPosition: 'top-right',
                 }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '待签约日期' && this.oneAsk === true) {
-                        this.pendingContract = ev.target.value;
-                        if (this.firstRemittance < this.pendingContract && this.firstRemittance !== '') {
-                            this.firstRemittance = '';
-                            //失败信息 ***
-                            this.info.error = '第一次房租日期不能小于待签约日期';
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        } else {
-                            this.$http.post('finance/date_diff', {
-                                start: ev.target.value,
-                                end: this.firstRemittance
-                            }).then((res) => {
-                                if (res.data.code === '90000') {
-                                    this.vacancyPeriod = res.data.data;
-                                }
-                            });
-                            this.oneAsk = false;
+                        if (ev.target.placeholder === '待签约日期') {
+                            this.pendingContract = ev.target.value;
                         }
-                    }
-                    if (ev.target.placeholder === '第一次房租日期' && this.oneAsk === true) {
-                        this.firstRemittance = ev.target.value;
-                        if (this.firstRemittance < this.pendingContract) {
-                            this.firstRemittance = '';
-                            //失败信息 ***
-                            this.info.error = '第一次房租日期不能小于待签约日期';
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                        } else {
-                            this.$http.post('finance/date_diff', {
-                                start: this.pendingContract,
-                                end: ev.target.value
-                            }).then((res) => {
-                                if (res.data.code === '90000') {
-                                    this.vacancyPeriod = res.data.data;
-                                }
-                            });
-                            this.oneAsk = false;
+                        if (ev.target.placeholder === '补齐时间') {
+                            this.complete_date = ev.target.value;
                         }
-                    }
-                    if (ev.target.placeholder === '补齐时间') {
-                        this.complete_date = ev.target.value;
-                    }
-                }.bind(this));
+                    }.bind(this)
+                )
+                ;
             },
 //              修改客户收款方式
-            changeCustomerPayment(){
+            changeCustomerPayment()
+            {
                 this.account_owner = '';
                 this.account_subbank = '';
                 this.bank = 1;
                 this.account = '';
-            },
-//               选择签约人
-            selectStaff(){
+            }
+            ,
+            //               选择签约人
+            selectStaff()
+            {
                 this.configure = {length: 1, class: 'amount'};
                 $('.selectCustom:eq(0)').modal('show');
-            },
-//               签约人信息
-            selectDateSendAdd(data){
+            }
+            ,
+            //               签约人信息
+            selectDateSendAdd(data)
+            {
                 this.staff = data.staff[0].name;
                 this.staffId = data.staff[0].id;
                 this.$http.get('finance/staff_info/' + data.staff[0].id).then((res) => {
@@ -1020,33 +991,39 @@
                         this.person_id = res.data.data.leader_id;               //负责人ID
                     }
                 });
-            },
-//              选择房屋
-            selectHouse(){
+            }
+            ,
+            //              选择房屋
+            selectHouse()
+            {
                 $('.selectHouse:eq(0)').modal('show');
-            },
-//              房屋信息
-            getHouse(data){
+            }
+            ,
+            //              房屋信息
+            getHouse(data)
+            {
                 this.house_id = data.id;
                 this.house_name = data.address;
-            },
-//              选择客户
-//            selectClient(){
-//                $('.selectClient:eq(0)').modal('show');
-//            },
-//              选择客户
-//            getClient(data){
-//                this.cus_id = data.id;
-//                this.cus_name = data.name;
-//            },
-//            新增确认科目
-//            save_show (){
-//                $('#clientAdd1').modal({
-//                    backdrop: 'static',         //空白处模态框不消失
-//                });
-//            },
-//              新增
-            save(num, address){
+            }
+            ,
+            //              选择客户
+            //            selectClient(){
+            //                $('.selectClient:eq(0)').modal('show');
+            //            },
+            //              选择客户
+            //            getClient(data){
+            //                this.cus_id = data.id;
+            //                this.cus_name = data.name;
+            //            },
+            //            新增确认科目
+            //            save_show (){
+            //                $('#clientAdd1').modal({
+            //                    backdrop: 'static',         //空白处模态框不消失
+            //                });
+            //            },
+            //              新增
+            save(num, address)
+            {
 //                保存为草稿
                 this.$http.post(address, {
                     id: this.renter_id,
@@ -1112,9 +1089,11 @@
                         this.info.state_error = true;
                     }
                 });
-            },
-//            修改
-            revise(){
+            }
+            ,
+            //            修改
+            revise()
+            {
                 this.$http.put('finance/customer/rent/' + this.cus_id, {
                     staff_id: this.staffId,                     //签约人
                     contact: this.cus_phone,                    //客户联系方式

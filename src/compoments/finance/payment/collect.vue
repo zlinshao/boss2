@@ -56,7 +56,7 @@
                         <li v-show="status != 3 && status != 4 && pitch.length == 1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
-                        <li v-show="pitch.length == 1">
+                        <li v-show="pitch.length == 1 && rollbacks !== null">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li v-show="pitch.length == 1">
@@ -139,7 +139,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
-                    <table class="table table-striped table-advance table-hover">
+                    <table class="table table-advance table-hover">
                         <thead>
                         <tr>
                             <th class="text-center" v-if="recycle_bin">
@@ -149,7 +149,7 @@
                             <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">收入科目</th>
-                            <th class="text-center width100" :class="{red: !recycle_bin}">应收金额</th>
+                            <th class="text-center width110" :class="{red: !recycle_bin}">应收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">实收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
@@ -161,15 +161,27 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
+                        <tr class="text-center" v-for="item in myData"
+                            :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1}">
                             <td v-if="recycle_bin">
                                 <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                                       @click="changeIndex($event,item.id,item.status)">
+                                       @click="changeIndex($event,item.id,item.status,item.running_account_record)">
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
-                            <td>{{item.amount_receivable}}</td>
+                            <td>
+                                <span @click="able_show(1,item.amount_receivable,item.id)" v-if="isActive !== item.id"
+                                      style="cursor: pointer;">
+                                    {{item.amount_receivable}}
+                                </span>
+                                <span v-if="isActive === item.id">
+                                    <input type="text" class="form-control" v-model="amount"
+                                           style="margin-bottom: 5px;">
+                                    <a class="btn btn-default btn-xs" @click='able_show(2)'>取消</a>
+                                    <a class="btn btn-success btn-xs" @click="able_save(item.id)">保存</a>
+                                </span>
+                            </td>
                             <td>{{item.amount_received}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
@@ -309,10 +321,15 @@
                         <h4 class="modal-title">提示信息</h4>
                     </div>
                     <div class="modal-body">
-                        <h5>确定回滚吗？</h5>
+                        <h5 v-for="(key,index) in rollbacks">
+                            <label>
+                            <input type="checkbox" @click="change_index($event,index)"
+                                   :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
+                            </label>
+                        </h5>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
+                        <button data-dismiss="modal" class="btn btn-dafault btn-md">取消</button>
                         <button class="btn btn-danger btn-md" @click="rollback">确认</button>
                     </div>
                 </div>
@@ -369,6 +386,10 @@
 
         data(){
             return {
+                rollback_id: [],               //回滚ID
+                rollbacks: {},               //回滚
+                isActive: '',
+                amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
                 look_remark: '',              //备注内容
                 remarks_status: '',          //新增/查看
@@ -492,6 +513,39 @@
         },
 
         methods: {
+//            编辑金额
+            able_show (val, m, id){
+                if (val === 1) {
+                    this.amount = m;
+                    this.isActive = id;
+                } else if (val === 2) {
+                    this.amount = '';
+                    this.isActive = '';
+                }
+            },
+//            保存金额编辑
+            able_save (id){
+                this.$http.post('account/receivable/edit/' + id, {
+                    amount: this.amount
+                }).then((res) => {
+                    if (res.data.code === '18510') {
+                        this.search(this.beforePage);
+                        this.amount = '';
+
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
 //            清空
             clear_info (){
                 this.params.department_id = [];
@@ -567,13 +621,27 @@
 
 //            回滚
             Rollback_show(){
+                this.rollback_id = [];
                 $('#Rollback').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
+//            回滚选择
+            change_index (ev, val){
+                if (ev.target.checked) {
+                    this.rollback_id.push(val);
+                } else {
+                    let index = this.rollback_id.indexOf(val);
+                    if (index > -1) {
+                        this.rollback_id.splice(index, 1);
+                    }
+                }
+            },
 //            回滚
             rollback (){
-                this.$http.post('account/receivable/revert/' + this.pitch).then((res) => {
+                this.$http.put('account/receivable/revert/' + this.pitch, {
+                    ra_id: this.rollback_id
+                }).then((res) => {
                     if (res.data.code === '18510') {
                         $('#Rollback').modal('hide');
                         this.search(this.beforePage);
@@ -642,7 +710,8 @@
 
 //                console.log(this.pitch);
             },
-            changeIndex(ev, id, status){
+            changeIndex(ev, id, status, index){
+                this.rollbacks = index;
                 this.pitch = [];
                 this.status = [];
                 if (ev.target.checked) {
@@ -926,9 +995,14 @@
         vertical-align: inherit;
     }
 
-    table tr input[type=checkbox] {
+    input[type=checkbox] {
         width: 17px;
         height: 17px;
+    }
+
+    .rollbacks {
+        margin-right: 10px;
+        vertical-align: sub;
     }
 
     .status.yellow {
@@ -943,21 +1017,25 @@
         background-color: #78CD51;
     }
 
-    .status.jingdong {
-        background-color: #e4393c;
-    }
-
     @media (max-width: 798px) {
         .panel-body .form-inline .input-group {
             margin-bottom: 5px;
         }
     }
 
-    .table-striped > tbody > tr.reds {
+    tr.pendable {
+        background-color: #D6D6D6;
+    }
+
+    tbody > tr.reds {
         background-color: #FFCECE;
     }
 
     th.red {
         color: #e4393c;
+    }
+
+    .status.jingdong {
+        background-color: #e4393c;
     }
 </style>

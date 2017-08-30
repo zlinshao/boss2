@@ -56,7 +56,7 @@
             </div>
         </section>
         <section class="panel table table-responsive roll">
-            <table class="table table-striped table-advance table-hover">
+            <table class="table table-advance table-hover">
                 <thead class="text-center">
                 <tr>
                     <th></th>
@@ -77,13 +77,18 @@
                 </thead>
                 <tbody class="text-center">
                 <tr class="text-center" v-for="item in LandlordList"
-                    :class="{'selected': pitch.indexOf(item.id) > -1}">
+                    :class="{'selected': pitch.indexOf(item.id) > -1,'freeze': item.freeze === 1}">
                     <td>
                         <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                               @click="pitchId(item.id, $event)">
+                               v-if="item.freeze !== 1" @click="pitchId(item.id, $event)">
+                        <span v-if="item.freeze === 1" @click="recover(item.id)"
+                              class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
                     <td class="text-center">{{item.create_time}}</td>
-                    <td class="text-center">{{item.address}}</td>
+                    <td class="text-center">
+                        {{item.address}}&nbsp;
+                        <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
+                    </td>
                     <td class="text-center">{{item.customer_name}}</td>
                     <td class="text-center">{{item.months}}</td>
                     <td class="text-center">
@@ -131,7 +136,7 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1}}">
+                        <router-link :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
                             详情
                         </router-link>
                     </td>
@@ -215,6 +220,28 @@
             }
         },
         methods: {
+//            恢复
+            recover (val){
+                this.$http.post('account/pending/recover', {
+                    customer_id: val,
+                    identity: 1,
+                }).then((res) => {
+                    if (res.data.code === '18810') {
+                        this.search();
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    }else{
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
 //            选中
             pitchId (rul, ev){
                 if (ev.target.checked === true) {
@@ -359,4 +386,8 @@
         background: #FFFF6F !important;
     }
 
+    .freeze {
+        background-color: #D6D6D6;
+        color: #E4393C;
+    }
 </style>
