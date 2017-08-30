@@ -2,7 +2,7 @@
     <div class="datePickerContainer input-group">
         <div v-if="range">
             <div v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
+                <input @focus="datePicker" type="text" name="reservation" :id="rangeId==undefined?'reservation':rangeId" placeholder="选择日期"
                        v-model="dateRange" class="reservation form-control" readonly>
             </div>
 
@@ -61,7 +61,7 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props: ['dateConfigure', 'currentDate','idName','placeholder'],
+        props: ['dateConfigure', 'currentDate','idName','placeholder','rangeId'],
         data(){
             return {
                 dateId: '',
@@ -211,10 +211,10 @@
 //                    console.log('start-------'+start.format('YYYY-MM-DD'));
 //                    console.log('end-------'+end);
 //                    console.log('label-------'+label);
-                    if (start.format('YYYY-MM-DD') == 'Invalid date') {
-//                        alert(1)
+                    if (start.format('YYYY-MM-DD') === 'Invalid date') {
                         _this.dateRange = '';
                         $('#reservation').val('');
+                        $('#'+_this.rangeId).val('');
                         _this.$emit('sendDate', '');
                     } else {
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
@@ -430,7 +430,8 @@
 //                console.log(this.currentDate!=undefined)
 
                 if (this.currentDate != undefined) {
-                    if (this.currentDate==''){
+//                    console.log(this.currentDate.length)
+                    if (this.currentDate.length==0){
                         this.date = '';
                         this.dateRange = '';
                         this.mobilePickerDate = '';
@@ -441,6 +442,7 @@
                         this.date = this.currentDate[0];
 //                        this.mobilePickerDate = this.currentDate[0];
                     } else if (this.currentDate.length == 2) {
+//                        alert(2222)
                         if (this.IsPC()) {
                             this.dateRange = this.currentDate[0] + "至" + this.currentDate[1];
                         } else {

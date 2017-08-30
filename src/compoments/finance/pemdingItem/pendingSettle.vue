@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">合同开始和结束时间</label>
                                     <div class="col-sm-8" style="padding-bottom: 18px;">
-                                        <DatePicker :dateConfigure="dateConfigure"
+                                        <DatePicker :dateConfigure="dateConfigure" :rangeId="'aaa'"
                                                    :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>
@@ -388,8 +388,17 @@
                 })
             },
             getDate(val){
-                this.pendingSellter.start_date = val.split('to')[0];
-                this.pendingSellter.end_date = val.split('to')[1];
+//                console.log(val)
+                if (val==''){
+                    this.currentDate.splice(0,this.currentDate.length);
+                    this.pendingSellter.start_date = '';
+                    this.pendingSellter.end_date = '';
+                } else {
+                    this.pendingSellter.start_date = val.split('to')[0];
+                    this.pendingSellter.end_date = val.split('to')[1];
+                }
+//                console.log(this.currentDate)
+
             },
 //            selectPayClient(){      //选择客户
 //                $('.selectClient:eq(0)').modal('show');
