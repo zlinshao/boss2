@@ -47,9 +47,9 @@
         <div v-else="range">
             <!--<div class="input-group">-->
             <!--<label>-->
-            <input @click="remindData" type="text" name="addtime" placeholder="选择时间" v-model="date"
+            <input @click="remindData" type="text" name="addtime" :placeholder="placeholder==undefined?'选择时间':placeholder" v-model="date"
                    :id="idName"
-                   class="form-control" readonly>
+                   class="form-control" readonly style="margin-bottom: 18px;">
             <!--</label>-->
             <!--</div>-->
         </div>
@@ -61,7 +61,7 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props: ['dateConfigure', 'currentDate','idName'],
+        props: ['dateConfigure', 'currentDate','idName','placeholder'],
         data(){
             return {
                 dateId: '',
@@ -96,35 +96,40 @@
                 },
             }
         },
-        components: { Status },
+        components: {Status},
         created () {
 //            判断是否pc
+//            console.log(this.IsPC());
             this.isPC = this.IsPC();
+//            console.log(this.dateConfigure[0]);
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
             this.dateId = this.dateConfigure[0].date_id;
+//            console.log(this.hour);
             this.setDate();
 //            this.ifNeedHour();
+//            this.remindData();
+
         },
         watch: {
             dateConfigure(val){
-//                console.log(val[0]);
+                console.log(val[0]);
                 this.range = val[0].range;
                 this.hour = val[0].needHour;
+//                console.log(val[0].currentDate);
+//                console.log(this.hour);
 //                this.ifNeedHour();
+//                this.remindData();
             },
             currentDate(val){
 //                console.log(val);
                 this.setDate();
             },
-            date(val){
-//                document.getElementsByClassName('form_datetime').value = val;
-//                document.getElementsByClassName('form_datetimeNeedHour').value = val;
-//                $('.form_datetime').val(val);
-//                $('.form_datetimeNeedHour').val(val);
-            }
         },
         updated (){
+//            this.remindData();
+        },
+        mounted (){
             this.remindData();
         },
         methods: {
@@ -141,6 +146,7 @@
                 }).on('changeDate', function (ev) {
                     this.date = ev.target.value;
                     this.$emit('sendDate', ev.target.value);
+//                    console.log(this.startDataTime);
                 }.bind(this));
 
                 /*$('.' + this.dateId).datetimepicker({
@@ -202,6 +208,9 @@
 //                    "startDate": "07/11/2017",
 //                    "endDate": "07/17/2017"
                 }, function (start, end, label) {
+//                    console.log('start-------'+start.format('YYYY-MM-DD'));
+//                    console.log('end-------'+end);
+//                    console.log('label-------'+label);
                     if (start.format('YYYY-MM-DD') == 'Invalid date') {
 //                        alert(1)
                         _this.dateRange = '';
@@ -211,6 +220,8 @@
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
                         _this.$emit('sendDate', start.format('YYYY-MM-DD') + "to" + end.format('YYYY-MM-DD'));
                     }
+
+//                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
                 });
             },
             IsPC(){
@@ -226,6 +237,7 @@
                 return flag;
             },
             sendDate(){
+//                alert(this.from+'&&'+this.to);
                 this.$emit('sendDate', this.from + 'to' + this.to);
             },
             selectDay(num){
@@ -320,6 +332,8 @@
                     this.mobilePickerDate = date;
                     this.showPicker = false;
                 }
+
+
             },
             saveMobilePicker(){
 //                console.log(this.from+'to'+this.to);
@@ -362,6 +376,8 @@
                 let month = currentDate.getMonth() + 1;
                 let day = currentDate.getDate();
 
+//                console.log('year:'+year+'month:'+month+'day:'+day);
+
                 let lastQuarterlyEnd;  // 上季度初
                 let thisQuarterlyStart;  // 上季度末
                 if (month <= 3) {
@@ -377,34 +393,53 @@
                     lastQuarterlyEnd = moment([year, 7, 1]);
                     thisQuarterlyStart = moment([year, 10, 1]);
                 }
+
 //                let thisQuarterlyStart = moment([year,])
 
                 let thisDay = moment([year, month, day]);
 
                 let lastMonth = moment([year, month - 1, 1]);
-//                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
+                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
                 let thisMonth = moment([year, month, 1]);
-//                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
+                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
 
                 let lastYear = moment([year - 1, 1, 1]);
                 let thisYear = moment([year, 1, 1]);
 
                 this.monthDates = thisDay.diff(thisMonth, 'days');
-//                console.log('this.monthDates====='+this.monthDates)
+                console.log('this.monthDates====='+this.monthDates)
                 this.lastMonthDays = thisMonth.diff(lastMonth, 'days');
-//                console.log('this.lastMonthDays====='+this.lastMonthDays)
+                console.log('this.lastMonthDays====='+this.lastMonthDays)
 
                 this.quarterlyDates = thisDay.diff(thisQuarterlyStart, 'days');
                 this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd, 'days') - 1;
 
                 this.yearDates = thisDay.diff(thisYear, 'days');
                 this.lastYearDays = thisYear.diff(lastYear, 'days');
+
+                /*console.log("this.monthDates--"+this.monthDates);       //17
+                 console.log("this.lastMonthDays--"+this.lastMonthDays); //30
+                 console.log("this.quarterlyDates--"+this.quarterlyDates);//167
+                 console.log("this.lastQuarterlyDays--"+this.lastQuarterlyDays);//89
+                 console.log("this.yearDates--"+this.yearDates);         //167
+                 console.log("this.lastYearDays--"+this.lastYearDays);   //366*/
+
             },
             setDate(){
+
+//                console.log(this.currentDate!=undefined)
+
                 if (this.currentDate != undefined) {
+                    if (this.currentDate==''){
+                        this.date = '';
+                        this.dateRange = '';
+                        this.mobilePickerDate = '';
+                        return;
+                    }
+
                     if (this.currentDate.length == 1) {
                         this.date = this.currentDate[0];
-                        this.mobilePickerDate = this.currentDate[0];
+//                        this.mobilePickerDate = this.currentDate[0];
                     } else if (this.currentDate.length == 2) {
                         if (this.IsPC()) {
                             this.dateRange = this.currentDate[0] + "至" + this.currentDate[1];
@@ -417,7 +452,6 @@
         }
     }
 </script>
-
 <style scoped>
     #reservation {
         width: 100%;

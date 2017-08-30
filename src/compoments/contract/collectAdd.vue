@@ -89,8 +89,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="空置期开始时间"
-                                                   v-model="contractAdd.vac_start_date" class="form-control form_date">
+                                            <!--<input @click="selectDate" readonly placeholder="空置期开始时间"
+                                                   v-model="contractAdd.vac_start_date" class="form-control form_date">-->
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVac'" :currentDate="[contractAdd.vac_start_date]" :placeholder="'空置期开始时间'" @sendDate="getDate"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
@@ -166,8 +167,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractAdd.complete_date" class="form-control form_date">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'complete'" :currentDate="[contractAdd.complete_date]" :placeholder="'资料补齐时间'" @sendDate="getDate1"></DatePicker>
+                                            <!--<input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractAdd.complete_date" class="form-control form_date">-->
                                         </div>
                                     </div>
 
@@ -374,6 +376,7 @@
     import Status from '../common/status.vue'
     import FlexBox from '../common/flexBox.vue'
     import SelectHouse from  '../common/selectHouse.vue'
+    import DatePicker from '../common/datePicker.vue'
 
     import Staff from '../common/organization/selectStaff.vue'
     export default{
@@ -384,7 +387,8 @@
             Status,
             SelectHouse,
             FlexBox,
-            Staff
+            Staff,
+            DatePicker
         },
         data(){
             return {
@@ -499,6 +503,13 @@
                 clientType : '',
                 house_name : '',
                 configure : '',
+
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
             }
         },
         updated(){
@@ -853,6 +864,12 @@
                 this.contractAdd.villa_id = data.id;
                 this.house_name = data.address;
             },
+            getDate(val){
+                this.contractAdd.vac_start_date = val;
+            },
+            getDate1(val){
+                this.contractAdd.complete_date = val;
+            }
         }
     }
 </script>

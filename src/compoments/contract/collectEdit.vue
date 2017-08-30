@@ -89,8 +89,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="空置期开始时间"
-                                                   v-model="contractEdit.vac_start_date" class="form-control form_date">
+                                            <!--<input @click="selectDate" readonly placeholder="空置期开始时间"
+                                                   v-model="contractEdit.vac_start_date" class="form-control form_date">-->
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVac'" :currentDate="[contractEdit.vac_start_date]" :placeholder="'空置期开始时间'" @sendDate="getDate"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
@@ -165,8 +166,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractEdit.complete_date" class="form-control form_date">
+                                            <!--<input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractEdit.complete_date" class="form-control form_date">-->
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'complete'" :currentDate="[contractEdit.complete_date]" :placeholder="'资料补齐时间'" @sendDate="getDate1"></DatePicker>
                                         </div>
                                     </div>
 
@@ -371,6 +373,7 @@
     import Status from '../common/status.vue'
     import FlexBox from '../common/flexBox.vue'
     import SelectHouse from  '../common/selectHouse.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default{
         props:['contractEitId','dictionary','isEditCollect',],
         components:{
@@ -378,7 +381,8 @@
             upLoad,
             Status,
             SelectHouse,
-            FlexBox
+            FlexBox,
+            DatePicker
         },
         data(){
             return {
@@ -493,6 +497,12 @@
                 showCustomer : false,
                 clientType : '',
                 house_name : '',
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
             }
         },
         updated(){
@@ -925,6 +935,12 @@
                 this.contractEdit.villa_id = data.id;
                 this.house_name = data.address;
             },
+            getDate(val){
+                this.contractEdit.vac_start_date = val;
+            },
+            getDate1(val){
+                this.contractEdit.complete_date = val;
+            }
         }
     }
 </script>

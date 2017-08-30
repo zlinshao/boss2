@@ -89,13 +89,15 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractRenew.start_date"
-                                                   @click="selectDate"  placeholder="合同开始时间">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startR'" :currentDate="[contractRenew.start_date]" :placeholder="'合同开始时间'" @sendDate="getDate"></DatePicker>
+                                            <!--<input readonly class="form-control formDatetime" v-model="contractRenew.start_date"
+                                                   @click="selectDate"  placeholder="合同开始时间">-->
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractRenew.end_date"
-                                                   @click="selectDate"  placeholder="合同结束时间">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'endR'" :currentDate="[contractRenew.end_date]" :placeholder="'合同结束时间'" @sendDate="getDate1"></DatePicker>
+                                            <!--<input readonly class="form-control formDatetime" v-model="contractRenew.end_date"
+                                                   @click="selectDate"  placeholder="合同结束时间">-->
                                         </div>
                                     </div>
                                     
@@ -479,8 +481,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractRenew.complete_date" class="form-control formDatetime">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'completeR'" :currentDate="[contractRenew.complete_date]" :placeholder="'资料补齐时间'" @sendDate="getDate2"></DatePicker>
+                                            <!--<input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractRenew.complete_date" class="form-control formDatetime">-->
                                         </div>
                                     </div>
                                     <div class="row">
@@ -574,6 +577,7 @@
     import Status from '../common/status.vue'
     import SelectHouse from  '../common/selectHouse.vue'
     import Staff from '../common/organization/selectStaff.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default{
         props:['dictionary','operateFlag','contractRenewList'],
         components:{
@@ -582,7 +586,8 @@
             Status,
             SelectHouse,
             FlexBox,
-            Staff
+            Staff,
+            DatePicker
         },
         data(){
             return {
@@ -735,6 +740,12 @@
                 more_pay_way: 1,       // 付款方式
                 configure: [],
                 operateType :'',
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
             }
         },
         updated(){
@@ -1046,6 +1057,8 @@
                 this.contractRenew.received_amount = '';
                 this.contractRenew.staff_id = '';
 
+                this.contractRenew.start_date = '';
+                this.contractRenew.end_date = '';
                 this.contractRenew.complete_date = '';
 
                 this.contractRenew.remarks = '';
@@ -1139,6 +1152,16 @@
                 this.contractRenew.medi_alipay_owner = '';
                 this.contractRenew.medi_account_bank = 1;
                 this.contractRenew.medi_account_num = '';
+            },
+            getDate(val){
+                this.contractRenew.start_date = val;
+//                console.log(this.contractRenew.start_date)
+            },
+            getDate1(val){
+                this.contractRenew.end_date = val;
+            },
+            getDate2(val){
+                this.contractRenew.complete_date = val;
             }
         }
     }

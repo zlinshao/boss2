@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "echarts": "^3.6.2",
+    "jquery": "^3.2.1",
     "vue": "^2.3.3"
   },
   "devDependencies": {

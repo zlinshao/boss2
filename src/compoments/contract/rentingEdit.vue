@@ -79,13 +79,15 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractEdit.start_date"
-                                                   @click="selectDate"  placeholder="合同开始时间">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startE'" :currentDate="[contractEdit.start_date]" :placeholder="'合同开始时间'" @sendDate="getDate"></DatePicker>
+                                            <!--<input readonly class="form-control formDatetime" v-model="contractEdit.start_date"
+                                                   @click="selectDate"  placeholder="合同开始时间">-->
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractEdit.end_date"
-                                                   @click="selectDate"  placeholder="合同结束时间">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'endE'" :currentDate="[contractEdit.end_date]" :placeholder="'合同结束时间'" @sendDate="getDate1"></DatePicker>
+                                            <!--<input readonly class="form-control formDatetime" v-model="contractEdit.end_date"-->
+                                                   <!--@click="selectDate"  placeholder="合同结束时间">-->
                                         </div>
                                     </div>
                                     
@@ -469,8 +471,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractEdit.complete_date" class="form-control formDatetime">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'completeE'" :currentDate="[contractEdit.complete_date]" :placeholder="'合同结束时间'" @sendDate="getDate2"></DatePicker>
+                                            <!--<input @click="selectDate" readonly placeholder="资料补齐时间"-->
+                                                   <!--v-model="contractEdit.complete_date" class="form-control formDatetime">-->
                                         </div>
                                     </div>
                                     <div class="row">
@@ -563,6 +566,7 @@
     import upLoad from '../common/upload.vue'
     import Status from '../common/status.vue'
     import SelectHouse from  '../common/selectHouse.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default{
         props:['contractEitId','dictionary','isEditRent'],
         components:{
@@ -570,7 +574,8 @@
             upLoad,
             Status,
             SelectHouse,
-            FlexBox
+            FlexBox,
+            DatePicker
         },
         data(){
             return {
@@ -755,6 +760,12 @@
                     }
                 ],
                 more_pay_way: 1,       // 付款方式
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
             }
         },
         mounted(){
@@ -1176,6 +1187,15 @@
                 this.contractEdit.medi_alipay_owner = '';
                 this.contractEdit.medi_account_bank = 1;
                 this.contractEdit.medi_account_num = '';
+            },
+            getDate(val){
+                this.contractEdit.start_date = val;
+            },
+            getDate1(val){
+                this.contractEdit.end_date = val;
+            },
+            getDate2(val){
+                this.contractEdit.complete_date = val;
             }
         }
     }

@@ -79,13 +79,15 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同开始日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractAdd.start_date"
-                                                   @click="selectDate"  placeholder="合同开始时间">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'start'" :currentDate="[contractAdd.start_date]" :placeholder="'合同开始时间'" @sendDate="getDate"></DatePicker>
+                                            <!--<input readonly class="form-control formDatetime" v-model="contractAdd.start_date"
+                                                   @click="selectDate"  placeholder="合同开始时间">-->
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >合同结束日期</label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input readonly class="form-control formDatetime" v-model="contractAdd.end_date"
-                                                   @click="selectDate"  placeholder="合同结束时间">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'end'" :currentDate="[contractAdd.end_date]" :placeholder="'合同结束时间'" @sendDate="getDate1"></DatePicker>
+                                            <!--<input readonly class="form-control formDatetime" v-model="contractAdd.end_date"
+                                                   @click="selectDate"  placeholder="合同结束时间">-->
                                         </div>
                                     </div>
                                     
@@ -469,8 +471,9 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >资料补齐时间<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <input @click="selectDate" readonly placeholder="资料补齐时间"
-                                                   v-model="contractAdd.complete_date" class="form-control formDatetime">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'complete'" :currentDate="[contractAdd.complete_date]" :placeholder="'资料补齐时间'" @sendDate="getDate2"></DatePicker>
+                                            <!--<input @click="selectDate" readonly placeholder="资料补齐时间"
+                                                   v-model="contractAdd.complete_date" class="form-control formDatetime">-->
                                         </div>
                                     </div>
                                     <div class="row">
@@ -564,6 +567,7 @@
     import Status from '../common/status.vue'
     import SelectHouse from  '../common/selectHouse.vue'
     import Staff from '../common/organization/selectStaff.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default{
         props:['contractEitId','dictionary','isEditRent'],
         components:{
@@ -572,7 +576,8 @@
             Status,
             SelectHouse,
             FlexBox,
-            Staff
+            Staff,
+            DatePicker
         },
         data(){
             return {
@@ -726,6 +731,13 @@
                 ],
                 more_pay_way: 1,       // 付款方式
                 configure: [],
+
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
             }
         },
         updated(){
@@ -998,6 +1010,8 @@
                 this.contractAdd.received_amount = '';
                 this.contractAdd.staff_id = '';
 
+                this.contractAdd.start_date = '';
+                this.contractAdd.end_date = '';
                 this.contractAdd.complete_date = '';
 
                 this.contractAdd.remarks = '';
@@ -1091,6 +1105,15 @@
                 this.contractAdd.medi_alipay_owner = '';
                 this.contractAdd.medi_account_bank = 1;
                 this.contractAdd.medi_account_num = '';
+            },
+            getDate(val){
+                this.contractAdd.start_date = val;
+            },
+            getDate1(val){
+                this.contractAdd.end_date = val;
+            },
+            getDate2(val){
+                this.contractAdd.complete_date = val;
             }
         }
     }

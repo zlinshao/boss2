@@ -37,9 +37,9 @@
                                     <div class="row" v-if="isAdvanced && remindTimes === ''">
                                         <label class="col-sm-2 control-label col-sm-2"></label>
                                         <div class="col-md-4">
-                                            <input @click="remind_time" type="text" placeholder="选择时间"
-                                                   v-model="remindTime" class="form-control remind_datetime" readonly>
-                                            <!--<DatePicker :dateConfigure="dateConfigure" @sendDate="getDate"></DatePicker>-->
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'remind'" @sendDate="getDate"></DatePicker>
+                                            <!--<input @click="remind_time" type="text" placeholder="选择时间"
+                                                   v-model="remindTime" class="form-control remind_datetime" readonly>-->
                                         </div>
                                     </div>
                                 </form>
@@ -88,7 +88,13 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : true,
+                    }
+                ],
             }
         },
 
@@ -143,9 +149,9 @@
                 this.isAdvanced = !this.isAdvanced;
             },
 //            日期组件
-//            getDate (val){
-//                this.remindTime = val;
-//            },
+            getDate (val){
+                this.remindTime = val;
+            },
 //            增加个人提示信息
             add_notice (){
                 if (this.remindTimes !== '') {
