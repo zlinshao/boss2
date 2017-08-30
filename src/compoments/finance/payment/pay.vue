@@ -38,14 +38,6 @@
                             </span>
                         </div>
 
-                        <!--<div class="input-group">-->
-                            <!--<input type="text" class="form-control" v-model="house_name"-->
-                                   <!--@click="selectHouse" readonly>-->
-                            <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-warning" type="button">清空</button>-->
-                            <!--</span>-->
-                        <!--</div>-->
-
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
@@ -54,6 +46,10 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+                        <div class="form-group" style="height: 39px;">
+                            <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
+                        </div>
+
                         <div class="form-group pull-right">
                             <a class="btn btn-success" @click="addPay">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
@@ -372,7 +368,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
-        <SelectHouse @House="getHouse" :house_status="1"></SelectHouse>
+        <SelectHouse @House="getHouse" :house_status="'1'"></SelectHouse>
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
@@ -394,7 +390,7 @@
     import STAFF from  '../../common/organization/selectStaff.vue'
     import DatePicker from '../../common/datePicker.vue'
 
-    import SelectHouse from '../../common/selectHouse.vue'
+    import SelectHouse from '../../common/selectPayHouse.vue'
     import SelectClient from '../../common/selectPayClient.vue'
     import SelectSubject from '../../common/selectSubject.vue'
     import Confirm from '../../common/confirm.vue'
@@ -418,7 +414,6 @@
 
         data(){
             return {
-                house_name: '',                 //地址
                 rollback_id: [],               //回滚ID
                 rollbacks: {},               //回滚
                 isActive: '',
@@ -531,15 +526,15 @@
             });
         },
         methods: {
-////              选择房屋
-//            selectHouse(){
-//                $('.selectHouse:eq(0)').modal('show');
-//            },
-////              房屋信息
-//            getHouse(data){
-//                this.params.search = data.address;
-//                this. search(1);
-//            },
+//              选择房屋
+            selectHouse(){
+                $('.selectHouse:eq(0)').modal('show');
+            },
+//              房屋信息
+            getHouse(data){
+                this.params.search = data.address;
+                this. search(1);
+            },
 //            清空科目
             search_empty (val){
                 this.params.subject_id = '';

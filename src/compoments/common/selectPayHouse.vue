@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <a class="btn btn-success" @click="search">搜索</a>
-                                <a class="btn btn-success" v-if="house_status !== 1" @click="newAddHouse">新增</a>
+                                <a class="btn btn-success" v-if="house_status !== '1'" @click="newAddHouse">新增</a>
                             </div>
                         </div>
                         <div class="table table-responsive roll">
