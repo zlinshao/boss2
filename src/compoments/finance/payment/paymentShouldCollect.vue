@@ -78,8 +78,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">补齐时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
-                                           class="form-control form_datetime" readonly v-model="formData.complete_date">
+                                    <DatePicker :dateConfigure="dateConfigure" :idName="'completeTime'" :currentDate="[formData.complete_date]" :placeholder="'补齐时间'" @sendDate="getDate"></DatePicker>
+                                    <!--<input @click="remindData" type="text" name="addtime" value="" placeholder="补齐时间"
+                                           class="form-control form_datetime" readonly v-model="formData.complete_date">-->
                                 </div>
                             </div>
 
@@ -144,11 +145,12 @@
 <script>
     import PicModal from '../../common/largePic.vue'
     import Status from '../../common/status.vue';
+    import DatePicker from '../../common/datePicker.vue'
 
 
     export default{
         props: ['id'],
-        components: {PicModal, Status},
+        components: {PicModal, Status,DatePicker},
         data(){
             return {
                 dict: {},
@@ -177,7 +179,14 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                        position : 'top-right'
+                    }
+                ],
             }
         },
         updated (){
@@ -282,6 +291,10 @@
                         }
                     })
             },
+
+            getDate(val){
+                this.formData.complete_date = val;
+            }
 
 //            计算剩余款项
 //            getBalance(){

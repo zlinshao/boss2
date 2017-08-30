@@ -399,17 +399,17 @@
                 let thisDay = moment([year, month, day]);
 
                 let lastMonth = moment([year, month - 1, 1]);
-                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
+//                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
                 let thisMonth = moment([year, month, 1]);
-                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
+//                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
 
                 let lastYear = moment([year - 1, 1, 1]);
                 let thisYear = moment([year, 1, 1]);
 
                 this.monthDates = thisDay.diff(thisMonth, 'days');
-                console.log('this.monthDates====='+this.monthDates)
+//                console.log('this.monthDates====='+this.monthDates)
                 this.lastMonthDays = thisMonth.diff(lastMonth, 'days');
-                console.log('this.lastMonthDays====='+this.lastMonthDays)
+//                console.log('this.lastMonthDays====='+this.lastMonthDays)
 
                 this.quarterlyDates = thisDay.diff(thisQuarterlyStart, 'days');
                 this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd, 'days') - 1;

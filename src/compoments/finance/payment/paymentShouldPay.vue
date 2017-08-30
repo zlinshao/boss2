@@ -102,8 +102,10 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">补齐日期</label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData1" type="text" placeholder="补齐日期"
-                                           class="form-control form_datetime1" readonly>
+                                    <DatePicker :dateConfigure="dateConfigure" :idName="'completeTime'" :currentDate="[complete_time]" :placeholder="'补齐日期'" @sendDate="getDate"></DatePicker>
+
+                                    <!--<input @click="remindData1" type="text" placeholder="补齐日期"
+                                           class="form-control form_datetime1" readonly>-->
                                 </div>
                             </div>
 
@@ -142,9 +144,10 @@
 <script>
     import SelectClient from '../../common/selectClient.vue'
     import Status from '../../common/status.vue';
+    import DatePicker from '../../common/datePicker.vue'
     export default{
         props: ['details'],
-        components: {SelectClient, Status},
+        components: {SelectClient, Status,DatePicker},
         data(){
             return {
                 dict: {},
@@ -165,7 +168,14 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                        position : 'top-right'
+                    }
+                ],
 
             }
         },
@@ -256,6 +266,9 @@
                     this.complete_time = ev.target.value;
                 }.bind(this));
             },
+            getDate(val){
+                this.complete_time = val;
+            }
         }
     }
 </script>

@@ -341,18 +341,20 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">尾款补齐时间</label>
                                         <div class="col-sm-10">
-                                            <input @click="remindData" type="text" name="addtime" value=""
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'completeDate'" :currentDate="[complete_date]" :placeholder="'补齐时间'" @sendDate="getDate"></DatePicker>
+                                            <!--<input @click="remindData" type="text" name="addtime" value=""
                                                    placeholder="补齐时间"
                                                    class="form-control form_datetime" readonly
-                                                   v-model="complete_date">
+                                                   v-model="complete_date">-->
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">待签约日期</label>
                                         <div class="col-sm-10">
-                                            <input @click="remindData" type="text" v-model="pendingContract"
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'pendingContract'" :currentDate="[pendingContract]" :placeholder="'待签约日期'" @sendDate="getDate1"></DatePicker>
+                                            <!--<input @click="remindData" type="text" v-model="pendingContract"
                                                    placeholder="待签约日期"
-                                                   class="form-control form_datetime" readonly>
+                                                   class="form-control form_datetime" readonly>-->
                                         </div>
                                     </div>
 
@@ -575,9 +577,10 @@
     import FlexBox from '../../common/flexBox.vue'
     import Status from '../../common/status.vue';
     import SelectClient from '../../common/selectPayClient.vue'        // 选择客户
+    import DatePicker from '../../common/datePicker.vue'
 
     export default{
-        components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject},
+        components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject,DatePicker},
         props: ['list'],
         data(){
             return {
@@ -691,6 +694,13 @@
                 oneAsk: '',                             //时间请求
                 cus_show: false,                        //客户展示
                 mon_show: false,                        //水电燃气费
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                        position : 'top-right'
+                    }
+                ],
             }
         },
         mounted (){
@@ -1153,6 +1163,13 @@
                         this.info.state_error = true;
                     }
                 });
+            },
+            getDate(val){
+                this.complete_date = val;
+//                console.log(this.contractRenew.start_date)
+            },
+            getDate1(val){
+                this.pendingContract = val;
             }
         }
     }

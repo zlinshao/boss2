@@ -218,8 +218,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">收款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <input @click="remindData" type="text" name="addtime" value="" placeholder="收款时间"
-                                           class="form-control form_datetime" readonly v-model="formData.pay_date">
+                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'recieveTime'" :currentDate="[formData.pay_date]" :placeholder="'收款时间'" @sendDate="getDate1"></DatePicker>
+                                    <!--<input @click="remindData" type="text" name="addtime" value="" placeholder="收款时间"
+                                           class="form-control form_datetime" readonly v-model="formData.pay_date">-->
                                     <!--<DatePicker :dateConfigure="dateConfigure1" @sendDate="getCollectTime"></DatePicker>-->
                                 </div>
                             </div>
@@ -448,6 +449,12 @@
                     id: '',
                     msg: ''
                 },
+                dateConfigure1 : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
 
             }
         },
@@ -865,6 +872,10 @@
                         this.info.state_error = false;
                     }
                 })
+            },
+            getDate1(val){
+                this.formData.pay_date = val;
+//                console.log(this.contractRenew.start_date)
             },
         }
     }
