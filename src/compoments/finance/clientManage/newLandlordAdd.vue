@@ -133,10 +133,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">第二次房租日期</label>
+                                        <label class="col-sm-2 control-label">第二次打房租日期</label>
                                         <div class="col-sm-10">
                                             <input @click="remindData" type="text" v-model="second_pay_date"
-                                                   placeholder="第二次房租日期"
+                                                   placeholder="第二次打房租日期"
                                                    class="form-control form_datetime" readonly>
                                         </div>
                                     </div>
@@ -592,7 +592,7 @@
                             });
                             this.oneAsk = false;
                         }
-                    } else if (ev.target.placeholder === '第二次房租日期') {
+                    } else if (ev.target.placeholder === '第二次打房租日期') {
                         this.second_pay_date = ev.target.value;
                     }
                 }.bind(this));
@@ -722,6 +722,7 @@
                     deposit: this.deposit,                      //押金
                     deal_date: this.pendingContract,            //待签约日期
                     first_pay_date: this.firstRemittance,       //第一次打房租日期
+                    second_pay_date: this.second_pay_date,       //第二次打房租日期
                     remark: this.remarks,                       //备注
                     account_type: this.payment,                 //客户付款方式
                     account_owner: this.account_owner,          //收款人姓名
