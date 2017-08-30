@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">合同开始和结束时间</label>
                                     <div class="col-sm-8" style="padding-bottom: 18px;">
-                                        <DatePicker :dateConfigure="dateConfigure" :rangeId="'aaa'"
+                                        <DatePicker :dateConfigure="dateConfigure"
                                                    :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                                     </div>
                                 </div>

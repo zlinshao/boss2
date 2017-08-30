@@ -2,7 +2,7 @@
     <div class="datePickerContainer input-group">
         <div v-if="range">
             <div v-show="isPC">
-                <input @focus="datePicker" type="text" name="reservation" :id="rangeId==undefined?'reservation':rangeId" placeholder="选择日期"
+                <input @focus="datePicker" type="text" name="reservation" id="reservation" placeholder="选择日期"
                        v-model="dateRange" class="reservation form-control" readonly>
             </div>
 
@@ -213,8 +213,7 @@
 //                    console.log('label-------'+label);
                     if (start.format('YYYY-MM-DD') === 'Invalid date') {
                         _this.dateRange = '';
-                        $('#reservation').val('');
-                        $('#'+_this.rangeId).val('');
+                        $('.reservation').val('');
                         _this.$emit('sendDate', '');
                     } else {
                         _this.dateRange = start.format('YYYY-MM-DD') + "至" + end.format('YYYY-MM-DD');
