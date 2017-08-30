@@ -133,6 +133,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">第二次房租日期</label>
+                                        <div class="col-sm-10">
+                                            <input @click="remindData" type="text" v-model="second_pay_date"
+                                                   placeholder="第二次房租日期"
+                                                   class="form-control form_datetime" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">备注</label>
                                         <div class="col-sm-10">
                                             <textarea class="form-control" cols="5" v-model="remarks"></textarea>
@@ -203,7 +211,7 @@
                                                            :current="subject_id.rental"></SelectSubject>
                                         </div>
                                         <!--<div class="col-sm-1 col-xs-2">-->
-                                            <!--<span @click="subject_empty(1)" class="fa fa-times-circle cha"></span>-->
+                                        <!--<span @click="subject_empty(1)" class="fa fa-times-circle cha"></span>-->
                                         <!--</div>-->
                                     </div>
 
@@ -214,7 +222,7 @@
                                                            :current="subject_id.deposit"></SelectSubject>
                                         </div>
                                         <!--<div class="col-sm-1 col-xs-2">-->
-                                            <!--<span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>-->
+                                        <!--<span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>-->
                                         <!--</div>-->
                                     </div>
                                 </div>
@@ -228,7 +236,9 @@
                                 <button type="button" class="btn btn-warning"
                                         @click="save(2,'finance/customer/collect/freeze')">不生成后续款项
                                 </button>
-                                <button type="button" class="btn btn-warning" @click="save(3,'finance/customer/collect/generate')">生成后续款项</button>
+                                <button type="button" class="btn btn-warning"
+                                        @click="save(3,'finance/customer/collect/generate')">生成后续款项
+                                </button>
                             </div>
                         </div>
                         <div class="modal-footer" v-if="reviseStatus === 2 || reviseStatus === 3">
@@ -246,7 +256,9 @@
                                 <button type="button" class="btn btn-warning"
                                         @click="save(2,'finance/customer/collect/freeze')">不生成后续款项
                                 </button>
-                                <button type="button" class="btn btn-warning" @click="save(3,'finance/customer/collect/generate')">生成后续款项</button>
+                                <button type="button" class="btn btn-warning"
+                                        @click="save(3,'finance/customer/collect/generate')">生成后续款项
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -255,36 +267,36 @@
         </div>
 
         <!--<div class="modal fade" id="clientAdd1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-             <!--aria-hidden="true">-->
-            <!--<div class="modal-dialog">-->
-                <!--<div class="modal-content">-->
+        <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
 
-                    <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                        <!--<h4 class="modal-title">生成款项</h4>-->
-                    <!--</div>-->
+        <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+        <!--<h4 class="modal-title">生成款项</h4>-->
+        <!--</div>-->
 
-                    <!--<div class="modal-body">-->
-                        <!--<form class="form-horizontal" role="form">-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="col-sm-3 control-label">您生成的科目有：</label>-->
-                                <!--<div class="col-lg-9" style="padding-top: 8px;">-->
-                                    <!--<span class="col-xs-4" v-if="this.subject_id.rental != ''">房屋科目</span>-->
-                                    <!--<span v-if="this.subject_id.deposit != ''">押金科目</span>-->
-                                    <!--<span v-if="this.subject_id.rental === '' && this.subject_id.deposit === ''">无</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</form>-->
-                    <!--</div>-->
+        <!--<div class="modal-body">-->
+        <!--<form class="form-horizontal" role="form">-->
+        <!--<div class="form-group">-->
+        <!--<label class="col-sm-3 control-label">您生成的科目有：</label>-->
+        <!--<div class="col-lg-9" style="padding-top: 8px;">-->
+        <!--<span class="col-xs-4" v-if="this.subject_id.rental != ''">房屋科目</span>-->
+        <!--<span v-if="this.subject_id.deposit != ''">押金科目</span>-->
+        <!--<span v-if="this.subject_id.rental === '' && this.subject_id.deposit === ''">无</span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>-->
+        <!--</div>-->
 
-                    <!--<div class="modal-footer">-->
-                        <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
-                        <!--<button class="btn btn-success" type="button"-->
-                                <!--@click="save(3,'finance/customer/collect/generate')"> 确定-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--<div class="modal-footer">-->
+        <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
+        <!--<button class="btn btn-success" type="button"-->
+        <!--@click="save(3,'finance/customer/collect/generate')"> 确定-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
         <!--签约人-->
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
@@ -343,6 +355,7 @@
                 pendingContract: '',                    //待签约日期
                 vacancyPeriod: '',                      //空置期
                 firstRemittance: '',                    //第一次房租日期
+                second_pay_date: '',                    //第二次房租日期
                 remarks: '',                            //备注
 
                 //客户
@@ -351,7 +364,7 @@
                 account_subbank: '',                    //支行
                 bank: 1,                                //开户行
                 account: '',                            // 账户
-                subject_id: {rental: '',deposit:''},  //科目款项
+                subject_id: {rental: '', deposit: ''},  //科目款项
 //                rental_status: true,                    //房租款项状态
 //                deposit_status: true,                   //科目款项状态
 
@@ -433,6 +446,7 @@
                     this.pendingContract = val.deal_date;                  //待签约日期
                     this.vacancyPeriod = val.vacancy;                    //空置期
                     this.firstRemittance = val.first_pay_date;                  //第一次打款日期
+                    this.second_pay_date = val.second_pay_date;                  //第二次打款日期
                     this.remarks = val.remark;                              //备注
 
                     if (val.subject_id !== null && val.subject_id !== undefined) {
@@ -513,6 +527,7 @@
                 this.pendingContract = '';                  //待签约日期
                 this.vacancyPeriod = '';                    //空置期
                 this.firstRemittance = '';                  //第一次打款日期
+                this.second_pay_date = '';                  //第二次打款日期
                 this.remarks = '';                          //备注
                 this.subject_id.rental = '';                //房租款项
 //                this.rental_status = true;                  //房租款项
@@ -577,6 +592,8 @@
                             });
                             this.oneAsk = false;
                         }
+                    } else if (ev.target.placeholder === '第二次房租日期') {
+                        this.second_pay_date = ev.target.value;
                     }
                 }.bind(this));
             },
@@ -646,6 +663,7 @@
                     deposit: this.deposit,                      //押金
                     deal_date: this.pendingContract,            //待签约日期
                     first_pay_date: this.firstRemittance,       //第一次打房租日期
+                    second_pay_date: this.second_pay_date,       //第二次打房租日期
                     remark: this.remarks,                       //备注
                     account_type: this.payment,                 //客户付款方式
                     account_owner: this.account_owner,          //收款人姓名
@@ -675,7 +693,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }else if(res.data.code === '90030'){
+                    } else if (res.data.code === '90030') {
                         this.renter_id = res.data.data;
                         //失败信息 ***
                         this.info.error = res.data.msg;

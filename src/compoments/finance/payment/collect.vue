@@ -33,6 +33,15 @@
                         </div>
 
                         <div class="input-group">
+                            <SelectSubject @choose="houseSubject" :current="params.subject_id"
+                                           :msg="'科目搜索'"></SelectSubject>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" id="Subject" type="button"
+                                        @click="search_empty()">清空</button>
+                            </span>
+                        </div>
+
+                        <div class="input-group">
                             <input type="text" class="form-control" placeholder="签收人/房屋地址/价格" v-model="params.search"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
@@ -322,8 +331,8 @@
                     <div class="modal-body">
                         <h5 v-for="(key,index) in rollbacks">
                             <label>
-                            <input type="checkbox" @click="change_index($event,index)"
-                                   :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
+                                <input type="checkbox" @click="change_index($event,index)"
+                                       :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
                             </label>
                         </h5>
                     </div>
@@ -431,7 +440,8 @@
                     staff_id: [],
                     status: '',
                     range: '',
-                    search: ''
+                    search: '',
+                    subject_id: '',                 //科目款项
                 },
                 tips: {
                     receivable_sum: 0,  // 应收金额
@@ -506,6 +516,16 @@
         },
 
         methods: {
+//            清空科目
+            search_empty (val){
+                this.params.subject_id = '';
+                this.search(1);
+            },
+//            科目搜索
+            houseSubject(val){
+                this.params.subject_id = val;
+                this.search(1);
+            },
 //            编辑金额
             able_show (val, m, id){
                 if (val === 1) {
@@ -947,6 +967,14 @@
         font-size: 15px;
         /*margin-top: 20px;*/
         /*width: 100%;*/
+    }
+
+    .input-group-btn {
+        vertical-align: top;
+    }
+
+    .input-group {
+        height: 39px;
     }
 
     .tips ul {

@@ -30,6 +30,23 @@
                         </div>
 
                         <div class="input-group">
+                            <SelectSubject @choose="houseSubject" :current="params.subject_id"
+                                           :msg="'科目搜索'"></SelectSubject>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" id="Subject" type="button"
+                                        @click="search_empty()">清空</button>
+                            </span>
+                        </div>
+
+                        <!--<div class="input-group">-->
+                            <!--<input type="text" class="form-control" v-model="house_name"-->
+                                   <!--@click="selectHouse" readonly>-->
+                            <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-warning" type="button">清空</button>-->
+                            <!--</span>-->
+                        <!--</div>-->
+
+                        <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
                                    v-model="params.search" @keydown.enter.prevent="search(1)">
@@ -355,7 +372,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
-        <!--<SelectHouse @House="getHouse"></SelectHouse>-->
+        <SelectHouse @House="getHouse" :house_status="1"></SelectHouse>
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
@@ -401,6 +418,7 @@
 
         data(){
             return {
+                house_name: '',                 //地址
                 rollback_id: [],               //回滚ID
                 rollbacks: {},               //回滚
                 isActive: '',
@@ -454,7 +472,8 @@
                     staff_id: [],
                     status: '',
                     range: '',
-                    search: ''
+                    search: '',
+                    subject_id: '',                 //科目款项
                 },
                 tips: {
                     payable_sum: 0.00,          // 应付总额
@@ -512,7 +531,25 @@
             });
         },
         methods: {
-
+////              选择房屋
+//            selectHouse(){
+//                $('.selectHouse:eq(0)').modal('show');
+//            },
+////              房屋信息
+//            getHouse(data){
+//                this.params.search = data.address;
+//                this. search(1);
+//            },
+//            清空科目
+            search_empty (val){
+                this.params.subject_id = '';
+                this.search(1);
+            },
+//            科目搜索
+            houseSubject(val){
+                this.params.subject_id = val;
+                this.search(1);
+            },
 //            编辑金额
             able_show (val, m, id){
                 if (val === 1) {
@@ -626,7 +663,7 @@
                 });
             },
 //            回滚选择
-            change_index (ev,val){
+            change_index (ev, val){
                 if (ev.target.checked) {
                     this.rollback_id.push(val);
                 } else {
@@ -638,7 +675,7 @@
             },
 //            回滚
             rollback (){
-                this.$http.put('account/payable/revert/' + this.pitch,{
+                this.$http.put('account/payable/revert/' + this.pitch, {
                     ra_id: this.rollback_id
                 }).then((res) => {
                     if (res.data.code === '18410') {
@@ -760,7 +797,7 @@
                 });
             },
 //            列表多选框
-            changeIndex(ev, id, status,index){
+            changeIndex(ev, id, status, index){
                 this.rollbacks = index;
                 this.pitch = [];
                 this.status = [];
@@ -944,6 +981,14 @@
         }
     }
 
+    .input-group-btn {
+        vertical-align: top;
+    }
+
+    .input-group {
+        height: 39px;
+    }
+
     .tips {
         line-height: 30px;
         padding-bottom: 5px;
@@ -986,7 +1031,7 @@
         height: 17px;
     }
 
-    .rollbacks{
+    .rollbacks {
         margin-right: 10px;
         vertical-align: sub;
     }

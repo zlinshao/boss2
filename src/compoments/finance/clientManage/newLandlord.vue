@@ -18,7 +18,7 @@
                         </span>
                         </div>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-3" style="padding: 0;margin-right: 10px;">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-3 col-lg-2" style="padding: 0;margin-right: 10px;">
                         <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;">

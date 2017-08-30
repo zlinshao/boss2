@@ -18,7 +18,7 @@
                         </span>
                         </div>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-3" style="padding: 0;margin-right: 10px">
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-3 col-lg-2" style="padding: 0;margin-right: 10px">
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                     </div>
@@ -224,18 +224,7 @@
                     identity: 2,
                 }).then((res) => {
                     if (res.data.code === '18810') {
-                        this.search();
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else{
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+
                     }
                 })
             },
