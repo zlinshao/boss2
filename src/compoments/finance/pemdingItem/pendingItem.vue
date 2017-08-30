@@ -21,7 +21,7 @@
                             </select>
                         </div>
 
-                        <div class="input-group">
+                        <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" @sendDate="getDate" :currentDate="currentDate"></DatePicker>
                         </div>
 

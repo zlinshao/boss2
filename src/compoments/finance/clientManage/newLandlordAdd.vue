@@ -113,10 +113,10 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">待签约日期</label>
                                         <div class="col-sm-10">
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'pendingContract'" :currentDate="[pendingContract]" :placeholder="'待签约日期'" @sendDate="getDate"></DatePicker>
-                                            <!--<input @click="remindData" type="text" v-model="pendingContract"
+                                            <!--<DatePicker :dateConfigure="dateConfigure" :idName="'pendingContract'" :currentDate="[pendingContract]" :placeholder="'待签约日期'" @sendDate="getDate"></DatePicker>-->
+                                            <input @click="remindData" type="text" v-model="pendingContract"
                                                    placeholder="待签约日期"
-                                                   class="form-control form_datetime" readonly>-->
+                                                   class="form-control form_datetime" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -128,10 +128,10 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">第一次房租日期</label>
                                         <div class="col-sm-10">
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'firstRemittance'" :currentDate="[firstRemittance]" :placeholder="'第一次房租日期'" @sendDate="getDate1"></DatePicker>
-                                            <!--<input @click="remindData" type="text" v-model="firstRemittance"
+                                            <!--<DatePicker :dateConfigure="dateConfigure" :idName="'firstRemittance'" :currentDate="[firstRemittance]" :placeholder="'第一次房租日期'" @sendDate="getDate1"></DatePicker>-->
+                                            <input @click="remindData" type="text" v-model="firstRemittance"
                                                    placeholder="第一次房租日期"
-                                                   class="form-control form_datetime" readonly>-->
+                                                   class="form-control form_datetime" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
