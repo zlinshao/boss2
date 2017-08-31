@@ -244,6 +244,7 @@
             },
 //            选中
             pitchId (rul, ev){
+                this.pitch = [];
                 if (ev.target.checked === true) {
                     this.pitch.push(rul);
 
