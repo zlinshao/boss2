@@ -3583,8 +3583,8 @@ table.sliders tr td {
 
 .has-js .label_check,
 .has-js .label_radio {
-    padding-left: 34px;
-    height: 21px;
+    padding-left: 25px;
+    height: 17px;
     vertical-align: middle;
 }
 
@@ -3593,8 +3593,9 @@ table.sliders tr td {
 }
 
 .has-js .label_check {
+    margin-top: 4px;
     background: url(../img/checkbox/check-off.png) no-repeat;
-    height: 21px;
+    height: 17px;
     vertical-align: middle;
 }
 
