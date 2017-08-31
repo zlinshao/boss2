@@ -39,7 +39,12 @@
                             <div><span class="text-primary">入职时间：</span><span>{{item.enroll_time}} </span></div>
                             <div><span class="text-primary">部门：</span><span>{{item.department[0].name}}</span></div>
                             <div><span class="text-primary">职务：</span><span>{{item.position_id[0].vocation}}</span></div>
-                            <div><span class="text-primary">用户组：</span><span>{{item.role[0].title}}</span></div>
+                            <div>
+                                <span class="text-primary">用户组：</span>
+                                <span v-for="role in item.role">
+                                    {{role.title}}
+                                </span>
+                            </div>
                             <div>
                                 <span class="text-primary">等级：</span>
                                 <span>{{levelList[item.level]}}&nbsp; &nbsp;</span>
@@ -128,8 +133,8 @@
     .client_info > div > div > div span.text-primary,.client_ > div span.text-primary {
         display: inline-block;
         padding-right: 20px;
-        text-align: right;
-        min-width: 100px;
+        /*text-align: right;*/
+        min-width: 120px;
     }
 
 </style>
