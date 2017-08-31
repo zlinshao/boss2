@@ -61,7 +61,7 @@
 
         <!--表格-->
 
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -81,8 +81,11 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :value="item.id" :checked="operId===item.id"
-                                       @click="changeIndex($event,item.id)">
+                                <label :class="{'label_check':true,'c_on':operId===item.id,'c_off':operId!==item.id}"
+                                       @click.prevent="changeIndex($event,item.id)">
+                                    <input type="checkbox" :value="item.id" :checked="operId===item.id">
+                                </label>
+
                             </td>
                             <td>{{item.name}}</td>
                             <td>{{dict.account_cate[item.cate]}}</td>
@@ -468,7 +471,9 @@
             },
             changeIndex(ev, id){
 //                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.operId = id;
 //                    console.log(this.operId);
                 } else {

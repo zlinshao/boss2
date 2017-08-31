@@ -4,7 +4,7 @@
             <li>房源管理</li>
             <li>公司房源</li>
         </ol>
-        <section class="panel">
+        <section class="panel has-js">
             <!--未选中-->
             <div class="panel-body clearFix">
                 <div v-if="houseSeleted===0">
@@ -80,8 +80,8 @@
                             </label>
                         </div>
                         <div class="pro-sort" style="height: 39px;">
-                            <label style="margin-top: 8px;">
-                                <input type="checkbox" class="pull-left" v-model="params.our_group" @click="search">显示本组房屋
+                            <label style="margin-top: 8px;padding-right: 25px" :class="{'label_check':true,'c_on':params.our_group,'c_off':!params.our_group}" @click.prevent="trid($event)">
+                                <input type="checkbox" class="pull-left" v-model="params.our_group">显示本组房屋
                             </label>
                         </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
@@ -130,7 +130,7 @@
         </section>
 
         <!--客户列表-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -156,9 +156,12 @@
                         <tbody>
                         <tr v-for="item in houseList">
                             <td class="text-center">
-                                <label ></label>
-                                <input type="checkbox" class="pull-left"  :value="item.id"
-                                       :checked="houseSeleted===item.id" @click="picked(item.id,$event,item.top)">
+                                <label :class="{'label_check':true,'c_on':houseSeleted===item.id,'c_off':houseSeleted!==item.id}"
+                                       @click.prevent="picked(item.id,$event,item.top)">
+                                    <input type="checkbox" class="pull-left"  :value="item.id"
+                                           :checked="houseSeleted===item.id">
+                                </label>
+
                             </td>
                             <td class="text-center">{{item.detailed_address}}</td>
                             <td class="text-center">
@@ -359,9 +362,19 @@
                     this.search();
                 }
             },
+
+            trid(ev){
+                let valInput = ev.target.getElementsByTagName('input')[0];
+                valInput.checked = !valInput.checked;
+                this.params.our_group = valInput.checked;
+                this.search();
+            },
+
             //选中的checkout框
             picked (id,e,top){
-                if(e.target.checked===true){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if(evInput.checked){
                     this.houseSeleted = id;
                     top === 2? this.top = 1:this.top = 2;
                 }else {

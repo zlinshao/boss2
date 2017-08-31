@@ -116,7 +116,7 @@
         </section>
 
         <!--客户列表-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -138,9 +138,12 @@
                         <tbody>
                         <tr v-for="item in villalist">
                             <td class="text-center">
-                                <label for="cus_id"></label>
-                                <input id="cus_id" type="checkbox" class="pull-left" :value="item.id"
-                                       :checked="seletedId===item.id" @click="changeIndex($event,item.id)">
+                                <label :class="{'label_check':true,'c_on':seletedId===item.id,'c_off':!seletedId===item.id}"
+                                       @click.prevent="changeIndex($event,item.id)">
+                                    <input type="checkbox" class="pull-left" :value="item.id"
+                                           :checked="seletedId===item.id">
+                                </label>
+
                             </td>
                             <td class="text-center">{{item.detailed_address}}</td>
                             <td class="text-center">{{dictionary.house_type[item.house_type]}}</td>
@@ -304,7 +307,9 @@
                     this.searchUncollect();
             },
             changeIndex(e, id){
-                if (e.target.checked) {
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.seletedId = id;
                 } else {
                     this.seletedId = 0;

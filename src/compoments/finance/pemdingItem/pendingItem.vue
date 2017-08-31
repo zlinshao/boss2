@@ -57,7 +57,7 @@
         </section>
 
         <!--表格-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -81,8 +81,14 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in pendingList">
-                            <td><input type="checkbox":value="item.id" :checked="operId===item.id"
-                                       @click="picked(item,$event)"></td>
+                            <td>
+                                <!--<input type="checkbox":value="item.id" :checked="operId===item.id"
+                                       @click="picked(item,$event)">-->
+                                <label :class="{'label_check':true,'c_on':operId===item.id,'c_off':operId!==item.id}"
+                                       @click.prevent="picked(item,$event)">
+                                    <input type="checkbox" :value="item.id" :checked="operId===item.id">
+                                </label>
+                            </td>
                             <td>{{dictionary.item_type[item.item_type]}}</td>
                             <td>{{item.staff_name}}</td>
                             <td>{{item.detailed_address}}</td>
@@ -221,7 +227,9 @@
                 })
             },
             picked(item,e){
-                if(e.target.checked===true){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if(evInput.checked){
                     this.operId = item.id;
                     this.account_pending_status = item.status;
                     this.collectRent = item.collect_rent;

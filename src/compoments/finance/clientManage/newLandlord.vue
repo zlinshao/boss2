@@ -55,7 +55,7 @@
                 </div>
             </div>
         </section>
-        <section class="panel table table-responsive roll">
+        <section class="panel table table-responsive roll has-js">
             <table class="table table-striped table-advance table-hover">
                 <thead class="text-center">
                 <tr>
@@ -79,8 +79,13 @@
                 <tr class="text-center" v-for="item in LandlordList"
                     :class="{'selected': pitch.indexOf(item.id) > -1}">
                     <td>
-                        <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                               @click="pitchId(item.id, $event)">
+                        <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id)==-1}"
+                               @click.prevent="pitchId(item.id, $event, item.name)">
+                            <input type="checkbox" class="pull-left"
+                                   :checked="pitch.indexOf(item.id) > -1">
+                        </label>
+                        <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                               @click="pitchId(item.id, $event)">-->
                     </td>
                     <td class="text-center">{{item.create_time}}</td>
                     <td class="text-center">{{item.address}}</td>
@@ -217,7 +222,9 @@
         methods: {
 //            选中
             pitchId (rul, ev){
-                if (ev.target.checked === true) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.pitch.push(rul);
 
                 } else {

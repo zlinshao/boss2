@@ -136,7 +136,7 @@
         </div>
 
         <!--表格-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -163,8 +163,12 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
                             <td v-if="recycle_bin">
-                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                                       @click="changeIndex($event,item.id,item.status)">
+                                <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                                       @click="changeIndex($event,item.id,item.status)">-->
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
+                                       @click.prevent="changeIndex($event,item.id,item.status)">
+                                    <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
+                                </label>
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
@@ -643,9 +647,11 @@
 //                console.log(this.pitch);
             },
             changeIndex(ev, id, status){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
                 this.pitch = [];
                 this.status = [];
-                if (ev.target.checked) {
+                if (evInput.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
                 } else {
