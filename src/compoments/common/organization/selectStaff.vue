@@ -11,166 +11,166 @@
                         <h4 class="modal-title">选人</h4>
                     </div>
                     <div class="modal-body scoll">
-                            <div class="row">
-                                <div class="col-lg-7 col-sm-7" >
-                                    <div class="box" @click="inputFocus" id="borderBlue">
-                                        <div id="tagsinput_tagsinput" class="tagsinput " style="border: none">
-                                            <span class="tag" v-for="item in member" v-if="member!=''">
-                                                <span >{{item.name}}&nbsp;&nbsp;</span>
-                                                <a class="tagsinput-remove-link" @click="deleteName(item)"></a>
-                                            </span>
-                                            <input v-model="keywords" @keyup="search" @keydown.8="backSpace" style="width: 65px"
-                                            placeholder="搜索"   id="inputFocus"    @keydown.down="changeDown" @keydown.up="changeUp" @keydown.13='keydownAdd'>
-                                        </div>
-                                        <div class="searchList box-body scoll" id="d1" style="max-height: 348px">
+                        <div class="row">
+                            <div class="col-lg-7 col-sm-7" >
+                                <div class="box" @click="inputFocus" id="borderBlue">
+                                    <div id="tagsinput_tagsinput" class="tagsinput " style="border: none">
+                                        <span class="tag" v-for="item in member" v-if="member!=''">
+                                            <span >{{item.name}}&nbsp;&nbsp;</span>
+                                            <a class="tagsinput-remove-link" @click="deleteName(item)"></a>
+                                        </span>
+                                        <input v-model="keywords" @keyup="search" @keydown.8="backSpace" style="width: 65px"
+                                        placeholder="搜索"   id="inputFocus"    @keydown.down="changeDown" @keydown.up="changeUp" @keydown.13='keydownAdd'>
+                                    </div>
+                                    <div class="searchList box-body scoll" id="d1" style="max-height: 348px">
+                                        <ul>
+                                            <li v-for="(item,index) in searchList" :class="{'hov':active_li==index}"
+                                                @mouseover="changeClass(index,item)" @click="mouseAdd(item)">
+                                                <div class="head">
+                                                    <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                </div>
+                                                <div class="head">
+                                                    <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                </div>
+
+                                                <div style="display: inline-block">
+                                                    <p style="height:14px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
+                                                    <p style="height:10px;font-size: 10px">
+                                                        {{item.department[0].name}}&nbsp;
+                                                    </p>
+                                                    <p style="height:10px;font-size: 10px">{{item.mobile}}</p>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-sm-5">
+                                <div class="box">
+                                    <div class="boxHead">组织架构</div>
+                                    <div style="margin-left: 10px">
+                                        <a @click="getFirst">南京乐伽商业管理有限公司</a>
+                                        <a v-if="isSecond"  @click="getSecond(secondId,secondName)"> &gt; {{secondName}}</a>
+                                        <a v-if="isThird" @click="getThird(thirdId,thirdName)"> &gt; {{thirdName}}</a>
+                                        <a v-if="isFour" @click="getFour(fourId,fourName)"> &gt; {{fourName}}</a>
+                                        <a v-if="isFive"> &gt; {{fiveName}}</a>
+                                    </div>
+                                    <div style="margin-top: 15px">
+                                        <div class="organizeList box-body scoll" id="box-body" >
                                             <ul>
-                                                <li v-for="(item,index) in searchList" :class="{'hov':active1==index}"
-                                                    @mouseover="changeClass(index,item)" @click="mouseAdd(item)">
+                                                <li v-for="item in organizeList"   v-if="type==1">
+                                                    <label class="checkbox-inline check">
+                                                        <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
+                                                            :disabled="noDepartment || isMarket.indexOf(item.id)>-1"
+                                                               @click="checkedOne(item)"   :value="item">
+                                                    </label>
+                                                    <div class="info">
+                                                        <button @click="getSecond(item.id,item.name)" class="btn btn-white"
+                                                                :disabled="checkIndex.indexOf(item.id)>-1" style="border: none">
+                                                            {{item.name}}
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==2">
+                                                    <label class="checkbox-inline check">
+                                                        <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
+                                                               :disabled="noDepartment"   @click="checkedOne(item)"   :value="item">
+                                                    </label>
+                                                    <div class="info">
+                                                        <button @click="getThird(item.id,item.name)" style="border: none"
+                                                                :disabled="checkIndex.indexOf(item.id)>-1"  class="btn btn-white">
+                                                            {{item.name}}
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==3" @click="select(item.id,item.real_name)"
+                                                    :disabled='true'>
                                                     <div class="head">
                                                         <img :src="item.avatar" v-if="item.avatar !== '' ">
                                                     </div>
                                                     <div class="head">
                                                         <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
                                                     </div>
-
                                                     <div style="display: inline-block">
-                                                        <p style="height:14px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
-                                                        <p style="height:10px;font-size: 10px">
-                                                            {{item.department[0].name}}&nbsp;
+                                                        <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
+                                                        <p style="height:14px;font-size: 10px">
+                                                            {{item.department[0].name}}&nbsp;&nbsp;
                                                         </p>
-                                                        <p style="height:10px;font-size: 10px">{{item.mobile}}</p>
                                                     </div>
-
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==4" >
+                                                    <label class="checkbox-inline check">
+                                                        <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
+                                                               :disabled="noDepartment"  @click="checkedOne(item)" :value="item">
+                                                    </label>
+                                                    <div class="info">
+                                                        <button @click="getFour(item.id,item.name)" class="btn btn-white"
+                                                                :disabled="checkIndex.indexOf(item.id)>-1" style="border: none">
+                                                            {{item.name}}
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==5" @click="select(item.id,item.real_name)">
+                                                    <div class="head">
+                                                        <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                    </div>
+                                                    <div class="head">
+                                                        <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                    </div>
+                                                    <div style="display: inline-block">
+                                                        <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
+                                                        <p style="height:14px;font-size: 10px">
+                                                            {{item.department[0].name}}&nbsp;&nbsp;
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==6">
+                                                    <label class="checkbox-inline check">
+                                                        <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
+                                                               :disabled="noDepartment"  @click="checkedOne(item)"   :value="item">
+                                                    </label>
+                                                    <div class="info">
+                                                        <button @click="getFive(item.id,item.name)" class="btn btn-white"
+                                                                :disabled="checkIndex.indexOf(item.id)>-1" style="border: none" >
+                                                            {{item.name}}
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==7" @click="select(item.id,item.real_name)">
+                                                    <div class="head">
+                                                        <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                    </div>
+                                                    <div class="head">
+                                                        <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                    </div>
+                                                    <div style="display: inline-block">
+                                                        <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
+                                                        <p style="height:14px;font-size: 10px">
+                                                            {{item.department[0].name}}&nbsp;&nbsp;
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li v-for="item in organizeList" v-if="type==8" @click="select(item.id,item.real_name)">
+                                                    <div class="head">
+                                                        <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                    </div>
+                                                    <div class="head">
+                                                        <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                    </div>
+                                                    <div style="display: inline-block">
+                                                        <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
+                                                        <p style="height:14px;font-size: 10px">
+                                                            {{item.department[0].name}}&nbsp;&nbsp;
+                                                        </p>
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-sm-5">
-                                    <div class="box">
-                                        <div class="boxHead">组织架构</div>
-                                        <div style="margin-left: 10px">
-                                            <a @click="getFirst">南京乐伽商业管理有限公司</a>
-                                            <a v-if="isSecond"  @click="getSecond(secondId,secondName)">&gt; {{secondName}}</a>
-                                            <a v-if="isThird" @click="getThird(thirdId,thirdName)"> &gt; {{thirdName}}</a>
-                                            <a v-if="isFour" @click="getFour(fourId,fourName)"> &gt; {{fourName}}</a>
-                                            <a v-if="isFive"> &gt; {{fiveName}}</a>
-                                        </div>
-                                        <div style="margin-top: 15px">
-                                            <div class="organizeList box-body scoll" id="box-body" >
-                                                <ul>
-                                                    <li v-for="item in organizeList"   v-if="type==1">
-                                                        <label class="checkbox-inline check">
-                                                            <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                :disabled="noDepartment || isMarket.indexOf(item.id)>-1"
-                                                                   @click="checkedOne(item)"   :value="item">
-                                                        </label>
-                                                        <div class="info">
-                                                            <button @click="getSecond(item.id,item.name)" class="btn btn-white"
-                                                                    :disabled="checkIndex.indexOf(item.id)>-1" style="border: none">
-                                                                {{item.name}}
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==2">
-                                                        <label class="checkbox-inline check">
-                                                            <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   :disabled="noDepartment"   @click="checkedOne(item)"   :value="item">
-                                                        </label>
-                                                        <div class="info">
-                                                            <button @click="getThird(item.id,item.name)" style="border: none"
-                                                                    :disabled="checkIndex.indexOf(item.id)>-1"  class="btn btn-white">
-                                                                {{item.name}}
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==3" @click="select(item.id,item.real_name)"
-                                                        :disabled='true'>
-                                                        <div class="head">
-                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
-                                                        </div>
-                                                        <div class="head">
-                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
-                                                        </div>
-                                                        <div style="display: inline-block">
-                                                            <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
-                                                            <p style="height:14px;font-size: 10px">
-                                                                {{item.department[0].name}}&nbsp;&nbsp;
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==4" >
-                                                        <label class="checkbox-inline check">
-                                                            <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   :disabled="noDepartment"  @click="checkedOne(item)" :value="item">
-                                                        </label>
-                                                        <div class="info">
-                                                            <button @click="getFour(item.id,item.name)" class="btn btn-white"
-                                                                    :disabled="checkIndex.indexOf(item.id)>-1" style="border: none">
-                                                                {{item.name}}
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==5" @click="select(item.id,item.real_name)">
-                                                        <div class="head">
-                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
-                                                        </div>
-                                                        <div class="head">
-                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
-                                                        </div>
-                                                        <div style="display: inline-block">
-                                                            <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
-                                                            <p style="height:14px;font-size: 10px">
-                                                                {{item.department[0].name}}&nbsp;&nbsp;
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==6">
-                                                        <label class="checkbox-inline check">
-                                                            <input type="checkbox" class="pull-left" value="1" v-model='checkboxModel'
-                                                                   :disabled="noDepartment"  @click="checkedOne(item)"   :value="item">
-                                                        </label>
-                                                        <div class="info">
-                                                            <button @click="getFive(item.id,item.name)" class="btn btn-white"
-                                                                    :disabled="checkIndex.indexOf(item.id)>-1" style="border: none" >
-                                                                {{item.name}}
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==7" @click="select(item.id,item.real_name)">
-                                                        <div class="head">
-                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
-                                                        </div>
-                                                        <div class="head">
-                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
-                                                        </div>
-                                                        <div style="display: inline-block">
-                                                            <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
-                                                            <p style="height:14px;font-size: 10px">
-                                                                {{item.department[0].name}}&nbsp;&nbsp;
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li v-for="item in organizeList" v-if="type==8" @click="select(item.id,item.real_name)">
-                                                        <div class="head">
-                                                            <img :src="item.avatar" v-if="item.avatar !== '' ">
-                                                        </div>
-                                                        <div class="head">
-                                                            <img src="../../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
-                                                        </div>
-                                                        <div style="display: inline-block">
-                                                            <p style="height:20px;font-size: 14px;color: #2a3542">{{item.real_name}}</p>
-                                                            <p style="height:14px;font-size: 10px">
-                                                                {{item.department[0].name}}&nbsp;&nbsp;
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" @click="closeModal">关闭</button>
@@ -194,7 +194,7 @@
                 organizeList:[],//人资列表
                 member:[],      //显示label数组
                 keywords:'',    //搜索关键字
-                active1: '-1',  //当前li索引
+                active_li: '-1',  //当前li索引
                 hovName:'',     //hover名字
                 hovId:'',       //hover Id
                 type:'',        //部门类型
@@ -411,7 +411,6 @@
                     this.info.error = '您只能选择部门';
                     //显示成功弹窗 ***
                     this.info.state_error = true;
-
                 }
 
             },
@@ -434,35 +433,40 @@
             //键盘向下事件
             changeDown(){
                 if(this.searchList.length!==0){
-                    this.active1++;
-                    if(this.active1===this.searchList.length)this.active1=this.searchList.length-1;
-                    this.hovName=this.searchList[this.active1].real_name;
-                    this.hovId=this.searchList[this.active1].id;
-                    if (this.active1>2) document.getElementById('d1').scrollTop+=55;
+                    this.active_li++;
+                    if(this.active_li===this.searchList.length)this.active_li=this.searchList.length-1;
+                    this.hovName=this.searchList[this.active_li].real_name;
+                    this.hovId=this.searchList[this.active_li].id;
+                    if (this.active_li>2) document.getElementById('d1').scrollTop+=55;
                 }
             },
             //键盘向上事件
             changeUp(){
                 if(this.searchList.length!==0){
-                    this.active1--;
-                    if(this.active1===-2)this.active1=-1;
-                    if(this.active1>-1){
-                        this.hovName=this.searchList[this.active1].real_name;
-                        this.hovId=this.searchList[this.active1].id;
-
+                    this.active_li--;
+                    if(this.active_li===-2)this.active_li=-1;
+                    if(this.active_li>-1){
+                        this.hovName=this.searchList[this.active_li].real_name;
+                        this.hovId=this.searchList[this.active_li].id;
                     }
-                    if (this.active1<this.searchList.length-4) document.getElementById('d1').scrollTop-=55;
+                    if (this.active_li<this.searchList.length-4) document.getElementById('d1').scrollTop-=55;
                 }
             },
             //hover事件
             changeClass(index,item){
-                this.active1=index;
+                this.active_li=index;
                 this.hovName=item.real_name;
                 this.hovId=item.id;
             },
             //鼠标增加事件
             mouseAdd(item){
-                if($.inArray(item.real_name, this.member)===-1){
+                let isExist = false;
+                for(let i=0;i<this.member.length;i++){//判断该id是否已经被选中
+                    if(item.id===this.member[i].id && item.real_name===this.member[i].name){
+                        isExist=true;
+                    }
+                }
+                if(!isExist){
                     let staff={}
                     staff.flag=1;
                     staff.id=this.hovId;
@@ -471,23 +475,38 @@
                     this.organize.staff.push(staff);
                     this.keywords='';
                     this.search();
-                    this.active1=-1;
+                    this.active_li=-1;
+                }else {
+                    this.info.error = '您已经选择该成员';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
                 }
             },
             //键盘enter事件
             keydownAdd(){
                 if(!this.noStaff){
-                    if(this.hovName!==''&& $.inArray(this.hovName, this.member)===-1){
-                        let staff={}
-                        staff.flag=1;
-                        staff.id=this.hovId;
-                        staff.name=this.hovName;
-                        this.member.push(staff);
-                        this.organize.staff.push(staff);
-                        this.keywords='';
-                        this.search();
-                        this.active1=-1;
+                    let isExist = false;
+                    for(let i=0;i<this.member.length;i++){//判断该id是否已经被选中
+                        if(this.hovId===this.member[i].id && this.hovName===this.member[i].name){
+                            isExist=true;
+                        }
                     }
+                    if(this.hovName !== ''){
+                        if(!isExist){
+                            let staff={}
+                            staff.flag=1;
+                            staff.id=this.hovId;
+                            staff.name=this.hovName;
+                            this.member.push(staff);
+                            this.organize.staff.push(staff);
+                            this.keywords='';
+                            this.search();
+                            this.active_li=-1;
+                        }else {
+                            
+                        }
+                    }
+                   
                     this.hovName='';
                 }else{
                     this.info.error = '您只能选择部门';
@@ -662,7 +681,7 @@
     }
 
     .box-body{
-        max-height: 280px;
+        max-height: 317px;
         overflow: auto;
         background: #ffffff;
     }

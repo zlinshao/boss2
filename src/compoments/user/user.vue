@@ -338,7 +338,7 @@
                                     <th>员工</th>
                                     <th>部门</th>
                                     <th>职务</th>
-                                    <th>用户组</th>
+                                    <!--<th>用户组</th>-->
                                     <th class="text-center">人员状态</th>
                                     <th class="text-center">手机号</th>
                                     <th class="text-center">入职时间</th>
@@ -360,7 +360,7 @@
 
                                     <td><span v-for="item1 in item.position_id">{{item1.vocation}}</span></td>
 
-                                    <td><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>
+                                    <!--<td><span v-for="item1 in item.role">{{item1.title}}&nbsp;</span></td>-->
                                     <td v-if="item.status==1" class="text-center">
                                         <span class="label label-success ">在职</span>
                                     </td>
@@ -1304,5 +1304,8 @@
         width: 100%;
         padding: 0 20px;
         border-radius: 0;
+    }
+    div.table.table-responsive table tr td:first-child {
+        width: 140px;
     }
 </style>
