@@ -30,15 +30,6 @@
                         </div>
 
                         <div class="input-group">
-                            <SelectSubject @choose="houseSubject" :current="params.subject_id"
-                                           :msg="'科目搜索'"></SelectSubject>
-                            <span class="input-group-btn">
-                                <button class="btn btn-warning" id="Subject" type="button"
-                                        @click="search_empty()">清空</button>
-                            </span>
-                        </div>
-
-                        <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
                                    v-model="params.search" @keydown.enter.prevent="search(1)">
@@ -46,10 +37,6 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
-                        <div class="form-group" style="height: 39px;">
-                            <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
-                        </div>
-
                         <div class="form-group pull-right">
                             <a class="btn btn-success" @click="addPay">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
@@ -68,7 +55,7 @@
                             <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="pitch.length == 1 && rollbacks !== null">
+                        <li v-show="pitch.length == 1">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li v-show="pitch.length == 1">
@@ -146,10 +133,10 @@
         </div>
 
         <!--表格-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
-                    <table class="table table-advance table-hover">
+                    <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
                             <th class="text-center" v-if="recycle_bin">
@@ -176,28 +163,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in myData"
-                            :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1}">
+                        <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
                             <td v-if="recycle_bin">
-                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                                       @click="changeIndex($event,item.id,item.status,item.running_account_record)">
+                                <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                                       @click="changeIndex($event,item.id,item.status)">-->
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
+                                       @click.prevent="changeIndex($event,item.id,item.status)">
+                                    <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
+                                </label>
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td><span v-if="item.customer != null">{{item.customer.address}}</span></td>
+                            <!--<td><span v-if="item.customer != null">{{item.customer.name}}</span></td>-->
+                            <!--<td>{{item.description.staff_name}}</td>
+                            <td>{{item.description.address}}</td>
+                            <td>{{dict.pay_type[item.description.pay_type]}}</td>
+                            <td>{{item.description.price}}</td>-->
                             <td>{{dict.account_subject[item.subject_id]}}</td>
-                            <td>
-                                <span @click="able_show(1,item.amount_payable,item.id)" v-if="isActive !== item.id"
-                                      style="cursor: pointer;">
-                                    {{item.amount_payable}}
-                                </span>
-                                <span v-if="isActive === item.id">
-                                    <input type="text" class="form-control" v-model="amount"
-                                           style="margin-bottom: 5px;">
-                                    <a class="btn btn-default btn-xs" @click='able_show(2)'>取消</a>
-                                    <a class="btn btn-success btn-xs" @click="able_save(item.id)">保存</a>
-                                </span>
-
-                            </td>
+                            <td>{{item.amount_payable}}</td>
                             <td>{{item.amount_paid}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
@@ -344,18 +327,13 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
-                        <h4 class="modal-title">回滚</h4>
+                        <h4 class="modal-title">提示信息</h4>
                     </div>
                     <div class="modal-body">
-                        <h5 v-for="(key,index) in rollbacks">
-                            <label>
-                                <input type="checkbox" :checked="rollback_id.indexOf(index) > -1"
-                                       @click="change_index($event,index)" class="rollbacks"><span>{{key}}</span>
-                            </label>
-                        </h5>
+                        <h5>确定回滚吗？</h5>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                        <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
                         <button class="btn btn-danger btn-md" @click="rollback">确认</button>
                     </div>
                 </div>
@@ -369,7 +347,7 @@
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
-        <SelectHouse @House="getHouse" :house_status="'1'"></SelectHouse>
+        <!--<SelectHouse @House="getHouse"></SelectHouse>-->
 
         <SelectClient @clientPayAdd="getClient"></SelectClient>
 
@@ -391,7 +369,7 @@
     import STAFF from  '../../common/organization/selectStaff.vue'
     import DatePicker from '../../common/datePicker.vue'
 
-    import SelectHouse from '../../common/selectPayHouse.vue'
+    import SelectHouse from '../../common/selectHouse.vue'
     import SelectClient from '../../common/selectPayClient.vue'
     import SelectSubject from '../../common/selectSubject.vue'
     import Confirm from '../../common/confirm.vue'
@@ -415,10 +393,6 @@
 
         data(){
             return {
-                rollback_id: [],               //回滚ID
-                rollbacks: {},               //回滚
-                isActive: '',
-                amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
                 pitch: [],                  //选中id
                 status: [],                // 选中状态
@@ -468,8 +442,7 @@
                     staff_id: [],
                     status: '',
                     range: '',
-                    search: '',
-                    subject_id: '',                 //科目款项
+                    search: ''
                 },
                 tips: {
                     payable_sum: 0.00,          // 应付总额
@@ -533,59 +506,6 @@
             });
         },
         methods: {
-//              选择房屋
-            selectHouse(){
-                $('.selectHouse:eq(0)').modal('show');
-            },
-//              房屋信息
-            getHouse(data){
-                this.params.search = data.address;
-                this. search(1);
-            },
-//            清空科目
-            search_empty (val){
-                this.params.subject_id = '';
-                this.search(1);
-            },
-//            科目搜索
-            houseSubject(val){
-                this.params.subject_id = val;
-                this.search(1);
-            },
-//            编辑金额
-            able_show (val, m, id){
-                if (val === 1) {
-                    this.amount = m;
-                    this.isActive = id;
-                } else if (val === 2) {
-                    this.amount = '';
-                    this.isActive = '';
-                }
-            },
-//            保存金额编辑
-            able_save (id){
-                this.$http.post('account/payable/edit/' + id, {
-                    amount: this.amount
-                }).then((res) => {
-                    if (res.data.code === '18410') {
-                        this.search(this.beforePage);
-                        this.amount = '';
-                        this.isActive = '';
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
-            },
-
 //            清空
             clear_info (){
                 this.params.department_id = [];
@@ -659,27 +579,13 @@
             },
 //            回滚
             Rollback_show(){
-                this.rollback_id = [];
                 $('#Rollback').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
-//            回滚选择
-            change_index (ev, val){
-                if (ev.target.checked) {
-                    this.rollback_id.push(val);
-                } else {
-                    let index = this.rollback_id.indexOf(val);
-                    if (index > -1) {
-                        this.rollback_id.splice(index, 1);
-                    }
-                }
-            },
 //            回滚
             rollback (){
-                this.$http.put('account/payable/revert/' + this.pitch, {
-                    ra_id: this.rollback_id
-                }).then((res) => {
+                this.$http.post('account/payable/revert/' + this.pitch).then((res) => {
                     if (res.data.code === '18410') {
                         this.search(this.beforePage);
                         $('#Rollback').modal('hide');
@@ -798,12 +704,13 @@
                     });
                 });
             },
-//            列表多选框
-            changeIndex(ev, id, status, index){
-                this.rollbacks = index;
+//            多选框
+            changeIndex(ev, id, status){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
                 this.pitch = [];
                 this.status = [];
-                if (ev.target.checked) {
+                if (evInput.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
                 } else {
@@ -987,14 +894,6 @@
         }
     }
 
-    .input-group-btn {
-        vertical-align: top;
-    }
-
-    .input-group {
-        height: 39px;
-    }
-
     .tips {
         line-height: 30px;
         padding-bottom: 5px;
@@ -1032,14 +931,9 @@
         vertical-align: inherit;
     }
 
-    input[type=checkbox] {
+    table tr input[type=checkbox] {
         width: 17px;
         height: 17px;
-    }
-
-    .rollbacks {
-        margin-right: 10px;
-        vertical-align: sub;
     }
 
     textarea {
@@ -1062,19 +956,15 @@
         background-color: #78CD51;
     }
 
-    tr.pendable {
-        background-color: #D6D6D6;
-    }
-
-    th.red {
-        color: #e4393c;
-    }
-
     .status.jingdong {
         background-color: #e4393c;
     }
 
-    tbody > tr.reds {
+    .table-striped > tbody > tr.reds {
         background-color: #FFCECE;
+    }
+
+    th.red {
+        color: #e4393c;
     }
 </style>

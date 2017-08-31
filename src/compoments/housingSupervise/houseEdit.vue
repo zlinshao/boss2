@@ -14,7 +14,7 @@
                         </div>
 
                         <!--新增/编辑-->
-                        <div class="modal-body">
+                        <div class="modal-body has-js">
                             <form class="form-horizontal" role="form">
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div v-if="houseEdit.amap_json !==null && houseEdit.amap_json !==undefined">
@@ -119,9 +119,14 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">配套设施</label>
                                     <div class="col-lg-10">
-                                        <label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
+                                        <!--<label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
                                             <input type="checkbox" class="pull-left" :value="key" @click="rules(key,$event)"
                                             v-model="checkboxModel"> {{value}}
+                                        </label>-->
+                                        <label class="check first" v-for="(value,key) in myDictionary.facility"
+                                               :class="{'label_check':true,'c_on':houseEdit.facility.indexOf(key) > -1,'c_off':houseEdit.facility.indexOf(key)==-1}"
+                                               @click.prevent="rules(key,$event)">
+                                            <input type="checkbox" class="pull-left" :value="key" :checked="houseEdit.facility.indexOf(key) > -1"> {{value}}
                                         </label>
                                     </div>
                                 </div>
@@ -538,11 +543,25 @@
                 }
                 return -1;
             },
-            rules (rul, eve){
+            /*rules (rul, eve){
                 if (eve.target.checked === true) {
                     this.houseEdit.facility.push(rul);
                 }
                 if (eve.target.checked === false) {
+                    let index = this.houseEdit.facility.indexOf(rul);
+                    if (index > -1) {
+                        this.houseEdit.facility.splice(index, 1);
+                    }
+                }
+            },*/
+            rules (rul, eve){
+                let evInput = eve.target.getElementsByTagName('input')[0];
+//                console.log(evInput)
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.houseEdit.facility.push(rul);
+                }
+                if (!evInput.checked) {
                     let index = this.houseEdit.facility.indexOf(rul);
                     if (index > -1) {
                         this.houseEdit.facility.splice(index, 1);
@@ -670,9 +689,10 @@
 
     .check {
         display: inline-block;
-        padding: 5px 0;
+        /*padding: 5px 0;*/
         font-size: 14px;
         margin-top: 2px;
+        /*line-height: 7px;*/
     }
     .first{
         margin-left: 10px;

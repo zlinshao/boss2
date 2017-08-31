@@ -18,9 +18,9 @@
                         </span>
                         </div>
                     </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-3 col-lg-2" style="padding: 0;margin-right: 10px">
-                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                    @sendDate="getDate"></DatePicker>
+                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-3" style="padding: 0;margin-right: 10px">
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                        @sendDate="getDate"></DatePicker>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
                         <div class="input-group">
@@ -56,8 +56,8 @@
                 </div>
             </div>
         </section>
-        <section class="panel table table-responsive roll">
-            <table class="table table-advance table-hover">
+        <section class="panel table table-responsive roll has-js">
+            <table class="table table-striped table-advance table-hover">
                 <thead class="text-center">
                 <tr>
                     <th></th>
@@ -77,18 +77,18 @@
                 </thead>
                 <tbody class="text-center">
                 <tr class="text-center" v-for="item in LandlordList"
-                    :class="{'selected': pitch.indexOf(item.id) > -1,'freeze': item.freeze === 1}">
+                    :class="{'selected': pitch.indexOf(item.id) > -1}">
                     <td>
-                        <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                               v-if="item.freeze !== 1" @click="pitchId(item.id, $event)">
-                        <span v-if="item.freeze === 1" @click="recover(item.id)"
-                              class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
+                        <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id)==-1}"
+                               @click.prevent="pitchId(item.id, $event, item.name)">
+                            <input type="checkbox" class="pull-left"
+                                   :checked="pitch.indexOf(item.id) > -1">
+                        </label>
+                        <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                               @click="pitchId(item.id, $event)">-->
                     </td>
                     <td class="text-center">{{item.create_time}}</td>
-                    <td class="text-center">
-                        {{item.address}}&nbsp;
-                        <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
-                    </td>
+                    <td class="text-center">{{item.address}}</td>
                     <td class="text-center">{{item.customer_name}}</td>
                     <td class="text-center">{{item.months}}</td>
                     <td class="text-center">
@@ -133,8 +133,7 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link
-                                :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
+                        <router-link :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 1}}">
                             详情
                         </router-link>
                     </td>
@@ -216,34 +215,14 @@
             } else {
                 this.getLandlordList(1);
             }
+
         },
         methods: {
-//            恢复
-            recover (val){
-                this.$http.post('account/pending/recover', {
-                    customer_id: val,
-                    identity: 2,
-                }).then((res) => {
-                    if (res.data.code === '18810') {
-                        this.search();
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
-            },
 //            选中
             pitchId (rul, ev){
-                this.pitch = [];
-                if (ev.target.checked === true) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.pitch.push(rul);
                 } else {
                     let index = this.pitch.indexOf(rul);
@@ -384,8 +363,4 @@
         background: #FFFF6F !important;
     }
 
-    .freeze {
-        background-color: #D6D6D6;
-        color: #E4393C;
-    }
 </style>

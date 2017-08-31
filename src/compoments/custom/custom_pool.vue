@@ -109,7 +109,7 @@
         </section>
 
         <!--客户池列表-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -134,10 +134,12 @@
                         <tr v-for="list in custom_list"
                             :class="{'selected': pitch.indexOf(list.id) > -1}">
                             <td class="text-center">
-                                <label for="cus_id"></label>
-                                <input id="cus_id" type="checkbox" class="pull-left"
-                                       :checked="pitch.indexOf(list.id) > -1"
-                                       @click="rules(list.id, $event, list.name)">
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(list.id) > -1,'c_off':pitch.indexOf(list.id)==-1}"
+                                       @click.prevent="rules(list.id, $event, list.name)">
+                                    <input type="checkbox" class="pull-left"
+                                           :checked="pitch.indexOf(list.id) > -1">
+                                </label>
+
                             </td>
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
@@ -329,11 +331,13 @@
             },
 //            分配
             rules (rul, eve, cus){
-                if (eve.target.checked === true) {
+                let evInput = eve.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.pitch.push(rul);
                     this.cus_name.push(cus)
                 }
-                if (eve.target.checked === false) {
+                if (!evInput.checked) {
                     let index = this.pitch.indexOf(rul);
                     let cus_name = this.cus_name.indexOf(cus);
                     if (index > -1) {

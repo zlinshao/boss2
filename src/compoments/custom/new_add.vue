@@ -24,20 +24,20 @@
                         </div>
 
                         <!--新增/编辑-->
-                        <div class="modal-body">
+                        <div class="modal-body has-js">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">身份</label>
                                     <div class="col-lg-10 status1">
-                                        <label>
+                                        <label :class="{'label_radio':true,'r_on':cus_status==1,'r_off':cus_status!=1}">
                                             <input type="radio" name="status" value="1"
                                                    class="pull-left" v-model="cus_status">业主
                                         </label>
-                                        <label>
+                                        <label :class="{'label_radio':true,'r_on':cus_status==2,'r_off':cus_status!=2}">
                                             <input type="radio" name="status" value="2"
                                                    class="pull-left" v-model="cus_status">租客
                                         </label>
-                                        <label>
+                                        <label :class="{'label_radio':true,'r_on':cus_status==3,'r_off':cus_status!=3}">
                                             <input type="radio" name="status" value="3"
                                                    class="pull-left" v-model="cus_status">业主(代理人)
                                         </label>
@@ -64,11 +64,11 @@
                                     <label class="col-lg-2 col-sm-2 control-label">尊称&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10 status1">
-                                        <label>
+                                        <label :class="{'label_radio':true,'r_on':cus_gender==1,'r_off':cus_gender!=1}">
                                             <input type="radio" name="gender" value="1"
                                                    class="pull-left" v-model="cus_gender">先生
                                         </label>
-                                        <label>
+                                        <label :class="{'label_radio':true,'r_on':cus_gender==2,'r_off':cus_gender!=2}">
                                             <input type="radio" name="gender" value="2"
                                                    class="pull-left" v-model="cus_gender">女士
                                         </label>

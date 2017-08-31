@@ -89,15 +89,20 @@
         </section>
 
         <!--表格-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
                             <th class="text-center">
-                                <input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
-                                       @click="chooseAll($event)">
+                                <label for="allCheck"
+                                       :class="{'label_check':true,'c_on':myData.length!=0&&pitch.length==myData.length,'c_off':pitch.length!=myData.length}"
+                                       @click.prevent="chooseAll($event)">
+                                    <input id="allCheck" type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length">
+                                </label>
+                                <!--<input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"
+                                       @click="chooseAll($event)">-->
                             </th>
                             <th class="text-center">办公用品名称</th>
                             <th class="text-center">登记类型</th>
@@ -113,8 +118,13 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                                       @click="changeIndex($event,item.id,item.status)">
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
+                                       @click.prevent="changeIndex($event,item.id,item.status)">
+                                    <input type="checkbox"
+                                           :checked="pitch.indexOf(item.id) > -1">
+                                </label>
+                                <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                                       @click="changeIndex($event,item.id,item.status)">-->
                             </td>
                             <td>{{item.inventory_name}}</td>
                             <td>{{dict.register_type[item.register_type]}}</td>
@@ -278,14 +288,16 @@
 
             // 全选
             chooseAll(ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
                 this.pitch.splice(0, this.pitch.length);
-                if (ev.target.checked) {
+                if (evInput.checked) {
                     for (let i = 0; i < this.myData.length; i++) {
                         this.pitch.push(this.myData[i].id);
                     }
                 }
                 this.status.splice(0, this.status.length);
-                if (ev.target.checked) {
+                if (evInput.checked) {
                     for (let i = 0; i < this.myData.length; i++) {
                         this.status.push(this.myData[i].id);
                     }
@@ -295,7 +307,9 @@
             },
             changeIndex(ev, id, status){
 //                console.log("一开始"+this.operId);
-                if (ev.target.checked) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
                     this.operId = id;
