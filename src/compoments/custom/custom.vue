@@ -109,9 +109,6 @@
                                     class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
                         <li>
-                            <!--<h5><a @click="remind_id"><i class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>-->
-                        </li>
-                        <li>
                             <h5><a @click="add_state('pool')"><i
                                     class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
@@ -159,7 +156,6 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            <!--<th class="text-center"></th>-->
                             <th class="text-center width80">客户名称</th>
                             <th class="text-center width50">尊称</th>
                             <th class="text-center width110">手机号</th>
@@ -183,7 +179,6 @@
                                        :checked="pitch.indexOf(list.id) > -1"
                                        @click="rules(list.id, $event, list.name)">
                             </td>
-                            <!--<td><a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a></td>-->
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
                             <td class="text-center">{{list.mobile}}</td>
@@ -198,7 +193,6 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!--<span>{{list.follow}}%</span>-->
                             </td>
                             <td class="text-center">{{select_list.source[list.source]}}</td>
                             <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
@@ -239,11 +233,9 @@
         <!--分页-->
         <Page @pag="sea_cus" :pg="return_sea.paging" :beforePage="return_sea.beforePage"></Page>
 
-        <!--增加提醒-->
-        <!--<AddRemind :remindId="pitch" @cus_seccess="succ"></AddRemind>-->
-
         <Status :state="info"></Status>
 
+        <!--加载-->
         <Loading v-if="wait === 1"></Loading>
 
     </div>
@@ -251,7 +243,6 @@
 
 <script>
     import Page from '.././common/page.vue'                             //分页
-    //    import AddRemind from  './addremind.vue'                          //增加提醒
     import newAdd from './new_add.vue'                                  //新增/修改客户
     import Status from '../common/status.vue'                           //提示信息
     import remindDaily from './remindDaily.vue'                         //修改客户
@@ -464,7 +455,6 @@
                 if (eve.target.checked === true) {
                     this.pitch.push(rul);
                     this.cus_name.push(cus);
-
                     this.$http.get('core/customer/readCustomer/id/' + rul).then((res) => {
                         this.temporary_save = {};
                         this.temporary_save = res.data.data;
@@ -501,12 +491,7 @@
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
-//            增加提醒
-            remind_id (){
-                $('#addRemind1').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
-            },
+
 //            新增客户
             customers_new (val){
                 this.revise_state = val;
@@ -536,7 +521,6 @@
                     } else if (this.top === 2) {
                         this.top = 1;
                     }
-
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
                         this.return_sea.paging = res.data.data.pages;

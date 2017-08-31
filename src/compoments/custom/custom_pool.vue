@@ -153,7 +153,6 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!--<span>{{list.follow}}%</span>-->
                             </td>
                             <td class="text-center">{{select_list.source[list.source]}}</td>
                             <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
@@ -180,8 +179,10 @@
 
         <!--分配-->
         <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
+
         <!--提示信息-->
         <Status :state='info'></Status>
+
         <!--分页-->
         <Page @pag="search_pool" :pg="return_sea.paging" :beforePage="return_sea.beforePage"></Page>
     </div>
@@ -258,24 +259,7 @@
             search_c (){
                 this.search_pool(1);
             },
-//            分配成功更新列表
-//            pitch_dele (){
-//                this.$http.post('core/customer_pool/customerpool').then((res) => {
-//                    if (res.data.code === '70040') {
-//                        this.custom_list = res.data.data.list;
-//                        this.return_sea.paging = res.data.data.pages;
-//                        this.isShow = false;
-//                    } else {
-//                        this.custom_list = [];
-//                        this.isShow = true;
-//                        //失败信息 ***
-//                        this.info.error = res.data.msg;
-//                        //显示失败弹窗 ***
-//                        this.info.state_error = true;
-//                    }
-//
-//                });
-//            },
+
 //            客户列表
             collectList (val){
                 if (this.sea_status !== 1) {
