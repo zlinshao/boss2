@@ -450,7 +450,6 @@
 //            共享客户请求
             proving (val){
                 this.$http.get('core/customer/sharecustomer/id/' + val, {}).then((res) => {
-                    console.log(res.data);
                     if (res.data.code === '70060') {
                         $('#customModel').modal('hide');        //成功关闭模态框
                         this.cus_cancel();

@@ -1,10 +1,5 @@
 <template>
     <div>
-        <!--<ol class="breadcrumb">-->
-        <!--<li><a href="#">Home</a></li>-->
-        <!--<li><a href="#">Library</a></li>-->
-        <!--<li class="active">Data</li>-->
-        <!--</ol>-->
         <section id="main-content" style="margin-top:0;">
             <section class="wrapper">
                 <div class="mail-box">

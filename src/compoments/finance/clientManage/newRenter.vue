@@ -19,8 +19,8 @@
                         </div>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-3 col-lg-2" style="padding: 0;margin-right: 10px">
-                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                        @sendDate="getDate"></DatePicker>
+                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                    @sendDate="getDate"></DatePicker>
                     </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
                         <div class="input-group">
@@ -133,7 +133,8 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
+                        <router-link
+                                :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
                             详情
                         </router-link>
                     </td>
@@ -219,12 +220,23 @@
         methods: {
 //            恢复
             recover (val){
-                this.$http.post('account/pending/recover',{
+                this.$http.post('account/pending/recover', {
                     customer_id: val,
                     identity: 2,
                 }).then((res) => {
                     if (res.data.code === '18810') {
-
+                        this.search();
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
                     }
                 })
             },
