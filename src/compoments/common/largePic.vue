@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="modal fade modal-dialog-center in largePic" id="largePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal fade modal-dialog-center in largePic" id="largePic" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content-wrap">
                     <!--<div class="modal-header white-bg white">
@@ -10,7 +11,7 @@
                         <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <div class="modal-body" id="pic">
                             <div class="imgContainer">
-                                <img id="img" v-if="index!=0" :src="src[index].raw">
+                                <img id="img" v-if="index!=0" :src="src[index].raw" @mousemove.prevent="">
                                 <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
                             </div>
 
@@ -57,6 +58,28 @@
             this.closeModal();
 //            console.log(this.largePic);
 
+        },
+        mounted(){
+            $('.largePic').on('shown.bs.modal', function (e) {
+
+                let div = this.firstChild.firstChild;
+                console.log(div)
+                div.onmousedown = function (ev) {
+                     let oevent = ev || event;
+                     let distanceX = oevent.clientX - div.offsetLeft;
+                     let distanceY = oevent.clientY - div.offsetTop;
+
+                     document.onmousemove = function (ev) {
+                         let oevent = ev || event;
+                         div.style.left = oevent.clientX - distanceX + 'px';
+                         div.style.top = oevent.clientY - distanceY + 'px';
+                     };
+                     document.onmouseup = function () {
+                         document.onmousemove = null;
+                         document.onmouseup = null;
+                     };
+                 }
+            })
         },
 
         watch :{
@@ -217,7 +240,7 @@
                     close.css('bottom','26px');
                     close.css('left','auto');
                 }
-            }
+            },
         }
     }
 </script>
