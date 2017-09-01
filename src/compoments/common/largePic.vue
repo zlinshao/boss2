@@ -18,15 +18,15 @@
                         </div>
                     </div>
                     <div class="changePic">
-                        <div @click="prev" title="上一张"><i class="fa fa-long-arrow-left"></i></div>
-                        <div @click="rotateLeft" title="逆时针旋转"><i class="fa fa-rotate-left"></i></div>
+                        <div @click="prev" @mousedown.stop="" title="上一张"><i class="fa fa-long-arrow-left"></i></div>
+                        <div @click="rotateLeft" @mousedown.stop="" title="逆时针旋转"><i class="fa fa-rotate-left"></i></div>
                         <div title="下载图片">
-                            <a v-if="index!=0" :href="src[index].raw" download="">
+                            <a v-if="index!=0" :href="src[index].raw" download="" @mousedown.stop="">
                                 <i class="fa fa-download"></i>
                             </a>
                         </div>
-                        <div @click="rotateRight" title="顺时针旋转"><i class="fa fa-rotate-right"></i></div>
-                        <div @click="next" title="下一张"><i class="fa fa-long-arrow-right"></i></div>
+                        <div @click="rotateRight" @mousedown.stop="" title="顺时针旋转"><i class="fa fa-rotate-right"></i></div>
+                        <div @click="next" @mousedown.stop="" title="下一张"><i class="fa fa-long-arrow-right"></i></div>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             $('.largePic').on('shown.bs.modal', function (e) {
 
                 let div = this.firstChild.firstChild;
-                console.log(div)
+//                console.log(div)
                 div.onmousedown = function (ev) {
                      let oevent = ev || event;
                      let distanceX = oevent.clientX - div.offsetLeft;
