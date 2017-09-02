@@ -163,7 +163,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in myData" :class="{'reds': item.aproach === 1}">
+                        <tr class="text-center" v-for="item in myData"
+                            :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1}">
                             <td v-if="recycle_bin">
                                 <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
                                        @click="changeIndex($event,item.id,item.status)">-->
@@ -229,7 +230,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'payTime'" :currentDate="[pay_time]" :placeholder="'付款时间'" @sendDate="getDate1"></DatePicker>
+                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'payTime'"
+                                                :currentDate="[pay_time]" :placeholder="'付款时间'"
+                                                @sendDate="getDate1"></DatePicker>
                                     <!--<input @click="remindData" type="text" name="addtime" v-model="pay_time"
                                            placeholder="付款时间"
                                            class="form-control form_datetime" readonly>-->
@@ -467,10 +470,10 @@
                     id: '',
                     msg: ''
                 },
-                dateConfigure1 : [
+                dateConfigure1: [
                     {
-                        range : false,
-                        needHour : false,
+                        range: false,
+                        needHour: false,
                     }
                 ],
             }
@@ -942,6 +945,10 @@
 
     tbody tr td .status {
         color: white;
+    }
+
+    tr.pendable {
+        background-color: #D6D6D6;
     }
 
     .status.yellow {
