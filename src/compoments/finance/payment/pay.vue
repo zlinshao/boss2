@@ -967,7 +967,7 @@
         background-color: #e4393c;
     }
 
-    .table-striped > tbody > tr.reds {
+    tbody > tr.reds {
         background-color: #FFCECE;
     }
 
