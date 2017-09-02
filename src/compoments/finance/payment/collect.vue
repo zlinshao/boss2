@@ -327,7 +327,7 @@
         </div>
 
         <!--回滚-->
-        <div role="dialog" class="modal fade bs-example-modal-sm" id="Rollback">
+        <div role="dialog" class="modal fade bs-example-modal-sm has-js" id="Rollback">
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -338,8 +338,11 @@
                     </div>
                     <div class="modal-body">
                         <h5 v-for="(key,index) in rollbacks">
-                            <label>
-                                <input type="checkbox" @click="change_index($event,index)"
+                            <label
+                                    :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
+                                    'c_off':rollback_id.indexOf(index) == -1}"
+                                    @click.prevent="change_index($event,index)">
+                                <input type="checkbox"
                                        :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
                             </label>
                         </h5>
@@ -668,7 +671,9 @@
             },
 //            回滚选择
             change_index (ev, val){
-                if (ev.target.checked) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.rollback_id.push(val);
                 } else {
                     let index = this.rollback_id.indexOf(val);
