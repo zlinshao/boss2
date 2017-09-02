@@ -126,11 +126,22 @@
                 this.setDate();
             },
         },
-        updated (){
-//            this.remindData();
-        },
         mounted (){
             this.remindData();
+            let _this = this;
+            $('body').bind('click',function (e) {
+                let mobileTime = $('.mobileTime');
+//                console.log(_this.showPicker)
+                for (let i = 0 ; i<mobileTime.length ; i++){
+                    if (_this.showPicker){
+                        let input = $(mobileTime[i]).prev()[0];
+                        if (!(e.target==mobileTime[i] || mobileTime[i].contains(e.target) || e.target==input)){
+                            _this.showPicker = false;
+                        }
+                    }
+                }
+
+            })
         },
         methods: {
             remindData (){
