@@ -240,6 +240,22 @@
                     }
                 );
 
+            let _this = this;
+            $('body').bind('click',function (e) {
+//                console.log(e.target)
+//                console.log(this.showChooseSubject)
+//                if (this.showChooseSubject){
+                let subjects = document.getElementsByClassName('subjectList')[0];
+                if (subjects.style.display!='none'){
+                    let input = $(subjects).prev()[0];
+                    if (!(e.target==subjects || subjects.contains(e.target) || e.target==input)){
+                        _this.reset();
+                    }
+                }
+
+//                }
+            })
+
         },
         watch : {
             'formData.superior_id' : {

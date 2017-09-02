@@ -50,6 +50,24 @@
                         this.dict = res.data;
                     }
                 );
+//            console.log(document.getElementsByTagName('body')[0]);
+            let _this = this;
+            $('body').bind('click',function (e) {
+//                console.log(e.target)
+//                console.log(this.showChooseSubject)
+//                if (this.showChooseSubject){
+                let subjects = document.getElementsByClassName('subjectList');
+                for (let i = 0;i<subjects.length;i++){
+                    if (subjects[i].style.display!='none'){
+                        let input = $(subjects[i]).prev()[0];
+                        if (!(e.target==subjects[i] || subjects[i].contains(e.target) || e.target==input)){
+                            _this.reset();
+                        }
+                    }
+                }
+
+//                }
+            })
         },
         methods: {
             changeCurId(id, name){
