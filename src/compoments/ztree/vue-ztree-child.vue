@@ -35,7 +35,6 @@
 						</ul>
 					</div>
 				</div>
-
 				<ul :class="ulClassVal" v-show='model.isFolder'>
 					<ztree-item v-for="(item,i) in model.son" :key='i' :callback='callback'
 								:expandfunc='expandfunc' :cxtmenufunc='cxtmenufunc' :model.sync="item" :num.sync='i'
@@ -44,16 +43,14 @@
 				</ul>
 			</li>
 		</div>
-		<editDpm></editDpm>
 	</div>
 </template>
 
 <script>
-	let dushuai = 25;
-	import editDpm from  '../user/editDpm.vue'
+	let operateId = '';
 	export default{
 		name: 'ztreeItem',
-        components:{editDpm},
+        components:{},
         data(){
             return{
 
@@ -174,7 +171,6 @@
 			},
 			open(val){
 				val.isFolder = !val.isFolder;
-				console.log(dushuai)
 //                    val.isExpand = !val.isExpand;
 //                    if(typeof this.expandfunc == "function" && val.isExpand) {
 //                        if(val.loadNode!=2) {
@@ -194,7 +190,6 @@
                 e.target.style.color = '#316AC5';
 			},
 			edit(val){
-			  	console.log(dushuai)
 				$('#myModalEditDpm').modal('show');
 			}
     },
