@@ -8,7 +8,7 @@
 					<span :class='model.iconClass' v-show='model.iconClass'></span>
 
 					<div class="dropdown">
-                        <span class="dropdown-toggle" data-toggle="dropdown"
+                        <span class="dropdown-toggle" data-toggle="dropdown" @click=" currentNode($event)"
                               aria-haspopup="true" aria-expanded="false">
                            {{model.name}}
                         </span>
@@ -187,8 +187,13 @@
 //                        val.isFolder = !val.isFolder;
 //                    }
 			},
+            currentNode(e){
+				for(let i=0; i < document.getElementsByClassName('dropdown-toggle').length;i++){
+                    document.getElementsByClassName('dropdown-toggle')[i].style.color = '#333'
+				}
+                e.target.style.color = '#316AC5';
+			},
 			edit(val){
-			  	dushuai = val.id;
 			  	console.log(dushuai)
 				$('#myModalEditDpm').modal('show');
 			}
