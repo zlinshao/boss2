@@ -93,6 +93,9 @@ import BatchApply from './compoments/office/batchApply.vue'                     
 import OfficeLibrary from './compoments/office/officeLibrary/officeLibrary.vue'                 // 办公用品库管理
 import OfficeDetail from './compoments/office/officeManage/officeDetail.vue'                    // 办公用品详情
 
+import Organize from  './compoments/user/organization.vue'                                      //组织架构
+import PositionManage from './compoments/user/positionManage.vue'
+
 export default[
     {
         path: '/',                  //重定向主页
@@ -498,5 +501,15 @@ export default[
         path: '/officeDetail',
         name: 'OfficeDetail',
         component: OfficeDetail
+    },
+    {       //组织架构
+        path: '/organize',
+        name: 'Organize',
+        component: Organize
+    },
+    {       //职位管理
+        path: '/positionManage',
+        name: 'PositionManage',
+        component: PositionManage
     },
 ]
