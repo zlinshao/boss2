@@ -99,6 +99,9 @@ import Article from './compoments/staffSquare/article/article.vue'              
 import ArticleDetail from './compoments/staffSquare/article/articleDetail.vue'                    // 文章详情
 import PostArticle from './compoments/staffSquare/article/postArticle.vue'                    // 发布
 
+import Organize from  './compoments/user/organization.vue'                                      //组织架构
+import PositionManage from './compoments/user/positionManage.vue'
+
 export default[
     {
         path: '/',                  //重定向主页
@@ -529,5 +532,15 @@ export default[
         path: '/postArticle',
         name: 'PostArticle',
         component: PostArticle
+    },
+    {       //组织架构
+        path: '/organize',
+        name: 'Organize',
+        component: Organize
+    },
+    {       //职位管理
+        path: '/positionManage',
+        name: 'PositionManage',
+        component: PositionManage
     },
 ]

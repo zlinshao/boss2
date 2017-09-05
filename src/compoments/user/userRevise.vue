@@ -31,15 +31,96 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >籍贯</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" v-model="origin_addr" class="form-control" placeholder="籍贯">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >家庭住址</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" v-model="home_addr" class="form-control" placeholder="家庭住址">
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <label class="col-sm-2 control-label col-lg-2" >婚姻状况</label>
+                                        <div class="col-lg-4 ">
+                                            <select class="form-control" v-model="marital_status">
+                                                <option value="">请选择</option>
+                                                <option :value="key" v-for="(value,key) in dictionary.marital_status">{{value}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >生育状况</label>
+                                        <div class="col-lg-4">
+                                            <label class="radio-inline" v-for="(value,key) in dictionary.fertility_status">
+                                                <input type="radio" :value="key" v-model="fertility_status">{{value}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >政治面貌</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" v-model="political_status">
+                                                <option value="">请选择</option>
+                                                <option :value="key" v-for="(value,key) in dictionary.political_status">{{value}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >学历</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" v-model="education">
+                                                <option value="">请选择</option>
+                                                <option :value="key" v-for="(value,key) in dictionary.education">{{value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >毕业院校</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="school" placeholder="毕业院校">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >专业</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="major" placeholder="专业">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >薪资</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="salary" placeholder="薪资">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >毕业时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'graduationtime'"
+                                                        :currentDate="[graduation_time]"                                                                                                                :placeholder="'毕业时间'"@sendDate="getGraduateDate"></DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >转正时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'fulltime'"
+                                                        :currentDate="[full_time]"                                                                                                                      :placeholder="'转正时间'"@sendDate="getFullDate"></DatePicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >买车时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'car2'" :currentDate="[car]"                                                                             :placeholder="'买车时间'"@sendDate="getCarDate"></DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >买房</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house2'" :currentDate="[house]"                                                                         :placeholder="'买车时间'"@sendDate="getHouseDate"></DatePicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >手机号码</label>
                                         <div class="col-lg-4">
                                             <input type="text" class="form-control" v-model="mobile" placeholder="手机号码">
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >生日</label>
                                         <div class="col-md-4">
-                                            <input @click="remindData" type="text"
-                                                   class="form-control form_datetime1" v-model="birthday"
-                                                   readonly value="" placeholder="生日">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'birthday2'" :currentDate="[birthday]"                                                                   :placeholder="'生日'"@sendDate="getBirthDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -222,9 +303,7 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
-                                            <input @click="enrollDate" type="text"
-                                                   class="form-control form_datetime2" v-model="enroll"
-                                                    readonly value="" placeholder="入职时间">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll2'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -267,9 +346,10 @@
 <script>
     import Status from '../common/status.vue';
     import upLoad from '../common/upload.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default {
         props:['editDate'],
-        components: { Status ,upLoad},
+        components: { Status ,upLoad , DatePicker},
         data(){
             return {
                 myAccount:this.account,
@@ -309,6 +389,19 @@
                 enroll:'',          //入职时间
                 id_copy:'',         //身份证复印件
                 photo:'',           //有无照片
+                origin_addr : '',   //籍贯
+                home_addr : '',     //家庭住址
+                marital_status : '', //婚姻
+                fertility_status : '',//生育
+                political_status : '',//政治面貌
+                education : '',     //学历
+                school : '',        //学校
+                major :  '',        //专业
+                graduation_time : '',    //毕业时间
+                full_time : '',      //转正日期
+                car : '',           //买车时间
+                house : '',         //买房时间
+                salary : '',
                 myResult: this.editDate,
                 reviseDpm:false,
                 //用户组写入
@@ -335,17 +428,27 @@
                 complete_ok:'ok',
                 isFinance : '', //  财务角色
                 module : '',
+                dateConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                    }
+                ],
+                dateTopConfigure : [
+                    {
+                        range : false,
+                        needHour : false,
+                        position : 'top-right'
+                    }
+                ],
+                dictionary : [],
             }
         },
         mounted(){
             this.getFirstDepart(); //请求公司列表
             this.searchRoles();    //请求角色列表
             this.getLevel();       //请求等级字典
-        },
-        updated (){
-//            时间选择
-            this.remindData();
-            this.enrollDate();
+            this.getDictionary();
         },
         watch:{
             editDate(val) {
@@ -359,7 +462,6 @@
                 this.id_Pic.cus_idPhotos = val.album.id_pic;
                 for (let i in this.id_Pic.cus_idPhotos) {
                     this.id_Pic.cus_idPhoto.push(i);
-                    console.log(this.id_Pic.cus_idPhoto)
                 }
                 this.birthday=this.myResult.birthday;
                 this.mobile=this.myResult.mobile;
@@ -388,6 +490,22 @@
                 this.id_copy=this.myResult.id_copy;
                 this.photo=this.myResult.photo;
                 this.enroll=this.myResult.enroll_time;
+
+
+                this.origin_addr  = this.myResult.origin_addr;   //籍贯
+                this.home_addr  = this.myResult.home_addr;     //家庭住址
+                this.marital_status  = this.myResult.marital_status; //婚姻
+                this.fertility_status  = this.myResult.fertility_status;//生育
+                this.political_status  = this.myResult.political_status;//政治面貌
+                this.education  = this.myResult.education;    //学历
+                this.school  = this.myResult.school;        //学校
+                this.major  = this.myResult.major;        //专业
+                this.graduation_time  = this.myResult.graduation_time;    //毕业时间
+                this.full_time  = this.myResult.full_time;      //转正日期
+                this.car  = this.myResult.car;          //买车时间
+                this.house  = this.myResult.house;         //买房时间
+                this.salary   = this.myResult.salary ;         //买房时间
+                this.duty  = this.myResult.duty;         //买房时间
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
@@ -401,6 +519,11 @@
             }
         },
         methods:{
+            getDictionary(){
+                this.$http.get('manager/user/dict').then((res)=>{
+                    this.dictionary=res.data.user;
+                })
+            },
             getFirstDepart(){
                 this.$http.get('manager/user/departmentWb').then((res)=>{
                     this.firstDepart=res.data.data;
@@ -556,33 +679,6 @@
                     this.id_Pic.cus_idPhoto.splice(id, 1);
                 }
             },
-
-            enrollDate(){
-                $('.form_datetime2').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    pickerPosition: 'top-left',
-                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    this.enroll = ev.target.value;
-                }.bind(this));
-            },
-
-            remindData (){
-                $('.form_datetime1').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    this.birthday = ev.target.value;
-                }.bind(this));
-            },
             selectDep(){
                 this.reviseDpm==false ? this.reviseDpm=true:this.reviseDpm=false;
                 this.myResult==[];
@@ -613,6 +709,19 @@
                                     "enroll":this.enroll,
                                     "id_pic":this.id_Pic.cus_idPhoto,
                                     "module":this.module,
+                                    "origin_addr" : this.origin_addr,   //籍贯
+                                    "home_addr" : this.home_addr,     //家庭住址
+                                    "marital_status" : this.marital_status, //婚姻
+                                    "fertility_status" : this.fertility_status,//生育
+                                    "political_status" : this.political_status,//政治面貌
+                                    "education" : this.education,     //学历
+                                    "school" : this.school,        //学校
+                                    "major" : this.major,        //专业
+                                    "graduation_time" : this.graduation_time,    //毕业时间
+                                    "full_time" : this.full_time,      //转正日期
+                                    "car" : this.car,           //买车时间
+                                    "house" : this.house,         //买房时间
+                                    "salary" : this.salary,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{
@@ -682,6 +791,25 @@
                     this.info.state_error = true;
                 }
             },
+            // 毕业时间
+            getGraduateDate(val){
+                this.graduation_time = val;
+            },
+            getFullDate(val){
+                this.full_time = val;
+            },
+            getCarDate(val){
+                this.car = val;
+            },
+            getHouseDate(val){
+                this.house = val;
+            },
+            getBirthDate(val){
+                this.birthday = val;
+            },
+            getEnrollDate(val){
+                this.enroll = val;
+            }
         }
     }
 </script>
@@ -709,5 +837,8 @@
     .financeRole{
         color:#59ace2;
         font-size: 16px;
+    }
+    .radio-inline,textarea{
+        margin-bottom: 18px;
     }
 </style>
