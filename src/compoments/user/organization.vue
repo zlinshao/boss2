@@ -1,5 +1,31 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>人资管理</li>
+            <li class="active">组织架构</li>
+        </ol>
+        <section class="panel">
+            <!--未选中-->
+            <div class="panel-body">
+                <div>
+                    <div class="pull-left">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-pencil-square-o"></i>&nbsp;编辑部门
+                        </button>
+                    </div>
+                    <div class="pull-left">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-plus-square"></i>&nbsp;新建下级部门
+                        </button>
+                    </div>
+                    <div class="pull-left">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-exchange"></i>&nbsp;调迁部门
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
         <div>
             <vue-ztree :list.sync='ztreeDataSource' :func='nodeClick' :expand='expandClick'
                        :contextmenu='contextmenuClick' :is-open='true'>
@@ -81,3 +107,8 @@
 
     }
 </script>
+<style scoped>
+    .pull-left{
+        margin-right: 10px;
+    }
+</style>

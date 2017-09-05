@@ -265,7 +265,7 @@
                         this.allId = [];
                         this.pages = '';
                         this.isShow = true;
-                        this.Waiting = true;
+                        this.Waiting = false;
                     }
                 })
             },
