@@ -308,8 +308,9 @@
             edit(id){
                 $('.rem_div').remove();
                 $('#myModalRevise').modal('show');
-                this.$http.get('manager/user/readUser/id/' + id).then((res) => {
-                    this.editData = res.data.data;
+                this.$http.post('manager/user/readUser/id/' + id).then((res) => {
+                    console.log(res.data.data.data)
+                    this.editData = res.data.data.data;
                 })
             },
             //启用账号

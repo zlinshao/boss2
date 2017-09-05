@@ -191,7 +191,7 @@
                                         <div class="col-lg-4">
                                             <select  class="form-control" v-model="position_id">
                                                 <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in dictionary.status">{{item.vocation}}</option>
+                                                <option :value="item.id" v-for="item in positionList">{{item.vocation}}</option>
                                             </select>
                                         </div>
                                     </div>
