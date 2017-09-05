@@ -52,7 +52,7 @@
 
 
         <!--表格-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -68,7 +68,11 @@
                         <tbody>
                         <tr :class="{'lightYellow' : operId===item.id , 'text-center' : true}" v-for="item in myData">
                             <td>
-                                <input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id)">
+                                <!--<input type="checkbox" :checked="operId===item.id" @click="changeIndex($event,item.id)">-->
+                                <label :class="{'label_check':true,'c_on':operId===item.id,'c_off':operId!==item.id}"
+                                       @click.prevent="changeIndex($event,item.id)">
+                                    <input type="checkbox" :value="item.id" :checked="operId===item.id">
+                                </label>
                             </td>
                             <td>{{item.root_id==0?'':dict.subject_root[item.root_id]}}</td>
                             <td>{{item.title}}</td>
@@ -236,6 +240,22 @@
                     }
                 );
 
+            let _this = this;
+            $('body').bind('click',function (e) {
+//                console.log(e.target)
+//                console.log(this.showChooseSubject)
+//                if (this.showChooseSubject){
+                let subjects = document.getElementsByClassName('subjectList')[0];
+                if (_this.showChooseSubject){
+                    let input = $(subjects).prev()[0];
+                    if (!(e.target==subjects || subjects.contains(e.target) || e.target==input)){
+                        _this.reset();
+                    }
+                }
+
+//                }
+            })
+
         },
         watch : {
             'formData.superior_id' : {
@@ -249,7 +269,9 @@
         methods : {
             changeIndex(ev,id){
 //                console.log("一开始"+this.operId);
-                if (ev.currentTarget.checked){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked){
                     this.operId = id;
 //                    console.log(this.operId);
                 }else {

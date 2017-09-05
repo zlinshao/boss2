@@ -109,7 +109,7 @@
         </section>
 
         <!--客户池列表-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
@@ -134,10 +134,12 @@
                         <tr v-for="list in custom_list"
                             :class="{'selected': pitch.indexOf(list.id) > -1}">
                             <td class="text-center">
-                                <label for="cus_id"></label>
-                                <input id="cus_id" type="checkbox" class="pull-left"
-                                       :checked="pitch.indexOf(list.id) > -1"
-                                       @click="rules(list.id, $event, list.name)">
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(list.id) > -1,'c_off':pitch.indexOf(list.id)==-1}"
+                                       @click.prevent="rules(list.id, $event, list.name)">
+                                    <input type="checkbox" class="pull-left"
+                                           :checked="pitch.indexOf(list.id) > -1">
+                                </label>
+
                             </td>
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
@@ -153,7 +155,6 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!--<span>{{list.follow}}%</span>-->
                             </td>
                             <td class="text-center">{{select_list.source[list.source]}}</td>
                             <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
@@ -180,8 +181,10 @@
 
         <!--分配-->
         <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
+
         <!--提示信息-->
         <Status :state='info'></Status>
+
         <!--分页-->
         <Page @pag="search_pool" :pg="return_sea.paging" :beforePage="return_sea.beforePage"></Page>
     </div>
@@ -258,24 +261,7 @@
             search_c (){
                 this.search_pool(1);
             },
-//            分配成功更新列表
-//            pitch_dele (){
-//                this.$http.post('core/customer_pool/customerpool').then((res) => {
-//                    if (res.data.code === '70040') {
-//                        this.custom_list = res.data.data.list;
-//                        this.return_sea.paging = res.data.data.pages;
-//                        this.isShow = false;
-//                    } else {
-//                        this.custom_list = [];
-//                        this.isShow = true;
-//                        //失败信息 ***
-//                        this.info.error = res.data.msg;
-//                        //显示失败弹窗 ***
-//                        this.info.state_error = true;
-//                    }
-//
-//                });
-//            },
+
 //            客户列表
             collectList (val){
                 if (this.sea_status !== 1) {
@@ -345,11 +331,13 @@
             },
 //            分配
             rules (rul, eve, cus){
-                if (eve.target.checked === true) {
+                let evInput = eve.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.pitch.push(rul);
                     this.cus_name.push(cus)
                 }
-                if (eve.target.checked === false) {
+                if (!evInput.checked) {
                     let index = this.pitch.indexOf(rul);
                     let cus_name = this.cus_name.indexOf(cus);
                     if (index > -1) {

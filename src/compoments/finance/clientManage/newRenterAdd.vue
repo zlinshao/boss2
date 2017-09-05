@@ -1022,8 +1022,7 @@
             //                });
             //            },
             //              新增
-            save(num, address)
-            {
+            save(num, address){
 //                保存为草稿
                 this.$http.post(address, {
                     id: this.renter_id,
@@ -1060,6 +1059,7 @@
                     if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/rent/generate') {
                         $('#newRenterAdd').modal('hide');
                         this.$emit('success_');
+                        this.closeModal();
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -1068,6 +1068,7 @@
                         this.info.state_success = true;
                     } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/rent/generate') {
                         this.$emit('success_');
+                        this.closeModal();
                         $('#clientAdd1').modal('hide');
                         $('#newRenterAdd').modal('hide');
                         //成功信息 ***
@@ -1092,8 +1093,7 @@
             }
             ,
             //            修改
-            revise()
-            {
+            revise(){
                 this.$http.put('finance/customer/rent/' + this.cus_id, {
                     staff_id: this.staffId,                     //签约人
                     contact: this.cus_phone,                    //客户联系方式
@@ -1127,6 +1127,7 @@
                 }).then((res) => {
                     if (res.data.code === '90000') {
                         this.$emit('success_');
+                        this.closeModal();
                         $('#newRenterAdd').modal('hide');
                         //成功信息 ***
                         this.info.success = res.data.msg;
@@ -1145,7 +1146,6 @@
             },
             getDate(val){
                 this.complete_date = val;
-//                console.log(this.contractRenew.start_date)
             },
             getDate1(val){
                 this.pendingContract = val;

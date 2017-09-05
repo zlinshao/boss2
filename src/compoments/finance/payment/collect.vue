@@ -148,7 +148,7 @@
         </div>
 
         <!--表格-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
                     <table class="table table-advance table-hover">
@@ -176,8 +176,12 @@
                         <tr class="text-center" v-for="item in myData"
                             :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1}">
                             <td v-if="recycle_bin">
-                                <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                                       @click="changeIndex($event,item.id,item.status,item.running_account_record)">
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
+                                       @click.prevent="changeIndex($event,item.id,item.status,item.running_account_record)">
+                                    <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
+                                </label>
+                                <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                                       @click="changeIndex($event,item.id,item.status,item.running_account_record)">-->
                             </td>
                             <td>{{item.pay_date}}</td>
                             <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
@@ -323,7 +327,7 @@
         </div>
 
         <!--回滚-->
-        <div role="dialog" class="modal fade bs-example-modal-sm" id="Rollback">
+        <div role="dialog" class="modal fade bs-example-modal-sm has-js" id="Rollback">
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -334,8 +338,11 @@
                     </div>
                     <div class="modal-body">
                         <h5 v-for="(key,index) in rollbacks">
-                            <label>
-                                <input type="checkbox" @click="change_index($event,index)"
+                            <label
+                                    :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
+                                    'c_off':rollback_id.indexOf(index) == -1}"
+                                    @click.prevent="change_index($event,index)">
+                                <input type="checkbox"
                                        :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
                             </label>
                         </h5>
@@ -664,7 +671,9 @@
             },
 //            回滚选择
             change_index (ev, val){
-                if (ev.target.checked) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.rollback_id.push(val);
                 } else {
                     let index = this.rollback_id.indexOf(val);
@@ -747,10 +756,12 @@
 //                console.log(this.pitch);
             },
             changeIndex(ev, id, status, index){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
                 this.rollbacks = index;
                 this.pitch = [];
                 this.status = [];
-                if (ev.target.checked) {
+                if (evInput.checked) {
                     this.pitch.push(id);
                     this.status.push(status);
                 } else {

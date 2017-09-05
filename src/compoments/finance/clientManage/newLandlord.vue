@@ -55,7 +55,7 @@
                 </div>
             </div>
         </section>
-        <section class="panel table table-responsive roll">
+        <section class="panel table table-responsive roll has-js">
             <table class="table table-advance table-hover">
                 <thead class="text-center">
                 <tr>
@@ -79,8 +79,13 @@
                 <tr class="text-center" v-for="item in LandlordList"
                     :class="{'selected': pitch.indexOf(item.id) > -1,'freeze': item.freeze === 1}">
                     <td>
-                        <input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                               v-if="item.freeze !== 1" @click="pitchId(item.id, $event)">
+                        <label v-if="item.freeze !== 1" :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id)==-1}"
+                               @click.prevent="pitchId(item.id, $event)">
+                            <input type="checkbox" class="pull-left"
+                                   :checked="pitch.indexOf(item.id) > -1">
+                        </label>
+                        <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
+                               v-if="item.freeze !== 1" @click="pitchId(item.id, $event)">-->
                         <span v-if="item.freeze === 1" @click="recover(item.id)"
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
@@ -244,7 +249,10 @@
             },
 //            选中
             pitchId (rul, ev){
-                if (ev.target.checked === true) {
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                this.pitch = [];
+                if (evInput.checked) {
                     this.pitch.push(rul);
 
                 } else {

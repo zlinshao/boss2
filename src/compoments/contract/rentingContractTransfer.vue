@@ -6,7 +6,7 @@
             <li class="active">租房订单</li>
         </ol>
 
-        <section class="panel">
+        <section class="panel has-js">
             <!--未选中-->
             <div class="panel-body">
                 <div v-if="contractSeleted.length === 0">
@@ -44,8 +44,12 @@
                         </div>
                         <div class="pro-sort" style="margin-left: 10px;margin-top: 15px">
                             <label>
-                                <input type="checkbox" v-model="contractSearchInfo.become_due" @click="search">
-                                30天内快到期
+                                <!--<input type="checkbox" v-model="contractSearchInfo.become_due" @click="search">
+                                30天内快到期-->
+                                <label style="padding-right: 25px" :class="{'label_check':true,'c_on':contractSearchInfo.become_due,'c_off':!contractSearchInfo.become_due}" @click.prevent="trid($event)">
+                                    <input type="checkbox" v-model="contractSearchInfo.become_due">
+                                    30天内快到期
+                                </label>
                             </label>
                         </div>
                         <!--<div class="pro-sort"  style="margin-left: 10px;margin-top: 15px">-->
@@ -87,14 +91,17 @@
             </div>
         </section>
         <!--表格-->
-        <div>
+        <div class="has-js">
             <section class="panel table table-responsive roll">
                 <table class="table table-striped table-advance table-hover">
                     <thead class="text-center">
                     <tr>
                         <th class="text-center">
-                            <input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
-                            <label for="allCheck"></label>
+                            <label for="allCheck"
+                                   :class="{'label_check':true,'c_on':contractSeleted.length==contractSearchList.length&&contractSearchList.length!=0,'c_off':contractSeleted.length!=contractSearchList.length}"
+                                   @click.prevent="pickedAll($event)">
+                                <input id="allCheck" type="checkbox" :checked="contractSeleted.length==contractSearchList.length&&contractSearchList.length!=0">
+                            </label>
                         </th>
                         <th class="text-center width100">合同编号</th>
                         <th class="text-center width100">上传时间</th>
@@ -110,8 +117,13 @@
                     <tbody class="text-center">
                     <tr class="text-center" v-for="item in contractSearchList"
                         :class="{'selected': contractSeleted.indexOf(item.id)>-1}">
-                        <td><input type="checkbox" @click="picked(item,$event)"
-                                   :value="item.id" v-model="checkboxModel"></td>
+                        <td>
+                            <label :class="{'label_check':true,'c_on':contractSeleted.indexOf(item.id) > -1,'c_off':contractSeleted.indexOf(item.id)==-1}"
+                                   @click.prevent="picked(item,$event)">
+                                <input type="checkbox"
+                                       :checked="contractSeleted.indexOf(item.id) > -1" :value="item.id">
+                            </label>
+                        </td>
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.name}}</td>
@@ -233,6 +245,12 @@
                     this.searchContract();
                 });
             },
+            trid(ev){
+                let valInput = ev.target.getElementsByTagName('input')[0];
+                valInput.checked = !valInput.checked;
+                this.contractSearchInfo.become_due = valInput.checked;
+                this.search();
+            },
             search(){
                 this.contractSearchInfo.page = 1;
                 this.searchContract();
@@ -340,7 +358,9 @@
                 this.searchContract();
             },
             picked (item, e){  //复选框单选并保存选中的id
-                if (e.target.checked === true) {
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.contractSeleted.push(item.id);
                 } else {
                     for (let i = 0; i < this.contractSeleted.length; i++) {
@@ -351,9 +371,15 @@
                 }
             },
             pickedAll(e){
-                if (e.target.checked === true) {
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+//                this.allCheck = evInput.checked;
+                if (evInput.checked) {
                     this.contractSeleted = [];
-                    this.contractSeleted = this.allId;
+                    for (let i = 0;i<this.contractSearchList.length;i++){
+                        this.contractSeleted.push(this.contractSearchList[i].id)
+                    }
+//                    this.contractSeleted = this.allId;
                 } else {
                     this.contractSeleted = [];
                 }

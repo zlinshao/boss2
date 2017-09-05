@@ -126,11 +126,22 @@
                 this.setDate();
             },
         },
-        updated (){
-//            this.remindData();
-        },
         mounted (){
             this.remindData();
+            let _this = this;
+            $('body').bind('click',function (e) {
+                let mobileTime = $('.mobileTime');
+//                console.log(_this.showPicker)
+                for (let i = 0 ; i<mobileTime.length ; i++){
+                    if (_this.showPicker){
+                        let input = $(mobileTime[i]).prev()[0];
+                        if (!(e.target==mobileTime[i] || mobileTime[i].contains(e.target) || e.target==input)){
+                            _this.showPicker = false;
+                        }
+                    }
+                }
+
+            })
         },
         methods: {
             remindData (){
@@ -372,6 +383,7 @@
                 let currentDate = new Date();
                 let year = currentDate.getFullYear();
                 let month = currentDate.getMonth() + 1;
+//                console.log(month)
                 let day = currentDate.getDate();
 
 //                console.log('year:'+year+'month:'+month+'day:'+day);
@@ -394,15 +406,19 @@
 
 //                let thisQuarterlyStart = moment([year,])
 
-                let thisDay = moment([year, month, day]);
+                let thisDay = moment([year, month-1, day]);
+//                console.log(thisDay.format('YYYY-MM-DD'));
 
-                let lastMonth = moment([year, month - 1, 1]);
+                let lastMonth = moment([year, month - 2, 1]);
 //                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
-                let thisMonth = moment([year, month, 1]);
+                let thisMonth = moment([year, month-1, 1]);
 //                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
 
-                let lastYear = moment([year - 1, 1, 1]);
-                let thisYear = moment([year, 1, 1]);
+                let lastYear = moment([year - 1, 0, 1]);
+//                console.log(lastYear.format('YYYY-MM-DD'))
+
+                let thisYear = moment([year, 0, 1]);
+//                console.log(thisYear.format('YYYY-MM-DD'))
 
                 this.monthDates = thisDay.diff(thisMonth, 'days');
 //                console.log('this.monthDates====='+this.monthDates)
@@ -410,7 +426,7 @@
 //                console.log('this.lastMonthDays====='+this.lastMonthDays)
 
                 this.quarterlyDates = thisDay.diff(thisQuarterlyStart, 'days');
-                this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd, 'days') - 1;
+                this.lastQuarterlyDays = thisQuarterlyStart.diff(lastQuarterlyEnd, 'days');
 
                 this.yearDates = thisDay.diff(thisYear, 'days');
                 this.lastYearDays = thisYear.diff(lastYear, 'days');

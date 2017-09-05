@@ -14,7 +14,7 @@
                         </div>
 
                         <!--新增/编辑-->
-                        <div class="modal-body">
+                        <div class="modal-body has-js">
                             <form class="form-horizontal" role="form">
                                 <h3 style="margin-bottom: 22px">基本信息</h3>
                                 <div class="form-group">
@@ -99,9 +99,10 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">配套设施</label>
                                     <div class="col-lg-10">
-                                        <label class="checkbox-inline check first" v-for="(value,key) in myDictionary.facility">
-                                            <input type="checkbox" class="pull-left" :value="key" @click="rules(key,$event)"
-                                            v-model="checkboxModel"> {{value}}
+                                        <label class="check first" v-for="(value,key) in myDictionary.facility"
+                                               :class="{'label_check':true,'c_on':houseAdd.facility.indexOf(key) > -1,'c_off':houseAdd.facility.indexOf(key)==-1}"
+                                                @click.prevent="rules(key,$event)">
+                                            <input type="checkbox" class="pull-left" :value="key" :checked="houseAdd.facility.indexOf(key) > -1"> {{value}}
                                         </label>
                                     </div>
                                 </div>
@@ -225,40 +226,40 @@
                                 </div>
 
                                 <!--已收 房屋-->
-                                <!--<div v-if="!msg.sss">-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="col-lg-2 col-sm-2 control-label">客户姓名</label>-->
-                                        <!--<div class="col-lg-10">-->
-                                            <!--<input type="text" class="form-control" placeholder="客户姓名" >-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="col-lg-2 col-sm-2 control-label">身份照片</label>-->
-                                        <!--<div class="col-lg-10">-->
-                                            <!--<input type="text" class="form-control" placeholder="">-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="col-lg-2 col-sm-2 control-label">来源</label>-->
-                                        <!--<div class="col-lg-10">-->
-                                            <!--<select class="form-control">-->
-                                                <!--<option value="1">推荐客户</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="col-lg-2 col-sm-2 control-label">参考租金</label>-->
-                                        <!--<div class="col-lg-10">-->
-                                            <!--<input type="text" class="form-control" disabled placeholder="">-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="col-lg-2 col-sm-2 control-label">备注</label>-->
-                                        <!--<div class="col-lg-10">-->
-                                            <!--<textarea class="form-control"></textarea>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                                <!--<div v-if="!msg.sss">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" placeholder="客户姓名" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-sm-2 control-label">身份照片</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-sm-2 control-label">来源</label>
+                                        <div class="col-lg-10">
+                                            <select class="form-control">
+                                                <option value="1">推荐客户</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-sm-2 control-label">参考租金</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" disabled placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-sm-2 control-label">备注</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>-->
                             </form>
                         </div>
 
@@ -444,10 +445,13 @@
                 return -1;
             },
             rules (rul, eve){
-                if (eve.target.checked === true) {
+                let evInput = eve.target.getElementsByTagName('input')[0];
+//                console.log(evInput)
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.houseAdd.facility.push(rul);
                 }
-                if (eve.target.checked === false) {
+                if (!evInput.checked) {
                     let index = this.houseAdd.facility.indexOf(rul);
                     if (index > -1) {
                         this.houseAdd.facility.splice(index, 1);
@@ -561,9 +565,10 @@
 
     .check {
         display: inline-block;
-        padding: 5px 0;
+        /*padding: 5px 0;*/
         font-size: 14px;
         margin-top: 2px;
+        /*line-height: 7px;*/
     }
     .first{
         margin-left: 10px;

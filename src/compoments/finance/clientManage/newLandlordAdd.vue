@@ -268,38 +268,6 @@
             </div>
         </div>
 
-        <!--<div class="modal fade" id="clientAdd1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-        <!--aria-hidden="true">-->
-        <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-
-        <!--<div class="modal-header">-->
-        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-        <!--<h4 class="modal-title">生成款项</h4>-->
-        <!--</div>-->
-
-        <!--<div class="modal-body">-->
-        <!--<form class="form-horizontal" role="form">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">您生成的科目有：</label>-->
-        <!--<div class="col-lg-9" style="padding-top: 8px;">-->
-        <!--<span class="col-xs-4" v-if="this.subject_id.rental != ''">房屋科目</span>-->
-        <!--<span v-if="this.subject_id.deposit != ''">押金科目</span>-->
-        <!--<span v-if="this.subject_id.rental === '' && this.subject_id.deposit === ''">无</span>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</form>-->
-        <!--</div>-->
-
-        <!--<div class="modal-footer">-->
-        <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
-        <!--<button class="btn btn-success" type="button"-->
-        <!--@click="save(3,'finance/customer/collect/generate')"> 确定-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
         <!--签约人-->
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
@@ -309,8 +277,6 @@
         <!--提示信息-->
         <Status :state='info'></Status>
 
-        <!--选择客户-->
-        <!--<SelectClient @clientAdd="getClient" :collectRent="coll" :staffId="staffId"></SelectClient>-->
     </div>
 </template>
 
@@ -320,11 +286,10 @@
     import SelectHouse from '../../common/selectPayHouse.vue'
     import FlexBox from '../../common/flexBox.vue'
     import Status from '../../common/status.vue';
-    import SelectClient from '../../common/selectPayClient.vue'        // 选择客户
     import DatePicker from '../../common/datePicker.vue'
 
     export default{
-        components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject,DatePicker},
+        components: {STAFF, SelectHouse, FlexBox, Status, SelectSubject,DatePicker},
         props: ['list'],
         data(){
             return {
@@ -368,8 +333,6 @@
                 bank: 1,                                //开户行
                 account: '',                            // 账户
                 subject_id: {rental: '', deposit: ''},  //科目款项
-//                rental_status: true,                    //房租款项状态
-//                deposit_status: true,                   //科目款项状态
 
                 configure: [],                          //人资
                 info: {
@@ -446,21 +409,21 @@
                     } else if (val.pay_types.length === 1) {
                         this.pay_typeChange = false;
                     }
-                    this.price = val.prices;                          //月单价
+                    this.price = val.prices;                                    //月单价
                     if (val.prices.length > 1) {
-                        this.put_type = true;                           //月单价不固定
+                        this.put_type = true;                                   //月单价不固定
                     } else if (val.prices.length === 1) {
-                        this.put_type = false;                        //月单价固定
+                        this.put_type = false;                                  //月单价固定
                     }
-                    this.more_type = val.pay_types;                                //付款年份个数
-                    this.pendingContract = val.deal_date;                  //待签约日期
-                    this.vacancyPeriod = val.vacancy;                    //空置期
+                    this.more_type = val.pay_types;                             //付款年份个数
+                    this.pendingContract = val.deal_date;                       //待签约日期
+                    this.vacancyPeriod = val.vacancy;                           //空置期
                     this.firstRemittance = val.first_pay_date;                  //第一次打款日期
-                    this.second_pay_date = val.second_pay_date;                  //第二次打款日期
-                    this.remarks = val.remark;                              //备注
+                    this.second_pay_date = val.second_pay_date;                 //第二次打款日期
+                    this.remarks = val.remark;                                  //备注
 
                     if (val.subject_id !== null && val.subject_id !== undefined) {
-                        this.subject_id = val.subject_id;                            //房租款项
+                        this.subject_id = val.subject_id;                        //房租款项
                     }
 
 //                收款方式
@@ -474,16 +437,6 @@
         },
 
         methods: {
-//            清空科目
-//            subject_empty (val){
-//                if (val === 1) {
-//                    this.subject_id.rental = '';         //房租款项
-//                    this.rental_status = false;
-//                } else if (val === 2) {
-//                    this.subject_id.deposit = '';        //科目款项
-//                    this.deposit_status = false;
-//                }
-//            },
 //            房款科目
             houseSubject(val){
                 this.subject_id.rental = val;
@@ -641,21 +594,7 @@
                 this.house_id = data.id;
                 this.house_name = data.address;
             },
-//              选择客户
-//            selectClient(){
-//                $('.selectClient:eq(0)').modal('show');
-//            },
-//              选择客户
-//            getClient(data){
-//                this.cus_id = data.id;
-//                this.cus_name = data.name;
-//            },
-//            新增确认科目
-//            save_show (){
-//                $('#clientAdd1').modal({
-//                    backdrop: 'static',         //空白处模态框不消失
-//                });
-//            },
+
 //              新增
             save(num, address){
 //                保存为草稿
@@ -732,7 +671,7 @@
                     deposit: this.deposit,                      //押金
                     deal_date: this.pendingContract,            //待签约日期
                     first_pay_date: this.firstRemittance,       //第一次打房租日期
-                    second_pay_date: this.second_pay_date,       //第二次打房租日期
+                    second_pay_date: this.second_pay_date,      //第二次打房租日期
                     remark: this.remarks,                       //备注
                     account_type: this.payment,                 //客户付款方式
                     account_owner: this.account_owner,          //收款人姓名
@@ -762,7 +701,6 @@
             },
             getDate(val){
                 this.pendingContract = val;
-//                console.log(this.contractRenew.start_date)
             },
             getDate1(val){
                 this.firstRemittance = val;

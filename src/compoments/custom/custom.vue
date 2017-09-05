@@ -7,7 +7,7 @@
 
         <!--客户-->
         <section class="panel">
-            <div class="panel-body">
+            <div class="panel-body has-js">
                 <!--没有选中-->
                 <div v-if="pitch.length === 0">
                     <div v-if="flag">
@@ -57,9 +57,8 @@
                         </div>
 
                         <div class="pro-sort" style="height: 39px;">
-                            <label style="margin-top: 8px;">
-                                <input type="checkbox" :checked="return_sea.Trid" class="pull-left"
-                                       @click="trid($event,1)">三天内未成交
+                            <label style="margin-top: 8px;padding-left: 25px;" :class="{'label_check':true,'c_on':return_sea.Trid,'c_off':!return_sea.Trid}" @click.prevent="trid($event,1)">
+                                <input type="checkbox" class="pull-left">三天内未成交
                             </label>
                         </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
@@ -109,9 +108,6 @@
                                     class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
                         <li>
-                            <!--<h5><a @click="remind_id"><i class="fa fa-bell-o"></i>&nbsp;提醒</a></h5>-->
-                        </li>
-                        <li>
                             <h5><a @click="add_state('pool')"><i
                                     class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
@@ -152,14 +148,13 @@
         </section>
 
         <!--客户列表-->
-        <div class="row">
+        <div class="row has-js">
             <div class="col-md-12">
                 <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            <!--<th class="text-center"></th>-->
                             <th class="text-center width80">客户名称</th>
                             <th class="text-center width50">尊称</th>
                             <th class="text-center width110">手机号</th>
@@ -178,12 +173,12 @@
                         <tr v-for="list in custom_list"
                             :class="{'selected': pitch.indexOf(list.id) > -1}">
                             <td class="text-center">
-                                <label for="cus_id"></label>
-                                <input id="cus_id" type="checkbox" class="pull-left"
-                                       :checked="pitch.indexOf(list.id) > -1"
-                                       @click="rules(list.id, $event, list.name)">
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(list.id) > -1,'c_off':pitch.indexOf(list.id)==-1}"
+                                       @click.prevent="rules(list.id, $event, list.name)">
+                                    <input type="checkbox" class="pull-left"
+                                           :checked="pitch.indexOf(list.id) > -1">
+                                </label>
                             </td>
-                            <!--<td><a class="text-danger pull-right"><i class="fa fa-bell-o"></i></a></td>-->
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
                             <td class="text-center">{{list.mobile}}</td>
@@ -198,7 +193,6 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!--<span>{{list.follow}}%</span>-->
                             </td>
                             <td class="text-center">{{select_list.source[list.source]}}</td>
                             <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
@@ -239,11 +233,9 @@
         <!--分页-->
         <Page @pag="sea_cus" :pg="return_sea.paging" :beforePage="return_sea.beforePage"></Page>
 
-        <!--增加提醒-->
-        <!--<AddRemind :remindId="pitch" @cus_seccess="succ"></AddRemind>-->
-
         <Status :state="info"></Status>
 
+        <!--加载-->
         <Loading v-if="wait === 1"></Loading>
 
     </div>
@@ -251,7 +243,6 @@
 
 <script>
     import Page from '.././common/page.vue'                             //分页
-    //    import AddRemind from  './addremind.vue'                          //增加提醒
     import newAdd from './new_add.vue'                                  //新增/修改客户
     import Status from '../common/status.vue'                           //提示信息
     import remindDaily from './remindDaily.vue'                         //修改客户
@@ -334,8 +325,11 @@
             },
 //            三天内未成交
             trid(val, pag) {
-                this.return_sea.Trid = val.target.checked;
-                if (val.target.checked === true) {
+//                console.log(val.target.getElementsByTagName('input')[0]);
+                let valInput = val.target.getElementsByTagName('input')[0];
+                valInput.checked = !valInput.checked;
+                this.return_sea.Trid = valInput.checked;
+                if (valInput.checked) {
                     this.$http.post('core/customer/customerList', {
                         unsettled: true
                     }).then((res) => {
@@ -354,7 +348,7 @@
                         }
                     });
                 }
-                if (val.target.checked === false) {
+                if (!valInput.checked) {
                     this.$http.post('core/customer/customerList', {
                         unsettled: false
                     }).then((res) => {
@@ -461,10 +455,12 @@
             },
 //            增删数组
             rules (rul, eve, cus){
-                if (eve.target.checked === true) {
+//                console.log(eve.target.getElementsByTagName('input')[0])
+                let evInput = eve.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.pitch.push(rul);
                     this.cus_name.push(cus);
-
                     this.$http.get('core/customer/readCustomer/id/' + rul).then((res) => {
                         this.temporary_save = {};
                         this.temporary_save = res.data.data;
@@ -475,7 +471,7 @@
                         }
                     });
                 }
-                if (eve.target.checked === false) {
+                if (!evInput.checked) {
                     $('.rem_div').remove();
                     let index = this.pitch.indexOf(rul);
                     let cus_name = this.cus_name.indexOf(cus);
@@ -486,6 +482,7 @@
                         this.cus_name.splice(cus_name, 1);
                     }
                 }
+
             },
 
 //            增加日志/放入客户池
@@ -501,12 +498,7 @@
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
-//            增加提醒
-            remind_id (){
-                $('#addRemind1').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
-            },
+
 //            新增客户
             customers_new (val){
                 this.revise_state = val;
@@ -536,7 +528,6 @@
                     } else if (this.top === 2) {
                         this.top = 1;
                     }
-
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
                         this.return_sea.paging = res.data.data.pages;

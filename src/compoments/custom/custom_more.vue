@@ -340,14 +340,10 @@
                 }
             }
         },
-        created (){
-
-        },
         mounted (){
             this.cus_Id = this.$route.query.nameId;
             this.custom_sear = this.$route.query.sear;
             this.custom = this.$route.query.cus;
-//            console.log(this.$route.query.sear)
             this.detailed_info(this.cus_Id);
         },
         methods: {
