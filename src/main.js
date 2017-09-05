@@ -10,6 +10,11 @@ import Loading from './compoments/loading'
 // 引入echarts
 import echarts from 'echarts'
 
+// UE
+import './UE/ueditor.config'
+import './UE/ueditor.all.min'
+import './UE/lang/zh-cn/zh-cn'
+import './UE/ueditor.parse.min'
 
 Vue.use(Loading);
 Vue.use(Vuex);
