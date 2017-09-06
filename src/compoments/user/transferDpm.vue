@@ -68,6 +68,8 @@
             selectDepartment(){
                 if(this.department_id !== ''){
                     this.$emit('TransferDepartment',this.department_id);
+                    this.department_name = '';
+                    this.department_id = '';
                     $('#myModalTransferDpm').modal('hide');
                 }
             }

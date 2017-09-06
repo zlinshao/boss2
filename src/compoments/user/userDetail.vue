@@ -124,14 +124,18 @@
                             </div>
                             <div class="col-md-4">
                                 <div>
+                                    <span class="text-primary">离职时间：</span>
+                                    <span>{{item.dismiss_time}}</span>
+                                </div>
+                                <div>
                                     <span class="text-primary">保险：</span>
                                     <span v-if="item.five_insurance">已交</span>
                                     <span v-if="!item.five_insurance">已交</span>
                                 </div>
-                                <div>
-                                    <span class="text-primary">资料：</span>
-                                    <span></span>
-                                </div>
+                                <!--<div>-->
+                                    <!--<span class="text-primary">资料：</span>-->
+                                    <!--<span></span>-->
+                                <!--</div>-->
                                 <div>
                                     <span class="text-primary">购车：</span>
                                     <span>{{dictionary.car[item.car]}}</span>
