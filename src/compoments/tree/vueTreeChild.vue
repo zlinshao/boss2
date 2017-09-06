@@ -6,8 +6,8 @@
 				<div :class="aClassVal" @click='Func(model,$event)' @contextmenu.prevent='cxtmenufunc'>
 					<span :class="{loadSyncNode:model.loadNode==1}" v-if='model.loadNode==1'></span>
 					<!--<span :class='model.iconClass' v-show='model.iconClass'></span>-->
-					<div class="dropdown">
-                        <span @click=" currentNode($event)" @mouseenter="operate($event)">
+					<div class="dropdown" @mouseenter="operate($event)" @mouseleave="leaveNode($event)">
+                        <span @click=" currentNode($event)">
                            	<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>
 							<span class="department">{{model.name}}</span>
                         </span>
@@ -186,10 +186,10 @@
 			},
             dropDownList(){this.model.contentHtml = '';},
             operate(e){
-                for(let i=0; i < document.getElementsByClassName('glyphicon-cog').length;i++){
-                    document.getElementsByClassName('glyphicon-cog')[i].style.display = 'none'
-                }
-              e.target.nextElementSibling.style.display = 'inline-block';
+                e.target.firstChild.nextElementSibling.style.display = 'inline-block';
+			},
+            leaveNode(e){
+                e.target.firstChild.nextElementSibling.style.display = 'none';
 			},
             currentNode(e){
 				for(let i=0; i < document.getElementsByClassName('department').length;i++){
