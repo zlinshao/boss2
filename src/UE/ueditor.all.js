@@ -8086,7 +8086,7 @@ UE.Editor.defaultOptions = function(editor){
                 me._serverConfigLoaded = false;
 
                 configUrl && UE.ajax.request(configUrl,{
-                    'method': 'GET',
+                    'method': 'POST',
                     'dataType': isJsonp ? 'jsonp':'',
                     'onsuccess':function(r){
                         try {
@@ -8339,7 +8339,7 @@ UE.ajax = function() {
          * UE.ajax.requeset( 'sayhello.php', {
          *
          *     //请求方法。可选值： 'GET', 'POST'，默认值是'POST'
-         *     method: 'GET',
+         *     method: 'POST',
          *
          *     //超时时间。 默认为5000， 单位是ms
          *     timeout: 10000,

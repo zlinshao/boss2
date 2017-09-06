@@ -5,14 +5,14 @@
             <li>
                 <router-link to="/article">发布文章</router-link>
             </li>
-            <li>新增</li>
+            <li>编辑</li>
         </ol>
 
         <section class="panel">
             <div class="panel-body">
                 <header>
                     <h4>
-                        新增
+                        编辑
                     </h4>
                 </header>
 
@@ -75,10 +75,10 @@
             getUEContent(val) {
 //                let content = this.$refs.ue.getUEContent();
                 /*this.$notify({
-                    title: '获取成功，可在控制台查看！',
-                    message: val,
-                    type: 'success'
-                });*/
+                 title: '获取成功，可在控制台查看！',
+                 message: val,
+                 type: 'success'
+                 });*/
                 console.log(val)
             }
         }

@@ -5,6 +5,11 @@
 </template>
 
 <script>
+    import '../../../UE/ueditor.config'
+    import '../../../UE/ueditor.all.min'
+    import '../../../UE/lang/zh-cn/zh-cn'
+    import '../../../UE/ueditor.parse.min'
+
     export default{
         name : 'UE',
         props : {
@@ -26,13 +31,21 @@
                 alert(1)
                 console.log(_this.getUEContent());
             });*/
-            $('body').bind('click',function (e) {
+            this.editor.addListener('blur',function () {
+//                alert(1)
+                _this.getUEContent();
+            })
+            /*$('body').bind('click',function (e) {
                 let editor = document.getElementById('editor');
-                if (!(e.target==editor || editor.contains(e.target))){
-                    _this.getUEContent();
+//                console.log(editor)
+                if (editor!=null){
+                    if (!(e.target==editor || editor.contains(e.target))){
+                        _this.getUEContent();
+                    }
                 }
 
-            })
+
+            })*/
         },
         data(){
             return {

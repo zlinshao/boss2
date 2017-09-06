@@ -3,21 +3,21 @@ import App from './App.vue'
 import Boss from './boss.config.js'
 import VueRouter from 'vue-router'
 import axios from 'axios'
-import Vuex from 'vuex'
 import store from './store/index.js'
 import routes from './routerConfig.js'
 import Loading from './compoments/loading'
+import Vuex from 'vuex'
+// import Vueditor from 'vueditor'
 // 引入echarts
 import echarts from 'echarts'
 
-// UE
-import './UE/ueditor.config'
-import './UE/ueditor.all.min'
-import './UE/lang/zh-cn/zh-cn'
-import './UE/ueditor.parse.min'
+
+import 'vueditor/dist/style/vueditor.min.css'
+
 
 Vue.use(Loading);
 Vue.use(Vuex);
+
 Vue.use(Boss);
 Vue.use(VueRouter);
 axios.defaults.baseURL = globalConfig.server;
@@ -25,6 +25,22 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Env'] = globalConfig.env;
 Vue.prototype.$http = axios;
 Vue.prototype.$echarts = echarts;
+
+// Vue.use(Vueditor);
+
+// 编辑器配置
+let config = {
+    toolbar: [
+        'removeFormat', 'undo', '|', 'elements', 'fontName', 'fontSize', 'foreColor', 'backColor'
+    ],
+    fontName: [
+        {val: 'arial black'},
+        {val: 'times new roman'},
+        {val: 'Courier New'}
+    ],
+    fontSize: ['12px', '14px', '16px', '18px', '0.8rem', '1.0rem', '1.2rem', '1.5rem', '2.0rem'],
+    uploadUrl: ''
+};
 
 
 const router = new VueRouter({
@@ -48,10 +64,9 @@ axios.interceptors.response.use((response) => { //配置请求回来的信息
     return Promise.reject(error);
 });
 
-
 new Vue({
     el: '#app',
-    router,
     store,
+    router,
     render: h => h(App)
 });

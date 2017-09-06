@@ -65,8 +65,70 @@
                                     <div class="time">
                                         2017/10/01&ensp;
                                         11:05&ensp;
-                                        2条回复
-                                        <i class="fa fa-angle-down"></i>
+                                        <a @click="showToggle($event)">
+                                            2条回复
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--回复-->
+                            <div class="commentReply">
+                                <div class="commentReplyItem">
+                                    <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
+                                    <div class="com">
+                                        <div>
+                                            <span class="name">哈哈</span>
+                                            <span class="pull-right">
+                                        <i class="fa fa-thumbs-o-up"></i>
+                                        <sup>15</sup>
+                                    </span>
+                                        </div>
+                                        <div class="commentContent">
+                                            说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="commentReplyItem">
+                                    <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
+                                    <div class="com">
+                                        <div>
+                                            <span class="name">哈哈</span>
+                                            <span class="pull-right">
+                                        <i class="fa fa-thumbs-o-up"></i>
+                                        <sup>15</sup>
+                                    </span>
+                                        </div>
+                                        <div class="commentContent">
+                                            说两点卡萨丁就看
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="commentItem">
+                            <div class="commentItemContainer">
+                                <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
+                                <div class="com">
+                                    <div>
+                                        <span class="name">哈哈</span>
+                                        <span class="pull-right">
+                                        <i class="fa fa-thumbs-o-up"></i>
+                                        <sup>15</sup>
+                                    </span>
+                                    </div>
+                                    <div class="commentContent">
+                                        说两点卡萨丁就看
+                                    </div>
+                                    <div class="time">
+                                        2017/10/01&ensp;
+                                        11:05&ensp;
+                                        <a @click="showToggle($event)">
+                                            2条回复
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +184,21 @@
                 msg: 'hello vue'
             }
         },
-        methods: {}
+        methods: {
+            showToggle(ev){
+                let next = ev.target.parentNode.parentNode.parentNode.nextElementSibling;
+                let i = $(ev.target).children('i');
+//                console.log(i);
+                if (next.style.display=='block'){
+                    next.style.display='none';
+                    i.removeClass('fa-angle-up').addClass('fa-angle-down');
+                } else {
+                    next.style.display='block';
+                    i.removeClass('fa-angle-down').addClass('fa-angle-up');
+                }
+//                console.log()
+            }
+        }
     }
 </script>
 <style scoped>
@@ -142,6 +218,9 @@
         border-bottom: 1px solid #aaaaaa;
     }
 
+    .commentItem+.commentItem{
+        margin-top: 12px;
+    }
     .commentItem img{
         width: 40px;
         height: 40px;
@@ -170,6 +249,8 @@
 
     .commentReply{
         padding: 8px 0 8px 40px;
+        display: none;
+        user-select: none;
     }
     .commentReply .commentReplyItem{
         background-color: #F2F2F2;
