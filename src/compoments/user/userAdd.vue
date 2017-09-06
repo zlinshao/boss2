@@ -110,7 +110,7 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >买房</label>
                                         <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house'" :currentDate="[house]"                                                                         :placeholder="'买车时间'"@sendDate="getHouseDate"></DatePicker>
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house'" :currentDate="[house]"                                                                            :placeholder="'买房时间'"@sendDate="getHouseDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -191,7 +191,7 @@
                                         <div class="col-lg-4">
                                             <select  class="form-control" v-model="position_id">
                                                 <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in dictionary.status">{{item.vocation}}</option>
+                                                <option :value="item.id" v-for="item in positionList">{{item.vocation}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -217,15 +217,22 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >等级</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <select  class="form-control" v-model="level">
                                                 <option value="">请选择</option>
                                                 <option :value="key" v-for="(value,key) in levelList">{{value}}</option>
                                             </select>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" v-if="status == 3">离职时间</label>
+                                        <div class="col-md-4" v-if="status == 3">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'dismiss_time'" :currentDate="[dismiss_time]"                                                           :placeholder="'离职时间'"@sendDate="getDismissDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -321,6 +328,7 @@
                 house : '',         //买房时间
                 status : '1',
                 salary : '',
+                dismiss_time : '',  //离职时间
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -522,6 +530,7 @@
                                     "house" : this.house,         //买房时间
                                     "salary" : this.salary,
                                     "status" : this.status,
+                                    "dismiss_time" : this.dismiss_time,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{
@@ -575,6 +584,7 @@
                 this.house  = '';         //买房时间
                 this.status  = '1';
                 this.salary  = '';
+                this.dismiss_time = '';
                 this.department='';
                 this.firstDepart=[];
                 this.secondDepart=[];
@@ -615,7 +625,11 @@
             },
             getEnrollDate(val){
                 this.enroll = val;
+            },
+            getDismissDate(val){
+                this.dismiss_time = val;
             }
+
 
         }
     }

@@ -265,7 +265,7 @@
                         this.allId = [];
                         this.pages = '';
                         this.isShow = true;
-                        this.Waiting = true;
+                        this.Waiting = false;
                     }
                 })
             },
@@ -287,11 +287,14 @@
             },
             clear(){
                 this.department_name = '';
+                this.params.department = '';
+                this.search();
             },
             advancedSearch(){   //高级搜索
                $('#advancedSearch').modal('show')
             },
             getAdvanced(val){
+                this.initialise();
                 this.params.time = val.time;
                 this.params.key = val.key;
                 if(val.key_next !== ''){
@@ -308,8 +311,8 @@
             edit(id){
                 $('.rem_div').remove();
                 $('#myModalRevise').modal('show');
-                this.$http.get('manager/user/readUser/id/' + id).then((res) => {
-                    this.editData = res.data.data;
+                this.$http.post('manager/user/readUser/id/' + id).then((res) => {
+                    this.editData = res.data.data.data;
                 })
             },
             //启用账号
@@ -396,7 +399,11 @@
                 this.searchUser();
             },
             reset(){
-                this.department_id = '';
+                this.department_name = '';
+                this.initialise();
+                this.search();
+            },
+            initialise(){
                 this.params ={
                     keywords : '',
                     key : '',
@@ -404,7 +411,6 @@
                     department : '',
                     time : '',
                 };
-                this.search();
             },
             successMsg(msg){    //成功提示信息
                 this.info.success = msg;

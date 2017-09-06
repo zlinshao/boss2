@@ -110,7 +110,7 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >买房</label>
                                         <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house2'" :currentDate="[house]"                                                                         :placeholder="'买车时间'"@sendDate="getHouseDate"></DatePicker>
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house2'" :currentDate="[house]"                                                                         :placeholder="'买房时间'"@sendDate="getHouseDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -296,14 +296,20 @@
                                     <hr>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >等级</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <select  class="form-control" v-model="level">
                                                 <option :value="key" v-for="(value,key) in levelList">{{value}}</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll2'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll1'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" v-if="staffStatus == 3">离职时间</label>
+                                        <div class="col-md-4" v-if="staffStatus == 3">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'dismiss_time1'" :currentDate="[dismiss_time]"                                                           :placeholder="'离职时间'"@sendDate="getDismissDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -402,6 +408,7 @@
                 car : '',           //买车时间
                 house : '',         //买房时间
                 salary : '',
+                dismiss_time : '',  //离职时间
                 myResult: this.editDate,
                 reviseDpm:false,
                 //用户组写入
@@ -442,6 +449,8 @@
                     }
                 ],
                 dictionary : [],
+
+                staffStatus :'',
             }
         },
         mounted(){
@@ -505,7 +514,8 @@
                 this.car  = this.myResult.car;          //买车时间
                 this.house  = this.myResult.house;         //买房时间
                 this.salary   = this.myResult.salary ;         //买房时间
-                this.duty  = this.myResult.duty;         //买房时间
+                this.dismiss_time  = this.myResult.dismiss_time;         //买房时间
+                this.staffStatus = this.myResult.status;
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
@@ -722,6 +732,7 @@
                                     "car" : this.car,           //买车时间
                                     "house" : this.house,         //买房时间
                                     "salary" : this.salary,
+                                    "dismiss_time" :this.dismiss_time,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{
@@ -809,6 +820,9 @@
             },
             getEnrollDate(val){
                 this.enroll = val;
+            },
+            getDismissDate(val){
+                this.dismiss_time = val;
             }
         }
     }

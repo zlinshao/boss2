@@ -1,83 +1,58 @@
+
 <template>
     <div>
-        <div>
-            <vue-ztree :list.sync='ztreeDataSource' :func='nodeClick' :expand='expandClick'
-                       :contextmenu='contextmenuClick' :is-open='true'>
-            </vue-ztree>
-        </div>
+        <ol class="breadcrumb">
+            <li>人资管理</li>
+            <li class="active">组织架构</li>
+        </ol>
+
+        <section class="panel ">
+            <!--未选中-->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div>
+                            <div>
+                                <h5>组织架构</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div>
+                            <div>
+                                <h5>岗位管理</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
-
 <script>
-    import vueZtree from '../../compoments/ztree/vue-ztree.vue'
-    export default {
-        components:{
-            vueZtree
-        },
-        data () {
-            return {
-                ztreeDataSource :[]
-            }
-        },
-        created(){
-            this.getDepartementList();
-        },
-        methods:{
-            getDepartementList(){
-                this.$http.post('manager/department/department_all').then((res)=>{
-//                    console.log(res.data.data)
-                    this.ztreeDataSource =res.data.data.data;
-                })
-            },
-            // 点击节点
-            nodeClick:function(m){
-//                console.log(JSON.parse(JSON.stringify(m)));
-            },
-            // 右击事件
-            contextmenuClick:function(){
-//                console.log("触发了自定义的contextmenuClick事件");
-            },
-            // 点击展开收起
-            expandClick:function(m){
-//                console.log(JSON.parse(JSON.stringify(m)));
-                // 点击异步加载
-//                if(m.isExpand) {
-//                    // 动态加载子节点, 模拟ajax请求数据
-//                    // 请注意 id 不能重复哦。
-//                    if(m.hasOwnProperty("children")){
-//
-//                        m.loadNode = 1; // 正在加载节点
-//
-//                        setTimeout(()=>{
-//
-//                            m.loadNode = 2; // 节点加载完毕
-//
-//                            m.isFolder = !m.isFolder;
-//
-//                            m.children.push({
-//                                id:+new Date(),
-//                                name:"动态加载节点1",
-//                                path:"",
-//                                clickNode:false,
-//                                isFolder:false,
-//                                isExpand:false,
-//                                loadNode:0,
-//                                children:[{
-//                                    id:+new Date()+1,
-//                                    name:"动态加载末节点",
-//                                    path:"",
-//                                    clickNode:false,
-//                                    isExpand:false,
-//                                    isFolder:false,
-//                                    loadNode:0
-//                                }]
-//                            })
-//                        },1000)
-//
-//                    }
-////                }
-            }
-        },
 
-    }
 </script>
+
+<style scoped>
+    h5 {
+        font-size: 18px;
+        color: #333333;
+    }
+    .row > div:first-child{
+        padding-left: 10px;
+        padding-right: 5px;
+    }
+    .row > div:last-child{
+        padding-left: 5px;
+        padding-right: 10px;
+    }
+    .row > div >div{
+        border: 1px solid #dddddd;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .row > div > div>div{
+        border-bottom: 2px solid #CCCCCC;
+    }
+</style>
+

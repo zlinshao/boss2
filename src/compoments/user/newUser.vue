@@ -814,8 +814,7 @@
             searchStaff(){
                 if (this.type !== 6) {
                     this.page = 1
-                }
-                ;
+                };
                 this.isThird = false;
                 this.isSecond = false;
                 this.isFirst = false;

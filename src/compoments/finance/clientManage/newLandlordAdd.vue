@@ -403,7 +403,7 @@
 //                    this.one_type = 1;                                                  //付款方式
                     this.deposit = val.deposit;                                         //押金
 
-                    this.pay_type = val.pay_types;                                      //付款方式
+                    this.one_type = String(val.pay_types);                                      //付款方式
                     if (val.pay_types.length > 1) {
                         this.pay_typeChange = true;
                     } else if (val.pay_types.length === 1) {

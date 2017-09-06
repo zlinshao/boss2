@@ -3,39 +3,40 @@
 		<div>
 			<li :class="liClassVal">
 				<span :class="spanClassVal" @click='open(model)'></span>
-				<div :class="aClassVal" @click='Func(model)' @contextmenu.prevent='cxtmenufunc'>
+				<div :class="aClassVal" @click='Func(model,$event)' @contextmenu.prevent='cxtmenufunc'>
 					<span :class="{loadSyncNode:model.loadNode==1}" v-if='model.loadNode==1'></span>
-					<span :class='model.iconClass' v-show='model.iconClass'></span>
-
-					<div class="dropdown">
-                        <span class="dropdown-toggle" data-toggle="dropdown"
-                              aria-haspopup="true" aria-expanded="false">
-                           {{model.name}}
+					<!--<span :class='model.iconClass' v-show='model.iconClass'></span>-->
+					<div class="dropdown" @mouseenter="operate($event)" @mouseleave="leaveNode($event)">
+                        <span @click=" currentNode($event)">
+                           	<!--<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>-->
+							<span class="department">{{model.name}}</span>
                         </span>
+						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
+						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						</i>
 
 						<ul class="dropdown-menu dropdown-menu-left" style="padding: 0 0 0 0px;">
 							<li>
-								<a @click="edit(model)">编辑部门</a>
+								<a @click="edit($event)">编辑部门</a>
 							</li>
 							<li>
-								<a>新建下级部门</a>
+								<a @click="addDeparment($event)">新建下级部门</a>
+							</li>
+							<!--<li>-->
+								<!--<a @click="startDepartment($event)" v-if="model.status == 2">启用部门</a>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<a @click="stopDepartment($event)" v-if="model.status == 1">停用部门</a>-->
+							<!--</li>-->
+							<li>
+								<a @click="deleteDepartment($event)">删除部门</a>
 							</li>
 							<li>
-								<a>启用部门</a>
-							</li>
-							<li>
-								<a>停用部门</a>
-							</li>
-							<li>
-								<a>删除部门</a>
-							</li>
-							<li>
-								<a>调迁部门</a>
+								<a @click="transferDepartment($event)">调迁部门</a>
 							</li>
 						</ul>
 					</div>
 				</div>
-
 				<ul :class="ulClassVal" v-show='model.isFolder'>
 					<ztree-item v-for="(item,i) in model.son" :key='i' :callback='callback'
 								:expandfunc='expandfunc' :cxtmenufunc='cxtmenufunc' :model.sync="item" :num.sync='i'
@@ -44,16 +45,13 @@
 				</ul>
 			</li>
 		</div>
-		<editDpm></editDpm>
 	</div>
 </template>
 
 <script>
-	let dushuai = 25;
-	import editDpm from  '../user/editDpm.vue'
 	export default{
 		name: 'ztreeItem',
-        components:{editDpm},
+        components:{},
         data(){
             return{
 
@@ -150,7 +148,7 @@
 			},
 		},
 		methods:{
-			Func(val){
+			Func(val,e){
 				// 查找点击的子节点
 				var recurFunc = (data,list) => {
 					data.forEach((i)=>{
@@ -174,7 +172,6 @@
 			},
 			open(val){
 				val.isFolder = !val.isFolder;
-				console.log(dushuai)
 //                    val.isExpand = !val.isExpand;
 //                    if(typeof this.expandfunc == "function" && val.isExpand) {
 //                        if(val.loadNode!=2) {
@@ -187,36 +184,47 @@
 //                        val.isFolder = !val.isFolder;
 //                    }
 			},
-			edit(val){
-			  	dushuai = val.id;
-			  	console.log(dushuai)
-				$('#myModalEditDpm').modal('show');
-			}
+            dropDownList(){this.model.contentHtml = '';},
+            operate(e){
+                e.target.firstChild.nextElementSibling.style.display = 'inline-block';
+			},
+            leaveNode(e){
+                e.target.firstChild.nextElementSibling.style.display = 'none';
+			},
+            currentNode(e){
+				for(let i=0; i < document.getElementsByClassName('department').length;i++){
+                    document.getElementsByClassName('department')[i].style.color = '#333'
+				}
+                e.target.style.color = '#e4393c';
+			},
+			edit(e){	//编辑
+                this.model.contentHtml = e.target.text;
+			},
+            addDeparment(e){
+                this.model.contentHtml = e.target.text;
+			},
+//            startDepartment(e){this.model.contentHtml = e.target.text;},
+//            stopDepartment(e){this.model.contentHtml = e.target.text;},
+            deleteDepartment(e){this.model.contentHtml = e.target.text;},
+            transferDepartment(e){this.model.contentHtml = e.target.text;},
     },
 }
 </script>
 
 <style>
-	div.ztree_content_wrap div.left{float: left;width: 100%;}
-	div.zTreeDemoBackground {width:100%;height:100%;text-align:left;}
-
-	ul.ztree {border:1px solid #ddd;background: #ffffff;width:100%;height:auto;}
-
 	.ztree li{position: relative; padding:0; margin:0; list-style:none; line-height:24px; text-align:left; white-space:nowrap; outline:0}
 	.ztree li ul{ margin:0; padding:0 0 0 32px}
-	.ztree li ul.line{ background:url('../../images/ztree/line_conn.gif') 0 0 repeat-y;}
+	.ztree li ul.line{ background:url('../../assets/img/line_conn.gif') 0 0 repeat-y;}
 
 	.ztree li>div {padding:1px 3px 0 5px; margin:0; cursor:pointer; height:17px; color:#333; background-color: transparent;
 		text-decoration:none; vertical-align:top; display: inline-block}
 	.ztree li a:hover {text-decoration:underline;color:#316AC5;}
-	.ztree li a.curSelectedNode {padding-top:0px;  color:#316AC5; height:24px; opacity:0.8;}
-	.ztree li a input.rename {height:14px; width:80px; padding:0; margin:0;
-		font-size:12px; border:1px #7EC4CC solid; *border:0px}
+
 	.ztree li span {line-height:16px; margin-right:2px; top: 3px; display: inline-block;}
 	.ztree li span.button {line-height:0; margin:0; width:16px; height:16px; display: inline-block; vertical-align:middle;
 		border:0 none; cursor: pointer;outline:none;
 		background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
-		background-image:url("../../images/ztree/zTreeStandard.png"); *background-image:url("../../images/ztree/zTreeStandard.gif")}
+		background-image:url("../../assets/img/zTreeStandard.png"); *background-image:url("../../assets/img/zTreeStandard.gif")}
 
 	.ztree li span.button.chk {width:13px; height:13px; margin:0 3px 0 0; cursor: auto}
 	.ztree li span.button.chk.checkbox_false_full {background-position:0 0}
@@ -272,5 +280,11 @@
 		text-decoration:none;
 		color: #316AC5;
 		background: #EEEEEE;
+	}
+	.glyphicon{
+		color: #dddddd;
+	}
+	.glyphicon-cog{
+		display: none;
 	}
 </style>

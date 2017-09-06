@@ -338,8 +338,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 v-for="(key,index) in rollbacks">
-                            <label
-                                    :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
+                            <label :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
                                     'c_off':rollback_id.indexOf(index) == -1}"
                                     @click.prevent="change_index($event,index)">
                                 <input type="checkbox"
