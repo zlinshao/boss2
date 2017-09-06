@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="postArticle">
         <ol class="breadcrumb">
             <li>员工广场</li>
             <li>
@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">标题：</label>
                             <div class="col-lg-6">
-                                <input class="form-control" placeholder="再次输入标题，50个字符以内">
+                                <input class="form-control" placeholder="输入标题，50个字符以内">
                             </div>
                         </div>
                         <div class="form-group">
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">内容：</label>
                             <div class="col-lg-8" id="editorContainer">
-                                <UE :defaultMsg=defaultMsg :config=config ref="ue" @editorContext="getUEContent"></UE>
+                                <Editor @editorContent="getUEContent"></Editor>
                                 <!--<Vueditor></Vueditor>-->
                             </div>
                         </div>
@@ -44,28 +44,29 @@
                 <div style="clear: both"></div>
 
                 <div class="buttons">
-                    <button class="btn btn-default">取消</button>
-                    <button class="btn btn-warning">预览</button>
+                    <button class="btn btn-default" @click="cancel">取消</button>
+                    <button class="btn btn-warning" @click="preview">预览</button>
                     <button class="btn btn-primary">保存</button>
                 </div>
 
             </div>
         </section>
 
+        <Preview :title="title" :content="content" :classify="classify"></Preview>
     </div>
 </template>
 
 <script>
-    import UE from './ueditor.vue'
+    import Editor from './editor.vue'
+    import Preview from './preview.vue'
     export default{
-        components: {UE},
+        components: {Editor,Preview},
         data(){
             return {
-                defaultMsg: 'adadsas',
-                config: {
-                    initialFrameWidth: null,
-                    initialFrameHeight: 350
-                }
+                title : 'dddddddd',
+                classify : 'asdsa',
+                content : '',
+
             }
         },
         mounted(){
@@ -79,7 +80,14 @@
                     message: val,
                     type: 'success'
                 });*/
-                console.log(val)
+                console.log(val);
+                this.content = val;
+            },
+            cancel(){
+                this.$router.back(-1)
+            },
+            preview(){
+                $('.preview').show()
             }
         }
     }
@@ -97,5 +105,8 @@
     .buttons{
         text-align: center;
         padding-top: 12px;
+    }
+    .postArticle{
+        position: relative;
     }
 </style>

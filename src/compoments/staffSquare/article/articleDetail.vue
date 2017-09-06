@@ -19,7 +19,7 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a>编辑</a></li>
+                                <li><router-link to="/modifyArticle">编辑</router-link></li>
                                 <li><a>发布</a></li>
                                 <li><a>下架</a></li>
                                 <li><a>删除</a></li>

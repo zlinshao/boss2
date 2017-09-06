@@ -98,6 +98,7 @@ import SquareDetail from './compoments/staffSquare/square/squareDetail.vue'     
 import Article from './compoments/staffSquare/article/article.vue'                    // 发布文章
 import ArticleDetail from './compoments/staffSquare/article/articleDetail.vue'                    // 文章详情
 import PostArticle from './compoments/staffSquare/article/postArticle.vue'                    // 发布
+import ModifyArticle from './compoments/staffSquare/article/modifyAriticle.vue'                    // 编辑
 
 import Organize from  './compoments/user/organization.vue'                                      //组织架构
 import PositionManage from './compoments/user/positionManage.vue'
@@ -532,6 +533,11 @@ export default[
         path: '/postArticle',
         name: 'PostArticle',
         component: PostArticle
+    },
+    {
+        path: '/modifyArticle',
+        name: 'ModifyArticle',
+        component: ModifyArticle
     },
     {       //组织架构
         path: '/organize',
