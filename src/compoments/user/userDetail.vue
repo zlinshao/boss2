@@ -205,7 +205,6 @@
                 this.$http.post('manager/user/readUser/id/'+this.userId).then((res) => {
                     this.userDetailList.push(res.data.data.data);
                     this.growth_chart = res.data.data.growth_chart;
-                    console.log(res.data.data)
                 })
             },
             showLargePic(name,index){

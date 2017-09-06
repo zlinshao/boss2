@@ -294,6 +294,7 @@
                $('#advancedSearch').modal('show')
             },
             getAdvanced(val){
+                this.initialise();
                 this.params.time = val.time;
                 this.params.key = val.key;
                 if(val.key_next !== ''){
@@ -311,7 +312,6 @@
                 $('.rem_div').remove();
                 $('#myModalRevise').modal('show');
                 this.$http.post('manager/user/readUser/id/' + id).then((res) => {
-                    console.log(res.data.data.data)
                     this.editData = res.data.data.data;
                 })
             },
@@ -400,6 +400,10 @@
             },
             reset(){
                 this.department_id = '';
+                this.initialise();
+                this.search();
+            },
+            initialise(){
                 this.params ={
                     keywords : '',
                     key : '',
@@ -407,7 +411,6 @@
                     department : '',
                     time : '',
                 };
-                this.search();
             },
             successMsg(msg){    //成功提示信息
                 this.info.success = msg;

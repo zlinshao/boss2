@@ -110,7 +110,7 @@
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >买房</label>
                                         <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house2'" :currentDate="[house]"                                                                         :placeholder="'买车时间'"@sendDate="getHouseDate"></DatePicker>
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'house2'" :currentDate="[house]"                                                                         :placeholder="'买房时间'"@sendDate="getHouseDate"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
