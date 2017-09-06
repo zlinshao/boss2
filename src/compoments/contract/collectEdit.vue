@@ -77,26 +77,20 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label">收房月数<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.months">
+                                            <input type="text" class="form-control" @click="changeisClick" v-model="contractEdit.months">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractEdit.vacancy">
-                                        </div>
-                                    </div>
+                                    
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期<sup>*</sup></label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <!--<input @click="selectDate" readonly placeholder="空置期开始时间"
-                                                   v-model="contractEdit.vac_start_date" class="form-control form_date">-->
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVac'" :currentDate="[contractEdit.vac_start_date]" :placeholder="'空置期开始时间'" @sendDate="getDate"></DatePicker>
+                                        <div class="col-lg-4 col-sm-9" @click="changeisClick">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVac'" :placeholder="'点击选择时间'"
+                                                        :currentDate="[contractEdit.vac_start_date]"  @sendDate="getVacStart"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input type="text" class="form-control" v-model="contractEdit.vac_end_date"
-                                                   disabled placeholder="空置期结束时间">
+                                        <div class="col-lg-4 col-sm-9" @click="changeisClick">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'endVac'" :placeholder="'点击选择时间'"
+                                                        :currentDate="[contractEdit.vac_end_date]"  @sendDate="getVacEnd"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -109,6 +103,12 @@
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractEdit.end_date"
                                                    disabled placeholder="合同结束时间">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" disabled v-model="contractEdit.vacancy">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -505,9 +505,6 @@
                 ],
             }
         },
-        updated(){
-            this.selectDate ();
-        },
         watch : {
             dictionary(val){
                 this.myDictionary = val;
@@ -522,7 +519,7 @@
             'contractEdit.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
+                    if( this.isClick){
                         this.completeDate(val);
                     }
                 }
@@ -530,15 +527,15 @@
             'contractEdit.months' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
+                    if(this.isClick){
                         this.completeDate(val);
                     }
                 }
             },
-            'contractEdit.vacancy' : {
+            'contractEdit.vac_end_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
+                    if(this.isClick){
                         this.completeDate(val);
                     }
                 }
@@ -561,6 +558,9 @@
             },
         },
         methods : {
+            changeisClick(){
+                this.isClick = true;
+            },
             gitContractInfo(){
                 if(this.myContractEitId !== ''){
                     this.$http.get('core/collect/readcontract/id/' +this.myContractEitId).then((res)=>{
@@ -736,38 +736,25 @@
 
             },
             completeDate(val){  //计算空置期结束 合同开始以及结束时间
-
-                this.$http.post('core/collect/contractDate',
+                this.$http.post('core/collect/date',
                     {
                         vac_start_date : this.contractEdit.vac_start_date,
-                        vacancy : this.contractEdit.vacancy,
-                        months : this.contractEdit.months ,
+                        vac_end_date : this.contractEdit.vac_end_date,
+                        months : this.contractEdit.months,
                     }).then(
                     (res) => {
-                        this.contractEdit.vac_end_date = res.data.vac_end_date;
-                        this.contractEdit.start_date = res.data.start_date;
-                        this.contractEdit.end_date = res.data.end_date;
+                        if(res.data.code === '70010'){
+                            this.contractEdit.start_date = res.data.data.start_date;
+                            this.contractEdit.end_date = res.data.data.end_date;
+                            this.contractEdit.vacancy = res.data.data.vacancy;
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
                     }
                 )
 
-            },
-            selectDate (){
-                this.isClick = true;
-                $('.form_date').datetimepicker({
-                    minView: "month",
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,
-                    pickerPosition: 'bottom-left',
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '空置期开始时间'){
-                        this.contractEdit.vac_start_date = ev.target.value;
-                    } else {
-                        this.contractEdit.complete_date = ev.target.value;
-                    }
-                });
             },
             //获取图片id
             bankPicId(val){         //获取成功上传银行卡 id 数组
@@ -935,8 +922,11 @@
                 this.contractEdit.villa_id = data.id;
                 this.house_name = data.address;
             },
-            getDate(val){
+            getVacStart(val){
                 this.contractEdit.vac_start_date = val;
+            },
+            getVacEnd(val){
+                this.contractEdit.vac_end_date = val;
             },
             getDate1(val){
                 this.contractEdit.complete_date = val;

@@ -771,9 +771,6 @@
         mounted(){
 
         },
-        updated(){
-            this.selectDate ();
-        },
         watch : {
             dictionary(val){
                 this.myDictionary = val;
@@ -977,24 +974,6 @@
                     this.customer_name = val.name;
                 }
 
-            },
-            selectDate (){
-                $('.formDatetime').datetimepicker({
-                    minView: "month",   //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '合同开始时间'){
-                        this.contractEdit.start_date = ev.target.value;
-                    }else if(ev.target.placeholder === '合同结束时间'){
-                        this.contractEdit.end_date = ev.target.value;
-                    }else {
-                        this.contractEdit.complete_date = ev.target.value;
-                    }
-
-                });
             },
             //获取图片id
             contractPicId(val){     //获取成功上传合同 id 数组

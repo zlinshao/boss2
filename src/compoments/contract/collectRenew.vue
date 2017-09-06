@@ -82,27 +82,20 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label">收房月数<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" @blur="changeisClick" v-model="contractRenew.months">
+                                            <input type="text" class="form-control" @click="changeisClick" v-model="contractRenew.months">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractRenew.vacancy">
-                                        </div>
-                                    </div>
-                                    <div class="row">
+
+                                    <div class="row" @click="changeisClick">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-9">
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVacR'" :currentDate="[contractRenew.vac_start_date]" :placeholder="'空置期开始时间'" @sendDate="getDate"></DatePicker>
-
-                                            <!--<input @click="selectDate" readonly placeholder="空置期开始时间"
-                                                   v-model="contractRenew.vac_start_date" class="form-control form_date">-->
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVacRenew'" :placeholder="'点击选择时间'"
+                                                        :currentDate="[contractRenew.vac_start_date]"  @sendDate="getVacStart"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input type="text" class="form-control" v-model="contractRenew.vac_end_date"
-                                                   disabled placeholder="空置期结束时间">
+                                        <div class="col-lg-4 col-sm-9" @click="changeisClick">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'endVacRenew'" :placeholder="'点击选择时间'"
+                                                        :currentDate="[contractRenew.vac_end_date]"  @sendDate="getVacEnd"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -117,7 +110,12 @@
                                                    disabled placeholder="合同结束时间">
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" disabled v-model="contractRenew.vacancy">
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >打房租日期<sup>*</sup></label>
                                         <div class="col-lg-4 col-sm-8">
@@ -516,9 +514,6 @@
                 ],
             }
         },
-        updated(){
-            this.selectDate ();
-        },
         watch : {
             dictionary(val){
                 this.myDictionary = val;
@@ -534,7 +529,7 @@
             'contractRenew.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
+                    if( this.isClick){
                         this.completeDate(val);
                     }
                 }
@@ -542,15 +537,15 @@
             'contractRenew.months' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
+                    if(this.isClick){
                         this.completeDate(val);
                     }
                 }
             },
-            'contractRenew.vacancy' : {
+            'contractRenew.vac_end_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
+                    if(this.isClick){
                         this.completeDate(val);
                     }
                 }
@@ -631,16 +626,22 @@
 
             },
             completeDate(val){  //计算空置期结束 合同开始以及结束时间
-                this.$http.post('core/collect/contractDate',
+                this.$http.post('core/collect/date',
                     {
                         vac_start_date : this.contractRenew.vac_start_date,
-                        vacancy : this.contractRenew.vacancy,
+                        vac_end_date : this.contractRenew.vac_end_date,
                         months : this.contractRenew.months,
                     }).then(
                     (res) => {
-                        this.contractRenew.vac_end_date = res.data.vac_end_date;
-                        this.contractRenew.start_date = res.data.start_date;
-                        this.contractRenew.end_date = res.data.end_date;
+                        if(res.data.code === '70010'){
+                            this.contractRenew.start_date = res.data.data.start_date;
+                            this.contractRenew.end_date = res.data.data.end_date;
+                            this.contractRenew.vacancy = res.data.data.vacancy;
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
                     }
                 )
 
@@ -648,23 +649,6 @@
 
             changeisClick(){
                 this.isClick = true;
-            },
-            selectDate (){
-                $('.form_date').datetimepicker({
-                    minView: "month",
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,
-                    pickerPosition: 'bottom-left',
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '空置期开始时间'){
-                        this.contractRenew.vac_start_date = ev.target.value;
-                    } else {
-                        this.contractRenew.complete_date = ev.target.value;
-                    }
-                });
             },
             //获取图片id
             bankPicId(val){         //获取成功上传银行卡 id 数组
@@ -883,8 +867,11 @@
             getFlexData(data){
                 this.contractRenew.price = data;
             },
-            getDate(val){
+            getVacStart(val){
                 this.contractRenew.vac_start_date = val;
+            },
+            getVacEnd(val){
+                this.contractRenew.vac_end_date = val;
             },
             getDate1(val){
                 this.contractRenew.complete_date = val;
