@@ -580,6 +580,9 @@
                         this.positionList=res.data.data;
                     });
                 }else{
+                    this.$http.get('manager/user/positionWb/id/'+this.first.id).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                     this.thirdDepart=[];
                     this.fourDepart=[];
                     this.fiveDepart=[];
@@ -599,6 +602,9 @@
                         this.positionList=res.data.data;
                     });
                 }else{
+                    this.$http.get('manager/user/positionWb/id/'+this.second.id).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                     this.fourDepart=[];
                     this.fiveDepart=[];
                 }
@@ -616,6 +622,9 @@
                         this.positionList=res.data.data;
                     });
                 }else{
+                    this.$http.get('manager/user/positionWb/id/'+this.third.id).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                     this.fiveDepart=[];
                 }
             },
