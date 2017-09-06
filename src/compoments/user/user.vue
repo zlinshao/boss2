@@ -287,6 +287,8 @@
             },
             clear(){
                 this.department_name = '';
+                this.params.department = '';
+                this.search();
             },
             advancedSearch(){   //高级搜索
                $('#advancedSearch').modal('show')

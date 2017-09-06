@@ -14,6 +14,12 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="row">
+                                    <label class="col-sm-2 control-label col-lg-2" >上级部门</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" readonly v-model="highDpm">
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <label class="col-sm-2 control-label col-lg-2" >部门名称</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="department">
@@ -35,13 +41,13 @@
 <script>
     import Status from '../common/status.vue';
     export default {
-        props:['addDpm'],
+        props:['department_id','department_name'],
         components: { Status },
         data(){
             return {
                 department:'',
                 id:'',
-                myAccount:this.addDpm,
+                highDpm : '',
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -55,10 +61,12 @@
             }
         },
         watch:{
-            addDpm(val) {
-                this.myAccount = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
-                this.id=this.myAccount;
+            department_id(val) {
+                this.id = val;
             },
+            department_name(val){
+                this.highDpm = val
+            }
         },
         methods:{
             responsible(){
@@ -66,6 +74,7 @@
                     if(res.data.code==10030){
                         this.department='';
                         $('#myModalAddDpm').modal('hide');
+                        this.$emit('success')
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
                         //显示成功弹窗 ***
