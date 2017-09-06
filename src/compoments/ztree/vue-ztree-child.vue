@@ -10,7 +10,9 @@
                         <span @click=" currentNode($event)" class="department">
                            <i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>{{model.name}}
                         </span>
-						<i class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"
+						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						</i>
 
 						<ul class="dropdown-menu dropdown-menu-left" style="padding: 0 0 0 0px;">
 							<li>
@@ -181,8 +183,8 @@
 //                        val.isFolder = !val.isFolder;
 //                    }
 			},
+            dropDownList(){this.model.contentHtml = '';},
             currentNode(e){
-                this.model.contentHtml = '';
 				for(let i=0; i < document.getElementsByClassName('department').length;i++){
                     document.getElementsByClassName('department')[i].style.color = '#333'
 				}
