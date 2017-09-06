@@ -332,7 +332,7 @@
                                         <label class="col-sm-2 control-label col-lg-2">资料</label>
                                         <div class="col-lg-10">
                                             <label class="checkbox-inline check first">
-                                                <input type="checkbox" class="pull-left" value="1" v-model="id_copy"> 身份证复印近
+                                                <input type="checkbox" class="pull-left" value="1" v-model="id_copy"> 身份证复印件
                                             </label>
                                             <label class="checkbox-inline check">
                                                 <input type="checkbox" class="pull-left" value="1" v-model="photo"> 照片
