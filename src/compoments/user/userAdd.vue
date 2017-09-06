@@ -230,8 +230,8 @@
                                         <div class="col-md-4">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
                                         </div>
-                                        <label class="col-sm-2 control-label col-lg-2">离职时间</label>
-                                        <div class="col-md-4">
+                                        <label class="col-sm-2 control-label col-lg-2" v-if="status == 3">离职时间</label>
+                                        <div class="col-md-4" v-if="status == 3">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'dismiss_time'" :currentDate="[dismiss_time]"                                                           :placeholder="'离职时间'"@sendDate="getDismissDate"></DatePicker>
                                         </div>
                                     </div>
