@@ -24,6 +24,9 @@
                             <span class="pull-left" style="margin-top: 8px;">岗位管理</span>
                             <button class="btn btn-primary btn-sm" style="visibility: hidden">岗位添加</button>
                         </h5>
+                        <div style="text-align: center;margin: 22.35% 0">
+                            <h3><i style="color: #1caadc">正在开发中...</i></h3>
+                        </div>
                     </div>
                 </section>
             </div>
