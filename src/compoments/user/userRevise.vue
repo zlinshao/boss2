@@ -307,8 +307,8 @@
                                         <div class="col-md-4">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll1'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
                                         </div>
-                                        <label class="col-sm-2 control-label col-lg-2">离职时间</label>
-                                        <div class="col-md-4">
+                                        <label class="col-sm-2 control-label col-lg-2" v-if="staffStatus == 3">离职时间</label>
+                                        <div class="col-md-4" v-if="staffStatus == 3">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'dismiss_time1'" :currentDate="[dismiss_time]"                                                           :placeholder="'离职时间'"@sendDate="getDismissDate"></DatePicker>
                                         </div>
                                     </div>
@@ -449,6 +449,8 @@
                     }
                 ],
                 dictionary : [],
+
+                staffStatus :'',
             }
         },
         mounted(){
@@ -513,6 +515,7 @@
                 this.house  = this.myResult.house;         //买房时间
                 this.salary   = this.myResult.salary ;         //买房时间
                 this.dismiss_time  = this.myResult.dismiss_time;         //买房时间
+                this.staffStatus = this.myResult.status;
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
