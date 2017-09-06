@@ -16,7 +16,7 @@
 
 <script>
 import Vue from 'vue'
-import ztreeItem from './vue-ztree-child.vue'
+import ztreeItem from './vueTreeChild.vue'
 export default{
     components:{ztreeItem},
 	data(){
@@ -95,6 +95,7 @@ export default{
 }
 </script>
 
-<style>
-
+<style scoped>
+	div.ztree_content_wrap div.left{float: left;width: 100%;}
+	div.zTreeDemoBackground {width:100%;height:100%;text-align:left;}
 </style>

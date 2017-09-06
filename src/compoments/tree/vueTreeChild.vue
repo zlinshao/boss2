@@ -7,10 +7,11 @@
 					<span :class="{loadSyncNode:model.loadNode==1}" v-if='model.loadNode==1'></span>
 					<!--<span :class='model.iconClass' v-show='model.iconClass'></span>-->
 					<div class="dropdown">
-                        <span @click=" currentNode($event)" class="department">
-                           <i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>{{model.name}}
+                        <span @click=" currentNode($event)" @mouseenter="operate($event)">
+                           	<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>
+							<span class="department">{{model.name}}</span>
                         </span>
-						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"
+						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
 						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						</i>
 
@@ -184,11 +185,17 @@
 //                    }
 			},
             dropDownList(){this.model.contentHtml = '';},
+            operate(e){
+                for(let i=0; i < document.getElementsByClassName('glyphicon-cog').length;i++){
+                    document.getElementsByClassName('glyphicon-cog')[i].style.display = 'none'
+                }
+              e.target.nextElementSibling.style.display = 'inline-block';
+			},
             currentNode(e){
 				for(let i=0; i < document.getElementsByClassName('department').length;i++){
                     document.getElementsByClassName('department')[i].style.color = '#333'
 				}
-                e.target.style.color = '#316AC5';
+                e.target.style.color = '#e4393c';
 			},
 			edit(e){	//编辑
                 this.model.contentHtml = e.target.text;
@@ -205,13 +212,9 @@
 </script>
 
 <style>
-	div.ztree_content_wrap div.left{float: left;width: 100%;}
-	div.zTreeDemoBackground {width:100%;height:100%;text-align:left;}
-
-
 	.ztree li{position: relative; padding:0; margin:0; list-style:none; line-height:24px; text-align:left; white-space:nowrap; outline:0}
 	.ztree li ul{ margin:0; padding:0 0 0 32px}
-	.ztree li ul.line{ background:url('../../images/ztree/line_conn.gif') 0 0 repeat-y;}
+	.ztree li ul.line{ background:url('../../assets/img/line_conn.gif') 0 0 repeat-y;}
 
 	.ztree li>div {padding:1px 3px 0 5px; margin:0; cursor:pointer; height:17px; color:#333; background-color: transparent;
 		text-decoration:none; vertical-align:top; display: inline-block}
@@ -221,7 +224,7 @@
 	.ztree li span.button {line-height:0; margin:0; width:16px; height:16px; display: inline-block; vertical-align:middle;
 		border:0 none; cursor: pointer;outline:none;
 		background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
-		background-image:url("../../images/ztree/zTreeStandard.png"); *background-image:url("../../images/ztree/zTreeStandard.gif")}
+		background-image:url("../../assets/img/zTreeStandard.png"); *background-image:url("../../assets/img/zTreeStandard.gif")}
 
 	.ztree li span.button.chk {width:13px; height:13px; margin:0 3px 0 0; cursor: auto}
 	.ztree li span.button.chk.checkbox_false_full {background-position:0 0}
@@ -280,5 +283,8 @@
 	}
 	.glyphicon{
 		color: #dddddd;
+	}
+	.glyphicon-cog{
+		display: none;
 	}
 </style>

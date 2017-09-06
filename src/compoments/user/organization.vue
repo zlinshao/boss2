@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import vueZtree from '../../compoments/ztree/vue-ztree.vue'
+    import vueZtree from '../tree/vueTree.vue'
     import editDpm from  './editDpm.vue';
     import Confirm from '../common/confirm.vue'
     import AddDpm from  './addDubordinateDpm.vue'
@@ -196,14 +196,9 @@
         font-size: 18px;
         color: #333333;
     }
-
-    .organize {
-        background: #ffffff;
-    }
-
-    .ztree {
-        border: 0;
-    }
+    /*.panel {*/
+        /*height: 80%;*/
+    /*}*/
 
     .panel-body > h5 {
         border-bottom: 2px solid #dddddd;
