@@ -399,7 +399,7 @@
                 this.searchUser();
             },
             reset(){
-                this.department_id = '';
+                this.department_name = '';
                 this.initialise();
                 this.search();
             },
