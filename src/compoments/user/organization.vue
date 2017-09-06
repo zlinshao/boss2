@@ -95,23 +95,23 @@
                         this.department_id = val.id;
                         $('#myModalAddDpm').modal('show');
                         break;
-                    case '启用部门' :
-                        this.department_id = val.id;
-                        this.confirmMsg = {msg: '您确定启用此部门吗'};
-                        $('#confirm').modal('show');
-                        this.msgFlag = 'startDepartment';
-                        break;
-                    case '停用部门' :
-                        this.department_id = val.id;
-                        this.confirmMsg = {msg: '您确定停用此部门吗'};
-                        $('#confirm').modal('show');
-                        this.msgFlag = 'stopDepartment';
-                        break;
+//                    case '启用部门' :
+//                        this.department_id = val.id;
+//                        this.confirmMsg = {msg: '您确定启用此部门吗'};
+//                        $('#confirm').modal('show');
+//                        this.msgFlag = 'startDepartment';
+//                        break;
+//                    case '停用部门' :
+//                        this.department_id = val.id;
+//                        this.confirmMsg = {msg: '您确定停用此部门吗'};
+//                        $('#confirm').modal('show');
+//                        this.msgFlag = 'stopDepartment';
+//                        break;
                     case '删除部门' :
                         this.department_id = val.id;
                         this.confirmMsg = {msg: '您确定删除此部门吗'};
                         $('#confirm').modal('show');
-                        this.msgFlag = 'delete';
+//                        this.msgFlag = 'delete';
                         break;
                     case '调迁部门' :
                         this.department_id = val.id;
@@ -130,38 +130,39 @@
                 this.getDepartementList();
             },
             getConfirm(){
-                switch (this.msgFlag) {
-                    case 'startDepartment' :
-                        this.$http.get('manager/department/disableDpm/id/' + this.department_id).then((res) => {
-                            if (res.data.code == 10010) {
-                                this.getDepartementList();
-                                this.successMsg(res.data.msg);
-                            } else {
-                                this.errorMsg(res.data.msg);
-                            }
-                        })
-                        break;
-                    case 'stopDepartment' :
-                        this.$http.get('manager/department/disableDpm/id/' + this.department_id).then((res) => {
-                            if (res.data.code == 10010) {
-                                this.getDepartementList();
-                                this.successMsg(res.data.msg);
-                            } else {
-                                this.errorMsg(res.data.msg);
-                            }
-                        })
-                        break;
-                    case 'delete' :
-                        this.$http.get('manager/department/softDelete/id/' + this.department_id).then((res) => {
-                            if (res.data.code == 10090) {
-                                this.getDepartementList();
-                                this.successMsg(res.data.msg);
-                            } else {
-                                this.errorMsg(res.data.msg);
-                            }
-                        })
-
-                }
+                this.$http.get('manager/department/softDelete/id/' + this.department_id).then((res) => {
+                    if (res.data.code == 10090) {
+                        this.getDepartementList();
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+//                switch (this.msgFlag) {
+//                    case 'startDepartment' :
+//                        this.$http.get('manager/department/disableDpm/id/' + this.department_id).then((res) => {
+//                            if (res.data.code == 10010) {
+//                                this.getDepartementList();
+//                                this.successMsg(res.data.msg);
+//                            } else {
+//                                this.errorMsg(res.data.msg);
+//                            }
+//                        })
+//                        break;
+//                    case 'stopDepartment' :
+//                        this.$http.get('manager/department/disableDpm/id/' + this.department_id).then((res) => {
+//                            if (res.data.code == 10010) {
+//                                this.getDepartementList();
+//                                this.successMsg(res.data.msg);
+//                            } else {
+//                                this.errorMsg(res.data.msg);
+//                            }
+//                        })
+//                        break;
+//                    case 'delete' :
+//
+//
+//                }
             },
             successMsg(msg){    //成功提示信息
                 this.info.success = msg;

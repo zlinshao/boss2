@@ -8,7 +8,7 @@
 					<!--<span :class='model.iconClass' v-show='model.iconClass'></span>-->
 					<div class="dropdown" @mouseenter="operate($event)" @mouseleave="leaveNode($event)">
                         <span @click=" currentNode($event)">
-                           	<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>
+                           	<!--<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>-->
 							<span class="department">{{model.name}}</span>
                         </span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
@@ -22,12 +22,12 @@
 							<li>
 								<a @click="addDeparment($event)">新建下级部门</a>
 							</li>
-							<li>
-								<a @click="startDepartment($event)" v-if="model.status == 2">启用部门</a>
-							</li>
-							<li>
-								<a @click="stopDepartment($event)" v-if="model.status == 1">停用部门</a>
-							</li>
+							<!--<li>-->
+								<!--<a @click="startDepartment($event)" v-if="model.status == 2">启用部门</a>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<a @click="stopDepartment($event)" v-if="model.status == 1">停用部门</a>-->
+							<!--</li>-->
 							<li>
 								<a @click="deleteDepartment($event)">删除部门</a>
 							</li>
@@ -203,8 +203,8 @@
             addDeparment(e){
                 this.model.contentHtml = e.target.text;
 			},
-            startDepartment(e){this.model.contentHtml = e.target.text;},
-            stopDepartment(e){this.model.contentHtml = e.target.text;},
+//            startDepartment(e){this.model.contentHtml = e.target.text;},
+//            stopDepartment(e){this.model.contentHtml = e.target.text;},
             deleteDepartment(e){this.model.contentHtml = e.target.text;},
             transferDepartment(e){this.model.contentHtml = e.target.text;},
     },
