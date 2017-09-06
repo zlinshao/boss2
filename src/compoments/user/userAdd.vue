@@ -399,7 +399,10 @@
                         this.thirdDepart=[];
                         this.fourDepart=[];
                         this.fiveDepart=[];
-                    })
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.firstId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                 }else{
                     this.secondDepart=[];
                     this.thirdDepart=[];
@@ -432,7 +435,10 @@
                         this.fourDepart=res.data.data;
                         this.department=this.thirdId;
                         this.fiveDepart=[];
-                    })
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.thirdId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                 }else{
                     this.fourDepart=[];
                     this.fiveDepart=[];
@@ -443,7 +449,10 @@
                     this.$http.get('manager/user/departmentWb/id/'+this.fourId).then((res)=>{
                         this.fiveDepart=res.data.data;
                         this.department=this.fourId;
-                    })
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.fourId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                 }else{
                     this.this.fiveDepart=[];
                 }

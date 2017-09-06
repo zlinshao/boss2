@@ -554,7 +554,10 @@
                         this.thirdDepart=[];
                         this.fourDepart=[];
                         this.fiveDepart=[];
-                    })
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.first.id).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                 }else{
                     this.secondDepart=[];
                     this.thirdDepart=[];
@@ -591,7 +594,10 @@
                         this.department.push(this.third);
                         this.depId=this.department[0].id;
                         this.fiveDepart=[];
-                    })
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.third.id).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                 }else{
                     this.fourDepart=[];
                     this.fiveDepart=[];
@@ -605,7 +611,10 @@
                         this.department.push(this.four);
                         this.depId=this.department[0].id;
 
-                    })
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.four.id).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
                 }else{
                     this.fiveDepart=[];
                 }
