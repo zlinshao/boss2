@@ -142,11 +142,11 @@
                                 <!--</div>-->
                                 <div>
                                     <span class="text-primary">购车：</span>
-                                    <span>{{dictionary.car[item.car]}}</span>
+                                    <span>{{item.car}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">购房：</span>
-                                    <span>{{dictionary.house[item.house]}}</span>
+                                    <span>{{item.house}}</span>
                                 </div>
                             </div>
                         </div>
