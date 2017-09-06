@@ -134,7 +134,7 @@
                                 <div>
                                     <span class="text-primary">保险：</span>
                                     <span v-if="item.five_insurance">已交</span>
-                                    <span v-if="!item.five_insurance">已交</span>
+                                    <span v-if="!item.five_insurance">未交</span>
                                 </div>
                                 <!--<div>-->
                                     <!--<span class="text-primary">资料：</span>-->
