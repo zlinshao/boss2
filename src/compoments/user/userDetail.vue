@@ -31,7 +31,7 @@
                                     <span v-if="item.gender === 2">女</span>
                                 </div>
                                 <div><span class="text-primary">生日：</span><span>{{item.birthday}}</span></div>
-                                <div><span class="text-primary">年龄：</span></div>
+                                <div><span class="text-primary">年龄：</span>{{item.age}}</div>
                                 <div><span class="text-primary">手机号：</span><span>{{item.mobile}}</span></div>
                                 <div><span class="text-primary">紧急联系电话：</span><span>{{item.emergency_call}}</span></div>
                             </div>
@@ -106,7 +106,11 @@
                             </div>
                             <div class="col-md-4">
                                 <div><span class="text-primary">转正时间：</span><span>{{item.full_time}}</span></div>
-                                <div><span class="text-primary">工龄：</span><span></span></div>
+                                <div><span class="text-primary">工龄：</span>
+                                    <span v-if="item.length_service.year>0">{{item.length_service.year}}年</span>
+                                    <span v-if="item.length_service.month>0">{{item.length_service.month}}月</span>
+                                    <span v-if="item.length_service.day>0">{{item.length_service.day}}天</span>
+                                </div>
                                 <div>
                                     <span class="text-primary">第一次签合同时间：</span>
                                     <span>{{item.agreement_first_time}}</span>
