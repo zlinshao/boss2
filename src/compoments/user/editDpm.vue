@@ -16,7 +16,7 @@
                                 <div class="row">
                                     <label class="col-sm-2 control-label col-lg-2" >部门名称</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="depart.department">
+                                        <input type="text" class="form-control" v-model="departmentName">
                                     </div>
                                 </div>
                             </div>
@@ -35,17 +35,17 @@
 <script>
     import Status from '../common/status.vue';
     export default {
-        props:['editDpm'],
+        props:['department_name' , 'department_id'],
         components: { Status },
         data(){
             return {
-                depart:{
-                    department:'',
-                    id:'',
-                    flag:'',
-                    reId:'',
-                    reName:'',
-                },
+//                depart:{
+//                    department:'',
+//                    id:'',
+//                    flag:'',
+//                    reId:'',
+//                    reName:'',
+//                },
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -56,23 +56,36 @@
                     //失败信息 ***
                     error: ''
                 },
+                departmentName : '',
+                departmentId : '',
 
-                myAccount:this.editDpm
+//                myAccount:this.editDpm
             }
         },
         watch:{
-            editDpm(val) {
-                this.myAccount = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
-                this.depart.department=this.myAccount.name;
-                this.depart.id=this.myAccount.id;
-                this.depart.flag=this.myAccount.flag;
-                this.depart.reId=this.myAccount.reId;
-                this.depart.reName=this.myAccount.reName;
+//            editDpm(val) {
+//                this.myAccount = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
+//                this.depart.department=this.myAccount.name;
+//                this.depart.id=this.myAccount.id;
+//                this.depart.flag=this.myAccount.flag;
+//                this.depart.reId=this.myAccount.reId;
+//                this.depart.reName=this.myAccount.reName;
+//            },
+            department_name(val){
+                this.departmentName = val
             },
+            department_id(val){
+                this.departmentId = val
+            }
         },
+//        computed : {
+//            departmentId(){
+//                return this.editDpm.id;
+//            },
+//        },
         methods:{
             responsible(){
-                this.$http.post('/manager/department/updateDpm/',{'id':this.depart.id,'name':this.depart.department}).then((res) => {
+                this.$http.post('/manager/department/updateDpm/',{'id':this.departmentId,'name':this.departmentName}).then((res) => {
                     if(res.data.code==10030){
                         $('#myModalEditDpm').modal('hide');
                         this.$emit('editDdp',this.depart);

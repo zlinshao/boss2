@@ -77,26 +77,19 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label">收房月数<sup>*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" @blur="changeisClick" v-model="contractAdd.months">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="contractAdd.vacancy">
+                                            <input type="text" class="form-control" @click="changeisClick" v-model="contractAdd.months">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >空置期开始日期<sup>*</sup></label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <!--<input @click="selectDate" readonly placeholder="空置期开始时间"
-                                                   v-model="contractAdd.vac_start_date" class="form-control form_date">-->
-                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVac'" :currentDate="[contractAdd.vac_start_date]" :placeholder="'空置期开始时间'" @sendDate="getDate"></DatePicker>
+                                        <div class="col-lg-4 col-sm-9" @click="changeisClick">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'startVac'" :placeholder="'点击选择时间'"
+                                                        :currentDate="[contractAdd.vac_start_date]"  @sendDate="getVacStart"></DatePicker>
                                         </div>
                                         <label class="col-sm-3 control-label col-lg-2" >空置期结束日期</label>
-                                        <div class="col-lg-4 col-sm-9">
-                                            <input type="text" class="form-control" v-model="contractAdd.vac_end_date"
-                                                   disabled placeholder="空置期结束时间">
+                                        <div class="col-lg-4 col-sm-9" @click="changeisClick">
+                                            <DatePicker :dateConfigure="dateConfigure" :idName="'endVac'" :placeholder="'点击选择时间'"
+                                                        :currentDate="[contractAdd.vac_end_date]"  @sendDate="getVacEnd"></DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -109,6 +102,12 @@
                                         <div class="col-lg-4 col-sm-9">
                                             <input type="text" class="form-control" v-model="contractAdd.end_date"
                                                    disabled placeholder="合同结束时间">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label">空置期<sup>*</sup></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" disabled v-model="contractAdd.vacancy">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -186,7 +185,7 @@
                                     <h4>客户信息</h4>
                                     <div>
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">客户汇款方式<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">客户汇款方式</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractAdd.payment" @change="changeCustomerPayment">
                                                     <option value="">请选择</option>
@@ -195,13 +194,13 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractAdd.payment==1||contractAdd.payment==4">
-                                            <label class="col-sm-2 control-label">客户收款人姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">客户收款人姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractAdd.account_owner">
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractAdd.payment==1||contractAdd.payment==4">
-                                            <label class="col-sm-2 control-label">开户行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">开户行</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractAdd.bank">
                                                     <option :value="value" v-for="(key,value) in myDictionary.bank">{{key}}</option>
@@ -215,17 +214,17 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractAdd.payment==2">
-                                            <label class="col-sm-2 control-label">支付宝姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支付宝姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractAdd.account_owner">
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label v-show="contractAdd.payment==1" class="col-sm-2 control-label">账号<sup>*</sup></label>
-                                            <label v-show="contractAdd.payment==2" class="col-sm-2 control-label">支付宝账号<sup>*</sup></label>
-                                            <label v-show="contractAdd.payment==3" class="col-sm-2 control-label">微信账号<sup>*</sup></label>
-                                            <label v-show="contractAdd.payment==4" class="col-sm-2 control-label">存折账号<sup>*</sup></label>
+                                            <label v-show="contractAdd.payment==1" class="col-sm-2 control-label">账号</label>
+                                            <label v-show="contractAdd.payment==2" class="col-sm-2 control-label">支付宝账号</label>
+                                            <label v-show="contractAdd.payment==3" class="col-sm-2 control-label">微信账号</label>
+                                            <label v-show="contractAdd.payment==4" class="col-sm-2 control-label">存折账号</label>
                                             <div class="col-sm-10" v-show="contractAdd.payment !=='' && contractAdd.payment !==undefined">
                                                 <input type="text" class="form-control" v-model="contractAdd.account">
                                             </div>
@@ -236,7 +235,7 @@
                                     <h4>中介信息</h4>
                                     <div>
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">中介费<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">中介费</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractAdd.cost_medi" >
                                             </div>
@@ -295,7 +294,7 @@
                                     <hr>
                                     <h4>合同附件</h4>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">银行卡照片<sup>*</sup></label>
+                                        <label class="col-lg-2 control-label">银行卡照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="bankPicId" @delete="picDelete" @complete="complete"
                                                      :result="'bankPic'" :idPhotos="bankPic"></up-load>
@@ -512,9 +511,6 @@
                 ],
             }
         },
-        updated(){
-            this.selectDate ();
-        },
         watch : {
             dictionary(val){
                 this.myDictionary = val;
@@ -530,24 +526,24 @@
             'contractAdd.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
-                        this.completeDate(val);
+                    if( this.isClick){
+                            this.completeDate(val,oldVal,'start');
                     }
                 }
             },
             'contractAdd.months' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
-                        this.completeDate(val);
+                    if(this.isClick){
+                        this.completeDate(val,oldVal,'months');
                     }
                 }
             },
-            'contractAdd.vacancy' : {
+            'contractAdd.vac_end_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(val !== oldVal && this.isClick){
-                        this.completeDate(val);
+                    if(this.isClick){
+                        this.completeDate(val,oldVal,'end');
                     }
                 }
             },
@@ -604,17 +600,30 @@
                 }
 
             },
-            completeDate(val){  //计算空置期结束 合同开始以及结束时间
-                this.$http.post('core/collect/contractDate',
+            completeDate(val,oldVal,flag){  //计算空置期结束 合同开始以及结束时间
+                this.$http.post('core/collect/date',
                     {
                         vac_start_date : this.contractAdd.vac_start_date,
-                        vacancy : this.contractAdd.vacancy,
+                        vac_end_date : this.contractAdd.vac_end_date,
                         months : this.contractAdd.months,
                     }).then(
                     (res) => {
-                        this.contractAdd.vac_end_date = res.data.vac_end_date;
-                        this.contractAdd.start_date = res.data.start_date;
-                        this.contractAdd.end_date = res.data.end_date;
+                        if(res.data.code === '70010'){
+                            this.contractAdd.start_date = res.data.data.start_date;
+                            this.contractAdd.end_date = res.data.data.end_date;
+                            this.contractAdd.vacancy = res.data.data.vacancy;
+                        }else {
+                            switch (flag){
+                                case 'start':
+                                    this.contractAdd.vac_start_date = oldVal;
+                                    break;
+                                case 'end' :
+                                    this.contractAdd.vac_end_date = oldVal;
+                            }
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
                     }
                 )
 
@@ -622,23 +631,6 @@
 
             changeisClick(){
                 this.isClick = true;
-            },
-            selectDate (){
-                $('.form_date').datetimepicker({
-                    minView: "month",
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,
-                    pickerPosition: 'bottom-left',
-                }).on('changeDate', ev => {
-                    if (ev.target.placeholder === '空置期开始时间'){
-                        this.contractAdd.vac_start_date = ev.target.value;
-                    } else {
-                        this.contractAdd.complete_date = ev.target.value;
-                    }
-                });
             },
             //获取图片id
             bankPicId(val){         //获取成功上传银行卡 id 数组
@@ -864,8 +856,11 @@
                 this.contractAdd.villa_id = data.id;
                 this.house_name = data.address;
             },
-            getDate(val){
+            getVacStart(val){
                 this.contractAdd.vac_start_date = val;
+            },
+            getVacEnd(val){
+                this.contractAdd.vac_end_date = val;
             },
             getDate1(val){
                 this.contractAdd.complete_date = val;

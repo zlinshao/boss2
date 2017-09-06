@@ -136,16 +136,8 @@
                         $('#myModalSuspend').modal('hide');
                         this.$emit('Account',this.myAccount);
                         this.info.success = res.data.msg;
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
                         this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        },2000);
                     }else{
-                        this.info.state_success = false;
-                        //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
@@ -158,16 +150,8 @@
                         $('#deleteAcount').modal('hide');
                         this.$emit('Account',this.myAccount);
                         this.info.success = res.data.msg;
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
                         this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        },2000);
                     }else{
-                        this.info.state_success = false;
-                        //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
                         this.info.state_error = true;
