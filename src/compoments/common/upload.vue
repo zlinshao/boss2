@@ -47,7 +47,8 @@
                     maxFiles: 60,       //一次性上传的文件数量上限
                     maxFilesize: 20,    //MB
                     acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp",
-                    dictMaxFilesExceeded: "您最多只能上传10个文件！",
+                    dictResponseError: "当前网络连接不稳定请稍后再试",
+                    dictMaxFilesExceeded: "您最多只能上传60个文件！",
                     dictFileTooBig: "文件过大上传文件最大支持.",
                     withCredentials: "yes",
                     init: function () {
