@@ -530,7 +530,7 @@
                 deep:true,
                 handler(val,oldVal){
                     if( this.isClick){
-                        this.completeDate(val);
+                        this.completeDate(val,oldVal,'start');
                     }
                 }
             },
@@ -538,7 +538,7 @@
                 deep:true,
                 handler(val,oldVal){
                     if(this.isClick){
-                        this.completeDate(val);
+                        this.completeDate(val,oldVal,'months');
                     }
                 }
             },
@@ -546,7 +546,7 @@
                 deep:true,
                 handler(val,oldVal){
                     if(this.isClick){
-                        this.completeDate(val);
+                        this.completeDate(val,oldVal,'end');
                     }
                 }
             },
@@ -625,7 +625,7 @@
                 }
 
             },
-            completeDate(val){  //计算空置期结束 合同开始以及结束时间
+            completeDate(val,oldVal,flag){  //计算空置期结束 合同开始以及结束时间
                 this.$http.post('core/collect/date',
                     {
                         vac_start_date : this.contractRenew.vac_start_date,
@@ -638,6 +638,13 @@
                             this.contractRenew.end_date = res.data.data.end_date;
                             this.contractRenew.vacancy = res.data.data.vacancy;
                         }else {
+                            switch (flag){
+                                case 'start':
+                                    this.contractRenew.vac_start_date = oldVal;
+                                    break;
+                                case 'end' :
+                                    this.contractRenew.vac_end_date = oldVal;
+                            }
                             this.info.error = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_error = true;

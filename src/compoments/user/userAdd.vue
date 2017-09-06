@@ -136,6 +136,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >银行卡号</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="bank_num" placeholder="银行卡号">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-lg-2 control-label">身份证照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="idPicId" @delete="picDelete" @complete="complete"
