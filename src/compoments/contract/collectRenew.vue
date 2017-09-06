@@ -190,7 +190,7 @@
                                     <h4>客户信息</h4>
                                     <div>
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">客户汇款方式<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">客户汇款方式</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractRenew.payment" @change="changeCustomerPayment">
                                                     <option value="">请选择</option>
@@ -199,13 +199,13 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractRenew.payment==1||contractRenew.payment==4">
-                                            <label class="col-sm-2 control-label">客户收款人姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">客户收款人姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractRenew.account_owner">
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractRenew.payment==1||contractRenew.payment==4">
-                                            <label class="col-sm-2 control-label">开户行<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">开户行</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractRenew.bank">
                                                     <option :value="value" v-for="(key,value) in myDictionary.bank">{{key}}</option>
@@ -219,17 +219,17 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractRenew.payment==2">
-                                            <label class="col-sm-2 control-label">支付宝姓名<sup>*</sup></label>
+                                            <label class="col-sm-2 control-label">支付宝姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractRenew.account_owner">
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label v-show="contractRenew.payment==1" class="col-sm-2 control-label">账号<sup>*</sup></label>
-                                            <label v-show="contractRenew.payment==2" class="col-sm-2 control-label">支付宝账号<sup>*</sup></label>
-                                            <label v-show="contractRenew.payment==3" class="col-sm-2 control-label">微信账号<sup>*</sup></label>
-                                            <label v-show="contractRenew.payment==4" class="col-sm-2 control-label">存折账号<sup>*</sup></label>
+                                            <label v-show="contractRenew.payment==1" class="col-sm-2 control-label">账号</label>
+                                            <label v-show="contractRenew.payment==2" class="col-sm-2 control-label">支付宝账号</label>
+                                            <label v-show="contractRenew.payment==3" class="col-sm-2 control-label">微信账号</label>
+                                            <label v-show="contractRenew.payment==4" class="col-sm-2 control-label">存折账号</label>
                                             <div class="col-sm-10" v-show="contractRenew.payment !=='' && contractRenew.payment !==undefined">
                                                 <input type="text" class="form-control" v-model="contractRenew.account">
                                             </div>
@@ -299,7 +299,7 @@
                                     <hr>
                                     <h4>合同附件</h4>
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">银行卡照片<sup>*</sup></label>
+                                        <label class="col-lg-2 control-label">银行卡照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="bankPicId" @delete="picDelete" @complete="complete"
                                                      :result="'bank_pic'" :idPhotos="bank_pic"></up-load>
