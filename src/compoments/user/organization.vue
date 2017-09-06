@@ -22,7 +22,7 @@
                     <div class="panel-body">
                         <h5 style="text-align: right">
                             <span class="pull-left" style="margin-top: 8px;">岗位管理</span>
-                            <button class="btn btn-primary btn-sm">岗位添加</button>
+                            <button class="btn btn-primary btn-sm" style="visibility: hidden">岗位添加</button>
                         </h5>
                     </div>
                 </section>
