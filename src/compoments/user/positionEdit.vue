@@ -16,7 +16,7 @@
                                     <label class="col-sm-2 control-label col-lg-2" >部门</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="department_name"
-                                              readonly placeholder="点击选择职位" @click="selectDpm">
+                                              disabled placeholder="点击选择职位" @click="selectDpm">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -29,7 +29,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
                         <button type="button" class="btn btn-primary" @click="confirmEidt">确定</button>
                     </div>
                 </div><!-- /.modal-content -->

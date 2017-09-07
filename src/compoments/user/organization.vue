@@ -11,8 +11,8 @@
                         <h5 style="margin-top: 8px;padding-bottom: 11px">
                             <span>组织架构</span>
                         </h5>
-                        <vue-ztree :list.sync='ztreeDataSource' :func='nodeClick'
-                                   :contextmenu='contextmenuClick' :is-open='true'>
+                        <vue-ztree :list.sync='departmentList' :func='departmentClick'
+                                   :contextmenu='rightClick' :is-open='true'>
                         </vue-ztree>
                     </div>
                 </section>
@@ -22,10 +22,13 @@
                     <div class="panel-body">
                         <h5 style="text-align: right">
                             <span class="pull-left" style="margin-top: 8px;">岗位管理</span>
-                            <button class="btn btn-primary btn-sm" style="visibility: hidden">岗位添加</button>
+                            <button class="btn btn-primary btn-sm" @click="addPosition">岗位添加</button>
                         </h5>
-                        <div style="text-align: center;margin: 22.35% 0">
-                            <h3><i style="color: #1caadc">正在开发中...</i></h3>
+                        <positionTree :list.sync='positionList' :func='positionClick'
+                                   :contextmenu='rightClick' :is-open='true'>
+                        </positionTree>
+                        <div v-if="noPosition">
+                            <i style="color: #1caadc;font-size: 16px">暂无相应岗位,请添加岗位...</i>
                         </div>
                     </div>
                 </section>
@@ -36,34 +39,43 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <AddDpm :department_name="department_name" :department_id="department_id" @success='addDpm'></AddDpm>
         <Status :state='info'></Status>
-        <Transfer @TransferDepartment="transferCommit"></Transfer>
+        <!--<Transfer @TransferDepartment="transferCommit"></Transfer>-->
+        <PositionAdd :position_id="position_id" :position_name="position_name" @success = 'addSuccess'></PositionAdd>
+        <PositionEdit :eidtId = 'position_id' @success="editSuccess"></PositionEdit>
+
     </div>
 </template>
 
 <script>
-    import vueZtree from '../tree/vueTree.vue'
+    import vueZtree from '../oraganizeTree/vueTree.vue'
+    import positionTree from  '../positionTree/vueTree.vue'
     import editDpm from  './editDpm.vue';
     import Confirm from '../common/confirm.vue'
     import AddDpm from  './addDubordinateDpm.vue'
     import Status from '../common/status.vue';
-    import Transfer from './transferDpm.vue'
-
+//    import Transfer from './transferDpm.vue'
+    import PositionEdit from './positionEdit.vue'   //职位编辑
+    import PositionAdd from  './positionAdd.vue'
     export default {
         components: {
             vueZtree,
+            positionTree,
             editDpm,
             Confirm,
             AddDpm,
             Status,
-            Transfer
+//            Transfer,
+            PositionEdit,
+            PositionAdd
         },
         data () {
             return {
-                ztreeDataSource: [],
-                department_id: '',
-                department_name: '',
-                confirmMsg: [],
-                info: {
+                departmentList: [], //部门数据
+                positionList : [],  //职位数据
+                department_id: '',  //部门id
+                department_name: '',//部门名称
+                confirmMsg: [],     //confirm信息
+                info: {             //提示信息
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -73,29 +85,45 @@
                     //失败信息 ***
                     error: ''
                 },
+                noPosition : false,     //有无相应职位
+                position_id : '',       //  职位id
+                position_name : '',     //  职位名字
             }
         },
         created(){
             this.getDepartementList();
+            this.getPositionList(1);
         },
         methods: {
             getDepartementList(){
                 this.$http.post('manager/department/department_all').then((res) => {
-                    this.ztreeDataSource = res.data.data.data;
+                    this.departmentList = res.data.data.data;
+                    console.log(this.departmentList)
                 })
             },
-            // 点击节点
-            nodeClick: function (val) {
+            getPositionList(id){
+                this.$http.post('manager/department/positions/id/' + id).then((res) => {
+                    if(res.data.code === '10050'){
+                        this.positionList = res.data.data.data;
+                        this.noPosition = false;
+                    }else {
+                        this.positionList = [];
+                        this.noPosition = true;
+                    }
 
+                })
+            },
+            //****************组织架构**********************
+            // 点击节点
+            departmentClick(val) {
+                this.department_id = val.id;
+                this.department_name = val.name;
+                this.getPositionList(this.department_id);
                 switch (val.contentHtml) {
                     case '编辑部门' :
-                        this.department_name = val.name;
-                        this.department_id = val.id;
                         $('#myModalEditDpm').modal('show');
                         break;
                     case '新建下级部门' :
-                        this.department_name = val.name;
-                        this.department_id = val.id;
                         $('#myModalAddDpm').modal('show');
                         break;
 //                    case '启用部门' :
@@ -111,20 +139,19 @@
 //                        this.msgFlag = 'stopDepartment';
 //                        break;
                     case '删除部门' :
-                        this.department_id = val.id;
                         this.confirmMsg = {msg: '您确定删除此部门吗'};
                         $('#confirm').modal('show');
-//                        this.msgFlag = 'delete';
-                        break;
-                    case '调迁部门' :
-                        this.department_id = val.id;
-                        $('#myModalTransferDpm').modal('show');
+                        this.msgFlag = 'deleteDepartment';
+//                        break;
+//                    case '调迁部门' :
+//                        this.department_id = val.id;
+//                        $('#myModalTransferDpm').modal('show');
                 }
 
             },
             // 右击事件
-            contextmenuClick: function () {
-//                console.log("触发了自定义的contextmenuClick事件");
+            rightClick() {
+                console.log("rightClick");
             },
             changeDpm(){
                 this.getDepartementList();
@@ -133,14 +160,26 @@
                 this.getDepartementList();
             },
             getConfirm(){
-                this.$http.get('manager/department/softDelete/id/' + this.department_id).then((res) => {
-                    if (res.data.code == 10090) {
-                        this.getDepartementList();
-                        this.successMsg(res.data.msg);
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                })
+                if(this.msgFlag === 'deleteDepartment'){
+                    this.$http.get('manager/department/softDelete/id/' + this.department_id).then((res) => {
+                        if (res.data.code === '10090') {
+                            this.getDepartementList();
+                            this.successMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                }else if(this.msgFlag === 'deletePosition'){
+                    this.$http.post('manager/user/position_delete/id/' +this.position_id).then((res) =>{
+                        if (res.data.code === '90071'){
+                            this.getPositionList(this.department_id);
+                            this.successMsg(res.data.msg);
+                        }else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                }
+
 //                switch (this.msgFlag) {
 //                    case 'startDepartment' :
 //                        this.$http.get('manager/department/disableDpm/id/' + this.department_id).then((res) => {
@@ -190,7 +229,43 @@
                         this.errorMsg(res.data.msg);
                     }
                 })
-            }
+            },
+
+            //****************职位管理**********************
+            positionClick(val){
+                console.log(val);
+                this.position_name = val.vocation;
+                this.position_id = val.id;
+                switch (val.contentHtml) {
+                    case '编辑岗位' :
+                        $('#positionEdit').modal('show');
+                        break;
+                    case '新建下级岗位' :
+                        $('#positionAdd').modal('show');
+                        break;
+                    case '岗位权限' :
+//                        $('#myModalAddDpm').modal('show');
+                        break;
+                    case '删除岗位' :
+                        this.confirmMsg = {msg: '您确定删除此岗位吗'};
+                        $('#confirm').modal('show');
+                        this.msgFlag = 'deletePosition';
+                }
+            },
+            addPosition(){
+                this.position_id = '';
+                this.position_name = '';
+                $('#positionAdd').modal('show');
+            },
+            editSuccess(){
+                this.getPositionList(this.department_id);
+            },
+            addSuccess(){
+                this.position_id = '';
+                this.position_name = '';
+                this.getPositionList(this.department_id);
+            },
+
         },
 
     }
@@ -200,10 +275,11 @@
         font-size: 18px;
         color: #333333;
     }
-    /*.panel {*/
-        /*height: 80%;*/
-    /*}*/
-
+    @media screen and (min-width: 992px) {
+        .panel {
+            min-height: 780px;
+        }
+    }
     .panel-body > h5 {
         border-bottom: 2px solid #dddddd;
         padding: 0 0 8px 6px;
