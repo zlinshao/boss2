@@ -20,7 +20,10 @@
 								<a @click="edit($event)">编辑部门</a>
 							</li>
 							<li>
-								<a @click="addDeparment($event)">新建下级部门</a>
+								<a @click="insertDeparment($event)">新建下级部门</a>
+							</li>
+							<li v-if="model.id === 1">
+								<a @click="addDeparment($event)">新建平级部门</a>
 							</li>
 							<!--<li>-->
 								<!--<a @click="startDepartment($event)" v-if="model.status == 2">启用部门</a>-->
@@ -150,7 +153,6 @@
 		},
 		methods:{
 			Func(val,e){
-			    console.log(val)
 				// 查找点击的子节点
 				let recurFunc = (data,list) => {
 					data.forEach((i)=>{
@@ -201,6 +203,9 @@
                 e.target.style.color = '#316AC5';
 			},
 			edit(e){	//编辑
+                this.model.contentHtml = e.target.text;
+			},
+            insertDeparment(e){
                 this.model.contentHtml = e.target.text;
 			},
             addDeparment(e){
