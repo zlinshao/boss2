@@ -273,7 +273,7 @@
                 }
             },
             addPosition(){
-                this.position_id = '';
+                this.position_id = '1';
                 this.position_name = '';
                 $('#positionAdd').modal('show');
             },
