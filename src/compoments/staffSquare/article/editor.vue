@@ -20,7 +20,7 @@
 //            let vueEditor = document.getElementById('quill-container');
             let _this = this;
             let vueEditor = document.getElementsByClassName('quillWrapper ')[0]
-            console.log(vueEditor);
+//            console.log(vueEditor);
             $('body').bind('click',function (e) {
                 if (!(e.target==vueEditor || vueEditor.contains(e.target))){
                     _this.saveContent();
@@ -31,7 +31,9 @@
             saveContent: function() {
                 // You have the content to save
 //                console.log(this.content);
-                this.$emit('editorContent',this.content);
+                if (this.content!=''){
+                    this.$emit('editorContent',this.content);
+                }
             },
             handleImageAdded: function(file, Editor, cursorLocation) {
                 // An example of using FormData

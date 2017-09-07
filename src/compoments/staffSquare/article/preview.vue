@@ -21,7 +21,19 @@
                     {{staff}}
                 </div>
 
-                <div class="articleContainer col-lg-12" v-html="content"></div>
+                <div class="articleContainer">
+                    <div class="vedioContainer col-lg-12" v-if="vedioArr.length>0">
+                        <video width="100%" :src="item" controls="controls" v-for="item in vedioArr">
+                            <!--<source :src="item" type="video/mp4">-->
+                        </video>
+                        <!--<video controls="controls" :src="url">
+                            <source :src="url" type="video/mp4">
+                        </video>-->
+                    </div>
+
+                    <div class="col-lg-12" v-html="content"></div>
+                </div>
+
                 <div class="buttons">
                     <button class="btn btn-default" @click="cancel">取消</button>
                     <button class="btn btn-warning">保存</button>
@@ -35,7 +47,7 @@
 
 <script>
     export default{
-        props : ['title','content','classify'],
+        props : ['title','content','classify','vedioArr'],
         components: {},
         data(){
             return {
@@ -65,14 +77,19 @@
 </script>
 <style scoped>
     .preview{
-        z-index: 1000000000;
         position: absolute;
         width: 100%;
         top: 0;
         left: 0;
         display: none;
     }
+    .preview .panel{
+        z-index: 1000000000;
 
+    }
+    /*.vedioContainer vedio{
+        width: 100%;
+    }*/
     .panel-body header h4 {
         text-align: center;
         border-bottom: 1px solid #aaaaaa;
@@ -85,7 +102,7 @@
         margin: 20px auto;
         padding-bottom: 30px;
         border-bottom: 1px solid #aaaaaa;
-        min-height: 700px;
+        min-height: 900px;
 
     }
     .buttons{

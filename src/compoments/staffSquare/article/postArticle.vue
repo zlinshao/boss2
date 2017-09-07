@@ -19,13 +19,13 @@
                 <div class="postContainer col-lg-12">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-2 col-sm-2 control-label">标题：</label>
+                            <label class="col-lg-2 col-sm-2 control-label">标题<sup class="required">*</sup>：</label>
                             <div class="col-lg-6">
                                 <input class="form-control" placeholder="输入标题，50个字符以内">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 col-sm-2 control-label">分类：</label>
+                            <label class="col-lg-2 col-sm-2 control-label">分类<sup class="required">*</sup>：</label>
                             <div class="col-lg-6">
                                 <select class="form-control">
                                     <option value="">--请选择--</option>
@@ -33,10 +33,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 col-sm-2 control-label">内容：</label>
+                            <label class="col-lg-2 col-sm-2 control-label">内容<sup class="required">*</sup>：</label>
                             <div class="col-lg-8" id="editorContainer">
                                 <Editor @editorContent="getUEContent"></Editor>
                                 <!--<Vueditor></Vueditor>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">视频(仅MP4格式)：</label>
+                            <div class="col-lg-8">
+                                <UploadVedio :result="'vedio'" :idVedio="vedio"
+                                             @vedio="uploadSuccess" @complete="uploadComplete" @delete="deleteVedio"></UploadVedio>
                             </div>
                         </div>
                     </form>
@@ -45,28 +52,35 @@
 
                 <div class="buttons">
                     <button class="btn btn-default" @click="cancel">取消</button>
-                    <button class="btn btn-warning" @click="preview">预览</button>
-                    <button class="btn btn-primary">保存</button>
+                    <button class="btn btn-warning" @click="preview" :disabled="complete!='ok'">预览</button>
+                    <button class="btn btn-primary" :disabled="complete!='ok'">保存</button>
                 </div>
 
             </div>
         </section>
-
-        <Preview :title="title" :content="content" :classify="classify"></Preview>
+        <Preview :title="title" :content="content" :classify="classify" :vedioArr="vedioArr"></Preview>
     </div>
 </template>
 
 <script>
     import Editor from './editor.vue'
     import Preview from './preview.vue'
+    import UploadVedio from '../../common/uploadVedio.vue'
     export default{
-        components: {Editor,Preview},
+        components: {Editor,Preview,UploadVedio},
         data(){
             return {
                 title : 'dddddddd',
                 classify : 'asdsa',
                 content : '',
 
+                vedioArr : [],
+
+                vedio : {
+                    idVedios : {},    //修改ID
+                    idVedio : [],     //上传ID
+                },
+                complete : 'ok'
             }
         },
         mounted(){
@@ -88,6 +102,36 @@
             },
             preview(){
                 $('.preview').show()
+            },
+
+            // 上传成功
+            uploadSuccess(val){
+                console.log(val);
+                this.vedio.idVedio = [];
+                this.vedio.idVedio = val;
+            },
+            // 上传完成
+            uploadComplete(val){
+                console.log(val);
+                this.complete = val;
+                let _this = this;
+                if (this.complete=='ok'){
+                    this.vedioArr = [];
+                    for (let i = 0 ; i<this.vedio.idVedio.length;i++){
+                        this.$http.post('/picture/'+_this.vedio.idVedio[i]).then((res)=>{
+                            console.log(res.data.data);
+                            _this.vedioArr.push(res.data.data);
+                        })
+                    }
+                }
+            },
+            // 删除
+            deleteVedio(val){
+                console.log(val);
+                let index = this.vedio.idVedio.indexOf('val');
+                if (index > -1) {
+                    this.vedio.idVedio.splice(index, 1);
+                }
             }
         }
     }
