@@ -33,25 +33,25 @@ export default{
         // 点击节点回调
 		func:{
 			type:Function,
-			default:null
+//			default:null
 		},
 		// 点击展开回调
 		expand:{
             type:Function,
-            default:null
+//            default:null
 		},
 		// 右击事件
 		contextmenu:{
             type:Function,
-            default:function(){
-            	console.log("defalt click contextmenu");
-            }
+//            default:function(){
+//            	console.log("defalt click contextmenu");
+//            }
 		},
 		// 是否展开
 		isOpen:{
 			type:Boolean,
 			twoWay:true,
-			default:false
+//			default:false
 		}
 	},
 	watch:{
@@ -72,14 +72,12 @@ export default{
     },
 	methods:{
         initTreeData(){
-            var tempList = JSON.parse(JSON.stringify(this.list));
+            let tempList = JSON.parse(JSON.stringify(this.list));
             // 递归操作，增加删除一些属性。比如: 展开/收起
-            var recurrenceFunc = (data) => {
+            let recurrenceFunc = (data) => {
                 data.forEach((val)=>{
                     val.clickNode = val.hasOwnProperty("clickNode") ? val.clickNode : false;
                     val.son = val.son || [];
-
-
 	               	val.isFolder =  val.hasOwnProperty("open") ? val.open : this.isOpen;
 	               	val.isExpand =  val.hasOwnProperty("open") ? val.open : this.isOpen;
 	               	val.loadNode = 0;

@@ -4,10 +4,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header" >
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @clic="closeModel">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">新增职位</h4>
+                        <h4 class="modal-title">新增岗位</h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
@@ -19,8 +19,14 @@
                                               readonly placeholder="点击选择职位" @click="selectDpm">
                                     </div>
                                 </div>
+                                <div class="row" v-if="positionName !== ''">
+                                    <label class="col-sm-2 control-label col-lg-2" >上级岗位</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" v-model="positionName" disabled>
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <label class="col-sm-2 control-label col-lg-2" >职位名称</label>
+                                    <label class="col-sm-2 control-label col-lg-2" >岗位名称</label>
                                     <div class="col-lg-10">
                                         <input type="text"class="form-control" v-model="position" placeholder="职位名称">
                                     </div>
@@ -29,7 +35,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @clic="closeModel">取消</button>
                         <button type="button" class="btn btn-primary" @click="confirmAdd">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -44,12 +50,15 @@
     import Department from '../common/organization/selectStaff.vue'
     export default {
         components: { Status ,Department},
+        props : ['position_name','position_id'],
         data(){
           return {
               configure : [],
               department_name : '',
               department_id : '',
+              positionName :'',
               position : '',
+              positionId : '1',
               info: {
                   //成功状态 ***
                   state_success: false,
@@ -61,6 +70,14 @@
                   error: ''
               },
           }
+        },
+        watch : {
+            position_id(val){
+                this.positionId = val ;
+            },
+            position_name(val){
+                this.positionName = val;
+            }
         },
         methods : {
             selectDpm(){
@@ -74,19 +91,28 @@
             confirmAdd(){
                 this.$http.post('manager/user/position_insert',{
                     vocation : this.position,
-                    department_id : this.department_id
+                    department_id : this.department_id,
+                    parent_id : this.positionId,
                 }).then((res) => {
                     if(res.data.code === '90045'){
                         this.$emit('success')
                         this.info.success = res.data.msg;
                         this.info.state_success = true;
-                        $('#positionAdd').modal('hide');
+                        this.closeModel();
                     }else {
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_error = true;
                     }
                 })
+            },
+            closeModel(){
+                $('#positionAdd').modal('hide');
+                this.position = '';
+                this.position_id = '';
+                this.position_name = '';
+                this.department_name = '';
+                this.department_id = '1';
             }
         }
     }
