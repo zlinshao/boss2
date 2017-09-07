@@ -80,7 +80,7 @@
             },
             selectDpm(){
                 this.configure = {length :1,class : 'department',id : []}
-                $('.selectCustom:eq(1)').modal('show');
+                $('.selectCustom:eq(0)').modal('show');
             },
             getDepartment(val){
                 this.department_name = val.department[0].name;
