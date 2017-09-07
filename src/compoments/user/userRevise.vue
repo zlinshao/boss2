@@ -629,11 +629,23 @@
                 }
             },
             departmentId(){
-                if(this.five.id!==''&& this.five.id!=undefined){
-                    this.department=[];
-                    this.department.push(this.five);
-                    this.depId=this.department[0].id;
+                if(this.fiveId!=='' && this.five.id!=undefined){
+                    this.$http.get('manager/user/departmentWb/id/'+this.fiveId).then((res)=>{
+                        this.fiveDepart=res.data.data;
+                        this.department=[];
+                        this.department.push(this.five);
+                        this.depId=this.department[0].id;
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.fiveId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
+                }else{
+                    this.$http.get('manager/user/positionWb/id/'+this.fourId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
+                    this.this.fiveDepart=[];
                 }
+
             },
             //查询角色
             searchRoles(){

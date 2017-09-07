@@ -13,10 +13,9 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="row">
-                                    <label class="col-sm-2 control-label col-lg-2" >部门</label>
+                                    <label class="col-sm-2 control-label col-lg-2" >所属部门</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="department_name"
-                                              readonly placeholder="点击选择职位" @click="selectDpm">
+                                        <input type="text" class="form-control" v-model="department_name" disabled>
                                     </div>
                                 </div>
                                 <div class="row" v-if="positionName !== ''">
@@ -42,20 +41,18 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
-        <Department :configure='configure' @Staff="getDepartment"></Department>
+        <!--<Department :configure='configure' @Staff="getDepartment"></Department>-->
     </div>
 </template>
 <script>
     import Status from '../common/status.vue';
     import Department from '../common/organization/selectStaff.vue'
     export default {
-        components: { Status ,Department},
-        props : ['position_name','position_id'],
+        components: { Status },
+        props : ['position_name','position_id','department_name','department_id'],
         data(){
           return {
               configure : [],
-              department_name : '',
-              department_id : '',
               positionName :'',
               position : '',
               positionId : '1',
@@ -80,14 +77,14 @@
             }
         },
         methods : {
-            selectDpm(){
-                this.configure = {length :1,class : 'department',id : []}
-                $('.selectCustom:eq(0)').modal('show');
-            },
-            getDepartment(val){
-                this.department_name = val.department[0].name;
-                this.department_id = val.department[0].id;
-            },
+//            selectDpm(){
+//                this.configure = {length :1,class : 'department',id : []}
+//                $('.selectCustom:eq(0)').modal('show');
+//            },
+//            getDepartment(val){
+//                this.department_name = val.department[0].name;
+//                this.department_id = val.department[0].id;
+//            },
             confirmAdd(){
                 this.$http.post('manager/user/position_insert',{
                     vocation : this.position,

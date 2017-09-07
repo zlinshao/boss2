@@ -468,8 +468,20 @@
             },
             departmentId(){
                 if(this.fiveId!==''){
-                    this.department=this.fiveId;
+                    this.$http.get('manager/user/departmentWb/id/'+this.fiveId).then((res)=>{
+                        this.fiveDepart=res.data.data;
+                        this.department=this.fiveId;
+                    });
+                    this.$http.get('manager/user/positionWb/id/'+this.fiveId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
+                }else{
+                    this.$http.get('manager/user/positionWb/id/'+this.fourId).then((res)=>{
+                        this.positionList=res.data.data;
+                    });
+                    this.this.fiveDepart=[];
                 }
+
             },
             searchRoles(){
                 this.$http.get('manager/user/searchRoles').then((res)=>{

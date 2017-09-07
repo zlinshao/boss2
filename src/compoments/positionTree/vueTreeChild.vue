@@ -17,10 +17,13 @@
 
 						<ul class="dropdown-menu dropdown-menu-left" style="padding: 0 0 0 0px;">
 							<li>
-								<a @click="insertPosition($event)">编辑岗位</a>
+								<a @click="editPosition($event)">编辑岗位</a>
 							</li>
 							<li>
-								<a @click="editPosition($event)">新建下级岗位</a>
+								<a @click="insertPosition($event)">新建下级岗位</a>
+							</li>
+							<li>
+								<a @click="addPosition($event)">新建平级岗位</a>
 							</li>
 							<!--<li>-->
 								<!--<a @click="positionRole($event)">岗位权限</a>-->
@@ -186,6 +189,9 @@
             insertPosition(e){
                 this.model.contentHtml = e.target.text;
 			},
+            addPosition(e){
+                this.model.contentHtml = e.target.text;
+			},
             editPosition(e){	//编辑
                 this.model.contentHtml = e.target.text;
             },
@@ -194,7 +200,7 @@
             },
             deletePosition(e){
                 this.model.contentHtml = e.target.text;
-                },
+            },
         },
     }
 </script>

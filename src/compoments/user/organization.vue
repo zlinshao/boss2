@@ -22,13 +22,18 @@
                     <div class="panel-body">
                         <h5 style="text-align: right">
                             <span class="pull-left" style="margin-top: 8px;">岗位管理</span>
-                            <button class="btn btn-primary btn-sm" @click="addPosition">岗位添加</button>
+                            <button class="btn btn-primary btn-sm" style="visibility: hidden">岗位添加</button>
                         </h5>
                         <positionTree :list.sync='positionList' :func='positionClick'
                                    :contextmenu='rightClick' :is-open='true'>
                         </positionTree>
                         <div v-if="noPosition">
-                            <i style="color: #1caadc;font-size: 16px">暂无相应岗位,请添加岗位...</i>
+                            <a class="addPosition"  @click="addPosition">
+                                <i class="fa fa-plus-square"></i>点击创建
+                            </a>
+                            <span class="info">
+                                当前部门岗位为空!
+                            </span>
                         </div>
                     </div>
                 </section>
@@ -40,7 +45,8 @@
         <AddDpm :department_name="department_name" :department_id="department_id" @success='addDpm'></AddDpm>
         <Status :state='info'></Status>
         <!--<Transfer @TransferDepartment="transferCommit"></Transfer>-->
-        <PositionAdd :position_id="position_id" :position_name="position_name" @success = 'addSuccess'></PositionAdd>
+        <PositionAdd :position_id="position_id" :position_name="position_name" :department_name="department_name"
+                     :department_id="department_id" @success = 'addSuccess'></PositionAdd>
         <PositionEdit :eidtId = 'position_id' @success="editSuccess"></PositionEdit>
 
     </div>
@@ -243,6 +249,11 @@
                     case '新建下级岗位' :
                         $('#positionAdd').modal('show');
                         break;
+                    case '新建平级岗位' :
+                        this.position_id = val.parent_id;
+                        this.position_name = '';
+                        $('#positionAdd').modal('show');
+                        break;
                     case '岗位权限' :
 //                        $('#myModalAddDpm').modal('show');
                         break;
@@ -284,5 +295,15 @@
         border-bottom: 2px solid #dddddd;
         padding: 0 0 8px 6px;
         margin-top: 0;
+    }
+    .addPosition{
+        display: block;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .info{
+        display: block;
+        text-align: center;
+        margin-top: 20px;
     }
 </style>
