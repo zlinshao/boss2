@@ -104,13 +104,14 @@
             getDepartementList(){
                 this.$http.post('manager/department/department_all').then((res) => {
                     this.departmentList = res.data.data.data;
-                    console.log(this.departmentList)
                 })
             },
             getPositionList(id){
                 this.$http.post('manager/department/positions/id/' + id).then((res) => {
                     if(res.data.code === '10050'){
                         this.positionList = res.data.data.data;
+                        this.department_id = this.positionList[0].department_id;
+                        this.department_name = this.positionList[0].name;
                         this.noPosition = false;
                     }else {
                         this.positionList = [];

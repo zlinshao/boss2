@@ -66,6 +66,8 @@
                   //失败信息 ***
                   error: ''
               },
+              departmentName :'',
+              departmentId :'',
           }
         },
         watch : {
@@ -74,7 +76,13 @@
             },
             position_name(val){
                 this.positionName = val;
-            }
+            },
+            departmentName(val){
+                this.departmentName = val;
+            },
+            department_id(val){
+                this.departmentId =  val;
+            },
         },
         methods : {
 //            selectDpm(){
@@ -82,13 +90,13 @@
 //                $('.selectCustom:eq(0)').modal('show');
 //            },
 //            getDepartment(val){
-//                this.department_name = val.department[0].name;
-//                this.department_id = val.department[0].id;
+//                this.departmentName = val.department[0].name;
+//                this.departmentId = val.department[0].id;
 //            },
             confirmAdd(){
                 this.$http.post('manager/user/position_insert',{
                     vocation : this.position,
-                    department_id : this.department_id,
+                    department_id : this.departmentId,
                     parent_id : this.positionId,
                 }).then((res) => {
                     if(res.data.code === '90045'){
@@ -106,10 +114,7 @@
             closeModel(){
                 $('#positionAdd').modal('hide');
                 this.position = '';
-                this.position_id = '';
-                this.position_name = '';
-                this.department_name = '';
-                this.department_id = '1';
+                this.positionId = '1';
             }
         }
     }

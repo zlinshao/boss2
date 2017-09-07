@@ -194,6 +194,7 @@
                 e.target.firstChild.nextElementSibling.style.display = 'none';
 			},
             currentNode(e){
+                this.model.contentHtml = '';
 				for(let i=0; i < document.getElementsByClassName('department').length;i++){
                     document.getElementsByClassName('department')[i].style.color = '#333'
 				}
