@@ -219,7 +219,7 @@
 }
 </script>
 
-<style>
+<style scoped>
 	.ztree li{position: relative; padding:0; margin:0; list-style:none; line-height:24px; text-align:left; white-space:nowrap; outline:0}
 	.ztree li ul{ margin:0; padding:0 0 0 32px}
 	.ztree li ul.line{ background:url('../../assets/img/line_conn.gif') 0 0 repeat-y;}
