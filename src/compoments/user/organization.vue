@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>人资管理</li>
-            <li class="active">组织架构</li>
+            <li class="active">组织架构{{parentDpartmentId}}</li>
         </ol>
         <div class="row">
             <div class="col-md-3">
@@ -42,7 +42,7 @@
 
         <editDpm :department_name="department_name" :department_id="department_id" @editDdp="changeDpm"></editDpm>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
-        <AddDpm :department_name="department_name" :department_id="department_id" @success='addDpm'></AddDpm>
+        <AddDpm :department_name="department_name" :parentDpartmentId='parentDpartmentId' @success='addDpm'></AddDpm>
         <Status :state='info'></Status>
         <!--<Transfer @TransferDepartment="transferCommit"></Transfer>-->
         <PositionAdd :position_id="position_id" :position_name="position_name" :department_name="department_name"
@@ -80,6 +80,8 @@
                 positionList : [],  //职位数据
                 department_id: '',  //部门id
                 department_name: '',//部门名称
+                parentDpartmentId : '',
+                parentDpartmentName : '',
                 confirmMsg: [],     //confirm信息
                 info: {             //提示信息
                     //成功状态 ***
@@ -125,12 +127,18 @@
             departmentClick(val) {
                 this.department_id = val.id;
                 this.department_name = val.name;
+                this.parentDpartmentId =  '';
                 this.getPositionList(this.department_id);
                 switch (val.contentHtml) {
                     case '编辑部门' :
                         $('#myModalEditDpm').modal('show');
                         break;
                     case '新建下级部门' :
+                        this.parentDpartmentId = val.id;
+                        $('#myModalAddDpm').modal('show');
+                        break;
+                    case '新建平级部门' :
+                        this.parentDpartmentId = val.parent_id;
                         $('#myModalAddDpm').modal('show');
                         break;
 //                    case '启用部门' :

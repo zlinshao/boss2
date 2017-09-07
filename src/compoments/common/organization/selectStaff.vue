@@ -581,29 +581,58 @@
             },
             //选择成员并发回父组件
             selectUser(){
-                if(this.organize.department.length === 0 && this.organize.staff.length === 0){
-                    this.info.error = '请先选择成员';
-                    //显示成功弹窗 ***
-                    this.info.state_error = true;
+                if(this.noStaff === true){
+                    if(this.organize.staff.length > 0){
+                        this.info.error = '您只能选择部门';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }else if (this.organize.department.length === 0 && this.organize.staff.length === 0){
+                        this.info.error = '请先选择成员';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }else {
+                        this.success();
+                    }
+                }else if(this.noDepartment){
+                    if(this.organize.department.length > 0){
+                        this.info.error = '您只能选择人员';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }else if (this.organize.department.length === 0 && this.organize.staff.length === 0){
+                        this.info.error = '请先选择成员';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }else {
+                        this.success();
+                    }
                 }else {
-                    this.$emit('Staff',this.organize);
-                    $('.selectCustom').modal('hide');
-                    this.organize={
-                        department:[
-
-                        ],
-                        staff:[
-
-                        ]
-                    };
-                    //点击确定清空相应数组
-                    this.member=[];
-                    this.checkboxModel=[];
-                    this.checkIndex=[];
-                    this.myConfigure={};
-                    this.noDepartment=false;
-                    this.noStaff=false;
+                    if (this.organize.department.length === 0 && this.organize.staff.length === 0){
+                        this.info.error = '请先选择成员';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }else {
+                        this.success();
+                    }
                 }
+            },
+            success(){
+                this.$emit('Staff',this.organize);
+                $('.selectCustom').modal('hide');
+                this.organize={
+                    department:[
+
+                    ],
+                    staff:[
+
+                    ]
+                };
+                //点击确定清空相应数组
+                this.member=[];
+                this.checkboxModel=[];
+                this.checkIndex=[];
+                this.myConfigure={};
+                this.noDepartment=false;
+                this.noStaff=false;
             },
             closeModal(){
                 $('.selectCustom').modal('hide');

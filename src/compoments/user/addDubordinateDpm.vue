@@ -13,7 +13,7 @@
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
-                                <div class="row">
+                                <div class="row" v-if="parent_id !== 0">
                                     <label class="col-sm-2 control-label col-lg-2" >上级部门</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" readonly v-model="highDpm">
@@ -41,12 +41,12 @@
 <script>
     import Status from '../common/status.vue';
     export default {
-        props:['department_id','department_name'],
+        props:['department_name' ,'parentDpartmentId'],
         components: { Status },
         data(){
             return {
                 department:'',
-                id:'',
+                parent_id:'',
                 highDpm : '',
                 info:{
                     //成功状态 ***
@@ -57,24 +57,25 @@
                     success: '',
                     //失败信息 ***
                     error: ''
-                }
+                },
+                parentId : ''
             }
         },
         watch:{
-            department_id(val) {
-                this.id = val;
-            },
             department_name(val){
                 this.highDpm = val
+            },
+            parentDpartmentId(val){
+                this.parent_id = val;
             }
         },
         methods:{
             responsible(){
-                this.$http.post('manager/department/saveDpm/',{'parent_id':this.id,'name':this.department}).then((res) => {
-                    if(res.data.code==10030){
+                this.$http.post('manager/department/saveDpm/',{'parent_id':this.parent_id,'name':this.department}).then((res) => {
+                    if(res.data.code==='10030'){
                         this.department='';
                         $('#myModalAddDpm').modal('hide');
-                        this.$emit('success')
+                        this.$emit('success');
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
                         //显示成功弹窗 ***
