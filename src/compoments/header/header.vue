@@ -600,9 +600,9 @@
                             <li :class="{'active': isActive == 8}" @click='pitch_on(8)'>
                                 <router-link to='/user'>用户管理</router-link>
                             </li>
-                            <li :class="{'active': isActive == 'positionManage'}" @click='pitch_on("positionManage")'>
-                                <router-link to='/positionManage'>职位管理</router-link>
-                            </li>
+                            <!--<li :class="{'active': isActive == 'positionManage'}" @click='pitch_on("positionManage")'>-->
+                                <!--<router-link to='/positionManage'>职位管理</router-link>-->
+                            <!--</li>-->
                             <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
                                 <router-link to='/role'>角色管理</router-link>
                             </li>
