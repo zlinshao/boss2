@@ -630,17 +630,15 @@
             },
             departmentId(){
                 if(this.fiveId!=='' && this.five.id!=undefined){
-                    this.$http.get('manager/user/departmentWb/id/'+this.fiveId).then((res)=>{
-                        this.fiveDepart=res.data.data;
-                        this.department=[];
-                        this.department.push(this.five);
-                        this.depId=this.department[0].id;
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.fiveId).then((res)=>{
+                    this.department=[];
+                    this.department.push(this.five);
+                    this.depId=this.department[0].id;
+
+                    this.$http.get('manager/user/positionWb/id/'+this.five.id).then((res)=>{
                         this.positionList=res.data.data;
                     });
                 }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.fourId).then((res)=>{
+                    this.$http.get('manager/user/positionWb/id/'+this.four.id).then((res)=>{
                         this.positionList=res.data.data;
                     });
                     this.this.fiveDepart=[];

@@ -173,7 +173,10 @@
             open(val){
                 val.isFolder = !val.isFolder;
             },
-            dropDownList(){this.model.contentHtml = '';},
+            dropDownList(){
+                console.log(this.model)
+                this.model.contentHtml = '';
+                },
             operate(e){
                 e.target.firstChild.nextElementSibling.style.display = 'inline-block';
             },
@@ -181,6 +184,7 @@
                 e.target.firstChild.nextElementSibling.style.display = 'none';
             },
             currentNode(e){
+                this.model.contentHtml = '';
                 for(let i=0; i < document.getElementsByClassName('department').length;i++){
                     document.getElementsByClassName('department')[i].style.color = '#333'
                 }

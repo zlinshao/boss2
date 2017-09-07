@@ -186,7 +186,7 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" ></label>
                                         <div class="col-md-4" v-show="fiveDepart.length>0">
-                                            <select class="form-control" v-model="fiveId" @change="departmentId()">
+                                            <select class="form-control" v-model="fiveId" @change="getSixDepart()">
                                                 <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in fiveDepart" >{{item.name}}</option>
                                             </select>
@@ -466,12 +466,9 @@
                     this.this.fiveDepart=[];
                 }
             },
-            departmentId(){
+            getSixDepart(){
                 if(this.fiveId!==''){
-                    this.$http.get('manager/user/departmentWb/id/'+this.fiveId).then((res)=>{
-                        this.fiveDepart=res.data.data;
-                        this.department=this.fiveId;
-                    });
+                    this.department=this.fiveId;
                     this.$http.get('manager/user/positionWb/id/'+this.fiveId).then((res)=>{
                         this.positionList=res.data.data;
                     });
