@@ -133,12 +133,12 @@
                         <div class="row product-list" style="margin-top: 16px;">
                             <div class="col-xs-6 col-sm-3 col-lg-2" v-for="(birth,index) in main_birthday">
                                 <section class="panel" v-show="index < 6">
-                                    <div class="pro-img-box margin10"
+                                    <div class="pro-img-box margin10" style="max-height: 70px;"
                                          :title="birth.position">
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
-                                             style="border-radius: 50%;"/>
+                                             style="border-radius: 50%;height: 100%;"/>
                                         <img src="./assets/img/head.png" v-if="birth.avatar === ''"
-                                             style="border-radius: 50%;"/>
+                                             style="border-radius: 50%;height: 100%;"/>
                                     </div>
                                     <div class="panel-body text-center padding15">
                                         <h5>{{birth.position}}</h5>
