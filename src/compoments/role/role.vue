@@ -12,6 +12,9 @@
                         <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色
                     </button>
                 </div>
+                <!--<button class="btn btn-success"@click="oraganize">-->
+                    <!--<i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色-->
+                <!--</button>-->
             </div>
         </section>
 
@@ -95,14 +98,18 @@
 
         <!--提醒-->
         <Status :state="info"></Status>
+        <Staff></Staff>
+
     </div>
 </template>
 
 <script>
     import Status from '../common/status.vue'
+    import Staff from '../common/oraganization.vue'
     export default {
         components: {
-            Status
+            Status,
+            Staff
         },
         data (){
             return {
@@ -288,6 +295,9 @@
                         this.checkboxModel.splice(index, 1);
                     }
                 }
+            },
+            oraganize(){
+                $('#selectCustom').modal('show')
             }
         }
     };

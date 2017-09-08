@@ -48,6 +48,8 @@
         <PositionAdd :position_id="position_id" :position_name="position_name" :department_name="department_name"
                      :department_id="department_id" @success = 'addSuccess'></PositionAdd>
         <PositionEdit :eidtId = 'position_id' @success="editSuccess"></PositionEdit>
+        <PositionHigh :position_id="position_id" :position_name="position_name" :department_name="department_name"
+                      :department_id="department_id" @success = 'addHighSuccess'></PositionHigh>
 
     </div>
 </template>
@@ -62,6 +64,7 @@
 //    import Transfer from './transferDpm.vue'
     import PositionEdit from './positionEdit.vue'   //职位编辑
     import PositionAdd from  './positionAdd.vue'
+    import PositionHigh from './positionHigh.vue'
     export default {
         components: {
             vueZtree,
@@ -72,7 +75,8 @@
             Status,
 //            Transfer,
             PositionEdit,
-            PositionAdd
+            PositionAdd,
+            PositionHigh
         },
         data () {
             return {
@@ -258,6 +262,9 @@
                     case '新建下级岗位' :
                         $('#positionAdd').modal('show');
                         break;
+                    case '新建上级岗位' :
+                        $('#positionHighAdd').modal('show');
+                        break;
                     case '新建平级岗位' :
                         this.position_id = val.parent_id;
                         this.position_name = '';
@@ -285,7 +292,10 @@
                 this.position_name = '';
                 this.getPositionList(this.department_id);
             },
-
+            addHighSuccess(){
+                $('#positionHighAdd').modal('hide');
+                this.getPositionList(this.department_id);
+            },
         },
 
     }

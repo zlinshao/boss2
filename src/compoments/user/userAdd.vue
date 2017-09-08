@@ -142,6 +142,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >个人邮箱</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="orgEmail" placeholder="个人邮箱">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-lg-2 control-label">身份证照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="idPicId" @delete="picDelete" @complete="complete"
@@ -335,7 +341,8 @@
                 status : '1',
                 salary : '',
                 dismiss_time : '',  //离职时间
-                info:{
+                orgEmail : '',      //邮箱
+                 info:{
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -564,6 +571,7 @@
                                     "salary" : this.salary,
                                     "status" : this.status,
                                     "dismiss_time" : this.dismiss_time,
+                                    "orgEmail":this.orgEmail,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{
@@ -615,6 +623,7 @@
                 this.full_time  = '';      //转正日期
                 this.car  = '';           //买车时间
                 this.house  = '';         //买房时间
+                this.orgEmail = '';
                 this.status  = '1';
                 this.salary  = '';
                 this.dismiss_time = '';

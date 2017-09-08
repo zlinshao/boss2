@@ -132,12 +132,12 @@
                                             :disabled="item.status==3 || item.status==2">禁用账号
                                     </button>
                                 </li>
-                                <li role="separator" class="divider" style="margin: 0"></li>
-                                <li @click="deleteAccount(item.id)">
-                                    <button type="button" class="btn btn-default btn-lg btn-block">
-                                        删除账号
-                                    </button>
-                                </li>
+                                <!--<li role="separator" class="divider" style="margin: 0"></li>-->
+                                <!--<li @click="deleteAccount(item.id)">-->
+                                    <!--<button type="button" class="btn btn-default btn-lg btn-block">-->
+                                        <!--删除账号-->
+                                    <!--</button>-->
+                                <!--</li>-->
                                 <li role="separator" class="divider" style="margin: 0"></li>
                                 <li v-if="simulate.indexOf('staff/logins') > -1"
                                     @click="simulates(item.id, 'staff/logins')">
