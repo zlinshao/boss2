@@ -8,16 +8,16 @@
                         <button type="button" class="close"  aria-label="Close" @click="closeModal" >
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">选人</h4>
+                        <h4 class="modal-title">选人{{checkboxModel}}</h4>
                     </div>
                     <div class="modal-body scoll">
                         <div class="row">
                             <div class="col-lg-7 col-sm-7" >
                                 <div class="box" @click="inputFocus" id="borderBlue">
-                                    <div class="tagsinput " style="border: none">
+                                    <div id="tagsinput_tagsinput" class="tagsinput " style="border: none">
                                         <span class="tag" v-for="item in memberList" v-if="memberList!=''">
                                             <span >{{item.name}}&nbsp;</span>
-                                            <a @click="deleteName(item)"></a>
+                                            <a class="tagsinput-remove-link" @click="deleteName(item)"></a>
                                         </span>
                                         <input v-model="keywords" @keyup="search($event)" @keydown.8="backSpace" style="width: 85px"
                                         placeholder="搜索" class="focusInput" @keydown.down="changeDown" @keydown.up="changeUp" @keydown.13='keyDownAdd'>
@@ -49,6 +49,43 @@
                             <div class="col-lg-5 col-sm-5">
                                 <div class="box">
                                     <div class="boxHead">组织架构</div>
+                                    <ul class="breadcrumb-wrapper">
+                                        <li class="breadcrumb">
+                                            <a @click="breadcrumbSearch(1)">南京乐伽商业管理有限公司</a>
+                                            <a v-for="(item,index) in breadcrumbList">
+                                                <span @click="breadcrumbSearch(item,index)">&nbsp;&nbsp;&gt;&nbsp;{{item.name}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class=" box-body scoll" style="max-height: 304px">
+                                        <ul class="organizeList">
+                                            <li style="border-bottom: 1px dotted #CCCCCC">
+                                                <div>
+                                                    <input type="checkbox">
+                                                    <span>全选</span>
+                                                </div>
+                                            </li>
+                                            <li v-for="item in organizeList" class="staff">
+                                                <div class="department" v-if="item.type === 'department'">
+                                                    <input type="checkbox" @click="selectDpm(item,$event)" v-model='checkboxModel'
+                                                           :value="item">
+                                                    <span @click="getNextLevel(item)">{{item.name}}</span>
+                                                    <span class="pull-right">{{item.member_num}}人 </span>
+                                                </div>
+                                                <div v-if="item.type === 'people'" >
+                                                    <div class="head">
+                                                        <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                                    </div>
+                                                    <div class="head">
+                                                        <img src="../../assets/img/head.png" alt="" v-if="item.avatar === '' ">
+                                                        <span>{{item.real_name}}</span>
+                                                        <span>({{item.vocation}})</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -96,25 +133,55 @@
                     //失败信息 ***
                     error: ''
                 },
-                departmentId : '',      //部门id
                 organizeList : [],      //组织架构数据列表
+                breadcrumbList : [],
             }
         },
         mounted(){
-            this.getOrganize();
+            this.getNextLevel(1);
         },
         methods:{
             /*******************************右侧组织架构***************************************/
-            getOrganize(){
-                this.$http.post('index/profile/index/id/' + this.departmentId).then((res) => {
+            getOrganize(id){
+                this.$http.post('index/profile/index/id/' + id).then((res) => {
                     if(res.data.code === '90020'){
                        this.organizeList = res.data.data.data;
-                       console.log(this.organizeList)
                     }else{
                         this.organizeList = [];
                         this.errorInfo(res.data.msg);
                     }
                 })
+            },
+            getNextLevel(val){
+                if(val === 1){
+                    this.getOrganize(1);
+                    this.breadcrumbList = [];
+                }else {
+                    this.getOrganize(val.id);
+                    this.breadcrumbList.push(val);
+
+                }
+            },
+            breadcrumbSearch(val,index){
+                if(val === 1){
+                    this.getOrganize(1);
+                    this.breadcrumbList = [];
+                }else {
+                    this.getOrganize(val.id);
+                    this.breadcrumbList.splice(index+1,this.breadcrumbList.length);
+
+                }
+            },
+            selectDpm(val,e){
+                if(e.target.checked === true){
+                    this.memberList.push(val);
+                }else {
+                    for (let i = 0; i < this.memberList.length; i++) {
+                        if (val.id === this.memberList[i].id && val.name === this.memberList[i].name) {
+                            this.memberList.splice(i, 1)
+                        }
+                    }
+                }
             },
             /*******************************左侧选人框***************************************/
             search(e){  //关键词搜索事件
@@ -198,6 +265,7 @@
             //删除成员
             deleteName(item){
                 this.memberList = this.memberList.filter((x)=>x!==item);
+
             },
 
             inputFocus(){   //点击选人框，input触发focus事件
@@ -223,6 +291,9 @@
                     }
                 }
                 return false;
+            },
+            isChecked(){
+
             },
         },
     }
@@ -259,15 +330,19 @@
     #borderBlue:hover{
         border:1px solid #52B9D5;
     }
-    .organizeList ul li:hover{
-        background: #f1f2f7;;
+    .organizeList>li{
+        height: 50px;
+        line-height: 40px;
     }
-    .organizeList ul li:hover .btn-white{
-        background: #f1f2f7;;
+    .organizeList li:hover{
+        background: #f1f2f7;
+    }
+    .staff{
+        line-height: 0;
     }
     ul li{
         cursor: pointer;
-        padding: 4px 20px;
+        padding: 4px 10px;
     }
 
     .box-body{
@@ -308,8 +383,10 @@
        margin: 2px;
     }
     input[type=checkbox] {
-        margin-right: 8px;
-        margin-top: 1px;
+
+        float: left;
+        margin-right: 10px;
+        margin-top: 11px;
         width: 17px;
         height: 17px;
     }

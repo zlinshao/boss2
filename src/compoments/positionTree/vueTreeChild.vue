@@ -11,13 +11,15 @@
                            	<!--<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>-->
 							<span class="department">{{model.vocation}} - </span>
 							<span class="department">[ {{model.member_num}} 人]</span>
-							<span class="department" v-if="model.member_name!==''"> - {{model.member_name}} </span>
-                        </span>
+							<span class="department" v-if="model.member_name!==''"	:title="model.member_name"
+								  style="max-width: 250px;overflow: hidden;"> - {{model.member_name}}
+							</span>
+						</span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
-						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						</i>
 
-						<ul class="dropdown-menu dropdown-menu-left" style="padding: 0 0 0 0px;">
+						<ul class="dropdown-menu dropdown-menu-right" style="padding: 0 0 0 0px;">
 							<li>
 								<a @click="editPosition($event)">编辑岗位</a>
 							</li>
