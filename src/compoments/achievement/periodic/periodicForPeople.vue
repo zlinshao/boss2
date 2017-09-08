@@ -147,7 +147,7 @@
                     .then(
                         (res) => {
 //                            console.log(res);
-                            if (res.data.code == 18300){
+                            if (res.data.code === '18300'){
                                 this.paging = res.data.data.pages;
                                 this.myData = res.data.data.data;
                                 this.isShow = false;
@@ -174,7 +174,7 @@
                     .then(
                         (res) => {
 //                            console.log(res);
-                            if (res.data.code == 18300){
+                            if (res.data.code === '18300'){
                                 this.paging = res.data.data.pages;
                                 this.myData = res.data.data.data;
                                 this.isShow = false;
