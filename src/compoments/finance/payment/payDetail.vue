@@ -76,6 +76,31 @@
                                 <!--<div><span class="text-primary">账户余额：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">付款方式：</span><span>{{details_info.description}}</span></div>-->
                                 <!--<div><span class="text-primary">月单价：</span><span>dfsdf</span></div>-->
+
+                                <!--<div>-->
+                                    <!--<span class="text-primary">汇款方式：</span>-->
+                                    <!--<span>-->
+                                        <!--{{select_info.payment[list.customer.account_type]}}-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                                <div>
+                                    <span class="text-primary">收款人姓名：</span>
+                                    <span>
+                                        {{list.customer.account_owner}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">开户行：</span>
+                                    <span>
+                                          {{select_info.bank[list.customer.account_bank]}}
+                                    </span>
+                                </div>
+                                <!--<div>-->
+                                    <!--<span class="text-primary">账号：</span>-->
+                                    <!--<span>-->
+                                        <!--{{list.customer.account_num}}-->
+                                    <!--</span>-->
+                                <!--</div>-->
                             </div>
                             <div class="col-md-6">
                                 <div>
