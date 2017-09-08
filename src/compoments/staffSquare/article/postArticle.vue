@@ -21,13 +21,13 @@
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">标题<sup class="required">*</sup>：</label>
                             <div class="col-lg-6">
-                                <input class="form-control" placeholder="输入标题，50个字符以内">
+                                <input class="form-control" placeholder="输入标题，50个字符以内" v-model="formData.title">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">分类<sup class="required">*</sup>：</label>
                             <div class="col-lg-6">
-                                <select class="form-control">
+                                <select class="form-control" v-model="formData.type">
                                     <option value="">--请选择--</option>
                                 </select>
                             </div>
@@ -53,12 +53,12 @@
                 <div class="buttons">
                     <button class="btn btn-default" @click="cancel">取消</button>
                     <button class="btn btn-warning" @click="preview" :disabled="complete!='ok'">预览</button>
-                    <button class="btn btn-primary" :disabled="complete!='ok'">保存</button>
+                    <button class="btn btn-primary" :disabled="complete!='ok'" @click="saveArticle">保存</button>
                 </div>
 
             </div>
         </section>
-        <Preview :title="title" :content="content" :classify="classify" :vedioArr="vedioArr"></Preview>
+        <Preview :title="formData.title" :content="formData.content" :type="formData.type" :vedioArr="vedioArr"></Preview>
     </div>
 </template>
 
@@ -70,10 +70,12 @@
         components: {Editor,Preview,UploadVedio},
         data(){
             return {
-                title : 'dddddddd',
-                classify : 'asdsa',
-                content : '',
+                formData :{
+                    title : '',
+                    type : '',
+                    content : '',
 
+                },
                 vedioArr : [],
 
                 vedio : {
@@ -95,7 +97,7 @@
                     type: 'success'
                 });*/
                 console.log(val);
-                this.content = val;
+                this.formData.content = val;
             },
             cancel(){
                 this.$router.back(-1)
@@ -132,6 +134,23 @@
                 if (index > -1) {
                     this.vedio.idVedio.splice(index, 1);
                 }
+                let vedioLink = '';
+                this.$http.post('/picture/'+val).then((res)=>{
+                    vedioLink = res.data.data;
+                });
+                let flag = this.vedioArr.indexOf(vedioLink);
+                if (flag > -1){
+                    this.vedioArr.splice(flag,1);
+                }
+            },
+
+
+            // 保存
+            saveArticle(){
+                this.formData.vedioArr = this.vedio.idVedio;
+                this.$http.post('checkin/extra',this.formData).then((res)=>{
+
+                })
             }
         }
     }

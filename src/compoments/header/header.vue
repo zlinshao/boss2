@@ -701,8 +701,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu" v-show="simulate.indexOf('manager/management') > -1||simulate.indexOf('manager/approver') > -1">
-                        <!--<li class="sub-menu">-->
+                    <!--<li class="sub-menu" v-show="simulate.indexOf('manager/management') > -1||simulate.indexOf('manager/approver') > -1">-->
+                    <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>员工广场</span>

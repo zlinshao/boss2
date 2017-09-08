@@ -19,11 +19,18 @@
                                 <option value="">草稿</option>
                             </select>
                         </div>
-                        <div class="input-group">
+                        <!--<div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
                                    v-model="selected" @click='select' readonly>
                             <span class="input-group-btn">
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            </span>
+                        </div>-->
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="办公用品名称"
+                                   @keydown.enter.prevent="search(1)">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
                         <div class="form-group pull-right">
@@ -124,8 +131,11 @@
                 configure: {},
                 selected: [],
                 params : {
-                    department_id : [],
-                    staff_id : [],
+//                    department_id : [],
+//                    staff_id : [],
+                    type : '',
+                    status : '',
+                    search : ''
                 },
                 confirmMsg: {
                     msg: '',

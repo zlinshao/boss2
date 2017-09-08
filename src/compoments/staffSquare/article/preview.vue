@@ -47,7 +47,7 @@
 
 <script>
     export default{
-        props : ['title','content','classify','vedioArr'],
+        props : ['title','content','type','vedioArr'],
         components: {},
         data(){
             return {
