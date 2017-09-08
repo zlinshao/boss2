@@ -147,7 +147,7 @@
                                 <!--<div><span class="text-primary">历史打款记录：</span><span>sdfdsf</span></div>-->
                             </div>
                             <div class="col-xs-12">
-                                <span class="text-primary">历史收款记录：</span>
+                                <span class="text-primary">历史付款记录：</span>
                                 <div class="table table-responsive roll" style="border: 0;">
                                     <table>
                                         <tbody>
