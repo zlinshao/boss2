@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="modal fade" id="positionAdd">
+        <div class="modal fade" id="positionHighAdd">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header" >
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" @clic="closeModel">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">新增岗位</h4>
+                        <h4 class="modal-title">新建上级岗位</h4>
                     </div>
                     <div class="modal-body">
                         <section class="panel">
@@ -15,19 +15,19 @@
                                 <div class="row">
                                     <label class="col-sm-2 control-label col-lg-2" >所属部门</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="department_name" disabled>
+                                        <input type="text" class="form-control" disabled v-model="departmentName">
                                     </div>
                                 </div>
-                                <div class="row" v-if="positionName !== ''">
-                                    <label class="col-sm-2 control-label col-lg-2" >上级岗位</label>
+                                <div class="row">
+                                    <label class="col-sm-2 control-label col-lg-2" >当前岗位</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="positionName" disabled>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 control-label col-lg-2" >岗位名称</label>
+                                    <label class="col-sm-2 control-label col-lg-2" >上级岗位</label>
                                     <div class="col-lg-10">
-                                        <input type="text"class="form-control" v-model="position" placeholder="职位名称">
+                                        <input type="text"class="form-control" placeholder="上级岗位名称" v-model="position">
                                     </div>
                                 </div>
                             </div>
@@ -41,21 +41,19 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
-        <!--<Department :configure='configure' @Staff="getDepartment"></Department>-->
     </div>
 </template>
 <script>
     import Status from '../common/status.vue';
-    import Department from '../common/organization/selectStaff.vue'
     export default {
-        components: { Status },
         props : ['position_name','position_id','department_name','department_id'],
+        components :{Status},
         data(){
           return {
               configure : [],
-              positionName :'',
               position : '',
-              positionId : '1',
+              positionId : '',
+              positionName : '',
               info: {
                   //成功状态 ***
                   state_success: false,
@@ -85,22 +83,14 @@
             },
         },
         methods : {
-//            selectDpm(){
-//                this.configure = {length :1,class : 'department',id : []}
-//                $('.selectCustom:eq(0)').modal('show');
-//            },
-//            getDepartment(val){
-//                this.departmentName = val.department[0].name;
-//                this.departmentId = val.department[0].id;
-//            },
             confirmAdd(){
-                this.$http.post('manager/user/position_insert',{
+                this.$http.post('manager/user/position_parent',{
                     vocation : this.position,
-                    department_id : this.departmentId,
-                    parent_id : this.positionId,
+                    department_id : this.department_id,
+                    id : this.positionId,
                 }).then((res) => {
-                    if(res.data.code === '90045'){
-                        this.$emit('success')
+                    if(res.data.code === '90071'){
+                        this.$emit('success');
                         this.info.success = res.data.msg;
                         this.info.state_success = true;
                         this.closeModel();
@@ -113,8 +103,6 @@
             },
             closeModel(){
                 $('#positionAdd').modal('hide');
-                this.position = '';
-                this.positionId = '1';
             }
         }
     }

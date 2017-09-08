@@ -9,7 +9,9 @@
 					<div class="dropdown" @mouseenter="operate($event)" @mouseleave="leaveNode($event)" >
                         <span @click=" currentNode($event)" >
                            	<!--<i class="glyphicon glyphicon-ban-circle" v-if="model.status == 2"></i>-->
-							<span class="department">{{model.vocation}}</span>
+							<span class="department">{{model.vocation}} - </span>
+							<span class="department">[ {{model.member_num}} 人]</span>
+							<span class="department" v-if="model.member_name!==''"> - {{model.member_name}} </span>
                         </span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
 						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,6 +26,9 @@
 							</li>
 							<li>
 								<a @click="addPosition($event)">新建平级岗位</a>
+							</li>
+							<li v-if="model.parent_id === 1">
+								<a @click="insertHighPosition($event)">新建上级岗位</a>
 							</li>
 							<!--<li>-->
 								<!--<a @click="positionRole($event)">岗位权限</a>-->
@@ -148,7 +153,6 @@
         },
         methods:{
             Func(val,e){
-                console.log(val)
                 // 查找点击的子节点
                 let recurFunc = (data,list) => {
                     data.forEach((i)=>{
@@ -191,6 +195,9 @@
                 e.target.style.color = '#316AC5';
             },
             insertPosition(e){
+                this.model.contentHtml = e.target.text;
+			},
+            insertHighPosition(e){
                 this.model.contentHtml = e.target.text;
 			},
             addPosition(e){

@@ -142,6 +142,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2" >个人邮箱</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" v-model="orgEmail" placeholder="个人邮箱">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-lg-2 control-label">身份证照片</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="id_PicId" @delete="picDelete" @complete="complete"
@@ -414,6 +420,7 @@
                 house : '',         //买房时间
                 salary : '',
                 dismiss_time : '',  //离职时间
+                orgEmail : '',      //个人邮箱
                 myResult: this.editDate,
                 reviseDpm:false,
                 //用户组写入
@@ -521,6 +528,7 @@
                 this.salary   = this.myResult.salary ;         //买房时间
                 this.dismiss_time  = this.myResult.dismiss_time;         //买房时间
                 this.staffStatus = this.myResult.status;
+                this.orgEmail = this.myResult.orgEmail;
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
@@ -766,6 +774,7 @@
                                     "house" : this.house,         //买房时间
                                     "salary" : this.salary,
                                     "dismiss_time" :this.dismiss_time,
+                                    "orgEmail" :this.orgEmail,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{
@@ -791,8 +800,9 @@
                                     this.enroll='';          //入职时间
                                     this.id_copy='';        //身份证复印件
                                     this.photo='';           //有无照片
+                                    this.orgEmail='';           //个人邮箱
                                     this.checkboxModel = [],
-                                    this.newBox = [],
+                                    this.newBox = [];
                                     this.position_id=[];     //职位
                                     this.position=[];    //职位
                                     this.firstDepart=[];
