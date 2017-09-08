@@ -134,6 +134,33 @@
                                 <!--</div>-->
                                 <!--</div>-->
                                 <!--</div>-->
+
+                                <div>
+                                    <span class="text-primary">汇款方式：</span>
+                                    <span>
+                                        {{dict.payment[msg.customer.account_type]}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">收款人姓名：</span>
+                                    <span>
+                                        {{msg.customer.account_owner}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">开户行：</span>
+                                    <span>
+                                          {{dict.bank[msg.customer.account_bank]}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">账号：</span>
+                                    <span>
+                                        {{msg.customer.account_num}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div>
                                     <span class="text-primary">应收金额：</span>
                                     <span>{{msg.amount_receivable}}</span>
@@ -142,8 +169,7 @@
                                     <span class="text-primary">实收金额：</span>
                                     <span>{{msg.amount_received}}</span>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+
                                 <div>
                                     <span class="text-primary">剩余款项：</span>
                                     <span>{{msg.balance}}</span>

@@ -90,7 +90,10 @@
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
                     <td class="text-center">{{item.create_time}}</td>
-                    <td class="text-center">{{item.address}}</td>
+                    <td class="text-center">
+                        {{item.address}}&nbsp;
+                        <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
+                    </td>
                     <td class="text-center">{{item.customer_name}}</td>
                     <td class="text-center">{{item.months}}</td>
                     <td class="text-center">
