@@ -420,8 +420,8 @@
                             id: this.moreTime[this.currentIndex].id,
                             pay_date: ev.target.value
                         });
-                        console.log(this.moreTime[this.currentIndex])
-                        console.log(this.times[this.currentIndex])
+//                        console.log(this.moreTime[this.currentIndex])
+//                        console.log(this.times[this.currentIndex])
                     } else if (ev.target.placeholder === '补齐时间') {
                         this.changeComplete = ev.target.value;
                     }
