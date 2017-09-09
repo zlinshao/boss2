@@ -174,7 +174,7 @@
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
     import ApplySupply from '../applySupply.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import EditApply from './applyEdit.vue'
     import Confirm from '../../common/confirm.vue'
     export default{
@@ -359,8 +359,8 @@
             },
 
             select(){
-                this.configure = {type: 'all', class: 'selectType'};
-                $('#selectCustom').modal('show');
+//                this.configure = {type: 'all', class: 'selectType'};
+                $('.selectCustom:eq(0)').modal('show');
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },
