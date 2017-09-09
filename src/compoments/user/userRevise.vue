@@ -147,13 +147,13 @@
                                             <input type="text" class="form-control" v-model="orgEmail" placeholder="企业邮箱">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-lg-2 control-label">身份证照片</label>
-                                        <div class="col-lg-10">
-                                            <up-load @photo="id_PicId" @delete="picDelete" @complete="complete"
-                                                     :result="'id_Pic'" :idPhotos="id_Pic"></up-load>
-                                        </div>
-                                    </div>
+                                    <!--<div class="row">-->
+                                        <!--<label class="col-lg-2 control-label">身份证照片</label>-->
+                                        <!--<div class="col-lg-10">-->
+                                            <!--<up-load @photo="id_PicId" @delete="picDelete" @complete="complete"-->
+                                                     <!--:result="'id_Pic'" :idPhotos="id_Pic"></up-load>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <hr>
                                     <h3 style="margin-top: -15px">工作信息</h3>
                                     <div class="row">
