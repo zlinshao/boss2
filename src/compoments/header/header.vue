@@ -392,7 +392,7 @@
                         <!--</ul>-->
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
-                    <li class="sub-menu" v-show="account_book">
+                    <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1">
                     <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -906,7 +906,7 @@
         props: ['Name', 'Card','simulate'],
         data(){
             return {
-                account_book: '',           //账本
+//                account_book: '',           //账本
                 remind_info: [],            //查看提醒
                 isActive: 0,
                 new_info: {},               //未读信息
@@ -936,13 +936,13 @@
         },
         mounted(){
 //            财务权限
-            this.$http.post('revenue/customer/is_rule').then((res) => {
-                if (res.data.code === '20015') {
-                    this.account_book = true;
-                } else {
-                    this.account_book = false;
-                }
-            });
+//            this.$http.post('revenue/customer/is_rule').then((res) => {
+//                if (res.data.code === '20015') {
+//                    this.account_book = true;
+//                } else {
+//                    this.account_book = false;
+//                }
+//            });
             this.isPc = this.IsPC();
             this.new_infos();
             setInterval(function () {
