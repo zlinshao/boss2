@@ -89,7 +89,7 @@
 </template>
 
 <script>
-    import STAFF from  '../common/organization/selectStaff.vue'
+    import STAFF from  '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
     import Status from '../common/status.vue';
     export default{
@@ -234,16 +234,13 @@
             selectDepartment(){
 
                 this.selectType = 1;
-//                this.configure = {type: 'all', class: 'selectType'};
-                this.configure={type:'department',class:'selectType'};
-                $('#selectCustom').modal('show');
-//                this.configure={id:[],class:'department'};
-//                this.configure={length:2,class:'amount'};
+                this.configure={type:'department'};
+                $('.selectCustom:eq(0)').modal('show');
             },
             selectStaff(){
                 this.selectType = 2;
-                this.configure={type:'staff',class:'selectType'};
-                $('#selectCustom').modal('show');
+                this.configure={type:'staff'};
+                $('.selectCustom:eq(0)').modal('show');
             },
             selectDateSend(val){
 //                console.log(val);
