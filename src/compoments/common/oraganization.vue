@@ -61,10 +61,10 @@
                                     <div class=" box-body scoll" style="max-height: 304px">
                                         <ul class="organizeList">
                                             <!--<li style="border-bottom: 1px dotted #CCCCCC">-->
-                                                <!--<div>-->
-                                                    <!--<input type="checkbox">-->
-                                                    <!--<span>全选</span>-->
-                                                <!--</div>-->
+                                            <!--<div>-->
+                                            <!--<input type="checkbox">-->
+                                            <!--<span>全选</span>-->
+                                            <!--</div>-->
                                             <!--</li>-->
                                             <li v-for="item in organizeList">
                                                 <div v-if="item.type === 'department'">
@@ -553,14 +553,9 @@
     .modal{
         z-index: 1100;
     }
-    @media screen and (min-width: 768px){
+    @media (min-width: 768px) {
         .modal-dialog{
             width: 676px;
-        }
-    }
-    @media screen and (max-width: 767px){
-        .modal-dialog{
-            width: 100%;
         }
     }
 </style>
