@@ -12,9 +12,6 @@
                         <i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色
                     </button>
                 </div>
-                <!--<button class="btn btn-success"@click="oraganize">-->
-                    <!--<i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增角色-->
-                <!--</button>-->
             </div>
         </section>
 
@@ -98,18 +95,15 @@
 
         <!--提醒-->
         <Status :state="info"></Status>
-        <Staff></Staff>
 
     </div>
 </template>
 
 <script>
     import Status from '../common/status.vue'
-    import Staff from '../common/oraganization.vue'
     export default {
         components: {
             Status,
-            Staff
         },
         data (){
             return {
@@ -136,7 +130,7 @@
         watch: {//深度 watcher
             'checkboxModel': {
                 handler: function (val, oldVal) {
-                    if  (this.checkboxModel.length === this.myData.length) {
+                    if(this.checkboxModel.length === this.myData.length) {
                         this.checked = true;
                     } else {
                         this.checked = false;
@@ -296,9 +290,6 @@
                     }
                 }
             },
-            oraganize(){
-                $('#selectCustom').modal('show')
-            }
         }
     };
 </script>

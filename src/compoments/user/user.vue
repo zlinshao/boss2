@@ -173,7 +173,7 @@
     import Loading from '../loading/Loading.vue'
     import Confirm from '../common/confirm.vue'
     import Page from '../common/page.vue'
-    import Department from '../common/organization/selectStaff.vue'
+    import Department from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
     import AdvancedSearch from './advancedSearch.vue'
     import UserRevise from './userRevise.vue';
@@ -277,8 +277,7 @@
 
             selectDpm(){ //选择部门
                 $('.selectCustom:eq(0)').modal('show');
-                this.configureType = 'selectDpm';
-                this.configure = {length: 1, class: 'department', id: []};
+                this.configure = {type:'department',length: 1};
             },
             getDepartment(val){
                 this.department_name = val.department[0].name;
