@@ -2,7 +2,7 @@
     <div>
         <!-- Button trigger modal -->
         <div class="modal fade selectCustom" id="selectCustom" data-backdrop="static">
-            <div class="modal-dialog" style="width:676px" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" aria-label="Close" @click="closeModal">
@@ -552,5 +552,15 @@
     }
     .modal{
         z-index: 1100;
+    }
+    @media screen and (min-width: 768px){
+        .modal-dialog{
+            width: 676px;
+        }
+    }
+    @media screen and (max-width: 767px){
+        .modal-dialog{
+            width: 100%;
+        }
     }
 </style>
