@@ -3,16 +3,17 @@ import App from './App.vue'
 import Boss from './boss.config.js'
 import VueRouter from 'vue-router'
 import axios from 'axios'
-import Vuex from 'vuex'
 import store from './store/index.js'
 import routes from './routerConfig.js'
 import Loading from './compoments/loading'
+import Vuex from 'vuex'
+// import Vueditor from 'vueditor'
 // 引入echarts
 import echarts from 'echarts'
 
-
 Vue.use(Loading);
 Vue.use(Vuex);
+
 Vue.use(Boss);
 Vue.use(VueRouter);
 axios.defaults.baseURL = globalConfig.server;
@@ -43,10 +44,9 @@ axios.interceptors.response.use((response) => { //配置请求回来的信息
     return Promise.reject(error);
 });
 
-
 new Vue({
     el: '#app',
-    router,
     store,
+    router,
     render: h => h(App)
 });

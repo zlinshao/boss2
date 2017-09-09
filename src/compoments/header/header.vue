@@ -701,6 +701,25 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="sub-menu" v-show="simulate.indexOf('manager/management') > -1||simulate.indexOf('manager/approver') > -1">
+                    <!--<li class="sub-menu">-->
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>员工广场</span>
+                        </a>
+                        <ul class="sub">
+                            <li :class="{'active': isActive == 'square'}" @click='pitch_on("square")'>
+                                <router-link to="/square">
+                                    <span>员工广场</span>
+                                </router-link>
+                            </li>
+                            <li :class="{'active': isActive == 'article'}" @click='pitch_on("article")'>
+                                <router-link to="/article">
+                                    <span>发布文章</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>

@@ -91,6 +91,13 @@ import BatchApply from './compoments/office/batchApply.vue'                     
 import OfficeLibrary from './compoments/office/officeLibrary/officeLibrary.vue'                 // 办公用品库管理
 import OfficeDetail from './compoments/office/officeManage/officeDetail.vue'                    // 办公用品详情
 
+import Square from './compoments/staffSquare/square/staffSquare.vue'                    // 员工广场
+import SquareDetail from './compoments/staffSquare/square/squareDetail.vue'                    // 员工广场详情
+import Article from './compoments/staffSquare/article/article.vue'                    // 发布文章
+import ArticleDetail from './compoments/staffSquare/article/articleDetail.vue'                    // 文章详情
+import PostArticle from './compoments/staffSquare/article/postArticle.vue'                    // 发布
+import ModifyArticle from './compoments/staffSquare/article/modifyAriticle.vue'                    // 编辑
+
 import Organize from  './compoments/user/organization.vue'                                      //组织架构
 import PositionManage from './compoments/user/positionManage.vue'
 
@@ -490,6 +497,36 @@ export default[
         path: '/officeDetail',
         name: 'OfficeDetail',
         component: OfficeDetail
+    },
+    {
+        path: '/square',
+        name: 'Square',
+        component: Square
+    },
+    {
+        path: '/article',
+        name: 'Article',
+        component: Article
+    },
+    {
+        path: '/squareDetail',
+        name: 'SquareDetail',
+        component: SquareDetail
+    },
+    {
+        path: '/articleDetail',
+        name: 'ArticleDetail',
+        component: ArticleDetail
+    },
+    {
+        path: '/postArticle',
+        name: 'PostArticle',
+        component: PostArticle
+    },
+    {
+        path: '/modifyArticle',
+        name: 'ModifyArticle',
+        component: ModifyArticle
     },
     {       //组织架构
         path: '/organize',
