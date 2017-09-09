@@ -86,7 +86,7 @@
 
 <script>
     import Page from '../../common/page.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
 
@@ -169,8 +169,8 @@
                 });
             },
             select(){
-                $('#selectCustom').modal({backdrop: 'static',});
-                this.configure = {type: 'department', class: 'selectType'};
+                $('.selectCustom:eq(0)').modal({backdrop: 'static',});
+                this.configure = {type: 'department'};
             },
             selectDateSend(val){
                 for (let i = 0; i < val.department.length; i++) {

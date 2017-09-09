@@ -576,7 +576,7 @@
 
 <script>
     import SelectSubject from '../../common/selectSubject.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import SelectHouse from '../../common/selectPayHouse.vue'
     import FlexBox from '../../common/flexBox.vue'
     import Status from '../../common/status.vue';
@@ -974,7 +974,7 @@
             //               选择签约人
             selectStaff()
             {
-                this.configure = {length: 1, class: 'amount'};
+                this.configure = {length: 1, type: 'staff'};
                 $('.selectCustom:eq(0)').modal('show');
             }
             ,

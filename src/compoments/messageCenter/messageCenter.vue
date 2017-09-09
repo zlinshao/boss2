@@ -378,7 +378,7 @@
     import Page from '../common/page.vue';
     import AnnouncementAdd from './announcementAdd.vue'
     import AnnouncementDetail from './announcemeDetail.vue'
-    import STAFF from  '../common/organization/selectStaff.vue'
+    import STAFF from  '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
         components: {
@@ -726,7 +726,7 @@
             },
 //            收件人
             selectStaff(){
-                this.configure = {length: 1, class: 'amount'};
+                this.configure = {length: 1, type: 'staff'};
                 $('.selectCustom:eq(0)').modal('show');
             },
 //            收件人ID

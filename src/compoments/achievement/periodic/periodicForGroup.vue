@@ -149,7 +149,7 @@
 </style>
 <script>
     import Page from '../../common/page.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
 
@@ -257,9 +257,8 @@
             select(){
 
 //                this.selectConfigure = 'department';
-                $('#selectCustom').modal({backdrop: 'static',});
-                this.configure={type:'department',class:'selectType'};
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(0)').modal({backdrop: 'static',});
+                this.configure={type:'department'};
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
             },

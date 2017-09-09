@@ -112,7 +112,7 @@
 
 <script>
     import Page from '../common/page.vue'
-    import Staff from '../common/organization/selectStaff.vue'
+    import Staff from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
     import DatePicker from '../common/datePicker.vue'
     export default{
@@ -234,8 +234,8 @@
             },
 
             selete(){
-                $('#selectCustom').modal('show');
-                this.configure = {length: 1, class: 'amount'};
+                $('.selectCustom:eq(0)').modal('show');
+                this.configure = {length: 1, type: 'staff'};
             },
             getData(data){
                 this.params.page = data;

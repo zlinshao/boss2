@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import SelectStaff from '../common/organization/selectStaff.vue'
+    import SelectStaff from '../common/oraganization.vue'
     import Status from '../common/status.vue';
     export default {
         components: {Status, SelectStaff},
@@ -70,10 +70,10 @@
             },
 //            组织架构
             distributions (){
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(0)').modal('show');
                 this.configure = {
                     length: 1,
-                    class: 'amount'
+                    type: 'staff'
                 };
             },
 //            获得派发对象
