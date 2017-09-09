@@ -237,7 +237,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2">第一次签合同时间</label>
+                                        <label class="col-sm-2 control-label col-lg-2">第二次签合同时间</label>
                                         <div class="col-md-4">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_time'"
                                                         :currentDate="[agreement_second_time]" :placeholder="'第二次签合同时间'"
@@ -245,7 +245,7 @@
 
                                             </DatePicker>
                                         </div>
-                                        <label class="col-sm-2 control-label col-lg-2" >第一次合同到期时间</label>
+                                        <label class="col-sm-2 control-label col-lg-2" >第二次合同到期时间</label>
                                         <div class="col-md-4">
                                             <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_end_time'"
                                                         :currentDate="[agreement_second_end_time]"   :placeholder="'第二次合同到期时间'"
