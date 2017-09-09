@@ -380,7 +380,7 @@
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import DatePicker from '../../common/datePicker.vue'
     import upLoad from '../../common/upload.vue'
     import SelectClient from '../../common/selectPayClient.vue'
@@ -811,7 +811,6 @@
             },
 
             select(){
-                this.configure = {type: 'all', class: 'selectType'};
                 $('#selectCustom').modal('show');
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};

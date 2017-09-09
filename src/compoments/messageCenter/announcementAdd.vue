@@ -53,7 +53,7 @@
 </template>
 
 <script>
-    import DepartmentSelect from '../common/organization/selectStaff.vue';
+    import DepartmentSelect from '../common/oraganization.vue';
     import Status from '../common/status.vue';
     export default {
         components: {DepartmentSelect, Status},
@@ -79,7 +79,7 @@
         methods: {
             selectDep(){
                 $('.selectCustom:eq(1)').modal('show');
-                this.configure = {type: 'department', class: 'selectType'};
+                this.configure = {type: 'department'};
             },
             selectedDpm(val){
                 for (let i = 0; i < val.department.length; i++) {

@@ -172,7 +172,7 @@
 
 <script>
     import Status from '../../common/status.vue'
-    import Department from '../../common/organization/selectStaff.vue'
+    import Department from '../../common/oraganization.vue'
     import NewClientAdd from  './newLandlordAdd.vue'
     import Page from  '../../common/page.vue'
     import Confirm from '../../common/confirm.vue'
@@ -304,7 +304,7 @@
 //            人资管理
             select(){
                 $('.selectCustom:eq(1)').modal({backdrop: 'static',});
-                this.configure = {type: 'department', class: 'selectType'};
+                this.configure = {type: 'department'};
             },
 //            人资管理
             selectDateSend(val){

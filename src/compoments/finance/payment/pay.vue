@@ -395,7 +395,7 @@
     import Page from '../../common/page.vue'
     import Status from '../../common/status.vue';
     import FlexBox from '../../common/flexBox.vue'
-    import STAFF from  '../../common/organization/selectStaff.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import DatePicker from '../../common/datePicker.vue'
 
     import SelectHouse from '../../common/selectPayHouse.vue'
@@ -867,7 +867,6 @@
             },
 //            人资
             select(){
-                this.configure = {type: 'all', class: 'selectType'};
                 $('#selectCustom').modal('show');
 //                this.configure={id:[],class:'department'};
 //                this.configure={length:2,class:'amount'};
