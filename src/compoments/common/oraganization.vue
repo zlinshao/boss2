@@ -180,8 +180,10 @@
             configure(val){
                 this.myConfigure = val;
                 if (val.type === 'department') {
+                    this.onlyStaff = false;
                     this.onlyDepartment = true;
                 } else if (val.type === 'staff') {
+                    this.onlyDepartment = false;
                     this.onlyStaff = true;
                 } else {
                     this.onlyDepartment = false;
