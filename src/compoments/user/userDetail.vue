@@ -124,9 +124,9 @@
                                 <div><span class="text-primary">第二次签合同时间：</span>
                                     <span>{{item.agreement_second_time}}</span>
                                 </div>
-                                <div><span class="text-primary">结束时间：</span>
-                                    <span>{{item.agreement_second_end_time}}</span>
-                                </div>
+                                <!--<div><span class="text-primary">结束时间：</span>-->
+                                    <!--<span>{{item.agreement_second_end_time}}</span>-->
+                                <!--</div>-->
                             </div>
                             <div class="col-md-4">
                                 <div>

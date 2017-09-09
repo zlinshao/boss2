@@ -245,14 +245,14 @@
 
                                             </DatePicker>
                                         </div>
-                                        <label class="col-sm-2 control-label col-lg-2" >第二次合同到期时间</label>
-                                        <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_end_time'"
-                                                        :currentDate="[agreement_second_end_time]"   :placeholder="'第二次合同到期时间'"
-                                                        @sendDate="getSecondEndDate">
+                                        <!--<label class="col-sm-2 control-label col-lg-2" >第二次合同到期时间</label>-->
+                                        <!--<div class="col-md-4">-->
+                                            <!--<DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_end_time'"-->
+                                                        <!--:currentDate="[agreement_second_end_time]"   :placeholder="'第二次合同到期时间'"-->
+                                                        <!--@sendDate="getSecondEndDate">-->
 
-                                            </DatePicker>
-                                        </div>
+                                            <!--</DatePicker>-->
+                                        <!--</div>-->
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">保险</label>
@@ -345,7 +345,7 @@
                 agreement_first_time : '',
                 agreement_first_end_time : '',
                 agreement_second_time : '',
-                agreement_second_end_time : '',
+//                agreement_second_end_time : '',
                  info:{
                     //成功状态 ***
                     state_success: false,
@@ -497,7 +497,7 @@
                                     "agreement_first_time":this.agreement_first_time,
                                     "agreement_first_end_time":this.agreement_first_end_time,
                                     "agreement_second_time":this.agreement_second_time,
-                                    "agreement_second_end_time":this.agreement_second_end_time,
+//                                    "agreement_second_end_time":this.agreement_second_end_time,
                                     "orgEmail":this.orgEmail,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
@@ -554,7 +554,7 @@
                 this.agreement_first_time = '';
                 this.agreement_first_end_time = '';
                 this.agreement_second_time = '';
-                this.agreement_second_end_time = '';
+//                this.agreement_second_end_time = '';
                 this.status  = '1';
                 this.salary  = '';
                 this.dismiss_time = '';
@@ -610,9 +610,9 @@
             getSecondDate(val){
                 this.agreement_second_time = val;
             },
-            getSecondEndDate(val){
-                this.agreement_second_end_time = val;
-            },
+//            getSecondEndDate(val){
+//                this.agreement_second_end_time = val;
+//            },
 
 
 
