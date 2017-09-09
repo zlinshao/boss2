@@ -54,8 +54,8 @@
                 <div class="buttons">
                     <button class="btn btn-default" @click="cancel">取消</button>
                     <button class="btn btn-warning" @click="preview" :disabled="complete!='ok'||formData.content.length==0">预览</button>
-                    <button class="btn btn-primary" :disabled="complete!='ok'||formData.content.length==0" @click="saveArticle(1)">保存</button>
-                    <button class="btn btn-primary" :disabled="complete!='ok'||formData.content.length==0" @click="saveArticle(2)">发布</button>
+                    <button class="btn btn-primary" :disabled="complete!='ok'||formData.content.length==0" @click="saveArticle(2)">保存</button>
+                    <button class="btn btn-primary" :disabled="complete!='ok'||formData.content.length==0" @click="saveArticle(1)">发布</button>
                 </div>
 
             </div>
