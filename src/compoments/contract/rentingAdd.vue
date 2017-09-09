@@ -566,7 +566,7 @@
     import upLoad from '../common/upload.vue'
     import Status from '../common/status.vue'
     import SelectHouse from  '../common/selectHouse.vue'
-    import Staff from '../common/organization/selectStaff.vue'
+    import Staff from '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
         props:['contractEitId','dictionary','isEditRent'],
@@ -763,7 +763,7 @@
         methods : {
             selectDpm(){ //选择部门
                 $('.selectCustom:eq(1)').modal('show');
-                this.configure = {length: 1, class: 'amount'};
+                this.configure = {type:'staff',length: 1};
             },
             dpmSeleted(val){
                 this.staff_name = val.staff[0].name;

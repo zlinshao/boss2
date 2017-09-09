@@ -235,7 +235,7 @@
     import Loading from '../loading/Loading.vue'
     import Confirm from '../common/confirm.vue'
     import Page from '../common/page.vue'
-    import Staff from '../common/organization/selectStaff.vue'
+    import Staff from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
     import DatePicker from '../common/datePicker.vue'
 
@@ -376,7 +376,7 @@
             selectDpm(){ //选择部门
                 $('.selectCustom:eq(0)').modal('show');
                 this.configureType = 'selectDpm';
-                this.configure = {length: 1, class: 'department', id: [9], name: '市场部'};
+                this.configure = {type:'department',length: 1};
             },
             dpmSeleted(val){
                 if (this.configureType === 'selectDpm') {
@@ -597,12 +597,12 @@
             },
             distribution(){
                 $('#selectCustom').modal('show');
-                this.configure = {length: 1, class: 'amount'};
+                this.configure = {type:'staff',length: 1};
                 this.configureType = 'distribution';
             },
             distributionDpm(){
                 $('#selectCustom').modal('show');
-                this.configure = {length: 1, class: 'department', id: [9], name: '市场部'};
+                this.configure = {type:'department',length: 1};
                 this.configureType = 'distributionDpm';
             },
 

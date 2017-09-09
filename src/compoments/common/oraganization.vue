@@ -178,6 +178,7 @@
                 }
             },
             configure(val){
+                console.log(val)
                 this.myConfigure = val;
                 if (val.type === 'department') {
                     this.onlyDepartment = true;
@@ -531,7 +532,7 @@
 
     .fa-check {
         color: #ffffff;
-        font-size: 22px;
+        font-size: 20px;
         position: absolute;
         left: 9px;
         top: 8px;

@@ -218,7 +218,7 @@
 
 <script>
     import Page from '.././common/page.vue'
-    import SelectDpm from '../common/organization/selectStaff.vue'
+    import SelectDpm from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
     export default {
         components: {Page,SelectDpm,Status},
@@ -353,7 +353,7 @@
             //选择部门
             selectDpm(){
                 $('#selectCustom').modal('show');
-                this.configure={length:1,class:'department',id:[9],name:'市场部'};
+                this.configure = {type:'department',length: 1};
             },
             dpmSeleted(val){
                 if(val.department.length){

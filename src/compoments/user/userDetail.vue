@@ -85,11 +85,13 @@
                             <div class="col-md-4">
                                 <div>
                                     <span class="text-primary">岗位部门：</span>
-                                    <span>{{item.department[0].name}}</span>
+                                    <span v-if="item.department.length > 0">{{item.department[0].name}}</span>
                                 </div>
                                 <div>
                                     <span class="text-primary">职务：</span>
-                                    <span>{{item.position_id[0].vocation}}</span>
+                                    <span v-if="item.position_id.length > 0">
+                                        {{item.position_id[0].vocation}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">等级：</span>
@@ -197,7 +199,6 @@
             getDictionary(){
                 this.$http.get('manager/user/dict').then((res)=>{
                     this.dictionary=res.data.user;
-                    console.log(this.dictionary)
                     this.userDetail();
                 })
             },

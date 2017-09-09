@@ -141,7 +141,7 @@
 <script>
     import DatePicker from '../common/datePicker.vue'
     import Page from '../common/page.vue'
-    import Staff from '../common/organization/selectStaff.vue'
+    import Staff from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
 //    import Confirm from '../common/confirm.vue'
     import EditMember from  './memorandumEdit.vue'
@@ -230,7 +230,7 @@
             },
             selete(){
                 $('#selectCustom').modal('show');
-                this.configure={length:1,class:'department',id:[9],name:'市场部'};
+                this.configure = {type:'department',length: 1};
             },
             getPage(data){
                 this.searchRequirement.page = data;
