@@ -299,7 +299,7 @@
                 this.status.splice(0, this.status.length);
                 if (evInput.checked) {
                     for (let i = 0; i < this.myData.length; i++) {
-                        this.status.push(this.myData[i].id);
+                        this.status.push(this.myData[i].status);
                     }
                 }
 
@@ -418,6 +418,7 @@
                     this.beforePage = val;
                 }
                 this.operId = 0;
+                this.statusId = '';
                 this.pitch = [];
                 this.status = [];
                 this.$http.post('manager/management/receive_index?pages='+this.beforePage,this.params).then((res)=>{
@@ -432,7 +433,7 @@
                         this.myData = [];
                         this.isShow = true;
                         this.paging = 0;
-                        this.page = 1;
+                        this.beforePage = 1;
                     }
                 })
             },

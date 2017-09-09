@@ -15,11 +15,11 @@
                         {{title}}
                     </h4>
                 </header>
-                <div class="time">
+                <!--<div class="time">
                     {{year}}/{{month}}/{{day}}
                     &emsp;
                     {{staff}}
-                </div>
+                </div>-->
 
                 <div class="articleContainer">
                     <div class="vedioContainer col-lg-12" v-if="vedioArr.length>0">
@@ -31,13 +31,13 @@
                         </video>-->
                     </div>
 
-                    <div class="col-lg-12" v-html="content"></div>
+                    <div class="col-lg-12 content" v-html="content"></div>
                 </div>
 
                 <div class="buttons">
                     <button class="btn btn-default" @click="cancel">取消</button>
-                    <button class="btn btn-warning">保存</button>
-                    <button class="btn btn-primary">发布</button>
+                    <!--<button class="btn btn-warning">保存</button>-->
+                    <!--<button class="btn btn-primary">发布</button>-->
                 </div>
 
             </div>
@@ -55,6 +55,11 @@
                 month : '',
                 day : '',
                 staff : ''
+            }
+        },
+        watch:{
+            content(val){
+                $('.articleContainer .content img').attr('width','100%')
             }
         },
         mounted(){
@@ -103,10 +108,14 @@
         padding-bottom: 30px;
         border-bottom: 1px solid #aaaaaa;
         min-height: 900px;
+        /*background-color: #CCCCCC;*/
 
     }
     .buttons{
         text-align: right;
         padding-top: 12px;
+    }
+    .articleContainer .content img{
+        /*width: 100% !important;*/
     }
 </style>

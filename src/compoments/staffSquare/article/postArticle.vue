@@ -29,6 +29,7 @@
                             <div class="col-lg-6">
                                 <select class="form-control" v-model="formData.type">
                                     <option value="">--请选择--</option>
+                                    <option :value="value" v-for="(key,value) in dict.article_type">{{key}}</option>
                                 </select>
                             </div>
                         </div>
@@ -52,13 +53,16 @@
 
                 <div class="buttons">
                     <button class="btn btn-default" @click="cancel">取消</button>
-                    <button class="btn btn-warning" @click="preview" :disabled="complete!='ok'">预览</button>
-                    <button class="btn btn-primary" :disabled="complete!='ok'" @click="saveArticle">保存</button>
+                    <button class="btn btn-warning" @click="preview" :disabled="complete!='ok'||formData.content.length==0">预览</button>
+                    <button class="btn btn-primary" :disabled="complete!='ok'||formData.content.length==0" @click="saveArticle(2)">保存</button>
+                    <button class="btn btn-primary" :disabled="complete!='ok'||formData.content.length==0" @click="saveArticle(1)">发布</button>
                 </div>
 
             </div>
         </section>
         <Preview :title="formData.title" :content="formData.content" :type="formData.type" :vedioArr="vedioArr"></Preview>
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 </template>
 
@@ -66,10 +70,14 @@
     import Editor from './editor.vue'
     import Preview from './preview.vue'
     import UploadVedio from '../../common/uploadVedio.vue'
+    import Status from '../../common/status.vue';
+
     export default{
-        components: {Editor,Preview,UploadVedio},
+        components: {Editor,Preview,UploadVedio,Status},
         data(){
             return {
+                dict : {},
+
                 formData :{
                     title : '',
                     type : '',
@@ -82,11 +90,25 @@
                     idVedios : {},    //修改ID
                     idVedio : [],     //上传ID
                 },
-                complete : 'ok'
+                complete : 'ok',
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted(){
-
+            this.$http.get('index/Staff_Square/dict').then((res)=>{
+//                console.log(res.data);
+                this.dict = res.data;
+                this.vedio.idVedios = {};
+            });
         },
         methods: {
             getUEContent(val) {
@@ -96,7 +118,8 @@
                     message: val,
                     type: 'success'
                 });*/
-                console.log(val);
+//                console.log(val);
+                val = val.replace(/<img/g,"<img style='max-width:100%'");
                 this.formData.content = val;
             },
             cancel(){
@@ -146,11 +169,37 @@
 
 
             // 保存
-            saveArticle(){
-                this.formData.vedioArr = this.vedio.idVedio;
-                this.$http.post('checkin/extra',this.formData).then((res)=>{
+            saveArticle(num){
+                this.formData.album = this.vedio.idVedio;
+                if (this.formData.title==''||this.formData.type==''||this.formData.content==''){
+                    this.info.error = "请填写必要信息";
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                    return;
+                }
+                let _this = this;
+                setTimeout(function () {
+//                    alert(_this.formData.content)
+                    _this.$http.post('index/Staff_Square/addArticle?is_public='+num,_this.formData).then((res)=>{
+                        console.log(res.data);
+                        if (res.data.code==30012){
+                            // 成功
+                            _this.info.success = res.data.msg;
+                            //关闭失败弹窗 ***
+                            _this.info.state_error = false;
+                            //显示成功弹窗 ***
+                            _this.info.state_success = true;
+                            _this.$router.replace({ path: '/article'});
+                        } else {
+                            // 失败
+                            _this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            _this.info.state_error = true;
+                        }
+                    })
+                },100)
+//                console.log(this.formData)
 
-                })
             }
         }
     }

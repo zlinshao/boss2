@@ -10,6 +10,7 @@
 <script>
     import { VueEditor } from 'vue2-editor'
     export default{
+        props : ['modifyContent'],
         components: {VueEditor},
         data(){
             return {
@@ -25,7 +26,14 @@
                 if (!(e.target==vueEditor || vueEditor.contains(e.target))){
                     _this.saveContent();
                 }
-            })
+            });
+        },
+        watch:{
+            modifyContent(val){
+                this.content = this.modifyContent;
+//                console.log(this.modifyContent)
+//                console.log(this.content)
+            }
         },
         methods: {
             saveContent: function() {

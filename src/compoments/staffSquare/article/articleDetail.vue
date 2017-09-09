@@ -9,39 +9,40 @@
         </ol>
 
         <section class="panel head">
-            <div class="panel-body">
+            <div class="panel-body" v-if="msg!=''">
                 <header>
                     <h4>
-                        乐伽公寓荣获南京公寓行业优秀奖
+                        {{msg.title}}
                         <!--编辑-->
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li><router-link to="/modifyArticle">编辑</router-link></li>
-                                <li><a>发布</a></li>
-                                <li><a>下架</a></li>
-                                <li><a>删除</a></li>
+                                <li v-if="msg.status!=2"><router-link :to="{path : '/modifyArticle',query:{articleId : msg.id}}">编辑</router-link></li>
+                                <li @click="oper(1)" v-if="msg.status==2"><a>下架</a></li>
+                                <li @click="oper(2)" v-if="msg.status==1"><a>发布</a></li>
+                                <li @click="oper(3)" v-if="msg.status!=2"><a>删除</a></li>
                             </ul>
                         </div>
                     </h4>
                 </header>
                 <div class="time">
-                    2017/10/01
+                    {{msg.create_time}}
                     &emsp;
-                    王梦园
+                    {{dict.staff_id[msg.publicer_id]}}
                 </div>
 
                 <div class="articleContainer col-lg-12">
-                    豫章故郡， 洪都新府。 星分翼轸， 地接衡庐。 襟三江而带五湖， 控蛮荆而引瓯越。 物华天宝， 龙光射牛斗之墟； 人杰地灵， 徐孺下陈蕃之榻。 雄州雾列， 俊采星驰。 台隍枕夷夏之交， 宾主尽东南之美。 都督阎公之雅望， 棨戟遥临； 宇文新州之懿范， 襜帷暂驻。 十旬休假， 胜友如云； 千里逢迎， 高朋满座。 腾蛟起凤， 孟学士之词宗； 紫电青霜， 王将军之武库。 家君作宰， 路出名区； 童子何知， 躬逢胜饯。
-                    <br>
-                    豫章故郡， 洪都新府。 星分翼轸， 地接衡庐。 襟三江而带五湖， 控蛮荆而引瓯越。 物华天宝， 龙光射牛斗之墟； 人杰地灵， 徐孺下陈蕃之榻。 雄州雾列， 俊采星驰。 台隍枕夷夏之交， 宾主尽东南之美。 都督阎公之雅望， 棨戟遥临； 宇文新州之懿范， 襜帷暂驻。 十旬休假， 胜友如云； 千里逢迎， 高朋满座。 腾蛟起凤， 孟学士之词宗； 紫电青霜， 王将军之武库。 家君作宰， 路出名区； 童子何知， 躬逢胜饯。
-                    <br>
-                    滕王高阁临江渚， 佩玉鸣鸾罢歌舞。<br>
-                    画栋朝飞南浦云， 珠帘暮卷西山雨。<br>
-                    闲云潭影日悠悠， 物换星移几度秋。<br>
-                    阁中帝子今何在？ 槛外长江空自流。
+                    <div class="vedioContainer col-lg-12" v-if="vedioArr.length>0">
+                        <video width="100%" :src="item" controls="controls" v-for="item in vedioArr">
+                            <!--<source :src="item" type="video/mp4">-->
+                        </video>
+                        <!--<video controls="controls" :src="url">
+                            <source :src="url" type="video/mp4">
+                        </video>-->
+                    </div>
+                    <div class="content col-lg-12" v-html="msg.content"></div>
                 </div>
 
                 <div class="commentContainer col-lg-12">
@@ -173,18 +174,70 @@
 
             </div>
         </section>
+
+
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <!--提示信息-->
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Confirm from '../../common/confirm.vue'
+    import Status from '../../common/status.vue';
+
     export default{
-        components: {},
+        components: {Confirm,Status},
         data(){
             return {
-                msg: 'hello vue'
+                dict: {},
+                articleId : 0,
+                msg : '',
+
+                vedioArr : [],
+
+                confirmMsg: {
+                    oper : 0,
+                    msg: '',
+                },
+
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
+        mounted(){
+
+            this.articleId = this.$route.query.articleId;
+            this.$http.get('index/Staff_Square/dict').then((res)=>{
+//                console.log(res.data);
+                this.dict = res.data;
+                this.getDeatils();
+            });
+        },
         methods: {
+            getDeatils(){
+                this.$http.get('index/Staff_Square/showDetails?id='+this.articleId).then((res)=>{
+//                    console.log(res.data);
+                    this.msg = res.data.data[0];
+
+                    this.vedioArr = [];
+                    for (let i = 0;i<this.msg.album.length;i++){
+                        this.$http.post('/picture/'+this.msg.album[i]).then((res)=>{
+//                            console.log(res.data.data);
+                            this.vedioArr.push(res.data.data);
+                        })
+                    }
+                    $('.articleContainer .content img').css('width','100%');
+                })
+            },
             showToggle(ev){
                 let next = ev.target.parentNode.parentNode.parentNode.nextElementSibling;
                 let i = $(ev.target).children('i');
@@ -197,7 +250,90 @@
                     i.removeClass('fa-angle-down').addClass('fa-angle-up');
                 }
 //                console.log()
-            }
+            },
+
+
+            oper(num){
+                this.confirmMsg.oper = num;
+                if (num==1){
+                    // 下架
+                    this.confirmMsg.msg = '确定下架该条新闻吗？';
+                } else if (num==2){
+                    // 发布
+                    this.confirmMsg.msg = '确定发布该条新闻吗？';
+                } else if (num==3){
+                    // 删除
+                    this.confirmMsg.msg = '确定删除该条新闻吗？';
+                }
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                let url = '';
+                if (this.confirmMsg.oper==1){
+                    // 下架
+                    url = 'index/Staff_Square/offArticle';
+                    this.$http.get(url+'?id='+this.articleId).then((res)=>{
+//                        console.log(res.data);
+                        if (res.data.code==30025){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //关闭失败弹窗 ***
+                            this.info.state_error = false;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.getDeatils()
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                } else if (this.confirmMsg.oper==2){
+                    // 发布
+                    url = 'index/Staff_Square/publicArticle';
+                    this.$http.post(url+'?id='+this.articleId).then((res)=>{
+//                        console.log(res.data);
+                        if (res.data.code==30022){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //关闭失败弹窗 ***
+                            this.info.state_error = false;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.getDeatils();
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
+
+                    })
+                } else if (this.confirmMsg.oper==3){
+                    // 删除
+                    url = 'index/Staff_Square/deleteArticle';
+                    this.$http.get(url+'?id='+[this.articleId]).then((res)=>{
+                        console.log(res.data);
+                        if (res.data.code==30016){
+                            // 成功
+                            this.info.success = res.data.msg;
+                            //关闭失败弹窗 ***
+                            this.info.state_error = false;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.$router.replace({ path: '/article'});
+                        } else {
+                            // 失败
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
+                }
+
+
+            },
         }
     }
 </script>
@@ -260,5 +396,8 @@
     }
     .commentReply .commentReplyItem+.commentReplyItem{
         margin-top: 2px;
+    }
+    .articleContainer .content img{
+        width: 100%;
     }
 </style>

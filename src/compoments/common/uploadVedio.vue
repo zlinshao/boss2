@@ -3,8 +3,8 @@
         <div class="dropzone form-horizontal">
             <div @click="uploadVedio(result)" :id="result">
                 <div v-for="(p, index) in idVedio.idVedios"
-                     class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
-                    <div class="dz-image">
+                     class="dz-preview dz-processing dz-file-preview dz-image-preview dz-success dz-complete">
+                    <div class="dz-image" style="z-index: 0">
                         <!--<img data-dz-thumbnail="" alt="" :src="p.small">-->
                     </div>
                     <a class="dz-remove" @click="dele(index)">删除视频</a>
@@ -32,7 +32,7 @@
                     this.vedios.splice(index, 1);
                 }
                 this.$emit('delete', rul);
-                this.$delete(this.idPhotos.cus_idPhotos, rul);
+                this.$delete(this.idVedio.idVedios, rul);
             },
             uploadVedio (res){
 //                this.vedios = this.idPhotos.cus_idPhoto;
