@@ -162,11 +162,14 @@
                 <div class="panel-body table-responsive client_info">
                     <div >
                         <div class="title">
-                            <span>入职轨迹</span>
+                            <span>成长轨迹</span>
                         </div>
                         <div v-for="item in growth_chart">
                             <span class="text-primary">{{item.create_time}} ：</span>
                             <span>{{item.content}}</span>
+                        </div>
+                        <div v-if="growth_chart.length === 0">
+                            <h4 style="border: none">暂无成长轨迹...</h4>
                         </div>
                     </div>
                 </div>
@@ -208,8 +211,11 @@
             },
             userDetail(){
                 this.$http.post('manager/user/readUser/id/'+this.userId).then((res) => {
-                    this.userDetailList.push(res.data.data.data);
-                    this.growth_chart = res.data.data.growth_chart;
+                    if(res.data.code === '90020'){
+                        this.userDetailList.push(res.data.data.data);
+                        this.growth_chart = res.data.data.growth_chart;
+                    }
+
                 })
             },
             showLargePic(name,index){
@@ -246,9 +252,14 @@
     .title{
         padding-left: 15px;
         margin-bottom: 10px;
-        border-left: 5px solid #CCCCCC;
+        border-left: 5px solid #FCB322;
     }
     .title>span{
         font-size: 22px;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>
