@@ -156,80 +156,28 @@
                                     </div>
                                     <hr>
                                     <h3 style="margin-top: -15px">工作信息</h3>
-                                    <div>
-                                        <div class="row">
-                                            <label class="col-sm-2 control-label col-lg-2" >部门</label>
-                                            <div class="col-lg-4">
-                                                <input type="text" class="form-control" disabled
-                                                       v-for="item in department" :value="item.name">
-                                            </div>
-                                            <label class="col-sm-2 control-label col-lg-2" >职位</label>
-                                            <div class="col-lg-4">
-                                                <input type="text" class="form-control" disabled
-                                                       v-for="item in position_id" :value="item.vocation">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" ></label>
+                                        <label class="col-sm-2 control-label col-lg-2" >部门</label>
+                                        <div class="col-lg-10" @click="selectDepartment">
+                                            <input type="text" class="form-control" readonly placeholder="选择部门" v-model="department_name">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-if="!isSelectPosition">
+                                        <label class="col-sm-2 control-label col-lg-2" >职务</label>
                                         <div class="col-lg-10">
-                                            <input type="button" class="btn btn-warning form-control"
-                                                  id="revise" value="修改部门和职位" @click="selectDep">
+                                            <input type="text" class="form-control" readonly v-model="positionName">
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div v-if="reviseDpm">
-                                        <div class="row">
-                                            <label class="col-sm-2 control-label col-lg-2" >选择部门</label>
-                                            <div class="col-md-4" >
-                                                <select class="form-control" v-model="first" @change="getSecondDepart()">
-                                                    <option value="" selected>请选择</option>
-                                                    <option :value="item" v-for="item in firstDepart" >{{item.name}}</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-sm-2 control-label col-lg-2" ></label>
-                                            <div class="col-md-4" v-show="secondDepart.length>0">
-                                                <select class="form-control" v-model="second" @change="getThirdDepart()">
-                                                    <option value="">请选择</option>
-                                                    <option :value="item" v-for="item in secondDepart">{{item.name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 control-label col-lg-2" ></label>
-                                            <div class="col-md-4" v-show="thirdDepart.length>0">
-                                                <select class="form-control" v-model="third" @change="getFourDepart()">
-                                                    <option value="">请选择</option>
-                                                    <option :value="item" v-for="item in thirdDepart" >{{item.name}}</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-sm-2 control-label col-lg-2" ></label>
-                                            <div class="col-md-4" v-show="fourDepart.length>0">
-                                                <select class="form-control" v-model="four" @change="getFiveDepart()">
-                                                    <option value="">请选择</option>
-                                                    <option :value="item" v-for="item in fourDepart">{{item.name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 control-label col-lg-2" ></label>
-                                            <div class="col-md-4" v-show="fiveDepart.length>0">
-                                                <select class="form-control" v-model="five" @change="departmentId()">
-                                                    <option value="">请选择</option>
-                                                    <option :value="item" v-for="item in fiveDepart">{{item.name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 control-label col-lg-2" >职务</label>
-                                            <div class="col-lg-4">
-                                                <select  class="form-control" @change="selectPostion" v-model="position">
-                                                    <option value="">请选择</option>
-                                                    <option :value="item" v-for="item in positionList">{{item.vocation}}</option>
-                                                </select>
-                                            </div>
+                                    <div class="row" v-if="isSelectPosition">
+                                        <label class="col-sm-2 control-label col-lg-2" >职务</label>
+                                        <div class="col-lg-10">
+                                            <select  class="form-control" v-model="positionId">
+                                                <option value="">请选择</option>
+                                                <option :value="item.id" v-for="item in positionList">{{item.vocation}}</option>
+                                            </select>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">用户组</label>
                                         <div class="col-lg-10">
@@ -324,6 +272,42 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2">第一次签合同时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_first_time_edit'"
+                                                        :currentDate="[agreement_first_time]" :placeholder="'第一次签合同时间'"
+                                                        @sendDate="getFirstDate">
+
+                                            </DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >第一次合同到期时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_first_end_time_edit'"
+                                                        :currentDate="[agreement_first_end_time]"   :placeholder="'第一次合同到期时间'"
+                                                        @sendDate="getFirstEndDate">
+
+                                            </DatePicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2">第一次签合同时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_time_edit'"
+                                                        :currentDate="[agreement_second_time]" :placeholder="'第二次签合同时间'"
+                                                        @sendDate="getSecondDate">
+
+                                            </DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >第一次合同到期时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_end_time_edit'"
+                                                        :currentDate="[agreement_second_end_time]"   :placeholder="'第二次合同到期时间'"
+                                                        @sendDate="getSecondEndDate">
+
+                                            </DatePicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">保险</label>
                                         <div class="col-lg-10">
                                             <label class="checkbox-inline check first">
@@ -357,6 +341,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
+        <Department :configure='configure' @Staff="getDepartment"></Department>
     </div>
 </template>
 
@@ -364,27 +349,18 @@
     import Status from '../common/status.vue';
     import upLoad from '../common/upload.vue'
     import DatePicker from '../common/datePicker.vue'
+    import Department from '../common/oraganization.vue'
     export default {
         props:['editDate'],
-        components: { Status ,upLoad , DatePicker},
+        components: { Status ,upLoad , DatePicker,Department},
         data(){
             return {
                 myAccount:this.account,
                 //字典列表
-                firstDepart:[],
-                secondDepart:[],
-                thirdDepart:[],
-                fourDepart:[],
-                fiveDepart:[],
-                roleList:[],
                 positionList:[],
                 levelList:[],
-                //id
-                first:[],
-                second:[],
-                third:[],
-                four:[],
-                five:[],
+                roleList : [],
+                department_name : '', //部门名称
                 //其余新增用户字段
                 accountId:'',
                 real_name:'',       //真实姓名
@@ -395,9 +371,7 @@
                 id_num:'',          //身份证
                 bank_num:'',        //银行卡
                 id_pic:[],          //照片
-                department:[],      //部门名称
-                depId:'',           //部门id
-                position_id:[],     //职位
+                department_id:'',           //部门id
                 positionId:'',      //职位id
 //                role:[],            //角色
                 accident_insurance:'',//意外险
@@ -421,6 +395,10 @@
                 salary : '',
                 dismiss_time : '',  //离职时间
                 orgEmail : '',      //个人邮箱
+                agreement_first_time : '',
+                agreement_first_end_time : '',
+                agreement_second_time : '',
+                agreement_second_end_time : '',
                 myResult: this.editDate,
                 reviseDpm:false,
                 //用户组写入
@@ -429,7 +407,6 @@
                 oldBox:[],        //角色字典名
                 oldRoleBox:[],    //角色字典
                 checkboxModelId:[], //增删后角色id
-                position:[],
                 info:{
                     //成功状态 ***
                     state_success: false,
@@ -463,18 +440,20 @@
                 dictionary : [],
 
                 staffStatus :'',
+                configure : [],
+                isSelectPosition : false,
+                positionName : '',
             }
         },
         mounted(){
-            this.getFirstDepart(); //请求公司列表
             this.searchRoles();    //请求角色列表
             this.getLevel();       //请求等级字典
             this.getDictionary();
         },
         watch:{
             editDate(val) {
+                this.isSelectPosition =false;
                 this.myAccount = val;
-                this.getFirstDepart();
                 this.checkboxModel=[];
                 this.myResult = val;//②监听外部对props属性result的变更，并同步到组件内的data属性myResult中
                 this.accountId=this.myResult.id;
@@ -489,14 +468,14 @@
                 this.emergency_call=this.myResult.emergency_call;
                 this.id_num=this.myResult.id_num;
                 this.bank_num=this.myResult.bank_num;
-                this.department=this.myResult.department;
-                this.depId=this.department[0].id;
-                this.position_id=this.myResult.position_id;
-                this.positionId=this.position_id[0].id;
+                this.department_id=this.myResult.department[0].id;
+                this.department_name=this.myResult.department[0].name;
+                this.positionId=this.myResult.position_id[0].id;
+                this.positionName=this.myResult.position_id[0].vocation;
                 this.role=this.myResult.role;
                 for(let i=0;i<this.role.length;i++){
                     this.newBox.push(this.role[i].role_id);
-                };
+                }
                 this.checkboxModel=this.newBox;
                 for (let s in this.checkboxModel) {
                     for (let x in this.oldRoleBox) {
@@ -529,6 +508,10 @@
                 this.dismiss_time  = this.myResult.dismiss_time;         //买房时间
                 this.staffStatus = this.myResult.status;
                 this.orgEmail = this.myResult.orgEmail;
+                this.agreement_first_time = this.myResult.agreement_first_time;
+                this.agreement_first_end_time = this.myResult.agreement_first_end_time;
+                this.agreement_second_time = this.myResult.agreement_second_time;
+                this.agreement_second_end_time = this.myResult.agreement_second_end_time;
             },
             'checkboxModel': {
                 handler: function (val, oldVal) {
@@ -547,112 +530,23 @@
                     this.dictionary=res.data.user;
                 })
             },
-            getFirstDepart(){
-                this.$http.get('manager/user/departmentWb').then((res)=>{
-                    this.firstDepart=res.data.data;
-                })
+            selectDepartment(){ //选择部门
+                $('.selectCustom:eq(2)').modal('show');
+                this.configure = {type:'department',length: 1};
             },
-            getSecondDepart(){
-                if(this.first.id!==''&&this.first.id!=undefined){
-                    this.$http.get('manager/user/departmentWb/id/'+this.first.id).then((res)=>{
-                        this.secondDepart=res.data.data;
-                        this.department=[];
-                        this.department.push(this.first);
-                        this.depId=this.department[0].id;
-                        this.thirdDepart=[];
-                        this.fourDepart=[];
-                        this.fiveDepart=[];
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.first.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.secondDepart=[];
-                    this.thirdDepart=[];
-                    this.fourDepart=[];
-                    this.fiveDepart=[];
-                }
+            getDepartment(val){ //获取部门id
+                this.department_name = val.department[0].name;
+                this.department_id = val.department[0].id;
+                this.getPositionList();
+            },
+            getPositionList(){
+                this.$http.get('manager/user/positionWb/id/'+this.department_id).then((res)=>{
+                    this.positionList=res.data.data;
+                    this.positionId = '';
+                    this.isSelectPosition = true;
+                });
+            },
 
-            },
-            getThirdDepart(){
-                if(this.second.id!==''&&this.second.id!=undefined){
-                    this.$http.get('manager/user/departmentWb/id/'+this.second.id).then((res)=>{
-                        this.thirdDepart=res.data.data;
-                        this.department=[];
-                        this.department.push(this.second);
-                        this.depId=this.department[0].id;
-                        this.fourDepart=[];
-                        this.fiveDepart=[];
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.second.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.first.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.thirdDepart=[];
-                    this.fourDepart=[];
-                    this.fiveDepart=[];
-                }
-
-            },
-            getFourDepart(){
-                if(this.third.id!==''&& this.third.id!=undefined){
-                    this.$http.get('manager/user/departmentWb/id/'+this.third.id).then((res)=>{
-                        this.fourDepart=res.data.data;
-                        this.department=[];
-                        this.department.push(this.third);
-                        this.depId=this.department[0].id;
-                        this.fiveDepart=[];
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.third.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.second.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.fourDepart=[];
-                    this.fiveDepart=[];
-                }
-            },
-            getFiveDepart(){
-                if(this.four.id!==''&& this.four.id!=undefined){
-                    this.$http.get('manager/user/departmentWb/id/'+this.four.id).then((res)=>{
-                        this.fiveDepart=res.data.data;
-                        this.department=[];
-                        this.department.push(this.four);
-                        this.depId=this.department[0].id;
-
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.four.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.third.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.fiveDepart=[];
-                }
-            },
-            departmentId(){
-                if(this.fiveId!=='' && this.five.id!=undefined){
-                    this.department=[];
-                    this.department.push(this.five);
-                    this.depId=this.department[0].id;
-
-                    this.$http.get('manager/user/positionWb/id/'+this.five.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.four.id).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.this.fiveDepart=[];
-                }
-
-            },
             //查询角色
             searchRoles(){
                 this.$http.get('manager/user/searchRoles').then((res)=>{
@@ -675,30 +569,14 @@
 
             },
             clearModal(){
-                this.checkboxModel = [],
-                this.newBox = [],
-                this.position_id=[];     //职位
+                this.checkboxModel = [];
+                this.newBox = [];
                 this.positionList=[];
                 this.reviseDpm=false;
-                this.firstDepart=[];
-                this.secondDepart=[];
-                this.thirdDepart=[];
-                this.fourDepart=[];
-                this.fiveDepart=[];
-                this.first=[];
-                this.second=[];
-                this.third=[];
-                this.five=[];
                 this.id_Pic.cus_idPhoto=[];
                 this.id_Pic.cus_idPhotos={};
                 $('.rem_div').remove();
                 $("#myModalRevise").modal("hide");//关闭模态框
-            },
-            //选择职位
-            selectPostion(){
-                this.position_id=[];
-                this.position_id.push(this.position);
-                this.positionId=this.position_id[0].id;
             },
             getLevel(){
                 this.$http.get('manager/user/level').then((res)=>{
@@ -730,10 +608,6 @@
                     this.id_Pic.cus_idPhoto.splice(id, 1);
                 }
             },
-            selectDep(){
-                this.reviseDpm==false ? this.reviseDpm=true:this.reviseDpm=false;
-                this.myResult==[];
-            },
             reviseUse(){
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
@@ -749,7 +623,7 @@
                                     "id_num":this.id_num,//身份证号
                                     "bank_num":this.bank_num,//银行卡号
                                     "id_pic":this.id_pic,//身份证照片id  字符串或数组
-                                    "department":this.depId,//部门
+                                    "department":this.department_id,//部门
                                     "position_id":this.positionId,//职位id
                                     "role":this.checkboxModelId,//角色id
                                     "level":this.level,//等级
@@ -758,7 +632,6 @@
                                     "id_copy":this.id_copy,// 身份证复印件 1有2无
                                     "photo":this.photo,
                                     "enroll":this.enroll,
-                                    "id_pic":this.id_Pic.cus_idPhoto,
                                     "module":this.module,
                                     "origin_addr" : this.origin_addr,   //籍贯
                                     "home_addr" : this.home_addr,     //家庭住址
@@ -775,6 +648,10 @@
                                     "salary" : this.salary,
                                     "dismiss_time" :this.dismiss_time,
                                     "orgEmail" :this.orgEmail,
+                                    "agreement_first_time":this.agreement_first_time,
+                                    "agreement_first_end_time":this.agreement_first_end_time,
+                                    "agreement_second_time":this.agreement_second_time,
+                                    "agreement_second_end_time":this.agreement_second_end_time,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
                             ).then((res)=>{
@@ -790,9 +667,8 @@
                                     this.id_num='';          //身份证
                                     this.bank_num='';        //银行卡
                                     this.id_pic=[];          //照片
-                                    this.department=[];      //部门
-                                    this.depId='',
-                                        this.positionId=''          //职位id
+                                    this.department_id='';
+                                    this.positionId='';          //职位id
                                     this.checkboxModelId=[];            //角色
                                     this.accident_insurance='';//意外险
                                     this.five_insurance='';  //五险
@@ -801,22 +677,11 @@
                                     this.id_copy='';        //身份证复印件
                                     this.photo='';           //有无照片
                                     this.orgEmail='';           //个人邮箱
-                                    this.checkboxModel = [],
+                                    this.checkboxModel = [];
                                     this.newBox = [];
-                                    this.position_id=[];     //职位
-                                    this.position=[];    //职位
-                                    this.firstDepart=[];
-                                    this.secondDepart=[];
-                                    this.thirdDepart=[];
-                                    this.fourDepart=[];
-                                    this.fiveDepart=[];
                                     this.positionList=[];
                                     this.reviseDpm=false;
-                                    this.first=[];
-                                    this.second=[];
-                                    this.third=[];
-                                    this.four=[];
-                                    this.five=[];
+
                                     this.id_Pic.cus_idPhoto=[];
                                     this.id_Pic.cus_idPhotos={};
 
@@ -866,7 +731,19 @@
             },
             getDismissDate(val){
                 this.dismiss_time = val;
-            }
+            },
+            getFirstDate(val){
+                this.agreement_first_time = val;
+            },
+            getFirstEndDate(val){
+                this.agreement_first_end_time = val;
+            },
+            getSecondDate(val){
+                this.agreement_second_time = val;
+            },
+            getSecondEndDate(val){
+                this.agreement_second_end_time = val;
+            },
         }
     }
 </script>

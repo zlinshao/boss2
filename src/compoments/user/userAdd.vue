@@ -158,49 +158,14 @@
 
                                     <h3 style="margin-top: -15px">工作信息</h3>
                                     <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" >选择部门</label>
-                                        <div class="col-md-4" >
-                                            <select class="form-control" v-model="firstId" @change="getSecondDepart()">
-                                                <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in firstDepart" >{{item.name}}</option>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-2 control-label col-lg-2" ></label>
-                                        <div class="col-md-4" v-show="secondDepart.length>0">
-                                            <select class="form-control" v-model="secondId" @change="getThirdDepart()">
-                                                <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in secondDepart">{{item.name}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" ></label>
-                                        <div class="col-md-4" v-show="thirdDepart.length>0">
-                                            <select class="form-control" v-model="thirdId" @change="getFourDepart()">
-                                                <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in thirdDepart" >{{item.name}}</option>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-2 control-label col-lg-2" ></label>
-                                        <div class="col-md-4" v-show="fourDepart.length>0">
-                                            <select class="form-control" v-model="fourId" @change="getFiveDepart()">
-                                                <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in fourDepart">{{item.name}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2" ></label>
-                                        <div class="col-md-4" v-show="fiveDepart.length>0">
-                                            <select class="form-control" v-model="fiveId" @change="getSixDepart()">
-                                                <option value="">请选择</option>
-                                                <option :value="item.id" v-for="item in fiveDepart" >{{item.name}}</option>
-                                            </select>
+                                        <label class="col-sm-2 control-label col-lg-2" >部门</label>
+                                        <div class="col-lg-10" @click="selectDepartment">
+                                            <input type="text" class="form-control" readonly placeholder="选择部门" v-model="department_name">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >职务</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-10">
                                             <select  class="form-control" v-model="position_id">
                                                 <option value="">请选择</option>
                                                 <option :value="item.id" v-for="item in positionList">{{item.vocation}}</option>
@@ -240,11 +205,53 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">入职时间</label>
                                         <div class="col-md-4">
-                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll'" :currentDate="[enroll]"                                                                       :placeholder="'入职时间'"@sendDate="getEnrollDate"></DatePicker>
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'enroll'"
+                                                        :currentDate="[enroll]" :placeholder="'入职时间'"
+                                                        @sendDate="getEnrollDate"></DatePicker>
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" v-if="status == 3">离职时间</label>
                                         <div class="col-md-4" v-if="status == 3">
-                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'dismiss_time'" :currentDate="[dismiss_time]"                                                           :placeholder="'离职时间'"@sendDate="getDismissDate"></DatePicker>
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'dismiss_time'"
+                                                        :currentDate="[dismiss_time]"   :placeholder="'离职时间'"
+                                                        @sendDate="getDismissDate">
+
+                                            </DatePicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2">第一次签合同时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_first_time'"
+                                                        :currentDate="[agreement_first_time]" :placeholder="'第一次签合同时间'"
+                                                        @sendDate="getFirstDate">
+
+                                            </DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >第一次合同到期时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_first_end_time'"
+                                                        :currentDate="[agreement_first_end_time]"   :placeholder="'第一次合同到期时间'"
+                                                        @sendDate="getFirstEndDate">
+
+                                            </DatePicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2">第一次签合同时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_time'"
+                                                        :currentDate="[agreement_second_time]" :placeholder="'第二次签合同时间'"
+                                                        @sendDate="getSecondDate">
+
+                                            </DatePicker>
+                                        </div>
+                                        <label class="col-sm-2 control-label col-lg-2" >第一次合同到期时间</label>
+                                        <div class="col-md-4">
+                                            <DatePicker :dateConfigure="dateTopConfigure" :idName="'agreement_second_end_time'"
+                                                        :currentDate="[agreement_second_end_time]"   :placeholder="'第二次合同到期时间'"
+                                                        @sendDate="getSecondEndDate">
+
+                                            </DatePicker>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -281,6 +288,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
+        <Department :configure='configure' @Staff="getDepartment"></Department>
     </div>
 </template>
 
@@ -288,26 +296,18 @@
     import Status from '../common/status.vue';
     import upLoad from '../common/upload.vue'
     import DatePicker from '../common/datePicker.vue'
+    import Department from '../common/oraganization.vue'
     export default {
         props:['editDate'],
-        components: { Status ,upLoad,DatePicker},
+        components: { Status ,upLoad,DatePicker,Department},
         data(){
             return {
                 //字典列表
-                firstDepart:[],
-                secondDepart:[],
-                thirdDepart:[],
-                fourDepart:[],
-                fiveDepart:[],
+
                 roleList:[],
                 positionList:[],
                 levelList:[],
-                //id
-                firstId:'',
-                secondId:'',
-                thirdId:'',
-                fourId:'',
-                fiveId:'',
+                department_name : '',
                 //其余新增用户字段
                 real_name:'',       //真实姓名
                 gender:'',          //性别
@@ -342,6 +342,10 @@
                 salary : '',
                 dismiss_time : '',  //离职时间
                 orgEmail : '',      //邮箱
+                agreement_first_time : '',
+                agreement_first_end_time : '',
+                agreement_second_time : '',
+                agreement_second_end_time : '',
                  info:{
                     //成功状态 ***
                     state_success: false,
@@ -372,10 +376,10 @@
                     }
                 ],
                 dictionary : [],
+                configure : [],
             }
         },
         created(){
-            this.getFirstDepart(); //请求公司列表
             this.searchRoles();    //请求角色列表
             this.getLevel();       //请求等级字典
             this.getDictionary();
@@ -390,102 +394,22 @@
             getDictionary(){
                 this.$http.get('manager/user/dict').then((res)=>{
                     this.dictionary=res.data.user;
-                    console.log(this.dictionary)
                 })
             },
-            getFirstDepart(){
-                this.$http.get('manager/user/departmentWb').then((res)=>{
-                    this.firstDepart=res.data.data;
-                })
+            selectDepartment(){ //选择部门
+                $('.selectCustom:eq(1)').modal('show');
+                this.configure = {type:'department',length: 1};
             },
-            getSecondDepart(){
-                if(this.firstId!==''){
-                    this.$http.get('manager/user/departmentWb/id/'+this.firstId).then((res)=>{
-                        this.secondDepart=res.data.data;
-                        this.department=this.firstId;
-                        this.thirdDepart=[];
-                        this.fourDepart=[];
-                        this.fiveDepart=[];
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.firstId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.secondDepart=[];
-                    this.thirdDepart=[];
-                    this.fourDepart=[];
-                    this.fiveDepart=[];
-                }
-
+            getDepartment(val){ //获取部门id
+                this.department_name = val.department[0].name;
+                this.department = val.department[0].id;
+                this.getPositionList();
             },
-            getThirdDepart(){
-                if(this.secondId!==''){
-                    this.$http.get('manager/user/departmentWb/id/'+this.secondId).then((res)=>{
-                        this.thirdDepart=res.data.data;
-                        this.department=this.secondId;
-                        this.fourDepart=[];
-                        this.fiveDepart=[];
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.secondId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.firstId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.thirdDepart=[];
-                    this.fourDepart=[];
-                    this.fiveDepart=[];
-                }
-
-            },
-            getFourDepart(){
-                if(this.thirdId!==''){
-                    this.$http.get('manager/user/departmentWb/id/'+this.thirdId).then((res)=>{
-                        this.fourDepart=res.data.data;
-                        this.department=this.thirdId;
-                        this.fiveDepart=[];
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.thirdId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.secondId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.fourDepart=[];
-                    this.fiveDepart=[];
-                }
-            },
-            getFiveDepart(){
-                if(this.fourId!==''){
-                    this.$http.get('manager/user/departmentWb/id/'+this.fourId).then((res)=>{
-                        this.fiveDepart=res.data.data;
-                        this.department=this.fourId;
-                    });
-                    this.$http.get('manager/user/positionWb/id/'+this.fourId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.thirdId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.this.fiveDepart=[];
-                }
-            },
-            getSixDepart(){
-                if(this.fiveId!==''){
-                    this.department=this.fiveId;
-                    this.$http.get('manager/user/positionWb/id/'+this.fiveId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                }else{
-                    this.$http.get('manager/user/positionWb/id/'+this.fourId).then((res)=>{
-                        this.positionList=res.data.data;
-                    });
-                    this.this.fiveDepart=[];
-                }
-
+            getPositionList(){
+                this.$http.get('manager/user/positionWb/id/'+this.department).then((res)=>{
+                    this.positionList=res.data.data;
+                    this.position_id = ''
+                });
             },
             searchRoles(){
                 this.$http.get('manager/user/searchRoles').then((res)=>{
@@ -555,7 +479,6 @@
                                     "id_copy":this.id_copy,// 身份证复印件 1有2无
                                     "photo":this.photo,
                                     "enroll":this.enroll,
-                                    "id_pic":this.idPic.cus_idPhoto,
                                     "origin_addr" : this.origin_addr,   //籍贯
                                     "home_addr" : this.home_addr,     //家庭住址
                                     "marital_status" : this.marital_status, //婚姻
@@ -571,6 +494,10 @@
                                     "salary" : this.salary,
                                     "status" : this.status,
                                     "dismiss_time" : this.dismiss_time,
+                                    "agreement_first_time":this.agreement_first_time,
+                                    "agreement_first_end_time":this.agreement_first_end_time,
+                                    "agreement_second_time":this.agreement_second_time,
+                                    "agreement_second_end_time":this.agreement_second_end_time,
                                     "orgEmail":this.orgEmail,
                                 },
                                 {headers:{'Content-Type': 'application/json'}}
@@ -624,6 +551,10 @@
                 this.car  = '';           //买车时间
                 this.house  = '';         //买房时间
                 this.orgEmail = '';
+                this.agreement_first_time = '';
+                this.agreement_first_end_time = '';
+                this.agreement_second_time = '';
+                this.agreement_second_end_time = '';
                 this.status  = '1';
                 this.salary  = '';
                 this.dismiss_time = '';
@@ -643,7 +574,6 @@
                 this.fiveId='';
                 this.idPic.cus_idPhoto=[];
                 this.idPic.cus_idPhotos={};
-                this.getFirstDepart(); //请求公司列表
                 this.searchRoles();    //请求角色列表
                 this.getLevel();       //请求等级字典
                 $("#myModalAdd").modal("hide");//关闭模态框
@@ -670,7 +600,20 @@
             },
             getDismissDate(val){
                 this.dismiss_time = val;
-            }
+            },
+            getFirstDate(val){
+                this.agreement_first_time = val;
+            },
+            getFirstEndDate(val){
+                this.agreement_first_end_time = val;
+            },
+            getSecondDate(val){
+                this.agreement_second_time = val;
+            },
+            getSecondEndDate(val){
+                this.agreement_second_end_time = val;
+            },
+
 
 
         }
