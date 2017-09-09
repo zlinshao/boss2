@@ -196,7 +196,7 @@
 //                    alert(_this.formData.content)
                     _this.$http.post('index/Staff_Square/editArticle?id='+_this.articleId+'&is_public='+num,_this.formData).then((res)=>{
                         console.log(res.data);
-                        if (res.data.code==30014){
+                        if (res.data.code==30014||res.data.code==30022){
                             // 成功
                             _this.info.success = res.data.msg;
                             //关闭失败弹窗 ***
