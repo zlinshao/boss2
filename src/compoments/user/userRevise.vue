@@ -468,10 +468,15 @@
                 this.emergency_call=this.myResult.emergency_call;
                 this.id_num=this.myResult.id_num;
                 this.bank_num=this.myResult.bank_num;
-                this.department_id=this.myResult.department[0].id;
-                this.department_name=this.myResult.department[0].name;
-                this.positionId=this.myResult.position_id[0].id;
-                this.positionName=this.myResult.position_id[0].vocation;
+                if(this.myResult.department.length > 0){
+                    this.department_id=this.myResult.department[0].id;
+                    this.department_name=this.myResult.department[0].name;
+                }
+
+                if(this.myResult.position_id.length >0){
+                    this.positionId=this.myResult.position_id[0].id;
+                    this.positionName=this.myResult.position_id[0].vocation;
+                }
                 this.role=this.myResult.role;
                 for(let i=0;i<this.role.length;i++){
                     this.newBox.push(this.role[i].role_id);
