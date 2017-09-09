@@ -130,6 +130,10 @@
                             </div>
                             <div class="col-md-4">
                                 <div>
+                                    <span class="text-primary">企业邮箱：</span>
+                                    <span>{{item.orgEmail}}</span>
+                                </div>
+                                <div>
                                     <span class="text-primary">离职时间：</span>
                                     <span>{{item.dismiss_time}}</span>
                                 </div>
