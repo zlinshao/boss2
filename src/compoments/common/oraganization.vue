@@ -178,7 +178,6 @@
                 }
             },
             configure(val){
-                console.log(val)
                 this.myConfigure = val;
                 if (val.type === 'department') {
                     this.onlyDepartment = true;

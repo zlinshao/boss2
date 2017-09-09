@@ -67,13 +67,13 @@
                                     <span class="text-primary">银行卡号：</span>
                                     <span>{{item.bank_num}}</span>
                                 </div>
-                                <div class="text-primary">
-                                    <span class="text-primary">照片：</span>
-                                    <a v-for="(img,index) in item.album.id_pic"
-                                       style="margin: 10px 10px 0 0;display: inline-block;">
-                                        <img :src="img.small"  @click="showLargePic('id_pic',index)">
-                                    </a>
-                                </div>
+                                <!--<div class="text-primary">-->
+                                    <!--<span class="text-primary">照片：</span>-->
+                                    <!--<a v-for="(img,index) in item.album.id_pic"-->
+                                       <!--style="margin: 10px 10px 0 0;display: inline-block;">-->
+                                        <!--<img :src="img.small"  @click="showLargePic('id_pic',index)">-->
+                                    <!--</a>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
         display: inline-block;
         padding-right: 20px;
         /*text-align: right;*/
-        min-width: 120px;
+        min-width: 150px;
     }
     .title{
         padding-left: 15px;
