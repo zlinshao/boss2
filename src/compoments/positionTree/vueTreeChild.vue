@@ -12,7 +12,7 @@
 							<span class="department">{{model.vocation}} - </span>
 							<span class="department">[ {{model.member_num}} 人]</span>
 							<span class="department" v-if="model.member_name!==''"	:title="model.member_name"
-								  style="max-width: 250px;overflow: hidden;"> - {{model.member_name}}
+								  style="max-width: 250px;overflow: hidden; display: inline-flex"> - {{model.member_name}}
 							</span>
 						</span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
