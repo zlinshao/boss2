@@ -468,7 +468,7 @@
                         this.info.state_success = false;
                         this.currentIndex = -1;
                         this.showOper.splice(index, 1, false);
-                        this.times.splice(index, 1, this.moreTime[index]);
+                        this.times.splice(index, 1, this.moreTime[index]);``
                     } else {
                         // 失败
                         this.info.error = res.data.msg;
