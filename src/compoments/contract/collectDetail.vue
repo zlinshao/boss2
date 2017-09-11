@@ -296,6 +296,14 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
+                                                <span>打房租日期：</span>
+                                                <span v-if="item.pay_date > 0">每期{{item.pay_date}}号</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>押金：</span>
+                                                <span>{{item.cost_deposit}}</span>
+                                            </div>
+                                            <div class="infoList">
                                                 <span>资料补齐日期：</span>
                                                 <span>
                                                     {{item.complete_date[0]}}&nbsp;&nbsp;

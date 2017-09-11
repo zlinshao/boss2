@@ -39,6 +39,7 @@
 
                         </div>
                         <div class="col-md-8">
+                            <div><span class="text-primary">房屋来源：</span><span>{{dictionary.source[item.source]}}</span></div>
                             <div><span class="text-primary">楼层：</span><span>{{item.floor}}/{{item.total_floor}}</span></div>
                             <div><span class="text-primary">建筑楼层：</span><span>{{dictionary.floor_type[item.floor_type]}}</span></div>
                             <div><span class="text-primary">房屋特色：</span><span>{{dictionary.house_feature[item.house_feature]}}</span></div>
