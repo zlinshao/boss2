@@ -15,11 +15,11 @@
                         {{title}}
                     </h4>
                 </header>
-                <!--<div class="time">
+                <div class="time">
                     {{year}}/{{month}}/{{day}}
                     &emsp;
                     {{staff}}
-                </div>-->
+                </div>
 
                 <div class="articleContainer">
                     <div class="vedioContainer col-lg-12" v-if="vedioArr.length>0">

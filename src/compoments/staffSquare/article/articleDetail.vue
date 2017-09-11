@@ -6,6 +6,9 @@
                 <router-link to="/article">发布文章</router-link>
             </li>
             <li>文章详情</li>
+            <li class="pull-right" v-show="typeof params!='string'">
+                <router-link :to="{path:'/article',query:{myParam:params,page:page}}"><i class="fa fa-angle-double-left"></i> 返回上一步</router-link>
+            </li>
         </ol>
 
         <section class="panel head">
@@ -211,9 +214,13 @@
                     //失败信息 ***
                     error: ''
                 },
+                params : {},
+                page : ''
             }
         },
         mounted(){
+            this.params = this.$route.query.myParams;
+            this.page = this.$route.query.page;
 
             this.articleId = this.$route.query.articleId;
             this.$http.get('index/Staff_Square/dict').then((res)=>{
@@ -228,14 +235,16 @@
 //                    console.log(res.data);
                     this.msg = res.data.data[0];
 
-                    this.vedioArr = [];
-                    for (let i = 0;i<this.msg.album.length;i++){
-                        this.$http.post('/picture/'+this.msg.album[i]).then((res)=>{
+                    if (this.msg.album!=undefined){
+                        this.vedioArr = [];
+                        for (let i = 0;i<this.msg.album.length;i++){
+                            this.$http.post('/picture/'+this.msg.album[i]).then((res)=>{
 //                            console.log(res.data.data);
-                            this.vedioArr.push(res.data.data);
-                        })
+                                this.vedioArr.push(res.data.data);
+                            })
+                        }
                     }
-                    $('.articleContainer .content img').css('width','100%');
+//                    $('.articleContainer .content img').css('width','100%');
                 })
             },
             showToggle(ev){
@@ -313,7 +322,9 @@
                 } else if (this.confirmMsg.oper==3){
                     // 删除
                     url = 'index/Staff_Square/deleteArticle';
-                    this.$http.get(url+'?id='+[this.articleId]).then((res)=>{
+                    this.$http.get(url,{params : {
+                        id : [this.articleId]
+                    }}).then((res)=>{
                         console.log(res.data);
                         if (res.data.code==30016){
                             // 成功
