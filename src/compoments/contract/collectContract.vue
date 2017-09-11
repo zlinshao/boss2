@@ -470,7 +470,7 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
-                    this.houseId.push(item.house_id);
+                    thisis.houseId.push(item.house_id);
                     item.top === 2 ? this.top = 1 : this.top = 2;
                     item.mark === 2 ? this.mark = 1 : this.mark = 2;
                     item.status !== 1 ? this.status = 2 : this.status = 1;

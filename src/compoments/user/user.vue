@@ -54,9 +54,8 @@
                     <thead class="text-center">
                     <tr>
                         <th>
-                            <label for="allCheck"
-                                   :class="{'label_check':true,'c_on':allCheck,'c_off':!allCheck}"
-                                   @click.prevent="pickedAll($event)">
+                            <label for="allCheck" @click.prevent="pickedAll($event)"
+                                   :class="{'label_check':true,'c_on':allCheck,'c_off':!allCheck}">
                                 <input id="allCheck" type="checkbox" v-model="allCheck">
                             </label>
                         </th>
@@ -236,6 +235,7 @@
                         return false;
                     }
                 }
+                //return this.allId.length > 0 ? true : false;
                 return true;
             }
         },
@@ -428,18 +428,18 @@
                 this.info.state_error = true;
             },
             picked(item,e){
-                let evInput = e.target.getElementsByTagName('input')[0];
-                evInput.checked = !evInput.checked;
-                if(evInput.checked){
+//                let evInput = e.target.getElementsByTagName('input')[0];
+                e.target.checked = !e.target.checked;
+                if(e.target.checked){
                     this.userSelectId.push(item.id)
                 }else {
                     this.userSelectId=this.userSelectId.filter((x) => x!==item.id);
                 }
             },
             pickedAll(e){
-                let evInput = e.target.getElementsByTagName('input')[0];
-                evInput.checked = !evInput.checked;
-                if (evInput.checked) {
+//                let evInput = e.target.getElementsByTagName('input')[0];
+                e.target.checked = !e.target.checked;
+                if (e.target.checked) {
                     this.userSelectId = this.userSelectId.concat(this.allId);
                 } else {
                     this.userSelectId =this.difference(this.userSelectId,this.allId)
