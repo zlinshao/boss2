@@ -70,7 +70,7 @@
                                                 <div v-if="item.type === 'department'">
                                                     <input type="checkbox" @click="selectDpm(item,$event)"
                                                            v-model='checkboxModel' :disabled = 'onlyStaff'
-                                                           :value="item">
+                                                           :value="item.id">
                                                     <span @click="getNextLevel(item)">{{item.name}}</span>
                                                     <span class="pull-right">{{item.member_num}}人 </span>
                                                 </div>
@@ -156,7 +156,7 @@
         },
         watch: {
             memberList(val, oldVal){
-                this.checkboxModel = this.isChecked(val, this.checkboxModel);
+                this.checkboxModel = this.isChecked(val, this.checkboxModel); //复选框
                 this.shadeList = this.isShade(val, this.shadeList);
                 if (this.onlyDepartment) {
                     for (let i = 0; i < val.length; i++) {
@@ -171,7 +171,7 @@
                     this.errorInfo('选择超过限制');
                 }
             },
-            shadeList(val,oldVal){
+            shadeList(val,oldVal){   //遮罩层
                 if(this.lengthLimit && val.length > this.myConfigure.length){
                     val.splice(this.myConfigure.length,1);
                     this.errorInfo('选择超过限制');
@@ -365,7 +365,7 @@
                 let result = [];
                 for (let i = 0; i < a.length; i++) {
                     for (let j = 0; j < b.length; j++) {
-                        if (b[j].name === a[i].name && b[j].id === a[i].id) {
+                        if (b[j] === a[i].id && a[i].type === 'department') {
                             result.push(b[j]);
                         }
                     }
