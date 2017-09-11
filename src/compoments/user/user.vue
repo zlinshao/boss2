@@ -49,13 +49,16 @@
         </section>
         <!--表格-->
         <div>
-            <section class="panel table table-responsive roll">
+            <section class="panel table table-responsive roll has-js">
                 <table class="table table-striped table-advance table-hover">
                     <thead class="text-center">
                     <tr>
                         <th>
-                            <input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
-                            <label for="allCheck"></label>
+                            <label for="allCheck"
+                                   :class="{'label_check':true,'c_on':allCheck,'c_off':!allCheck}"
+                                   @click.prevent="pickedAll($event)">
+                                <input id="allCheck" type="checkbox" v-model="allCheck">
+                            </label>
                         </th>
                         <th>员工</th>
                         <th>部门</th>
@@ -73,7 +76,10 @@
                     <tbody>
                     <tr v-for="item in userList">
                         <td>
-                            <input type="checkbox" :value="item.id" v-model="checkboxModel" @click="picked(item,$event)">
+                            <label :class="{'label_check':true,'c_on':checkboxModel.indexOf(item.id) > -1,
+                                'c_off':checkboxModel.indexOf(item.id)==-1}" @click.prevent="picked(item,$event)">
+                                <input type="checkbox" :value="item.id" v-model="checkboxModel">
+                            </label>
                         </td>
                         <td>
                             <img :src="item.avatar" class="head" alt="" v-if="item.avatar !== '' ">
@@ -422,14 +428,18 @@
                 this.info.state_error = true;
             },
             picked(item,e){
-                if(e.target.checked === true){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if(evInput.checked){
                     this.userSelectId.push(item.id)
                 }else {
                     this.userSelectId=this.userSelectId.filter((x) => x!==item.id);
                 }
             },
             pickedAll(e){
-                if (e.target.checked === true) {
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     this.userSelectId = this.userSelectId.concat(this.allId);
                 } else {
                     this.userSelectId =this.difference(this.userSelectId,this.allId)

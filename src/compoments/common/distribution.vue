@@ -8,7 +8,9 @@
 
                     <!--客户派发-->
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="empty_cus">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="empty_cus">
+                            ×
+                        </button>
                         <h4 class="modal-title">客户派发</h4>
                     </div>
 
@@ -35,7 +37,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button" @click="empty_cus">取消</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button" @click="empty_cus">取消
+                        </button>
                         <button class="btn btn-success" type="button" @click="distribution_ok"> 确定</button>
                     </div>
                 </div>
@@ -57,9 +60,10 @@
         data (){
             return {
                 configure: [],
-                salesman: [],       //客户姓名
-                salesman_id: [],    //客户ID
-                info:{
+                salesman: '',       //客户姓名
+                salesman_id: '',    //客户ID
+                department_id: '',  //部门ID
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -82,24 +86,26 @@
             },
 //            清空员工ID
             empty_cus (){
-                this.salesman = [];
-                this.salesman_id = [];
+                this.salesman = '';
+                this.salesman_id = '';
+                this.department_id = '';
             },
 //            获得派发对象
             selectDateSend (val){
                 this.empty_cus();
-                this.salesman.push(val.staff[0].name);
-                this.salesman_id.push(val.staff[0].id);
+                this.salesman = val.staff[0].name;
+                this.salesman_id = val.staff[0].id;
+                this.department_id = val.staff[0].department;
             },
             distribution_ok (){
                 this.$http.post('core/customer_pool/allotCustomer', {
-                    customer_id: this.pit,                          //客户id
-                    staff_id: String(this.salesman_id)              //员工id
-
+                    customer_id: this.pit,                  //客户id
+                    staff_id: this.salesman_id,             //员工id
+                    department: this.department_id          //部门id
                 }).then((res) => {
                     if (res.data.code === '70070') {
                         $('#distribution').modal('hide');
-                        this.$emit('distribution',1);
+                        this.$emit('distribution', 1);
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -107,7 +113,7 @@
                         //显示成功弹窗 ***
                         this.info.state_success = true;
                         this.empty_cus();
-                    }else{
+                    } else {
                         //关闭成功信息(可选)
                         this.info.state_success = false;
                         //失败信息 ***
@@ -124,7 +130,7 @@
 
 
 <style scoped>
-    .iconic-input.right i{
+    .iconic-input.right i {
         right: 20px;
     }
 </style>
