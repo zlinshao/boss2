@@ -120,8 +120,8 @@
                 searchList: [],          //搜索列表
                 memberList: [],          //显示label数组
                 keywords: '',            //搜索关键字
-                active_li: '-1',        //当前li索引
-                hoverMember: '',         //hover名字
+                active_li: '-1',         //当前li索引
+                hoverMember: [],         //hover名字
                 checkboxModel: [],       //选中数组
 
                 organize: {              //发送回父组件的数据
@@ -142,13 +142,13 @@
                     //失败信息 ***
                     error: ''
                 },
-                organizeList: [],      //组织架构数据列表
-                breadcrumbList: [],
-                onlyDepartment: false,        //只选部门
-                onlyStaff: false,   //只选员工
-                myConfigure: [],       //配置项
-                lengthLimit : false,
-                shadeList : [],     //遮罩层id 列表
+                organizeList: [],         //组织架构数据列表
+                breadcrumbList: [],       //面包屑列表
+                onlyDepartment: false,    //只选部门
+                onlyStaff: false,         //只选员工
+                myConfigure: [],          //配置项
+                lengthLimit : false,      //选择长度限制
+                shadeList : [],           //遮罩层id 列表
             }
         },
         created(){
@@ -199,7 +199,7 @@
         },
         methods: {
             /*******************************右侧组织架构***************************************/
-            getOrganize(id){
+            getOrganize(id){    //请求部门数据
                 this.$http.post('index/profile/index/id/' + id).then((res) => {
                     if (res.data.code === '90020') {
                         this.organizeList = res.data.data.data;
@@ -209,7 +209,7 @@
                     }
                 })
             },
-            getNextLevel(val){
+            getNextLevel(val){  //获取下级部门
                 if (val === 0) {
                     this.getOrganize(0);
                     this.breadcrumbList = [];
@@ -226,11 +226,10 @@
                 } else {
                     this.getOrganize(val.id);
                     this.breadcrumbList.splice(index + 1, this.breadcrumbList.length);
-
                 }
             },
             selectDpm(val, e){   //选择部门
-                if (e.target.checked === true) {
+                if (e.target.checked) {
                     this.memberList.push(val);
                 } else {
                     for (let i = 0; i < this.memberList.length; i++) {
@@ -287,6 +286,7 @@
                     this.active_li--;
                     if (this.active_li === -2) {
                         this.active_li = -1;
+                        this.hoverMember = [];
                     } else if (this.active_li > -1) {
                         this.hoverMember = this.searchList[this.active_li];
                     }
@@ -313,25 +313,24 @@
             },
             //键盘enter事件
             keyDownAdd(){
-                let exist;
-                exist = this.isExist(this.hoverMember, this.memberList);
-                if (!exist) {
-                    this.memberList.push(this.hoverMember);
-                    this.keywords = '';
-                    this.active_li = -1;
-                    this.search();
-                } else {
-                    this.errorInfo('您已经选择该成员');
+                if(!Array.isArray(this.hoverMember)){
+                    let exist;
+                    exist = this.isExist(this.hoverMember, this.memberList);
+                    if (!exist) {
+                        this.memberList.push(this.hoverMember);
+                        this.keywords = '';
+                        this.active_li = -1;
+                        this.search();
+                    } else {
+                        this.errorInfo('您已经选择该成员');
+                    }
                 }
             },
             //回车删除事件
             backSpace(){
+                this.hoverMember = [];
                 if (this.keywords === '' && this.memberList.length > 0) {
-                    if (this.memberList[this.memberList.length - 1].flag === 1) {
-                        this.memberList.pop();
-                    } else {
-                        this.memberList.pop();
-                    }
+                    this.memberList.pop();
                 }
             },
             //删除成员
