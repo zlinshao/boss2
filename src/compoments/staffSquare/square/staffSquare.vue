@@ -7,17 +7,16 @@
 
         <header>员工广场</header>
 
-        <div class="squareContainer col-lg-12">
+        <div class="squareContainer">
             <div class="bannerContainer clearFix">
                 <!--轮播-->
-                <div class="banner col-lg-7">
-                    <img src="https://static.bootcss.com/www/assets/img/react.png?1503034592571" alt="">
-                    <div class="bannerTitle">杭州，我们来了</div>
+                <div class="banner col-lg-7" @mouseenter="stop" @mouseleave="playBanner">
+                    <div class="bannerCon">
+                        <img :src="image" v-for='(image,index) in img' :key='index' v-show='index===mark'>
+                    </div>
+                    <div class="bannerTitle">{{title[mark]}}</div>
                     <div class="change">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span v-for='(item,index) in img.length' :class="{'active':index===mark}" @click='change(index)'></span>
                     </div>
                 </div>
                 <!--广告-->
@@ -42,10 +41,47 @@
         components: {},
         data(){
             return {
-                msg: 'hello vue'
+                mark: 0,
+                timer: null,
+                img: [
+                    'http://upload-images.jianshu.io/upload_images/3360875-5625658440cb542d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+                    'http://upload-images.jianshu.io/upload_images/3360875-b70e9d81d26e2a27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+                    'http://upload-images.jianshu.io/upload_images/3360875-dc724649454c2ddc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+                    'http://upload-images.jianshu.io/upload_images/3360875-d2148a1bb7ea9d21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'
+                ],
+                title : [
+                    '杭州，我们来了',
+                    '苏州，我们来了',
+                    '无锡，我们来了',
+                    '常州，我们来了',
+                ],
+                play : '',
             }
         },
-        methods: {}
+        mounted() {
+            this.playBanner();
+        },
+        destroyed(){
+            this.stop();
+        },
+        methods: {
+            change(i) {
+                this.mark = i
+            },
+            autoPlay() {
+                this.mark++;
+                if (this.mark === 4) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            playBanner() {
+                this.play = setInterval(this.autoPlay, 3000)
+            },
+            stop(){
+                clearInterval(this.play)
+            }
+        }
     }
 </script>
 <style scoped>
@@ -69,13 +105,18 @@
         margin-top: 14px;
         margin-bottom: 20px;
     }
-    .banner img{
-        width: 100%;
-        height: 100%;
-    }
+
     .banner{
         position: relative;
         /*padding-left: 0;*/
+    }
+    .banner .bannerCon{
+        width: 100%;
+        height: 100%;
+    }
+    .banner .bannerCon img{
+        width: 100%;
+        height: 100%;
     }
     .bannerTitle{
         position: absolute;
@@ -83,7 +124,7 @@
         padding: 14px 18px;
         left: 15px;
         bottom: 0;
-        width: 60%;
+        width: 55%;
     }
 
     .change{
@@ -91,20 +132,22 @@
         padding: 14px 18px;
         right: 15px;
         bottom: 0;
-        text-align: center;
-        width: 20%;
+        text-align: right;
+        width: 40%;
     }
     .change span{
         display: inline-block;
         width: 20px;
         height: 4px;
-        background-color: #1caadc;
+        background-color: #ffffff;
+    }
+    .change span+span{
+        margin-left: 3px;
+    }
+    .change span.active{
+        background-color: black;
     }
 
-
-    .adContainer{
-        padding-right: 0;
-    }
     .adItem{
         background-color: #aec5dc;
         height: 200px;

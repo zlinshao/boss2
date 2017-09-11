@@ -116,7 +116,7 @@
                                 </label>
                             </td>
                             <td>
-                                <router-link :to="{path : '/articleDetail',query:{articleId : item.id}}">
+                                <router-link :to="{path : '/articleDetail',query:{articleId : item.id,page:beforePage,myParams:params}}">
                                     详情
                                 </router-link>
                             </td>
@@ -213,10 +213,23 @@
             },
         },
         mounted(){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
             this.$http.get('index/Staff_Square/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data;
-                this.getList();
+                if (page!=undefined){
+                    this.page = page;
+                    this.beforePage = page;
+                    if (params!=undefined&&typeof params!='string'){
+//                                this.currentDate = [];
+                        this.params = params;
+//                                alert(this.beforePage)
+                    }
+                    this.search(this.beforePage);
+                } else {
+                    this.getList();
+                }
             })
         },
         methods: {
@@ -392,7 +405,11 @@
                 } else if (this.confirmMsg.oper==3){
                     // 删除
                     url = 'index/Staff_Square/deleteArticle';
-                    this.$http.get(url+'?id='+this.pitch).then((res)=>{
+                    this.$http.get(url,{
+                        params : {
+                            id : this.pitch
+                        }
+                    }).then((res)=>{
                         console.log(res.data)
                         if (res.data.code==30016){
                             // 成功
