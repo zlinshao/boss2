@@ -41,6 +41,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">封面图片<sup class="required">*</sup>：</label>
+                            <div class="col-lg-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">视频(仅MP4格式)：</label>
                             <div class="col-lg-8">
                                 <UploadVedio :result="'vedio'" :idVedio="vedio"
