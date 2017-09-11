@@ -3,6 +3,5 @@ node_modules/
 dist/
 npm-debug.log
 yarn-error.log
-src/boss.config.js
 webpack.config.js
 /.idea/
