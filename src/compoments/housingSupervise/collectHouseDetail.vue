@@ -41,8 +41,14 @@
                                 <!--<div><span class="text-primary">业主姓名：</span><span>乐伽</span></div>-->
                                 <div><span class="text-primary">联系电话：</span><span>400-123-123</span></div>
                                 <div><span class="text-primary">参考租金：</span><span>{{item.reference}} 元</span></div>
+                                <!--<div>-->
+                                    <!--<span class="text-primary">房屋状态：</span><span>{{dictionary.villa_status[item.status_villa]}}</span>-->
+                                <!--</div>-->
                                 <div>
-                                    <span class="text-primary">房屋状态：</span><span>{{item.status_villa}}</span>
+                                    <span class="text-primary">房屋来源：</span><span>{{dictionary.source[item.source]}}</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">个人/中介：</span><span>{{dictionary.person_medium[item.person_medium]}}</span>
                                 </div>
                             </div>
                         </div>
