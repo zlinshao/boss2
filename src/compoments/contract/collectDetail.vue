@@ -245,7 +245,7 @@
                                                 <span>{{item.vac_end_date}}</span>
                                             </div>
                                             <div class="infoList">
-                                                <span>合同起始日期：</span>
+                                                <span>合同开始日期：</span>
                                                 <span>{{item.start_date}}</span>
                                             </div>
                                             <div class="infoList">
@@ -255,7 +255,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>月数<sup>*</sup>：</span>
+                                                <span>收房月数<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.months}}月
                                                 </span>
@@ -332,7 +332,7 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>业主姓名<sup>*</sup>：</span>
+                                                <span>客户姓名<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">
