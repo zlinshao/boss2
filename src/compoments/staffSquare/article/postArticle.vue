@@ -40,6 +40,13 @@
                                 <!--<Vueditor></Vueditor>-->
                             </div>
                         </div>
+                        <!--<div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">封面图片<sup class="required">*</sup>：</label>
+                            <div class="col-lg-8">
+                                <upLoad @photo="coverPicId" @delete="picDelete" @complete="completePic"
+                                         :result="'coverPic'" :idPhotos="coverPic"></upLoad>
+                            </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">视频(仅MP4格式)：</label>
                             <div class="col-lg-8">
@@ -71,9 +78,10 @@
     import Preview from './preview.vue'
     import UploadVedio from '../../common/uploadVedio.vue'
     import Status from '../../common/status.vue';
+    import upLoad from '../../common/upload.vue'
 
     export default{
-        components: {Editor,Preview,UploadVedio,Status},
+        components: {Editor,Preview,UploadVedio,Status,upLoad},
         data(){
             return {
                 dict : {},
@@ -89,6 +97,10 @@
                 vedio : {
                     idVedios : {},    //修改ID
                     idVedio : [],     //上传ID
+                },
+                coverPic : {
+                    cus_idPhotos : {},    //修改ID
+                    cus_idPhoto : [],     //上传ID
                 },
                 complete : 'ok',
                 info: {
@@ -107,6 +119,7 @@
             this.$http.get('index/Staff_Square/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data;
+                this.coverPic.cus_idPhotos = {};
                 this.vedio.idVedios = {};
             });
         },
@@ -167,6 +180,21 @@
                 }
             },
 
+
+
+//            上传封面
+            coverPicId(val){
+                this.coverPic.idCoverPic = val;
+            },
+            picDelete(val){
+                let index = this.coverPic.idCoverPic.indexOf(val);
+                if (index > -1) {
+                    this.coverPic.idCoverPic.splice(index, 1);
+                }
+            },
+            completePic(val){
+                this.complete = val;
+            },
 
             // 保存
             saveArticle(num){
