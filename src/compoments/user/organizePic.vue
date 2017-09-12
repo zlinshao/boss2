@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div id="main" style="height: 950px;"></div>
+        <div id="main" style="height: 1000px;"></div>
     </div>
 </template>
 
 <script>
     export default{
         mounted(){
-            let data =[]
+            let data =[];
             this.$http.post('manager/department/position/id/1').then((res) => {
                 let data = res.data.data.data;
                 this.organizePicture(data);
@@ -17,7 +17,6 @@
         },
         methods :{
             organizePicture(data){
-                console.log(data)
                 let myChart = echarts.init(document.getElementById('main'));
                 let option = {
                     title: {
