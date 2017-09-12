@@ -284,7 +284,7 @@
             changeUp(){
                 if (this.searchList.length !== 0) {
                     this.active_li--;
-                    if (this.active_li === -2) {
+                    if (this.active_li <= -1) {
                         this.active_li = -1;
                         this.hoverMember = [];
                     } else if (this.active_li > -1) {
@@ -306,6 +306,7 @@
                     this.memberList.push(item);
                     this.keywords = '';
                     this.active_li = -1;
+                    this.hoverMember = [];
                     this.search();
                 } else {
                     this.errorInfo('您已经选择该成员');
@@ -320,6 +321,7 @@
                         this.memberList.push(this.hoverMember);
                         this.keywords = '';
                         this.active_li = -1;
+                        this.hoverMember = [];
                         this.search();
                     } else {
                         this.errorInfo('您已经选择该成员');
