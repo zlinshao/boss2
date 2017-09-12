@@ -40,13 +40,13 @@
                                 <!--<Vueditor></Vueditor>-->
                             </div>
                         </div>
-                        <!--<div class="form-group">
+                        <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">封面图片<sup class="required">*</sup>：</label>
                             <div class="col-lg-8">
                                 <upLoad @photo="coverPicId" @delete="picDelete" @complete="completePic"
                                          :result="'coverPic'" :idPhotos="coverPic"></upLoad>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">视频(仅MP4格式)：</label>
                             <div class="col-lg-8">
@@ -144,13 +144,13 @@
 
             // 上传成功
             uploadSuccess(val){
-                console.log(val);
+//                console.log(val);
                 this.vedio.idVedio = [];
                 this.vedio.idVedio = val;
             },
             // 上传完成
             uploadComplete(val){
-                console.log(val);
+//                console.log(val);
                 this.complete = val;
                 let _this = this;
                 if (this.complete=='ok'){
@@ -184,12 +184,12 @@
 
 //            上传封面
             coverPicId(val){
-                this.coverPic.idCoverPic = val;
+                this.coverPic.cus_idPhoto = val;
             },
             picDelete(val){
-                let index = this.coverPic.idCoverPic.indexOf(val);
+                let index = this.coverPic.cus_idPhoto.indexOf(val);
                 if (index > -1) {
-                    this.coverPic.idCoverPic.splice(index, 1);
+                    this.coverPic.cus_idPhoto.splice(index, 1);
                 }
             },
             completePic(val){
@@ -198,9 +198,17 @@
 
             // 保存
             saveArticle(num){
-                this.formData.album = this.vedio.idVedio;
-                if (this.formData.title==''||this.formData.type==''||this.formData.content==''){
+                this.formData.vedio_pic = this.vedio.idVedio;
+                this.formData.staff_pic = this.coverPic.cus_idPhoto;
+//                console.log(this.formData);
+                if (this.formData.title==''||this.formData.type==''||this.formData.content==''||this.formData.staff_pic.length==0){
                     this.info.error = "请填写必要信息";
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                    return;
+                }
+                if (this.formData.staff_pic.length>1){
+                    this.info.error = "只能上传一张封面图片";
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                     return;
@@ -209,7 +217,7 @@
                 setTimeout(function () {
 //                    alert(_this.formData.content)
                     _this.$http.post('index/Staff_Square/addArticle?is_public='+num,_this.formData).then((res)=>{
-                        console.log(res.data);
+//                        console.log(res.data);
                         if (res.data.code==30012||res.data.code==30022){
                             // 成功
                             _this.info.success = res.data.msg;

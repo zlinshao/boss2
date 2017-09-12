@@ -35,7 +35,7 @@
                 this.$delete(this.idVedio.idVedios, rul);
             },
             uploadVedio (res){
-//                this.vedios = this.idPhotos.cus_idPhoto;
+                this.vedios = this.idVedio.idVedio;
                 let _this = this;
                 let myDropzone = new Dropzone('#' + res, {
                     url: globalConfig.vedio_address,

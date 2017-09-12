@@ -40,12 +40,13 @@
                                 <!--<Vueditor></Vueditor>-->
                             </div>
                         </div>
-                        <!--<div class="form-group">
+                        <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">封面图片<sup class="required">*</sup>：</label>
                             <div class="col-lg-8">
-
+                                <upLoad @photo="coverPicId" @delete="picDelete" @complete="completePic"
+                                        :result="'coverPic'" :idPhotos="coverPic"></upLoad>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">视频(仅MP4格式)：</label>
                             <div class="col-lg-8">
@@ -77,9 +78,10 @@
     import Preview from './preview.vue'
     import UploadVedio from '../../common/uploadVedio.vue'
     import Status from '../../common/status.vue';
+    import upLoad from '../../common/upload.vue'
 
     export default{
-        components: {Editor,Preview,UploadVedio,Status},
+        components: {Editor,Preview,UploadVedio,Status,upLoad},
         data(){
             return {
                 dict : {},
@@ -97,6 +99,11 @@
                     idVedios : {},    //修改ID
                     idVedio : [],     //上传ID
                 },
+                coverPic : {
+                    cus_idPhotos : {},    //修改ID
+                    cus_idPhoto : [],     //上传ID
+                },
+
                 complete : 'ok',
                 info: {
                     //成功状态 ***
@@ -128,7 +135,14 @@
                     this.formData.type = msg.type;
                     this.formData.content = msg.content;
 
-                    this.vedio.idVedios = res.data.data[0].album;
+                    this.vedio.idVedios = res.data.data[0].album.vedio_pic;
+                    for (let i in this.vedio.idVedios) {
+                        this.vedio.idVedio.push(i);
+                    }
+                    this.coverPic.cus_idPhotos = res.data.data[0].album.staff_pic;                            //修改图片ID
+                    for (let i in this.coverPic.cus_idPhotos) {
+                        this.coverPic.cus_idPhoto.push(i);
+                    }
 //                    console.log(this.vedio.idVedios)
                 })
             },
@@ -151,13 +165,12 @@
 
             // 上传成功
             uploadSuccess(val){
-                console.log(val);
-                this.vedio.idVedio = [];
+//                console.log(val);
                 this.vedio.idVedio = val;
             },
             // 上传完成
             uploadComplete(val){
-                console.log(val);
+//                console.log(val);
                 this.complete = val;
                 let _this = this;
                 if (this.complete=='ok'){
@@ -186,13 +199,36 @@
                     this.vedioArr.splice(flag,1);
                 }
             },
-
+//            上传封面
+            coverPicId(val){
+//                console.log(val);
+                this.coverPic.cus_idPhoto = val;
+            },
+            picDelete(val){
+                let index = this.coverPic.cus_idPhoto.indexOf(val);
+                if (index > -1) {
+                    this.coverPic.cus_idPhoto.splice(index, 1);
+                }
+            },
+            completePic(val){
+                this.complete = val;
+            },
 
             // 保存
             saveArticle(num){
-                this.formData.album = this.vedio.idVedios;
-                if (this.formData.title==''||this.formData.type==''||this.formData.content==''){
+                this.formData.vedio_pic = this.vedio.idVedio;
+                this.formData.staff_pic = this.coverPic.cus_idPhoto;
+//                console.log(this.vedio)
+//                console.log(this.formData);
+
+                if (this.formData.title==''||this.formData.type==''||this.formData.content==''||this.formData.staff_pic.length==0){
                     this.info.error = "请填写必要信息";
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                    return;
+                }
+                if (this.formData.staff_pic.length>1){
+                    this.info.error = "只能上传一张封面图片";
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                     return;
@@ -201,7 +237,7 @@
                 setTimeout(function () {
 //                    alert(_this.formData.content)
                     _this.$http.post('index/Staff_Square/editArticle?id='+_this.articleId+'&is_public='+num,_this.formData).then((res)=>{
-                        console.log(res.data);
+//                        console.log(res.data);
                         if (res.data.code==30014||res.data.code==30022){
                             // 成功
                             _this.info.success = res.data.msg;

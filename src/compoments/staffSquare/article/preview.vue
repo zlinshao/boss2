@@ -107,7 +107,7 @@
         margin: 20px auto;
         padding-bottom: 30px;
         border-bottom: 1px solid #aaaaaa;
-        min-height: 900px;
+        min-height: 1000px;
         /*background-color: #CCCCCC;*/
 
     }

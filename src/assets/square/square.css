@@ -60,7 +60,8 @@ a:hover {
 }
 
 .idx_main {
-    position: relative
+    position: relative;
+    margin-bottom: 60px;
 }
 
 .left_sidebar {
@@ -110,7 +111,7 @@ a:hover {
     text-decoration: none;
     font: normal 12px/24px "STHeiti", "SimSun";
     color: #4b7985;
-    background: url(../images/icon.png) no-repeat -200px -140px;
+    background: url(./images/icon.png) no-repeat -200px -140px;
     padding-left: 10px;
     margin-left: 10px
 }
@@ -124,7 +125,7 @@ a:hover {
 .rg_title h2 {
     width: 283px;
     padding-left: 17px;
-    background: url(../images/icon.png) no-repeat -200px 11px;
+    background: url(./images/icon.png) no-repeat -200px 11px;
     font: bold 18px/36px "STHeiti", "Microsoft Yahei";
     color: #404040;
     text-decoration: none
@@ -268,7 +269,7 @@ a:hover {
     position: absolute;
     left: 0;
     bottom: 0;
-    background: url(../images/til_bg.png) repeat;
+    background: url(./images/til_bg.png) repeat;
     border-bottom: 3px solid #fdf400;
     font: normal 14px/70px "STHeiti", "SimSun";
     color: #fff;
@@ -283,14 +284,14 @@ a:hover {
     text-decoration: none;
     font: normal 14px/32px "STHeiti", "SimSun";
     color: #666;
-    background: url(../images/icon.png) no-repeat -200px -45px;
+    background: url(./images/icon.png) no-repeat -200px -45px;
     padding-left: 8px;
     margin-left: 5px
 }
 
 .rg_pic_wrap ul li a:hover {
     color: #ee305f;
-    background: url(../images/icon.png) no-repeat -200px -95px
+    background: url(./images/icon.png) no-repeat -200px -95px
 }
 
 .rg_video_wrap {
@@ -332,7 +333,7 @@ a:hover {
     display: block;
     width: 55px;
     height: 55px;
-    background: url(../images/icon.png) 0 -150px;
+    background: url(./images/icon.png) 0 -150px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -356,7 +357,7 @@ a:hover {
     position: absolute;
     left: 0;
     bottom: 0;
-    background: url(../images/til_bg.png) repeat;
+    background: url(./images/til_bg.png) repeat;
     border-bottom: 3px solid #fdf400;
     font: normal 14px/70px "STHeiti", "SimSun";
     color: #fff;
@@ -421,17 +422,6 @@ a:hover {
     margin: 15px 0 0 7px
 }
 
-.ic_qrcode {
-    width: 60px;
-    height: 76px;
-    background: url(../images/foot_icon.png) no-repeat -69px -308px
-}
-
-.ic_totop {
-    width: 46px;
-    height: 25px;
-    background: url(../images/foot_icon.png) no-repeat 0 -298px
-}
 
 .ic_guide {
     width: 58px;
@@ -604,7 +594,8 @@ a:hover {
     float: left;
     position: relative;
     overflow: hidden;
-    *zoom: 1
+    *zoom: 1;
+    user-select: none;
 }
 
 .main_slide .slide_prev, .main_slide .slide_next {
@@ -612,7 +603,7 @@ a:hover {
     height: 75px;
     position: absolute;
     top: 160px;
-    background: url(../images/icon.png) no-repeat;
+    background: url(./images/icon.png) no-repeat;
     cursor: pointer;
     text-indent: -9999px;
     z-index: 9
@@ -670,13 +661,18 @@ a:hover {
 .main_slide .slide_scroll {
     position: absolute;
     left: 0;
-    background: #f9f9f9
+    background: #f9f9f9;
+
+    /*新增*/
+    min-width: 799px;
 }
 
 .main_slide .slide_page {
     float: left;
     height: 392px;
-    position: relative
+    position: relative;
+    /*新增*/
+    width: 799px;
 }
 
 .main_slide .slide_page a {
@@ -742,7 +738,7 @@ a:hover {
     display: block;
     width: 12px;
     height: 12px;
-    background: url(../images/icon.png) -150px -50px
+    background: url(./images/icon.png) -150px -50px
 }
 
 .main_slide .slide_nav ul li span.current {
@@ -794,7 +790,7 @@ a:hover {
     height: 80px;
     line-height: 80px;
     padding: 0 10px;
-    background: url(../images/til_bg2.png) repeat-x;
+    background: url(./images/til_bg2.png) repeat-x;
     color: #fff;
     font: normal 18px/110px "STHeiti", "Microsoft Yahei";
     position: absolute;
@@ -808,7 +804,7 @@ a:hover {
 
 .originalcolumn .lf_title {
     width: 200px;
-    background: url(../images/icon.png) no-repeat 0 -210px;
+    background: url(./images/icon.png) no-repeat 0 -210px;
     margin-bottom: 14px
 }
 
@@ -877,7 +873,7 @@ a:hover {
     display: block;
     width: 88px;
     height: 40px;
-    background: #fff url(../images/icon.png) no-repeat;
+    background: #fff url(./images/icon.png) no-repeat;
     text-indent: -9999px;
     position: absolute;
     left: 50%;
@@ -1031,19 +1027,19 @@ a:hover {
     text-decoration: none;
     font: normal 12px/24px "STHeiti", "SimSun";
     color: #888;
-    background: url(../images/icon.png) no-repeat -200px -45px;
+    background: url(./images/icon.png) no-repeat -200px -45px;
     padding-left: 12px
 }
 
 .originalcolumn .column_list li a:hover {
     color: #ee305f;
-    background: url(../images/icon.png) no-repeat -200px -95px
+    background: url(./images/icon.png) no-repeat -200px -95px
 }
 
 .originalcolumn .white_bg {
     width: 215px;
     height: 75px;
-    background: url(../images/white_bg.png) repeat-x 0 100%;
+    background: url(./images/white_bg.png) repeat-x 0 100%;
     position: relative;
     z-index: 9;
     margin-top: -75px;
@@ -1248,6 +1244,10 @@ a:hover {
 .newsdata_list {
     position: relative;
     z-index: 1
+}
+
+.newsdata_list .newsdata_item+.newsdata_item{
+    display: none;
 }
 
 .ndi_main {
@@ -1473,7 +1473,7 @@ a:hover {
 }
 
 .load_more_btn {
-    width: 598;
+    width: 598px;
     height: 30px;
     display: none;
     padding: 14px 0;
@@ -1630,7 +1630,7 @@ a:hover {
 }
 
 .join-count .tie-icon {
-    background: url(../images/icon.png) no-repeat 0 0;
+    background: url(./images/icon.png) no-repeat 0 0;
     display: block;
     height: 20px;
     padding-left: 26px;
@@ -1689,7 +1689,7 @@ a:hover {
     display: block;
     width: 15px;
     height: 26px;
-    background: url(../images/icon.png) no-repeat;
+    background: url(./images/icon.png) no-repeat;
     position: absolute;
     top: 35px;
     -webkit-transition: all .3s;
@@ -1945,7 +1945,7 @@ a:hover {
     display: block;
     width: 11px;
     height: 11px;
-    background: url(../images/icon.png) no-repeat -292px -680px;
+    background: url(./images/icon.png) no-repeat -292px -680px;
     position: absolute;
     top: 3px;
     right: 50%;
@@ -1983,7 +1983,7 @@ a:hover {
     display: block;
     width: 11px;
     height: 11px;
-    background: url(../images/icon.png) no-repeat -292px -613px;
+    background: url(./images/icon.png) no-repeat -292px -613px;
     position: absolute;
     top: 3px;
     right: 50%;
@@ -2627,7 +2627,7 @@ a:hover {
     width: 100px;
     height: 75px;
     overflow: hidden;
-    background: #fff url(../images/icon.png) no-repeat 0 -50px;
+    background: #fff url(./images/icon.png) no-repeat 0 -50px;
     margin-right: 15px;
     text-indent: -9999px;
     position: relative
@@ -2637,7 +2637,7 @@ a:hover {
     display: block;
     width: 72px;
     height: 40px;
-    background: #fff url(../images/icon.png) no-repeat;
+    background: #fff url(./images/icon.png) no-repeat;
     position: absolute;
     left: 50%;
     margin-left: -36px;
@@ -2880,7 +2880,7 @@ h1 {
 
 .channel_logo {
     display: block;
-    background: url(../images/icon.png) no-repeat 0 -500px;
+    background: url(./images/icon.png) no-repeat 0 -500px;
     width: 225px;
     height: 31px
 }
@@ -2925,7 +2925,7 @@ h1 {
 
 .top_search_submit {
     border: 0;
-    background: url(../images/icon.png) no-repeat -100px -150px;
+    background: url(./images/icon.png) no-repeat -100px -150px;
     width: 16px;
     height: 16px;
     text-indent: -9999px;
@@ -2945,7 +2945,7 @@ h1 {
 
 .nav_bottom span {
     padding-right: 27px;
-    background: url(../images/nav_icon.png) no-repeat right 5px;
+    background: url(./images/nav_icon.png) no-repeat right 5px;
     display: inline-block;
     *display: inline;
     *zoom: 1

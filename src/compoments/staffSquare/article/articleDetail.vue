@@ -37,8 +37,13 @@
                 </div>
 
                 <div class="articleContainer col-lg-12">
-                    <div class="vedioContainer col-lg-12" v-if="vedioArr.length>0">
-                        <video width="100%" :src="item" controls="controls" v-for="item in vedioArr">
+                    <div class="coverPicContainer">
+                        <h4>封面</h4>
+                        <img :src="key.raw" alt="" style="max-width: 100%" v-for="(key,value) in coverImg">
+                    </div>
+                    <h4>正文</h4>
+                    <div class="vedioContainer col-lg-12">
+                        <video width="100%" :src="key.raw" controls="controls" v-for="(key,value) in vedioArr">
                             <!--<source :src="item" type="video/mp4">-->
                         </video>
                         <!--<video controls="controls" :src="url">
@@ -197,7 +202,8 @@
                 articleId : 0,
                 msg : '',
 
-                vedioArr : [],
+                coverImg : {},
+                vedioArr : {},
 
                 confirmMsg: {
                     oper : 0,
@@ -236,13 +242,15 @@
                     this.msg = res.data.data[0];
 
                     if (this.msg.album!=undefined){
-                        this.vedioArr = [];
-                        for (let i = 0;i<this.msg.album.length;i++){
+                        this.coverImg = this.msg.album.staff_pic;
+                        this.vedioArr = this.msg.album.vedio_pic;
+//                        console.log(this.msg.album.vedio_pic);
+                        /*for (let i = 0;i<this.msg.album.length;i++){
                             this.$http.post('/picture/'+this.msg.album[i]).then((res)=>{
 //                            console.log(res.data.data);
                                 this.vedioArr.push(res.data.data);
                             })
-                        }
+                        }*/
                     }
 //                    $('.articleContainer .content img').css('width','100%');
                 })
@@ -364,7 +372,12 @@
         font-size: 14px;
         border-bottom: 1px solid #aaaaaa;
     }
-
+    .articleContainer h4{
+        /*text-align: center;*/
+        padding-left: 20px;
+        line-height: 30px;
+        border-left: 5px solid #fcb322;;
+    }
     .commentItem+.commentItem{
         margin-top: 12px;
     }
