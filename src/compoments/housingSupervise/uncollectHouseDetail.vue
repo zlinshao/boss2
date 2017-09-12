@@ -47,7 +47,7 @@
                                 <span class="text-primary">配套设施：</span>
                                 <span v-for="list in item.facility">{{dictionary.facility[list]}}&nbsp; &nbsp;</span>
                             </div>
-                            <div><span class="text-primary">来源：</span><span>{{dictionary.source[item.source]}}</span></div>
+                            <!--<div><span class="text-primary">来源：</span><span>{{dictionary.source[item.source]}}</span></div>-->
                             <div><span class="text-primary">负责人：</span><span>{{item.staff_id}}</span></div>
                         </div>
                     </div>
