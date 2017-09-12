@@ -3,13 +3,27 @@
         <ol class="breadcrumb">
             <li>人资管理</li>
             <li class="active">组织架构{{parentDpartmentId}}</li>
+            <li class="pull-right" v-if="isShowPic">
+                <a @click="changeView">
+                    <i class="fa fa-angle-double-left"></i>返回
+                </a>
+            </li>
         </ol>
-        <div class="row">
+        <div style="background: #ffffff" v-if="isShowPic">
+            <div>
+                <OrganizePic></OrganizePic>
+            </div>
+
+
+        </div>
+
+        <div class="row" v-if="!isShowPic">
             <div class="col-md-3">
                 <section class="panel">
                     <div class="panel-body">
                         <h5 style="margin-top: 8px;padding-bottom: 11px">
                             <span>组织架构</span>
+                            <button class="btn btn-primary btn-xs pull-right" @click="changeView">组织架构图</button>
                         </h5>
                         <vue-ztree :list.sync='departmentList' :func='departmentClick'
                                    :contextmenu='rightClick' :is-open='true'>
@@ -65,6 +79,8 @@
     import PositionEdit from './positionEdit.vue'   //职位编辑
     import PositionAdd from  './positionAdd.vue'
     import PositionHigh from './positionHigh.vue'
+
+    import OrganizePic from './organizePic.vue'
     export default {
         components: {
             vueZtree,
@@ -76,7 +92,8 @@
 //            Transfer,
             PositionEdit,
             PositionAdd,
-            PositionHigh
+            PositionHigh,
+            OrganizePic
         },
         data () {
             return {
@@ -100,6 +117,7 @@
                 noPosition : false,     //有无相应职位
                 position_id : '',       //  职位id
                 position_name : '',     //  职位名字
+                isShowPic : false,
             }
         },
         created(){
@@ -296,6 +314,9 @@
                 $('#positionHighAdd').modal('hide');
                 this.getPositionList(this.department_id);
             },
+            changeView(){
+                this.isShowPic = !this.isShowPic;
+            }
         },
 
     }
@@ -324,5 +345,10 @@
         display: block;
         text-align: center;
         margin-top: 20px;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>
