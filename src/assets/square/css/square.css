@@ -749,10 +749,9 @@ a:hover {
     float: right
 }
 
-.banner_pics .bpic.tbpic {
-    margin-bottom: 2px
+.banner_pics .bpic+.bpic{
+    margin-top: 2px
 }
-
 .banner_pics .bpic {
     width: 399px;
     height: 195px;
@@ -1004,7 +1003,8 @@ a:hover {
     width: 200px;
     height: 30px;
     overflow: hidden;
-    margin-bottom: 7px
+    margin-bottom: 7px;
+    text-align: center;
 }
 
 .originalcolumn .column_pic h3 a {
@@ -1123,16 +1123,16 @@ a:hover {
 
 .row_message {
     width: 600px;
-    height: 30px;
+    /*height: 30px;*/
     line-height: 30px;
-    background: #d9eef8;
     text-align: center;
     font-family: "STHeiti", "SimSun";
-    color: #008cd2;
-    margin: 10px 0;
-    cursor: pointer;
+    /*margin: 10px 0;*/
+    font-size: 24px;
+    color: #c6c6c6;
+    /*cursor: pointer;*/
     display: none;
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     z-index: 9;
     -moz-transform: all .3s ease 0;
@@ -1141,9 +1141,6 @@ a:hover {
     transition: all .3s ease 0s
 }
 
-.row_message:hover {
-    background: #bee7fa
-}
 
 .newsdata_nav {
     width: 600px;
