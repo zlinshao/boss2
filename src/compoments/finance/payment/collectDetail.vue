@@ -1,13 +1,26 @@
 <template>
     <div>
-        <ol class="breadcrumb">
-            <li>财务账本</li>
+        <ol class="breadcrumb" v-if="cus == 1">
+            <li>财务账本{{cus}}</li>
             <li>
                 <router-link to="/CollectPayment">应收款项</router-link>
             </li>
             <li class="active">应收款项详情</li>
             <li class="pull-right" v-show="typeof params!='string'">
                 <router-link :to="{path:'/CollectPayment',query:{myParam:params,page:page,selected:selected}}"><i
+                        class="fa fa-angle-double-left"></i> 返回上一步
+                </router-link>
+            </li>
+        </ol>
+
+        <ol class="breadcrumb" v-if="cus == 2">
+            <li>财务账本</li>
+            <li>
+                <router-link to="/payCllentAll">应收款项</router-link>
+            </li>
+            <li class="active">应收款项详情</li>
+            <li class="pull-right" v-show="cus === 2">
+                <router-link :to="{path:'/payCllentAll',query:{myParam:params, selected:selected, sear: 1}}"><i
                         class="fa fa-angle-double-left"></i> 返回上一步
                 </router-link>
             </li>
@@ -306,6 +319,7 @@
         components: {Status, ShouldCollect, SelectHouse, SelectClient, PicModal, Confirm},
         data(){
             return {
+                cus: '',
                 dict: {},
 
                 id: '',
@@ -354,6 +368,7 @@
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
             this.selected = this.$route.query.selected;
+            this.cus = this.$route.query.cus;
 
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.dict = res.data;
