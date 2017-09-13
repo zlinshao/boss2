@@ -659,6 +659,13 @@
                             <span>消息中心</span>
                         </router-link>
                     </li>
+
+                    <li :class="{'active': isActive == 'question'}" @click='pitch_on("question")'>
+                        <router-link to="/question">
+                            <i class="fa fa-pencil-square-o"></i>
+                            <span>问卷调查</span>
+                        </router-link>
+                    </li>
                     <li :class="{'active': isActive == 33}" @click='pitch_on(33)'>
                         <router-link to="/checkIn">
                             <i class="fa fa-map-marker"></i>
@@ -671,6 +678,7 @@
                             <span>打卡记录</span>
                         </router-link>
                     </li>
+
 
                     <li class="sub-menu" v-show="simulate.indexOf('manager/management') > -1||simulate.indexOf('manager/approver') > -1">
                         <!--<li class="sub-menu">-->

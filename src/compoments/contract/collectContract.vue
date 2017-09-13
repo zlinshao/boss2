@@ -617,7 +617,7 @@
 
 <style scoped>
     .panel-body {
-        padding: 8px 8px 0px 15px;
+        padding: 8px 8px 0 15px;
     }
 
     input[type=checkbox], input[type=radio] {

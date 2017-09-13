@@ -22,7 +22,7 @@
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="请输入员工姓名"
-                                      @keyup="search" v-model="params.keywords">
+                                       @keyup="search" v-model="params.keywords">
                                 <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" @click="search">搜索</button>
                             </span>

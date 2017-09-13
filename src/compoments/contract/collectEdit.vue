@@ -519,7 +519,7 @@
             'contractEdit.vac_start_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if( this.isClick){
+                    if( this.isClick && val!== ''){
                         this.completeDate(val,oldVal,'start');
                     }
                 }
@@ -527,7 +527,7 @@
             'contractEdit.months' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(this.isClick){
+                    if(this.isClick && val!== ''){
                         this.completeDate(val,oldVal,'months');
                     }
                 }
@@ -535,7 +535,7 @@
             'contractEdit.vac_end_date' : {
                 deep:true,
                 handler(val,oldVal){
-                    if(this.isClick){
+                    if(this.isClick && val!== ''){
                         this.completeDate(val,oldVal,'end');
                     }
                 }
@@ -736,6 +736,15 @@
 
             },
             completeDate(val,oldVal,flag){  //计算空置期结束 合同开始以及结束时间
+                if(flag === 'start' && val > this.contractEdit.vac_end_date && this.contractEdit.vac_end_date !== ''){
+                    this.contractEdit.vac_start_date = oldVal;
+                    this.info.error = '开始日期必须小于结束日期';
+                    this.info.state_error = true;
+                }else if(flag === 'end' && val < this.contractEdit.vac_start_date && this.contractEdit.vac_start_date !== ''){
+                    this.contractEdit.vac_end_date = oldVal;
+                    this.info.error = '结束日期必须大于开始日期';
+                    this.info.state_error = true;
+                }
                 this.$http.post('core/collect/date',
                     {
                         vac_start_date : this.contractEdit.vac_start_date,
@@ -748,13 +757,6 @@
                             this.contractEdit.end_date = res.data.data.end_date;
                             this.contractEdit.vacancy = res.data.data.vacancy;
                         }else {
-                            switch (flag){
-                                case 'start':
-                                    this.contractEdit.vac_start_date = oldVal;
-                                    break;
-                                case 'end' :
-                                    this.contractEdit.vac_end_date = oldVal;
-                            }
                             this.info.error = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_error = true;
