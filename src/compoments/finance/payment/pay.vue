@@ -213,8 +213,10 @@
                             <td>{{item.pay_date}}</td>
                             <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
-                                <span style="line-height: 9px;" v-if="item.identity === 1" class="btn btn-danger btn-xs">F</span>
-                                <span style="line-height: 9px;" v-if="item.identity === 2" class="btn btn-danger btn-xs">Z</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 1"
+                                      class="btn btn-danger btn-xs">F</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 2"
+                                      class="btn btn-danger btn-xs">Z</span>
                             </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>
@@ -278,7 +280,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'payTime'" :currentDate="[pay_time]" :placeholder="'付款时间'" @sendDate="getDate1"></DatePicker>
+                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'payTime'"
+                                                :currentDate="[pay_time]" :placeholder="'付款时间'"
+                                                @sendDate="getDate1"></DatePicker>
                                     <!--<input @click="remindData" type="text" name="addtime" v-model="pay_time"
                                            placeholder="付款时间"
                                            class="form-control form_datetime" readonly>-->
@@ -385,7 +389,7 @@
                                     'c_off':rollback_id.indexOf(index) == -1}"
                                     @click.prevent="change_index($event,index)">
                                 <input type="checkbox" :checked="rollback_id.indexOf(index) > -1"
-                                        class="rollbacks"><span>{{key}}</span>
+                                       class="rollbacks"><span>{{key}}</span>
                             </label>
                         </h5>
                     </div>
@@ -464,7 +468,7 @@
                 accountType: '',                    //账户类型
                 accountNumber: '',                  //账户账号
                 details_info: [],                   //应入
-                select_info: {},
+                select_info: {},                    //字典
                 pay_time: '',                       //付款日期
                 cus_id: '',                         //客户ID
                 cus_name: '',                       //客户姓名
@@ -530,10 +534,10 @@
                     id: '',
                     msg: ''
                 },
-                dateConfigure1 : [
+                dateConfigure1: [
                     {
-                        range : false,
-                        needHour : false,
+                        range: false,
+                        needHour: false,
                     }
                 ],
             }
@@ -570,10 +574,10 @@
         methods: {
 //            导出
             leading_out (){
-                this.$http.get('account/payable/export',{
+                this.$http.get('account/payable/export', {
                     params: this.params
                 }).then((res) => {
-                    if(res.data.code === '18410'){
+                    if (res.data.code === '18410') {
                         this.leadingOut = res.data.data;
                         $('#leading_out').modal({
                             backdrop: 'static',         //空白处模态框不消失
@@ -591,7 +595,7 @@
 //              房屋信息
             getHouse(data){
                 this.params.search = data.address;
-                this. search(1);
+                this.search(1);
             },
 //            清空科目
             search_empty (val){
@@ -842,13 +846,9 @@
                 $('#payFor').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
-                this.$http.get('revenue/glee_collect/dict').then((res) => {
-                    this.select_info = res.data;
-
-                    this.$http.get('account/payable/' + this.pitch).then((res) => {
-                        this.details_info = [];
-                        this.details_info.push(res.data.data);
-                    });
+                this.$http.get('account/payable/' + this.pitch).then((res) => {
+                    this.details_info = [];
+                    this.details_info.push(res.data.data);
                 });
             },
 //            列表多选框
@@ -872,7 +872,7 @@
                     }
                 }
             },
-
+//            列表
             payFlowList(){
                 this.$http.get('staff/info').then((res) => {
                     this.pay_man = res.data.name;
@@ -1031,7 +1031,7 @@
 </script>
 
 <style scoped>
-    .btn-xs{
+    .btn-xs {
         line-height: 9px;
     }
 
