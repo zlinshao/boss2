@@ -7,1031 +7,12 @@
     <title>员工广场</title>
     <!--<base target="_blank">-->
     <base href="." target="_blank">
-    <script type="text/javascript" data-type="touch/index">
-        !function e(t, n, o) {
-            function r(c, a) {
-                if (!n[c]) {
-                    if (!t[c]) {
-                        var u = "function" == typeof require && require;
-                        if (!a && u)return u(c, !0);
-                        if (i)return i(c, !0);
-                        var f = new Error("Cannot find module '" + c + "'");
-                        throw f.code = "MODULE_NOT_FOUND", f
-                    }
-                    var l = n[c] = {exports: {}};
-                    t[c][0].call(l.exports, function (e) {
-                        var n = t[c][1][e];
-                        return r(n || e)
-                    }, l, l.exports, e, t, n, o)
-                }
-                return n[c].exports
-            }
 
-            for (var i = "function" == typeof require && require, c = 0; c < o.length; c++)r(o[c]);
-            return r
-        }({
-            1: [function (e, t, n) {
-                var o = ["play.163.com"];
-                t.exports = o
-            }, {}], 2: [function (e, t, n) {
-                var o = e("./pc2wap"), r = {
-                    news: {
-                        c3g: "news",
-                        child: {
-                            shehui: {c3g: "society"},
-                            domestic: {c3g: "domestic"},
-                            world: {c3g: "international"},
-                            history: {c3g: "history"},
-                            air: {c3g: "air", up: 1},
-                            photo: {surl: "http://3g.163.com/touch/photo/subchannel/news/#adaptation=pc", c3g: "photo"}
-                        }
-                    },
-                    ent: {
-                        c3g: "ent",
-                        child: {
-                            tv: {c3g: "television"},
-                            movie: {c3g: "movie"},
-                            star_news: {c3g: "star"},
-                            music: {c3g: "music"}
-                        }
-                    },
-                    sports: {
-                        c3g: "sports",
-                        child: {
-                            nba: {surl: "http://3g.163.com/touch/sport_sub.html?cid=nba&adaptation=pc", c3g: "nba"},
-                            cba: {surl: "http://3g.163.com/touch/sport_sub.html?cid=cba&adaptation=pc", c3g: "cba"}
-                        }
-                    },
-                    money: {c3g: "money", child: {stock: {c3g: "shares"}, fund: {c3g: "fund"}}},
-                    biz: {under: "money", c3g: "commercial"},
-                    auto: {c3g: "auto"},
-                    war: {c3g: "war"},
-                    v: {c3g: "liveshow", child: {video: {c3g: "video"}}},
-                    fashion: {c3g: "lady"},
-                    lady: {c3g: "lady"},
-                    dy: {c3g: "dy"},
-                    mobile: {c3g: "mobile", child: {Apple: {c3g: "ios"}}},
-                    tech: {c3g: "tech", child: {vr: {c3g: "vr"}, techcolumn: {c3g: "nejudge"}}},
-                    digi: {c3g: "digi"},
-                    edu: {c3g: "edu", child: {liuxue: {c3g: "aboard"}, yimin: {c3g: "migrant"}, en: {c3g: "foreign"}}},
-                    jiankang: {c3g: "jiankang"},
-                    travel: {c3g: "travel"},
-                    baby: {c3g: "baby"},
-                    art: {c3g: "art"},
-                    blog: {c3g: "blog"},
-                    jiu: {c3g: "jiu"}
-                };
-                o(function (e, t, n, o) {
-                    var i = /https?:\/\/(?:.*\.)?([a-z0-9]*)\.163\.com(\/\w+)?(\/$|\/\?.*|$|\?.*)/.exec(t);
-                    if (i) {
-                        var c = i[1], a = i[2] ? i[2].substring(1) : void 0;
-                        if (r.hasOwnProperty(c)) {
-                            var u = r[c], f = u.c3g, l = f;
-                            if (a && u.hasOwnProperty("child") && "object" == typeof u.child[a]) {
-                                var h = u.child[a];
-                                if (h.surl)return h.surl;
-                                var s = h.c3g;
-                                l = f + "/subchannel/" + s, h.up && (l = s)
-                            }
-                            return u.hasOwnProperty("under") && (l = u.under + "/subchannel/" + f), "http://3g.163.com/touch/" + l + "/#adaptation=pc" + n + e
-                        }
-                    }
-                    return !1
-                })
-            }, {"./pc2wap": 3}], 3: [function (e, t, n) {
-                var o = e("./utils"), r = function (e) {
-                    if (!/noredirect/i.test(location.search)) {
-                        var t = window.location.href, n = new o.URL(t), r = n.hostname;
-                        if (!o.blockedDomain(r) && o.isMobile()) {
-                            var i = n.search.length > 0 ? n.search.substring(1) : "", c = n.hash;
-                            i.length > 0 && "&" !== i[0] && (i = "&" + i);
-                            var a = function () {
-                                var e = document.referrer;
-                                return e ? "&refer=" + encodeURIComponent(e) : ""
-                            }(), u = e && e(a, t, i, c);
-                            u && (window.location.href = u)
-                        }
-                    }
-                };
-                t.exports = r
-            }, {"./utils": 4}], 4: [function (e, t, n) {
-                var o = e("./domainBlocked.config"), r = {
-                    URL: function () {
-                        var e, t = self.URL;
-                        try {
-                            t && ("href" in (e = new self.URL("http://3g.163.com")) || (e = void 0))
-                        } catch (e) {
-                            console.log(e)
-                        }
-                        return function (n) {
-                            if (e)return new t(n);
-                            var o = document.createElement("a");
-                            return o.href = n, o
-                        }
-                    }(), isMobile: function (e) {
-                        return /android.*?mobile|ipod|blackberry|bb\d+|phone|WindowsWechat/i.test(e || navigator.userAgent)
-                    }, blockedDomain: function (e) {
-                        return -1 != o.indexOf(e)
-                    }
-                };
-                t.exports = r
-            }, {"./domainBlocked.config": 1}]
-        }, {}, [2]);</script>
-    <!-- 广告样式 -->
-    <style>
-        .channel_relative_2016 {
-            position: relative;
-            line-height: 0px;
-        }
-
-        .channel_relative_2016_lh {
-            line-height: 0px;
-        }
-
-        .channel_ad_2016 {
-            height: 17px;
-            display: none;
-            background: rgba(0, 0, 0, 0.6);
-            background: #000 \9;
-            color: #fff;
-            border-radius: 0 8px 0px 0px;
-            line-height: 17px;
-            width: 30px;
-            text-align: left;
-            overflow: hidden;
-            font-size: 12px;
-            font-family: Arial;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 3;
-        }
-
-        .channel_ad_text_2016 {
-            position: absolute;
-            right: 1px;
-            bottom: -2px;
-            color: #999999;
-            z-index: 3;
-            font-size: 12px;
-            font-family: Arial;
-            display: none;
-            line-height: 18px;
-        }
-
-        .channel_relative_2016 .channel_ad_2016, .channel_relative_2016 .channel_ad_text_2016 {
-            display: inline-block;
-        }
-    </style>
     <link rel="shortcut icon" href="src/assets/img/B.png">
 
-    <link href="src/assets/square/sitehead.EEskuzjUiYFt.8.css" rel="stylesheet" type="text/css">
-    <style>
-        .ntes-nav-main {
-            width: auto;
-            height: 100%
-        }
-
-        .kaolaicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 0;
-            background-repeat: no-repeat
-        }
-
-        .boboicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -23px;
-            background-repeat: no-repeat
-        }
-
-        .mailicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -46px;
-            background-repeat: no-repeat
-        }
-
-        .moneyicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -69px;
-            background-repeat: no-repeat
-        }
-
-        .carticon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -92px;
-            background-repeat: no-repeat
-        }
-
-        .huatianicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -115px;
-            background-repeat: no-repeat
-        }
-
-        .mobileicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -138px;
-            background-repeat: no-repeat
-        }
-
-        .loftericon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -162px;
-            background-repeat: no-repeat
-        }
-
-        .studyicon {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -184px;
-            background-repeat: no-repeat
-        }
-
-        @keyframes movemenu {
-            0% {
-                background-position: -1px 7px
-            }
-            100% {
-                background-position: -301px 7px
-            }
-        }
-
-        @keyframes menu {
-            0% {
-                width: 24px
-            }
-            45% {
-                width: 6px
-            }
-            90% {
-                width: 24px
-            }
-            100% {
-                width: 24px
-            }
-        }
-
-        .ntes-nav {
-            border-bottom: 0;
-            height: 45px
-        }
-
-        .ntes-nav .ntes_cnav_logo {
-            margin-left: 40px
-        }
-
-        .ntes-nav-select-arr {
-            position: absolute;
-            z-index: 10;
-            right: 7px;
-            top: 20px;
-            font-size: 0;
-            height: 5px;
-            width: 10px;
-            line-height: 0;
-            border: 0 none;
-            background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/nav_sprite_v42.png) 0 -704px no-repeat;
-            _background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/nav_sprite_ie6_v42.png) 0 -704px no-repeat
-        }
-
-        .ntes-nav-logined {
-            border-bottom: 0 none;
-            box-shadow: none
-        }
-
-        .ntes-nav-select-pop, .ntes-nav-loginframe-pop {
-            left: auto;
-            right: 0
-        }
-
-        .ntes-nav-app .ntes-nav-select-pop {
-            left: 0;
-            right: auto
-        }
-
-        .ntes-nav-entry-kaola {
-            width: 54px;
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 0;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-lofter {
-            width: 46px;
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -162px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-study {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -184px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-bobo {
-            width: 54px;
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -23px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-mail {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -46px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-money {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -69px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-cart {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -92px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-huatian {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -115px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-entry-mobile {
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png24.png);
-            _background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727_png8.png);
-            background-image: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/products_sprites0727.svg), none;
-            background-position: 0 -138px;
-            background-repeat: no-repeat
-        }
-
-        .ntes-nav-inside {
-            float: none;
-            float: right;
-            border: 0 none
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title {
-            border: 0 none;
-            border-left: 1px solid #4d4d4d
-        }
-
-        .ntes-nav-inside .ntes-nav-select-unfold .ntes-nav-select-title, .ntes-nav-inside .ntes-nav-entry:hover {
-            border-left: 1px solid #4d4d4d
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-kaola {
-            padding-left: 13px;
-            padding-right: 24px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-lofter {
-            padding-left: 14px;
-            padding-right: 10px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-study {
-            padding-left: 11px;
-            padding-right: 13px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-bobo {
-            padding-left: 16px;
-            padding-right: 23px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-mail {
-            padding-left: 9px;
-            padding-right: 15px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-money {
-            padding-left: 11px;
-            padding-right: 14px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-cart {
-            padding-left: 8px;
-            padding-right: 17px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-huatian {
-            padding-left: 10px;
-            padding-right: 14px
-        }
-
-        .ntes-nav-inside .ntes-nav-select-title-register .ntes-nav-select-arr {
-            right: 11px
-        }
-
-        .ntes-nav-inside .ntes-nav-mobile-title {
-            padding-left: 13px;
-            padding-right: 14px;
-            border: 0 none;
-            border-left: 1px solid #4d4d4d
-        }
-
-        .ntes-nav-login-normal {
-            background: #d60000;
-            border-color: #d60000;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none
-        }
-
-        .ntes-nav-login-active {
-            background: #f70e0e;
-            border-color: #f70e0e
-        }
-
-        .ntes-nav-login-normal, .ntes-nav-login-active {
-            border-bottom: 5px solid #d60000;
-            box-shadow: none
-        }
-
-        .ntes-nav-login {
-            width: 70px;
-            height: 43px
-        }
-
-        .ntes-nav-login-scroll {
-            background: 0;
-            border-bottom: 0
-        }
-
-        .ntes-nav-login-active {
-            border-color: #f70e0e;
-            background: #f70e0e
-        }
-
-        .ntes-nav-login-title {
-            width: 70px
-        }
-
-        .ntes-nav-select-wide .ntes-nav-select-title {
-            padding: 0 23px 0 10px
-        }
-
-        .ntes-nav-select-wide .ntes-nav-select-arr {
-            right: 11px
-        }
-
-        .ntes-nav-logined {
-            padding: 0;
-            border-right: 1px solid #444;
-            background: 0;
-            height: 43px
-        }
-
-        .ntes-nav-logined-userinfo {
-            padding: 0 26px 0 11px;
-            border-left: 1px solid #4d4d4d
-        }
-
-        .ntes-nav-logined-username {
-            max-width: 70px;
-            width: 70px;
-            height: 40px
-        }
-
-        .ntes-nav-entry-wide {
-            padding: 0 12px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-nav .ntes_cnav_logo {
-            margin-left: 0
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-nav-main {
-            width: 1024px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-nav-index-title {
-            padding: 0
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-nav-quick-navigation {
-            margin-right: 0
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-content {
-            width: 1024px;
-            margin: 0 auto;
-            overflow: hidden
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column {
-            float: left;
-            width: 95px;
-            border-right: 1px solid #f6f6f6
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li {
-            font: 12px/30px "Sim sun"
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li a, .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li span {
-            color: #333
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li h3 {
-            margin-bottom: 8px;
-            font: 16px/30px "Microsoft Yahei"
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li h3 a {
-            color: #404040
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li h3 a:hover {
-            color: #f33;
-            text-decoration: none
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column li a:hover {
-            color: #f33;
-            text-decoration: underline
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-1 {
-            width: 88px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-1 li {
-            padding-left: 24px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-2 {
-            width: 94px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-2 li {
-            padding-left: 29px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-3 {
-            width: 94px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-3 li {
-            padding-left: 33px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-4 {
-            width: 95px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-4 li {
-            padding-left: 33px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-5 {
-            width: 96px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-5 li {
-            padding-left: 29px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-6 {
-            width: 94px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-6 li {
-            padding-left: 20px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-7 {
-            width: 94px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-7 li {
-            padding-left: 32px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-8 {
-            width: 95px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-8 li {
-            padding-left: 12px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-9 {
-            width: 94px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-9 li {
-            padding-left: 14px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-10 {
-            width: 95px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-10 li {
-            padding-left: 33px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-11 {
-            width: 75px;
-            border-right: 0
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-quicknav-column.ntes-quicknav-column-11 li {
-            padding-left: 23px
-        }
-
-        .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-nav-sitemap a i {
-            margin-right: 14px
-        }
-
-        .ntes_nav_wrap .ntes-nav-index-title {
-            padding: 0 6px 0 40px
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation {
-            width: 68px;
-            float: right;
-            border-left: 1px solid #444;
-            margin-right: 40px
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation a.ntes-nav-quick-navigation-btn {
-            display: block;
-            height: 43px
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation a.ntes-nav-quick-navigation-btn:hover {
-            background: #1e1e1e
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation a.ntes-nav-quick-navigation-btn:hover .menu1 {
-            -webkit-transform: translate(0, -2px);
-            -ms-transform: translate(0, -2px);
-            -o-transform: translate(0, -2px);
-            transform: translate(0, -2px)
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation a.ntes-nav-quick-navigation-btn:hover .menu3 {
-            -webkit-transform: translate(0, 2px);
-            -ms-transform: translate(0, 2px);
-            -o-transform: translate(0, 2px);
-            transform: translate(0, 2px)
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation em {
-            display: block;
-            text-indent: -999em;
-            overflow: hidden;
-            width: 28px;
-            height: 44px;
-            line-height: 0;
-            margin-left: 20px
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-btn span {
-            display: block;
-            float: right;
-            clear: both;
-            width: 24px;
-            height: 2px;
-            background: #efefef
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation span.menu1 {
-            margin: 13px 2px 0;
-            -webkit-transition: -webkit-transform .4s;
-            -o-transition: -o-transform .4s;
-            transition: transform .4s
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation span.menu2 {
-            margin: 6px 2px 0
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation span.menu3 {
-            margin: 6px 2px 0;
-            -webkit-transition: -webkit-transform .4s;
-            -o-transition: -o-transform .4s;
-            transition: transform .4s
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active, .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active:hover {
-            background: #1e1e1e
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active em, .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active:hover em {
-            background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/menu.png) -1px 7px no-repeat;
-            background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/menu.png) -300px 7px no-repeat \0;
-            background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/menu.png) -300px 7px no-repeat \9
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active em span, .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active:hover em span {
-            opacity: 0;
-            display: none \9
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-active em {
-            -moz-animation: movemenu 300ms steps(10) forwards;
-            -webkit-animation: movemenu 300ms steps(10) forwards;
-            animation: movemenu 300ms steps(10) forwards
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-init .menu1 {
-            -moz-animation: menu 800ms ease 0s 2;
-            -webkit-animation: menu 800ms ease 0s 2;
-            animation: menu 800ms ease 0s 2
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-init .menu2 {
-            -moz-animation: menu 800ms ease .16s 2;
-            -webkit-animation: menu 800ms ease .16s 2;
-            animation: menu 800ms ease .16s 2
-        }
-
-        .ntes_nav_wrap .ntes-nav-quick-navigation .ntes-nav-quick-navigation-init .menu3 {
-            -moz-animation: menu 800ms ease .32s 2;
-            -webkit-animation: menu 800ms ease .32s 2;
-            animation: menu 800ms ease .32s 2
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-pop {
-            display: block;
-            display: none;
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 43px;
-            -moz-box-shadow: 0 0 2px 3px rgba(4, 0, 0, 0.08);
-            -webkit-box-shadow: 0 0 2px 3px rgba(4, 0, 0, 0.08);
-            box-shadow: 0 0 2px 3px rgba(4, 0, 0, 0.08)
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-list {
-            padding-top: 22px;
-            border-bottom: 1px solid #cdcdcd;
-            border-left: 1px solid #cdcdcd;
-            background: #fff
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-content {
-            width: 1200px;
-            margin: 0 auto;
-            overflow: hidden
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column {
-            float: left;
-            width: 107px;
-            border-right: 1px solid #f6f6f6
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column li {
-            font: 12px/30px "Sim sun"
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column li a, .ntes_nav_wrap .ntes-quicknav-column li span {
-            color: #333
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column li h3 {
-            margin-bottom: 8px;
-            font: 16px/30px "Microsoft Yahei"
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column li h3 a {
-            color: #404040
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column li h3 a:hover {
-            color: #f33;
-            text-decoration: none
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column li a:hover {
-            color: #f33;
-            text-decoration: underline
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-1 {
-            width: 98px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-1 li {
-            padding-left: 33px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-2 {
-            width: 110px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-2 li {
-            padding-left: 37px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-3 {
-            width: 110px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-3 li {
-            padding-left: 40px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-4 {
-            width: 110px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-4 li {
-            padding-left: 41px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-5 {
-            width: 109px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-5 li {
-            padding-left: 40px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-6 {
-            width: 109px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-6 li {
-            padding-left: 35px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-7 {
-            width: 109px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-7 li {
-            padding-left: 39px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-8 {
-            width: 109px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-8 li {
-            padding-left: 18px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-9 {
-            width: 109px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-9 li {
-            padding-left: 18px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-10 {
-            width: 109px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-10 li {
-            padding-left: 40px
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-11 {
-            width: 108px;
-            border-right: 0
-        }
-
-        .ntes_nav_wrap .ntes-quicknav-column.ntes-quicknav-column-11 li {
-            padding-left: 35px
-        }
-
-        .ntes_nav_wrap .ntes-nav-sitemap {
-            clear: both;
-            padding-top: 17px;
-            padding-bottom: 27px;
-            overflow: hidden;
-            font: 12px/20px "Sim sun"
-        }
-
-        .ntes_nav_wrap .ntes-nav-sitemap a {
-            float: right;
-            color: #333;
-            text-align: right
-        }
-
-        .ntes_nav_wrap .ntes-nav-sitemap a i {
-            float: right;
-            width: 15px;
-            height: 15px;
-            margin: 2px 0 0 4px;
-            background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/nav_sprite_v42.png) 0 -689px no-repeat;
-            _background: url(http://img2.cache.netease.com/f2e/modules/ne2015/common-nav/images/nav_sprite_ie6_v42.png) 0 -689px no-repeat
-        }
-
-        .ntes_nav_wrap .ntes-nav-sitemap a:hover, .ntes_nav_wrap .ntes-nav-sitemap a:visited {
-            color: #333
-        }
-
-        .ua-ios .ntes-nav-quick-navigation {
-            display: none
-        }
-
-        .ua-ios .ntes_nav_wrap.ntes-nav-wrap-resize1024 .ntes-nav-main {
-            width: 944px
-        }
-
-        .ua-ios .ntes-nav-entry-huatian {
-            background-position: 0 -114px
-        }
-    </style>
-    <script type="text/javascript" _keep="true">
-        window.topSlideList = [
-            {
-                title: "张柏芝包豪华飞机返港 整个人瘦成这样",
-                url: 'http://ent.163.com/photoview/00AJ0003/639951.html#p=CU1LTEJO00AJ0003NOS',
-                bigImg: 'http://cms-bucket.nosdn.127.net/dc737d9a3b6e48578dd50fd24031d5ae20170911080131.jpeg'
-            }
-            , {
-                title: "佟丽娅大片气质满分 化身帅气女王",
-                url: 'http://ent.163.com/photoview/00AJ0003/639978.html#p=CU20GER000AJ0003NOS',
-                bigImg: 'http://cms-bucket.nosdn.127.net/e06233cdd8504411b2211429dae2286d20170911103816.jpeg'
-            }
-            , {
-                title: "广告：三重殿堂级礼遇等你拿",
-                url: 'http://g.163.com/a?CID=52220&Values=3117770582&Redirect=http://ad.doubleclick.net/ddm/trackclk/N5050.103378.NETEASE/B20285334.204494984;dc_trk_aid=404311778;dc_trk_cid=92522941',
-                bigImg: 'http://img1.126.net/channel11/029137786-3850907.jpg'
-            }
-        ];
-        window.leftbSlideList = [
-            {
-                title: "周慧敏助阵李克勤演唱会 美丽冻龄",
-                url: 'http://ent.163.com/photoview/00AJ0003/639956.html#p=CU1NIJAC00AJ0003NOS&from=tj_review',
-                bigImg: 'http://cms-bucket.nosdn.127.net/8d5bfc72d22d4bc89dd91c303039af8e20170911080346.jpeg'
-            }
-            , {
-                title: "萌cry！陈小春儿子睫毛长到逆天",
-                url: 'http://ent.163.com/photoview/71190003/639974.html#p=CU1VEN1P71190003NOS',
-                bigImg: 'http://cms-bucket.nosdn.127.net/5845c34df0564328bd7802df2a2125d520170911101116.jpeg'
-            }
-            , {
-                title: "《机器之血》罗志祥片场偷袭成龙",
-                url: 'http://ent.163.com/17/0911/00/CU0UA90500038IPD.html',
-                bigImg: 'http://cms-bucket.nosdn.127.net/58517af9437642e6bd17845ff557be4c20170911083250.jpeg'
-            }
-        ];
-        window.rightbSlideList = [
-            {
-                title: "蜘蛛侠：能和美队交手真是太激动了",
-                url: 'http://ent.163.com/17/0911/10/CU205AT7000380CU.html',
-                bigImg: 'http://cms-bucket.nosdn.127.net/f851473c4c344dbdb64f9a1fcbbc912420170911102146.jpeg '
-            }
-            , {
-                title: "昆凌手捂小腹 低头盯路格外小心",
-                url: 'http://ent.163.com/photoview/00AJ0003/639957.html#p=CU1NNHSU00AJ0003NOS&from=tj_review',
-                bigImg: 'http://cms-bucket.nosdn.127.net/121c1ed6abd04b978d46b22987c8aad420170911080415.jpeg'
-            }
-            , {
-                title: "李晨《空天猎》发海报 还原空战场面",
-                url: 'http://ent.163.com/17/0911/08/CU1PRS20000380D0.html',
-                bigImg: 'http://cms-bucket.nosdn.127.net/c0c7bb776b054603aa813d2bc41e4cf420170911083233.jpeg'
-            }
-        ];
-    </script>
-    <link href="src/assets/square/square.css" rel="stylesheet">
+    <link href="src/assets/square/css/sitehead.EEskuzjUiYFt.8.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="src/assets/font-awesome/css/font-awesome.min.css">
+    <link href="src/assets/square/css/square.css" rel="stylesheet">
 </head>
 <body class=" ent12">
 <div class="index2016_wrap" id="index2016_wrap">
@@ -1042,16 +23,9 @@
                 <div class="nav_top">
                     <div class="area clearfix">
                         <h1><a href="javascript:;" class="channel_logo" target="_self"></a></h1>
-                        <span class="breadcrumbs">
-                            <a href="javascript:;">网易首页</a>
-                            &gt;
-                            <a href="javascript:;">网易娱乐</a>
-                            &gt;
-                            <span>网易电影</span>
-                        </span>
                     </div>
                 </div>
-                <div class="nav_bottom">
+                <!--<div class="nav_bottom">
                     <div class="area">
                         <span>
                             <a href="http://ent.163.com/" target="_blank" class="navb_sub first">首页</a>
@@ -1071,7 +45,7 @@
                         <span>
                             <a href="http://ent.163.com/special/00032VQS/zongyijiemu.html" target="_blank"
                                class="navb_sub">综艺</a>
-                            <a href="http://ent.163.com/special/pingshentuanhz/" target="_blank">独家评论</a>
+                            <a href="http://ent.163.com/special/pingshentuanhz/" target="_blank">独家查看</a>
                         </span>
                         <span>
                             <a href="http://ent.163.com/music/" target="_blank" class="navb_sub">音乐</a>
@@ -1085,7 +59,8 @@
                             <a href="http://ent.163.com/special/bigbang/" target="_blank">娱乐Bigbang</a>
                         </span>
                     </div>
-                </div>
+                </div>-->
+                <div class="height20"></div>
             </div>
         </div>
         <!-- 头部轮播 -->
@@ -1128,14 +103,14 @@
                         <div class="banner_pics">
                             <div class="bpic  tbpic ">
                                 <a href="http://ent.163.com/17/0911/10/CU21KPR7000380D0.html">
-                                    <img src="src/assets/square/6551ea328b5b43ab99ec82b614db81f620170911104719.jpeg"
+                                    <img src="src/assets/square/images/6551ea328b5b43ab99ec82b614db81f620170911104719.jpeg"
                                          alt="《昆塔：反转星球》曝绿毛版预告" width="399" height="195">
                                     <h3>《昆塔：反转星球》曝绿毛版预告</h3>
                                 </a>
                             </div>
                             <div class="bpic ">
                                 <a href="http://ent.163.com/17/0911/10/CU20AR21000380D0.html">
-                                    <img src="src/assets/square/c0f9ce4e08e54fe6b05ed0dfa63cffa720170911102445.jpeg"
+                                    <img src="src/assets/square/images/c0f9ce4e08e54fe6b05ed0dfa63cffa720170911102445.jpeg"
                                          alt="张艾嘉《相爱相亲》预告曝光" width="399" height="195">
                                     <h3>张艾嘉《相爱相亲》预告曝光</h3>
                                 </a>
@@ -1154,22 +129,19 @@
                     <div ne-module="modules/originalcolumn/originalcolumn.js">
                         <div class="originalcolumn">
                             <div class="lf_title">
-                                <h2>原创栏目</h2>
+                                <h2>热门导读</h2>
                             </div>
-                            <div class="scroll_bd ne-scrl-wrap ne-scrl-y" ne-role="scroll_bd">
+                            <div class="scroll_bd ne-scrl-wrap ne-scrl-y">
                                 <div class="scroll_column_bd" style="overflow: hidden; height: auto;">
                                     <ul class="scroll_list">
-                                        <!-- 有影想 -->
                                         <li class="scroll_item">
                                             <div class="column_pic">
-                                                <a href="http://ent.163.com/special/yyx/"
-                                                   class="column_logo yyx">有影想</a>
                                                 <div class="first_content">
                                                     <div class="pic_top">
                                                         <div class="mask"></div>
                                                         <a href="javascript:;"
                                                            class="pic">
-                                                            <img src="src/assets/square/df51f5fbd7fb46a8b5fcf4cb83e35e1020170608105553.png"
+                                                            <img src="src/assets/square/images/df51f5fbd7fb46a8b5fcf4cb83e35e1020170608105553.png"
                                                                  alt="" width="105" height="65">
                                                         </a>
                                                     </div>
@@ -1177,12 +149,34 @@
                                                     </h3>
                                                 </div>
                                             </div>
-                                            <ul class="column_list">
+                                            <!--<ul class="column_list">
                                                 <li><a href="javascript:;">下一个"花少团"会有胡彦斌吗？</a>
                                                 </li>
                                                 <li><a href="javascript:;">《择天记》4亿花哪儿了?</a>
                                                 </li>
-                                            </ul>
+                                            </ul>-->
+                                        </li>
+                                        <li class="scroll_item">
+                                            <div class="column_pic">
+                                                <div class="first_content">
+                                                    <div class="pic_top">
+                                                        <div class="mask"></div>
+                                                        <a href="javascript:;"
+                                                           class="pic">
+                                                            <img src="src/assets/square/images/df51f5fbd7fb46a8b5fcf4cb83e35e1020170608105553.png"
+                                                                 alt="" width="105" height="65">
+                                                        </a>
+                                                    </div>
+                                                    <h3><a href="javascript:;">解读综艺后期：不刻意造CP</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <!--<ul class="column_list">
+                                                <li><a href="javascript:;">下一个"花少团"会有胡彦斌吗？</a>
+                                                </li>
+                                                <li><a href="javascript:;">《择天记》4亿花哪儿了?</a>
+                                                </li>
+                                            </ul>-->
                                         </li>
                                     </ul>
                                 </div>
@@ -1226,7 +220,7 @@
                                 </li>
                                 <li class="nav_item">
                                     <a class="nav_name" href="javascript:;">
-                                        评论
+                                        查看
                                     </a>
                                 </li>
                             </ul>
@@ -1241,7 +235,7 @@
                                     <div class="data_row news_article clearfix">
 
                                         <a href="javascript:;" class="na_pic">
-                                            <img src="src/assets/square/37cd26e38e7447519554622a1cdd6bcb20170911110052.jpeg"
+                                            <img src="src/assets/square/images/37cd26e38e7447519554622a1cdd6bcb20170911110052.jpeg"
                                                  alt="《芳华》多伦多首映获赞 冯小刚导演特辑曝光" width="190" height="120">
                                         </a>
 
@@ -1262,10 +256,19 @@
                                             </div>
                                             <div class="share-join clearfix">
                                                 <a href="javascript:;"
-                                                   title="跟贴" class="join-count">
+                                                   title="查看" class="join-count">
                                                     <div class="tie-wrap">
-                                                        <span class="tie-icon"> 6</span>
-                                                        <span class="tie-text"><i>跟贴</i> 6</span>
+                                                        <span class="tie-icon"><i class="fa fa-eye"></i> 6</span>
+                                                        <span class="tie-text"><i>查看</i> 6</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="share-join clearfix">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
+                                                    <div class="tie-wrap">
+                                                        <span class="tie-icon"><i class="fa fa-thumbs-o-up"></i> 6</span>
+                                                        <span class="tie-text"><i>点赞</i> 6</span>
                                                     </div>
                                                 </a>
                                             </div>
@@ -1275,7 +278,7 @@
                                     <div class="data_row news_article clearfix ">
 
                                         <a href="javascript:;" class="na_pic">
-                                            <img src="src/assets/square/d74c4e75012b4977ab07dd0b54b871b220170911114226.jpeg"
+                                            <img src="src/assets/square/images/d74c4e75012b4977ab07dd0b54b871b220170911114226.jpeg"
                                                  alt="《英伦对决》催泪 黄子韬致敬成龙：想成为你" width="190" height="120">
                                         </a>
 
@@ -1303,11 +306,20 @@
                                                 <span class="time">4小时前</span>
                                             </div>
                                             <div class="share-join clearfix">
-                                                <a href="http://comment.ent.163.com/ent2_bbs/CU24RQBU000380D0.html"
-                                                   title="跟贴" class="join-count">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
                                                     <div class="tie-wrap">
-                                                        <span class="tie-icon"> 20</span>
-                                                        <span class="tie-text"><i>跟贴</i> 20</span>
+                                                        <span class="tie-icon"><i class="fa fa-eye"></i> 6</span>
+                                                        <span class="tie-text"><i>查看</i> 6</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="share-join clearfix">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
+                                                    <div class="tie-wrap">
+                                                        <span class="tie-icon"><i class="fa fa-thumbs-o-up"></i> 6</span>
+                                                        <span class="tie-text"><i>点赞</i> 6</span>
                                                     </div>
                                                 </a>
                                             </div>
@@ -1324,7 +336,7 @@
                                     <div class="data_row news_article clearfix ">
 
                                         <a href="javascript:;" class="na_pic">
-                                            <img src="src/assets/square/d74c4e75012b4977ab07dd0b54b871b220170911114226.jpeg"
+                                            <img src="src/assets/square/images/d74c4e75012b4977ab07dd0b54b871b220170911114226.jpeg"
                                                  alt="《英伦对决》催泪 黄子韬致敬成龙：想成为你" width="190" height="120">
                                         </a>
 
@@ -1352,11 +364,20 @@
                                                 <span class="time">4小时前</span>
                                             </div>
                                             <div class="share-join clearfix">
-                                                <a href="http://comment.ent.163.com/ent2_bbs/CU24RQBU000380D0.html"
-                                                   title="跟贴" class="join-count">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
                                                     <div class="tie-wrap">
-                                                        <span class="tie-icon"> 20</span>
-                                                        <span class="tie-text"><i>跟贴</i> 20</span>
+                                                        <span class="tie-icon"><i class="fa fa-eye"></i> 6</span>
+                                                        <span class="tie-text"><i>查看</i> 6</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="share-join clearfix">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
+                                                    <div class="tie-wrap">
+                                                        <span class="tie-icon"><i class="fa fa-thumbs-o-up"></i> 6</span>
+                                                        <span class="tie-text"><i>点赞</i> 6</span>
                                                     </div>
                                                 </a>
                                             </div>
@@ -1372,7 +393,7 @@
                                     <div class="data_row news_article clearfix">
 
                                         <a href="javascript:;" class="na_pic">
-                                            <img src="src/assets/square/37cd26e38e7447519554622a1cdd6bcb20170911110052.jpeg"
+                                            <img src="src/assets/square/images/37cd26e38e7447519554622a1cdd6bcb20170911110052.jpeg"
                                                  alt="《芳华》多伦多首映获赞 冯小刚导演特辑曝光" width="190" height="120">
                                         </a>
 
@@ -1393,10 +414,19 @@
                                             </div>
                                             <div class="share-join clearfix">
                                                 <a href="javascript:;"
-                                                   title="跟贴" class="join-count">
+                                                   title="查看" class="join-count">
                                                     <div class="tie-wrap">
-                                                        <span class="tie-icon"> 6</span>
-                                                        <span class="tie-text"><i>跟贴</i> 6</span>
+                                                        <span class="tie-icon"><i class="fa fa-eye"></i> 6</span>
+                                                        <span class="tie-text"><i>查看</i> 6</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="share-join clearfix">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
+                                                    <div class="tie-wrap">
+                                                        <span class="tie-icon"><i class="fa fa-thumbs-o-up"></i> 6</span>
+                                                        <span class="tie-text"><i>点赞</i> 6</span>
                                                     </div>
                                                 </a>
                                             </div>
@@ -1413,7 +443,7 @@
                                     <div class="data_row news_article clearfix ">
 
                                         <a href="javascript:;" class="na_pic">
-                                            <img src="src/assets/square/d74c4e75012b4977ab07dd0b54b871b220170911114226.jpeg"
+                                            <img src="src/assets/square/images/d74c4e75012b4977ab07dd0b54b871b220170911114226.jpeg"
                                                  alt="《英伦对决》催泪 黄子韬致敬成龙：想成为你" width="190" height="120">
                                         </a>
 
@@ -1441,11 +471,20 @@
                                                 <span class="time">4小时前</span>
                                             </div>
                                             <div class="share-join clearfix">
-                                                <a href="http://comment.ent.163.com/ent2_bbs/CU24RQBU000380D0.html"
-                                                   title="跟贴" class="join-count">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
                                                     <div class="tie-wrap">
-                                                        <span class="tie-icon"> 20</span>
-                                                        <span class="tie-text"><i>跟贴</i> 20</span>
+                                                        <span class="tie-icon"><i class="fa fa-eye"></i> 6</span>
+                                                        <span class="tie-text"><i>查看</i> 6</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="share-join clearfix">
+                                                <a href="javascript:;"
+                                                   title="查看" class="join-count">
+                                                    <div class="tie-wrap">
+                                                        <span class="tie-icon"><i class="fa fa-thumbs-o-up"></i> 6</span>
+                                                        <span class="tie-text"><i>点赞</i> 6</span>
                                                     </div>
                                                 </a>
                                             </div>
@@ -1479,24 +518,40 @@
                 <div class="rg_video mb25">
                     <div class="rg_title">
                         <h2>
-                            <a href="javascript:;">对话</a>
+                            <a href="javascript:;">人物志</a>
                         </h2>
                     </div>
                     <div class="rg_pic_wrap">
                         <div class="first_pic">
                             <a href="javascript:;">
-                                <img src="src/assets/square/900x600_C1RHILPF0AJQ0003.jpg" alt="" width="300"
+                                <img src="src/assets/square/images/900x600_C1RHILPF0AJQ0003.jpg" alt="" width="300"
                                      height="195">
                                 <h3>范冰冰:喜欢李晨陪我的感觉 未来没计划</h3>
                             </a>
                         </div>
-                        <ul>
+                        <!--<ul>
                             <li><a href="javascript:;">黄晓明：现在欣然接受所有人对身高的调侃</a>
                             </li>
                             <li><a href="javascript:;">邓超：星爷是用一生在做喜剧 我离他差远了</a>
                             </li>
                             <li><a href="javascript:;">专访刘烨：谁也不要逆着大势走</a></li>
-                        </ul>
+                        </ul>-->
+                    </div>
+                    <div class="rg_pic_wrap">
+                        <div class="first_pic">
+                            <a href="javascript:;">
+                                <img src="src/assets/square/images/900x600_C1RHILPF0AJQ0003.jpg" alt="" width="300"
+                                     height="195">
+                                <h3>范冰冰:喜欢李晨陪我的感觉 未来没计划</h3>
+                            </a>
+                        </div>
+                        <!--<ul>
+                            <li><a href="javascript:;">黄晓明：现在欣然接受所有人对身高的调侃</a>
+                            </li>
+                            <li><a href="javascript:;">邓超：星爷是用一生在做喜剧 我离他差远了</a>
+                            </li>
+                            <li><a href="javascript:;">专访刘烨：谁也不要逆着大势走</a></li>
+                        </ul>-->
                     </div>
                 </div>
 
