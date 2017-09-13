@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>人资管理</li>
-            <li class="active">组织架构{{parentDpartmentId}}</li>
+            <li class="active">组织架构</li>
             <li class="pull-right" v-if="isShowPic">
                 <a @click="changeView">
                     <i class="fa fa-angle-double-left"></i>返回

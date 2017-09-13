@@ -96,10 +96,10 @@
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
-                            <td class="text-center"></td>
+                            <td class="text-center">详情</td>
                         </tr>
                         <tr v-if="isShow">
-                            <td colspan="14" class="text-center text-muted">
+                            <td colspan="8" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -118,7 +118,7 @@
         components :{Add},
         data(){
             return{
-                isShow : false,
+                isShow : true,
             }
         },
         methods :{
