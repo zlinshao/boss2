@@ -12,7 +12,12 @@
                     </div>
                     <div class="modal-body inbox-body panel" v-if="!isNewHouse">
                         <div class="row">
-                            <label class="col-sm-2 control-label col-lg-2" >房屋地址</label>
+                            <div class="iconic-input right col-lg-4" v-if="isNewAddHouse != 1">
+                                <select  class="form-control" v-model="houseType">
+                                    <option value="1">未收房源</option>
+                                    <option value="2">公司房源</option>
+                                </select>
+                            </div>
                             <div class="iconic-input right col-lg-4">
                                 <i class="fa fa-search"></i>
                                 <input type="text" class="form-control" placeholder="请输入房屋地址" v-model="keywords"
@@ -162,6 +167,7 @@
                 keywords:'',
                 houseList:[],
                 dictionary:[],
+                houseType : '1',
                 houseAddress:{          //发送回父组件的数据
                     id:'',
                     address:'',
@@ -216,7 +222,7 @@
             search(){
                 if(this.keywords!==''){
                     if(this.isNewAddHouse == 1){
-                        this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords)).then((res) => {
+                        this.$http.get('core/core_common/villalist/keywords/'+encodeURI(this.keywords +/type/ +false)).then((res) => {
                             if(res.data.code === '20010'){
                                 this.houseList=res.data.data;
                                 this.isShow = false;
@@ -228,17 +234,32 @@
                             }
                         })
                     }else {
-                        this.$http.get('core/core_common/villacollect/keywords/'+encodeURI(this.keywords)).then((res) => {
-                            if(res.data.code === '20010'){
-                                this.houseList=res.data.data;
-                                this.isShow = false;
-                            }else {
-                                this.houseList=[];
-                                this.isShow = true;
-                                this.info.error = res.data.msg;
-                                this.info.state_error = true;
-                            }
-                        })
+                        if(this.houseType == 1){
+                            this.$http.get('core/core_common/villacollect/keywords/'+encodeURI(this.keywords)).then((res) => {
+                                if(res.data.code === '20010'){
+                                    this.houseList=res.data.data;
+                                    this.isShow = false;
+                                }else {
+                                    this.houseList=[];
+                                    this.isShow = true;
+                                    this.info.error = res.data.msg;
+                                    this.info.state_error = true;
+                                }
+                            })
+                        }else {
+                            this.$http.post('core/villa/com_villa/keyword/'+encodeURI(this.keywords)).then((res) => {
+                                if(res.data.code === '80050'){
+                                    this.houseList=res.data.data.data;
+                                    this.isShow = false;
+                                }else {
+                                    this.houseList=[];
+                                    this.isShow = true;
+                                    this.info.error = res.data.msg;
+                                    this.info.state_error = true;
+                                }
+                            })
+                        }
+
                     }
 
                 }
