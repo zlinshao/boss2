@@ -41,6 +41,13 @@ import RentingContractTransfer from "./compoments/contract/rentingContractTransf
 
 import  Comparecontract from  './compoments/contract/Compare.vue'
 
+import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'                     //财务房东管理
+import NewRenter from './compoments/finance/clientManage/newRenter.vue'                         //财务租客管理
+import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'             //财务房东管理详情
+import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDetail.vue'         //财务租客管理详情
+import RentLordAll from './compoments/finance/clientManage/RentLordAll.vue'                     //财务房东/租客管理总汇
+
+import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'       //财务客户管理
 // 账本
 import Account from './compoments/finance/account.vue'                                          // 账号管理
 import Subject from './compoments/finance/subject/subject.vue'                                  // 科目管理
@@ -48,6 +55,7 @@ import Classify from './compoments/finance/subject/classify.vue'                
 import Jurisdiction from './compoments/finance/jurisdiction.vue'                                // 科目管理
 import CollectPayment from './compoments/finance/payment/collect.vue'                           // 应收款项
 import PayPayment from './compoments/finance/payment/pay.vue'                                   // 应付款项
+import PayCllentAll from './compoments/finance/payment/PayCollectAll.vue'                        //财务应收/应付总汇
 import IncomeFlow from './compoments/finance/incomeFlow.vue'                                    // 收支流水
 import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'                       // 收支流水
 import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'               // 收支流水
@@ -78,12 +86,7 @@ import PunchRecord from './compoments/punchRecord/punchRecord.vue'              
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
 // import ClientManage from './compoments/finance/clientManage/clientManageList.vue'               //财务客户管理
 
-import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'                     //财务房东管理
-import NewRenter from './compoments/finance/clientManage/newRenter.vue'                         //财务租客管理
-import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'             //财务房东管理详情
-import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDetail.vue'         //财务租客管理详情
 
-import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'       //财务客户管理
 
 import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'                // 办公用品管理
 import OfficeApply from './compoments/office/officeApply/officeApply.vue'                       // 办公用品申领
@@ -244,6 +247,16 @@ export default[
         component: NewLandlordDetail
     },
     {
+        path: '/rentLordAll',
+        name: 'rentLordAll',                   //财务房东/租客总汇
+        component: RentLordAll
+    },
+    {
+        path: '/payCllentAll',
+        name: 'payCllentAll',                   //财务应收/应付总汇
+        component: PayCllentAll
+    },
+    {
         path: '/newRenter',
         name: 'newRenter',                      //财务租房管理
         component: NewRenter
@@ -330,28 +343,28 @@ export default[
     },
     {
         path: '/collectPayment',
-        name: 'CollectPayment',
+        name: 'CollectPayment',                 //应收
         component: CollectPayment
     },
     {
+        path: '/collectPaymentDetail',
+        name: 'CollectPaymentDetail',           //应收详情
+        component: CollectPaymentDetail
+    },
+    {
         path: '/payPayment',
-        name: 'PayPayment',
+        name: 'PayPayment',                     //应付
         component: PayPayment
+    },
+    {
+        path: '/payPaymentDetail',
+        name: 'PayPaymentDetail',               //应付详情
+        component: PayPaymentDetail
     },
     {
         path: '/incomeFlow',
         name: 'IncomeFlow',
         component: IncomeFlow
-    },
-    {
-        path: '/payPaymentDetail',
-        name: 'PayPaymentDetail',
-        component: PayPaymentDetail
-    },
-    {
-        path: '/collectPaymentDetail',
-        name: 'CollectPaymentDetail',
-        component: CollectPaymentDetail
     },
     {
         path: '/pendingItem',

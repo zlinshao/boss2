@@ -21,7 +21,7 @@
 </style>
 <script>
     export default {
-        props: ['pg','beforePage'],
+        props: ['pg', 'beforePage'],
         data (){
             return {
                 page: 1,               //分页
@@ -67,6 +67,11 @@
 </script>
 
 <style scoped>
+    .pagination {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
     li {
         list-style: none;
     }

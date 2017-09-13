@@ -1,13 +1,26 @@
 <template>
     <div>
-        <ol class="breadcrumb">
-            <li>财务账本</li>
+        <ol class="breadcrumb" v-if="cus == 1">
+            <li>财务账本{{cus}}</li>
             <li>
                 <router-link to="/payPayment">应付款项</router-link>
             </li>
             <li class="active">应付款项详情</li>
             <li class="pull-right" v-show="typeof params!='string'">
                 <router-link :to="{path:'/payPayment',query:{myParam:params,page:page,selected:selected}}"><i
+                        class="fa fa-angle-double-left"></i> 返回上一步
+                </router-link>
+            </li>
+        </ol>
+
+        <ol class="breadcrumb" v-if="cus == 2">
+            <li>财务账本</li>
+            <li>
+                <router-link to="/payCllentAll">应收款项</router-link>
+            </li>
+            <li class="active">应收款项详情</li>
+            <li class="pull-right" v-show="cus === 2">
+                <router-link :to="{path:'/payCllentAll',query:{myParam:params, selected:selected, sear: 1}}"><i
                         class="fa fa-angle-double-left"></i> 返回上一步
                 </router-link>
             </li>
@@ -85,13 +98,13 @@
                                 <!--</div>-->
                                 <div>
                                     <span class="text-primary">收款人姓名：</span>
-                                    <span>
+                                    <span v-if="list.customer !== null && list.customer !== undefined">
                                         {{list.customer.account_owner}}
                                     </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">开户行：</span>
-                                    <span>
+                                    <span v-if="list.customer !== null && list.customer !== undefined">
                                           {{select_info.bank[list.customer.account_bank]}}
                                     </span>
                                 </div>
@@ -238,6 +251,7 @@
         components: {Status, ShouldPay, SelectHouse, SelectClient, Confirm},
         data(){
             return {
+                cus: '',
                 changeCompleteDate: true,       //修改补齐时间
                 complete_date: '',              //资料补齐时间
                 address: '',
@@ -283,11 +297,11 @@
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
             this.selected = this.$route.query.selected;
+            this.cus = this.$route.query.cus;
             this.details(this.$route.query.payId);
             for (let i = 0; i < this.moreTime.length; i++) {
                 this.showOper.push(false);
             }
-//            this.times = this.moreTime;
         },
         methods: {
 //            资料补齐时间
@@ -341,7 +355,6 @@
                         this.details_info = [];
                         this.moreTime = [];
                         this.details_info.push(res.data.data);
-                        console.log(status);
                         this.status = res.data.data.status;
                         if (res.data.data.customer !== null && res.data.data.customer !== undefined) {
                             this.address = res.data.data.customer.address;

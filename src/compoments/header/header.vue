@@ -416,6 +416,9 @@
                                     <li :class="{'active': isActive == 41}" @click='pitch_on(41)'>
                                         <router-link to="/newRenter">租客</router-link>
                                     </li>
+                                    <li :class="{'active': isActive == 42}" @click='pitch_on(42)'>
+                                        <router-link to="/rentLordAll">房东/租客总汇</router-link>
+                                    </li>
                                 </ul>
                             </li>
                             <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
@@ -439,7 +442,9 @@
                                     <span>应收款项</span>
                                 </router-link>
                             </li>
-
+                            <li :class="{'active': isActive == 43}" @click='pitch_on(43)'>
+                                <router-link to="/payCllentAll">应收/应付总汇</router-link>
+                            </li>
                             <li :class="{'active': isActive == 28}" @click='pitch_on(28)'>
                                 <router-link to="/incomeFlow">
                                     <span>收支流水</span>

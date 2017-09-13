@@ -50,6 +50,30 @@
                             <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
                         </div>
 
+                        <div class="form-group" style="height: 39px;">
+                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                        </div>
+
+                        <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">提示信息</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>生成 成功！</h5>
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group pull-right">
                             <a class="btn btn-success" @click="addPay">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应付款项
@@ -64,7 +88,7 @@
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="status != 3 && status != 4 && pitch.length == 1">
+                        <li v-show="pitch.length == 1">
                             <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
@@ -187,7 +211,11 @@
 
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td><span v-if="item.customer != null">{{item.customer.address}}</span></td>
+                            <td>
+                                <span v-if="item.customer != null">{{item.customer.address}}</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 1" class="btn btn-danger btn-xs">F</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 2" class="btn btn-danger btn-xs">Z</span>
+                            </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>
                                 <span @click="able_show(1,item.amount_payable,item.id)" v-if="isActive !== item.id"
@@ -219,7 +247,7 @@
                             </td>
                             <td v-if="recycle_bin">
                                 <router-link
-                                        :to="{path:'/payPaymentDetail',query: {payId: item.id,page:beforePage,myParams:params,selected:selected}}">
+                                        :to="{path:'/payPaymentDetail',query: {payId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1}}">
                                     详情
                                 </router-link>
                             </td>
@@ -422,6 +450,7 @@
 
         data(){
             return {
+                leadingOut: '',             //导出
                 rollback_id: [],               //回滚ID
                 rollbacks: {},               //回滚
                 isActive: '',
@@ -528,7 +557,6 @@
                         this.currentDate = params.range.split('to');
 //                        this.currentDate = params.range.split('to');
                         this.params = params;
-                        console.log(this.params);
                     }
                     if (selected !== undefined) {
                         this.selected = selected;
@@ -540,6 +568,22 @@
             });
         },
         methods: {
+//            导出
+            leading_out (){
+                this.$http.get('account/payable/export',{
+                    params: this.params
+                }).then((res) => {
+                    if(res.data.code === '18410'){
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                    }
+                })
+            },
+            close_ (){
+                $('#leading_out').modal('hide');
+            },
 //              选择房屋
             selectHouse(){
                 $('.selectHouse:eq(0)').modal('show');
@@ -987,6 +1031,10 @@
 </script>
 
 <style scoped>
+    .btn-xs{
+        line-height: 9px;
+    }
+
     .datePickerContainer {
         margin-bottom: 0;
     }
