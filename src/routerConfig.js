@@ -101,6 +101,8 @@ import ModifyArticle from './compoments/staffSquare/article/modifyAriticle.vue' 
 import Organize from  './compoments/user/organization.vue'                                      //组织架构
 import PositionManage from './compoments/user/positionManage.vue'
 
+import Question from  './compoments/questionnaire/questionList.vue'             //问卷调查
+
 export default[
     {
         path: '/',                  //重定向主页
@@ -537,5 +539,10 @@ export default[
         path: '/positionManage',
         name: 'PositionManage',
         component: PositionManage
+    },
+    {       //问卷调查
+        path: '/question',
+        name: 'Question',
+        component: Question
     },
 ]
