@@ -350,7 +350,11 @@
                         //****赋值
                         this.pendingSellter.item_type =res.data.data.item_type;
                         this.pendingSellter.customer_id =res.data.data.customer_id;
-                        this.customer_name =res.data.data.customer_name;
+                        if(res.data.data.identity === 2){
+                            this.customer_name =res.data.data.customer_name_rent;
+                        }else if(res.data.data.identity === 1){
+                            this.customer_name =res.data.data.customer_name_collect;
+                        }
                         this.pendingSellter.house_id =res.data.data.house_id;
                         this.house_name =res.data.data.detailed_address;
                         this.pendingSellter.department_id =res.data.data.department_id;
