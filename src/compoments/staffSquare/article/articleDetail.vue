@@ -39,7 +39,7 @@
                 <div class="articleContainer col-lg-12">
                     <div class="coverPicContainer">
                         <h4>封面</h4>
-                        <img :src="key.raw" alt="" style="max-width: 100%" v-for="(key,value) in coverImg">
+                        <img :src="key.raw" alt="" style="width: 30%" v-for="(key,value) in coverImg">
                     </div>
                     <h4>正文</h4>
                     <div class="vedioContainer col-lg-12">
