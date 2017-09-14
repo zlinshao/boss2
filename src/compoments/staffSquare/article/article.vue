@@ -450,4 +450,8 @@
     .panel-body .form-inline .input-group {
         margin-bottom: 5px;
     }
+    label.label{
+        display: inline-block;
+        width: 58px;
+    }
 </style>
