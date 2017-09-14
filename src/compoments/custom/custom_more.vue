@@ -46,6 +46,9 @@
                             <div><span class="text-primary">尊称：</span>
                                 <span>{{select_list.gender[info.gender]}}</span>
                             </div>
+                            <div><span class="text-primary">国籍：</span>
+                                <span>{{select_list.nationality[info.nationality]}}</span>
+                            </div>
                             <div><span class="text-primary">手机号：</span><span>{{info.mobile}}</span></div>
                             <div><span class="text-primary">负责人：</span><span>{{info.staff_id}}</span></div>
                         </div>
@@ -91,6 +94,7 @@
                             <div><span
                                     class="text-primary">个人/中介：</span><span>{{select_list.person_medium[info.person_medium]}}</span>
                             </div>
+                            <div><span class="text-primary">证件类型：</span><span>{{select_list.credentials[info.id_type]}}</span></div>
                             <div><span class="text-primary">证件号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">证件照片：</span>
                                 <a v-for="(pic,index) in photos"
