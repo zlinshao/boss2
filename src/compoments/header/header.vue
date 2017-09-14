@@ -726,6 +726,11 @@
                                     <span>员工广场</span>
                                 </router-link>
                             </li>-->
+                            <li :class="{'active': isActive == 'square'}" @click='pitch_on("square")'>
+                                <a href="../../../staffSquare.html" target="_blank">
+                                    <span>员工广场</span>
+                                </a>
+                            </li>
                             <li :class="{'active': isActive == 'article'}" @click='pitch_on("article")'>
                                 <router-link to="/article">
                                     <span>发布文章</span>
