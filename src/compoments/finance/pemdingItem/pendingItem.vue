@@ -148,7 +148,7 @@
             return {
                 operId : 0,
                 collectRent :'',
-                paging : 1,
+                paging : '',
                 dictionary : [],
                 pendingList : [],
                 isShow:false,
@@ -214,10 +214,13 @@
             getPendingList(){
                 this.$http.get('account/pending',{ params : this.params}).then((res) =>{
                     if(res.data.code === '18800'){
+                        this.paging = '';
                         this.pendingList = res.data.data.data;
+                        this.paging = res.data.data.pages;
                         this.isShow = false;
                     }else {
                         this.pendingList = [];
+                        this.paging = '';
                         this.isShow = true;
                         this.info.error =res.data.msg;
                         //显示成功弹窗 ***
