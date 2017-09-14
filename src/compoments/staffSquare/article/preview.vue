@@ -68,7 +68,7 @@
             this.month = date.getMonth()+1<10?'0'+(date.getMonth()+1):date.getMonth()+1;
             this.day = date.getDate()<10?'0'+date.getDate():date.getDate();
 
-            this.$http.get('http://test.v2.api.boss.lejias.cn/staff/info').then((res)=>{
+            this.$http.get('staff/info').then((res)=>{
 //                console.log(res.data.name);
                 this.staff = res.data.name;
             })
