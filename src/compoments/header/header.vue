@@ -721,11 +721,11 @@
                             <span>员工广场</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 'square'}" @click='pitch_on("square")'>
+                            <!--<li :class="{'active': isActive == 'square'}" @click='pitch_on("square")'>
                                 <router-link to="/square">
                                     <span>员工广场</span>
                                 </router-link>
-                            </li>
+                            </li>-->
                             <li :class="{'active': isActive == 'article'}" @click='pitch_on("article")'>
                                 <router-link to="/article">
                                     <span>发布文章</span>

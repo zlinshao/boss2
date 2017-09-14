@@ -80,7 +80,7 @@
                                         {{item.create_time}}
                                         <a @click="showToggle($event)">
                                             {{item.reply.length}}条回复
-                                            <i class="fa fa-angle-down"></i>
+                                            <i class="fa fa-angle-down" v-show="item.reply.length>0"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -104,6 +104,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="text-center text-muted" v-show="msg.comments.length==0">
+                        <h4>暂无评论....</h4>
                     </div>
                 </div>
 
