@@ -47,7 +47,7 @@
                                 <span>{{select_list.gender[info.gender]}}</span>
                             </div>
                             <div><span class="text-primary">国籍：</span>
-                                <span>{{select_list.nationality[info.nationality]}}</span>
+                                <span>{{cus_nationality_name}}</span>
                             </div>
                             <div><span class="text-primary">手机号：</span><span>{{info.mobile}}</span></div>
                             <div><span class="text-primary">负责人：</span><span>{{info.staff_id}}</span></div>
@@ -314,6 +314,8 @@
         components: {New_add, PicModal, Status, Sharing},
         data (){
             return {
+                all_count: [],              //国籍
+                cus_nationality_name: '',   //展示
                 custom_sear: {},
                 custom: '',                 //客户或客户池
                 look_remind: '',            //是否有提醒
@@ -373,6 +375,14 @@
 //                字典
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
+
+                    this.$http.post('index/country/index', {
+                        name: ''
+                    }).then((res) => {
+                        if (res.data.data) {
+                            this.all_count = res.data.data;
+                        }
+                    });
 //                    客户信息
                     this.$http.get('core/customer/readCustomer/id/' + val).then((res) => {
                         this.revise_info = res.data.data;
@@ -381,6 +391,13 @@
                         this.photos = res.data.data.album.id_pic;
                         for (let i in this.photos) {
                             this.card.push(this.photos[i].big);
+                        }
+                        if (res.data.data.nationality) {
+                            this.cus_nationality = res.data.data.nationality;                             //国籍ID
+                            for(let key in this.all_count){
+                                if(this.all_count[key].id === res.data.data.nationality)
+                                    this.cus_nationality_name = this.all_count[key].zh_name;    //国籍
+                            }
                         }
                     });
 //                   获取沟通日志
