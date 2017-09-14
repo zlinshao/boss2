@@ -2,7 +2,8 @@
  * Created by 乐伽运营 on 2017/9/13.
  */
 
-let baseUrl = 'http://test.v2.api.boss.lejias.cn/';
+// let baseUrl = 'http://test.v2.api.boss.lejias.cn/';
+let baseUrl = globalConfig.server;
 let dict = {};
 $(function () {
 

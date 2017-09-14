@@ -1,7 +1,8 @@
 /**
  * Created by 乐伽运营 on 2017/9/12.
  */
-let baseUrl = 'http://test.v2.api.boss.lejias.cn/';
+// let baseUrl = 'http://test.v2.api.boss.lejias.cn/';
+let baseUrl = globalConfig.server;
 
 var bannerData = [];
 let bannerLength = 0;   // 轮播数量
