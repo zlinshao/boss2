@@ -51,130 +51,57 @@
                         </video>-->
                     </div>
                     <div class="content col-lg-12" v-html="msg.content"></div>
+
+                    <div class="thumbs pull-right">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{msg.thumbs}}
+                    </div>
                 </div>
 
                 <div class="commentContainer col-lg-12">
                     <h5>评论</h5>
                     <div class="comment">
                         <!--评论-->
-                        <div class="commentItem">
+                        <div class="commentItem" v-for="item in msg.comments">
                             <div class="commentItemContainer">
-                                <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
+                                <img :src="item.pic_url" alt="">
                                 <div class="com">
                                     <div>
-                                        <span class="name">哈哈</span>
+                                        <span class="name">{{item.user_name}}</span>
                                         <span class="pull-right">
-                                        <i class="fa fa-thumbs-o-up"></i>
-                                        <sup>15</sup>
+                                        <!--<i class="fa fa-thumbs-o-up"></i>
+                                        <sup>15</sup>-->
                                     </span>
                                     </div>
                                     <div class="commentContent">
-                                        说两点卡萨丁就看
+                                        {{item.comment}}
                                     </div>
                                     <div class="time">
-                                        2017/10/01&ensp;
-                                        11:05&ensp;
+                                        {{item.create_time}}
                                         <a @click="showToggle($event)">
-                                            2条回复
+                                            {{item.reply.length}}条回复
                                             <i class="fa fa-angle-down"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-
                             <!--回复-->
                             <div class="commentReply">
-                                <div class="commentReplyItem">
-                                    <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
+                                <div class="commentReplyItem" v-for="reply in item.reply">
+                                    <img :src="reply.pic_url" alt="">
                                     <div class="com">
                                         <div>
-                                            <span class="name">哈哈</span>
-                                            <span class="pull-right">
-                                        <i class="fa fa-thumbs-o-up"></i>
-                                        <sup>15</sup>
-                                    </span>
+                                            <span class="name">{{reply.user_name}}</span>
+                                            <!--<span class="pull-right">
+                                                <i class="fa fa-thumbs-o-up"></i>
+                                                <sup>15</sup>
+                                            </span>-->
                                         </div>
                                         <div class="commentContent">
-                                            说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看
+                                            {{reply.comment}}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="commentReplyItem">
-                                    <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
-                                    <div class="com">
-                                        <div>
-                                            <span class="name">哈哈</span>
-                                            <span class="pull-right">
-                                        <i class="fa fa-thumbs-o-up"></i>
-                                        <sup>15</sup>
-                                    </span>
-                                        </div>
-                                        <div class="commentContent">
-                                            说两点卡萨丁就看
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="commentItem">
-                            <div class="commentItemContainer">
-                                <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
-                                <div class="com">
-                                    <div>
-                                        <span class="name">哈哈</span>
-                                        <span class="pull-right">
-                                        <i class="fa fa-thumbs-o-up"></i>
-                                        <sup>15</sup>
-                                    </span>
-                                    </div>
-                                    <div class="commentContent">
-                                        说两点卡萨丁就看
-                                    </div>
-                                    <div class="time">
-                                        2017/10/01&ensp;
-                                        11:05&ensp;
-                                        <a @click="showToggle($event)">
-                                            2条回复
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--回复-->
-                            <div class="commentReply">
-                                <div class="commentReplyItem">
-                                    <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
-                                    <div class="com">
-                                        <div>
-                                            <span class="name">哈哈</span>
-                                            <span class="pull-right">
-                                        <i class="fa fa-thumbs-o-up"></i>
-                                        <sup>15</sup>
-                                    </span>
-                                        </div>
-                                        <div class="commentContent">
-                                            说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看说两点卡萨丁就看
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="commentReplyItem">
-                                    <img src="http://static.dingtalk.com/media/lADOxQDkO80C7s0C7g_750_750.jpg" alt="">
-                                    <div class="com">
-                                        <div>
-                                            <span class="name">哈哈</span>
-                                            <span class="pull-right">
-                                        <i class="fa fa-thumbs-o-up"></i>
-                                        <sup>15</sup>
-                                    </span>
-                                        </div>
-                                        <div class="commentContent">
-                                            说两点卡萨丁就看
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -410,7 +337,7 @@
     .commentReply{
         padding: 8px 0 8px 40px;
         display: none;
-        user-select: none;
+        /*user-select: none;*/
     }
     .commentReply .commentReplyItem{
         background-color: #F2F2F2;
@@ -424,4 +351,6 @@
     .articleContainer .content img{
         width: 100%;
     }
+
+
 </style>

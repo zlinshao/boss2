@@ -107,8 +107,8 @@
                             <td>{{dict.article_type[item.type]}}</td>
                             <td>{{dict.staff_id[item.publicer_id]}}</td>
                             <td>{{item.create_time}}</td>
-                            <td>{{item.comment}}</td>
-                            <td>{{item.zan}}</td>
+                            <td>{{item.comment_num}}</td>
+                            <td>{{item.thumbs}}</td>
                             <td>
                                 <label :class="{'label':true,'status':true,
                                 'gray':item.status===1,'green':item.status===2,'yellow':item.status===3,}">
