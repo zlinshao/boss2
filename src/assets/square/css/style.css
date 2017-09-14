@@ -290,6 +290,16 @@ a:active {
     background: #e9e9e9;
 }
 
+.nav_top {
+    border-bottom: 2px solid #f36;
+    padding-bottom: 15px
+}
+.channel_logo {
+    display: block;
+    background: url(../images/logo2.png) no-repeat;
+    width: 333px;
+    height: 50px
+}
 .ns-side-totop i {
     background: url(http://img1.cache.netease.com/f2e/www/index2014/images/sprite_dw2.png);
     width: 46px;
@@ -450,6 +460,21 @@ a.ep-btn-1b:hover .ep-icon-enter { background-position: right -72px; }
 #endText .f_right {text-align:right;}
 #endText .f_justify {text-align:justify; text-justify:inter-ideograph; text-indent:0;}
 .ent_kw_replace { font-family: 楷体, 楷体_GB2312; color: #515151; }
+
+/*点赞*/
+.post_body .operation{
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 18px;
+    font-size: 18px;
+    color: rgb(202, 202, 202);
+    margin-right: 20px;
+
+}
+.post_body .operation.current{
+    color: #f36;
+}
 /* pages */
 .ep-pages { padding: 10px 12px; clear: both; text-align: center; font-family: Arial, "\5B8B\4F53", sans-serif; font-size: 14px; vertical-align: top; }
 .ep-pages a, .ep-pages span { display: inline-block; height: 23px; line-height: 23px; padding: 0 8px; margin: 5px 1px 0 0; background: #fff; border: 1px solid #e5e5e5; overflow: hidden; vertical-align: top; }
@@ -694,6 +719,51 @@ q:after {
 .single-tie .tie-bdy .bdy-inner {
     margin-left: 65px;
 }
+
+.reply{
+    display: none;
+    padding-left: 48px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.reply textarea{
+    resize: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 4px 14px;
+    border: solid 1px #1d87e4;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.reply button.replyBtn{
+    position: absolute;
+    color: #fff;
+    background-color: #1d87e4;
+    border-color: #2e6da4;
+    bottom: -22px;
+    right: 0;
+    padding: 6px 12px;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.reply button.replyBtn:hover{
+    color: #fff;
+    background-color: #3B9EF4;
+    /*border-color: #204d74;*/
+}
+.replyList{
+    padding-left: 48px;
+}
+.replyItem .replyPhoto{
+
+}
+
 .single-tie .tie-author {
     line-height: 12px;
 }
