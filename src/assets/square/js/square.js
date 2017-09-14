@@ -146,7 +146,10 @@ function createBanner(item) {
 
     let slide_page = $('<div></div>').addClass('slide_page');
 
-    let a = $('<a></a>').attr('href','detail.html?id='+item.id);
+    let a = $('<a></a>').attr('href','detail.html?id='+item.id)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
     $('<img width="100%" height="100%" />').attr('src',src).appendTo(a);
     $('<h3></h3>').text(item.title).appendTo(a);
     a.appendTo(slide_page);
@@ -310,14 +313,20 @@ function createHot(item) {
     let firstDiv = $('<div></div>').addClass('first_content').appendTo(columDiv);
     let picTopDiv = $('<div></div>').addClass('pic_top').appendTo(firstDiv);
     $('<div></div>').addClass('mask').appendTo(picTopDiv);
-    let a = $('<a></a>').attr('href','detail.html?id='+item.id).addClass('pic').appendTo(picTopDiv);
+    let a = $('<a></a>').attr('href','detail.html?id='+item.id).addClass('pic').appendTo(picTopDiv)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
     $('<img width="105" height="65" />').attr({
         'src' : getSrc(item),
         'alt' : item.title
     }).appendTo(a);
 
     let h3 = $('<h3></h3>').appendTo(firstDiv);
-    $('<a></a>').attr('href','detail.html?id='+item.id).text(item.title).appendTo(h3);
+    $('<a></a>').attr('href','detail.html?id='+item.id).text(item.title).appendTo(h3)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
 
     return li;
 }
@@ -354,7 +363,10 @@ function createPeople(item) {
     let div = $('<div></div>').addClass('rg_pic_wrap');
 
     let picDiv = $('<div></div>').addClass('first_pic').appendTo(div);
-    let a = $('<a></a>').attr('href','detail.html?id='+item.id).appendTo(picDiv);
+    let a = $('<a></a>').attr('href','detail.html?id='+item.id).appendTo(picDiv)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
 
     $('<img width="300" height="195" />').attr({
         'src' : getSrc(item),
@@ -404,7 +416,10 @@ function getNew(type) {
 function createNew(item) {
     let div = $('<div></div>').addClass('data_row').addClass('news_article').addClass('clearfix');
 
-    let picA = $('<a></a>').addClass('na_pic').attr('href','detail.html?id='+item.id).appendTo(div);
+    let picA = $('<a></a>').addClass('na_pic').attr('href','detail.html?id='+item.id).appendTo(div)
+        .bind('click',function () {
+        addSeen(item.id)
+    });
     $('<img width="190" height="120" />').attr({
         'src' : getSrc(item),
         'alt' : item.title
@@ -414,20 +429,32 @@ function createNew(item) {
 
     let titleDiv = $('<div></div>').addClass('news_title').appendTo(detailDiv);
     let titleH3 = $('<h3></h3>').appendTo(titleDiv);
-    $('<a></a>').attr('href','detail.html?id='+item.id).text(item.title).appendTo(titleH3);
+    $('<a></a>').attr('href','detail.html?id='+item.id).text(item.title).appendTo(titleH3)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
 
     let tagDiv = $('<div></div>').addClass('news_tag').appendTo(detailDiv);
-    $('<a></a>').attr('href','detail.html?id='+item.id).addClass('link').text(dict.article_type[item.type]).appendTo(tagDiv);
+    $('<a></a>').attr('href','detail.html?id='+item.id).addClass('link').text(dict.article_type[item.type]).appendTo(tagDiv)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
     $('<span></span>').addClass('time').text(item.create_time).appendTo(tagDiv);
 
     let shareDiv1 = $('<div></div>').addClass('share-join').addClass('clearfix').appendTo(detailDiv);
-    let shareA1 = $('<a></a>').attr('href','detail.html?id='+item.id).addClass('join-count').appendTo(shareDiv1);
+    let shareA1 = $('<a></a>').attr('href','detail.html?id='+item.id).addClass('join-count').appendTo(shareDiv1)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
     let tieDiv1 = $('<div></div>').addClass('tie-wrap').appendTo(shareA1);
     $('<span></span>').addClass('tie-icon').html('<i class="fa fa-eye"></i> '+item.browser).appendTo(tieDiv1);   // 查看
     $('<span></span>').addClass('tie-icon').html('<i>查看</i> '+item.browser).appendTo(tieDiv1);   // 查看
 
     let shareDiv2 = $('<div></div>').addClass('share-join').addClass('clearfix').appendTo(detailDiv);
-    let shareA2 = $('<a></a>').attr('href','detail.html?id='+item.id).addClass('join-count').appendTo(shareDiv2);
+    let shareA2 = $('<a></a>').attr('href','detail.html?id='+item.id).addClass('join-count').appendTo(shareDiv2)
+        .bind('click',function () {
+            addSeen(item.id)
+        });
     let tieDiv2 = $('<div></div>').addClass('tie-wrap').appendTo(shareA2);
     $('<span></span>').addClass('tie-icon').html('<i class="fa fa-thumbs-o-up"></i> '+item.thumbs).appendTo(tieDiv2);   // 查看
     $('<span></span>').addClass('tie-icon').html('<i>点赞</i> '+item.thumbs).appendTo(tieDiv2);   // 查看
@@ -436,12 +463,18 @@ function createNew(item) {
 }
 
 
-
-
-
-
-
-
+// 查看次数加一
+function addSeen(id) {
+    $.ajax({
+        type: 'GET',
+        xhrFields: {
+            withCredentials: true
+        },
+        url: baseUrl + 'index/Staff_Square/showDetails?id=' + id+'&front=-1',
+        success: (data) => {
+        }
+    })
+}
 
 
 

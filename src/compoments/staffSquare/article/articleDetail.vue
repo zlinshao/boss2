@@ -295,6 +295,11 @@
     .panel-body .time{
         text-align: center;
     }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
+    }
     .articleContainer{
         margin: 20px auto;
         padding-bottom: 30px;

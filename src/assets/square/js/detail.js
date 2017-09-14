@@ -91,7 +91,7 @@ function getDetails() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square/showDetails?id='+id+'&front=-1',
+        url: baseUrl + 'index/Staff_Square/showDetails?id='+id,
         success: (data) => {
             // console.log(data);
             if (data.code==30020){
