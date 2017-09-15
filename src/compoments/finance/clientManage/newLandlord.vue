@@ -9,19 +9,20 @@
             <!--未选中-->
             <div class="panel-body clearFix">
                 <div v-if="pitch.length === 0">
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 10px;">
+                    <form class="form-inline clearFix" role="form">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="params.selecteds" @click='select' readonly>
                             <span class="input-group-btn">
-                            <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
-                        </span>
+                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
+                            </span>
                         </div>
-                    </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-3 col-lg-2" style="padding: 0;margin-right: 10px;">
-                        <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" @sendDate="getDate"></DatePicker>
-                    </div>
-                    <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;">
+
+                        <div class="padd">
+                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                        @sendDate="getDate"></DatePicker>
+                        </div>
+
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="params.search" placeholder="房屋地址/客户名"
                                    @keyup.enter="search">
@@ -29,14 +30,14 @@
                                 <button class="btn btn-success" type="button" @click="search">搜索</button>
                             </span>
                         </div>
-                    </div>
 
-                    <div class="pro-sort pull-right">
-                        <button class="btn btn-success" type="button" @click="newAddClient">
-                            <i class="fa fa fa-plus-square"></i>
-                            新增客户
-                        </button>
-                    </div>
+                        <div class="pro-sort pull-right">
+                            <button class="btn btn-success" type="button" @click="newAddClient">
+                                <i class="fa fa-plus-square"></i>
+                                新增客户
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <!--选中-->
@@ -79,7 +80,8 @@
                 <tr class="text-center" v-for="item in LandlordList"
                     :class="{'selected': pitch.indexOf(item.id) > -1,'freeze': item.freeze === 1}">
                     <td>
-                        <label v-if="item.freeze !== 1" :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id)==-1}"
+                        <label v-if="item.freeze !== 1"
+                               :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id)==-1}"
                                @click.prevent="pitchId(item.id, $event)">
                             <input type="checkbox" class="pull-left"
                                    :checked="pitch.indexOf(item.id) > -1">
@@ -141,7 +143,8 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
+                        <router-link
+                                :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
                             详情
                         </router-link>
                     </td>
@@ -217,10 +220,10 @@
             }
         },
         mounted(){
-            if(this.$route.query.land === 1){
+            if (this.$route.query.land === 1) {
                 this.params = this.$route.query.sea;
                 this.getLandlordList(1);
-            }else{
+            } else {
                 this.getLandlordList(1);
             }
         },
@@ -239,7 +242,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                    }else{
+                    } else {
                         //失败信息 ***
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -340,10 +343,10 @@
             },
 //            删除回调
             getConfirm(){
-                this.$http.post('finance/customer/collect/delete',{
+                this.$http.post('finance/customer/collect/delete', {
                     ids: this.pitch
                 }).then((res) => {
-                    if(res.data.code === '90010'){
+                    if (res.data.code === '90010') {
                         this.pitch = [];
                         this.getLandlordList(1);
                     }

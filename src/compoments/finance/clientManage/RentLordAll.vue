@@ -31,9 +31,9 @@
                     </form>
                 </div>
 
-                <div class="col-lg-12 remind">
+                <div class="col-lg-12 remind" v-if="pitch.length > 0">
                     <!--房东-->
-                    <ul v-if="landRenter === 'landlord' && pitch.length > 0">
+                    <ul v-if="landRenter === 'landlord'">
                         <li>
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>
@@ -48,7 +48,7 @@
                     </ul>
 
                     <!--租客-->
-                    <ul v-if="landRenter === 'renter' && pitch.length > 0">
+                    <ul v-if="landRenter === 'renter'">
                         <li>
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>

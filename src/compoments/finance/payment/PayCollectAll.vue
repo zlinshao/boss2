@@ -51,7 +51,7 @@
                     </form>
                 </div>
 
-                <div class="col-lg-12 remind" v-if="pitch > 1">
+                <div class="col-lg-12 remind" v-if="pitch.length > 0">
                     <!--应收-->
                     <ul v-if="status_top == 'collect'">
                         <li>
@@ -490,7 +490,7 @@
             },
 //            部门搜索
             select(){
-                $('#selectCustom').modal('show');
+                $('.selectCustom:eq(0)').modal('show');
             },
 //            部门搜索
             selectDateSend(val){
