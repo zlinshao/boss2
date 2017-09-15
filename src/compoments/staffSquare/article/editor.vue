@@ -38,7 +38,7 @@
         methods: {
             saveContent: function() {
                 // You have the content to save
-                console.log(this.content);
+//                console.log(this.content);
                 if (this.content!=''){
                     this.$emit('editorContent',this.content);
                 }
