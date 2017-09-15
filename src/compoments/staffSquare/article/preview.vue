@@ -31,7 +31,7 @@
                         </video>-->
                     </div>
 
-                    <div class="col-lg-12 content" v-html="content"></div>
+                    <div class="col-lg-12 content ql-editor" v-html="content"></div>
                 </div>
 
                 <div class="buttons">

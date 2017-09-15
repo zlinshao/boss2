@@ -50,7 +50,7 @@
                             <source :src="url" type="video/mp4">
                         </video>-->
                     </div>
-                    <div class="content col-lg-12" v-html="msg.content"></div>
+                    <div class="content col-lg-12 ql-editor" v-html="msg.content"></div>
 
                     <div class="thumbs pull-right">
                         <i class="fa fa-thumbs-o-up"></i>
