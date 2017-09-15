@@ -150,25 +150,25 @@
 
                                 <div>
                                     <span class="text-primary">汇款方式：</span>
-                                    <span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
                                         {{dict.payment[msg.customer.account_type]}}
                                     </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">收款人姓名：</span>
-                                    <span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
                                         {{msg.customer.account_owner}}
                                     </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">开户行：</span>
-                                    <span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
                                           {{dict.bank[msg.customer.account_bank]}}
                                     </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">账号：</span>
-                                    <span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
                                         {{msg.customer.account_num}}
                                     </span>
                                 </div>

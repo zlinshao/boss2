@@ -31,8 +31,8 @@ import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";       
 import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";              //未收房源更多
 import CollectContract from "./compoments/contract/collectContract.vue";                        //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";                        //租房合同
-import ContractDetail from './compoments/contract/collectDetail.vue'                            // 收房合同详情
-import RentingDetail from './compoments/contract/rentingDetail.vue'                             // 租房合同详情
+import ContractDetail from './compoments/contract/collectDetail.vue'                            //收房合同详情
+import RentingDetail from './compoments/contract/rentingDetail.vue'                             //租房合同详情
 import  Memorandum from  './compoments/contract/searchMemorandum.vue'                           //查看备忘录
 
 import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";        //收房合同
@@ -55,14 +55,20 @@ import Classify from './compoments/finance/subject/classify.vue'                
 import Jurisdiction from './compoments/finance/jurisdiction.vue'                                // 科目管理
 import CollectPayment from './compoments/finance/payment/collect.vue'                           // 应收款项
 import PayPayment from './compoments/finance/payment/pay.vue'                                   // 应付款项
-import PayCllentAll from './compoments/finance/payment/PayCollectAll.vue'                        //财务应收/应付总汇
+import PayCllentAll from './compoments/finance/payment/PayCollectAll.vue'                       // 财务应收/应付总汇
 import IncomeFlow from './compoments/finance/incomeFlow.vue'                                    // 收支流水
 import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'                       // 收支流水
 import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'               // 收支流水
 import PendingItem from './compoments/finance/pemdingItem/pendingItem.vue'                      // 待处理项
 import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'                  // 待处理项详情
 import GeneralOperation from './compoments/finance/generalOperation.vue'                        // 总账操作
-// import GeneralRecord from './compoments/finance/generalRecord.vue'                              // 总账操作记录
+import Company from './compoments/salary/company.vue'                                               // 公司工资
+import Group from './compoments/salary/group.vue'                                                   // 小组工资
+import Personal from './compoments/salary/personal.vue'                                             // 个人工资
+import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
+
+
+// import GeneralRecord from './compoments/finance/generalRecord.vue'                           // 总账操作记录
 import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                                    // 日志操作记录
 import MessageCenter from  './compoments/messageCenter/messageCenter.vue'                       //消息中心
@@ -80,7 +86,6 @@ import CheckIn from './compoments/checkIn/checkIn.vue'                          
 // import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'                   //其余款项报备
 
 import lockScreen from './compoments/lock_screen/lock_screen.vue'                               //锁屏
-import MyAchievement from './compoments/myAchievement/myAchievement.vue'                        //我的业绩
 import UserDetail from './compoments/user/userDetail.vue'                                       //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'                              //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
@@ -232,11 +237,6 @@ export default[
         component: LeadingOut
     },
     {
-        path: '/myAchievement',                 //客户导出
-        name: 'myAchievement',
-        component: MyAchievement
-    },
-    {
         path: '/newLandlord',
         name: 'newLandlord',                    //财务房东管理
         component: NewLandlord
@@ -265,6 +265,26 @@ export default[
         path: '/newRenterDetail',
         name: 'newRenterDetail',                //财务租房管理
         component: NewRenterDetail
+    },
+    {
+        path: '/personal',
+        name: 'personal',                         //个人工资
+        component: Personal
+    },
+    {
+        path: '/personalDetail',
+        name: 'personalDetail',                   //个人工资详情
+        component: PersonalDetail
+    },
+    {
+        path: '/company',
+        name: 'company',                         //公司工资
+        component: Company
+    },
+    {
+        path: '/group',
+        name: 'group',                              //小组工资
+        component: Group
     },
     {
         path: '/compare',
