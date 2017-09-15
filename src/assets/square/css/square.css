@@ -1239,7 +1239,7 @@ a:hover {
 }
 
 .newsdata_list {
-    position: relative;
+    /*position: relative;*/
     z-index: 1
 }
 
