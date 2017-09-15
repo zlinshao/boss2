@@ -215,6 +215,14 @@ blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
 .ntes-nav-entry-rss{background-position:left -80px}
 .ntes-nav-entry-huatian{background-position:left -278px}
 }
+
+.bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 .N-nav-bottom{color:#616161;background:#333}
 .N-nav-bottom-copyright{color:#ddd;padding-right:2px}
 .N-nav-bottom-copyright-icon{font-family:Arial}
