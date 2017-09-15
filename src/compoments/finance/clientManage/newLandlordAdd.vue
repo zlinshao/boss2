@@ -104,7 +104,7 @@
                                     <FlexBox :flexData="Math.ceil(months/12)" :datas="price" :change="put_type"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-12" style="padding: 0;">
                                         <label class="col-sm-2 control-label">押金</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="deposit">
@@ -289,7 +289,7 @@
     import DatePicker from '../../common/datePicker.vue'
 
     export default{
-        components: {STAFF, SelectHouse, FlexBox, Status, SelectSubject,DatePicker},
+        components: {STAFF, SelectHouse, FlexBox, Status, SelectSubject, DatePicker},
         props: ['list'],
         data(){
             return {
@@ -346,11 +346,11 @@
                     error: ''
                 },
                 oneAsk: '',                             //时间请求
-                dateConfigure : [
+                dateConfigure: [
                     {
-                        range : false,
-                        needHour : false,
-                        position : 'top-right'
+                        range: false,
+                        needHour: false,
+                        position: 'top-right'
                     }
                 ],
             }
@@ -738,6 +738,11 @@
         padding-left: 20px;
         line-height: 30px;
         cursor: pointer;
+    }
+
+    .form-horizontal .form-group {
+        margin-right: 0;
+        margin-left: 0;
     }
 
 </style>

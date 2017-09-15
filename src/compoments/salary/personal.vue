@@ -51,8 +51,8 @@
             </div>
         </section>
 
-        <section class="panel table table-responsive roll has-js" style="padding: 10px;">
-            <table class="table table-advance table-hover" v-for="item in 6">
+        <section class="panel table table-responsive roll has-js" style="padding: 16px;">
+            <table class="table table-advance table-hover" v-for="item in 4">
                 <tbody class="text-center">
                 <tr class="text-center">
                     <td rowspan="2">
