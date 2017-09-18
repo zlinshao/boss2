@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">选人</h4>
                     </div>
-                    <div class="modal-body scoll">
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-7 col-sm-7">
                                 <div class="box" @click="inputFocus" id="borderBlue">
@@ -412,7 +412,6 @@
 
 <style scoped>
     .modal-body {
-        overflow-y: auto;
         background: #fafafc;
     }
 

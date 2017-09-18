@@ -53,7 +53,8 @@
                             <div><span
                                     class="text-primary">客户身份：</span><span>{{select_list.identity[info.identity]}}</span>
                             </div>
-                            <div><span style="vertical-align: top;" class="text-primary">跟进进度：</span>
+                            <div>
+                                <span style="vertical-align: top;" class="text-primary">跟进进度：</span>
                                 <a data-v-2f43a2b3="" href="#">
                                     <div data-v-2f43a2b3="" class="progress1 progress progress-striped active">
                                         <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"

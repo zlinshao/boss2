@@ -102,6 +102,8 @@ import Organize from  './compoments/user/organization.vue'                      
 import PositionManage from './compoments/user/positionManage.vue'
 
 import Question from  './compoments/questionnaire/questionList.vue'             //问卷调查
+import Questionnaire from './compoments/questionnaire/questionDetail.vue'
+import QuestionResult from './compoments/questionnaire/questionResult.vue'
 
 export default[
     {
@@ -544,5 +546,15 @@ export default[
         path: '/question',
         name: 'Question',
         component: Question
+    },
+    {       //问卷调查
+        path: '/questionnaire',
+        name: 'Questionnaire',
+        component: Questionnaire
+    },
+    {       //问卷调查
+        path: '/questionResult',
+        name: 'QuestionResult',
+        component: QuestionResult
     },
 ]

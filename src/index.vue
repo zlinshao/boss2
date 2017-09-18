@@ -281,13 +281,15 @@
                     </div>
                 </section>
             </div>
-
         </div>
+        <Question :questionId = 'questionId'></Question>
     </div>
 </template>
 
 <script>
+    import Question from './compoments/questionnaire/questionnaire.vue'
     export default {
+        components : {Question},
         data (){
             return {
                 more: 9,
@@ -312,6 +314,7 @@
                 check_inData: [],               //入住
                 collect_rentsData: [],          //收租
                 customData: [],                 //客户来源
+                questionId : '',
             }
         },
 //        mounted (){
@@ -345,12 +348,23 @@
 //                }
 //            }
 //        },
-        created (){
+        mounted (){
+            this.isDone();
             this.home_index();
             this.home_system();
             this.online();
         },
         methods: {
+            isDone(){
+                this.$http.post('index/Mission/checkIsWrite').then((res) => {
+                    if(res.data.code === '30080'){
+                        this.questionId = res.data.data;
+                        setTimeout(function () {
+                            $('.questionnaire').modal('show');
+                        },2000);
+                    }
+                })
+            },
 //            更多
             click_more (){
                 $('#panel').scroll();

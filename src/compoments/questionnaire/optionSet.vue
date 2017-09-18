@@ -13,30 +13,44 @@
                         <div class="row">
                             <label class="col-sm-2 control-label">任务类型</label>
                             <div class="col-sm-10">
-                                <select class="form-control">
-                                    <option value="">请选择</option>
-                                    <option value="">单选</option>
-                                    <option value="">多选</option>
+                                <select class="form-control" v-model="optionList.question_type">
+                                    <option value="1">单选</option>
+                                    <option value="2">多选</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="row" v-for="key in 4">
+                        <div class="row">
+                            <label class="col-sm-2 control-label">选项类型</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" v-model="optionList.is_picture">
+                                    <option value="1">图片</option>
+                                    <option value="2">文本</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" v-for="key in amount" v-if="optionList.is_picture == 2">
                             <label class="col-sm-2 col-xs-12 control-label">选项{{key}}</label>
                             <div class="col-sm-8 col-xs-8">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" :value="optionList.option[key-1]" v-model="optionList.option[key-1]">
                             </div>
                             <div class="col-sm-2 col-xs-4 flexBox">
-                                <i class="fa fa-plus-circle"></i>
-                                <i class="fa fa-minus-circle"></i>
+                                <i class="fa fa-plus-circle" @click="add(key-1)"></i>
+                                <i class="fa fa-minus-circle" @click="reduce(key-1)"></i>
                             </div>
-                            <div class="col-sm-10 col-xs-8 text-right">
-                                <a @click="setOption">上传图片</a>
+                        </div>
+                        <div class="row" v-if="optionList.is_picture == 1">
+                            <label class="col-sm-2 control-label">上传图片</label>
+                            <div class="col-sm-10">
+                                <div style="margin: 9px 0">
+                                    <up-load @photo="PicId" @delete="picDelete" @complete="complete"
+                                             :result="'Pic'" :idPhotos="Pic"></up-load>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">确定</button>
+                        <button type="button" class="btn btn-primary" @click="confirmAdd">确定</button>
                     </div>
                 </div>
             </div>
@@ -50,13 +64,55 @@
         components : {upLoad},
         data(){
             return{
-
+                amount : 1,
+                optionList :{
+                    question_type : '1',
+                    is_picture : '2',
+                    option : [],
+                },
+                Pic : {
+                    cus_idPhotos : {},    //银行卡照片id
+                    cus_idPhoto : [],     //银行卡照片
+                },
             }
         },
         methods :{
-            setOption(){
-
-            }
+//            setOption(){
+//
+//            },
+            add(key){
+                this.amount ++;
+            },
+            reduce(key){
+                if(this.amount >1){
+                    this.amount --;
+                    this.optionList.option.splice(key,1);
+                }
+            },
+            confirmAdd(){
+                this.$emit('option',this.optionList);
+                $('.optionSet').modal('hide');
+                this.optionList ={
+                    question_type : '1',
+                    is_picture : '2',
+                    option : [],
+                };
+                this.amount = 1;
+            },
+            PicId(val){      //获取成功上传身份证 id 数组
+                this.optionList.option = val;
+            },
+            //图片上传完成
+            complete(val){          //监控上传进度
+                this.complete_ok = val;
+            },
+            //删除照片ID
+            picDelete (val){
+                let id = this.optionList.option.indexOf(val);
+                if (id > -1) {
+                    this.optionList.option.splice(id, 1);
+                }
+            },
         }
     }
 </script>

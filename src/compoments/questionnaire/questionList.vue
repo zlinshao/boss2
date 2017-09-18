@@ -7,26 +7,28 @@
         <section class="panel">
             <div class="panel-body">
 
-                <div class="form-inline">
+                <div class="form-inline" v-if="selectId === ''">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control">
+                            <select class="form-control" v-model="params.type" @change="search">
                                 <option value="">请选择</option>
+                                <option :value="key" v-for="(value,key) in dictionary.mission_status">{{value}}</option>
                             </select>
                         </label>
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control">
+                            <select class="form-control" v-model="params.status"  @change="search">
                                 <option value="">请选择</option>
+                                <option :value="key" v-for="(value,key) in dictionary.mission_type">{{value}}</option>
                             </select>
                         </label>
                     </div>
                     <div class="pro-sort">
                         <div class="input-group">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" v-model="params.keywords" @keyup="search">
                             <span class="input-group-btn">
-                               <button class="btn btn-success" type="button">搜索</button>
+                               <button class="btn btn-success" type="button" @click="search">搜索</button>
                            </span>
                         </div>
                     </div>
@@ -38,7 +40,7 @@
                 </div>
 
 
-                <div class="col-lg-12 remind" v-if="false">
+                <div class="col-lg-12 remind" v-if="selectId > 0">
                     <ul>
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
@@ -46,17 +48,21 @@
                         <li>
                             <h5><a><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a></h5>
                         </li>
-                        <li>
+                        <li @click="undercarriage">
                             <h5><a><i class="fa fa-arrow-down"></i>&nbsp;下架</a></h5>
                         </li>
-                        <li>
+                        <li @click="publicQuestion">
                             <h5><a><i class="fa fa-arrow-up"></i>&nbsp;发布</a></h5>
                         </li>
-                        <li>
+                        <li @click="deleteQuestion">
                             <h5><a><i class="fa fa-times-circle"></i>&nbsp;删除</a></h5>
                         </li>
                         <li>
-                            <h5><a><i class="fa fa-eye"></i>&nbsp;查看结果</a></h5>
+                            <h5>
+                                <router-link :to="{path:'/questionResult',query:{questionId : selectId}}">
+                                    <i class="fa fa-eye"></i>&nbsp;查看结果
+                                </router-link>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -70,9 +76,9 @@
                         <thead>
                         <tr>
                             <th>
-                                <label for="allCheck" :class="{'label_check':true}">
-                                    <input id="allCheck" type="checkbox">
-                                </label>
+                                <!--<label for="allCheck">-->
+                                    <!--<input id="allCheck" type="checkbox">-->
+                                <!--</label>-->
                             </th>
                             <th class="text-center">标题</th>
                             <th class="text-center">类型</th>
@@ -84,19 +90,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr v-for="item in questionList">
                             <td>
-                                <label :class="{'label_check':true}">
-                                    <input type="checkbox" class="pull-left">
+                                <label @click="pick(item.id,$event)">
+                                    <input type="checkbox" class="pull-left" :checked="item.id === selectId">
                                 </label>
                             </td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center">详情</td>
+                            <td class="text-center">{{item.title}}</td>
+                            <td class="text-center">{{dictionary.mission_type[item.type]}}</td>
+                            <td class="text-center">{{dictionary.staff_id[item.public_id]}}</td>
+                            <td class="text-center">{{item.create_time}}</td>
+                            <td class="text-center">{{item.comment_nums}}</td>
+                            <td class="text-center">
+                                <label class="label label-default" v-if="item.status === 1">
+                                    {{dictionary.mission_status[item.status]}}
+                                </label>
+                                <label class="label label-success" v-if="item.status === 2">
+                                    {{dictionary.mission_status[item.status]}}
+                                </label>
+                                <label class="label label-warning" v-if="item.status === 3">
+                                    {{dictionary.mission_status[item.status]}}
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <router-link :to="{path:'/questionnaire',query:{questionId : item.id}}">
+                                    详情
+                                </router-link>
+                            </td>
                         </tr>
                         <tr v-if="isShow">
                             <td colspan="8" class="text-center text-muted">
@@ -108,22 +128,156 @@
                 </section>
             </div>
         </div>
-        <Add></Add>
+        <Add @Add="successAdd"></Add>
+        <Page :pg="pages" @pag="getPage" :beforePage="params.page"></Page>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import Add from './questionAdd.vue'
+    import Page from '../common/page.vue'
+    import Confirm from '../common/confirm.vue'
+    import Status from '../common/status.vue';
     export default {
-        components :{Add},
+        components :{Add,Page,Confirm,Status},
         data(){
             return{
-                isShow : true,
+                isShow : false,
+                questionList : [],
+                dictionary : [],
+                pages : '',
+                params : {
+                    page : '',
+                    type : '',
+                    status : '',
+                    keywords : '',
+                },
+                selectId : '',
+                confirmMsg : [],
+                msgFlag :'',
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
+        created(){
+            this.getDictionary();
+        },
         methods :{
+            getDictionary(){
+                this.$http.get('index/Mission/dict').then((res) => {
+                    this.dictionary = res.data;
+                    this.getQuestionList();
+                })
+            },
+            search(){
+                this.params.page=1;
+                this.getQuestionList();
+            },
+            getQuestionList(){
+                this.$http.post('index/Mission/index',this.params).then((res) => {
+                    if(res.data.code === '30010'){
+                        this.questionList = res.data.data.list;
+                        this.pages = res.data.data.pages;
+                        this.isShow = false;
+                    }else {
+                        this.questionList = [];
+                        this.isShow = true;
+                        this.pages = 1;
+                    }
+
+                })
+            },
             createQuestion(){   //创建问卷
                 $('.questionAdd').modal('show');
+            },
+            getPage(val){
+                this.params.page = val;
+                this.getQuestionList();
+            },
+            pick(id , e){
+                if(e.target.checked){
+                    this.selectId = id;
+                }else {
+//                    this.questionSelect=this.questionSelect.filter((x) => x!==id)
+                    this.selectId = '';
+                }
+            },
+            successAdd(){
+                this.search();
+            },
+            deleteQuestion(){       //删除
+                this.confirmMsg = {msg: '您确定删除吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'delete';
+            },
+            undercarriage(){
+                this.confirmMsg = {msg: '您确定下架吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'undercarriage';
+            },
+            publicQuestion(){
+                this.confirmMsg = {msg: '您确定发布吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'publicQuestion';
+            },
+            getConfirm(){
+                switch (this.msgFlag){
+                    case 'delete' :
+                        this.$http.get('index/Mission/Delete/id/' + this.selectId).then((res) => {
+                            if(res.data.code === '30031'){
+                                this.selectId = '';
+                                this.search();
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            }else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                        break;
+                    case 'undercarriage' :
+                        this.$http.get('index/Mission/offMission/id/' + this.selectId).then((res) => {
+                            if(res.data.code === '30034'){
+                                this.selectId = '';
+                                this.search();
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            }else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                        break;
+                    case 'publicQuestion' :
+                        this.$http.get('index/Mission/publicMission/id/' + this.selectId).then((res) => {
+                            if(res.data.code === '30022'){
+                                this.selectId = '';
+                                this.search();
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            }else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                        break;
+                }
             }
         }
     }
