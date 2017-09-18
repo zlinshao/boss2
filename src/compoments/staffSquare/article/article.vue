@@ -107,8 +107,8 @@
                             <td>{{dict.article_type[item.type]}}</td>
                             <td>{{dict.staff_id[item.publicer_id]}}</td>
                             <td>{{item.create_time}}</td>
-                            <td>{{item.comment}}</td>
-                            <td>{{item.zan}}</td>
+                            <td>{{item.comment_num}}</td>
+                            <td>{{item.thumbs}}</td>
                             <td>
                                 <label :class="{'label':true,'status':true,
                                 'gray':item.status===1,'green':item.status===2,'yellow':item.status===3,}">
@@ -449,5 +449,9 @@
     }
     .panel-body .form-inline .input-group {
         margin-bottom: 5px;
+    }
+    label.label{
+        display: inline-block;
+        width: 58px;
     }
 </style>

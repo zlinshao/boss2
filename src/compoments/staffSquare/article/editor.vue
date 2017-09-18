@@ -51,10 +51,10 @@
                 var formData = new FormData();
                 formData.append('image', file)
 
-                this.$http.post('http://test.v2.api.boss.lejias.cn/picture/upload',formData).then((res)=>{
+                this.$http.post('picture/upload',formData).then((res)=>{
 //                    console.log(res.data.data)
                     let picId = res.data.data;
-                    this.$http.post('http://test.v2.api.boss.lejias.cn/picture/'+picId).then((res)=>{
+                    this.$http.post('picture/'+picId).then((res)=>{
                         let url = res.data.data; // Get url from response
                         Editor.insertEmbed(cursorLocation, 'image', url);
                     })

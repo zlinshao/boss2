@@ -17,9 +17,6 @@
                             </span>
                         </div>
 
-                        <!--<div class="input-group">
-                            <button class="btn btn-primary" type="button" @click="select">筛选部门及员工</button>
-                        </div>-->
                         <div class="input-group">
                             <select class="form-control" v-model="params.status" @change="search(1)">
                                 <option value="">全部</option>
@@ -51,11 +48,37 @@
                         <div class="form-group" style="height: 39px;">
                             <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
                         </div>
+
+                        <div class="form-group" style="height: 39px;">
+                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                        </div>
+
+                        <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">提示信息</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>生成 成功！</h5>
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group pull-right">
                             <a class="btn btn-success" data-toggle="modal" data-target="#addCollect">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增应收款项
                             </a>
                         </div>
+
                     </form>
                 </div>
 
@@ -65,7 +88,7 @@
                         <!--<li>
                             <h5 data-toggle="modal" data-target="#addPay"><a><i class="fa fa-plus-square"></i>&nbsp;新增应付款项</a></h5>
                         </li>-->
-                        <li v-show="status != 3 && status != 4 && pitch.length == 1">
+                        <li v-show="pitch.length == 1">
                             <h5 @click="addCollect"><a><i class="fa fa-pencil"></i>&nbsp;应收入账</a></h5>
                         </li>
                         <li v-show="pitch.length == 1 && rollbacks !== null">
@@ -74,11 +97,7 @@
                         <li v-show="pitch.length == 1">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
-                        <!--<li>-->
-                        <!--<h5 data-toggle="modal" data-target="#modifyTime">-->
-                        <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
-                        <!--</h5>-->
-                        <!--</li>-->
+
                         <li v-show="pitch.length == 1">
                             <h5 @click="remark_show">
                                 <a><i class="fa fa-book"></i>&nbsp;新增备注</a>
@@ -154,10 +173,7 @@
                     <table class="table table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center" v-if="recycle_bin">
-                                <!--<input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"-->
-                                <!--@click="chooseAll($event)">-->
-                            </th>
+                            <th class="text-center" v-if="recycle_bin"></th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">收入科目</th>
@@ -180,11 +196,13 @@
                                        @click.prevent="changeIndex($event,item.id,item.status,item.running_account_record)">
                                     <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
-                                <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                                       @click="changeIndex($event,item.id,item.status,item.running_account_record)">-->
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
+                            <td>
+                                {{item.customer == undefined ? '' : item.customer.address}}
+                                <span style="line-height: 9px;" v-if="item.identity === 1" class="btn btn-danger btn-xs">F</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 2" class="btn btn-danger btn-xs">Z</span>
+                            </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>
                                 <span @click="able_show(1,item.amount_receivable,item.id)" v-if="isActive !== item.id"
@@ -215,7 +233,7 @@
                             </td>
                             <td v-if="recycle_bin">
                                 <router-link
-                                        :to="{path:'/collectPaymentDetail',query: {collectId: item.id, page:beforePage, myParams:params, selected:selected}}">
+                                        :to="{path:'/collectPaymentDetail',query: {collectId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1}}">
                                     详情
                                 </router-link>
                             </td>
@@ -408,8 +426,9 @@
 
         data(){
             return {
-                rollback_id: [],               //回滚ID
-                rollbacks: {},               //回滚
+                leadingOut: '',             //导出
+                rollback_id: [],            //回滚ID
+                rollbacks: {},              //回滚
                 isActive: '',
                 amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
@@ -536,6 +555,22 @@
         },
 
         methods: {
+//            导出
+            leading_out (){
+                this.$http.get('account/receivable/export',{
+                    params: this.params
+                }).then((res) => {
+                    if(res.data.code === '18510'){
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                    }
+                })
+            },
+            close_ (){
+                $('#leading_out').modal('hide');
+            },
 //              选择房屋
             selectHouse(){
                 $('.selectHouse:eq(0)').modal('show');
