@@ -10,7 +10,7 @@
                 <div class="form-inline" v-if="selectId === ''">
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="params.type" @change="search">
+                            <select class="form-control" v-model="params.status" @change="search">
                                 <option value="">请选择</option>
                                 <option :value="key" v-for="(value,key) in dictionary.mission_status">{{value}}</option>
                             </select>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="pro-sort">
                         <label>
-                            <select class="form-control" v-model="params.status"  @change="search">
+                            <select class="form-control" v-model="params.type"  @change="search">
                                 <option value="">请选择</option>
                                 <option :value="key" v-for="(value,key) in dictionary.mission_type">{{value}}</option>
                             </select>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="pro-sort">
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="params.keywords" @keyup="search">
+                            <input type="text" class="form-control" placeholder="请输入标题" v-model="params.keywords" @keyup="search">
                             <span class="input-group-btn">
                                <button class="btn btn-success" type="button" @click="search">搜索</button>
                            </span>
