@@ -18,9 +18,9 @@
 
                         <div v-if="item.option.length < 1">
                             <label class="option col-xs-12" v-for="(value,key) in item.answer">
-                                <span style="margin-right: 10px">{{key+1}})</span>
-                                <span v-if="key<2">{{value.answer}}</span>
-                                <a v-if="key>1" style="margin-left: 10px" @click="showMore(item.answer)">更多 &gt;&gt;</a>
+                                <span v-if="key<4" style="margin-right: 10px">{{key+1}})</span>
+                                <span v-if="key<4">{{value.answer}}</span>
+                                <a v-if="key==4" @click="showMore(item.answer)">更多 &gt;&gt;</a>
                             </label>
                             <label class="option col-xs-12" v-if="item.answer.length == 0">
                                 <span style="color: #1caadc">暂无数据</span>
@@ -41,7 +41,8 @@
                                              :style="{ width: value.proportion}">
                                         </div>
                                     </div>
-                                    <span class="percent">{{value.proportion}}</span>
+                                    <span class="percent">{{value.vote_nums}}票</span>
+                                    <span class="percent" v-if="value.proportion">({{value.proportion}})</span>
                                 </a>
                             </label>
                             <label class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 2">
@@ -57,7 +58,8 @@
                                              :style="{ width: value.proportion}">
                                         </div>
                                     </div>
-                                    <span class="percent">{{value.proportion}}</span>
+                                    <span class="percent">{{value.vote_nums}}票</span>
+                                    <span class="percent" v-if="value.proportion>0">({{value.proportion}})</span>
                                 </a>
                             </label>
                         </div>
