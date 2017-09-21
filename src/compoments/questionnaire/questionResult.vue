@@ -13,8 +13,11 @@
         </ol>
         <section class="panel">
             <div class="panel-body">
+                <h4 class="text-center">{{questionInfo.title}}</h4>
+                <hr>
+                <h5 class="text-center">{{questionInfo.create_time}}</h5>
                 <div class="row select" v-for="(item,index) in questionInfo.question">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 question">
                         <b v-if="item.question_type === 0">{{index+1}}&nbsp;{{item.question}}(问卷)</b>
                         <b v-if="item.question_type === 1">{{index+1}}&nbsp;{{item.question}}(单选)</b>
                         <b v-if="item.question_type === 2">{{index+1}}&nbsp;{{item.question}}(多选)</b>
@@ -154,5 +157,8 @@
     .noWrite{
         margin: 0 15px;
         font-size: 16px;
+    }
+    .question{
+        margin-left: 10px;
     }
 </style>
