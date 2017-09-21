@@ -111,6 +111,10 @@
                         is_picture : '2',
                         option : [],
                     };
+                    this.Pic = {
+                        cus_idPhotos : {},
+                        cus_idPhoto : [],
+                    };
                     this.amount = 1;
                 }else {
                     this.info.error = '图片正在上传';

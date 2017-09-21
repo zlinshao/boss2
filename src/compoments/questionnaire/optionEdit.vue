@@ -102,7 +102,6 @@
         },
         watch :{
             optionInfo(val){
-                console.log(val)
                 this.Pic = {
                     cus_idPhotos : {},
                     cus_idPhoto : [],
