@@ -75,7 +75,7 @@
             </div>
         </section>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
-        <Edit :questionId="editId" @Edit="successEdit"></Edit>
+        <Edit :questionId="editId" :startEdit="startEdit" @Edit="successEdit"></Edit>
         <NoWrite :selectId="editId"></NoWrite>
         <Status :state='info'></Status>
     </div>
@@ -107,6 +107,7 @@
                     error: ''
                 },
                 editId : '',
+                startEdit : false,
             }
         },
         created(){
@@ -132,10 +133,12 @@
             },
 
             editQuestion(){
+                this.startEdit = true;
                 $('.questionEdit').modal('show');
             },
             successEdit(){
                 this.getQuestionInfo();
+                this.startEdit = false;
             },
             deleteQuestion(){       //删除
                 this.confirmMsg = {msg: '您确定删除吗'};

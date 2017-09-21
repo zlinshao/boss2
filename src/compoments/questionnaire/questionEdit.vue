@@ -65,7 +65,7 @@
     import OptionEdit from './optionEdit.vue'
     export default {
         components : {Status,OptionEdit},
-        props :['questionId'],
+        props :['questionId','startEdit'],
         data(){
             return{
                 questionInfo :{
@@ -91,7 +91,7 @@
             }
         },
         watch :{
-            questionId(val){
+            startEdit(val){
                 if(val){
                     this.getQuestionnaire();
                 }
@@ -184,6 +184,14 @@
                     if(res.data.code==='30020'){
                         this.$emit('Edit');
                         this.hasEdit = [];
+                        let question = {
+                            is_picture : '',
+                            question : '',
+                            question_type : '',
+                            option : [],
+                        };
+                        this.optionInfo = [];
+                        this.order = '';
                         $('.questionEdit').modal('hide');
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***

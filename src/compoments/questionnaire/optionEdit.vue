@@ -65,14 +65,16 @@
                 </div>
             </div>
         </div>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import upLoad from '../common/upload.vue'
+    import Status from '../common/status.vue';
     export default {
         props : ['optionInfo'],
-        components : {upLoad},
+        components : {upLoad,Status},
         data(){
             return{
                 optionList :{
@@ -86,6 +88,16 @@
                     cus_idPhoto : [],
                 },
                 complete_ok : 'ok',
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         watch :{
@@ -128,18 +140,25 @@
                 }
             },
             confirmAdd(){
-                this.$emit('option',this.optionList);
-                this.optionList ={
-                    question :'',
-                    question_type : '',
-                    is_picture : '',
-                    option : [],
-                };
-                this.Pic = {
-                    cus_idPhotos : {},
-                    cus_idPhoto : [],
-                };
-                $('.optionEdit').modal('hide');
+                if(this.complete_ok === 'ok'){
+                    this.$emit('option',this.optionList);
+                    this.optionList ={
+                        question :'',
+                        question_type : '',
+                        is_picture : '',
+                        option : [],
+                    };
+                    this.Pic = {
+                        cus_idPhotos : {},
+                        cus_idPhoto : [],
+                    };
+                    $('.optionEdit').modal('hide');
+                }else {
+                    this.info.error = '图片正在上传';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
+
             },
             PicId(val){      //获取成功上传身份证 id 数组
                 this.optionList.option=val;

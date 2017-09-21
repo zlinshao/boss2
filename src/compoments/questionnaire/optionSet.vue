@@ -55,13 +55,15 @@
                 </div>
             </div>
         </div>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import upLoad from '../common/upload.vue'
+    import Status from '../common/status.vue';
     export default {
-        components : {upLoad},
+        components : {upLoad,Status},
         data(){
             return{
                 amount : 1,
@@ -73,6 +75,17 @@
                 Pic : {
                     cus_idPhotos : {},    //银行卡照片id
                     cus_idPhoto : [],     //银行卡照片
+                },
+                complete_ok : 'ok',
+                info:{
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
                 },
             }
         },
@@ -90,14 +103,21 @@
                 }
             },
             confirmAdd(){
-                this.$emit('option',this.optionList);
-                $('.optionSet').modal('hide');
-                this.optionList ={
-                    question_type : '1',
-                    is_picture : '2',
-                    option : [],
-                };
-                this.amount = 1;
+                if(this.complete_ok === 'ok'){
+                    this.$emit('option',this.optionList);
+                    $('.optionSet').modal('hide');
+                    this.optionList ={
+                        question_type : '1',
+                        is_picture : '2',
+                        option : [],
+                    };
+                    this.amount = 1;
+                }else {
+                    this.info.error = '图片正在上传';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
+
             },
             PicId(val){      //获取成功上传身份证 id 数组
                 this.optionList.option = val;
