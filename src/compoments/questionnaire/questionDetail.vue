@@ -20,12 +20,12 @@
                                 <li @click="editQuestion" v-if="questionInfo.status == 1"><span>编辑</span></li>
                                 <li @click="publicQuestion"><span>发布</span></li>
                                 <li @click="undercarriage"><span>下架</span></li>
-                                <li @click="deleteQuestion"><span>删除</span></li>
+                                <!--<li @click="deleteQuestion"><span>删除</span></li>-->
                                 <li @click="noWrite">
                                     <span>未填写员工</span>
                                 </li>
                                 <li>
-                                    <router-link tag="span" :to="{path:'/questionResult',query:{questionId : editId}}">
+                                    <router-link tag="span" :to="{path:'/questionResult',query:{questionId : editId,type : 'detail'}}">
                                         查看结果
                                     </router-link>
                                 </li>

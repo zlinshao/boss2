@@ -4,6 +4,11 @@
             <li>
                 <router-link to="/question">问卷调查</router-link>
             </li>
+            <li v-if="type == 'detail'">
+                <router-link :to="{path:'/questionnaire',query:{questionId : questionnaireId}}">
+                    详情
+                </router-link>
+            </li>
             <li class="active">查看结果</li>
         </ol>
         <section class="panel">
@@ -86,6 +91,7 @@
         },
         created(){
             this.questionnaireId = this.$route.query.questionId;
+            this.type = this.$route.query.type;
             this.searchResult();
         },
         methods : {

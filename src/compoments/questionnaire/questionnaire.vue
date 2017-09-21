@@ -96,6 +96,7 @@
                 if(this.questionId !== ''){
                     this.$http.get('index/Mission/showDetail/id/' + this.questionId).then((res) => {
                         this.questionInfo = res.data.data[0];
+                        this.getQuestionId(this.questionInfo);
                     })
                 }
             },
@@ -111,20 +112,31 @@
                     }
                 }
             },
-            questionContent(id,index){
-                let question = {};
-                let idExist = false;
-                question.id =id;
-                question.content = this.content[index];
-                for(let i=0; i<this.params.question.length;i++){
-                    if(this.params.question[i].id === id){
-                        this.params.question[i].content = question.content;
-                        idExist = true;
+
+            getQuestionId(val){
+                for(let i=0;i<val.question.length;i++){
+                    if(val.question[i].question_type == 0){
+                        let question = {};
+                        question.id =val.question[i].id;
+                        question.content = '';
+                        this.params.question.push(question);
                     }
                 }
-                if(!idExist){
-                    this.params.question.push(question);
+            },
+            questionContent(id,index){
+//                let question = {};
+//                let idExist = false;
+//                question.id =id;
+
+                let content = this.content[index];
+                for(let i=0; i<this.params.question.length;i++){
+                    if(this.params.question[i].id == id){
+                        this.params.question[i].content = content;
+                    }
                 }
+//                if(!idExist){
+//                    this.params.question.push(question);
+//                }
             },
             vote(){
                 this.$http.post('index/Mission/Vote',this.params).then((res) => {
