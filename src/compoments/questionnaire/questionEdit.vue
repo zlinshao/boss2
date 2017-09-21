@@ -112,7 +112,9 @@
                 this.questionInfo.question.push(question);
             },
             reduce(index){
-                this.questionInfo.question.splice(index,1)
+                if(this.questionInfo.question.length>1){
+                    this.questionInfo.question.splice(index,1)
+                }
             },
             getQuestionnaire(){
                 this.questionInfo = {
