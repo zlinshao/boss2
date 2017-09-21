@@ -45,7 +45,7 @@
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
-                        <li @click="editQuestion">
+                        <li @click="editQuestion" v-if="status == 1">
                             <h5><a><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li @click="publicQuestion">
@@ -96,7 +96,7 @@
                         <tbody>
                         <tr v-for="item in questionList">
                             <td>
-                                <label @click="pick(item.id,$event)" :class="{'label_check':true,
+                                <label @click="pick(item,$event)" :class="{'label_check':true,
                                     'c_on':selectId===item.id,'c_off':selectId!==item.id}">
                                     <input type="checkbox" class="pull-left" :checked="item.id === selectId">
                                 </label>
@@ -139,6 +139,8 @@
         <Status :state='info'></Status>
         <Edit :questionId="selectId" @Edit="successEdit"></Edit>
         <NoWrite :selectId="selectId"></NoWrite>
+
+        <Loading v-if='Waiting'></Loading>
     </div>
 </template>
 
@@ -149,8 +151,9 @@
     import Status from '../common/status.vue';
     import Edit from './questionEdit.vue'
     import NoWrite from './noWrite.vue'
+    import Loading from '../loading/Loading.vue'
     export default {
-        components :{Add,Page,Confirm,Status,Edit,NoWrite},
+        components :{Add,Page,Confirm,Status,Edit,NoWrite,Loading},
         data(){
             return{
                 isShow : false,
@@ -176,6 +179,8 @@
                     //失败信息 ***
                     error: ''
                 },
+                status : '',
+                Waiting : true
             }
         },
         created(){
@@ -199,10 +204,12 @@
                         this.questionList = res.data.data.list;
                         this.pages = res.data.data.pages;
                         this.isShow = false;
+                        this.Waiting =false;
                     }else {
                         this.questionList = [];
                         this.isShow = true;
                         this.pages = 1;
+                        this.Waiting =false;
                     }
 
                 })
@@ -214,13 +221,15 @@
                 this.params.page = val;
                 this.getQuestionList();
             },
-            pick(id , e){
+            pick(item, e){
                 e.target.checked = !e.target.checked;
                 if(e.target.checked){
-                    this.selectId = id;
+                    this.selectId = item.id;
+                    this.status = item.status;
                 }else {
 //                    this.questionSelect=this.questionSelect.filter((x) => x!==id)
                     this.selectId = '';
+                    this.status = '';
                 }
             },
             successAdd(){

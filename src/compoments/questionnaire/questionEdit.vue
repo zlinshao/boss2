@@ -14,7 +14,7 @@
                             <label class="col-sm-3 control-label">任务类型</label>
                             <div class="col-sm-9">
                                 <select  class="form-control" v-model="questionInfo.type">
-                                    <option value="">请选择</option>
+                                    <!--<option value="">请选择</option>-->
                                     <option value="1">投票</option>
                                     <option value="2">问卷</option>
                                 </select>

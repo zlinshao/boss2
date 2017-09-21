@@ -17,7 +17,7 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li @click="editQuestion"><span>编辑</span></li>
+                                <li @click="editQuestion" v-if="questionInfo.status == 1"><span>编辑</span></li>
                                 <li @click="publicQuestion"><span>发布</span></li>
                                 <li @click="undercarriage"><span>下架</span></li>
                                 <li @click="deleteQuestion"><span>删除</span></li>

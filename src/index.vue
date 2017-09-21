@@ -360,7 +360,6 @@
                     if(res.data.code === '30080'){
                         this.questionId = res.data.data;
                         $('.questionnaire').modal('show');
-
                     }
                 })
             },
