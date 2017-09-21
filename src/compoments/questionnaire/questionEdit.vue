@@ -108,7 +108,6 @@
                 question.is_picture = 2;
                 question.question = '';
                 question.question_type = 1;
-                question.option.push('');
                 this.questionInfo.question.push(question);
             },
             reduce(index){

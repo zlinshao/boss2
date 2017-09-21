@@ -38,6 +38,16 @@
                                 <i class="fa fa-minus-circle" @click="reduce(index)"></i>
                             </div>
                         </div>
+                        <div class="row" v-if="optionList.is_picture == 2 && optionList.option.length < 1">
+                            <label class="col-sm-2 col-xs-12 control-label">选项1</label>
+                            <div class="col-sm-8 col-xs-8">
+                                <input type="text" class="form-control" v-model="optionList.option[0]">
+                            </div>
+                            <div class="col-sm-2 col-xs-4 flexBox">
+                                <i class="fa fa-plus-circle" @click="addOption(0)"></i>
+                                <i class="fa fa-minus-circle" @click="reduce(0)"></i>
+                            </div>
+                        </div>
                         <div class="row" v-if="optionList.is_picture == 1">
                             <label class="col-sm-2 control-label">上传图片</label>
                             <div class="col-sm-10">
