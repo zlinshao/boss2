@@ -45,17 +45,21 @@
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
-                        <li>
+                        <li @click="editQuestion">
                             <h5><a><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a></h5>
-                        </li>
-                        <li @click="undercarriage">
-                            <h5><a><i class="fa fa-arrow-down"></i>&nbsp;下架</a></h5>
                         </li>
                         <li @click="publicQuestion">
                             <h5><a><i class="fa fa-arrow-up"></i>&nbsp;发布</a></h5>
                         </li>
+                        <li @click="undercarriage">
+                            <h5><a><i class="fa fa-arrow-down"></i>&nbsp;下架</a></h5>
+                        </li>
+
                         <li @click="deleteQuestion">
                             <h5><a><i class="fa fa-times-circle"></i>&nbsp;删除</a></h5>
+                        </li>
+                        <li @click="noWrite">
+                            <h5><a><i class="fa fa-user"></i>&nbsp;未填写员工</a></h5>
                         </li>
                         <li>
                             <h5>
@@ -92,7 +96,8 @@
                         <tbody>
                         <tr v-for="item in questionList">
                             <td>
-                                <label @click="pick(item.id,$event)">
+                                <label @click="pick(item.id,$event)" :class="{'label_check':true,
+                                    'c_on':selectId===item.id,'c_off':selectId!==item.id}">
                                     <input type="checkbox" class="pull-left" :checked="item.id === selectId">
                                 </label>
                             </td>
@@ -132,6 +137,8 @@
         <Page :pg="pages" @pag="getPage" :beforePage="params.page"></Page>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <Status :state='info'></Status>
+        <Edit :questionId="selectId" @Edit="successEdit"></Edit>
+        <NoWrite :selectId="selectId"></NoWrite>
     </div>
 </template>
 
@@ -140,8 +147,10 @@
     import Page from '../common/page.vue'
     import Confirm from '../common/confirm.vue'
     import Status from '../common/status.vue';
+    import Edit from './questionEdit.vue'
+    import NoWrite from './noWrite.vue'
     export default {
-        components :{Add,Page,Confirm,Status},
+        components :{Add,Page,Confirm,Status,Edit,NoWrite},
         data(){
             return{
                 isShow : false,
@@ -181,6 +190,7 @@
             },
             search(){
                 this.params.page=1;
+                this.selectId = '';
                 this.getQuestionList();
             },
             getQuestionList(){
@@ -205,6 +215,7 @@
                 this.getQuestionList();
             },
             pick(id , e){
+                e.target.checked = !e.target.checked;
                 if(e.target.checked){
                     this.selectId = id;
                 }else {
@@ -213,6 +224,9 @@
                 }
             },
             successAdd(){
+                this.search();
+            },
+            successEdit(){
                 this.search();
             },
             deleteQuestion(){       //删除
@@ -229,6 +243,9 @@
                 this.confirmMsg = {msg: '您确定发布吗'};
                 $('#confirm').modal('show');
                 this.msgFlag = 'publicQuestion';
+            },
+            noWrite(){
+                $('.noWrite').modal('show');
             },
             getConfirm(){
                 switch (this.msgFlag){
@@ -278,7 +295,10 @@
                         });
                         break;
                 }
-            }
+            },
+            editQuestion(){
+                $('.questionEdit').modal('show');
+            },
         }
     }
 </script>

@@ -18,14 +18,22 @@
                                 <div class="col-sm-12 margin" v-if="item.option.length > 0">
                                     <label class="option" v-for="(value,key) in item.option" v-if="item.question_type === 1">
                                         <input type="radio" :name="item.id" :value="value.id" @click="singleSelect(item.id,value.id,$event)">
-                                        {{value.content}}
+                                        <span v-if="value.content !== null">{{value.content}}</span>
+                                        <span v-if="value.content === null">
+                                            <img :src="img.small" v-for="(img,index) in value.album.option_pic">
+                                         </span>
                                     </label>
                                     <label class="option" v-for="(value,key) in item.option" v-if="item.question_type === 2">
-                                        <input type="checkbox" :value ="value.id" v-model="params.checkbox_id">{{value.content}}
+                                        <input type="checkbox" :value ="value.id" v-model="params.checkbox_id">
+                                        <span v-if="value.content !== null">{{value.content}}</span>
+                                        <span v-if="value.content === null">
+                                            <img :src="img.small" v-for="(img,index) in value.album.option_pic">
+                                        </span>
                                     </label>
                                 </div>
                                 <div class="col-sm-6 margin" v-if="item.option.length === 0">
-                                    <textarea class="form-control" rows="5" @blur="questionContent(item.id,index)" v-model="content[index]"></textarea>
+                                    <textarea class="form-control" rows="5" @blur="questionContent(item.id,index)"
+                                              v-model="content[index]"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +60,7 @@
                 questionInfo : [],
                 pid : [],
                 params : {
-                    mission_id : this.questionId,
+                    id : '',
                     radio_id : [],
                     checkbox_id : [],
                     question : [],
@@ -71,8 +79,11 @@
                 },
             }
         },
-        created(){
-            this.getDictionary();
+        watch :{
+            questionId(val){
+                this.params.id = val;
+                this.getDictionary();
+            }
         },
         methods : {
             getDictionary(){
@@ -152,6 +163,9 @@
     }
     b{
         font-size: 14px;
+    }
+    textarea{
+        resize: none;
     }
 </style>
 

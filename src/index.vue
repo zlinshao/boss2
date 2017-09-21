@@ -356,12 +356,11 @@
         },
         methods: {
             isDone(){
-                this.$http.post('index/Mission/checkIsWrite').then((res) => {
+                this.$http.get('index/Mission/checkIsWrite').then((res) => {
                     if(res.data.code === '30080'){
                         this.questionId = res.data.data;
-                        setTimeout(function () {
-                            $('.questionnaire').modal('show');
-                        },2000);
+                        $('.questionnaire').modal('show');
+
                     }
                 })
             },

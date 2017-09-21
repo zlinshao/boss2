@@ -612,6 +612,7 @@
 
                         if(!Array.isArray(contractList.ablum)){
                             this.bankPic.cus_idPhotos = contractList.album.bank_pic;                    //修改图片ID
+                            console.log(this.bankPic.cus_idPhotos)
                             for (let i in this.bankPic.cus_idPhotos) {
                                 this.bankPic.cus_idPhoto.push(i);
                                 this.contractEdit.bank_pic.push(i);

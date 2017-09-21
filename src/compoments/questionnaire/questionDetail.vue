@@ -17,11 +17,18 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><span>编辑</span></li>
-                                <li><span>发布</span></li>
-                                <li><span>下架</span></li>
-                                <li><span>删除</span></li>
-                                <li><span>查看结果</span></li>
+                                <li @click="editQuestion"><span>编辑</span></li>
+                                <li @click="publicQuestion"><span>发布</span></li>
+                                <li @click="undercarriage"><span>下架</span></li>
+                                <li @click="deleteQuestion"><span>删除</span></li>
+                                <li @click="noWrite">
+                                    <span>未填写员工</span>
+                                </li>
+                                <li>
+                                    <router-link tag="span" :to="{path:'/questionResult',query:{questionId : editId}}">
+                                        查看结果
+                                    </router-link>
+                                </li>
                             </ul>
                         </div>
                     </h4>
@@ -37,10 +44,18 @@
                     </div>
                     <div class="col-sm-12 margin" v-if="item.option.length > 0">
                         <label class="option" v-for="(value,key) in item.option" v-if="item.question_type === 1">
-                            <input type="radio" :name="item.id">{{value.content}}
+                            <input type="radio" :name="item.id">
+                            <span v-if="value.content !== null">{{value.content}}</span>
+                            <span v-if="value.content === null">
+                                 <img :src="img.small" v-for="(img,index) in value.album.option_pic">
+                            </span>
                         </label>
                         <label class="option" v-for="(value,key) in item.option" v-if="item.question_type === 2">
-                            <input type="checkbox">{{value.content}}
+                            <input type="checkbox">
+                            <span v-if="value.content !== null">{{value.content}}</span>
+                            <span v-if="value.content === null">
+                                 <img :src="img.small" v-for="(img,index) in value.album.option_pic">
+                            </span>
                         </label>
                     </div>
                     <div class="col-sm-6 margin" v-if="item.option.length === 0">
@@ -60,24 +75,48 @@
             </div>
         </section>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <Edit :questionId="editId" @Edit="successEdit"></Edit>
+        <NoWrite :selectId="editId"></NoWrite>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import Confirm from '../common/confirm.vue'
+    import Edit from './questionEdit.vue'
+    import NoWrite from './noWrite.vue'
+    import Status from '../common/status.vue';
     export default {
-        components : {Confirm},
+        components : {Confirm,Edit,NoWrite,Status},
         data(){
             return{
                 questionId : '',    //问卷 id
                 dictionary : [],    //字典
                 questionInfo : [],  //问卷信息
-                confirmMsg :[],     //确认信息
+
+                confirmMsg : [],
+                msgFlag :'',
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
+                editId : '',
             }
         },
         created(){
             this.questionId = this.$route.query.questionId;
             this.getDictionary();
+        },
+        watch :{
+            questionId(val){
+                this.editId = val;
+            }
         },
         methods : {
             getDictionary(){        //ask for dictionary
@@ -91,7 +130,76 @@
                     this.questionInfo = res.data.data[0];
                 })
             },
-            getConfirm(){},
+
+            editQuestion(){
+                $('.questionEdit').modal('show');
+            },
+            successEdit(){
+                this.getQuestionInfo();
+            },
+            deleteQuestion(){       //删除
+                this.confirmMsg = {msg: '您确定删除吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'delete';
+            },
+            undercarriage(){
+                this.confirmMsg = {msg: '您确定下架吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'undercarriage';
+            },
+            publicQuestion(){
+                this.confirmMsg = {msg: '您确定发布吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'publicQuestion';
+            },
+
+            getConfirm(){
+                switch (this.msgFlag) {
+                    case 'delete' :
+                        this.$http.get('index/Mission/Delete/id/' + this.editId).then((res) => {
+                            if (res.data.code === '30031') {
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            } else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                        break;
+                    case 'undercarriage' :
+                        this.$http.get('index/Mission/offMission/id/' + this.editId).then((res) => {
+                            if (res.data.code === '30034') {
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            } else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                        break;
+                    case 'publicQuestion' :
+                        this.$http.get('index/Mission/publicMission/id/' + this.editId).then((res) => {
+                            if (res.data.code === '30022') {
+                                this.info.success = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_success = true;
+                            } else {
+                                this.info.error = res.data.msg;
+                                //显示成功弹窗 ***
+                                this.info.state_error = true;
+                            }
+                        });
+                        break;
+                }
+            },
+
+            noWrite(){
+                $('.noWrite').modal('show');
+            },
         }
     }
 </script>
@@ -144,5 +252,8 @@
     }
     b{
         font-size: 14px;
+    }
+    textarea{
+        resize: none;
     }
 </style>
