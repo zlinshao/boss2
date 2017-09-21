@@ -9,11 +9,17 @@
                         </button>
                         <h4 class="modal-title">未填写员工</h4>
                     </div>
-                    <div class="modal-body inbox-body panel">
+                    <div class="modal-body inbox-body panel roll">
                         <div class="row">
                             <div class=" col-md-6" v-for="item in hasNotWriteMember">
-                                <span style="color: #1caadc">{{item.name}}</span>
-                                <span>({{item.department[0].name}})</span>
+                                <div>
+                                    <div class="item col-sm-12 " style="color: #777">
+                                        <img :src="item.avatar" v-if="item.avatar !== '' ">
+                                        <img src="../../assets/img/head.png" v-if="item.avatar === '' ">
+                                        <span style="display: inline-block;width: 55px;">{{item.name}}</span>
+                                        <span>({{item.department[0].name}})</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -45,8 +51,26 @@
         },
     }
 </script>
-<style>
+<style scoped>
     .col-md-6 span{
         margin: 5px;
+    }
+    .inbox-body{
+        max-height: 500px;
+        overflow: auto;
+    }
+    @media (min-width: 768px) {
+        .modal-dialog{
+            width: 767px;
+        }
+    }
+    .item{
+        margin: 5px;
+    }
+    .item2{
+        margin: -5px 5px 5px 5px;
+    }
+    img {
+        display: inline-block;width: 30px;height: 30px;border-radius: 50%;background: #aaaaaa;
     }
 </style>

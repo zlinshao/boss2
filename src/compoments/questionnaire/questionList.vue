@@ -137,7 +137,7 @@
         <Page :pg="pages" @pag="getPage" :beforePage="params.page"></Page>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <Status :state='info'></Status>
-        <Edit :questionId="selectId" @Edit="successEdit"></Edit>
+        <Edit :questionId="selectId" :startEdit="startEdit" @Edit="successEdit"></Edit>
         <NoWrite :selectId="selectId"></NoWrite>
 
         <Loading v-if='Waiting'></Loading>
@@ -180,7 +180,8 @@
                     error: ''
                 },
                 status : '',
-                Waiting : true
+                Waiting : true,
+                startEdit : false,
             }
         },
         created(){
@@ -217,6 +218,10 @@
             createQuestion(){   //创建问卷
                 $('.questionAdd').modal('show');
             },
+            editQuestion(){
+                this.startEdit =true;
+                $('.questionEdit').modal('show');
+            },
             getPage(val){
                 this.params.page = val;
                 this.getQuestionList();
@@ -236,6 +241,7 @@
                 this.search();
             },
             successEdit(){
+                this.startEdit = false;
                 this.search();
             },
             deleteQuestion(){       //删除
@@ -305,9 +311,7 @@
                         break;
                 }
             },
-            editQuestion(){
-                $('.questionEdit').modal('show');
-            },
+
         }
     }
 </script>

@@ -24,11 +24,9 @@
                                 <li @click="noWrite">
                                     <span>未填写员工</span>
                                 </li>
-                                <li>
-                                    <router-link tag="span" :to="{path:'/questionResult',query:{questionId : editId,type : 'detail'}}">
-                                        查看结果
-                                    </router-link>
-                                </li>
+                                <router-link tag="li" :to="{path:'/questionResult',query:{questionId : editId,type : 'detail'}}">
+                                    <span>查看结果</span>
+                                </router-link>
                             </ul>
                         </div>
                     </h4>

@@ -33,30 +33,37 @@
                         </div>
 
                         <div v-if="item.option.length > 0">
-                            <label class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 1">
-                                <span style="margin-right: 10px">{{key+1}})</span>
-                                <span v-if="value.content !== null">{{value.content}}</span>
-                                <span v-if="value.content === null">
+                            <div class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 1">
+                                <div class="col-sm-3">
+                                    <span style="margin-right: 10px">{{key+1}})</span>
+                                    <span v-if="value.content !== null">{{value.content}}</span>
+                                    <span v-if="value.content === null">
                                     <img :src="img.small" v-for="(img,index) in value.album.option_pic">
                                 </span>
-                                <a data-v-2f43a2b3="" href="#">
-                                    <div class="progress1 progress progress-striped active">
-                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
-                                             aria-valuenow="45" role="progressbar" class="progress-bar"
-                                             :style="{ width: value.proportion}">
+                                </div>
+                                <div class="col-sm-9">
+                                    <span data-v-2f43a2b3="">
+                                        <div class="progress1 progress progress-striped active">
+                                            <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                                                 aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                 :style="{ width: value.proportion}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span class="percent">{{value.vote_nums}}票</span>
-                                    <span class="percent" v-if="value.proportion">({{value.proportion}})</span>
-                                </a>
-                            </label>
-                            <label class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 2">
-                                <span style="margin-right: 10px">{{key+1}})</span>
-                                <span v-if="value.content !== null">{{value.content}}</span>
-                                <span v-if="value.content === null">
+                                        <span class="percent">{{value.vote_nums}}票</span>
+                                        <span class="percent" v-if="value.proportion">({{value.proportion}})</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 2">
+                                <div class="col-sm-3">
+                                    <span style="margin-right: 10px">{{key+1}})</span>
+                                    <span v-if="value.content !== null">{{value.content}}</span>
+                                    <span v-if="value.content === null">
                                     <img :src="img.small" v-for="(img,index) in value.album.option_pic">
                                 </span>
-                                <a data-v-2f43a2b3="" href="#">
+                                </div>
+                                <div class="col-sm-9">
+                                    <span data-v-2f43a2b3="">
                                     <div class="progress1 progress progress-striped active">
                                         <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
@@ -65,8 +72,10 @@
                                     </div>
                                     <span class="percent">{{value.vote_nums}}票</span>
                                     <span class="percent" v-if="value.proportion>0">({{value.proportion}})</span>
-                                </a>
-                            </label>
+                                </span>
+                                </div>
+
+                            </div>
                         </div>
 
                     </div>
