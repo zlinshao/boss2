@@ -26,7 +26,8 @@
             <div class="panel-body">
                 <h4 class="text-center">{{questionInfo.title}}</h4>
                 <hr>
-                <h5 class="text-center">{{questionInfo.create_time}}</h5>
+                <h5 class="text-center" v-if="questionInfo.update_time == undefined">{{questionInfo.create_time}}</h5>
+                <h5 class="text-center" v-if="questionInfo.update_time != undefined">{{questionInfo.update_time}}</h5>
                 <div class="row select" v-for="(item,index) in questionInfo.question">
                     <div class="col-xs-12 question">
                         <b v-if="item.question_type === 0">{{index+1}}&nbsp;{{item.question}}(问卷)</b>

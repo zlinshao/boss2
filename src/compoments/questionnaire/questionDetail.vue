@@ -39,7 +39,9 @@
                 </header>
                 <div style="text-align: center">
                     <b v-if="questionInfo.public_id !==undefined">
-                        {{questionInfo.create_time}}&nbsp;&nbsp;&nbsp;{{dictionary.staff_id[questionInfo.public_id]}}
+                        <span v-if="questionInfo.update_time == undefined">{{questionInfo.create_time}}&nbsp;&nbsp;&nbsp;</span>
+                        <span v-if="questionInfo.update_time != undefined">{{questionInfo.update_time}}&nbsp;&nbsp;&nbsp;</span>
+                        {{dictionary.staff_id[questionInfo.public_id]}}
                     </b>
                 </div>
                 <div class="row select" v-for="(item,index) in questionInfo.question">
