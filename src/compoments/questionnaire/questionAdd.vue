@@ -4,7 +4,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" @click="closeModal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">创建任务</h4>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="confirmAdd">确定</button>
                     </div>
                 </div>
@@ -125,8 +125,9 @@
 
                 this.$http.post('index/Mission/addMission',this.questionList).then((res) => {
                     if(res.data.code==='30020'){
-                        this.$emit('Add')
-                        $('.questionAdd').modal('hide');
+                        this.$emit('Add');
+
+                       this.closeModal();
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
@@ -136,6 +137,19 @@
                         this.info.state_error = true;
                     }
                 })
+            },
+            closeModal(){
+                this.questionList = {
+                    title : '',
+                    type : '1',
+                    question : []
+                };
+                this.amount = '1';
+                this.arr=[];
+                this.order = '';
+                this.question = {};
+                this.selectOption = [];
+                $('.questionAdd').modal('hide');
             },
         }
     }
