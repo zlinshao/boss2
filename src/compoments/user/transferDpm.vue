@@ -36,7 +36,7 @@
 </template>
 <script>
     import Status from '../common/status.vue';
-    import SelectDpm from '../common/organization/selectStaff.vue'
+    import SelectDpm from '../common/oraganization.vue'
     export default {
         components: { Status , SelectDpm},
         data(){
@@ -58,8 +58,8 @@
         },
         methods:{
             choose(){
-                $('#selectCustom').modal('show');
-                this.configure={length:1,class:'department',id:[]};
+                $('.selectCustom:eq(0)').modal('show');
+                this.configure = {type:'department',length: 1};
             },
             dpmSeleted(val){
                 this.department_name = val.department[0].name;
