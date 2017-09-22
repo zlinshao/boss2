@@ -5,6 +5,12 @@
                 <router-link to="/question">问卷调查</router-link>
             </li>
             <li class="active">详情</li>
+
+            <li class="pull-right">
+                <router-link to="/question">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
 
         <section class="panel">
@@ -256,5 +262,11 @@
     }
     textarea{
         resize: none;
+    }
+
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

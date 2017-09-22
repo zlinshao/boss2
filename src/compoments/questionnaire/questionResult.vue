@@ -10,6 +10,17 @@
                 </router-link>
             </li>
             <li class="active">查看结果</li>
+
+            <li class="pull-right"  v-if="type != 'detail'">
+                <router-link to="/question">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
+            <li class="pull-right"  v-if="type == 'detail'">
+                <router-link :to="{path:'/questionnaire',query:{questionId : questionnaireId}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
         <section class="panel">
             <div class="panel-body">
@@ -31,7 +42,7 @@
                                 <a v-if="key==4" @click="showMore(item.answer)">更多 &gt;&gt;</a>
                             </label>
                             <label class="option col-xs-12" v-if="item.answer.length == 0">
-                                <span style="color: #1caadc">暂无数据</span>
+                                <span class="noData">暂无数据</span>
                             </label>
                         </div>
 
@@ -116,6 +127,7 @@
             showMore(val){
                 this.moreResult = val;
                 $('.resultMore').modal('show');
+
             }
         },
     }
@@ -160,5 +172,14 @@
     }
     .question{
         margin-left: 10px;
+    }
+    .noData{
+        color: #1caadc;
+        margin-left: 10px;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>

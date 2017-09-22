@@ -9,7 +9,7 @@
                         </button>
                         <h4 class="modal-title">问卷调查</h4>
                     </div>
-                    <div class="modal-body inbox-body panel">
+                    <div class="modal-body inbox-body panel roll">
                         <div class="panel-body">
                             <h4 class="text-center">{{questionInfo.title}}</h4>
                             <hr>
@@ -20,7 +20,8 @@
                                 </div>
                                 <div class="col-sm-12 margin" v-if="item.option.length > 0">
                                     <label class="option" v-for="(value,key) in item.option" v-if="item.question_type === 1">
-                                        <input type="radio" :name="item.id" :value="value.id" @click="singleSelect(item.id,value.id,$event)">
+                                        <input type="radio" :name="item.id" :value="value.id"
+                                               @click="singleSelect(item.id,value.id,$event)">
                                         <span v-if="value.content !== null">{{value.content}}</span>
                                         <span v-if="value.content === null">
                                             <img :src="img.small" v-for="(img,index) in value.album.option_pic">
@@ -181,6 +182,9 @@
     }
     textarea{
         resize: none;
+    }
+    .inbox-body{
+        max-height: 500px;
     }
 </style>
 
