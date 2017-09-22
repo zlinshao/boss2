@@ -126,7 +126,6 @@
                 this.$http.post('index/Mission/addMission',this.questionList).then((res) => {
                     if(res.data.code==='30020'){
                         this.$emit('Add');
-
                        this.closeModal();
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***

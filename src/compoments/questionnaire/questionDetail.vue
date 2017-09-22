@@ -142,8 +142,10 @@
                 this.startEdit = true;
                 $('.questionEdit').modal('show');
             },
-            successEdit(){
-                this.getQuestionInfo();
+            successEdit(val){
+                if(typeof (val) === 'string'){
+                    this.getQuestionInfo();
+                }
                 this.startEdit = false;
             },
             deleteQuestion(){       //删除

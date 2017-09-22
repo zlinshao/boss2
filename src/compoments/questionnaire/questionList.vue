@@ -242,8 +242,10 @@
                 this.search();
             },
             successEdit(){
+                if(typeof (val) === 'string'){
+                    this.search();
+                }
                 this.startEdit = false;
-                this.search();
             },
             deleteQuestion(){       //删除
                 this.confirmMsg = {msg: '您确定删除吗'};

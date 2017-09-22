@@ -4,7 +4,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" aria-label="Close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">编辑任务</h4>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" @click="closeModal">关闭</button>
                         <button type="button" class="btn btn-primary" @click="confirmAdd">确定</button>
                     </div>
                 </div>
@@ -182,17 +182,7 @@
                 }
                 this.$http.post('index/Mission/updateMission',this.questionInfo).then((res) => {
                     if(res.data.code==='30020'){
-                        this.$emit('Edit');
-                        this.hasEdit = [];
-                        let question = {
-                            is_picture : '',
-                            question : '',
-                            question_type : '',
-                            option : [],
-                        };
-                        this.optionInfo = [];
-                        this.order = '';
-                        $('.questionEdit').modal('hide');
+                        this.closeModal(res.data.code);
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
@@ -203,7 +193,19 @@
                     }
                 })
             },
-
+            closeModal(val){
+                this.$emit('Edit',val);
+                this.hasEdit = [];
+                let question = {
+                    is_picture : '',
+                    question : '',
+                    question_type : '',
+                    option : [],
+                };
+                this.optionInfo = [];
+                this.order = '';
+                $('.questionEdit').modal('hide');
+            },
         }
     }
 </script>
