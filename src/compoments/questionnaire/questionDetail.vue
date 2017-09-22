@@ -17,7 +17,8 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        <span>标题：{{questionInfo.title}}</span>&nbsp;
+                        <!--<span style="display: inline-block;text-align: center"></span>&nbsp;-->
+                        {{questionInfo.title}}
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
@@ -38,11 +39,10 @@
                     </h4>
                 </header>
                 <div style="text-align: center">
-                    <b v-if="questionInfo.public_id !==undefined">
-                        <span v-if="questionInfo.update_time == undefined">{{questionInfo.create_time}}&nbsp;&nbsp;&nbsp;</span>
-                        <span v-if="questionInfo.update_time != undefined">{{questionInfo.update_time}}&nbsp;&nbsp;&nbsp;</span>
-                        {{dictionary.staff_id[questionInfo.public_id]}}
-                    </b>
+                    <!--<h4 class="text-center" style="">{{questionInfo.title}}</h4>-->
+                    <!--<hr>-->
+                    <h5 class="text-center"  v-if="questionInfo.update_time == undefined">{{questionInfo.create_time}}</h5>
+                    <h5 class="text-center"  v-if="questionInfo.update_time != undefined">{{questionInfo.update_time}}</h5>
                 </div>
                 <div class="row select" v-for="(item,index) in questionInfo.question">
                     <div class="col-xs-12">
@@ -226,6 +226,7 @@
     h4 {
         border-bottom: 1px solid #aaaaaa;
         padding: 0 10px 8px;
+        text-align: center
     }
     .panel-body:not(:last-child) {
         border-bottom: 1px solid #aaaaaa;
