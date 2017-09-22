@@ -282,14 +282,16 @@
                 </section>
             </div>
         </div>
-        <Question :questionId = 'questionId'></Question>
+        <Question :questionId = 'questionId' @success="successVote"></Question>
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import Question from './compoments/questionnaire/questionnaire.vue'
+    import Status from './compoments/common/status.vue'
     export default {
-        components : {Question},
+        components : {Question,Status},
         data (){
             return {
                 more: 9,
@@ -315,6 +317,16 @@
                 collect_rentsData: [],          //收租
                 customData: [],                 //客户来源
                 questionId : '',
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
 //        mounted (){
@@ -362,6 +374,11 @@
                         $('.questionnaire').modal('show');
                     }
                 })
+            },
+            successVote(val){
+                this.info.success = val;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
             },
 //            更多
             click_more (){

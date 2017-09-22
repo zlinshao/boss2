@@ -145,10 +145,8 @@
             vote(){
                 this.$http.post('index/Mission/Vote',this.params).then((res) => {
                     if(res.data.code === '30025'){
+                        this.$emit('success',res.data.msg)
                         $('.questionnaire').modal('hide');
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
                     }else {
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***
