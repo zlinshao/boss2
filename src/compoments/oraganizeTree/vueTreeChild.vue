@@ -34,9 +34,9 @@
 							<li>
 								<a @click="deleteDepartment($event)">删除部门</a>
 							</li>
-							<!--<li>-->
-								<!--<a @click="transferDepartment($event)">调迁部门</a>-->
-							<!--</li>-->
+							<li>
+								<a @click="transferDepartment($event)">调迁部门</a>
+							</li>
 						</ul>
 					</div>
 				</div>

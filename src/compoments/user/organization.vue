@@ -58,7 +58,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <AddDpm :department_name="department_name" :parentDpartmentId='parentDpartmentId' @success='addDpm'></AddDpm>
         <Status :state='info'></Status>
-        <!--<Transfer @TransferDepartment="transferCommit"></Transfer>-->
+        <Transfer @TransferDepartment="transferCommit"></Transfer>
         <PositionAdd :position_id="position_id" :position_name="position_name" :department_name="department_name"
                      :department_id="department_id" @success = 'addSuccess'></PositionAdd>
         <PositionEdit :eidtId = 'position_id' @success="editSuccess"></PositionEdit>
@@ -75,7 +75,7 @@
     import Confirm from '../common/confirm.vue'
     import AddDpm from  './addDubordinateDpm.vue'
     import Status from '../common/status.vue';
-//    import Transfer from './transferDpm.vue'
+    import Transfer from './transferDpm.vue'
     import PositionEdit from './positionEdit.vue'   //职位编辑
     import PositionAdd from  './positionAdd.vue'
     import PositionHigh from './positionHigh.vue'
@@ -89,7 +89,7 @@
             Confirm,
             AddDpm,
             Status,
-//            Transfer,
+            Transfer,
             PositionEdit,
             PositionAdd,
             PositionHigh,
@@ -180,9 +180,9 @@
                         $('#confirm').modal('show');
                         this.msgFlag = 'deleteDepartment';
 //                        break;
-//                    case '调迁部门' :
-//                        this.department_id = val.id;
-//                        $('#myModalTransferDpm').modal('show');
+                    case '调迁部门' :
+                        this.department_id = val.id;
+                        $('#myModalTransferDpm').modal('show');
                 }
 
             },
