@@ -179,7 +179,7 @@
                         this.confirmMsg = {msg: '您确定删除此部门吗'};
                         $('#confirm').modal('show');
                         this.msgFlag = 'deleteDepartment';
-//                        break;
+                        break;
                     case '调迁部门' :
                         this.department_id = val.id;
                         $('#myModalTransferDpm').modal('show');
