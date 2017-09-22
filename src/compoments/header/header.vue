@@ -682,7 +682,8 @@
                         </router-link>
                     </li>
 
-                    <li :class="{'active': isActive == 'question'}" @click='pitch_on("question")'>
+                    <li v-if="simulate.indexOf('Mission/index') > -1"
+                        :class="{'active': isActive == 'question'}" @click='pitch_on("question")'>
                         <router-link to="/question">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>问卷调查</span>

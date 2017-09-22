@@ -184,7 +184,8 @@
         resize: none;
     }
     .inbox-body{
-        max-height: 500px;
+        max-height: 700px;
+        overflow: auto;
     }
 </style>
 

@@ -17,7 +17,7 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        <span>{{questionInfo.title}}</span>&nbsp;
+                        <span>标题：{{questionInfo.title}}</span>&nbsp;
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
@@ -62,7 +62,7 @@
                             </span>
                         </label>
                     </div>
-                    <div class="col-sm-6 margin" v-if="item.option.length === 0">
+                    <div class="col-sm-5 margin" v-if="item.option.length === 0">
                         <textarea class="form-control" rows="5"></textarea>
                     </div>
                 </div>

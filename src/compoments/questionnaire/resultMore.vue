@@ -9,8 +9,8 @@
                         </button>
                         <h4 class="modal-title">更多</h4>
                     </div>
-                    <div class="modal-body inbox-body panel">
-                        <div class="row">
+                    <div class="modal-body inbox-body panel roll">
+                        <div class="row ">
                             <div class="col-xs-12" v-for="(value,key) in moreResult">
                                 {{key+1}} ) {{value.answer}}
                             </div>
@@ -30,3 +30,9 @@
         props : ['moreResult'],
     }
 </script>
+<style scoped>
+    .roll{
+        max-height: 10px;
+        overflow: auto;
+    }
+</style>

@@ -37,9 +37,9 @@
 
                         <div v-if="item.option.length < 1">
                             <label class="option col-xs-12" v-for="(value,key) in item.answer">
-                                <span v-if="key<4" style="margin-right: 10px">{{key+1}})</span>
-                                <span v-if="key<4">{{value.answer}}</span>
-                                <a v-if="key==4" @click="showMore(item.answer)">更多 &gt;&gt;</a>
+                                <span style="margin-left: 15px" v-if="key<4">{{key+1}})</span>
+                                <span class="question" v-if="key<4">{{value.answer}}</span>
+                                <a style="margin-left: 15px" v-if="key==4" @click="showMore(item.answer)">更多 &gt;&gt;</a>
                             </label>
                             <label class="option col-xs-12" v-if="item.answer.length == 0">
                                 <span class="noData">暂无数据</span>
@@ -49,11 +49,11 @@
                         <div v-if="item.option.length > 0">
                             <div class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 1">
                                 <div class="col-sm-3">
-                                    <span style="margin-right: 10px">{{key+1}})</span>
-                                    <span v-if="value.content !== null">{{value.content}}</span>
-                                    <span v-if="value.content === null">
-                                    <img :src="img.small" v-for="(img,index) in value.album.option_pic">
-                                </span>
+                                    <span>{{key+1}})</span>
+                                    <span class="question" v-if="value.content !== null">{{value.content}}</span>
+                                    <span class="question" v-if="value.content === null">
+                                        <img :src="img.small" v-for="(img,index) in value.album.option_pic">
+                                    </span>
                                 </div>
                                 <div class="col-sm-9">
                                     <span data-v-2f43a2b3="">
@@ -70,11 +70,11 @@
                             </div>
                             <div class="option col-xs-12" v-for="(value,key) in item.option" v-if="item.question_type === 2">
                                 <div class="col-sm-3">
-                                    <span style="margin-right: 10px">{{key+1}})</span>
-                                    <span v-if="value.content !== null">{{value.content}}</span>
-                                    <span v-if="value.content === null">
-                                    <img :src="img.small" v-for="(img,index) in value.album.option_pic">
-                                </span>
+                                    <span>{{key+1}})</span>
+                                    <span class="question" v-if="value.content !== null">{{value.content}}</span>
+                                    <span class="question" v-if="value.content === null">
+                                        <img :src="img.small" v-for="(img,index) in value.album.option_pic">
+                                    </span>
                                 </div>
                                 <div class="col-sm-9">
                                     <span data-v-2f43a2b3="">
@@ -85,7 +85,7 @@
                                         </div>
                                     </div>
                                     <span class="percent">{{value.vote_nums}}票</span>
-                                    <span class="percent" v-if="value.proportion>0">({{value.proportion}})</span>
+                                    <span class="percent" v-if="value.proportion">({{value.proportion}})</span>
                                 </span>
                                 </div>
 
@@ -159,9 +159,6 @@
         margin-bottom: 0;
         margin-left: 10px;
         width: 18%;
-    }
-    .percent{
-        margin-left: 5px;
     }
     .option{
         margin: 5px;
