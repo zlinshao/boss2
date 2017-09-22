@@ -104,7 +104,8 @@
                             <td class="text-center">{{item.title}}</td>
                             <td class="text-center">{{dictionary.mission_type[item.type]}}</td>
                             <td class="text-center">{{dictionary.staff_id[item.public_id]}}</td>
-                            <td class="text-center">{{item.create_time}}</td>
+                            <td class="text-center" v-if="item.update_time == undefined">{{item.create_time}}</td>
+                            <td class="text-center" v-if="item.update_time != undefined">{{item.update_time}}</td>
                             <td class="text-center">{{item.comment_nums}}</td>
                             <td class="text-center">
                                 <label class="label label-default" v-if="item.status === 1">
