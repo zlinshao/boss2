@@ -301,7 +301,10 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>押金：</span>
-                                                <span>{{item.cost_deposit}}</span>
+                                                <span v-if="item.checkin_collect_id !== null
+                                                && item.checkin_collect_id !== undefined">
+                                                    {{item.checkin_collect_id.cost_deposit}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>资料补齐日期：</span>
