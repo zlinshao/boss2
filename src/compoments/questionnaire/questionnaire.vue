@@ -7,7 +7,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">问卷调查{{content}}{{content.length}}</h4>
+                        <h4 class="modal-title">问卷调查{{content}}</h4>
                     </div>
                     <div class="modal-body inbox-body panel roll">
                         <div class="panel-body">
@@ -36,6 +36,7 @@
                                     </label>
                                 </div>
                                 <div class="col-sm-6 margin" v-if="item.option.length === 0">
+                                    {{index}}
                                     <textarea class="form-control" rows="5" @blur="questionContent(item.id,index)"
                                               v-model="content[index]"></textarea>
                                 </div>
@@ -128,19 +129,12 @@
                 }
             },
             questionContent(id,index){
-//                let question = {};
-//                let idExist = false;
-//                question.id =id;
-
                 let content = this.content[index];
                 for(let i=0; i<this.params.question.length;i++){
                     if(this.params.question[i].id == id){
                         this.params.question[i].content = content;
                     }
                 }
-//                if(!idExist){
-//                    this.params.question.push(question);
-//                }
             },
             vote(){
                 this.$http.post('index/Mission/Vote',this.params).then((res) => {
