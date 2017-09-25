@@ -88,7 +88,13 @@
                 $('.optionSet').modal('show');
             },
             add(key){
-                this.amount ++;
+                if(this.arr.length == this.amount){
+                    this.amount ++;
+                }else {
+                    this.info.error = '请先编辑已有问题';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }
             },
             reduce(key){
                 if(this.amount >1){
