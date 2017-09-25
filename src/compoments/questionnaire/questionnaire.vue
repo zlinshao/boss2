@@ -7,7 +7,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">问卷调查</h4>
+                        <h4 class="modal-title">问卷调查{{content}}{{content.length}}</h4>
                     </div>
                     <div class="modal-body inbox-body panel roll">
                         <div class="panel-body">
