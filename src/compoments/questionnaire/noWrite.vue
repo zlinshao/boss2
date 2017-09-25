@@ -17,7 +17,9 @@
                                         <img :src="item.avatar" v-if="item.avatar !== '' ">
                                         <img src="../../assets/img/head.png" v-if="item.avatar === '' ">
                                         <span style="display: inline-block;width: 55px;">{{item.name}}</span>
-                                        <span>({{item.department[0].name}})</span>
+                                        <span v-if="item.department.length > 0">
+                                            ({{item.department[0].name}})
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -45,6 +47,7 @@
                 if(val){
                     this.$http.get('index/Mission/showDetail/id/' + val).then((res) => {
                         this.hasNotWriteMember = res.data.data[0].hasNotWrite;
+                        console.log(this.hasNotWriteMember)
                     })
                 }
             }
