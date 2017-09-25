@@ -16,7 +16,7 @@
         <section class="panel">
             <div class="panel-body">
                 <header>
-                    <h4>
+                    <h4 v-if="questionInfo.title">
                         <!--<span style="display: inline-block;text-align: center"></span>&nbsp;-->
                         {{questionInfo.title}}
                         <div class="btn-group pull-right">
@@ -226,7 +226,8 @@
     h4 {
         border-bottom: 1px solid #aaaaaa;
         padding: 0 10px 8px;
-        text-align: center
+        text-align: center;
+        height: 28px;
     }
     .panel-body:not(:last-child) {
         border-bottom: 1px solid #aaaaaa;
