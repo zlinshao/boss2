@@ -96,7 +96,7 @@
                         <tbody>
                         <tr v-for="item in questionList">
                             <td>
-                                <label @click="pick(item,$event)" :class="{'label_check':true,
+                                <label @click.prevent="pick(item,$event)" :class="{'label_check':true,
                                     'c_on':selectId===item.id,'c_off':selectId!==item.id}">
                                     <input type="checkbox" class="pull-left" :checked="item.id === selectId">
                                 </label>
