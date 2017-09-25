@@ -11,7 +11,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control" v-model="params.status" @change="search">
-                                <option value="">请选择</option>
+                                <option value="">状态选择</option>
                                 <option :value="key" v-for="(value,key) in dictionary.mission_status">{{value}}</option>
                             </select>
                         </label>
@@ -19,7 +19,7 @@
                     <div class="pro-sort">
                         <label>
                             <select class="form-control" v-model="params.type"  @change="search">
-                                <option value="">请选择</option>
+                                <option value="">类型选择</option>
                                 <option :value="key" v-for="(value,key) in dictionary.mission_type">{{value}}</option>
                             </select>
                         </label>
