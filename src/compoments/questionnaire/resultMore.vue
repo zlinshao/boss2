@@ -32,7 +32,7 @@
 </script>
 <style scoped>
     .roll{
-        max-height: 10px;
+        max-height:400px;
         overflow: auto;
     }
 </style>

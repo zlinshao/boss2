@@ -228,8 +228,10 @@
                 this.getQuestionList();
             },
             pick(item, e){
-                e.target.checked = !e.target.checked;
-                if(e.target.checked){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+//                e.target.checked = !e.target.checked;
+                if(evInput.checked){
                     this.selectId = item.id;
                     this.status = item.status;
                 }else {
