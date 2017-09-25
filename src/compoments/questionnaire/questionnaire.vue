@@ -7,7 +7,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">问卷调查{{content}}</h4>
+                        <h4 class="modal-title">问卷调查</h4>
                     </div>
                     <div class="modal-body inbox-body panel roll">
                         <div class="panel-body">
@@ -36,9 +36,7 @@
                                     </label>
                                 </div>
                                 <div class="col-sm-6 margin" v-if="item.option.length === 0">
-                                    {{index}}
-                                    <textarea class="form-control" rows="5" @blur="questionContent(item.id,index)"
-                                              v-model="content[index]"></textarea>
+                                    <textarea class="form-control" rows="5" @blur="questionContent($event,item.id,index)"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +68,6 @@
                     checkbox_id : [],
                     question : [],
                 },
-                content: [],
                 confirmMsg :[],
                 info: {
                     //成功状态 ***
@@ -128,8 +125,8 @@
                     }
                 }
             },
-            questionContent(id,index){
-                let content = this.content[index];
+            questionContent(e,id,index){
+                let content = e.target.value;
                 for(let i=0; i<this.params.question.length;i++){
                     if(this.params.question[i].id == id){
                         this.params.question[i].content = content;
