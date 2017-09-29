@@ -18,7 +18,7 @@ $(function () {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square/dict',
+        url: baseUrl + 'code/Staff_Square/dict',
         success: (data) => {
             // console.log(data);
             dict = data;
@@ -56,7 +56,7 @@ function getBanner() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             type : 7,
             status : 2
@@ -227,7 +227,7 @@ function getSubtitle() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             type : 8,
             status : 2
@@ -246,7 +246,7 @@ function getSubtitle() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             type : 9,
             status : 2
@@ -290,7 +290,7 @@ function getHot() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             type : 6,
             status : 2
@@ -343,7 +343,7 @@ function getPeople() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             type : 5,
             status : 2
@@ -395,7 +395,7 @@ function getNew(type) {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             type : type,
             status : 2
@@ -471,7 +471,7 @@ function addSeen(id) {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square/showDetails?id=' + id+'&front=-1',
+        url: baseUrl + 'code/Staff_Square/showDetails?id=' + id+'&front=-1',
         success: (data) => {
         }
     })

@@ -123,7 +123,7 @@
                     question : []
 
                 };
-                this.$http.get('index/Mission/showDetail/id/' + this.questionId).then((res) => {
+                this.$http.get('code/Mission/showDetail/id/' + this.questionId).then((res) => {
                     let val = res.data.data[0];
                     this.questionInfo.title = val.title;
                     this.questionInfo.id = val.id;
@@ -180,7 +180,7 @@
                         }
                     }
                 }
-                this.$http.post('index/Mission/updateMission',this.questionInfo).then((res) => {
+                this.$http.post('code/Mission/updateMission',this.questionInfo).then((res) => {
                     if(res.data.code==='30020'){
                         this.closeModal(res.data.code);
                         this.info.success = res.data.msg;

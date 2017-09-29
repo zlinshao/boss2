@@ -190,7 +190,7 @@
         },
         methods :{
             getDictionary(){
-                this.$http.get('index/Mission/dict').then((res) => {
+                this.$http.get('code/Mission/dict').then((res) => {
                     this.dictionary = res.data;
                     this.getQuestionList();
                 })
@@ -201,7 +201,7 @@
                 this.getQuestionList();
             },
             getQuestionList(){
-                this.$http.post('index/Mission/index',this.params).then((res) => {
+                this.$http.post('code/Mission/index',this.params).then((res) => {
                     if(res.data.code === '30010'){
                         this.questionList = res.data.data.list;
                         this.pages = res.data.data.pages;
@@ -270,7 +270,7 @@
             getConfirm(){
                 switch (this.msgFlag){
                     case 'delete' :
-                        this.$http.get('index/Mission/Delete/id/' + this.selectId).then((res) => {
+                        this.$http.get('code/Mission/Delete/id/' + this.selectId).then((res) => {
                             if(res.data.code === '30031'){
                                 this.selectId = '';
                                 this.search();
@@ -285,7 +285,7 @@
                         });
                         break;
                     case 'undercarriage' :
-                        this.$http.get('index/Mission/offMission/id/' + this.selectId).then((res) => {
+                        this.$http.get('code/Mission/offMission/id/' + this.selectId).then((res) => {
                             if(res.data.code === '30034'){
                                 this.selectId = '';
                                 this.search();
@@ -300,7 +300,7 @@
                         });
                         break;
                     case 'publicQuestion' :
-                        this.$http.get('index/Mission/publicMission/id/' + this.selectId).then((res) => {
+                        this.$http.get('code/Mission/publicMission/id/' + this.selectId).then((res) => {
                             if(res.data.code === '30022'){
                                 this.selectId = '';
                                 this.search();

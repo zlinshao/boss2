@@ -89,14 +89,14 @@
         },
         methods : {
             getDictionary(){
-                this.$http.get('index/Mission/dict').then((res) => {
+                this.$http.get('code/Mission/dict').then((res) => {
                     this.dictionary = res.data;
                     this.getQuestionInfo();
                 })
             },
             getQuestionInfo(){
                 if(this.questionId !== ''){
-                    this.$http.get('index/Mission/showDetail/id/' + this.questionId).then((res) => {
+                    this.$http.get('code/Mission/showDetail/id/' + this.questionId).then((res) => {
                         this.questionInfo = res.data.data[0];
                         this.getQuestionId(this.questionInfo);
                     })
@@ -134,7 +134,7 @@
                 }
             },
             vote(){
-                this.$http.post('index/Mission/Vote',this.params).then((res) => {
+                this.$http.post('code/Mission/Vote',this.params).then((res) => {
                     if(res.data.code === '30025'){
                         this.$emit('success',res.data.msg)
                         $('.questionnaire').modal('hide');

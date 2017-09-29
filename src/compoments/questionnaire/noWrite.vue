@@ -49,7 +49,7 @@
         watch : {
             selectId(val){
                 if(val){
-                    this.$http.get('index/Mission/showDetail/id/' + val).then((res) => {
+                    this.$http.get('code/Mission/showDetail/id/' + val).then((res) => {
                         this.hasNotWriteMember = res.data.data[0].hasNotWrite;
                     })
                 }

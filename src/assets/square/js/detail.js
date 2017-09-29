@@ -26,7 +26,7 @@ $(function () {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square/dict',
+        url: baseUrl + 'code/Staff_Square/dict',
         success: (data) => {
             // console.log(data);
             dict = data;
@@ -47,7 +47,7 @@ $(function () {
                 xhrFields: {
                     withCredentials: true
                 },
-                url: baseUrl + 'index/Staff_Square/comment',
+                url: baseUrl + 'code/Staff_Square/comment',
                 data : {
                     article_id : id,
                     comment : val
@@ -92,7 +92,7 @@ function getDetails() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square/showDetails?id='+id,
+        url: baseUrl + 'code/Staff_Square/showDetails?id='+id,
         success: (data) => {
             // console.log(data);
             if (data.code==30020){
@@ -116,7 +116,7 @@ function getDetails() {
                             xhrFields: {
                                 withCredentials: true
                             },
-                            url: baseUrl + 'index/Staff_Square/thumbsUp?article_id=' + id,
+                            url: baseUrl + 'code/Staff_Square/thumbsUp?article_id=' + id,
                             success: (data) => {
                                 // console.log(data);
                                 if (data.code==30060){
@@ -226,7 +226,7 @@ function createComment(item) {
                 xhrFields: {
                     withCredentials: true
                 },
-                url: baseUrl + 'index/Staff_Square/comment',
+                url: baseUrl + 'code/Staff_Square/comment',
                 data : {
                     article_id : item.article_id,
                     response_id : item.id,
@@ -280,7 +280,7 @@ function getRecommend() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             browser_most : 1
         },
@@ -308,7 +308,7 @@ function getRecommend() {
         xhrFields: {
             withCredentials: true
         },
-        url: baseUrl + 'index/Staff_Square',
+        url: baseUrl + 'code/Staff_Square',
         data : {
             comment_most : 1
         },

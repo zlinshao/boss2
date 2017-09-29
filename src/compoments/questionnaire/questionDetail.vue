@@ -127,13 +127,13 @@
         },
         methods : {
             getDictionary(){        //ask for dictionary
-                this.$http.get('index/Mission/dict').then((res) => {
+                this.$http.get('code/Mission/dict').then((res) => {
                     this.dictionary = res.data;
                     this.getQuestionInfo();
                 })
             },
             getQuestionInfo(){      //ask for question information
-                this.$http.get('index/Mission/showDetail/id/' + this.questionId).then((res) => {
+                this.$http.get('code/Mission/showDetail/id/' + this.questionId).then((res) => {
                     this.questionInfo = res.data.data[0];
                 })
             },
@@ -167,7 +167,7 @@
             getConfirm(){
                 switch (this.msgFlag) {
                     case 'delete' :
-                        this.$http.get('index/Mission/Delete/id/' + this.editId).then((res) => {
+                        this.$http.get('code/Mission/Delete/id/' + this.editId).then((res) => {
                             if (res.data.code === '30031') {
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
@@ -180,7 +180,7 @@
                         });
                         break;
                     case 'undercarriage' :
-                        this.$http.get('index/Mission/offMission/id/' + this.editId).then((res) => {
+                        this.$http.get('code/Mission/offMission/id/' + this.editId).then((res) => {
                             if (res.data.code === '30034') {
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***
@@ -193,7 +193,7 @@
                         });
                         break;
                     case 'publicQuestion' :
-                        this.$http.get('index/Mission/publicMission/id/' + this.editId).then((res) => {
+                        this.$http.get('code/Mission/publicMission/id/' + this.editId).then((res) => {
                             if (res.data.code === '30022') {
                                 this.info.success = res.data.msg;
                                 //显示成功弹窗 ***

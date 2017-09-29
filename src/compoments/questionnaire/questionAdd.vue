@@ -129,7 +129,7 @@
                 this.questionList.question = [];
                 this.questionList.question = arr;
 
-                this.$http.post('index/Mission/addMission',this.questionList).then((res) => {
+                this.$http.post('code/Mission/addMission',this.questionList).then((res) => {
                     if(res.data.code==='30020'){
                         this.$emit('Add');
                        this.closeModal();

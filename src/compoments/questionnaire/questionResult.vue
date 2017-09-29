@@ -120,7 +120,7 @@
         },
         methods : {
             searchResult(){
-                    this.$http.get('index/Mission/showResult/id/' + this.questionnaireId).then((res)=>{
+                    this.$http.get('code/Mission/showResult/id/' + this.questionnaireId).then((res)=>{
                     this.questionInfo = res.data.data[0];
                     console.log(this.questionInfo)
                 })
