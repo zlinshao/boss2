@@ -187,7 +187,7 @@
             flexData(val){
                 if (this.changeYears) {
                     this.moreYears = val;
-                    if (this.moreYears == 0){
+                    if (this.moreYears === 0){
                         this.changeYears = false;
                     }
                     this.sendData();
@@ -200,7 +200,7 @@
         components: {},
         methods: {
             changeMoney(ev){
-                if (this.moreYears == 0 || this.flexData == 0){
+                if (this.moreYears === 0 || this.flexData === 0){
                     ev.target.checked = false;
                     return;
                 }
@@ -251,7 +251,6 @@
         line-height: 34px;
         font-size: 20px;
         color: #ddd;
-        /*text-align: left;*/
         cursor: pointer;
     }
 

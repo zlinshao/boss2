@@ -93,7 +93,7 @@
                                             <div class="col-sm-7">
                                                 <select class="form-control" v-model="more_type[index]">
 
-                                                    <option :value="value" v-for="(key,value) in dict.pay_type">
+                                                    <option :value="value" v-for="(key, value) in dict.pay_type">
                                                         {{key}}
                                                     </option>
                                                 </select>
@@ -212,9 +212,6 @@
                                             <SelectSubject @choose="houseSubject"
                                                            :current="subject_id.rental"></SelectSubject>
                                         </div>
-                                        <!--<div class="col-sm-1 col-xs-2">-->
-                                        <!--<span @click="subject_empty(1)" class="fa fa-times-circle cha"></span>-->
-                                        <!--</div>-->
                                     </div>
 
                                     <div class="form-group">
@@ -223,9 +220,6 @@
                                             <SelectSubject @choose="depositSubject"
                                                            :current="subject_id.deposit"></SelectSubject>
                                         </div>
-                                        <!--<div class="col-sm-1 col-xs-2">-->
-                                        <!--<span @click="subject_empty(2)" class="fa fa-times-circle cha"></span>-->
-                                        <!--</div>-->
                                     </div>
                                 </div>
                             </form>

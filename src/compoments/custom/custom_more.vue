@@ -56,14 +56,13 @@
                             <div><span
                                     class="text-primary">客户身份：</span><span>{{select_list.identity[info.identity]}}</span>
                             </div>
-                            <div>
-                                <span style="vertical-align: top;" class="text-primary">跟进进度：</span>
-                                <a data-v-2f43a2b3="" href="#">
-                                    <div data-v-2f43a2b3="" class="progress1 progress progress-striped active">
-                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                            <div><span style="vertical-align: top;" class="text-primary">跟进进度：</span>
+                                <a href="#">
+                                    <div class="progress1 progress progress-striped active">
+                                        <div aria-valuemax="100" aria-valuemin="0"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
                                              :style="{ width: cus_progress + '%'}">
-                                            <span data-v-2f43a2b3="" class="sr-only">{{cus_progress}}%</span>
+                                            <span class="sr-only">{{cus_progress}}%</span>
                                         </div>
                                     </div>
                                 </a>
@@ -152,11 +151,11 @@
             <!--<td>合同时间</td>-->
             <!--<td class="paddingTop">-->
             <!--<a data-v-2f43a2b3="" href="#">-->
-            <!--<div data-v-2f43a2b3="" class="progress progress-striped active">-->
-            <!--<div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"-->
+            <!--<div class="progress progress-striped active">-->
+            <!--<div aria-valuemax="100" aria-valuemin="0"-->
             <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
             <!--:style="{ width: progress + '%'}">-->
-            <!--<span data-v-2f43a2b3="" class="sr-only">{{progress}}% Complete</span>-->
+            <!--<span class="sr-only">{{progress}}% Complete</span>-->
             <!--</div>-->
             <!--</div>-->
             <!--</a>-->

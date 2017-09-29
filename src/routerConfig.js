@@ -2,6 +2,8 @@ import Power from "./compoments/power/power.vue";                               
 import Index from "./index.vue";                                                                //权限管理
 import User from "./compoments/user/user.vue";                                                  //用户管理
 import Role from "./compoments/role/role.vue";                                                  //角色
+
+import FunctionLine from "./compoments/functionLine/function_line.vue";                         //功能排期
 // import Village from "./compoments/village/village.vue";
 // import VillageDetail from "./compoments/village/villageDetail.vue";
 import CACollect from './compoments/achievement/companyAchievement/CACollect.vue'
@@ -66,6 +68,8 @@ import Company from './compoments/salary/company.vue'                           
 import Group from './compoments/salary/group.vue'                                                   // 小组工资
 import Personal from './compoments/salary/personal.vue'                                             // 个人工资
 import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
+import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                 // 周期表
+import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                                 // 周期表详情
 
 
 // import GeneralRecord from './compoments/finance/generalRecord.vue'                           // 总账操作记录
@@ -138,6 +142,11 @@ export default[
         name: 'Role',
         component: Role
     },
+    {
+        path: '/functionLine',              //角色
+        name: 'functionLine',
+        component: FunctionLine
+    },
     /*{
         path: '/village',
         name: 'Village',
@@ -199,88 +208,98 @@ export default[
         component: WARenting
     },
     {
-        path: '/custom',                        //客户
+        path: '/custom',                            //客户
         name: 'custom',
         component: Custom
     },
     {
-        path: '/customerPool',                  //客户池
+        path: '/customerPool',                      //客户池
         name: 'customerPool',
         component: CustomerPool
     },
     {
-        path: '/OkCollect',                     //公司房源
+        path: '/OkCollect',                         //公司房源
         name: 'OkCollect',
         component: OkCollect
     },
     {
-        path: '/noCollect',                     //待收房源
+        path: '/noCollect',                         //待收房源
         name: 'noCollect',
         component: NoCollect
     },
     {
-        path: '/details',                       //客户详情
+        path: '/details',                           //客户详情
         name: 'details',
         component: Details
     },
     {
-        path: '/collectDetail',                 //公司房源详情
+        path: '/collectDetail',                     //公司房源详情
         name: 'collectDetail',
         component: CollectDetail
     },
     {
-        path: '/collectMore',                   //客户详情
+        path: '/collectMore',                       //客户详情
         name: 'collectMore',
         component: Collect_More
     },
     {
-        path: '/leadingOut',                    //客户导出
+        path: '/leadingOut',                        //客户导出
         name: 'leadingOut',
         component: LeadingOut
     },
     {
         path: '/newLandlord',
-        name: 'newLandlord',                    //财务房东管理
+        name: 'newLandlord',                        //财务房东管理
         component: NewLandlord
     },
     {
         path: '/newLandlordDetail',
-        name: 'newLandlordDetail',              //财务房东管理详情
+        name: 'newLandlordDetail',                  //财务房东管理详情
         component: NewLandlordDetail
     },
     {
         path: '/rentLordAll',
-        name: 'rentLordAll',                   //财务房东/租客总汇
+        name: 'rentLordAll',                        //财务房东/租客总汇
         component: RentLordAll
     },
     {
         path: '/payCllentAll',
-        name: 'payCllentAll',                   //财务应收/应付总汇
+        name: 'payCllentAll',                       //财务应收/应付总汇
         component: PayCllentAll
     },
     {
         path: '/newRenter',
-        name: 'newRenter',                      //财务租房管理
+        name: 'newRenter',                          //财务租房管理
         component: NewRenter
     },
     {
         path: '/newRenterDetail',
-        name: 'newRenterDetail',                //财务租房管理
+        name: 'newRenterDetail',                    //财务租房管理
         component: NewRenterDetail
     },
     {
         path: '/personal',
-        name: 'personal',                         //个人工资
+        name: 'personal',                           //个人工资
         component: Personal
     },
     {
         path: '/personalDetail',
-        name: 'personalDetail',                   //个人工资详情
+        name: 'personalDetail',                     //个人工资详情
         component: PersonalDetail
     },
     {
+        path: '/periodicFor',
+        name: 'periodicFor',                        //周期表
+        component: PeriodicFor
+    },
+    {
+        path: '/periodicDetail',
+        name: 'periodicDetail',                     //周期表详情
+        component: PeriodicDetail
+    },
+    {
         path: '/company',
-        name: 'company',                         //公司工资
+        name: 'company',                            //公司工资
         component: Company
     },
     {
