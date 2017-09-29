@@ -185,11 +185,11 @@
                             <td class="text-center">{{select_list.customer_will[list.customer_will]}}</td>
                             <td class="text-center">
                                 <a data-v-2f43a2b3="" href="#">
-                                    <div data-v-2f43a2b3="" class="progress progress-striped active">
-                                        <div data-v-2f43a2b3="" aria-valuemax="100" aria-valuemin="0"
+                                    <div class="progress progress-striped active">
+                                        <div aria-valuemax="100" aria-valuemin="0"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
                                              :style="{ width: list.follow + '%'}">
-                                            <span data-v-2f43a2b3="" class="sr-only">{{list.follow}}%</span>
+                                            <span class="sr-only">{{list.follow}}%</span>
                                         </div>
                                     </div>
                                 </a>

@@ -295,9 +295,9 @@
                             </li>
                             <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
                             <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
-                            <li>
-                                <router-link to="/myAchievement"><i class="fa fa-money"></i>我的业绩</router-link>
-                            </li>
+                            <!--<li>-->
+                                <!--<router-link to="/functionLine"><i class="fa fa-money"></i>功能排期</router-link>-->
+                            <!--</li>-->
                             <li v-show="!isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
                             <li><a @click="logOut"><i class="fa  fa-sign-out"></i>退出登录</a></li>
                         </ul>
@@ -520,6 +520,20 @@
                                 <!--<router-link to="/personal">个人</router-link>-->
                             <!--</li>-->
                         <!--</ul>-->
+                    <!--</li>-->
+
+                    <!--<li :class="{'active': isActive == 19}" @click='pitch_on(19)'>-->
+                        <!--<router-link to="/personal">-->
+                            <!--<i class="fa  fa-calendar"></i>-->
+                            <!--<span>业绩管理</span>-->
+                        <!--</router-link>-->
+                    <!--</li>-->
+
+                    <!--<li :class="{'active': isActive == 45}" @click='pitch_on(45)'>-->
+                        <!--<router-link to="/periodicFor">-->
+                            <!--<i class="fa  fa-calendar"></i>-->
+                            <!--<span>周期表</span>-->
+                        <!--</router-link>-->
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
                     <!--<a href="javascript:;">-->

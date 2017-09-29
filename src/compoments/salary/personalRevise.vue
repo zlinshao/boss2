@@ -88,36 +88,59 @@
                                 <!--业绩提成-->
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">业绩提成</label>
-                                    <div class="col-lg-10 iconic-input right">
-                                        <i class="fa fa-square-o" @click="remark_s(3)"></i>
-                                        <i class="fa fa-check-square" @click="remark_s(0)"
-                                           v-if="remark_status == 3"></i>
+                                    <div class="col-lg-10">
                                         <input type="text" v-model="achievement_up" class="form-control"
-                                               placeholder="">
-                                        <div>{{achievement_up_b}}</div>
+                                               placeholder="" readonly>
                                     </div>
                                 </div>
 
-                                <!--备注-->
-                                <div class="form-group" v-if="remark_status == 3">
-                                    <label class="col-lg-2 col-sm-2 control-label">备注</label>
+                                <!--收房奖励-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">收房奖励</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder=""
-                                               v-model="achievement_up_b">
+                                        <input type="text" v-model="collect_reward" class="form-control"
+                                               placeholder="" readonly>
+                                    </div>
+                                </div>
+
+                                <!--未发比例-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">未发比例</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" v-model="insightful_c" class="form-control"
+                                               placeholder="" readonly>
+                                    </div>
+                                </div>
+
+                                <!--租房奖励-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">租房奖励</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" v-model="rent_reward" class="form-control"
+                                               placeholder="" readonly>
+                                    </div>
+                                </div>
+
+                                <!--未发比例-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">未发比例</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" v-model="insightful_r" class="form-control"
+                                               placeholder="" readonly>
                                     </div>
                                 </div>
                                 <hr>
 
-                                <!--空置期奖励-->
+                                <!--迟到扣款-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">空置期奖励</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">迟到扣款</label>
                                     <div class="col-lg-10 iconic-input right">
                                         <i class="fa fa-square-o" @click="remark_s(4)"></i>
                                         <i class="fa fa-check-square" @click="remark_s(0)"
                                            v-if="remark_status == 4"></i>
-                                        <input type="text" v-model="vacant_period" class="form-control"
+                                        <input type="text" v-model="come_late" class="form-control"
                                                placeholder="">
-                                        <div>{{vacant_period_b}}</div>
+                                        <div>{{come_late_b}}</div>
                                     </div>
                                 </div>
 
@@ -126,20 +149,20 @@
                                     <label class="col-lg-2 col-sm-2 control-label">备注</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" placeholder=""
-                                               v-model="vacant_period_b">
+                                               v-model="come_late_b">
                                     </div>
                                 </div>
                                 <hr>
 
-                                <!--价格差奖励-->
+                                <!--事假扣款-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">价格差奖励</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">事假扣款</label>
                                     <div class="col-lg-10 iconic-input right">
                                         <i class="fa fa-square-o" @click="remark_s(5)"></i>
                                         <i class="fa fa-check-square" @click="remark_s(0)"
                                            v-if="remark_status == 5"></i>
-                                        <input type="text" v-model="price_gap" class="form-control" placeholder="">
-                                        <div>{{price_gap_b}}</div>
+                                        <input type="text" v-model="com_leave" class="form-control" placeholder="">
+                                        <div>{{com_leave_b}}</div>
                                     </div>
                                 </div>
 
@@ -147,20 +170,20 @@
                                 <div class="form-group" v-if="remark_status == 5">
                                     <label class="col-lg-2 col-sm-2 control-label">备注</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="" v-model="price_gap_b">
+                                        <input type="text" class="form-control" placeholder="" v-model="com_leave_b">
                                     </div>
                                 </div>
                                 <hr>
 
-                                <!--年限奖励-->
+                                <!--其他扣款-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">年限奖励</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">其他扣款</label>
                                     <div class="col-lg-10 iconic-input right">
                                         <i class="fa fa-square-o" @click="remark_s(6)"></i>
                                         <i class="fa fa-check-square" @click="remark_s(0)"
                                            v-if="remark_status == 6"></i>
-                                        <input type="text" v-model="year_reward" class="form-control" placeholder="">
-                                        <div>{{year_reward_b}}</div>
+                                        <input type="text" v-model="other_withhold" class="form-control" placeholder="">
+                                        <div>{{other_withhold_b}}</div>
                                     </div>
                                 </div>
 
@@ -168,7 +191,7 @@
                                 <div class="form-group" v-if="remark_status == 6">
                                     <label class="col-lg-2 col-sm-2 control-label">备注</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="" v-model="year_reward_b">
+                                        <input type="text" class="form-control" placeholder="" v-model="other_withhold_b">
                                     </div>
                                 </div>
                                 <hr>
@@ -180,7 +203,10 @@
                                         <i class="fa fa-square-o" @click="remark_s(7)"></i>
                                         <i class="fa fa-check-square" @click="remark_s(0)"
                                            v-if="remark_status == 7"></i>
-                                        <input type="text" v-model="set_meal" class="form-control" placeholder="">
+                                        <select v-model="set_meal" class="form-control">
+                                            <option value="1">鸡腿包</option>
+                                            <option value="2">梦想包</option>
+                                        </select>
                                         <div>{{set_meal_b}}</div>
                                     </div>
                                 </div>
@@ -194,11 +220,19 @@
                                 </div>
                                 <hr>
 
-                                <!--共计-->
+                                <!--应发工资-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">共计</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">应发工资</label>
                                     <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="in_all" class="form-control" placeholder="">
+                                        <input type="text" v-model="should_money" class="form-control" placeholder="" readonly>
+                                    </div>
+                                </div>
+
+                                <!--实发工资-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">实发工资</label>
+                                    <div class="col-lg-10 iconic-input right">
+                                        <input type="text" v-model="reality_money" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <hr>
@@ -237,16 +271,20 @@
                 subsidy: '',                        //补助
                 subsidy_b: '',                      //补助备注
                 achievement_up: '',                 //业绩提成
-                achievement_up_b: '',               //业绩提成备注
-                vacant_period: '',                  //空置期奖励
-                vacant_period_b: '',                //空置期奖励备注
-                price_gap: '',                      //价格差奖励
-                price_gap_b: '',                    //价格差奖励备注
-                year_reward: '',                    //年限奖励
-                year_reward_b: '',                  //年限奖励备注
-                set_meal: '',                       //套餐类型
+                collect_reward: '',                 //收房奖励
+                insightful_c: '',                   //未发比例
+                rent_reward: '',                    //租房奖励
+                insightful_r: '',                   //未发比例
+                come_late: '',                      //迟到扣款
+                come_late_b: '',                    //迟到扣款备注
+                com_leave: '',                      //事假扣款
+                com_leave_b: '',                    //事假扣款备注
+                other_withhold: '',                 //其他扣款
+                other_withhold_b: '',               //其他扣款备注
+                set_meal: 1,                        //套餐类型
                 set_meal_b: '',                     //套餐类型备注
-                in_all: '',                         //共计
+                should_money: '',                   //应发工资
+                reality_money: '',                  //实发工资
                 remarks: '',                        //备注
             }
         },
@@ -262,17 +300,21 @@
                     a: this.base_pay,                   //底薪
                     a: this.subsidy_b,                  //补助备注
                     a: this.subsidy,                    //补助
-                    a: this.achievement_up_b,           //业绩提成备注
                     a: this.achievement_up,             //业绩提成
-                    a: this.vacant_period_b,            //空置期奖励备注
-                    a: this.vacant_period,              //空置期奖励
-                    a: this.price_gap_b,                //价格差奖励备注
-                    a: this.price_gap,                  //价格差奖励
-                    a: this.year_reward_b,              //年限奖励备注
-                    a: this.year_reward,                //年限奖励
+                    a: this.collect_reward,             //收房奖励
+                    a: this.insightful_c,               //未发比例
+                    a: this.rent_reward,                //租房奖励
+                    a: this.insightful_r,               //未发比例
+                    a: this.come_late_b,                //迟到扣款备注
+                    a: this.come_late,                  //迟到扣款
+                    a: this.com_leave_b,                //事假扣款备注
+                    a: this.com_leave,                  //事假扣款
+                    a: this.other_withhold_b,           //其他扣款备注
+                    a: this.other_withhold,             //其他扣款
                     a: this.set_meal_b,                 //套餐类型备注
                     a: this.set_meal,                   //套餐类型
-                    a: this.in_all,                     //共计
+                    a: this.should_money,               //应发工资
+                    a: this.reality_money,              //实发工资
                     a: this.remarks,                    //备注
                 }).then((res) => {
 
@@ -293,26 +335,30 @@
 //            清空备注
             clear_remark (){
                 this.remark_status = '';
-                this.staff_name = '';                     //姓名
-                this.department_id = '';                  //部门ID
-                this.department_name = '';                //部门名称
-                this.position = '';                       //职位
-                this.base_pay = '';                       //底薪
-                this.base_pay_b = '';                     //底薪备注
-                this.subsidy = '';                        //补助
-                this.subsidy_b = '';                      //补助备注
-                this.achievement_up = '';                 //业绩提成
-                this.achievement_up_b = '';               //业绩提成备注
-                this.vacant_period = '';                  //空置期奖励
-                this.vacant_period_b = '';                //空置期奖励备注
-                this.price_gap = '';                      //价格差奖励
-                this.price_gap_b = '';                    //价格差奖励备注
-                this.year_reward = '';                    //年限奖励
-                this.year_reward_b = '';                  //年限奖励备注
-                this.set_meal = '';                       //套餐类型
-                this.set_meal_b = '';                     //套餐类型备注
-                this.in_all = '';                         //共计
-                this.remarks = '';                        //备注
+                this.staff_name = '';                       //姓名
+                this.department_id = '';                    //部门ID
+                this.department_name = '';                  //部门名称
+                this.position = '';                         //职位
+                this.base_pay = '';                         //底薪
+                this.base_pay_b = '';                       //底薪备注
+                this.subsidy = '';                          //补助
+                this.subsidy_b = '';                        //补助备注
+                this.achievement_up = '';                   //业绩提成
+                this.collect_reward = '';                   //收房奖励
+                this.insightful_c = '';                     //未发比例
+                this.rent_reward = '';                      //租房奖励
+                this.insightful_r = '';                     //未发比例
+                this.come_late = '';                        //迟到扣款
+                this.come_late_b = '';                      //迟到扣款备注
+                this.com_leave = '';                        //事假扣款
+                this.com_leave_b = '';                      //事假扣款备注
+                this.other_withhold = '';                   //其他扣款
+                this.other_withhold_b = '';                 //其他扣款备注
+                this.set_meal = 1;                          //套餐类型
+                this.set_meal_b = '';                       //套餐类型备注
+                this.should_money = '';                     //应发工资
+                this.reality_money = '';                    //实发工资
+                this.remarks = '';                          //备注
             }
         }
     }
@@ -342,7 +388,7 @@
     }
 
     i.fa.fa-check-square, i.fa.fa-square-o {
-        right: 24px;
+        right: 28px;
         color: #000;
         font-size: 20px
     }

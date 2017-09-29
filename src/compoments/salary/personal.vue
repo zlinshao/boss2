@@ -112,7 +112,7 @@
         <personalRevise></personalRevise>
 
         <!--查看备注-->
-        <lookRemark :personal="personalRem" :look="lookRem"></lookRemark>
+        <lookRemark :msg="1" :personal="personalRem" :look="lookRem"></lookRemark>
     </div>
 </template>
 

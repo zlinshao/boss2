@@ -156,7 +156,7 @@
                                     <FlexBox :flexData="Math.ceil(months/12)" :datas="price" :change="put_type"
                                              :title="'租房月单价'" @sendData="getFlexData"></FlexBox>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-12" style="padding: 0;">
                                         <label class="col-sm-2 control-label">已收</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="received_amount">
@@ -1203,5 +1203,10 @@
 
     .col-sm-2.icon i:hover {
         color: #999;
+    }
+
+    .form-horizontal .form-group {
+        margin-right: 0;
+        margin-left: 0;
     }
 </style>
