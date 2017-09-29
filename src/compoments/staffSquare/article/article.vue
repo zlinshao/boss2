@@ -215,7 +215,7 @@
         mounted(){
             let params = this.$route.query.myParam;
             let page = this.$route.query.page;
-            this.$http.get('index/Staff_Square/dict').then((res)=>{
+            this.$http.get('code/Staff_Square/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data;
                 if (page!=undefined){
@@ -304,7 +304,7 @@
                 }
             },
             getList(){
-                this.$http.get('index/Staff_Square?page=1').then((res)=>{
+                this.$http.get('code/Staff_Square?page=1').then((res)=>{
 //                    console.log(res.data);
                     if (res.data.code == 30010){
                         // 成功
@@ -325,7 +325,7 @@
                 this.pitch = [];
                 this.status = [];
 
-                this.$http.get('index/Staff_Square?page='+this.beforePage,{
+                this.$http.get('code/Staff_Square?page='+this.beforePage,{
                     params:this.params
                 }).then((res)=>{
 //                    console.log(res.data);
@@ -362,7 +362,7 @@
                 let url = '';
                 if (this.confirmMsg.oper==1){
                     // 下架
-                    url = 'index/Staff_Square/offArticle';
+                    url = 'code/Staff_Square/offArticle';
                     this.$http.get(url+'?id='+this.operId).then((res)=>{
 //                        console.log(res.data);
                         if (res.data.code==30025){
@@ -382,7 +382,7 @@
                     })
                 } else if (this.confirmMsg.oper==2){
                     // 发布
-                    url = 'index/Staff_Square/publicArticle';
+                    url = 'code/Staff_Square/publicArticle';
                     this.$http.post(url+'?id='+this.operId).then((res)=>{
 //                        console.log(res.data);
                         if (res.data.code==30022){
@@ -404,7 +404,7 @@
                     })
                 } else if (this.confirmMsg.oper==3){
                     // 删除
-                    url = 'index/Staff_Square/deleteArticle';
+                    url = 'code/Staff_Square/deleteArticle';
                     this.$http.get(url,{
                         params : {
                             id : this.pitch

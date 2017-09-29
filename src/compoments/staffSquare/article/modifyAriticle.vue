@@ -119,7 +119,7 @@
         },
         mounted(){
             this.articleId = this.$route.query.articleId;
-            this.$http.get('index/Staff_Square/dict').then((res)=>{
+            this.$http.get('code/Staff_Square/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data;
                 this.getDeatils();
@@ -127,7 +127,7 @@
         },
         methods: {
             getDeatils(){
-                this.$http.get('index/Staff_Square/showDetails?id='+this.articleId).then((res)=>{
+                this.$http.get('code/Staff_Square/showDetails?id='+this.articleId).then((res)=>{
 //                    console.log(res.data);
                     let msg = res.data.data[0];
 //                    console.log(msg);
@@ -236,7 +236,7 @@
                 let _this = this;
                 setTimeout(function () {
 //                    alert(_this.formData.content)
-                    _this.$http.post('index/Staff_Square/editArticle?id='+_this.articleId+'&is_public='+num,_this.formData).then((res)=>{
+                    _this.$http.post('code/Staff_Square/editArticle?id='+_this.articleId+'&is_public='+num,_this.formData).then((res)=>{
 //                        console.log(res.data);
                         if (res.data.code==30014||res.data.code==30022){
                             // 成功

@@ -159,7 +159,7 @@
             this.page = this.$route.query.page;
 
             this.articleId = this.$route.query.articleId;
-            this.$http.get('index/Staff_Square/dict').then((res)=>{
+            this.$http.get('code/Staff_Square/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data;
                 this.getDeatils();
@@ -167,7 +167,7 @@
         },
         methods: {
             getDeatils(){
-                this.$http.get('index/Staff_Square/showDetails?id='+this.articleId).then((res)=>{
+                this.$http.get('code/Staff_Square/showDetails?id='+this.articleId).then((res)=>{
 //                    console.log(res.data);
                     this.msg = res.data.data[0];
 
@@ -218,7 +218,7 @@
                 let url = '';
                 if (this.confirmMsg.oper==1){
                     // 下架
-                    url = 'index/Staff_Square/offArticle';
+                    url = 'code/Staff_Square/offArticle';
                     this.$http.get(url+'?id='+this.articleId).then((res)=>{
 //                        console.log(res.data);
                         if (res.data.code==30025){
@@ -238,7 +238,7 @@
                     })
                 } else if (this.confirmMsg.oper==2){
                     // 发布
-                    url = 'index/Staff_Square/publicArticle';
+                    url = 'code/Staff_Square/publicArticle';
                     this.$http.post(url+'?id='+this.articleId).then((res)=>{
 //                        console.log(res.data);
                         if (res.data.code==30022){
@@ -259,7 +259,7 @@
                     })
                 } else if (this.confirmMsg.oper==3){
                     // 删除
-                    url = 'index/Staff_Square/deleteArticle';
+                    url = 'code/Staff_Square/deleteArticle';
                     this.$http.get(url,{params : {
                         id : [this.articleId]
                     }}).then((res)=>{

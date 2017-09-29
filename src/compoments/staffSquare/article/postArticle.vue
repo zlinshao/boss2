@@ -116,7 +116,7 @@
             }
         },
         mounted(){
-            this.$http.get('index/Staff_Square/dict').then((res)=>{
+            this.$http.get('code/Staff_Square/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data;
                 this.coverPic.cus_idPhotos = {};
@@ -216,7 +216,7 @@
                 let _this = this;
                 setTimeout(function () {
 //                    alert(_this.formData.content)
-                    _this.$http.post('index/Staff_Square/addArticle?is_public='+num,_this.formData).then((res)=>{
+                    _this.$http.post('code/Staff_Square/addArticle?is_public='+num,_this.formData).then((res)=>{
 //                        console.log(res.data);
                         if (res.data.code==30012||res.data.code==30022){
                             // 成功
