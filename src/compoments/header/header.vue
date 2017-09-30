@@ -372,6 +372,11 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li :class="{'active': isActive == 'contractNum'}" @click='pitch_on("contractNum")'>
+                                <router-link to="/contractNum">
+                                    <span>编号记录</span>
+                                </router-link>
+                            </li>
                         </ul>
                     </li>
                     <!--<li class="sub-menu">-->
