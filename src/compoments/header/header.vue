@@ -295,9 +295,9 @@
                             </li>
                             <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
                             <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
-                            <!--<li>-->
-                                <!--<router-link to="/functionLine"><i class="fa fa-money"></i>功能排期</router-link>-->
-                            <!--</li>-->
+                            <li>
+                                <router-link to="/functionLine"><i class="fa fa-money"></i>功能排期</router-link>
+                            </li>
                             <li v-show="!isPc" @click="saveCheckIn"><a><i class="fa fa-map-marker"></i>签到</a></li>
                             <li><a @click="logOut"><i class="fa  fa-sign-out"></i>退出登录</a></li>
                         </ul>
@@ -375,35 +375,35 @@
                         </ul>
                     </li>
                     <!--<li class="sub-menu">-->
-                        <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-envelope"></i>-->
-                            <!--<span>片区经理报备</span>-->
-                        <!--</a>-->
-                        <!--<ul class="sub">-->
-                            <!--<li :class="{'active': isActive == 34}" @click='pitch_on(34)'>-->
-                                <!--<router-link to='/reportedCollect'>收租房报备</router-link>-->
-                            <!--</li>-->
-                            <!--<li :class="{'active': isActive == 35}" @click='pitch_on(35)'>-->
-                                <!--<router-link to='/reportedRenting'>未收先租报备</router-link>-->
-                            <!--</li>-->
-                            <!--<li :class="{'active': isActive == 36}" @click='pitch_on(36)'>-->
-                                <!--<router-link to='/reportedOther'>其余款项报备</router-link>-->
-                            <!--</li>-->
-                        <!--</ul>-->
+                    <!--<a href="javascript:;">-->
+                    <!--<i class="fa fa-envelope"></i>-->
+                    <!--<span>片区经理报备</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                    <!--<li :class="{'active': isActive == 34}" @click='pitch_on(34)'>-->
+                    <!--<router-link to='/reportedCollect'>收租房报备</router-link>-->
+                    <!--</li>-->
+                    <!--<li :class="{'active': isActive == 35}" @click='pitch_on(35)'>-->
+                    <!--<router-link to='/reportedRenting'>未收先租报备</router-link>-->
+                    <!--</li>-->
+                    <!--<li :class="{'active': isActive == 36}" @click='pitch_on(36)'>-->
+                    <!--<router-link to='/reportedOther'>其余款项报备</router-link>-->
+                    <!--</li>-->
+                    <!--</ul>-->
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
                     <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1">
-                    <!--<li class="sub-menu">-->
+                        <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>财务账本</span>
                         </a>
                         <ul class="sub">
                             <!--<li :class="{'active': isActive == 'clientManage'}" @click='pitch_on("clientManage")'>-->
-                                <!--<router-link to="/clientManage">-->
-                                <!--<router-link to="/clientManage">-->
-                                    <!--<span>客户管理</span>-->
-                                <!--</router-link>-->
+                            <!--<router-link to="/clientManage">-->
+                            <!--<router-link to="/clientManage">-->
+                            <!--<span>客户管理</span>-->
+                            <!--</router-link>-->
                             <!--</li>-->
                             <li class="sub-menu">
                                 <a href="javascript:;">
@@ -451,9 +451,9 @@
                                 </router-link>
                             </li>
                             <!--<li :class="{'active': isActive == 29}" @click='pitch_on(29)'>-->
-                                <!--<router-link to="/generalRecord">-->
-                                    <!--<span>转账操作记录</span>-->
-                                <!--</router-link>-->
+                            <!--<router-link to="/generalRecord">-->
+                            <!--<span>转账操作记录</span>-->
+                            <!--</router-link>-->
                             <!--</li>-->
                             <li :class="{'active': isActive == 30}" @click='pitch_on(30)'>
                                 <router-link to="/pendingItem">
@@ -505,21 +505,21 @@
                         </ul>
                     </li>
                     <!--<li class="sub-menu">-->
-                        <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-bar-chart-o"></i>-->
-                            <!--<span>业绩管理</span>-->
-                        <!--</a>-->
-                        <!--<ul class="sub">-->
-                            <!--<li :class="{'active': isActive == 38}" @click='pitch_on(38)'>-->
-                                <!--<router-link to="/company">公司</router-link>-->
-                            <!--</li>-->
-                            <!--<li :class="{'active': isActive == 18}" @click='pitch_on(18)'>-->
-                                <!--<router-link to="/group">小组</router-link>-->
-                            <!--</li>-->
-                            <!--<li :class="{'active': isActive == 19}" @click='pitch_on(19)'>-->
-                                <!--<router-link to="/personal">个人</router-link>-->
-                            <!--</li>-->
-                        <!--</ul>-->
+                    <!--<a href="javascript:;">-->
+                    <!--<i class="fa fa-bar-chart-o"></i>-->
+                    <!--<span>业绩管理</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                    <!--<li :class="{'active': isActive == 38}" @click='pitch_on(38)'>-->
+                    <!--<router-link to="/company">公司</router-link>-->
+                    <!--</li>-->
+                    <!--<li :class="{'active': isActive == 18}" @click='pitch_on(18)'>-->
+                    <!--<router-link to="/group">小组</router-link>-->
+                    <!--</li>-->
+                    <!--<li :class="{'active': isActive == 19}" @click='pitch_on(19)'>-->
+                    <!--<router-link to="/personal">个人</router-link>-->
+                    <!--</li>-->
+                    <!--</ul>-->
                     <!--</li>-->
 
                     <!--<li :class="{'active': isActive == 19}" @click='pitch_on(19)'>-->
@@ -535,6 +535,7 @@
                             <!--<span>周期表</span>-->
                         <!--</router-link>-->
                     <!--</li>-->
+
                     <!--<li class="sub-menu">-->
                     <!--<a href="javascript:;">-->
                     <!--<i class="fa fa-bar-chart-o"></i>-->
@@ -637,7 +638,7 @@
                                 <router-link to='/user'>用户管理</router-link>
                             </li>
                             <!--<li :class="{'active': isActive == 'positionManage'}" @click='pitch_on("positionManage")'>-->
-                                <!--<router-link to='/positionManage'>职位管理</router-link>-->
+                            <!--<router-link to='/positionManage'>职位管理</router-link>-->
                             <!--</li>-->
                             <li :class="{'active': isActive == 9}" @click='pitch_on(9)'>
                                 <router-link to='/role'>角色管理</router-link>
@@ -646,17 +647,17 @@
                                 <router-link to='/power'>权限管理</router-link>
                             </li>
                             <!--<li class="sub-menu">-->
-                                <!--<a href="javascript:;">-->
-                                    <!--<span>订单迁移</span>-->
-                                <!--</a>-->
-                                <!--<ul class="sub">-->
-                                    <!--<li :class="{'active': isActive == 22}" @click='pitch_on(22)'>-->
-                                        <!--<router-link to='/orderManage'>收房</router-link>-->
-                                    <!--</li>-->
-                                    <!--<li :class="{'active': isActive == 23}" @click='pitch_on(23)'>-->
-                                        <!--<router-link to="/rentingOrder">租房</router-link>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
+                            <!--<a href="javascript:;">-->
+                            <!--<span>订单迁移</span>-->
+                            <!--</a>-->
+                            <!--<ul class="sub">-->
+                            <!--<li :class="{'active': isActive == 22}" @click='pitch_on(22)'>-->
+                            <!--<router-link to='/orderManage'>收房</router-link>-->
+                            <!--</li>-->
+                            <!--<li :class="{'active': isActive == 23}" @click='pitch_on(23)'>-->
+                            <!--<router-link to="/rentingOrder">租房</router-link>-->
+                            <!--</li>-->
+                            <!--</ul>-->
                             <!--</li>-->
                         </ul>
                     </li>
@@ -716,29 +717,34 @@
                         </router-link>
                     </li>
 
-                    <li class="sub-menu" v-show="simulate.indexOf('manager/management') > -1||simulate.indexOf('manager/approver') > -1">
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('manager/management') > -1||simulate.indexOf('manager/approver') > -1">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>办公用品</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 'officeLibrary'}" @click='pitch_on("officeLibrary")' v-if="simulate.indexOf('manager/approver') > -1">
+                            <li :class="{'active': isActive == 'officeLibrary'}" @click='pitch_on("officeLibrary")'
+                                v-if="simulate.indexOf('manager/approver') > -1">
                                 <router-link to="/officeLibrary">
                                     <span>办公用品类型管理</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 'officeSupplies'}" @click='pitch_on("officeSupplies")' v-if="simulate.indexOf('manager/approver') > -1">
+                            <li :class="{'active': isActive == 'officeSupplies'}" @click='pitch_on("officeSupplies")'
+                                v-if="simulate.indexOf('manager/approver') > -1">
                                 <router-link to="/officeSupplies">
                                     <span>办公用品管理</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 'officeApply'}" @click='pitch_on("officeApply")' v-if="simulate.indexOf('manager/approver') > -1||simulate.indexOf('manager/management') > -1">
+                            <li :class="{'active': isActive == 'officeApply'}" @click='pitch_on("officeApply")'
+                                v-if="simulate.indexOf('manager/approver') > -1||simulate.indexOf('manager/management') > -1">
                                 <router-link to="/officeApply">
                                     <span>申领记录</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 'batchApply'}" @click='pitch_on("batchApply")' v-if="simulate.indexOf('manager/management') > -1">
+                            <li :class="{'active': isActive == 'batchApply'}" @click='pitch_on("batchApply")'
+                                v-if="simulate.indexOf('manager/management') > -1">
                                 <router-link to="/batchApply">
                                     <span>办公用品批量申领</span>
                                 </router-link>
@@ -971,7 +977,7 @@
     import Status from '../common/status.vue';
     export default {
         components: {AddRemind, Status, LookRemind},
-        props: ['Name', 'Card','simulate'],
+        props: ['Name', 'Card', 'simulate'],
         data(){
             return {
 //                account_book: '',           //账本

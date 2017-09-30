@@ -106,7 +106,7 @@
                                         <td>
                                             <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                             'c_off':pitch.indexOf(item.id)==-1}"
-                                                   @click.prevent="checked_id(item.id, $event)">
+                                                   @click.prevent="checked_id(item.id, $event, item.name, item.target_id)">
                                                 <input type="checkbox" class="pull-left"
                                                        :checked="pitch.indexOf(item.id) > -1">
                                             </label>
@@ -155,7 +155,7 @@
                                         <td>
                                             <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                             'c_off':pitch.indexOf(item.id)==-1}"
-                                                   @click.prevent="checked_id(item.id, $event)">
+                                                   @click.prevent="checked_id(item.id, $event, item.name, item.target_id)">
                                                 <input type="checkbox" class="pull-left"
                                                        :checked="pitch.indexOf(item.id) > -1">
                                             </label>
