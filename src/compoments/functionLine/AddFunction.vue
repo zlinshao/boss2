@@ -95,14 +95,17 @@
 
         <!--部门搜索-->
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import DatePicker from '../common/datePicker.vue'
     import STAFF from  '../common/oraganization.vue'     //部门搜索
+    import Status from '../common/status.vue';              //提示信息
     export default {
-        components: {DatePicker, STAFF},
+        components: {DatePicker, STAFF, Status},
         props: ['msg', 'detail'],
         data (){
             return {
@@ -126,6 +129,16 @@
                     }
                 ],
                 currentDate: [],                //日期组件参数
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         watch: {
@@ -166,7 +179,14 @@
                 }).then((res) => {
                     if (res.data.code === '30008' || res.data.code === '30019') {
                         this.$emit('fun_success', 2);
-                        this.close_()
+                        this.close_();
+                        this.info.success = res.data.msg;
+                        this.info.state_error = false;
+                        this.info.state_success = true;
+                    } else {
+                        this.info.error = res.data.msg;
+                        this.info.state_error = true;
+                        this.info.state_success = false;
                     }
                 })
             },
