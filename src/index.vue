@@ -187,181 +187,180 @@
             </div>
 
             <div class="col-md-3">
-                <!--&lt;!&ndash;功能排期表&ndash;&gt;-->
-                <!--<section class="panel">-->
-                    <!--<header class="panel-heading" style="margin-bottom: 2px;">-->
-                        <!--功能排期表 <span class="pull-right add" @click="line_up">+</span>-->
-                    <!--</header>-->
-                    <!--<header class="panel-heading tab-bg-dark-navy-blue ">-->
-                        <!--<ul class="nav nav-tabs">-->
-                            <!--<li class="active">-->
-                                <!--<a data-toggle="tab" href="#carry_on" aria-expanded="true">-->
-                                    <!--进行中-->
-                                <!--</a>-->
-                            <!--</li>-->
-                            <!--<li class="">-->
-                                <!--<a data-toggle="tab" href="#complete" aria-expanded="false">-->
-                                    <!--已完成-->
-                                <!--</a>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</header>-->
-                    <!--<div class="panel-body">-->
-                        <!--<div class="tab-content">-->
-                            <!--<div id="carry_on" class="tab-pane active">-->
-                                <!--进行中-->
-                                <!--<section class="panel table-responsive roll">-->
-                                    <!--<table class="table table-advance table-hover">-->
-                                        <!--<thead>-->
-                                        <!--<tr>-->
-                                            <!--<th class="text-center width100">结束日期</th>-->
-                                            <!--<th class="text-center width100">功能名称</th>-->
-                                            <!--<th class="text-center width80">进度</th>-->
-                                            <!--<th class="text-center width100">相关部门</th>-->
-                                        <!--</tr>-->
-                                        <!--</thead>-->
-                                        <!--<tbody>-->
-                                        <!--<tr class="text-center" v-for="key in line_list_way">-->
-                                            <!--<td>{{key.finish_time}}</td>-->
-                                            <!--<td>{{key.function_name}}</td>-->
-                                            <!--<td>-->
-                                                <!--<div class="progress progress-striped active">-->
-                                                    <!--<div aria-valuemax="100" aria-valuemin="0"-->
-                                                         <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
-                                                         <!--:style="{ width: key.process + '%'}">-->
-                                                        <!--<span class="sr-only">{{key.process}}%</span>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</td>-->
-                                            <!--<td v-for="item in key.applicant_id">-->
-                                                <!--<span v-for="list in item.department">-->
-                                                    <!--{{list.name}}-->
-                                                <!--</span>-->
-                                            <!--</td>-->
-                                        <!--</tr>-->
-                                        <!--<tr v-if="way">-->
-                                            <!--<td colspan="4" class="text-center text-muted">-->
-                                                <!--<h4>暂无数据....</h4>-->
-                                            <!--</td>-->
-                                        <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                <!--</section>-->
-                            <!--</div>-->
+                <!--功能排期表-->
+                <section class="panel">
+                    <header class="panel-heading" style="margin-bottom: 2px;">
+                        功能排期表 <span class="pull-right add" @click="line_up">+</span>
+                    </header>
+                    <header class="panel-heading tab-bg-dark-navy-blue ">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#carry_on" aria-expanded="true">
+                                    进行中
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#complete" aria-expanded="false">
+                                    已完成
+                                </a>
+                            </li>
+                        </ul>
+                    </header>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div id="carry_on" class="tab-pane active">
+                                进行中
+                                <section class="panel table-responsive roll">
+                                    <table class="table table-advance table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center width100">结束日期</th>
+                                            <th class="text-center width100">功能名称</th>
+                                            <th class="text-center width80">进度</th>
+                                            <th class="text-center width100">相关部门</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="text-center" v-for="key in line_list_way">
+                                            <td>{{key.finish_time}}</td>
+                                            <td>{{key.function_name}}</td>
+                                            <td>
+                                                <div class="progress progress-striped active">
+                                                    <div aria-valuemax="100" aria-valuemin="0"
+                                                         aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                         :style="{ width: key.process + '%'}">
+                                                        <span class="sr-only">{{key.process}}%</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td v-for="item in key.applicant_id">
+                                                <span v-for="list in item.department">
+                                                    {{list.name}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="way">
+                                            <td colspan="4" class="text-center text-muted">
+                                                <h4>暂无数据....</h4>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
 
-                            <!--<div id="complete" class="tab-pane">-->
-                                <!--已完成-->
-                                <!--<section class="panel table-responsive roll">-->
-                                    <!--<table class="table table-advance table-hover">-->
-                                        <!--<thead>-->
-                                        <!--<tr>-->
-                                            <!--<th class="text-center width100">结束日期</th>-->
-                                            <!--<th class="text-center width100">功能名称</th>-->
-                                            <!--<th class="text-center width80">进度</th>-->
-                                            <!--<th class="text-center width100">相关部门</th>-->
-                                        <!--</tr>-->
-                                        <!--</thead>-->
-                                        <!--<tbody>-->
-                                        <!--<tr class="text-center" v-for="key in line_list_finish">-->
-                                            <!--<td>{{key.finish_time}}</td>-->
-                                            <!--<td>{{key.function_name}}</td>-->
-                                            <!--<td>-->
-                                                <!--<div class="progress progress-striped active">-->
-                                                    <!--<div aria-valuemax="100" aria-valuemin="0"-->
-                                                         <!--aria-valuenow="45" role="progressbar" class="progress-bar"-->
-                                                         <!--:style="{ width: key.process + '%'}">-->
-                                                        <!--<span class="sr-only">{{key.process}}%</span>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</td>-->
-                                            <!--<td v-for="item in key.applicant_id">-->
-                                                <!--<span v-for="list in item.department">-->
-                                                    <!--{{list.name}}-->
-                                                <!--</span>-->
-                                            <!--</td>-->
-                                        <!--</tr>-->
-                                        <!--<tr v-if="fin">-->
-                                            <!--<td colspan="4" class="text-center text-muted">-->
-                                                <!--<h4>暂无数据....</h4>-->
-                                            <!--</td>-->
-                                        <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                <!--</section>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</section>-->
+                            <div id="complete" class="tab-pane">
+                                已完成
+                                <section class="panel table-responsive roll">
+                                    <table class="table table-advance table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center width100">结束日期</th>
+                                            <th class="text-center width100">功能名称</th>
+                                            <th class="text-center width80">进度</th>
+                                            <th class="text-center width100">相关部门</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="text-center" v-for="key in line_list_finish">
+                                            <td>{{key.finish_time}}</td>
+                                            <td>{{key.function_name}}</td>
+                                            <td>
+                                                <div class="progress progress-striped active">
+                                                    <div aria-valuemax="100" aria-valuemin="0"
+                                                         aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                         :style="{ width: key.process + '%'}">
+                                                        <span class="sr-only">{{key.process}}%</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td v-for="item in key.applicant_id">
+                                                <span v-for="list in item.department">
+                                                    {{list.name}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="fin">
+                                            <td colspan="4" class="text-center text-muted">
+                                                <h4>暂无数据....</h4>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-                <!--&lt;!&ndash;排期申请&ndash;&gt;-->
-                <!--<div class="modal fade full-width-modal-right" id="Apply" tabindex="-1" role="dialog"-->
-                     <!--aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">-->
-                    <!--<div class="modal-dialog modal-md">-->
-                        <!--<div class="modal-content-wrap">-->
-                            <!--<div class="modal-content roll">-->
-                                <!--<div class="modal-header">-->
-                                    <!--<button type="button" class="close" @click="close_" aria-hidden="true">×</button>-->
-                                    <!--<h4 class="modal-title">排期申请</h4>-->
-                                <!--</div>-->
+                <!--排期申请-->
+                <div class="modal fade full-width-modal-right" id="Apply" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content-wrap">
+                            <div class="modal-content roll">
+                                <div class="modal-header">
+                                    <button type="button" class="close" @click="close_" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">排期申请</h4>
+                                </div>
 
-                                <!--<div class="modal-body has-js">-->
-                                    <!--<form class="form-horizontal" role="form">-->
+                                <div class="modal-body has-js">
+                                    <form class="form-horizontal" role="form">
 
-                                        <!--&lt;!&ndash;功能名称&ndash;&gt;-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label class="col-lg-2 col-sm-2 control-label">功能名称</label>-->
-                                            <!--<div class="col-lg-10">-->
-                                                <!--<input type="text" v-model="fun_name" class="form-control"-->
-                                                       <!--placeholder="">-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <!--功能名称-->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-2 control-label">功能名称</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" v-model="fun_name" class="form-control"
+                                                       placeholder="">
+                                            </div>
+                                        </div>
 
-                                        <!--&lt;!&ndash;期望完成日期&ndash;&gt;-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label class="col-lg-2 col-sm-2 control-label">期望完成日期</label>-->
-                                            <!--<div class="col-lg-10">-->
-                                                <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"-->
-                                                            <!--:idName="'want'"-->
-                                                            <!--@sendDate="getDate"></DatePicker>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <!--期望完成日期-->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-2 control-label">期望完成日期</label>
+                                            <div class="col-lg-10">
+                                                <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                                            :idName="'want'" @sendDate="getDate"></DatePicker>
+                                            </div>
+                                        </div>
 
-                                        <!--&lt;!&ndash;需求描述&ndash;&gt;-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label class="col-lg-2 col-sm-2 control-label">需求描述</label>-->
-                                            <!--<div class="col-lg-10">-->
-                                                <!--<input type="text" v-model="describe" class="form-control"-->
-                                                       <!--placeholder="">-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <!--需求描述-->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-2 control-label">需求描述</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" v-model="describe" class="form-control"
+                                                       placeholder="">
+                                            </div>
+                                        </div>
 
-                                        <!--&lt;!&ndash;申请人&ndash;&gt;-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label class="col-lg-2 col-sm-2 control-label">申请人</label>-->
-                                            <!--<div class="col-lg-10">-->
-                                                <!--<input type="text" v-model="proposer" class="form-control"-->
-                                                       <!--placeholder="" readonly>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
+                                        <!--申请人-->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-2 control-label">申请人</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" v-model="proposer" class="form-control"
+                                                       placeholder="" readonly>
+                                            </div>
+                                        </div>
 
-                                        <!--&lt;!&ndash;申请部门&ndash;&gt;-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label class="col-lg-2 col-sm-2 control-label">申请部门</label>-->
-                                            <!--<div class="col-lg-10">-->
-                                                <!--<input type="text" v-model="proposer_branch"-->
-                                                       <!--class="form-control" placeholder="" readonly>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</form>-->
-                                <!--</div>-->
-                                <!--<div class="modal-footer">-->
-                                    <!--<button class="btn btn-default" type="button" @click="close_">取消</button>-->
-                                    <!--<button class="btn btn-primary" type="button" @click="application">确定</button>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                                        <!--申请部门-->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-sm-2 control-label">申请部门</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" v-model="department"
+                                                       class="form-control" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-default" type="button" @click="close_">取消</button>
+                                    <button class="btn btn-primary" type="button" @click="application">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!--在线人数-->
                 <section class="panel">
@@ -460,13 +459,17 @@
                 </section>
             </div>
         </div>
+
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
     import DatePicker from './compoments/common/datePicker.vue'
+    import Status from './compoments/common/status.vue';              //提示信息
     export default {
-        components: {DatePicker},
+        props: ['id'],
+        components: {DatePicker, Status},
         data (){
             return {
                 line_list_way: [],              //排期列表  进行中
@@ -485,7 +488,9 @@
                 end_time: '',               //期望结束时间
                 describe: '',               //需求描述
                 proposer: '',               //申请人
-                proposer_branch: '',        //申请部门
+                proposer_id: '',            //申请人ID
+                department: '',             //申请部门
+                department_id: '',          //部门ID
 
                 more: 9,
                 mores: '',
@@ -509,6 +514,16 @@
                 check_inData: [],               //入住
                 collect_rentsData: [],          //收租
                 customData: [],                 //客户来源
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
 //        mounted (){
@@ -550,8 +565,18 @@
         },
         methods: {
             line_list (){
+                this.$http.get('staff/info').then((res) => {
+                    this.proposer = res.data.name;
+                    this.proposer_id = res.data.id;
+
+                    this.$http.get('finance/staff_info/' + res.data.id).then((res) => {
+                        this.department = res.data.data.departmnet_name;
+                        this.department_id = res.data.data.department_id;
+                    });
+                });
+
 //            排期列表  进行中
-                this.$http.get('index/Functional_Schedule/smallPage?status=2').then((res) => {
+                this.$http.get('code/Functional_Schedule/smallPage?status=2').then((res) => {
                     if (res.data.code === '30040') {
                         this.line_list_way = res.data.data;
                         this.way = false;
@@ -560,7 +585,7 @@
                     }
                 });
 //            排期列表  已完成
-                this.$http.get('index/Functional_Schedule/smallPage?status=3').then((res) => {
+                this.$http.get('code/Functional_Schedule/smallPage?status=3').then((res) => {
                     if (res.data.code === '30040') {
                         this.line_list_finish = res.data.data;
                         this.fin = false;
@@ -573,26 +598,35 @@
 //            排期申请
             line_up (){
                 $('#Apply').modal({backdrop: 'static'});
-//                function_name
-//                expected_finish_time
-//                requirement_description
-//                applicant_id
-//                applicant_name
             },
             getDate (val){
                 this.end_time = val;
             },
 //            排期申请
             application (){
-                this.$http.post('index/Functional_Schedule/edit',{
-                    in_index: 1,
+                this.$http.post('code/Functional_Schedule/edit', {
+                    is_index: 1,
                     function_name: this.fun_name,
                     expected_finish_time: this.end_time,
                     requirement_description: this.describe,
-                    applicant_id: this.proposer,
-                    applicant_name: this.proposer_branch,
+                    applicant_id: this.proposer_id,
+                    department_id: this.department_id,
                 }).then((res) => {
-                    console.log(res.data);
+                    if (res.data.code === '30008') {
+                        this.line_list();
+                        $('#Apply').modal('hide');
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        this.info.error = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = true;
+                        //显示成功弹窗 ***
+                        this.info.state_success = false;
+                    }
                 })
             },
             close_ (){
@@ -601,7 +635,9 @@
                 this.end_time = '';               //期望结束时间
                 this.describe = '';               //需求描述
                 this.proposer = '';               //申请人
-                this.proposer_branch = '';        //申请部门
+                this.proposer_id = '';            //申请人ID
+                this.department = '';             //申请部门
+                this.department_id = '';          //申请部门ID
             },
 //            更多
             click_more (){
