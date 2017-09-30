@@ -65,6 +65,8 @@
         <PositionHigh :position_id="position_id" :position_name="position_name" :department_name="department_name"
                       :department_id="department_id" @success = 'addHighSuccess'></PositionHigh>
 
+        <Authority :authorityId = 'position_id' @success="authoritySuccess"></Authority>
+
     </div>
 </template>
 
@@ -77,6 +79,7 @@
     import Status from '../common/status.vue';
     import Transfer from './transferDpm.vue'
     import PositionEdit from './positionEdit.vue'   //职位编辑
+    import Authority from './authority.vue'
     import PositionAdd from  './positionAdd.vue'
     import PositionHigh from './positionHigh.vue'
 
@@ -93,6 +96,7 @@
             PositionEdit,
             PositionAdd,
             PositionHigh,
+            Authority,
             OrganizePic
         },
         data () {
@@ -275,6 +279,7 @@
                 this.position_id = val.id;
                 switch (val.contentHtml) {
                     case '编辑岗位' :
+                        this.position_id = val.id;
                         $('#positionEdit').modal('show');
                         break;
                     case '新建下级岗位' :
@@ -289,7 +294,8 @@
                         $('#positionAdd').modal('show');
                         break;
                     case '岗位权限' :
-//                        $('#myModalAddDpm').modal('show');
+                        this.position_id = val.id;
+                        $('#myModalAuthority').modal('show');
                         break;
                     case '删除岗位' :
                         this.confirmMsg = {msg: '您确定删除此岗位吗'};
@@ -316,6 +322,10 @@
             },
             changeView(){
                 this.isShowPic = !this.isShowPic;
+            },
+            // 编辑权限成功
+            authoritySuccess(){
+
             }
         },
 

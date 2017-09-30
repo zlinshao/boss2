@@ -39,6 +39,8 @@ import  Memorandum from  './compoments/contract/searchMemorandum.vue'           
 
 import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";        //收房合同
 import RentingContractTransfer from "./compoments/contract/rentingContractTransfer.vue";        //租房合同
+import ContractNum from "./compoments/contract/contractNumber/contractNum.vue";        // 编号记录
+import ContractNumDetail from "./compoments/contract/contractNumber/contractNumDetail.vue";        // 编号记录详情
 
 
 import  Comparecontract from  './compoments/contract/Compare.vue'
@@ -528,6 +530,16 @@ export default[
         path: '/collectContractTransfer',
         name: 'CollectContractTransfer',
         component: CollectContractTransfer
+    },,
+    {
+        path: '/contractNum',
+        name: 'contractNum',
+        component: ContractNum
+    },,
+    {
+        path: '/contractNumDetail',
+        name: 'contractNumDetail',
+        component: ContractNumDetail
     },
     {
         path: '/officeSupplies',

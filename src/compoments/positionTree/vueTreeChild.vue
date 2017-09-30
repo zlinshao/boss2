@@ -32,9 +32,9 @@
 							<li v-if="model.parent_id === 1">
 								<a @click="insertHighPosition($event)">新建上级岗位</a>
 							</li>
-							<!--<li>-->
-								<!--<a @click="positionRole($event)">岗位权限</a>-->
-							<!--</li>-->
+							<!--<li>
+								<a @click="positionRole($event)">岗位权限</a>
+							</li>-->
 							<li>
 								<a @click="deletePosition($event)">删除岗位</a>
 							</li>
