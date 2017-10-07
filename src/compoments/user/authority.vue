@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="modal fade" id="myModalAuthority">
+        <div class="modal fade" id="myModalAuthority" data-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="getAlready">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">岗位授权</h4>
@@ -52,7 +52,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="getAlready">取消</button>
                         <button type="button" class="btn btn-primary" @click="sure">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
