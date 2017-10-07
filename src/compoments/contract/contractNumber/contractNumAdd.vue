@@ -36,7 +36,7 @@
                                         <div class="col-sm-10">
                                             <!--<input type="text" class="form-control" readonly>-->
                                             <input type="text" class="form-control" placeholder="点击选择员工"
-                                                   v-model="selected" @click='select' readonly>
+                                                   v-model="chooseResult" @click='select' readonly>
                                         </div>
                                     </div>
                                 </form>
@@ -69,12 +69,28 @@
                     }
                 ],
                 currentDate: [],
+
+                configure: {},
+
+                chooseResult : '',
+                formData : {
+                    staff_id : ''
+                }
             }
         },
         methods: {
             getDate(val){
 
-            }
+            },
+            select(){
+                this.configure = {type:'staff',length : 1};
+                $('.selectCustom:eq(1)').modal('show');
+            },
+            selectDateSend(val){
+                console.log(val);
+                this.chooseResult = val.staff[0].name;
+                this.formData.staff_id = val.staff[0].id;
+            },
         }
     }
 </script>
