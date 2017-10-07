@@ -10,7 +10,7 @@
                 <div v-show="pitch.length === 0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="点击选择部门/员工"
+                            <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="selected" @click='select' readonly>
                             <span class="input-group-btn">
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
@@ -23,7 +23,7 @@
 
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="合同编号/领取人"
-                                   @keydown.enter.prevent="search(1)" v-model="contract_num">
+                                   @keydown.enter.prevent="search(1)" v-model="params.keywords">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
@@ -64,17 +64,17 @@
         <section class="panel has-js">
             <header class="panel-heading tab-bg-dark-navy-blue">
                 <ul class="nav nav-tabs ">
-                    <li :class="{'active': params.isActive === 1}" @click="tabs(1)">
+                    <li :class="{'active': params.type === 1}" @click="tabs(1)">
                         <a data-toggle="tab" href="#receive">
                             领取
                         </a>
                     </li>
-                    <li :class="{'active': params.isActive === 2}" @click="tabs(2)">
+                    <!--<li :class="{'active': params.type === 2}" @click="tabs(2)">
                         <a data-toggle="tab" href="#void">
                             作废
                         </a>
-                    </li>
-                    <li :class="{'active': params.isActive === 3}" @click="tabs(3)">
+                    </li>-->
+                    <li :class="{'active': params.type === 3}" @click="tabs(3)">
                         <a data-toggle="tab" href="#turnOver">
                             上缴
                         </a>
@@ -85,7 +85,7 @@
                 <div class="tab-content tasi-tab has-js">
 
                     <!--领取-->
-                    <div class="tab-pane" id="receive" :class="{'active': params.isActive === 1}">
+                    <div class="tab-pane" id="receive" :class="{'active': params.type === 1}">
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
@@ -93,42 +93,44 @@
                                 <th class="text-center">领取时间</th>
                                 <th class="text-center">领取合同数(收)</th>
                                 <th class="text-center">领取合同数(租)</th>
-                                <th class="text-center">剩余合同数(收)</th>
-                                <th class="text-center">剩余合同数(租)</th>
+                                <!--<th class="text-center">剩余合同数(收)</th>-->
+                                <!--<th class="text-center">剩余合同数(租)</th>-->
                                 <th class="text-center">领取人</th>
                                 <th class="text-center">所属部门</th>
                                 <th class="text-center">详情</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-center" v-for="item in 9">
+                            <tr class="text-center" v-for="item in myData">
                                 <td>
-                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item) > -1,
-                                            'c_off':pitch.indexOf(item)==-1}"
-                                           @click.prevent="checked_id(item, $event)">
+                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
+                                            'c_off':pitch.indexOf(item.id)==-1}"
+                                           @click.prevent="checked_id(item.id, $event)">
                                         <input type="checkbox" class="pull-left"
-                                               :checked="pitch.indexOf(item) > -1">
+                                               :checked="pitch.indexOf(item.id) > -1">
                                     </label>
                                 </td>
-                                <td>{{item}}1</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
+                                <td>{{item.receiver_time}}</td>
+                                <td>{{item.sf_numbers}}</td>
+                                <td>{{item.zf_numbers}}</td>
+                                <!--<td>{{item.zf_numbers}}</td>-->
+                                <!--<td>{{item.zf_numbers}}</td>-->
+                                <td>{{item.receiver_name}}</td>
+                                <td>{{item.department_id[0]}}</td>
                                 <td>
-                                    <router-link to="/contractNumDetail">详情</router-link>
+                                    <router-link :to="{path : '/contractNumDetail',
+                                    query:{request_time:item.request_time,page:beforePage,myParams:params,select:selected}}"
+                                    >详情</router-link>
                                 </td>
                             </tr>
-                            <tr class="text-center">
+                            <tr class="text-center" v-show="isShow">
                                 <td colspan="9" style="font-size: 22px;">暂无数据......</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <!--作废-->
-                    <div class="tab-pane" id="void" :class="{'active': params.isActive === 2}">
+                    <div class="tab-pane" id="void" :class="{'active': params.type === 2}">
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
@@ -164,14 +166,14 @@
                                     <router-link to="/contractNumDetail">详情</router-link>
                                 </td>
                             </tr>
-                            <tr class="text-center">
+                            <tr class="text-center" v-show="isShow">
                                 <td colspan="9" style="font-size: 22px;">暂无数据......</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <!--上缴-->
-                    <div class="tab-pane" id="turnOver" :class="{'active': params.isActive === 3}">
+                    <div class="tab-pane" id="turnOver" :class="{'active': params.type === 3}">
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
@@ -179,35 +181,34 @@
                                 <th class="text-center">上缴时间</th>
                                 <th class="text-center">上缴合同数(收)</th>
                                 <th class="text-center">上缴合同数(租)</th>
-                                <th class="text-center">剩余合同数(收)</th>
-                                <th class="text-center">剩余合同数(租)</th>
+                                <!--<th class="text-center">剩余合同数(收)</th>-->
+                                <!--<th class="text-center">剩余合同数(租)</th>-->
                                 <th class="text-center">上缴人</th>
                                 <th class="text-center">所属部门</th>
                                 <th class="text-center">详情</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-center" v-for="item in 9">
+                            <tr class="text-center" v-for="item in myData">
                                 <td>
-                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item) > -1,
-                                            'c_off':pitch.indexOf(item)==-1}"
-                                           @click.prevent="checked_id(item, $event)">
+                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
+                                            'c_off':pitch.indexOf(item.id)==-1}"
+                                           @click.prevent="checked_id(item.id, $event)">
                                         <input type="checkbox" class="pull-left"
-                                               :checked="pitch.indexOf(item) > -1">
+                                               :checked="pitch.indexOf(item.id) > -1">
                                     </label>
                                 </td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
+                                <td>{{item.paid_time}}</td>
+                                <td>{{item.zf_numbers}}</td>
+                                <td>{{item.sf_numbers}}</td>
+                                <td>{{item.paid_name}}</td>
+                                <td>{{item.department_id[0]}}</td>
                                 <td>
-                                    <router-link to="/contractNumDetail">详情</router-link>
+                                    <router-link :to="{path : '/contractNumDetail',
+                                    query:{request_time:item.request_time,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                                 </td>
                             </tr>
-                            <tr class="text-center">
+                            <tr class="text-center" v-show="isShow">
                                 <td colspan="9" style="font-size: 22px;">暂无数据......</td>
                             </tr>
                             </tbody>
@@ -226,7 +227,7 @@
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
-        <AddModal :msg="params.isActive"></AddModal>
+        <AddModal :msg="params.type" @success="successAdd"></AddModal>
 
     </div>
 </template>
@@ -243,10 +244,15 @@
         components: {Page, Status, DatePicker, STAFF, Confirm, AddModal},
         data(){
             return {
-                contract_num: '',                   //关键字搜索
+                dict : {},
+
                 pitch: [],
                 beforePage: 1,                      //当前页
-                paging: '3',                        //总页数
+                paging: 1,                        //总页数
+
+                myData : [],
+                isShow : false,
+
                 confirmMsg: {                       //删除
                     id: '',
                     msg: ''
@@ -261,9 +267,11 @@
                 configure: {},                      //组织架构
                 selected: [],                       //部门名称
                 params: {
-                    isActive: 1,
-                    department_id: [],             //筛选
-                    staff_id: [],
+                    type: 1,
+                    department_id: '',             //筛选
+                    start : '',
+                    end : '',
+                    keywords : ''
                 },
                 info: {
                     //成功状态 ***
@@ -278,47 +286,83 @@
             }
         },
         mounted (){
-            this.contract_list(1, 1);
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let select = this.$route.query.select;
+
+//            this.$http.get('code/Staff_Square/dict').then((res)=>{
+                if (page!=undefined){
+                    this.page = page;
+                    this.beforePage = page;
+                    if (params!=undefined&&typeof params!='string'){
+                        this.params = params;
+                        if (params.start!=''&&params.end!=''){
+                            this.currentDate = [params.start,params.end];
+                        }
+                    }
+                    this.selected = select;
+                    this.search(this.beforePage);
+                } else {
+                    this.search(1);
+                }
+//            })
+
+//            this.contract_list(1);
         },
         methods: {
 //            搜索
             search(val){
-                this.contract_list(this.params.isActive, val);
+                this.contract_list(val);
             },
 //            列表
-            contract_list (val,page){
-                this.$http.post('code/Contract_Number_Record/index', {
-                    type: val,
-                    start: "2017-09-1 14:35:25",
-                    end: "2017-09-30 14:57:25"
-                }).then((res) => {
+            contract_list (page){
+                this.beforePage = page;
+                this.params.page = page;
+                this.$http.post('code/Contract_Number_Record/index', this.params).then((res) => {
+//                    console.log(res.data);
+                    if (res.data.code==30010){
+                        // 成功
+                        this.paging = res.data.data.pages;
 
+                        this.myData = res.data.data.list;
+                        this.isShow = false;
+                    } else {
+                        // 失败
+                        this.paging = 1;
+                        this.myData = [];
+                        this.isShow = true;
+                    }
                 })
             },
 //            标签页切换
             tabs (val){
                 this.pitch = [];
-                this.params.department_id = [];
-                this.params.staff_id = [];
+                this.params.department_id = '';
+                this.params.start = '';
+                this.params.end = '';
+                this.params.type = val;
                 this.selected = [];
                 this.contract_num = '';
-                this.params.isActive = val;
-                this.contract_list(val, 1);
+                this.currentDate = [];
+                this.contract_list(1);
             },
 //            部门搜索模态框
             select(){
+                this.configure = {type: 'department', length: 1};
                 $('.selectCustom:eq(0)').modal('show');
             },
 //            部门搜索
             selectDateSend(val){
-                for (let i = 0; i < val.department.length; i++) {
+                this.selected = val.department[0].name;
+                this.params.department_id = val.department[0].id;
+                /*for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
-                }
-                for (let j = 0; j < val.staff.length; j++) {
+                }*/
+                /*for (let j = 0; j < val.staff.length; j++) {
                     this.selected.push(val.staff[j].name);
                     this.params.staff_id.push(val.staff[j].id)
-                }
+                }*/
                 this.search(1);
             },
 //            清空部门搜索
@@ -346,7 +390,10 @@
 
 //            时间搜索
             getDate(val){
-
+//                console.log(val)
+                this.params.start = val.split('to')[0];
+                this.params.end = val.split('to')[1];
+                this.search(1);
             },
 
 //            选中
@@ -363,6 +410,11 @@
                     }
                 }
             },
+
+            // 新增成功
+            successAdd(){
+                this.contract_list(1);
+            }
         }
     }
 </script>
