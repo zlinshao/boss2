@@ -295,10 +295,10 @@
                 params: {
                     generate_date: '',              //日期
                     staff_name: '',                 //模糊搜索
-                    city_id: [],                    //公司
-                    region_id: [],                  //区域
-                    district_id: [],                //小组
-                    department_id: [],              //部门
+                    city_id: '',                    //公司
+                    region_id: '',                  //区域
+                    district_id: '',                //小组
+                    department_id: '',              //部门
                     page: '',                       //分页
                 },
                 selected: [],                       //部门名称
@@ -363,10 +363,10 @@
 //            清空搜索
             empty_search (val){
                 this.params.staff_name = '';
-                this.params.city_id = [];
-                this.params.region_id = [];
-                this.params.district_id = [];
-                this.params.department_id = [];
+                this.params.city_id = '';
+                this.params.region_id = '';
+                this.params.district_id = '';
+                this.params.department_id = '';
                 this.personalList(val, 1);
                 this.times();
             },
@@ -521,17 +521,17 @@
 //            部门搜索
             select(){
                 $('.selectCustom:eq(0)').modal({backdrop: 'static',});
-                this.configure = {type: 'department'};
+                this.configure = {type: 'department',length: 1};
             },
 
 //            部门搜索
             selectDateSend(val){
                 for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.city_id.push(val.department[i].id);
-                    this.params.region_id.push(val.department[i].id);
-                    this.params.district_id.push(val.department[i].id);
-                    this.params.department_id.push(val.department[i].id);
+                    this.selected = val.department[i].name;
+                    this.params.city_id = val.department[i].id;
+                    this.params.region_id = val.department[i].id;
+                    this.params.district_id = val.department[i].id;
+                    this.params.department_id = val.department[i].id;
                 }
                 this.search(this.remark_term.tabs, 1);
             },
@@ -541,10 +541,10 @@
                 if (this.selected.length === 0) {
                     return;
                 }
-                this.params.city_id = [];
-                this.params.region_id = [];
-                this.params.district_id = [];
-                this.params.department_id = [];
+                this.params.city_id = '';
+                this.params.region_id = '';
+                this.params.district_id = '';
+                this.params.department_id = '';
                 this.selected = [];
                 this.search(this.remark_term.tabs, 1);
             },
