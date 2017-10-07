@@ -66,8 +66,6 @@ import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue
 import PendingItem from './compoments/finance/pemdingItem/pendingItem.vue'                      // 待处理项
 import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'                  // 待处理项详情
 import GeneralOperation from './compoments/finance/generalOperation.vue'                        // 总账操作
-import Company from './compoments/salary/company.vue'                                               // 公司工资
-import Group from './compoments/salary/group.vue'                                                   // 小组工资
 import Personal from './compoments/salary/personal.vue'                                             // 个人工资
 import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
 import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                 // 周期表
@@ -298,16 +296,6 @@ export default[
         path: '/periodicDetail',
         name: 'periodicDetail',                     //周期表详情
         component: PeriodicDetail
-    },
-    {
-        path: '/company',
-        name: 'company',                            //公司工资
-        component: Company
-    },
-    {
-        path: '/group',
-        name: 'group',                              //小组工资
-        component: Group
     },
     {
         path: '/compare',

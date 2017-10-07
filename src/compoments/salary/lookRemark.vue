@@ -48,15 +48,29 @@
                 </div>
             </div>
         </div>
+
+        <Status :state="info"></Status>
     </div>
 </template>
 
 <script>
+    import Status from '../common/status.vue'
     export default {
+        components: {Status},
         props: ['msg'],
         data (){
             return {
                 lookRemark: '',             //备注内容
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         watch: {},
@@ -73,6 +87,18 @@
                         this.$emit('Remark', this.msg.tabs);
                         $('#lookRemark').modal('hide');
                         this.close_remark();
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                    } else {
+                        //关闭成功信息(可选)
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
                     }
                 });
             },

@@ -127,11 +127,11 @@
                     <div class="panel-body">
                         <header class="panel-heading">
                             本月寿星
-                            <a class="pull-right" @click="aaaa" v-show="main_birthday.length > 6">更多</a>
+                            <a class="pull-right" @click="birth_show_more" v-show="main_birthday.length > 6">更多</a>
                         </header>
                         <div class="row product-list" style="margin-top: 16px;">
                             <div class="col-xs-6 col-sm-3 col-lg-2" v-for="(birth,index) in main_birthday">
-                                <section class="panel" v-show="index < hhhh">
+                                <section class="panel" v-show="index < birth_show">
                                     <div class="pro-img-box margin10" style="max-height: 70px;"
                                          :title="birth.position">
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
@@ -244,103 +244,103 @@
                         功能排期表 <span class="pull-right add" @click="line_up">+</span>
                     </header>
                     <div class="roll" style="overflow: auto; height: 90%;">
-                    <header class="panel-heading tab-bg-dark-navy-blue">
-                        <ul class="nav nav-tabs">
-                            <li class="active" style="width: 50%;">
-                                <a data-toggle="tab" href="#carry_on" aria-expanded="true">
-                                    进行中
-                                </a>
-                            </li>
-                            <li class="" style="width: 50%;">
-                                <a data-toggle="tab" href="#complete" aria-expanded="false">
-                                    已完成
-                                </a>
-                            </li>
-                        </ul>
-                    </header>
-                    <div class="panel-body">
-                        <div class="tab-content">
-                            <div id="carry_on" class="tab-pane active" style="overflow: auto;">
-                                <section class="panel table-responsive roll">
-                                    <table class="table table-advance table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center width100">结束日期</th>
-                                            <th class="text-center width100">功能名称</th>
-                                            <th class="text-center width80">进度</th>
-                                            <th class="text-center width100">相关部门</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr class="text-center" v-for="key in line_list_way">
-                                            <td>{{key.finish_time}}</td>
-                                            <td>{{key.function_name}}</td>
-                                            <td>
-                                                <div class="progress progress-striped active">
-                                                    <div aria-valuemax="100" aria-valuemin="0"
-                                                         aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                         :style="{ width: key.process + '%'}">
-                                                        <span class="sr-only">{{key.process}}%</span>
+                        <header class="panel-heading tab-bg-dark-navy-blue">
+                            <ul class="nav nav-tabs">
+                                <li class="active" style="width: 50%;">
+                                    <a data-toggle="tab" href="#carry_on" aria-expanded="true">
+                                        进行中
+                                    </a>
+                                </li>
+                                <li class="" style="width: 50%;">
+                                    <a data-toggle="tab" href="#complete" aria-expanded="false">
+                                        已完成
+                                    </a>
+                                </li>
+                            </ul>
+                        </header>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="carry_on" class="tab-pane active" style="overflow: auto;">
+                                    <section class="panel table-responsive roll">
+                                        <table class="table table-advance table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center width100">结束日期</th>
+                                                <th class="text-center width100">功能名称</th>
+                                                <th class="text-center width80">进度</th>
+                                                <th class="text-center width100">相关部门</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="text-center" v-for="key in line_list_way">
+                                                <td>{{key.finish_time}}</td>
+                                                <td>{{key.function_name}}</td>
+                                                <td>
+                                                    <div class="progress progress-striped active">
+                                                        <div aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                             :style="{ width: key.process + '%'}">
+                                                            <span class="sr-only">{{key.process}}%</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td v-for="item in key.applicant_id">
+                                                </td>
+                                                <td v-for="item in key.applicant_id">
                                                 <span v-for="list in item.department">
                                                     {{list.name}}
                                                 </span>
-                                            </td>
-                                        </tr>
-                                        <tr v-if="way">
-                                            <td colspan="4" class="text-center text-muted">
-                                                <h4>暂无数据....</h4>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
-                            </div>
+                                                </td>
+                                            </tr>
+                                            <tr v-if="way">
+                                                <td colspan="4" class="text-center text-muted">
+                                                    <h4>暂无数据....</h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </section>
+                                </div>
 
-                            <div id="complete" class="tab-pane">
-                                <section class="panel table-responsive roll">
-                                    <table class="table table-advance table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center width100">结束日期</th>
-                                            <th class="text-center width100">功能名称</th>
-                                            <th class="text-center width80">进度</th>
-                                            <th class="text-center width100">相关部门</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr class="text-center" v-for="key in line_list_finish">
-                                            <td>{{key.finish_time}}</td>
-                                            <td>{{key.function_name}}</td>
-                                            <td>
-                                                <div class="progress progress-striped active">
-                                                    <div aria-valuemax="100" aria-valuemin="0"
-                                                         aria-valuenow="100" role="progressbar" class="progress-bar"
-                                                         style="width: 100%">
-                                                        <span class="sr-only">100%</span>
+                                <div id="complete" class="tab-pane">
+                                    <section class="panel table-responsive roll">
+                                        <table class="table table-advance table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center width100">结束日期</th>
+                                                <th class="text-center width100">功能名称</th>
+                                                <th class="text-center width80">进度</th>
+                                                <th class="text-center width100">相关部门</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="text-center" v-for="key in line_list_finish">
+                                                <td>{{key.finish_time}}</td>
+                                                <td>{{key.function_name}}</td>
+                                                <td>
+                                                    <div class="progress progress-striped active">
+                                                        <div aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="100" role="progressbar" class="progress-bar"
+                                                             style="width: 100%">
+                                                            <span class="sr-only">100%</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td v-for="item in key.applicant_id">
+                                                </td>
+                                                <td v-for="item in key.applicant_id">
                                                 <span v-for="list in item.department">
                                                     {{list.name}}
                                                 </span>
-                                            </td>
-                                        </tr>
-                                        <tr v-if="fin">
-                                            <td colspan="4" class="text-center text-muted">
-                                                <h4>暂无数据....</h4>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
+                                                </td>
+                                            </tr>
+                                            <tr v-if="fin">
+                                                <td colspan="4" class="text-center text-muted">
+                                                    <h4>暂无数据....</h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </section>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </section>
 
@@ -415,46 +415,46 @@
 
                 <!--龙虎榜-->
                 <!--<section class="panel">-->
-                    <!--<header class="panel-heading">-->
-                        <!--龙虎榜-->
-                    <!--</header>-->
-                    <!--<div class="panel-body" style="padding-top: 0;">-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-md-12" style="padding: 0;">-->
-                                <!--<section class="panel table-responsive roll">-->
-                                    <!--<table class="table table-advance table-hover">-->
-                                        <!--<thead>-->
-                                        <!--<tr>-->
-                                            <!--<th>排名</th>-->
-                                            <!--<th>姓名</th>-->
-                                            <!--<th>部门</th>-->
-                                            <!--<th>当月业绩</th>-->
-                                        <!--</tr>-->
-                                        <!--</thead>-->
-                                        <!--<tbody>-->
-                                        <!--&lt;!&ndash;<tr v-for="(ran, index) in main_ranking">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td style="min-width: 60px;">{{index + 1}}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td style="min-width: 80px;">{{ran.name}}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td style="min-width: 110px;">{{ran.department}}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td style="min-width: 100px;">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;{{ran.money}}&ndash;&gt;-->
-                                        <!--&lt;!&ndash;&lt;!&ndash;<span class="text-danger" v-if="ran.rank_id === 1"><i&ndash;&gt;&ndash;&gt;-->
-                                        <!--&lt;!&ndash;&lt;!&ndash;class="fa fa-arrow-up"></i></span>&ndash;&gt;&ndash;&gt;-->
-                                        <!--&lt;!&ndash;&lt;!&ndash;<span class="text-success" v-if="ran.rank_id === 2"><i&ndash;&gt;&ndash;&gt;-->
-                                        <!--&lt;!&ndash;&lt;!&ndash;class="fa  fa-arrow-down"></i></span>&ndash;&gt;&ndash;&gt;-->
-                                        <!--&lt;!&ndash;</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-                                        <!--<tr v-show="main_ranking.length === 0">-->
-                                            <!--<td colspan="7" class="text-center text-muted">-->
-                                                <!--<h4>暂无数据....</h4>-->
-                                            <!--</td>-->
-                                        <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                <!--</section>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--<header class="panel-heading">-->
+                <!--龙虎榜-->
+                <!--</header>-->
+                <!--<div class="panel-body" style="padding-top: 0;">-->
+                <!--<div class="row">-->
+                <!--<div class="col-md-12" style="padding: 0;">-->
+                <!--<section class="panel table-responsive roll">-->
+                <!--<table class="table table-advance table-hover">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th>排名</th>-->
+                <!--<th>姓名</th>-->
+                <!--<th>部门</th>-->
+                <!--<th>当月业绩</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--&lt;!&ndash;<tr v-for="(ran, index) in main_ranking">&ndash;&gt;-->
+                <!--&lt;!&ndash;<td style="min-width: 60px;">{{index + 1}}</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td style="min-width: 80px;">{{ran.name}}</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td style="min-width: 110px;">{{ran.department}}</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td style="min-width: 100px;">&ndash;&gt;-->
+                <!--&lt;!&ndash;{{ran.money}}&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<span class="text-danger" v-if="ran.rank_id === 1"><i&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;class="fa fa-arrow-up"></i></span>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<span class="text-success" v-if="ran.rank_id === 2"><i&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;class="fa  fa-arrow-down"></i></span>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                <!--<tr v-show="main_ranking.length === 0">-->
+                <!--<td colspan="7" class="text-center text-muted">-->
+                <!--<h4>暂无数据....</h4>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</section>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--</section>-->
             </div>
         </div>
@@ -471,7 +471,7 @@
         components: {DatePicker, Status},
         data (){
             return {
-                hhhh: 6,
+                birth_show: 6,
                 line_list_way: [],              //排期列表  进行中
                 way: false,
                 line_list_finish: [],           //排期列表  已完成
@@ -564,8 +564,12 @@
             this.online();
         },
         methods: {
-            aaaa (){
-                this.hhhh = this.main_birthday.length + 1;
+            birth_show_more (){
+                if (this.birth_show === 6) {
+                    this.birth_show = this.main_birthday.length;
+                } else if (this.birth_show === this.main_birthday.length) {
+                    this.birth_show = 6;
+                }
             },
             line_list (){
                 this.$http.get('staff/info').then((res) => {
@@ -900,7 +904,7 @@
     }
 
     .padding15 {
-        padding: 0 15px;
+        padding: 0;
     }
 
     .margin10 {
