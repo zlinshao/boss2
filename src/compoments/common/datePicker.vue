@@ -391,17 +391,17 @@
                 let lastQuarterlyEnd;  // 上季度初
                 let thisQuarterlyStart;  // 上季度末
                 if (month <= 3) {
-                    lastQuarterlyEnd = moment([year - 1, 10, 1]);
-                    thisQuarterlyStart = moment([year, 1, 1]);
+                    lastQuarterlyEnd = moment([year - 1, 9, 1]);
+                    thisQuarterlyStart = moment([year, 0, 1]);
                 } else if (month > 3 && month <= 6) {
-                    lastQuarterlyEnd = moment([year, 1, 1]);
-                    thisQuarterlyStart = moment([year, 4, 1]);
+                    lastQuarterlyEnd = moment([year, 0, 1]);
+                    thisQuarterlyStart = moment([year, 3, 1]);
                 } else if (month > 6 && month <= 9) {
-                    lastQuarterlyEnd = moment([year, 4, 1]);
-                    thisQuarterlyStart = moment([year, 7, 1]);
+                    lastQuarterlyEnd = moment([year, 3, 1]);
+                    thisQuarterlyStart = moment([year, 6, 1]);
                 } else if (month > 9 && month <= 12) {
-                    lastQuarterlyEnd = moment([year, 7, 1]);
-                    thisQuarterlyStart = moment([year, 10, 1]);
+                    lastQuarterlyEnd = moment([year, 6, 1]);
+                    thisQuarterlyStart = moment([year, 9, 1]);
                 }
 
 //                let thisQuarterlyStart = moment([year,])
