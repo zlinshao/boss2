@@ -4,7 +4,7 @@
             <li>
                 <router-link to="/periodicFor">周期表</router-link>
             </li>
-            <li>详情</li>
+            <li>业绩</li>
         </ol>
         <section class="panel">
             <div class="panel-body clearFix">
@@ -14,7 +14,7 @@
                         <div class="input-group">
                             <select class="form-control" v-for="key in dict" v-model="params.typical"
                                     @change="search(1)">
-                                <option value="">请选择</option>
+                                <option value="">全部</option>
                                 <option v-for="(list,index) in dict.typical" :value="index">{{list}}</option>
                             </select>
                         </div>
@@ -53,7 +53,7 @@
                         <li>
                             <h5 @click="periodicEdit"><a>编辑</a></h5>
                         </li>
-                        <li>
+                        <li v-if="simple_status == 1">
                             <h5 @click="periodic_rev"><a>充公选择</a></h5>
                         </li>
 
@@ -91,7 +91,7 @@
                                         <td>
                                             <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                             'c_off':pitch.indexOf(item.id)==-1}"
-                                                   @click.prevent="checked_id(item.id, $event)">
+                                                   @click.prevent="checked_id(item.id, $event, item.simple_confiscation)">
                                                 <input type="checkbox" class="pull-left"
                                                        :checked="pitch.indexOf(item.id) > -1">
                                             </label>
@@ -99,7 +99,7 @@
                                         <td>{{item.generate_date}}</td>
                                         <td>
                                             {{item.address}}
-                                            <a class="text-danger" @click=" confiscate(item.simple_confiscation.id)"
+                                            <a class="text-danger" @click="confiscate(item.simple_confiscation.id)"
                                                v-if="item.simple_confiscation != null">充公</a>
                                         </td>
                                         <td>{{dict.typical[item.typical]}}</td>
@@ -184,6 +184,7 @@
         components: {DatePicker, STAFF, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit},
         data (){
             return {
+                simple_status: '',              //选择充公状态
                 revise_info: {},                //编辑
                 dict: {},
                 periodic_id: '',
@@ -205,7 +206,7 @@
                     typical: '',
                     department_id: [],
                     staff_id: [],
-                    range: '',
+                    generate_date: '',
                     search: '',
                     page: 1
                 },
@@ -283,7 +284,7 @@
 
 //            日期搜索
             getDate(data){
-                this.params.range = data;
+                this.params.generate_date = data;
                 this.search(1);
             },
 
@@ -325,10 +326,15 @@
                 this.search(1);
             },
 //            选中
-            checked_id (rul, ev){
+            checked_id (rul, ev, simple){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
+                if(simple === null){
+                    this.simple_status = 1;
+                }else{
+                    this.simple_status = '';
+                }
                 if (evInput.checked) {
                     this.pitch.push(rul);
                 } else {

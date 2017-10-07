@@ -69,8 +69,14 @@
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">月单价</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" v-model="prices" class="form-control">
+                                        <div class="col-sm-10" :class="{'padding0':prices.length > 1}">
+                                            <div v-if="prices.length == 1" v-for="(key,index) in prices">
+                                                <input type="text" class="form-control" v-model="prices[index]" :value="key">
+                                            </div>
+
+                                            <div v-if="prices.length > 1" v-for="(key,index) in prices" class="col-sm-6">
+                                                <input type="text" class="form-control" v-model="prices[index]" :value="key">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -167,6 +173,7 @@
         },
         watch: {
             msg (val){
+                this.department = val.district.name;
                 this.typical = val.typical;
                 this.pay_type = val.pay_type;
                 this.months = val.months;
@@ -222,5 +229,7 @@
 </script>
 
 <style scoped>
-
+    .padding0{
+        padding: 0;
+    }
 </style>

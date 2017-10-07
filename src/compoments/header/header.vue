@@ -536,7 +536,7 @@
                             <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
                                 <router-link to="/personal">
                                     <i class="fa  fa-money"></i>
-                                    <span>个人业绩</span>
+                                    <span>个人工资</span>
                                 </router-link>
                             </li>
                             <li :class="{'active': isActive == 45}" @click='pitch_on(45)'>

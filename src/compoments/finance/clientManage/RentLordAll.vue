@@ -176,7 +176,7 @@
                     <th class="text-center width100">生成时间</th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">客户姓名</th>
-                    <th class="text-center width80">收房月数</th>
+                    <th class="text-center width80">租房月数</th>
                     <th class="text-center" style="min-width: 110px;">付款方式</th>
                     <th class="text-center" style="min-width: 90px;">月单价</th>
                     <th class="text-center width80">租房类型</th>
