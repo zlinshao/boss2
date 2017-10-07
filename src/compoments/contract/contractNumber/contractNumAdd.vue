@@ -35,9 +35,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用日期</label>
-                                        <label class="col-sm-2 control-label" v-if="new_status == 2">报备日期</label>
-                                        <label class="col-sm-2 control-label" v-if="new_status == 3">上缴日期</label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用日期<sup data-v-25ec7810="" class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 2">报备日期<sup data-v-25ec7810="" class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 3">上缴日期<sup data-v-25ec7810="" class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                                         :idName="'receiveDate'"
@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group" v-if="new_status == 2">
-                                        <label class="col-sm-2 control-label">实到日期</label>
+                                        <label class="col-sm-2 control-label">实到日期<sup data-v-25ec7810="" class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                                         :idName="'receiveDate2'"
@@ -53,9 +53,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用人</label>
-                                        <label class="col-sm-2 control-label" v-if="new_status == 2">报备人</label>
-                                        <label class="col-sm-2 control-label" v-if="new_status == 3">上缴人</label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用人<sup data-v-25ec7810="" class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 2">报备人<sup data-v-25ec7810="" class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 3">上缴人<sup data-v-25ec7810="" class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" placeholder="点击选择员工"
                                                    v-model="receiver_name" @click='select' readonly>
@@ -68,9 +68,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用合同数(收)</label>
-                                        <label class="col-sm-2 control-label" v-if="new_status == 2">作废合同数(收)</label>
-                                        <label class="col-sm-2 control-label" v-if="new_status == 3">上缴合同数(收)</label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用合同数(收)<sup data-v-25ec7810="" class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 2">作废合同数(收)<sup data-v-25ec7810="" class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 3">上缴合同数(收)<sup data-v-25ec7810="" class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" v-model="collect_num" class="form-control"
                                                    @blur="turn_in_collect" @keyup="collect_num = collect_num.replace(/[^\d]/g,'');">
@@ -79,7 +79,7 @@
                                     <!--领取-->
                                     <div v-if="new_status == 1">
                                         <div class="form-group">
-                                            <label class="col-xs-12 col-sm-2 control-label">本次领取合同编号记录(收)</label>
+                                            <label class="col-xs-12 col-sm-2 control-label">本次领取合同编号记录(收)<sup data-v-25ec7810="" class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="collect_num_start" @blur="getCollectEnd" @keyup="collect_num_start = collect_num_start.replace(/[^\d]/g,'');">
                                             </div>
@@ -97,13 +97,13 @@
                                             </div>
                                         </div>-->
                                         <div class="form-group">
-                                            <label class="col-xs-12 col-sm-2 control-label">领取合同数(租)</label>
+                                            <label class="col-xs-12 col-sm-2 control-label">领取合同数(租)<sup data-v-25ec7810="" class="required">*</sup></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="rent_num" @blur="turn_in_rent" @keyup="rent_num = rent_num.replace(/[^\d]/g,'');" >
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">本次领取合同编号记录(租)</label>
+                                            <label class="col-sm-2 control-label">本次领取合同编号记录(租)<sup data-v-25ec7810="" class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="rent_num_start" @blur="getRentEnd" @keyup="rent_num_start = rent_num_start.replace(/[^\d]/g,'');">
                                             </div>
@@ -145,7 +145,7 @@
                                     <!--上缴-->
                                     <div v-if="new_status == 3">
                                         <div class="form-group" v-for="(item, index) in collect_turn_num">
-                                            <label class="col-xs-12 col-sm-2 control-label">合同编号</label>
+                                            <label class="col-xs-12 col-sm-2 control-label">合同编号<sup data-v-25ec7810="" class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="collect_turn_num[index].contract_number">
                                             </div>
@@ -189,7 +189,7 @@
                                             </div>
                                         </div>-->
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">上缴合同数(租)</label>
+                                            <label class="col-sm-2 control-label">上缴合同数(租)<sup data-v-25ec7810="" class="required">*</sup></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="rent_num"
                                                        @blur="turn_in_rent">
@@ -197,7 +197,7 @@
                                         </div>
 
                                         <div class="form-group" v-for="(item,index) in rent_turn_num">
-                                            <label class="col-xs-12 col-sm-2 control-label">上缴合同数</label>
+                                            <label class="col-xs-12 col-sm-2 control-label">上缴合同数<sup data-v-25ec7810="" class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="rent_turn_num[index].contract_number">
                                             </div>

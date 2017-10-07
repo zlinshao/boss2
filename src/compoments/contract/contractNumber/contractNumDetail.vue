@@ -37,16 +37,18 @@
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <div>
-                            <span class="text-primary">领取日期：</span>
-                            <span>{{public.receiver_time}}</span>
+                            <div class="text-primary">领取日期：</div>
+                            <div>{{public.receiver_time}}</div>
                         </div>
                         <div>
-                            <span class="text-primary">领取合同数(收)：</span>
-                            <span>{{msg.num[0].sf_numbers}}</span>
+                            <div class="text-primary">领取合同数(收)：</div>
+                            <div>{{msg.num[0].sf_numbers}}</div>
                         </div>
                         <div>
-                            <span class="text-primary">本次领取合同编号(收)：</span>
-                            <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
+                            <div class="text-primary">本次领取合同编号(收)：</div>
+                            <div>
+                                <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
+                            </div>
                         </div>
                         <!--<div>
                             <span class="text-primary">剩余合同编号(收)：</span>
@@ -57,12 +59,14 @@
                             <span>asdasd</span>
                         </div>-->
                         <div>
-                            <span class="text-primary">领取合同数(租)：</span>
-                            <span>{{msg.num[0].zf_numbers}}</span>
+                            <div class="text-primary">领取合同数(租)：</div>
+                            <div>{{msg.num[0].zf_numbers}}</div>
                         </div>
                         <div>
-                            <span class="text-primary">本次领取合同编号(租)：</span>
-                            <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
+                            <div class="text-primary">本次领取合同编号(租)：</div>
+                            <div>
+                                <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
+                            </div>
                         </div>
                         <!--<div>
                             <span class="text-primary">剩余合同编号(租)：</span>
@@ -75,23 +79,23 @@
                     </div>
                     <div class="col-md-6">
                         <div>
-                            <span class="text-primary">领取人：</span>
-                            <span>{{public.receiver_name}}</span>
+                            <div class="text-primary">领取人：</div>
+                            <div>{{public.receiver_name}}</div>
                         </div>
                         <div>
-                            <span class="text-primary">所属部门：</span>
-                            <span>{{public.department_id[0]}}</span>
+                            <div class="text-primary">所属部门：</div>
+                            <div>{{public.department_id[0]}}</div>
                         </div>
                         <div>
-                            <span class="text-primary">截图凭证：</span>
-                            <span>
+                            <div class="text-primary">截图凭证：</div>
+                            <div>
                                 <img :src="img.small" @click="showLargePic(index)"
                                      v-for="(img,index) in public.album.pz_pic">
-                            </span>
+                            </div>
                         </div>
                         <div>
-                            <span class="text-primary">操作人：</span>
-                            <span>sdgfsfdgfsdg</span>
+                            <div class="text-primary">操作人：</div>
+                            <div>{{public.operator.name}}</div>
                         </div>
                     </div>
                 </div>
@@ -161,12 +165,18 @@
     .client_info .col-md-6>div {
         margin-bottom: 20px;
     }
-
-    .client_info .col-md-6>div span.text-primary {
+    .client_info .col-md-6>div>div{
         display: inline-block;
+        vertical-align: top;
+    }
+    .client_info .col-md-6>div .text-primary {
+        /*display: inline-block;*/
         padding-right: 20px;
         text-align: right;
-        min-width: 180px;
+        min-width: 150px;
+    }
+    .client_info .col-md-6>div .text-primary+div{
+        max-width: 425px;
     }
 
     .client_info .col-md-6>div span a {
