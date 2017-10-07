@@ -127,12 +127,11 @@
                     <div class="panel-body">
                         <header class="panel-heading">
                             本月寿星
-                            <router-link v-if="main_birthday.length > 6" to="/user" class="pull-right">更多&gt;&gt;
-                            </router-link>
+                            <a class="pull-right" @click="aaaa" v-show="main_birthday.length > 6">更多</a>
                         </header>
                         <div class="row product-list" style="margin-top: 16px;">
                             <div class="col-xs-6 col-sm-3 col-lg-2" v-for="(birth,index) in main_birthday">
-                                <section class="panel" v-show="index < 6">
+                                <section class="panel" v-show="index < hhhh">
                                     <div class="pro-img-box margin10" style="max-height: 70px;"
                                          :title="birth.position">
                                         <img :src="birth.avatar" v-if="birth.avatar !== ''"
@@ -472,6 +471,7 @@
         components: {DatePicker, Status},
         data (){
             return {
+                hhhh: 6,
                 line_list_way: [],              //排期列表  进行中
                 way: false,
                 line_list_finish: [],           //排期列表  已完成
@@ -564,6 +564,9 @@
             this.online();
         },
         methods: {
+            aaaa (){
+                this.hhhh = this.main_birthday.length + 1;
+            },
             line_list (){
                 this.$http.get('staff/info').then((res) => {
                     this.proposer = res.data.name;

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--充公选择-->
-        <div class="modal fade " id="periodicRevise" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade " id="periodicInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -15,43 +15,11 @@
                     <div class="modal-body has-js">
                         <form class="form-horizontal" role="form">
 
-                            <!--房屋地址-->
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">房屋地址</label>
-                                <div class="col-lg-10">
-                                    <input type="text" :value="msg.address" class="form-control" placeholder=""
-                                           readonly>
-                                </div>
-                            </div>
-
-                            <!--收房人-->
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">收房人</label>
-                                <div class="col-lg-10">
-                                    <input type="text" :value="msg.collect_staff_name" class="form-control"
-                                           placeholder=""
-                                           readonly>
-                                </div>
-                            </div>
-
-                            <!--租房人-->
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">租房人</label>
-                                <div class="col-lg-10">
-                                    <input type="text" :value="msg.rent_staff_name" class="form-control" placeholder=""
-                                           readonly>
-                                </div>
-                            </div>
-
                             <!--充公人-->
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">充公人</label>
                                 <div class="col-lg-10">
-                                    <select v-model="confiscate" class="form-control">
-                                        <option value="">请选择充公人</option>
-                                        <option :value="msg.collect_staff_id">{{msg.collect_staff_name}}</option>
-                                        <option :value="msg.rent_staff_id">{{msg.rent_staff_name}}</option>
-                                    </select>
+                                    <input type="text" v-model="confiscate" class="form-control" readonly>
                                 </div>
                             </div>
 
@@ -59,7 +27,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">充公原因</label>
                                 <div class="col-lg-10">
-                                    <textarea v-model="confiscate_cause" class="form-control"></textarea>
+                                    <textarea class="form-control" :value="msg.reason" readonly></textarea>
                                 </div>
                             </div>
 
@@ -74,7 +42,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-default" type="button" @click="close_">取消</button>
-                        <button class="btn btn-primary" type="button" @click="periodicRevise()">确定</button>
+                        <button class="btn btn-primary" type="button" @click="periodicRevise()">修改</button>
                     </div>
                 </div>
             </div>
@@ -88,7 +56,7 @@
     import Status from '../common/status.vue';
     export default {
         components: {Status},
-        props: ['msg', 'id'],
+        props: ['msg'],
         data (){
             return {
                 confiscate: '',                     //充公人
@@ -106,15 +74,19 @@
                 },
             }
         },
+        watch: {
+            msg (val){
+                this.confiscate = val.blame_staff.real_name;
+                this.remarks = val.remark;
+            }
+        },
         methods: {
 //            确定编辑
             periodicRevise (){
-                this.$http.post('achv/commission/confiscate/' + this.id, {
-                    blame_staff_id: this.confiscate,             //充公人
+                this.$http.put('achv/confiscation/' + this.msg.id, {
                     remark: this.remarks,                        //备注
-                    reason: this.confiscate_cause,               //充公原因
                 }).then((res) => {
-                    if (res.data.code === '70000') {
+                    if (res.data.code === '70010') {
                         this.close_();
                         this.$emit('confiscate',1);
                         this.info.success = res.data.msg;
@@ -136,7 +108,7 @@
 //            关闭模态框
             close_ (){
                 this.clear_content();
-                $('#periodicRevise').modal('hide');          //成功关闭模态框
+                $('#periodicInfo').modal('hide');          //成功关闭模态框
             },
 
 //            清空内容

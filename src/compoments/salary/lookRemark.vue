@@ -72,6 +72,7 @@
                     if (res.data.code === '70000') {
                         this.$emit('Remark', this.msg.tabs);
                         $('#lookRemark').modal('hide');
+                        this.close_remark();
                     }
                 });
             },
