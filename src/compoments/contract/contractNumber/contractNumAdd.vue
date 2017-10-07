@@ -73,7 +73,7 @@
                                         <label class="col-sm-2 control-label" v-if="new_status == 3">上缴合同数(收)</label>
                                         <div class="col-sm-10">
                                             <input type="text" v-model="collect_num" class="form-control"
-                                                   @blur="turn_in_collect">
+                                                   @blur="turn_in_collect" @keyup="collect_num = collect_num.replace(/[^\d]/g,'');">
                                         </div>
                                     </div>
                                     <!--领取-->
@@ -81,7 +81,7 @@
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-2 control-label">本次领取合同编号记录(收)</label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="collect_num_start" @blur="getCollectEnd">
+                                                <input type="text" class="form-control" v-model="collect_num_start" @blur="getCollectEnd" @keyup="collect_num_start = collect_num_start.replace(/[^\d]/g,'');">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px;">
                                                 到
@@ -99,13 +99,13 @@
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-2 control-label">领取合同数(租)</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="rent_num" @blur="turn_in_rent">
+                                                <input type="text" class="form-control" v-model="rent_num" @blur="turn_in_rent" @keyup="rent_num = rent_num.replace(/[^\d]/g,'');" >
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">本次领取合同编号记录(租)</label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="rent_num_start" @blur="getRentEnd">
+                                                <input type="text" class="form-control" v-model="rent_num_start" @blur="getRentEnd" @keyup="rent_num_start = rent_num_start.replace(/[^\d]/g,'');">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px;">
                                                 到
@@ -400,7 +400,7 @@
 //                    contract_type : 1,
                     area : this.area
                 }).then((res)=>{
-//                    console.log(res.data);
+                    console.log(res.data);
                     this.collect_num_start = res.data.sf;
                     this.rent_num_start = res.data.zf;
                 })
@@ -501,7 +501,7 @@
             // 获取收房合同结束编号
             getCollectEnd(){
                 if (this.collect_num!=''&&this.collect_num_start!=''){
-                    this.collect_num_end = parseInt(this.collect_num_start)+parseInt(this.collect_num)+'';
+                    this.collect_num_end = parseInt(this.collect_num_start)+parseInt(this.collect_num)-1+'';
 //                    console.log(this.collect_num_end.length);
                     if (this.collect_num_end.length<this.collect_num_start.length){
                         let length = this.collect_num_start.length-this.collect_num_end.length;
@@ -516,7 +516,7 @@
             // 获取租房合同结束编号
             getRentEnd(){
                 if (this.rent_num!=''&&this.rent_num_start!=''){
-                    this.rent_num_end = parseInt(this.rent_num_start)+parseInt(this.rent_num)+'';
+                    this.rent_num_end = parseInt(this.rent_num_start)+parseInt(this.rent_num)-1+'';
 //                    console.log(this.rent_num_end.length);
                     if (this.rent_num_end.length<this.rent_num_start.length){
                         let length = this.rent_num_start.length-this.rent_num_end.length;
@@ -565,6 +565,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
+                        this.close_empty();
                         $('#contractNumAdd').modal('hide');
                         this.$emit('success');
                     } else {

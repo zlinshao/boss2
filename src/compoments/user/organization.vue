@@ -356,9 +356,9 @@
         text-align: center;
         margin-top: 20px;
     }
-    .breadcrumb > li:last-child:before {
+    /*.breadcrumb > li:last-child:before {
         padding: 0 5px;
         color: #ccc;
         content: "";
-    }
+    }*/
 </style>
