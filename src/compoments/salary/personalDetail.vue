@@ -127,16 +127,16 @@
                                     <th class="text-center width50">1月份</th>
                                     <th class="text-center width80">客户姓名</th>
                                     <th class="text-center width150">房屋地址</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">空置期奖励</th>
-                                    <th class="text-center width80" v-if="aaaa === 2">收房付款方式奖励</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">收房年限奖励</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">价格差奖励</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">空置期奖励</th>
+                                    <th class="text-center width80" v-if="portion_show == 2">收房付款方式奖励</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">收房年限奖励</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">价格差奖励</th>
                                     <th class="text-center width80">未发比例</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">合同</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">资料</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">交接</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">客诉</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">尾款</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">合同</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">资料</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">交接</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">客诉</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">尾款</th>
                                     <th class="text-center width50">中介费</th>
                                     <th class="text-center width50">共计</th>
                                     <th class="text-center width50">备注</th>
@@ -152,16 +152,16 @@
                                     <td>90000</td>
                                     <td>30000</td>
                                     <td>光明城市9-1103</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
                                     <td>未发比例</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">尾款</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">尾款</td>
                                     <td>30000</td>
                                     <td>73000</td>
                                     <td><i class="fa fa-book" @click="lookRemark"></i></td>
@@ -183,16 +183,16 @@
                                     <th class="text-center width50">2月份</th>
                                     <th class="text-center width80">客户姓名</th>
                                     <th class="text-center width150">房屋地址</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">空置期奖励</th>
-                                    <th class="text-center width80" v-if="aaaa === 2">收房付款方式奖励</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">收房年限奖励</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">价格差奖励</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">空置期奖励</th>
+                                    <th class="text-center width80" v-if="portion_show == 2">收房付款方式奖励</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">收房年限奖励</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">价格差奖励</th>
                                     <th class="text-center width80">未发比例</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">合同</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">资料</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">交接</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">客诉</th>
-                                    <th class="text-center width50" v-if="aaaa === 2">尾款</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">合同</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">资料</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">交接</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">客诉</th>
+                                    <th class="text-center width50" v-if="portion_show == 2">尾款</th>
                                     <th class="text-center width50">中介费</th>
                                     <th class="text-center width50">共计</th>
                                     <th class="text-center width50">备注</th>
@@ -208,16 +208,16 @@
                                     <td>90000</td>
                                     <td>30000</td>
                                     <td>光明城市9-1103</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
                                     <td :class="{'deduct_marks': true}">未发比例</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">30000</td>
-                                    <td v-if="aaaa === 2">尾款</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">30000</td>
+                                    <td v-if="portion_show == 2">尾款</td>
                                     <td>30000</td>
                                     <td>73000</td>
                                     <td><i class="fa fa-book" @click="lookRemark"></i></td>
@@ -250,7 +250,7 @@
         components: {lookRemark, personalRevise, DetailRevise},
         data (){
             return {
-                aaaa: 2,
+                portion_show: 2,
                 personal_id: '',        //ID
                 personalRem: '',        //备注对象
                 lookRem: '',            //备注内容

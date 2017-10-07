@@ -31,6 +31,10 @@
                             </span>
                         </div>
 
+                        <div class="pull-right">
+                            <router-link class="btn btn-success" :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
+                            </router-link>
+                        </div>
                     </form>
                 </div>
 
@@ -98,7 +102,6 @@
                                         <th class="text-center width80">溢出业绩</th>
                                         <th class="text-center width100">所属部门</th>
                                         <th class="text-center width50">备注</th>
-                                        <th class="text-center width50">详情</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -120,10 +123,6 @@
                                         <td>
                                             <i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"
                                                v-if="target_show.indexOf(item.target_id) > -1"></i>
-                                        </td>
-                                        <td>
-                                            <router-link :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
-                                            </router-link>
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="com_show">
@@ -147,7 +146,6 @@
                                         <th class="text-center width80">溢出业绩</th>
                                         <th class="text-center width100">所属部门</th>
                                         <th class="text-center width50">备注</th>
-                                        <th class="text-center width50">详情</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -169,10 +167,6 @@
                                         <td>
                                             <i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"
                                                v-if="target_show.indexOf(item.target_id) > -1"></i>
-                                        </td>
-                                        <td>
-                                            <router-link :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
-                                            </router-link>
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="area_show">
@@ -196,7 +190,6 @@
                                         <th class="text-center width80">溢出业绩</th>
                                         <th class="text-center width100">所属部门</th>
                                         <th class="text-center width50">备注</th>
-                                        <th class="text-center width50">详情</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -218,10 +211,6 @@
                                         <td>
                                             <i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"
                                                v-if="target_show.indexOf(item.target_id) > -1"></i>
-                                        </td>
-                                        <td>
-                                            <router-link :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
-                                            </router-link>
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="group_show">
@@ -245,7 +234,6 @@
                                         <th class="text-center width80">溢出业绩</th>
                                         <th class="text-center width100">所属部门</th>
                                         <th class="text-center width50">备注</th>
-                                        <th class="text-center width50">详情</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -267,10 +255,6 @@
                                         <td>
                                             <i class="fa fa-book" @click="lookRemarks(item.name, item.target_id)"
                                                v-if="target_show.indexOf(item.target_id) > -1"></i>
-                                        </td>
-                                        <td>
-                                            <router-link :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
-                                            </router-link>
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="per_show">
@@ -324,7 +308,7 @@
 //                查看备注
                 remark_term: {
                     range: '',                      //当月时间
-                    tabs: 3,                        //标签页切换
+                    tabs: 1,                        //标签页切换
                     addRemark: '',                  //增加备注
                     remark_obj: '',                 //备注对象
                     remark_con: '',                 //备注内容
@@ -349,7 +333,7 @@
             }
         },
         mounted (){
-            this.personalList(3, 1);
+            this.personalList(1, 1);
             this.times();
         },
         methods: {
