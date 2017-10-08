@@ -178,7 +178,7 @@
                     department_id: this.department_id,          //申请部门
                 }).then((res) => {
                     if (res.data.code === '30008' || res.data.code === '30019') {
-                        this.$emit('fun_success', 2);
+                        this.$emit('fun_success');
                         this.close_();
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
