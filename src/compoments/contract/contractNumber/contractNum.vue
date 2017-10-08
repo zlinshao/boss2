@@ -86,7 +86,7 @@
 
                     <!--领取-->
                     <div class="tab-pane" id="receive" :class="{'active': params.type === 1}">
-                        <table class="table table-advance table-hover table-striped">
+                        <table class="table table-advance table-hover">
                             <thead>
                             <tr>
                                 <th class="text-center"></th>
@@ -131,7 +131,7 @@
                     </div>
                     <!--作废-->
                     <div class="tab-pane" id="void" :class="{'active': params.type === 2}">
-                        <table class="table table-advance table-hover table-striped">
+                        <table class="table table-advance table-hover">
                             <thead>
                             <tr>
                                 <th class="text-center"></th>
@@ -174,7 +174,7 @@
                     </div>
                     <!--上缴-->
                     <div class="tab-pane" id="turnOver" :class="{'active': params.type === 3}">
-                        <table class="table table-advance table-hover table-striped">
+                        <table class="table table-advance table-hover">
                             <thead>
                             <tr>
                                 <th class="text-center"></th>
@@ -426,10 +426,4 @@
     section.panel.has-js table{
         background-color: white;
     }
-    /*section.panel.has-js .table-striped>tbody>tr:nth-of-type(odd){
-        background-color: #f9f9f9;
-    }
-    section.panel.has-js .table-striped>tbody>tr:nth-of-type(even){
-        background-color: white;
-    }*/
 </style>
