@@ -127,7 +127,7 @@
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th class="text-center width100">结束日期</th>
+                                        <th class="text-center width100">期望完成日期</th>
                                         <th class="text-center width100">功能名称</th>
                                         <th class="text-center width150">功能需求</th>
                                         <th class="text-center width100">申请人</th>
@@ -145,7 +145,7 @@
                                                        :checked="pitch.indexOf(key.id) > -1">
                                             </label>
                                         </td>
-                                        <td>{{key.finish_time}}</td>
+                                        <td>{{key.expected_finish_time}}</td>
                                         <td>{{key.function_name}}</td>
                                         <td>{{key.requirement_description}}</td>
                                         <td>{{key.applicant_name}}</td>
