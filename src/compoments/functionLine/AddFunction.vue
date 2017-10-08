@@ -223,12 +223,17 @@
 
 //            部门搜索
             selectDateSend(val){
-                this.proposer = val.staff[0].name;
-                this.proposer_id = val.staff[0].id;
-                this.$http.get('finance/staff_info/' + val.staff[0].id).then((res) => {
-                    this.department = res.data.data.departmnet_name;
-                    this.department_id = res.data.data.department_id;
-                })
+//                console.log(val.staff.length)
+                if (val.staff.length!=0){
+                    this.proposer = val.staff[0].name;
+                    this.proposer_id = val.staff[0].id;
+                    this.$http.get('finance/staff_info/' + val.staff[0].id).then((res) => {
+                        this.department = res.data.data.departmnet_name;
+                        this.department_id = res.data.data.department_id;
+                    })
+                }
+
+
             },
         }
     }
