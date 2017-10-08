@@ -23,9 +23,9 @@
 
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="业务员姓名" v-model="keySearch"
-                                   @keydown.enter.prevent="search(fun.tabs, 1)">
+                                   @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(fun.tabs, 1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
                         <div class="pull-right">
@@ -113,7 +113,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <tr class="text-center" v-if="isShow2">
+                                    <tr class="text-center" v-if="isShow">
                                         <td colspan="12" style="font-size: 22px;">暂无数据......</td>
                                     </tr>
                                     </tbody>
@@ -157,7 +157,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <tr class="text-center" v-if="isShow1">
+                                    <tr class="text-center" v-if="isShow">
                                         <td colspan="6" style="font-size: 22px;">暂无数据......</td>
                                     </tr>
                                     </tbody>
@@ -215,8 +215,7 @@
         components: {DatePicker, STAFF, Page, Confirm, AddFunction, Status},
         data (){
             return {
-                isShow1: false,
-                isShow2: false,
+                isShow: false,
                 line_list: [],
                 fun_detail: {},                 //排期编辑
                 fun: {
@@ -257,22 +256,45 @@
             }
         },
         mounted (){
-            this.fun_line(2, 1);
+            this.fun_line(1);
         },
         methods: {
             empty_tab (val){
                 this.keySearch = '';
                 this.selected = [];
                 this.department_id = [];
-                this.fun_line(val, 1);
+                this.currentDate = [];
+                this.fun.tabs = val;
+                this.fun_line(1);
             },
 //            列表
-            fun_line (val, page){
+            fun_line (page){
                 this.beforePage = page;
-                this.fun.tabs = val;
                 this.paging = '';
                 this.pitch = [];
-                if (val === 2) {
+
+                this.$http.post('code/Functional_Schedule/index', {
+                    status: this.fun.tabs,
+                    start: this.start_time,
+                    end: this.end_time,
+                    department_id: this.department_id,
+                    keywords: this.keySearch,
+                    page: this.beforePage
+                }).then((res) => {
+                    if (res.data.code === '30010') {
+                        this.line_list = res.data.data.list;
+                        console.log(this.line_list)
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.line_list = [];
+                        this.paging = 1;
+                        this.beforePage = 1;
+                        this.isShow = true;
+                    }
+                });
+
+                /*if (val === 2) {
                     this.$http.post('code/Functional_Schedule/index', {
                         status: val,
                         start: this.start_time,
@@ -301,7 +323,7 @@
                     }).then((res) => {
                         this.line_list = res.data.data.list
                     });
-                }
+                }*/
             },
 //            新增排期
             add_fun (){
@@ -342,7 +364,7 @@
             },
 //            搜索
             search (val){
-                this.fun_line(val, 1)
+                this.fun_line(val)
             },
             line_search (){
 
@@ -354,7 +376,7 @@
                     this.start_time = data.split('to')[0];
                     this.end_time = data.split('to')[1];
                 }
-                this.search(this.fun.tabs, 1);
+                this.search(1);
             },
 
 //            部门搜索
@@ -369,7 +391,7 @@
                     this.selected.push(val.department[i].name);
                     this.department_id.push(val.department[i].id);
                 }
-                this.search(this.fun.tabs, 1);
+                this.search(1);
             },
 
 //            重置部门搜索
@@ -379,7 +401,7 @@
                 }
                 this.department_id = [];
                 this.selected = [];
-                this.search(this.fun.tabs, 1);
+                this.search(1);
             },
 
 //            选中

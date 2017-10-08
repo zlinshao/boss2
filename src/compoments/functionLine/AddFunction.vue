@@ -208,6 +208,7 @@
                 this.proposer_id = '';              //申请人ID
                 this.department = '';               //申请部门
                 this.department_id = '';            //申请部门ID
+                this.currentDate = [];              // 结束时间
             },
 
 //            日期搜索
