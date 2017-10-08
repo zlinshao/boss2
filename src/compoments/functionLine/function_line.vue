@@ -287,7 +287,7 @@
                 }).then((res) => {
                     if (res.data.code === '30010') {
                         this.line_list = res.data.data.list;
-                        console.log(this.line_list)
+//                        console.log(this.line_list)
                         this.paging = res.data.data.pages;
                         this.isShow = false;
                     } else {
