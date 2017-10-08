@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="keySearch"
+                            <input type="text" class="form-control" placeholder="任务名称/申请人" v-model="keySearch"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
