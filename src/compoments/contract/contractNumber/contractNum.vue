@@ -199,8 +199,8 @@
                                     </label>
                                 </td>
                                 <td>{{item.paid_time}}</td>
-                                <td>{{item.zf_numbers}}</td>
                                 <td>{{item.sf_numbers}}</td>
+                                <td>{{item.zf_numbers}}</td>
                                 <td>{{item.paid_name}}</td>
                                 <td>{{item.department_id[0]}}</td>
                                 <td>
