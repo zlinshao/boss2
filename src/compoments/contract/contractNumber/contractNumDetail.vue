@@ -57,8 +57,19 @@
                                 <div>
                                     <div class="text-primary" v-if="type==1">本次领取合同编号(收)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(收)：</div>
-                                    <div>
+                                    <div v-if="type==1">
                                         <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
+                                    </div>
+                                    <div v-if="type==3">
+                                        <div v-for="item in msg.sf">
+                                            <p>{{item.contract_number}}&emsp;房屋地址：{{item.address}}</p>
+                                            <p>(
+                                                <span v-if="item.delivery_receitp==1">交接单</span>
+                                                <span v-if="item.receipt==1">收条</span>
+                                                <span v-if="item.idcard_copy==1">身份证</span>
+                                                <span v-if="item.house_property==1">房产证复印件</span>
+                                                )</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--<div>
@@ -77,8 +88,17 @@
                                 <div>
                                     <div class="text-primary" v-if="type==1">本次领取合同编号(租)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(租)：</div>
-                                    <div>
+                                    <div v-if="type==1">
                                         <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
+                                    </div>
+                                    <div v-if="type==3">
+                                        <div v-for="item in msg.zf">
+                                            <p>{{item.contract_number}}&emsp;房屋地址：{{item.address}}</p>
+                                            <p>(
+                                                <span v-if="item.delivery_receitp==1">交接单</span>
+                                                <span v-if="item.receipt==1">收条</span>
+                                                )</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--<div>
@@ -160,7 +180,7 @@
                         this.public = this.msg.zf[0];
                     }
                 }
-                console.log(this.public)
+//                console.log(this.public)
             })
         },
         methods: {
