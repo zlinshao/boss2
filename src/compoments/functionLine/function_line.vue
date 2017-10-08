@@ -127,6 +127,7 @@
                                     <thead>
                                     <tr>
                                         <th></th>
+                                        <th class="text-center width100">创建日期</th>
                                         <th class="text-center width100">期望完成日期</th>
                                         <th class="text-center width100">功能名称</th>
                                         <th class="text-center width150">功能需求</th>
@@ -145,6 +146,7 @@
                                                        :checked="pitch.indexOf(key.id) > -1">
                                             </label>
                                         </td>
+                                        <td>{{key.create_time}}</td>
                                         <td>{{key.expected_finish_time}}</td>
                                         <td>{{key.function_name}}</td>
                                         <td>{{key.requirement_description}}</td>
