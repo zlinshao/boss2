@@ -392,8 +392,14 @@
 //            时间搜索
             getDate(val){
 //                console.log(val)
-                this.params.start = val.split('to')[0];
-                this.params.end = val.split('to')[1];
+                if (val!=''){
+                    this.params.start = val.split('to')[0];
+                    this.params.end = val.split('to')[1];
+                } else {
+                    this.params.start = '';
+                    this.params.end = '';
+                }
+
                 this.search(1);
             },
 

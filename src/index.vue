@@ -627,6 +627,7 @@
                         this.info.state_error = false;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
+                        this.close_();
                     } else {
                         this.info.error = res.data.msg;
                         //关闭失败弹窗 ***
@@ -641,6 +642,11 @@
                 this.fun_name = '';               //功能名称
                 this.end_time = '';               //期望结束时间
                 this.describe = '';               //需求描述
+//                this.proposer = '';               //申请人
+//                this.proposer_id = '';            //申请人ID
+//                this.department = '';             //申请部门
+//                this.department_id = '';          //申请部门ID
+                this.currentDate = [];
             },
 //            更多
             click_more (){
