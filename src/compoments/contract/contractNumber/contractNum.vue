@@ -119,7 +119,7 @@
                                 <td>{{item.department_id[0]}}</td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
-                                    query:{request_time:item.request_time,page:beforePage,myParams:params,select:selected}}"
+                                    query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}"
                                     >详情</router-link>
                                 </td>
                             </tr>
@@ -205,7 +205,7 @@
                                 <td>{{item.department_id[0]}}</td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
-                                    query:{request_time:item.request_time,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                    query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
@@ -323,6 +323,7 @@
                     if (res.data.code==30010){
                         // 成功
                         this.paging = res.data.data.pages;
+//                        console.log(this.paging)
 
                         this.myData = res.data.data.list;
                         this.isShow = false;
