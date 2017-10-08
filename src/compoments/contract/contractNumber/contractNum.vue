@@ -42,12 +42,12 @@
                 <div class="col-lg-12 remind" v-show="pitch.length === 1">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <!--<li>-->
-                        <!--<h5>
-                            <a><i class="fa fa-pencil"></i>&nbsp;编辑</a>
-                        </h5>-->
-                        <!--</li>-->
                         <!--<li>
+                        <h5>
+                            <a><i class="fa fa-pencil"></i>&nbsp;编辑</a>
+                        </h5>
+                        </li>
+                        <li>
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                         <li>
