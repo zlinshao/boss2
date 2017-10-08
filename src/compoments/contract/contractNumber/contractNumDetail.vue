@@ -62,12 +62,13 @@
                                     </div>
                                     <div v-if="type==3">
                                         <div v-for="item in msg.sf">
-                                            <p>{{item.contract_number}}&emsp;房屋地址：{{item.address}}</p>
+                                            <p>{{item.contract_number}}&emsp;房屋地址：{{item.address==''?'未填写':item.address}}</p>
                                             <p>(
                                                 <span v-if="item.delivery_receitp==1">交接单</span>
                                                 <span v-if="item.receipt==1">收条</span>
                                                 <span v-if="item.idcard_copy==1">身份证</span>
                                                 <span v-if="item.house_property==1">房产证复印件</span>
+                                                <span v-if="item.receipt==0&&item.delivery_receitp==0&&item.idcard_copy==0&&item.house_property==0">无</span>
                                                 )</p>
                                         </div>
                                     </div>
@@ -93,10 +94,11 @@
                                     </div>
                                     <div v-if="type==3">
                                         <div v-for="item in msg.zf">
-                                            <p>{{item.contract_number}}&emsp;房屋地址：{{item.address}}</p>
+                                            <p>{{item.contract_number}}&emsp;房屋地址：{{item.address==''?'未填写':item.address}}</p>
                                             <p>(
                                                 <span v-if="item.delivery_receitp==1">交接单</span>
                                                 <span v-if="item.receipt==1">收条</span>
+                                                <span v-if="item.receipt==0&&item.delivery_receitp==0">无</span>
                                                 )</p>
                                         </div>
                                     </div>

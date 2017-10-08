@@ -372,7 +372,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li :class="{'active': isActive == 'contractNum'}" @click='pitch_on("contractNum")'>
+                            <li :class="{'active': isActive == 'contractNum'}" @click='pitch_on("contractNum")' v-show="simulate.indexOf('ContractNumberRecord/index') > -1">
                                 <router-link to="/contractNum">
                                     <span>编号记录</span>
                                 </router-link>
