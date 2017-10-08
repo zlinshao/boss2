@@ -421,12 +421,15 @@
 </script>
 <style scoped>
     section.panel.has-js{
-        background-color: transparent;
+        /*background-color: transparent;*/
     }
     section.panel.has-js table{
-        background-color: white;
+        /*background-color: white;*/
     }
     .remind ul{
+        margin-bottom: 0;
+    }
+    .table {
         margin-bottom: 0;
     }
 </style>
