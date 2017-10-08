@@ -58,7 +58,7 @@
                                     <span>{{item.address}}</span>
                                 </div>
                                 <div>
-                                    <span class="text-primary">收房月数：</span>
+                                    <span class="text-primary">租房月数：</span>
                                     <span>{{item.months}}</span>
                                 </div>
                                 <div>

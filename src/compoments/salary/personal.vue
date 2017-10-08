@@ -41,7 +41,7 @@
                         <li><h5><a @click="personal_rev">编辑</a></h5></li>
                         <li>
                             <h5>
-                                <router-link :to="{path:'/personalDetail',query: {nameId: 1}}">
+                                <router-link :to="{path:'/personalDetail',query: {nameId: pitch}}">
                                     查看详情
                                 </router-link>
                             </h5>
@@ -66,9 +66,7 @@
                     <td class="width100">底薪</td>
                     <td class="width80">业绩提成</td>
                     <td class="width100">收房奖励</td>
-                    <td class="width100">未发比例</td>
                     <td class="width80">租房奖励</td>
-                    <td class="width80">未发比例</td>
                     <td class="width80">扣款</td>
                     <td class="width80">过往未发工资</td>
                     <td class="width80">套餐类型</td>
@@ -80,15 +78,11 @@
                 <tr class="text-center">
                     <td>
                         <div>{{item.staff_name}}</div>
-                        <div>组长</div>
-                        <div>苏州一区二组</div>
                     </td>
                     <td>{{item.base}}</td>
                     <td>{{item.commission}}</td>
                     <td>{{item.bonus_collect}}</td>
-                    <td>{{item.commission}}</td>
                     <td>{{item.bonus_rent}}</td>
-                    <td>{{item.commission}}</td>
                     <td>{{item.deduction}}</td>
                     <td>{{item.history_rc}}</td>
                     <td>{{dict.package[item.package]}}</td>
@@ -101,7 +95,7 @@
                 </tr>
                 </tbody>
             </table>
-            <table class="table table-advance table-hover" style="border: 0;">
+            <table class="table table-advance table-hover" style="border: 0;" v-if="isShow">
                 <tbody class="text-center">
                 <tr class="text-center" style="font-size: 24px;">
                     暂无数据......
@@ -137,7 +131,7 @@
                 pitch: [],
                 dict: {},
                 salary: [],
-                isShow: true,
+                isShow: false,
                 dateConfigure: [
                     {
                         range: true,            //日期组件参数
@@ -145,11 +139,10 @@
                     }
                 ],
                 configure: {},                  //部门组件参数
-                selected: [],                   //部门搜索
+                selected: '',                   //部门搜索
                 currentDate: [],                //日期组件参数
                 params: {
-                    department_id: [],
-                    staff_id: [],
+                    department_id: '',
                     range: '',
                     search: '',
                     page: 1,
@@ -172,12 +165,19 @@
 
                     this.beforePage = val;
                     this.paging = '';
+                    this.salary = [];
                     this.pitch = [];
-                    this.$http.get('salary/view').then((res) => {
-                        this.salary = res.data.data.data;
+                    this.$http.get('salary/view', {
+                        params: this.params
+                    }).then((res) => {
+                        if(res.data.code === '70010'){
+                            this.salary = res.data.data.data;
+                            this.isShow = false;
+                        }else{
+                            this.isShow = true;
+                        }
                     })
                 });
-
             },
 
 //            搜索
@@ -194,30 +194,22 @@
 //            部门搜索
             select(){
                 $('.selectCustom:eq(0)').modal({backdrop: 'static',});
-                this.configure = {type: 'department'};
+                this.configure = {type: 'department',length: 1};
             },
 
 //            部门搜索
             selectDateSend(val){
                 for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
-                }
-                for (let j = 0; j < val.staff.length; j++) {
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
+                    this.selected = val.department[i].name;
+                    this.params.department_id = val.department[i].id
                 }
                 this.search(1);
             },
 
 //            重置部门搜索
             clearSelect(){
-                if (this.selected.length === 0) {
-                    return;
-                }
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
+                this.params.department_id = '';
+                this.selected = '';
                 this.search(1);
             },
 

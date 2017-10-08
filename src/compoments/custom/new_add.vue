@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Status :state='info'></Status>
+
         <!--客户 新增/编辑-->
         <div class="modal fade full-width-modal-right" id="customModel" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -283,6 +283,8 @@
 
         <!--国家-->
         <Country @nation="nation"></Country>
+
+        <Status :state='info'></Status>
     </div>
 </template>
 

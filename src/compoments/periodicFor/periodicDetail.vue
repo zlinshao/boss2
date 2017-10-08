@@ -12,7 +12,7 @@
                 <div v-if="pitch.length == 0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <select class="form-control" v-for="key in dict" v-model="params.typical"
+                            <select class="form-control" v-model="params.typical"
                                     @change="search(1)">
                                 <option value="">全部</option>
                                 <option v-for="(list,index) in dict.typical" :value="index">{{list}}</option>
