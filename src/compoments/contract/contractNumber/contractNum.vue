@@ -53,7 +53,7 @@
                         <li>
                             <h5>
                                 <a><i class="fa fa-star"></i>&nbsp;标记</a>
-                                <a><i class="fa fa-star"></i>&nbsp;取消标记</a>
+                                <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
                             </h5>
                         </li>
                     </ul>
@@ -86,7 +86,7 @@
 
                     <!--领取-->
                     <div class="tab-pane" id="receive" :class="{'active': params.type === 1}">
-                        <table class="table table-advance table-hover">
+                        <table class="table table-advance table-hover table-striped">
                             <thead>
                             <tr>
                                 <th class="text-center"></th>
@@ -131,7 +131,7 @@
                     </div>
                     <!--作废-->
                     <div class="tab-pane" id="void" :class="{'active': params.type === 2}">
-                        <table class="table table-advance table-hover">
+                        <table class="table table-advance table-hover table-striped">
                             <thead>
                             <tr>
                                 <th class="text-center"></th>
@@ -174,7 +174,7 @@
                     </div>
                     <!--上缴-->
                     <div class="tab-pane" id="turnOver" :class="{'active': params.type === 3}">
-                        <table class="table table-advance table-hover">
+                        <table class="table table-advance table-hover table-striped">
                             <thead>
                             <tr>
                                 <th class="text-center"></th>
@@ -205,7 +205,7 @@
                                 <td>{{item.department_id[0]}}</td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
-                                    query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                    query:{request_time:item.paid_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
@@ -420,5 +420,16 @@
     }
 </script>
 <style scoped>
-
+    section.panel.has-js{
+        background-color: transparent;
+    }
+    section.panel.has-js table{
+        background-color: white;
+    }
+    /*section.panel.has-js .table-striped>tbody>tr:nth-of-type(odd){
+        background-color: #f9f9f9;
+    }
+    section.panel.has-js .table-striped>tbody>tr:nth-of-type(even){
+        background-color: white;
+    }*/
 </style>
