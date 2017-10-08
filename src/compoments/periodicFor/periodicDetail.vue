@@ -110,7 +110,12 @@
                                         <td>{{item.vacancy}}</td>
                                         <td>2000</td>
                                         <td>{{item.achv_real}}</td>
-                                        <td>{{item.achv_overflow}}</td>
+                                        <td @mouseenter="enter_overflow(item.id)"
+                                            @mouseleave="enter_overflow('')" style="cursor: pointer;">
+                                            {{item.achv_overflow}}<br>
+                                            <span style="color: #aaaaaa;"
+                                                  v-if="item.id == isActive">{{item.achv_overflow_full}}</span>
+                                        </td>
                                         <td>{{item.staff_name}}</td>
                                         <td>{{item.district.name}}</td>
                                         <td>
@@ -184,6 +189,7 @@
         components: {DatePicker, STAFF, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit},
         data (){
             return {
+                isActive: '',
                 simple_status: '',              //选择充公状态
                 revise_info: {},                //编辑
                 dict: {},
@@ -220,6 +226,9 @@
             this.personalList(1);
         },
         methods: {
+            enter_overflow (val){
+                this.isActive = val;
+            },
 //            切换标签页清空
             changing_over (){
                 this.pitch = [];
@@ -330,9 +339,9 @@
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
-                if(simple === null){
+                if (simple === null) {
                     this.simple_status = 1;
-                }else{
+                } else {
                     this.simple_status = '';
                 }
                 if (evInput.checked) {

@@ -541,6 +541,20 @@
                                                      :result="'handoverPic'" :idPhotos="handoverPic"></up-load>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label">退租交接单</label>
+                                        <div class="col-lg-10">
+                                            <up-load @photo="retreatHandoverPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'retreatHandoverPic'" :idPhotos="retreatHandoverPic"></up-load>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-lg-2 control-label">退组结算单</label>
+                                        <div class="col-lg-10">
+                                            <up-load @photo="retreatBalancePicId" @delete="picDelete" @complete="complete"
+                                                     :result="'retreatBalancePic'" :idPhotos="retreatBalancePic"></up-load>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                     </div>
@@ -607,26 +621,36 @@
                     cus_idPhoto : [],     //交接单照片
                 },
                 handoverPic : {
-                    cus_idPhotos : {},    //j交接单
+                    cus_idPhotos : {},    //交接单
+                    cus_idPhoto : [],     //
+                },
+                retreatHandoverPic : {
+                    cus_idPhotos : {},    //退出交接单
+                    cus_idPhoto : [],     //
+                },
+                retreatBalancePic : {
+                    cus_idPhotos : {},    //退出结算单
                     cus_idPhoto : [],     //
                 },
                 relative_customer : [],
                 contractEdit : {
                     id:'',
-                    relative_customer_id:[],//客户id
-                    contract_num:'',        //合同编号
-                    start_date:'',          //合同开始日期
-                    end_date:'',            //合同结束日期
-                    complete_date:'',       //资料补齐时间
-                    remarks:'',             //备注信息
-                    contract_pic:[],        //合同照片
-                    water_card_pic:[],      //水卡照片
-                    elec_card_pic:[],       //电卡照片
-                    gas_card_pic:[],        //燃气卡卡照片
-                    receipt_pic:[],         //押金收条
-                    handover_pic:[],        //交接单照片
+                    relative_customer_id:[],    //客户id
+                    contract_num:'',            //合同编号
+                    start_date:'',              //合同开始日期
+                    end_date:'',                //合同结束日期
+                    complete_date:'',           //资料补齐时间
+                    remarks:'',                 //备注信息
+                    contract_pic:[],            //合同照片
+                    water_card_pic:[],          //水卡照片
+                    elec_card_pic:[],           //电卡照片
+                    gas_card_pic:[],            //燃气卡卡照片
+                    receipt_pic:[],             //押金收条
+                    handover_pic:[],            //交接单照片
+                    surrender_order_pic:[],     //退出交接单照片
+                    refund_form_pic:[],         //退出结算单照片
 
-                    payment_pic :[],        //转账凭证
+                    payment_pic :[],            //转账凭证
 
                     villa_id: '',
                     customer_id: '',
@@ -810,6 +834,13 @@
                         this.paymentPic.cus_idPhotos = [];
                         this.paymentPic.cus_idPhoto = [];
                         this.contractEdit.payment_pic = [];
+                        this.contractEdit.surrender_order_pic = [];
+                        this.retreatHandoverPic.cus_idPhotos = {};
+                        this.retreatHandoverPic.cus_idPhoto = [];
+
+                        this.contractEdit.refund_form_pic = [];
+                        this.retreatBalancePic.cus_idPhotos = {};
+                        this.retreatBalancePic.cus_idPhoto = [];
 
                         let contractList =res.data.data;
                         this.contractEdit.id = contractList.id; //合同id
@@ -838,22 +869,22 @@
                                 this.handoverPic.cus_idPhoto.push(i);
                                 this.contractEdit.handover_pic.push(i);
                             }
-                            this.receiptPic.cus_idPhotos = contractList.album.receipt_pic;                    //修改图片ID
+                            this.receiptPic.cus_idPhotos = contractList.album.receipt_pic;          //修改图片ID
                             for (let i in this.receiptPic.cus_idPhotos) {
                                 this.receiptPic.cus_idPhoto.push(i);
                                 this.contractEdit.receipt_pic.push(i);
                             }
-                            this.waterPic.cus_idPhotos = contractList.album.water_card_pic;                    //修改图片ID
+                            this.waterPic.cus_idPhotos = contractList.album.water_card_pic;         //修改图片ID
                             for (let i in this.waterPic.cus_idPhotos) {
                                 this.waterPic.cus_idPhoto.push(i);
                                 this.contractEdit.water_card_pic.push(i);
                             }
-                            this.elePic.cus_idPhotos = contractList.album.elec_card_pic;                    //修改图片ID
+                            this.elePic.cus_idPhotos = contractList.album.elec_card_pic;            //修改图片ID
                             for (let i in this.elePic.cus_idPhotos) {
                                 this.elePic.cus_idPhoto.push(i);
                                 this.contractEdit.elec_card_pic.push(i);
                             }
-                            this.gasPic.cus_idPhotos = contractList.album.gas_card_pic;                    //修改图片ID
+                            this.gasPic.cus_idPhotos = contractList.album.gas_card_pic;             //修改图片ID
                             for (let i in this.gasPic.cus_idPhotos) {
                                 this.gasPic.cus_idPhoto.push(i);
                                 this.contractEdit.gas_card_pic.push(i);
@@ -864,10 +895,21 @@
                                 this.paymentPic.cus_idPhoto.push(i);
                                 this.contractEdit.payment_pic.push(i);
                             }
+
+                            this.retreatHandoverPic.cus_idPhotos = contractList.album.surrender_order_pic;
+                            for (let i in this.retreatHandoverPic.cus_idPhotos) {
+                                this.retreatHandoverPic.cus_idPhoto.push(i);
+                                this.contractEdit.surrender_order_pic.push(i);
+                            }
+                            this.retreatBalancePic.cus_idPhotos = contractList.album.refund_form_pic;
+                            for (let i in this.retreatBalancePic.cus_idPhotos) {
+                                this.retreatBalancePic.cus_idPhoto.push(i);
+                                this.contractEdit.refund_form_pic.push(i);
+                            }
                         }
                         this.staff = contractList.staff;
 
-                        this.contractEdit.staff_id = contractList.checkin_rent_id.staff_id;
+                        this.contractEdit.staff_id = contractList.staff_id;
 
 
                         // 清空
@@ -994,13 +1036,20 @@
             receiptPicId(val){      //获取成功上传转账凭证 id 数组
                 this.contractEdit.receipt_pic = val;
             },
-            certificatePicId(val){
+            certificatePicId(val){  //凭证截图
                 this.contractEdit.payment_pic = val;
+            },
+            retreatHandoverPicId (val){    //退租交接单
+                this.contractEdit.surrender_order_pic = val;
+            },
+            retreatBalancePicId (val){     //退租结算单
+                this.contractEdit.refund_form_pic = val;
             },
             //图片上传完成
             complete(val){          //监控上传进度
                 this.complete_ok = val;
             },
+
             //删除照片ID
             picDelete (val){
                 let contract = this.contractEdit.contract_pic.indexOf(val);
@@ -1042,7 +1091,14 @@
                 if (receipt > -1) {
                     this.contractEdit.receipt_pic.splice(receipt, 1);
                 }
-
+                let surrender_order = this.contractEdit.surrender_order_pic.indexOf(val);
+                if (surrender_order > -1) {
+                    this.contractEdit.surrender_order_pic.splice(surrender_order, 1);
+                }
+                let refund_form = this.contractEdit.refund_form_pic.indexOf(val);
+                if (refund_form > -1) {
+                    this.contractEdit.refund_form_pic.splice(refund_form, 1);
+                }
             },
             editContract(){
                 
