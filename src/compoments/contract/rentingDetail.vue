@@ -595,6 +595,20 @@
                                                  v-for="(img,index) in item.album.handover_pic">
                                         </span>
                                     </div>
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-1">退租交接单照片</span>
+                                        <span class="col-lg-11">
+                                            <img :src="img.small" @click="showLargePic('surrender_order_pic',index)"
+                                                 v-for="(img,index) in item.album.surrender_order_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
+                                        <span class="col-lg-1">退租结算照片</span>
+                                        <span class="col-lg-11">
+                                            <img :src="img.small" @click="showLargePic('refund_form_pic',index)"
+                                                 v-for="(img,index) in item.album.refund_form_pic">
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -694,17 +708,12 @@
         </div>
         <!--components-->
         <Transfer></Transfer>
-
         <Contract></Contract>
-
         <AddModal :operateFlag="type" :dictionary="dictionary"
                   :contractRenewList="contractRenewList" @Close="closeRenew"></AddModal>
-
-        <!--编辑租房合同-->
+        <!--编辑租房-->
         <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
-
         <PicModal :largePic="largePic"></PicModal>
-
         <Status :state='info'></Status>
         <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared"  @Compared="haveCompared"></Comparison>-->
 

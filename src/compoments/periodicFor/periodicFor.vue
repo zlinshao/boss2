@@ -30,17 +30,41 @@
                                         @click="search(remark_term.tabs, 1)">搜索</button>
                             </span>
                         </div>
-
+                        <div class="pull-right" style="margin-left: 10px;">
+                            <a class="btn btn-success" @click="time_choose">生成工资</a>
+                        </div>
                         <div class="pull-right">
                             <router-link class="btn btn-success" :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
                             </router-link>
                         </div>
                     </form>
                 </div>
-
+                <!--生成工资-->
+                <div role="dialog" class="modal fade bs-example-modal-sm" id="time_choose">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                                <h4 class="modal-title">月份选择</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <DatePicker :dateConfigure="dateConfigures" :currentDate="currentDates"
+                                                @sendDate="getDates" :idName="'code'"></DatePicker>
+                                </div>
+                            </div>
+                            <div class="modal-footer text-right">
+                                <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                                <button class="btn btn-primary btn-md" @click="generating_ok">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--选中-->
                 <div class="col-lg-12 remind" v-show="pitch.length > 0">
-                    <ul>
+                    <ul class="pull-left" style="margin-bottom: 0;">
                         <li>
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>
@@ -57,6 +81,9 @@
                         <!--<h5 @click="periodic_rev"><a>充公选择</a></h5>-->
                         <!--</li>-->
                     </ul>
+                    <div class="pull-right">
+                        <a class="btn btn-success" @click="time_choose">生成工资</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -288,6 +315,7 @@
         components: {DatePicker, STAFF, lookRemark, Page},
         data (){
             return {
+                generating: '',                     //月份选择
                 pitch: [],                          //选中ID
                 remark_info: [],                    //备注信息
                 targetId: [],                       //备注ID
@@ -321,6 +349,13 @@
                         needHour: false
                     }
                 ],
+                currentDates: [],                    //月份选择
+                dateConfigures: [
+                    {
+                        range: false,                //月份选择
+                        needHour: false
+                    }
+                ],
                 company: [],                        //公司
                 com_show: false,
                 area: [],                           //区域
@@ -337,6 +372,12 @@
             this.times();
         },
         methods: {
+//            月份选择
+            time_choose (){
+                this.generating = '';
+                this.currentDates = [];
+                $('#time_choose').modal({backdrop: 'static',});
+            },
 //            当月时间
             times (){
                 this.$http.get('periodic/current').then((res) => {
@@ -351,6 +392,16 @@
                 this.remark_term.range = data;
                 this.params.generate_date = data;
                 this.search(this.remark_term.tabs, 1);
+            },
+//            月份选择
+            getDates(data){
+                this.generating = data;
+            },
+//            生成工资
+            generating_ok (){
+                this.$http.get('salary/view/generate/' + this.generating).then((res) => {
+
+                })
             },
             search (val){
                 this.personalList(val, this.beforePage);
@@ -371,7 +422,7 @@
                 this.times();
             },
 //            列表
-            personalList ( val, page){
+            personalList (val, page){
                 this.pitch = [];
                 this.remark_term.tabs = val;
                 this.params.page = page;
@@ -521,7 +572,7 @@
 //            部门搜索
             select(){
                 $('.selectCustom:eq(0)').modal({backdrop: 'static',});
-                this.configure = {type: 'department',length: 1};
+                this.configure = {type: 'department', length: 1};
             },
 
 //            部门搜索
