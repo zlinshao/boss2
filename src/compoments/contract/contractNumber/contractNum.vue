@@ -47,7 +47,7 @@
                             <a><i class="fa fa-pencil"></i>&nbsp;编辑</a>
                         </h5>-->
                         <!--</li>-->
-                        <li>
+                        <!--<li>
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                         <li>
@@ -55,7 +55,7 @@
                                 <a><i class="fa fa-star"></i>&nbsp;标记</a>
                                 <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
                             </h5>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
