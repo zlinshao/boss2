@@ -124,13 +124,13 @@
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{item.account_name}}</td>
                             <td>{{item.account_num}}</td>
-                            <td @mouseenter="enter_payable(item.id)" @mouseleave="leave_payable" style="cursor: pointer;">
+                            <td @mouseenter="enter_payable(item.id)" @mouseleave="enter_payable('')" style="cursor: pointer;">
                                 {{item.amount_received}}<br>
                                 <span v-if="item.id === isActive" style="color: #aaaaaa;">
                                     应收:&nbsp;{{item.amount_receivable}}
                                 </span>
                             </td>
-                            <td @mouseenter="enter_payable(item.id)" @mouseleave="leave_payable" style="cursor: pointer;">
+                            <td @mouseenter="enter_payable(item.id)" @mouseleave="enter_payable('')" style="cursor: pointer;">
                                 {{item.amount_paid}}<br>
                                 <span v-if="item.id === isActive" style="color: #aaaaaa;">
                                     应付:&nbsp;{{item.amount_payable}}
@@ -227,9 +227,6 @@
             },
             enter_payable (val){
                 this.isActive = val;
-            },
-            leave_payable (){
-                this.isActive = '';
             },
 //            房款科目
             houseSubject(val){

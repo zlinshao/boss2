@@ -52,41 +52,49 @@
         </section>
 
         <section class="panel table table-responsive roll has-js" style="padding: 16px;">
-            <table class="table table-advance table-hover" v-for="item in 4">
+            <table class="table table-advance table-hover" v-for="item in salary">
                 <tbody class="text-center">
                 <tr class="text-center">
                     <td rowspan="2">
-                        <label :class="{'label_check':true,'c_on':pitch.indexOf(item) > -1,
-                        'c_off':pitch.indexOf(item)==-1}" @click.prevent="pitchId(item, $event)">
+                        <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
+                        'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event)">
                             <input type="checkbox" class="pull-left"
-                                   :checked="pitch.indexOf(item) > -1">
+                                   :checked="pitch.indexOf(item.id) > -1">
                         </label>
                     </td>
-                    <td class="width100">{{item}}月工资</td>
+                    <td class="width100">月工资</td>
                     <td class="width100">底薪</td>
-                    <td class="width80">补助</td>
                     <td class="width80">业绩提成</td>
-                    <td class="width100">空置期奖励</td>
-                    <td class="width100">价格差奖励</td>
-                    <td class="width80">年限奖励</td>
+                    <td class="width100">收房奖励</td>
+                    <td class="width100">未发比例</td>
+                    <td class="width80">租房奖励</td>
+                    <td class="width80">未发比例</td>
+                    <td class="width80">扣款</td>
+                    <td class="width80">过往未发工资</td>
                     <td class="width80">套餐类型</td>
-                    <td class="width80">共计</td>
+                    <td class="width80">应发工资</td>
+                    <td class="width80">实发工资</td>
+                    <td class="width80">工资状态</td>
                     <td class="width50">备注</td>
                 </tr>
                 <tr class="text-center">
                     <td>
-                        <div>吕哲哲</div>
+                        <div>{{item.staff_name}}</div>
                         <div>组长</div>
                         <div>苏州一区二组</div>
                     </td>
-                    <td>3000</td>
-                    <td>/</td>
-                    <td>1000</td>
-                    <td>/</td>
-                    <td>/</td>
-                    <td>/</td>
-                    <td>鸡腿包</td>
-                    <td>4900</td>
+                    <td>{{item.base}}</td>
+                    <td>{{item.commission}}</td>
+                    <td>{{item.bonus_collect}}</td>
+                    <td>{{item.commission}}</td>
+                    <td>{{item.bonus_rent}}</td>
+                    <td>{{item.commission}}</td>
+                    <td>{{item.deduction}}</td>
+                    <td>{{item.history_rc}}</td>
+                    <td>{{dict.package[item.package]}}</td>
+                    <td>{{item.amount_due}}</td>
+                    <td>{{item.amount_actual}}</td>
+                    <td>{{dict.salary_status[item.status]}}</td>
                     <td>
                         <i class="fa fa-book" @click="lookRemark()"></i>
                     </td>
@@ -127,6 +135,8 @@
         data (){
             return {
                 pitch: [],
+                dict: {},
+                salary: [],
                 isShow: true,
                 dateConfigure: [
                     {
@@ -142,8 +152,9 @@
                     staff_id: [],
                     range: '',
                     search: '',
+                    page: 1,
                 },
-                paging: 3,                      //总页数
+                paging: '',                     //总页数
                 beforePage: 1,                  //当前页
                 addRemark: '',                  //新增备注
                 personalRem: '',                //备注对象
@@ -156,12 +167,17 @@
         methods: {
 //            列表
             personalList (val){
-                this.beforePage = val;
-//                this.paging = '';
-                this.pitch = [];
-//                this.$http.get('').then((res) => {
-//
-//                })
+                this.$http.get('salary/Commission/dict').then((res) => {
+                    this.dict = res.data;
+
+                    this.beforePage = val;
+                    this.paging = '';
+                    this.pitch = [];
+                    this.$http.get('salary/view').then((res) => {
+                        this.salary = res.data.data.data;
+                    })
+                });
+
             },
 
 //            搜索

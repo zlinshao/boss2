@@ -641,10 +641,6 @@
                 this.fun_name = '';               //功能名称
                 this.end_time = '';               //期望结束时间
                 this.describe = '';               //需求描述
-                this.proposer = '';               //申请人
-                this.proposer_id = '';            //申请人ID
-                this.department = '';             //申请部门
-                this.department_id = '';          //申请部门ID
             },
 //            更多
             click_more (){
