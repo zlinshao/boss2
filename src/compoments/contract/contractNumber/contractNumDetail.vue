@@ -13,9 +13,9 @@
         <section class="panel head">
             <div class="panel-body">
                 <div>
-                    <span v-show="public.type===1">领取合同</span>
-                    <span v-show="public.type===2">作废合同</span>
-                    <span v-show="public.type===3">上缴合同</span>
+                    <span v-if="type==1">领取合同</span>
+                    <span v-if="type==2">作废合同</span>
+                    <span v-if="type==3">上缴合同</span>
                 </div>
             </div>
         </section>
@@ -24,9 +24,9 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        <span v-show="public.type===1">领取详情</span>
-                        <span v-show="public.type===2">作废详情</span>
-                        <span v-show="public.type===3">上缴详情</span>
+                        <span v-if="type==1">领取详情</span>
+                        <span v-if="type==2">作废详情</span>
+                        <span v-if="type==3">上缴详情</span>
                         <!--编辑-->
                         <!--<div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
@@ -43,18 +43,20 @@
                         <div class="col-md-12">
                             <div class="col-md-6">
                                 <div>
-                                    <div class="text-primary" v-if="public.type===1">领取日期：</div>
-                                    <div class="text-primary" v-if="public.type===2">作废日期：</div>
-                                    <div class="text-primary" v-if="public.type===3">上缴日期：</div>
-                                    <div v-if="public.type===1">{{public.receiver_time}}</div>
-                                    <div v-if="public.type===3">{{public.paid_time}}</div>
+                                    <div class="text-primary" v-if="type==1">领取日期：</div>
+                                    <div class="text-primary" v-if="type==2">作废日期：</div>
+                                    <div class="text-primary" v-if="type==3">上缴日期：</div>
+                                    <div v-if="type==1">{{public.receiver_time}}</div>
+                                    <div v-if="type==3">{{public.paid_time}}</div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">领取合同数(收)：</div>
+                                    <div class="text-primary" v-if="type==1">领取合同数(收)：</div>
+                                    <div class="text-primary" v-if="type==3">上缴合同数(收)：</div>
                                     <div>{{msg.num[0].sf_numbers}}</div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">本次领取合同编号(收)：</div>
+                                    <div class="text-primary" v-if="type==1">本次领取合同编号(收)：</div>
+                                    <div class="text-primary" v-if="type==3">本次上缴合同编号(收)：</div>
                                     <div>
                                         <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
                                     </div>
@@ -68,11 +70,13 @@
                                     <span>asdasd</span>
                                 </div>-->
                                 <div>
-                                    <div class="text-primary">领取合同数(租)：</div>
+                                    <div class="text-primary" v-if="type==1">领取合同数(租)：</div>
+                                    <div class="text-primary" v-if="type==3">上缴合同数(租)：</div>
                                     <div>{{msg.num[0].zf_numbers}}</div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">本次领取合同编号(租)：</div>
+                                    <div class="text-primary" v-if="type==1">本次领取合同编号(租)：</div>
+                                    <div class="text-primary" v-if="type==3">本次上缴合同编号(租)：</div>
                                     <div>
                                         <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
                                     </div>
@@ -88,7 +92,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div>
-                                    <div class="text-primary">领取人：</div>
+                                    <div class="text-primary" v-if="type==1">领取人：</div>
+                                    <div class="text-primary" v-if="type==3">上缴人：</div>
                                     <div>{{public.receiver_name}}</div>
                                 </div>
                                 <div>
@@ -141,11 +146,12 @@
             this.request_time = this.$route.query.request_time;
             this.type = this.$route.query.type;
 //            console.log(this.request_time);
+//            console.log(this.type);
             this.$http.post('code/Contract_Number_Record/showDetail',{
                 request_time : this.request_time,
                 type : this.type
             }).then((res)=>{
-                console.log(res.data)
+//                console.log(res.data)
                 if (res.data.code==30070){
                     this.msg = res.data.data;
                     if (this.msg.sf.length>0){
