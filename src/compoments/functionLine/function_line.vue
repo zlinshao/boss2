@@ -269,7 +269,9 @@
             },
 //            列表
             fun_line (page){
-                this.beforePage = page;
+                if (page!=undefined){
+                    this.beforePage = page;
+                }
                 this.paging = '';
                 this.pitch = [];
 
@@ -375,6 +377,9 @@
                 if (data !== '') {
                     this.start_time = data.split('to')[0];
                     this.end_time = data.split('to')[1];
+                } else {
+                    this.start_time = '';
+                    this.end_time = '';
                 }
                 this.search(1);
             },
