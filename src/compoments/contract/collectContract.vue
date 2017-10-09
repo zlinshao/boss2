@@ -64,6 +64,10 @@
                                     simulate.indexOf('core/area') == -1 && simulate.indexOf('core/up_contract') == -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
                             </button>
+                            <!--<button class="btn btn-primary" @click="collectAdd"
+                                    :disabled="simulate.indexOf('Collect/saveContract') == -1">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
+                            </button>-->
                         </div>
                         <div class="pull-right pro-sort" style="margin: 8px">
                             <router-link :to="{path:'/Memorandum',query: {flag: 'collect'}}" class="btn btn-primary">
