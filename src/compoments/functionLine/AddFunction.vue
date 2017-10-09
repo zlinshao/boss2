@@ -200,6 +200,7 @@
 
 //            清空内容
             clear_content (){
+                this.line_id = '';
                 this.fun_name = '';                 //功能名称
                 this.end_time = '';                 //结束时间
                 this.fore_end = '';                 //前端
