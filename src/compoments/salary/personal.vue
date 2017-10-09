@@ -39,13 +39,6 @@
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>
                         <li><h5><a @click="personal_rev">编辑</a></h5></li>
-                        <li>
-                            <h5>
-                                <router-link :to="{path:'/personalDetail',query: {nameId: pitch}}">
-                                    查看详情
-                                </router-link>
-                            </h5>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -74,6 +67,7 @@
                     <td class="width80">实发工资</td>
                     <td class="width80">工资状态</td>
                     <td class="width50">备注</td>
+                    <td class="width50">详情</td>
                 </tr>
                 <tr class="text-center">
                     <td>
@@ -91,6 +85,11 @@
                     <td>{{dict.salary_status[item.status]}}</td>
                     <td>
                         <i class="fa fa-book" @click="lookRemark()"></i>
+                    </td>
+                    <td>
+                        <router-link :to="{path:'/personalDetail',query: {nameId: item.id}}">
+                            详情
+                        </router-link>
                     </td>
                 </tr>
                 </tbody>
@@ -164,6 +163,7 @@
                     this.dict = res.data;
 
                     this.beforePage = val;
+                    this.params.page = val;
                     this.paging = '';
                     this.salary = [];
                     this.pitch = [];
@@ -172,6 +172,7 @@
                     }).then((res) => {
                         if(res.data.code === '70010'){
                             this.salary = res.data.data.data;
+                            this.paging = res.data.data.pages;
                             this.isShow = false;
                         }else{
                             this.isShow = true;

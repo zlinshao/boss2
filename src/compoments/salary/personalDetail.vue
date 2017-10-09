@@ -108,7 +108,7 @@
                             </header>
                             <!--过往未发工资明细-->
                             <table class="table table-advance table-hover">
-                                <tbody class="text-center">
+                                <thead class="text-center">
                                 <tr class="vertical">
                                     <th></th>
                                     <th class="text-center width80">收租状态</th>
@@ -130,10 +130,13 @@
                                     <th class="text-center width50">备注</th>
                                     <th class="text-center width50">编辑</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr class="text-center" v-for="item in salaryDetail">
                                     <td>
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                                    'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event, item.simple_cells)">
+                                    'c_off':pitch.indexOf(item.id)==-1}"
+                                               @click.prevent="pitchId(item.id, $event, item.simple_cells)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -168,7 +171,8 @@
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="item.simple_cells.length == 5">
+                                    <td v-if="item.simple_cells.length == 5"
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
                                          <span v-if="portion_show == 2" v-for="key in item.simple_cells"
                                                :class="{'deduct_marks': key.status == 1}"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
@@ -195,7 +199,7 @@
                             </header>
                             <!--本月工资明细-->
                             <table class="table table-advance table-hover has-js">
-                                <tbody class="text-center">
+                                <thead class="text-center">
                                 <tr class="vertical">
                                     <th></th>
                                     <th class="text-center width80">收租状态</th>
@@ -217,10 +221,13 @@
                                     <th class="text-center width50">备注</th>
                                     <th class="text-center width50">编辑</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr class="text-center" v-for="item in salaryDetail">
                                     <td>
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                                    'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event, item.simple_cells)">
+                                    'c_off':pitch.indexOf(item.id)==-1}"
+                                               @click.prevent="pitchId(item.id, $event, item.simple_cells)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -255,9 +262,9 @@
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="item.simple_cells.length == 5">
+                                    <td v-if="item.simple_cells.length == 5"
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
                                          <span v-if="portion_show == 2" v-for="key in item.simple_cells"
-                                               :class="{'deduct_marks': key.status == 1}"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
                                     <td v-else>
@@ -291,9 +298,11 @@
                         <h4 class="modal-title" style="border: 0;">提示信息</h4>
                     </div>
                     <div class="modal-body has-js clearfix">
-                        <div v-for="item in simple_cells" v-if="item.status == 2" class="pull-left" style="margin-right: 15px;">
+                        <div v-for="item in simple_cells" v-if="item.status == 2" class="pull-left"
+                             style="margin-right: 15px;">
                             <label :class="{'label_check':true,'c_on':cell_pitch.indexOf(item.id) > -1,
-                                    'c_off':cell_pitch.indexOf(item.id)==-1}" @click.prevent="cell_pitchId(item.id, $event)">
+                                    'c_off':cell_pitch.indexOf(item.id)==-1}"
+                                   @click.prevent="cell_pitchId(item.id, $event)">
                                 <input type="checkbox" class="pull-left"
                                        :checked="cell_pitch.indexOf(item.id) > -1">{{dict.cell_category[item.category]}}
                             </label>
@@ -447,10 +456,10 @@
             },
 //            确定已发
             cell_ok (){
-                this.$http.post('achv/cell/settle/' + this.pitch,{
+                this.$http.post('achv/cell/settle/' + this.pitch, {
                     ids: this.cell_pitch
                 }).then((res) => {
-                    if(res.data.code === '70000'){
+                    if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');
                         this.personal(this.personal_id, this.tabs);
                         this.info.success = res.data.msg;
