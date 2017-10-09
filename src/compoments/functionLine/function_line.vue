@@ -436,7 +436,7 @@
                     id: this.pitch
                 }).then((res) => {
                     if (res.data.code === '30090') {
-                        this.fun_line(this.fun.tabs, 1);
+                        this.fun_line(1);
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
                         this.info.state_success = true;
