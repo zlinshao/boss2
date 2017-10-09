@@ -267,6 +267,8 @@
                 this.keySearch = '';
                 this.selected = [];
                 this.department_id = [];
+                this.start_time = '';
+                this.end_time = '';
                 this.currentDate = [];
                 this.fun.tabs = val;
                 this.fun_line(1);
