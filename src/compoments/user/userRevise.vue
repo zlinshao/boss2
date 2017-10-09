@@ -178,7 +178,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <!--<div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">用户组</label>
                                         <div class="col-lg-10">
                                             <label class="checkbox-inline check first" v-for="item in roleList"  v-if="item.module !== 'revenue'">
@@ -186,7 +186,7 @@
                                                        @click="roles" v-model="checkboxModel"
                                                 > {{item.role}}
                                             </label>
-                                            <!--财务权限-->
+                                            &lt;!&ndash;财务权限&ndash;&gt;
                                             <h5 class="financeRole" v-if="isFinance">组长报备</h5>
                                             <label class="checkbox-inline check first" v-for="item in roleList"
                                                    v-if="item.module === 'revenue' && item.child_module === 'CheckinCollect' ">
@@ -229,13 +229,13 @@
                                                        @click="roles" v-model="checkboxModel"
                                                 > {{item.role}}
                                             </label>
-                                            <!--<h5>收支流水</h5>-->
-                                            <!--<label class="checkbox-inline check first" v-for="item in roleList"-->
-                                                   <!--v-if="item.module === 'revenue' && item.child_module === 'CheckinCollect' ">-->
-                                                <!--<input type="checkbox" class="pull-left" :value="item.id"-->
-                                                       <!--@click="roles" v-model="checkboxModel"-->
-                                                <!--&gt; {{item.role}}-->
-                                            <!--</label>-->
+                                            &lt;!&ndash;<h5>收支流水</h5>&ndash;&gt;
+                                            &lt;!&ndash;<label class="checkbox-inline check first" v-for="item in roleList"&ndash;&gt;
+                                                   &lt;!&ndash;v-if="item.module === 'revenue' && item.child_module === 'CheckinCollect' ">&ndash;&gt;
+                                                &lt;!&ndash;<input type="checkbox" class="pull-left" :value="item.id"&ndash;&gt;
+                                                       &lt;!&ndash;@click="roles" v-model="checkboxModel"&ndash;&gt;
+                                                &lt;!&ndash;&gt; {{item.role}}&ndash;&gt;
+                                            &lt;!&ndash;</label>&ndash;&gt;
                                             <h5 class="financeRole" v-if="isFinance">转账操作记录</h5>
                                             <label class="checkbox-inline check first" v-for="item in roleList"
                                                    v-if="item.module === 'revenue' && item.child_module === 'Transfer' ">
@@ -251,7 +251,7 @@
                                                 > {{item.role}}
                                             </label>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <hr>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >等级</label>

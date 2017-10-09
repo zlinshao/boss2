@@ -173,7 +173,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <!--<div class="row">
                                         <label class="col-sm-2 control-label col-lg-2">用户组</label>
                                         <div class="col-lg-10">
                                             <label class="checkbox-inline check first" v-for="item in roleList">
@@ -182,7 +182,7 @@
                                                 > {{item.role}}
                                             </label>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <hr>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >账号状态</label>
