@@ -582,7 +582,7 @@
     import SelectHouse from  '../common/selectHouse.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
-        props:['contractEitId','dictionary','isEditRent'],
+        props:['contractEitId','dictionary','isEditRent','simulate'],
         components:{
             SelectClient,
             upLoad,
