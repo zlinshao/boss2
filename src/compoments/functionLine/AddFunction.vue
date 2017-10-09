@@ -150,6 +150,7 @@
                 }
             },
             detail (val){
+                console.log(val);
                 this.line_id = val.id;
                 this.fun_name = val.function_name;                              //功能名称
                 this.end_time = val.finish_time;                                //结束时间
@@ -157,7 +158,7 @@
                 this.fore_end = val.front;                                      //前端
                 this.after_end = val.back;                                      //后端
                 this.produce = val.product;                                     //产品
-                this.proposer = val.applicant_name;                             //申请人
+                this.proposer = val.applicant_id[0].name;                             //申请人
                 this.proposer_id = val.applicant_id;                            //申请人ID
                 this.department = val.applicant_id[0].department[0].name;       //申请部门
                 this.department_id = val.applicant_id[0].department[0].id;      //申请部门ID
