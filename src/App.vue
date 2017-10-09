@@ -235,7 +235,7 @@
 <style scoped>
     #custom_ser {
         position: fixed;
-        bottom: 50px;
+        bottom: 60px;
         right: 10px;
         z-index: 100;
     }
