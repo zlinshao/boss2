@@ -64,8 +64,7 @@
                                     simulate.indexOf('core/area') == -1 && simulate.indexOf('core/up_contract') == -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
                             </button>
-                            <!--<button class="btn btn-primary" @click="collectAdd"
-                                    :disabled="simulate.indexOf('Collect/saveContract') == -1">
+                            <!--<button class="btn btn-primary" @click="collectAdd" v-show="simulate.indexOf('Collect/saveContract') > -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
                             </button>-->
                         </div>
