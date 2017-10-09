@@ -711,7 +711,7 @@
         <Contract></Contract>
         <AddModal :operateFlag="type" :dictionary="dictionary"
                   :contractRenewList="contractRenewList" @Close="closeRenew"></AddModal>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" @EditStatus="editSuccess"></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" :simulate="simulate" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared"  @Compared="haveCompared"></Comparison>-->
