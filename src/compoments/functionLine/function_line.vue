@@ -153,11 +153,12 @@
                                         <td>{{key.requirement_description}}</td>
                                         <td>{{key.applicant_name}}</td>
                                         <td>
-                                            <span v-for="list in key.applicant_id">
+                                            <!--<span v-for="list in key.applicant_id">
                                                 <span v-for="item in list.department">
                                                     {{item.name}}
                                                 </span>
-                                            </span>
+                                            </span>-->
+                                            {{key.department_name}}
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="isShow">
