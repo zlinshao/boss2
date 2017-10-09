@@ -39,13 +39,6 @@
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>
                         <li><h5><a @click="personal_rev">编辑</a></h5></li>
-                        <li>
-                            <h5>
-                                <router-link :to="{path:'/personalDetail',query: {nameId: pitch}}">
-                                    查看详情
-                                </router-link>
-                            </h5>
-                        </li>
                     </ul>
                 </div>
             </div>
