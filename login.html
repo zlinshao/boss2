@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="src/assets/img/B.png">
+    <link rel="stylesheet" href="src/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="src/assets/gritter/css/jquery.gritter.css">
+    <link rel="stylesheet" href="src/assets/css/style.css">
+    <link rel="stylesheet" href="src/assets/css/style-responsive.css">
+    <style>
+        @media screen and (max-width: 767px) {
+            #login_container {
+                display: none;
+            }
+
+            .login-wrap {
+                min-height: 200px;
+            }
+
+            body #QRCode, body .QR_Code {
+                display: block;
+            }
+
+            body #computer_PC, body .computer {
+                display: none;
+            }
+        }
+        .none_ {
+            display: none;
+        }
+    </style>
+    <script src="src/assets/js/jquery-3.2.0.js"></script>
+    <script src="src/assets/bootstrap/js/bootstrap.js"></script>
+    <script src="//g.alicdn.com/dingding/dinglogin/0.0.2/ddLogin.js"></script>
+    <script src="src/boss.config.js"></script>
+    <script src="src/assets/gritter/js/jquery.gritter.js"></script>
+    <script>
+        window.onload = function () {
+            if (navigator.userAgent.indexOf('Edge') != -1 || ( navigator.userAgent.indexOf('Chrome') === -1 && navigator.userAgent.indexOf('CriOS') === -1 )) {
+                document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/download">下载</a></h4>');
+            }
+        }
+    </script>
+    <title>BOSS</title>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" action="index.html">
+        <h2 class="form-signin-heading"
+            style="background-color: #ffffff;text-align: right;border-bottom: 1px solid #cccccc;padding-bottom: 14px;">
+            <div>
+                <div class="none_" id="QRCode">
+                    <span style=" float: left;margin-top: 16px;margin-left: 24px;color: #000;">手机登录</span>
+                    <img src="erweima.png">
+                </div>
+                <div id="computer_PC">
+                    <span style=" float: left;margin-top: 16px;margin-left: 24px;color: #000;">扫码登陆</span>
+                    <img src="diannao.png">
+                </div>
+            </div>
+        </h2>
+        <div class="login-wrap" style="height: 380px;">
+            <div id="login">
+                <!--短信登陆-->
+                <div class="login-wrap col-xs-12 none_ QR_Code"
+                     style="margin-top: 30px;padding-left: 0;padding-right: 0;">
+                    <div class="form-group">
+                        <div class="col-sm-7">
+                            <input id="phone" type="text" class="form-control" placeholder="手机号" autofocus>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="button" class="identifying_code form-control btn btn-default" value="获取验证码">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <input type="text" class="form-control" placeholder="请输入验证码" id="code" style="display: none;">
+                        <button id="landing" class="btn btn-lg btn-login btn-block" type="button">登陆</button>
+                    </div>
+                </div>
+
+                <!--扫码登陆-->
+                <div class="login-wrap col-xs-12 computer">
+                    <div id="login_container"></div>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
+    </form>
+
+</div>
+
+
+</body>
+<script>
+    let url = window.location.href;
+    let url_index = url.split("login")[0];
+
+    function remind(m, s) {
+        $.gritter.add({
+            title: '提醒',
+            text: m,
+            sticky: false,
+            time: s,
+            speed: 1000,
+            position: 'bottom-right',
+            class_name: 'gritter-success'
+        });
+    }
+    //    登陆
+    $('#computer_PC').click(function () {
+        $(this).css('display', 'none');
+        $('.computer').css('display', 'none');
+        $('#QRCode').css('display', 'block');
+        $('.QR_Code').css('display', 'block');
+
+    });
+    $('#QRCode').click(function () {
+        $(this).css('display', 'none');
+        $('.QR_Code').css('display', 'none');
+        $('#computer_PC').css('display', 'block');
+        $('.computer').css('display', 'block');
+
+    });
+
+    //    短信登陆
+    $('.identifying_code').click(function () {
+        let phone = $('#phone').val();
+        $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
+            url: globalConfig.server + 'auth/login/sms?phone=' + phone,
+            success: function (data) {
+                if (data.code === '80000') {
+                    remind(data.msg, 1000);
+                    $('#code').css('display', 'block');
+                    $('.identifying_code').attr('disabled', true);
+                    let time = 60;
+                    setInterval(function () {
+                        if (time > 0) {
+                            time--;
+                            if (time === 0) {
+                                $('.identifying_code').attr('disabled', false).val('获取验证码');
+                            }
+                            if (time > 0) {
+                                $('.identifying_code').attr('disabled', true).val(time + 's 后重发');
+                            }
+                        }
+                    }, 1000);
+                } else if (data.code === '80005') {
+                    remind(JSON.parse(data.msg).body, 1000);
+                    console.log(JSON.parse(data.msg).body);
+                    $('#code').css('display', 'block');
+                    $('.identifying_code').attr('disabled', true);
+                    let time = JSON.parse(data.msg).extra;
+                    setInterval(function () {
+                        if (time > 0) {
+                            time--;
+                            if (time === 0) {
+                                $('.identifying_code').attr('disabled', false).val('获取验证码');
+                            }
+                            if (time > 0) {
+                                $('.identifying_code').attr('disabled', true).val(time + 's 后重发');
+                            }
+                        }
+                    }, 1000);
+                } else {
+                    remind(data.msg, 1000);
+                }
+            }
+        })
+    });
+    $('#landing').click(function () {
+        let code = $('#code').val();
+        $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
+            url: globalConfig.server + 'auth/login/validateSms?code=' + code,
+            success: function (data) {
+                window.location.href = url_index;
+                console.log(data);
+            }
+        })
+    });
+
+    //    二维码
+    let obj = DDLogin({
+        id: "login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
+        goto: encodeURIComponent("https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=" + globalConfig.appId
+            + "&response_type=code&scope=snsapi_login&state=" + globalConfig.state
+            + "&redirect_uri=" + globalConfig.server + "staff/fromqr"),
+        style: "",
+        href: "",
+        width: "300px",
+        height: "300px"
+    });
+    let hanndleMessage = function (event) {
+        let loginTmpCode = event.data; //拿到loginTmpCode后就可以在这里构造跳转链接进行跳转了
+        let origin = event.origin;
+        window.location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=' + globalConfig.appId
+            + '&response_type=code&scope=snsapi_login&state=' + globalConfig.state
+            + '&redirect_uri=' + globalConfig.server
+            + 'staff/fromqr&loginTmpCode=' + loginTmpCode;
+        console.log(event);
+    };
+    if (typeof window.addEventListener != 'undefined') {
+        window.addEventListener('message', hanndleMessage, false);
+    } else if (typeof window.attachEvent != 'undefined') {
+        window.attachEvent('onmessage', hanndleMessage);
+    }
+</script>
+</html>

@@ -693,6 +693,87 @@ input, select, .bootstrap-timepicker, [href='renting_1.html'], .btn.btn-white.dr
     filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
     transform: translate(-50%, -50%);
 }
-li.active i,li.active span{
+
+li.active i, li.active span {
     color: #FF6C60;
+}
+
+label {
+    font-weight: normal;
+}
+
+a {
+    cursor: pointer;
+}
+
+.dropzone {
+    min-height: 0;
+    border: 0;
+    padding: 0;
+}
+
+.dropzone > div {
+    min-height: 34px;
+    width: 100%;
+    margin-bottom: 18px;
+    border: 1px solid #E2E2E4;
+    border-radius: 6px;
+}
+
+.roll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.roll::-webkit-scrollbar-button {
+    background-color: #ffff;
+}
+
+.roll::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.roll::-webkit-scrollbar-thumb {
+    background: rgba(121, 121, 121, .2);
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 767px) {
+    .table.table-responsive > .table > tbody > tr > th.phone {
+        min-width: 360px;
+        max-width: 466px;
+        word-wrap: break-word;
+    }
+}
+
+.width50 {
+    min-width: 50px;
+}
+
+.width80 {
+    min-width: 80px;
+}
+
+.width90 {
+    min-width: 90px;
+}
+
+.width100 {
+    min-width: 100px;
+}
+
+.width110 {
+    min-width: 110px;
+}
+
+.width120 {
+    min-width: 120px;
+}
+
+.width130 {
+    min-width: 130px;
+}
+
+.width150 {
+    min-width: 150px;
 }

@@ -1,7 +1,8 @@
 .DS_Store
 node_modules/
-src/boss.config.js
 dist/
 npm-debug.log
 yarn-error.log
+webpack.config.js
+src/boss.config.js
 /.idea/

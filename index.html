@@ -1,48 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mosaddek">
-  <meta name="keyword" content="">
-  <script src="https://webapi.amap.com/js/marker.js"></script>
-  <script src="https://webapi.amap.com/maps?v=1.3&key=b5357e10019b0a6fd5a71488846b270a"></script>
-  <link rel="shortcut icon" href="img/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="">
 
-  <title>boss2</title>
+    <link rel="shortcut icon" href="src/assets/img/B.png">
 
-  <!-- Bootstrap core CSS -->
-  <link href="src/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="src/assets/css/bootstrap-reset.css" rel="stylesheet">
-  <!--external css-->
-  <link href="src/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <title>BOSS</title>
 
-  <!--right slidebar-->
-  <link href="src/assets/css/slidebars.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="src/assets/css/style.css" rel="stylesheet">
-  <link href="src/assets/css/style-responsive.css" rel="stylesheet"/>
-  <script>
-      window.onload=function(){
-          if (navigator.userAgent.indexOf('WebKit') == -1) {
-              document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/">下载</a></h4>');
-          }
-      }
-  </script>
+    <!-- Bootstrap core CSS -->
+    <link href="src/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="src/assets/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="src/assets/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!--external css-->
+    <link href="src/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <!--right slidebar-->
+    <link href="src/assets/css/slidebars.css" rel="stylesheet">
+
+    <link href="src/assets/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet"> <!--备忘录-->
+    <!--more pics-->
+    <link href="src/assets/css/dropzone.css" rel="stylesheet">
+
+
+    <!--daterangepicker-->
+    <link rel="stylesheet" href="src/assets/css/daterangepicker.css">
+    <link rel="stylesheet" media="all" href="src/assets/css/daterangepicker-bs2.css">
+
+
+    <!--地图-->
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <!-- Custom styles for this template -->
+
+    <link rel="stylesheet" href="src/assets/square/css/core.css">
+
+    <link href="src/assets/css/style.css" rel="stylesheet">
+    <link href="src/assets/css/style-responsive.css" rel="stylesheet"/>
+    <link href="src/assets/css/loading.css" rel="stylesheet"/>
+    <script>
+        window.onload = function () {
+            document.getElementById('log').style.display = 'none';
+
+            if (navigator.userAgent.indexOf('WebKit') === -1 || navigator.userAgent.indexOf('Edge') != -1) {
+                document.write('<h4 style="text-align: center; line-height: 30px;">本系统只能试用谷歌浏览器打开，请前去<a href="https://chrome.en.softonic.com/">下载</a></h4>');
+            }
+        };
+    </script>
 </head>
 <body>
+<div id="log">
+    <div class="znsLoadingInner">
+        <div class="ballSpinFadeLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
 <div id="app"></div>
-<script src="/dist/build.js"></script>
 <script src="src/assets/js/jquery-3.2.0.js"></script>
 <script src="src/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="src/assets/js/bootstrap-datetimepicker.js"></script>       <!--日期选择-->
+<script src="src/assets/js/bootstrap-datetimepicker.zh-CN.js"></script> <!--日期汉化-->
+<script src="src/assets/js/jquery-ui-1.9.2.custom.min.js"></script>     <!--ui库-->
+<script src="src/assets/fullcalendar/fullcalendar.min.js"></script>     <!--备忘录-->
+
+<script src="src/assets/js/moment.min.js"></script>
+<script src="src/assets/js/daterangepicker.js"></script>
 <script class="include" type="text/javascript" src="src/assets/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="src/assets/js/jquery.scrollTo.min.js"></script>
 <script src="src/assets/js/slidebars.min.js"></script>
 <script src="src/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 <!--common script for all pages-->
 <script src="src/assets/js/common-scripts.js"></script>
-<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+
+<script src="src/assets/js/dropzone.js"></script>
+<script src="src/assets/js/echarts-all.js"></script>
+<script src="/dist/build.js"></script>
+
+
+<!--地图-->
+<script src="//webapi.amap.com/maps?v=1.3&key=35ba5c7d8e90a5c95fefa592fdea8d7a"></script>
+<!--<script src="http://cache.amap.com/lbs/static/addToolbar.js"></script>-->
+<!--<script src="http://g.alicdn.com/dingding/dinglogin/0.0.2/ddLogin.js"></script>-->
+<script>
+    Dropzone.autoDiscover = false;
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+</script>
 </body>
 </html>

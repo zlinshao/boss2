@@ -6,7 +6,6 @@ Website: http://thevectorlab.net/
 */
 
 /* Import fonts */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
 body {
     color: #797979;
@@ -55,7 +54,7 @@ a, a:hover, a:focus {
 }
 
 .form-signin {
-    max-width: 330px;
+    max-width: 450px;
     margin: 100px auto 0;
     background: #fff;
     border-radius: 5px;
@@ -362,6 +361,11 @@ ul.sidebar-menu li a.active i {
     padding: 15px;
     width: 100%;
 }
+@media (max-width: 767px){
+    .wrapper{
+        padding: 0;
+    }
+}
 
 a.logo {
     font-size: 21px;
@@ -428,8 +432,8 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended {
-    max-width: 300px !important;
-    min-width: 160px !important;
+    max-width: 300px;
+    min-width: 160px;
     top: 42px;
     width: 235px !important;
     padding: 0;
@@ -802,7 +806,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     margin-top: 0;
     margin-bottom: 20px;
     padding-bottom: 5px;
-    font-weight: normal;
+    /*font-weight: normal;*/
     font-size: 18px;
     display: inline-block;
     width: 100%;
@@ -821,7 +825,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     height: 100%;
     position: relative;
     width: 4.3%;
-    margin: 0px 2%;
+    margin: 0 2%;
     float: left;
     text-align: center;
     -webkit-border-radius: 5px 5px 0 0;
@@ -1951,8 +1955,7 @@ ul.ft-link li a i {
     -webkit-border-radius: 4px;
 }
 .user-head .user-name {
-    display: inline-block;
-    margin:0 0 0 10px;
+    text-align:center;
 }
 
 .user-head .user-name h5 {
@@ -2020,11 +2023,23 @@ ul.inbox-nav li a  {
     padding: 0 20px;
 }
 
-ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus  {
+ul.inbox-nav>li>a:hover, ul.inbox-nav>li.active>a, ul.inbox-nav li a:focus  {
     color: #6a6a6a;
     background: #d5d7de;
 }
-
+/*自定义*/
+ul.inbox-nav>li>a:hover .department{
+    color: #6a6a6a;
+    background: #d5d7de;
+}
+ul.inbox-nav>li.active>a .department{
+    color: #6a6a6a;
+    background: #d5d7de;
+}
+ul.inbox-nav li a:focus .department{
+    color: #6a6a6a;
+    background: #d5d7de;
+}
 ul.inbox-nav li a i {
     padding-right: 10px;
     font-size: 16px;
@@ -2854,11 +2869,11 @@ ul.amounts li {
     color: #fff !important;
 }
 
-.fc-event-skin {
-    background-color: #6883a3 !important;
-    border-color: #6883a3 !important;
-    color: #FFFFFF !important;
-}
+/*.fc-event-skin {*/
+    /*background-color: #6883a3 !important;*/
+    /*border-color: #6883a3 !important;*/
+    /*color: #FFFFFF !important;*/
+/*}*/
 
 .fc-grid th {
     height: 30px;
@@ -2907,6 +2922,10 @@ ul.amounts li {
 .fc-corner-right {
     border-radius: 0 4px 4px 0;
     -webkit-border-radius: 0 4px 4px 0;
+}
+
+#memorandum > #calendar .fc-corner-right{
+    border-radius: 4px;
 }
 
 .drp-rmv {
@@ -3429,7 +3448,7 @@ table.sliders tr td {
 .tagsinput {
     border: 1px solid #e3e6ed;
     border-radius: 6px;
-    height: 100px;
+    /*height: 100px;*/
     padding: 6px 1px 1px 6px;
     overflow-y: auto;
     text-align: left;
@@ -3477,7 +3496,6 @@ table.sliders tr td {
     outline: 0;
     margin-right: 5px;
     margin-bottom: 5px;
-    width: 12px;
 }
 .tagsinput-remove-link {
     bottom: 0;
@@ -3534,8 +3552,15 @@ table.sliders tr td {
     width: 100%;
     height: 0px;
 }
+.clearFix:after{
+    content: '';
+    display: block;
+    clear: both;
+}
 
-
+.modal-content{
+    overflow: auto;
+}
 /*checkbox & radio style*/
 
 
@@ -3558,7 +3583,9 @@ table.sliders tr td {
 
 .has-js .label_check,
 .has-js .label_radio {
-    padding-left: 34px;
+    padding-left: 25px;
+    height: 17px;
+    vertical-align: middle;
 }
 
 .has-js .label_radio {
@@ -3566,7 +3593,10 @@ table.sliders tr td {
 }
 
 .has-js .label_check {
+    margin-top: 4px;
     background: url(../img/checkbox/check-off.png) no-repeat;
+    height: 17px;
+    vertical-align: middle;
 }
 
 .has-js label.c_on {
@@ -4109,7 +4139,6 @@ span.customSelect.changed {
     content: "\f005";
     color: #41CAC0;
 }
-
 /*search page*/
 
 .classic-search {
@@ -5949,7 +5978,11 @@ a.guest-on i {
     display: table-cell;
     vertical-align: middle;
 }
-
+@media (max-width: 767px) {
+    div.modal-dialog{
+        width: 100%;
+    }
+}
 
 /*-----*/
 
@@ -6186,3 +6219,65 @@ header.blue-bg .search:focus {
     overflow: hidden;
 }
 
+.datetime{
+    padding-top: 5px;
+}
+.choosed{
+    padding-bottom: 1px;
+}
+
+
+.remind li {
+    float: left;
+}
+
+.remind li a {
+    padding: 0 10px;
+}
+
+.remind li + li a {
+    border-left: 1px solid #aaaaaa;
+}
+
+.pro-sort {
+    padding-right: 6px;
+}
+
+.pro-sort select.form-control {
+    padding: 6px 8px;
+}
+
+.amap-markers .amap-marker .amap-icon img{
+    border-radius: 50%;
+}
+.form-group .padding_0{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+tbody tr td .yellow, span.status.yellow {
+    background-color: #FFCC00;
+}
+
+tbody tr td .orange, span.status.orange {
+    background-color: #FCB322;
+}
+
+tbody tr td .green, span.status.green {
+    background-color: #78CD51;
+}
+
+sup.required{
+    color: #FF6C60 !important;
+    /*font-size: 14px;*/
+    /*font-weight: bold;*/
+}
+.label.status {
+    font-weight: normal;
+}
+
+div.padd {
+    display: inline-block;
+    width: 250px;
+    /*padding: 0 15px 0 0;*/
+}
