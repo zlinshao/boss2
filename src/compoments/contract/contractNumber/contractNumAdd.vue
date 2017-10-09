@@ -400,9 +400,9 @@
 //                    contract_type : 1,
                     area : this.area
                 }).then((res)=>{
-                    console.log(res.data);
-                    this.collect_num_start = res.data.sf;
-                    this.rent_num_start = res.data.zf;
+                    console.log(res.data.data);
+                    this.collect_num_start = res.data.data.sf;
+                    this.rent_num_start = res.data.data.zf;
                 })
             },
 
@@ -534,29 +534,50 @@
 //                console.log(this.photos.cus_idPhoto)
                 let data = {
                     type: this.new_status,
-                    area: this.area,
-                    receiver_time: this.receiver_time,
-                    paid_time: this.receiver_time,
-                    receiver_id: this.receiver_id,
-                    paid_id: this.receiver_id,
+//                    area : this.area,
+//                    receiver_time: this.receiver_time,
+//                    paid_time: this.receiver_time,
+//                    receiver_id: this.receiver_id,
+//                    paid_id: this.receiver_id,
                     department_id: this.department_id,
                     ljsf: this.collect_num,
-                    ljsf_record_start: this.collect_num_start,
-                    ljsf_record_end: this.collect_num_end,
+//                    ljsf_record_start: this.collect_num_start,
+//                    ljsf_record_end: this.collect_num_end,
                     ljzf: this.rent_num,
-                    ljzf_record_start: this.rent_num_start,
-                    ljzf_record_end: this.rent_num_end,
-                    extra_ljzf: [],
-                    extra_ljsf: [],
+//                    ljzf_record_start: this.rent_num_start,
+//                    ljzf_record_end: this.rent_num_end,
+//                    extra_ljzf: [],
+//                    extra_ljsf: [],
                     pz_pic: this.photos.cus_idPhoto,
-                    paid_ljsf : this.collect_turn_num,
-                    paid_ljzf : this.rent_turn_num
+//                    paid_ljsf : this.collect_turn_num,
+//                    paid_ljzf : this.rent_turn_num
                 };
-//                console.log(data)
+                if (this.new_status==1){
+                    // 领取
+                    data.area = this.area;
+                    data.receiver_time = this.receiver_time;
+                    data.receiver_id = this.receiver_id;
+                    data.ljsf_record_start = this.ljsf_record_start;
+                    data.ljsf_record_end = this.ljsf_record_end;
+                    data.ljzf_record_start = this.ljzf_record_start;
+                    data.ljzf_record_end = this.ljzf_record_end;
+                    data.extra_ljzf = [];
+                    data.extra_ljsf = [];
+                } else if (this.new_status==2){
+                    // 废除
+                } else {
+                    // 上缴
+                    data.paid_time = this.receiver_time;
+                    data.paid_id = this.receiver_id;
+                    data.paid_ljsf = this.collect_turn_num;
+                    data.paid_ljzf = this.rent_turn_num;
+                }
+
+                console.log(data)
 //                console.log(this.collect_turn_num)
 //                console.log(this.rent_turn_num)
 
-                this.$http.post('code/Contract_Number_Record/add', data).then((res) => {
+                /*this.$http.post('code/Contract_Number_Record/add', data).then((res) => {
                     console.log(res.data);
                     if (res.data.code==30012){
                         // 成功
@@ -574,7 +595,7 @@
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                     }
-                })
+                })*/
             },
         }
     }

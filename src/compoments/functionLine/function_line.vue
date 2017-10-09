@@ -106,11 +106,12 @@
                                         <td>{{key.product}}</td>
                                         <td>{{key.applicant_name}}</td>
                                         <td>
-                                            <span v-for="list in key.applicant_id">
+                                            <!--<span v-for="list in key.applicant_id">
                                                 <span v-for="item in list.department">
                                                     {{item.name}}
                                                 </span>
-                                            </span>
+                                            </span>-->
+                                            {{key.department_name}}
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="isShow">
@@ -152,11 +153,12 @@
                                         <td>{{key.requirement_description}}</td>
                                         <td>{{key.applicant_name}}</td>
                                         <td>
-                                            <span v-for="list in key.applicant_id">
+                                            <!--<span v-for="list in key.applicant_id">
                                                 <span v-for="item in list.department">
                                                     {{item.name}}
                                                 </span>
-                                            </span>
+                                            </span>-->
+                                            {{key.department_name}}
                                         </td>
                                     </tr>
                                     <tr class="text-center" v-if="isShow">
@@ -265,6 +267,8 @@
                 this.keySearch = '';
                 this.selected = [];
                 this.department_id = [];
+                this.start_time = '';
+                this.end_time = '';
                 this.currentDate = [];
                 this.fun.tabs = val;
                 this.fun_line(1);
@@ -355,7 +359,7 @@
                     id: this.pitch
                 }).then((res) => {
                     if (res.data.code === '30023') {
-                        this.fun_line(2, 1);
+                        this.fun_line(1);
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
                         this.info.state_success = true;
@@ -435,7 +439,7 @@
                     id: this.pitch
                 }).then((res) => {
                     if (res.data.code === '30090') {
-                        this.fun_line(this.fun.tabs, 1);
+                        this.fun_line(1);
                         this.info.success = res.data.msg;
                         this.info.state_error = false;
                         this.info.state_success = true;
