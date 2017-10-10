@@ -198,7 +198,6 @@
                         for (let i = 0; i < res.data.auth_all.length; i++) {
                             this.simulates.push(res.data.auth_all[i].name);
                         }
-                        debugger
                         this.superManager = res.data.super_auth.indexOf(res.data.id)>-1;
                     }
                 });
