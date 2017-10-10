@@ -557,10 +557,10 @@
                     data.area = this.area;
                     data.receiver_time = this.receiver_time;
                     data.receiver_id = this.receiver_id;
-                    data.ljsf_record_start = this.ljsf_record_start;
-                    data.ljsf_record_end = this.ljsf_record_end;
-                    data.ljzf_record_start = this.ljzf_record_start;
-                    data.ljzf_record_end = this.ljzf_record_end;
+                    data.ljsf_record_start = this.collect_num_start;
+                    data.ljsf_record_end = this.collect_num_end;
+                    data.ljzf_record_start = this.rent_num_start;
+                    data.ljzf_record_end = this.rent_num_end;
                     data.extra_ljzf = [];
                     data.extra_ljsf = [];
                 } else if (this.new_status==2){
@@ -573,7 +573,7 @@
                     data.paid_ljzf = this.rent_turn_num;
                 }
 
-//                console.log(data)
+                console.log(data)
 //                console.log(this.collect_turn_num)
 //                console.log(this.rent_turn_num)
 
