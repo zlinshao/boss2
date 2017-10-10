@@ -88,15 +88,24 @@
                                             </div>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="collect_num_end" readonly>
-                                                <div style="text-align: right"><a>点击录入</a></div>
+                                                <div class="icon" style="text-align: right"><a>点击录入</a>
+                                                    <!--<div class="col-xs-5 col-sm-2 icon">-->
+                                                    <span>
+                                                        <i class="fa fa-plus-circle"></i>
+                                                        <i class="fa fa-minus-circle"></i>
+                                                    </span>
+                                                    <!--</div>-->
+                                                </div>
                                             </div>
                                         </div>
-                                        <!--<div class="form-group">
-                                            <label class="col-xs-12 col-sm-2 control-label">合同编号</label>
-                                            <div class="col-xs-5 col-sm-7">
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>-->
+                                        <div class="form-group">
+                                            <!--<div class="col-sm-6 padd0">
+                                                <label class="col-xs-12 col-sm-4 control-label">合同编号</label>
+                                                <div class="col-xs-5 col-sm-8">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>-->
+                                        </div>
                                         <!--<div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
                                             <div class="col-sm-10">
@@ -279,6 +288,11 @@
         data(){
             return {
                 dict : {},
+
+                extra_sf_num:0,     // 点击录入收房个数
+                extra_ljzf : [],
+                extra_zf_num:0,     // 点击录入租房个数
+                extra_ljsf : [],
 
                 collect_turn_num: [],
                 rent_turn_num: [],
@@ -612,5 +626,23 @@
     .has-js .label_check, .has-js .label_radio {
         padding-left: 19px;
         margin-left: 6px;
+    }
+    div.icon{
+        user-select: none;
+    }
+    div.icon i{
+        cursor: pointer;
+        font-size: 20px;
+        color: #ddd;
+        vertical-align: middle;
+        margin-left: 3px;
+    }
+    div.icon i:hover{
+        color: #aaa;
+    }
+
+    .padd0{
+        padding-left: 0;
+        padding-right: 0;
     }
 </style>
