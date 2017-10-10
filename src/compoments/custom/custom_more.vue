@@ -28,7 +28,7 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li @click="customers_rev('rev')"><a>编辑</a></li>
+                                <li @click="customers_rev('rev')" v-show="simulate.indexOf('Customer/updateCustomer')>-1"><a>编辑</a></li>
                                 <!--<li @click="remind_id"><a>增加提醒</a></li>-->
                                 <li @click="sharing"><a>共享客户</a></li>
                                 <!--<li class="divider"></li>-->
@@ -311,6 +311,7 @@
     import PicModal from '../common/largePic.vue'               //查看大图
     import Sharing from './sharing.vue'                         //共享客户
     export default {
+        props:['simulate'],
         components: {New_add, PicModal, Status, Sharing},
         data (){
             return {

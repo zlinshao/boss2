@@ -25,7 +25,7 @@
                             <span>组织架构</span>
                             <button class="btn btn-primary btn-xs pull-right" @click="changeView">组织架构图</button>
                         </h5>
-                        <vue-ztree :list.sync='departmentList' :func='departmentClick'
+                        <vue-ztree :list.sync='departmentList' :func='departmentClick' :simulate="simulate"
                                    :contextmenu='rightClick' :is-open='true'>
                         </vue-ztree>
                     </div>
@@ -85,6 +85,7 @@
 
     import OrganizePic from './organizePic.vue'
     export default {
+        props:['simulate'],
         components: {
             vueZtree,
             positionTree,
