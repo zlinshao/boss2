@@ -88,9 +88,15 @@
                                             </div>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="collect_num_end" readonly>
-                                                <div><a>点击录入</a></div>
+                                                <div style="text-align: right"><a>点击录入</a></div>
                                             </div>
                                         </div>
+                                        <!--<div class="form-group">
+                                            <label class="col-xs-12 col-sm-2 control-label">合同编号</label>
+                                            <div class="col-xs-5 col-sm-7">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>-->
                                         <!--<div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
                                             <div class="col-sm-10">
@@ -113,6 +119,7 @@
                                             </div>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="rent_num_end" readonly>
+                                                <div style="text-align: right"><a>点击录入</a></div>
                                             </div>
                                         </div>
                                     </div>

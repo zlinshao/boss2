@@ -84,8 +84,13 @@
                     <tbody>
                         <tr v-for="item in searchList">
                             <td>
-                                <input type="checkbox" @click="picked(item,$event)"
-                                       :value="item.id" :checked="contractSeleted===item.id">
+                                <label :class="{'label_check':true,'c_on':contractSeleted===item.id,
+                                            'c_off':contractSeleted!==item.id}"
+                                       @click.prevent="picked(item, $event)">
+                                    <input type="checkbox" @click="picked(item,$event)"
+                                           :value="item.id" :checked="contractSeleted===item.id">
+                                </label>
+
                             </td>
                             <td class="text-center">{{item.contract_num}}</td>
                             <td class="text-center">{{item.create_time}}</td>
@@ -134,7 +139,7 @@
         <Status :state='info'></Status>
         <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
 
-        <EditMember :contractId="contractSeleted" @MemoUpdate = 'alreadyUpdate'></EditMember>
+        <EditMember :contractId="contractSeleted" :type="searchRequirement.type" @MemoUpdate = 'alreadyUpdate'></EditMember>
     </div>
 </template>
 
@@ -209,16 +214,16 @@
                         this.searchList=res.data.data.list;
                         this.pages=res.data.data.pages;
                         this.isShow = false;
-                        this.info.success = res.data.msg;
+//                        this.info.success = res.data.msg;
                         //显示成功弹窗 ***
-                        this.info.state_success = true;
+//                        this.info.state_success = true;
                     }else {
                         this.searchList=[];
                         this.pages=1;
                         this.isShow = true;
-                        this.info.error = res.data.msg;
+//                        this.info.error = res.data.msg;
                         //显示成功弹窗 ***
-                        this.info.state_error = true;
+//                        this.info.state_error = true;
                     }
 
                 })
@@ -245,7 +250,9 @@
 
             },
             picked (item,e){  //复选框单选并保存选中的id
-                if(e.target.checked===true){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if(evInput){
                     this.contractSeleted = item.id;
                 }else {
                     this.contractSeleted = 0;
