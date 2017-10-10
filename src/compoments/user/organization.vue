@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>人资管理</li>
             <li class="active">组织架构</li>
-            <li class="pull-right" v-if="isShowPic">
+            <li class="pull-right" v-show="isShowPic">
                 <a @click="changeView">
                     <i class="fa fa-angle-double-left"></i>返回
                 </a>
@@ -18,12 +18,12 @@
         </div>
 
         <div class="row" v-if="!isShowPic">
-            <div class="col-md-3">
+            <div class="col-md-3" v-if="simulate.indexOf('Department/department_all')>-1||isSuper">
                 <section class="panel">
                     <div class="panel-body">
                         <h5 style="margin-top: 8px;padding-bottom: 11px">
                             <span>组织架构</span>
-                            <button class="btn btn-primary btn-xs pull-right" @click="changeView">组织架构图</button>
+                            <button class="btn btn-primary btn-xs pull-right" @click="changeView" v-if="simulate.indexOf('Department/position')>-1||isSuper">组织架构图</button>
                         </h5>
                         <vue-ztree :list.sync='departmentList' :func='departmentClick' :simulate="simulate"
                                    :contextmenu='rightClick' :is-open='true'>
@@ -31,7 +31,7 @@
                     </div>
                 </section>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9" v-if="simulate.indexOf('Department/position_index')>-1||isSuper">
                 <section class="panel">
                     <div class="panel-body">
                         <h5 style="text-align: right">
@@ -85,7 +85,7 @@
 
     import OrganizePic from './organizePic.vue'
     export default {
-        props:['simulate'],
+        props:['simulate','isSuper'],
         components: {
             vueZtree,
             positionTree,
@@ -357,9 +357,9 @@
         text-align: center;
         margin-top: 20px;
     }
-    /*.breadcrumb > li:last-child:before {
+    .breadcrumb > li:last-child:before {
         padding: 0 5px;
         color: #ccc;
         content: "";
-    }*/
+    }
 </style>

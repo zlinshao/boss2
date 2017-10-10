@@ -15,7 +15,7 @@
                 <header>
                     <h4>
                         <i class="fa fa-home"></i>&nbsp;{{item.address}}
-                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editUncollect" v-show="simulate.indexOf('Villa/updateVilla')>-1"></a>
+                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editUncollect" v-show="simulate.indexOf('Villa/updateVilla')>-1||isSuper"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info"  >
@@ -102,7 +102,7 @@
     import HouseEdit from './houseEdit.vue'
     import PicModal from '../common/largePic.vue'
     export default {
-        props:['simulate'],
+        props:['simulate','isSuper'],
         components: {HouseEdit,PicModal},
         data (){
             return {

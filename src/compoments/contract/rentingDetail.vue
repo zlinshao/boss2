@@ -36,8 +36,8 @@
                 <router-link class="btn btn-primary" :to="{path:'/comparecontract',query:{houseId : houseId}}">
                     对比
                 </router-link>
-                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1&&simulate.indexOf('Rent/inform')>-1">通知</button>
-                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1&&simulate.index('Rent/review')>-1">
+                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1&&(simulate.indexOf('Rent/inform')>-1||isSuper)">通知</button>
+                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1&&(simulate.index('Rent/review')>-1||isSuper)">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1 && contract_status!=1">
@@ -56,26 +56,26 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li v-show="simulate.indexOf('Rent/updateContract')>-1">
                             <button class="btn btn-white btn-block" @click="editContract"
-                                    :disabled="(contract_pass>4||contract_status==1) && simulate.indexOf('Rent/update_success') == -1">
+                                    :disabled="(contract_pass>4||contract_status==1) && (simulate.indexOf('Rent/update_success') == -1||isSuper)">
                                 编辑
                             </button>
                         </li>
-                        <li v-show="simulate.indexOf('Rent/continued')>-1">
+                        <li v-show="simulate.indexOf('Rent/continued')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="renewContract(2)" :disabled="contract_status==1">
                                 续约
                             </button>
                         </li>
-                        <li v-show="simulate.indexOf('Rent/turn')>-1">
+                        <li v-show="simulate.indexOf('Rent/turn')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="renewContract(3)" :disabled="contract_status==1">
                                 转租
                             </button>
                         </li>
-                        <li v-show="simulate.indexOf('Rent/tune')>-1">
+                        <li v-show="simulate.indexOf('Rent/tune')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="renewContract(4)" :disabled="contract_status==1">
                                 调租
                             </button>
                         </li>
-                        <li v-show="simulate.indexOf('Rent/readContract_easy')>-1">
+                        <li v-show="simulate.indexOf('Rent/readContract_easy')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="openSimpleConvenient">
                                 简版
                             </button>
@@ -595,14 +595,14 @@
                                                  v-for="(img,index) in item.album.handover_pic">
                                         </span>
                                     </div>
-                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1">
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <span class="col-lg-1">退租交接单照片</span>
                                         <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('surrender_order_pic',index)"
                                                  v-for="(img,index) in item.album.surrender_order_pic">
                                         </span>
                                     </div>
-                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1">
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <span class="col-lg-1">退租结算单照片</span>
                                         <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('refund_form_pic',index)"
@@ -711,7 +711,7 @@
         <Contract></Contract>
         <AddModal :operateFlag="type" :dictionary="dictionary"
                   :contractRenewList="contractRenewList" @Close="closeRenew"></AddModal>
-        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" :simulate="simulate" @EditStatus="editSuccess"></ContractEit>
+        <ContractEit :contractEitId="contractEitId" :dictionary="dictionary" :isEditRent="isEditRent" :simulate="simulate" :isSuper="isSuper" @EditStatus="editSuccess"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
         <!--<Comparison :villaId="villaId" :dictionary="dictionary" :isCompared="isCompared"  @Compared="haveCompared"></Comparison>-->
@@ -734,7 +734,7 @@
     import Confirm from '../common/confirm.vue'
     import AddModal from './rentingRenew.vue'
     export default{
-        props:['simulate'],
+        props:['simulate','isSuper'],
         components: {
             Transfer,   //转账
             Contract,   //合同信息
