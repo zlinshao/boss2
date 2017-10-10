@@ -88,23 +88,23 @@
                                             </div>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="collect_num_end" readonly>
-                                                <div class="icon" style="text-align: right"><a>点击录入</a>
+                                                <div class="icon" style="text-align: right"><a @click="extra(1)">点击录入</a>
                                                     <!--<div class="col-xs-5 col-sm-2 icon">-->
-                                                    <span>
-                                                        <i class="fa fa-plus-circle"></i>
-                                                        <i class="fa fa-minus-circle"></i>
+                                                    <span v-show="is_extra_sf">
+                                                        <i class="fa fa-plus-circle" @click="plusNum(1)"></i>
+                                                        <i class="fa fa-minus-circle" @click="minusNum(1)"></i>
                                                     </span>
                                                     <!--</div>-->
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <!--<div class="col-sm-6 padd0">
+                                            <div class="col-sm-6 padd0" v-for="(item,index) in extra_sf_num">
                                                 <label class="col-xs-12 col-sm-4 control-label">合同编号</label>
                                                 <div class="col-xs-5 col-sm-8">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" v-model="extra_ljsf[index]">
                                                 </div>
-                                            </div>-->
+                                            </div>
                                         </div>
                                         <!--<div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
@@ -118,6 +118,7 @@
                                                 <input type="text" class="form-control" v-model="rent_num" @blur="turn_in_rent" @keyup="rent_num = rent_num.replace(/[^\d]/g,'');" >
                                             </div>
                                         </div>
+
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">本次领取合同编号记录(租)<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
@@ -128,7 +129,22 @@
                                             </div>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="rent_num_end" readonly>
-                                                <div style="text-align: right"><a>点击录入</a></div>
+                                                <div class="icon" style="text-align: right"><a @click="extra(2)">点击录入</a>
+                                                    <!--<div class="col-xs-5 col-sm-2 icon">-->
+                                                    <span v-show="is_extra_zf">
+                                                        <i class="fa fa-plus-circle" @click="plusNum(2)"></i>
+                                                        <i class="fa fa-minus-circle" @click="minusNum(2)"></i>
+                                                    </span>
+                                                    <!--</div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6 padd0" v-for="(item,index) in extra_zf_num">
+                                                <label class="col-xs-12 col-sm-4 control-label">合同编号</label>
+                                                <div class="col-xs-5 col-sm-8">
+                                                    <input type="text" class="form-control" v-model="extra_ljzf[index]">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -288,6 +304,9 @@
         data(){
             return {
                 dict : {},
+
+                is_extra_sf : false,
+                is_extra_zf : false,
 
                 extra_sf_num:0,     // 点击录入收房个数
                 extra_ljzf : [],
@@ -457,8 +476,67 @@
                     this.photos.cus_idPhoto.splice(index, 1);
                 }
             },
+
+
+            extra(num){
+                switch (num){
+                    case 1 :
+                        this.is_extra_sf = true;
+                        this.extra_sf_num = 1;
+                        break;
+                    case 2 :
+                        this.is_extra_zf = true;
+                        this.extra_zf_num = 1;
+                }
+            },
+            // 点击录入 加
+            plusNum(num){
+                switch (num){
+                    case 1 :
+                        if(this.extra_sf_num<10){
+                            this.extra_sf_num++;
+                            this.extra_ljzf.push('');
+                        }
+                        break;
+                    case 2 :
+                        if(this.extra_zf_num<10){
+                            this.extra_zf_num++;
+                            this.extra_ljsf.push('');
+                        }
+                }
+            },
+            // 点击录入 减
+            minusNum(num){
+                switch (num){
+                    case 1 :
+                        if(this.extra_sf_num>0){
+                            this.extra_sf_num--;
+                            if (this.extra_sf_num==0){
+                                this.is_extra_sf = false;
+                            }
+                            this.extra_ljzf.pop();
+                        }
+                        break;
+                    case 2 :
+                        if(this.extra_zf_num>0){
+                            this.extra_zf_num--;
+                            if (this.extra_zf_num==0){
+                                this.is_extra_zf = false;
+                            }
+                            this.extra_ljsf.pop();
+                        }
+                }
+            },
+
 //            清空
             close_empty (){
+                this.is_extra_sf = false;
+                this.is_extra_zf = false;
+                this.extra_sf_num=0;     // 点击录入收房个数
+                this.extra_ljzf = [];
+                this.extra_zf_num=0;     // 点击录入租房个数
+                this.extra_ljsf = [];
+
                 this.collect_turn_num = [];
                 this.rent_turn_num = [];
                 this.area = '01';
@@ -583,8 +661,8 @@
                     data.ljsf_record_end = this.collect_num_end;
                     data.ljzf_record_start = this.rent_num_start;
                     data.ljzf_record_end = this.rent_num_end;
-                    data.extra_ljzf = [];
-                    data.extra_ljsf = [];
+                    data.extra_ljzf = this.extra_ljzf;
+                    data.extra_ljsf = this.extra_ljsf;
                 } else if (this.new_status==2){
                     // 废除
                 } else {
