@@ -339,9 +339,9 @@
                         this.houseList=res.data.data.list;
                         this.isShow=false;
                         this.pages=res.data.data.pages;
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+//                        this.info.success = res.data.msg;
+//                        显示成功弹窗 ***
+//                        this.info.state_success = true;
                     }else {
                         this.houseList=[];
                         this.pages=1;

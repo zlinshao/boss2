@@ -282,10 +282,9 @@
                         this.villalist = res.data.data.list;
                         this.isShow = false;
                         this.pages = res.data.data.pages;
-                        ;
-                        this.info.success = res.data.msg;
+//                        this.info.success = res.data.msg;
                         //显示成功弹窗 ***
-                        this.info.state_success = true;
+//                        this.info.state_success = true;
                     } else {
                         this.villalist = [];
                         this.pages = 1;

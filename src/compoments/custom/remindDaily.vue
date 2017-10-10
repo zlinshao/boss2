@@ -96,12 +96,20 @@
                     this.$http.post('core/customer/putInPool', {
                         id: this.msg
                     }).then((res) => {
-                        $('#remindDaily').modal('hide');
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        this.$emit('pitches',1);
+                        console.log(res.data);
+                        if (res.data.code==70050){
+                            //成功信息 ***
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                            this.$emit('pitches',1);
+                            $('#remindDaily').modal('hide');
+                        } else {
+                            //失败信息 ***
+                            this.info.error = res.data.msg;
+                            //显示失败弹窗 ***
+                            this.info.state_error = true;
+                        }
                     });
                 }
 //                新增跟进记录
