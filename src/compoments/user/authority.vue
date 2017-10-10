@@ -33,9 +33,8 @@
                                                     <div class="classify" v-for="(key1,value1) in dict.role.child_module" v-if="value1==value">
                                                         <div v-for="(key2,value2) in key1">
                                                             <h4 style="line-height: 30px;">{{key2}}</h4>
-                                                            <div style="display: inline-block;width: 180px">
+                                                            <div style="display: inline-block;width: 180px" v-for="item in allModules" v-if="item.module==value&&item.child_module==value2">
                                                                 <label :class="{'label_check':true,'c_on':authorityArr.indexOf(item.id) > -1,'c_off':authorityArr.indexOf(item.id) == -1}"
-                                                                       v-for="item in allModules" v-if="item.module==value&&item.child_module==value2"
                                                                        @click.prevent="pitch($event,item.id)">
                                                                     <input type="checkbox" :value="item.id" :checked="authorityArr.indexOf(item.id) > -1">
                                                                     {{item.role}}
