@@ -45,7 +45,7 @@
 <script>
     import Status from '../common/status.vue';
     export default{
-        props:['contractId'],
+        props:['contractId','type'],
         components:{Status},
         data(){
             return {
@@ -83,6 +83,7 @@
             },
             reviseMemo(){
                 this.$http.post('core/memo/updatememo',{
+                    type:this.type,
                     id:this.MemorandumId,
                     content:this.preContent,
                 }).then((res) =>{

@@ -134,7 +134,7 @@
         <Status :state='info'></Status>
         <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
 
-        <EditMember :contractId="contractSeleted" @MemoUpdate = 'alreadyUpdate'></EditMember>
+        <EditMember :contractId="contractSeleted" :type="searchRequirement.type" @MemoUpdate = 'alreadyUpdate'></EditMember>
     </div>
 </template>
 
