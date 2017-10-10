@@ -60,6 +60,8 @@
                                     </button>
                                 </div>
                             </form>
+
+                            <!--部门发件箱-->
                             <form class="pull-right position" action="#">
                                 <div class="input-append pull-right" v-if="isNew2">
                                     <button type="button" class="btn btn-primary" @click="resetting"
@@ -74,7 +76,6 @@
                                            v-model="params.staff" @click="selectStaff" placeholder='选择收件人'>
                                 </div>
                             </div>
-
                             <div v-if="isNew2" class="pull-right col-xs-12 col-md-4"
                                  style="margin-top: 4px;">
                                 <div class="form-group">
@@ -381,6 +382,7 @@
     import STAFF from  '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
+        props:['simulate','isSuper'],
         components: {
             AnnouncementAdd,
             AnnouncementDetail,

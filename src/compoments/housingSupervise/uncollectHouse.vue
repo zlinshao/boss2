@@ -80,7 +80,7 @@
                             <a class="btn btn-success" @click="reset">&nbsp;重置
                             </a>
                         </div>
-                        <div class="pull-right" style="margin-left: 10px;height: 39px;" v-if="simulate.indexOf('Villa/saveVilla')>-1">
+                        <div class="pull-right" style="margin-left: 10px;height: 39px;" v-if="simulate.indexOf('Villa/saveVilla')>-1||isSuper">
                             <a class="btn btn-success" @click="collectAdd"><i
                                     class="fa fa-plus-square"></i>&nbsp;增加房屋
                             </a>
@@ -106,7 +106,7 @@
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
-                        <li @click="deleteHouse" v-if="simulate.indexOf('Villa/deleteVilla')>-1">
+                        <li @click="deleteHouse" v-if="simulate.indexOf('Villa/deleteVilla')>-1||isSuper">
                             <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a>
                             </h5>
                         </li>
@@ -192,7 +192,7 @@
     import Status from  '../common/status.vue'
     import Confirm from  '../common/confirm.vue'
     export default {
-        props:['simulate'],
+        props:['simulate','isSuper'],
         components: {Page, CollectAdd , Status ,Confirm}, //, New_add
         data (){
             return {

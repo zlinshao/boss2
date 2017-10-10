@@ -17,7 +17,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;{{item.address}}
-                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" v-show="simulate.indexOf('Villa/updateVilla_success')>-1"></a>
+                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" v-show="simulate.indexOf('Villa/updateVilla_success')>-1||isSuper"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -305,7 +305,7 @@
                                         </a>
                                     </div>
                                     <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
-                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1">
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">产权证照片：</span>
                                         <a v-for="(img,index) in item.album.property_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
@@ -313,7 +313,7 @@
                                         </a>
                                     </div>
                                     <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
-                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1">
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">水卡照片：</span>
                                         <a v-for="(img,index) in item.album.water_card_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
@@ -321,7 +321,7 @@
                                         </a>
                                     </div>
                                     <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
-                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1">
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">电卡照片：</span>
                                         <a v-for="(img,index) in item.album.elec_card_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
@@ -329,7 +329,7 @@
                                         </a>
                                     </div>
                                     <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
-                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1">
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">燃气卡照片：</span>
                                         <a v-for="(img,index) in item.album.gas_card_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
@@ -358,7 +358,7 @@
     import HouseEdit from './houseEdit.vue'
     import PicModal from '../common/largePic.vue'
     export default {
-        props:['simulate'],
+        props:['simulate','isSuper'],
         components: {
             Distribution,
             HouseEdit,

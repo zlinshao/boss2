@@ -2,11 +2,11 @@
     <div id="app">
         <section id="container">
             <!--header-->
-            <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates"></HeaderVue>
+            <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates" :isSuper="superManager"></HeaderVue>
             <!--router-->
             <section id="main-content">
                 <section class="wrapper">
-                    <router-view :simulate="simulates"></router-view>
+                    <router-view :simulate="simulates" :isSuper="superManager"></router-view>
                 </section>
             </section>
             <!--loading-->
@@ -139,6 +139,8 @@
         data (){
             return {
                 simulates: [],
+                superManager : false,
+
                 urlName: '',
                 urlCard: '',
 
@@ -196,6 +198,7 @@
                         for (let i = 0; i < res.data.auth_all.length; i++) {
                             this.simulates.push(res.data.auth_all[i].name);
                         }
+                        this.superManager = res.data.super_auth.indexOf(res.data.id)>-1;
                     }
                 });
             },
