@@ -159,7 +159,7 @@
                         <th class="text-center width80">审核状态</th>
                         <th class="text-center width50">锁定</th>
                         <th class="text-center width50">置顶</th>
-                        <th class="text-center width50">详情</th>
+                        <th class="text-center width50" v-if="simulate.indexOf('Collect/readContract')>-1">详情</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
@@ -213,7 +213,7 @@
                         <td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
-                        <td>
+                        <td v-if="simulate.indexOf('Collect/readContract')>-1">
                             <router-link :to="{path:'/contractDetail',
                             query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName }}">
                                 详情

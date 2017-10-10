@@ -36,8 +36,8 @@
                 <router-link class="btn btn-primary" :to="{path:'/comparecontract',query:{houseId : houseId}}">
                     对比
                 </router-link>
-                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1">通知</button>
-                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1">
+                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1&&simulate.indexOf('Rent/inform')>-1">通知</button>
+                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1&&simulate.index('Rent/review')>-1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1 && contract_status!=1">
@@ -54,28 +54,28 @@
                         更多
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li>
+                        <li v-show="simulate.indexOf('Rent/updateContract')>-1">
                             <button class="btn btn-white btn-block" @click="editContract"
-                                    :disabled="(contract_pass>4||contract_status==1) && simulate.indexOf('core/cmo') == -1">
+                                    :disabled="(contract_pass>4||contract_status==1) && simulate.indexOf('Rent/update_success') == -1">
                                 编辑
                             </button>
                         </li>
-                        <li>
+                        <li v-show="simulate.indexOf('Rent/continued')>-1">
                             <button class="btn btn-white btn-block" @click="renewContract(2)" :disabled="contract_status==1">
                                 续约
                             </button>
                         </li>
-                        <li>
+                        <li v-show="simulate.indexOf('Rent/turn')>-1">
                             <button class="btn btn-white btn-block" @click="renewContract(3)" :disabled="contract_status==1">
                                 转租
                             </button>
                         </li>
-                        <li>
+                        <li v-show="simulate.indexOf('Rent/tune')>-1">
                             <button class="btn btn-white btn-block" @click="renewContract(4)" :disabled="contract_status==1">
                                 调租
                             </button>
                         </li>
-                        <li>
+                        <li v-show="simulate.indexOf('Rent/readContract_easy')>-1">
                             <button class="btn btn-white btn-block" @click="openSimpleConvenient">
                                 简版
                             </button>

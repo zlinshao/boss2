@@ -579,7 +579,7 @@
 
             },
             announceDetail(val7, val1, val2, val3, val4, val5, val6, val8){
-                if (val7 === '系统公告') {
+                if (val7 === '系统公告'&&this.simulate.indexOf('System/content')>-1) {
                     this.info_details.get_title = val1;
                     this.info_details.get_department_name = val2;
                     this.info_details.get_create_time = val3;

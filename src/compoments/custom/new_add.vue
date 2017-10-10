@@ -251,7 +251,7 @@
                         <div class="modal-footer">
                             <div class="form-group">
                                 <div class="col-xs-12" style="padding: 0;margin-bottom: 10px;">
-                                    <a class="text-danger" v-if="cus_exist !== ''" @click="proving(exist_id)"><i
+                                    <a class="text-danger" v-if="cus_exist !== ''&&simulate.indexOf('Customer/doShare')>-1" @click="proving(exist_id)"><i
                                             class="fa fa-delete"></i>{{cus_exist}}</a>
                                 </div>
                             </div>
@@ -295,7 +295,7 @@
     import Country from '../common/country.vue'             //国家
     export default {
         components: {upLoad, ChooseAddress, Status, Country},
-        props: ['msg', 'revise', 'selects'],
+        props: ['msg', 'revise', 'selects','simulate'],
         data (){
             return {
                 exist_id: '',                       //客户已存在ID
