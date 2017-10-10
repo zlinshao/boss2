@@ -88,6 +88,7 @@
                                             </div>
                                             <div class="col-xs-5 col-sm-4">
                                                 <input type="text" class="form-control" v-model="collect_num_end" readonly>
+                                                <div><a>点击录入</a></div>
                                             </div>
                                         </div>
                                         <!--<div class="form-group">
