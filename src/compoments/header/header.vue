@@ -228,7 +228,11 @@
             <!--</ul>-->
             <!--</div>-->
             <div class="top-nav">
-                <div class="nav notify-row" id="top_menu" style="display: inline-block;width: 26px;margin-top: 8px;">
+                <div class="nav notify-row" id="top_menu" style="display: inline-block;width: 26px;margin-top: 8px;"
+                     v-show="simulate.indexOf('System/index')>-1||simulate.indexOf('Approval/index')>-1
+                        ||simulate.indexOf('Remind/index')>-1||simulate.indexOf('Secretary/index')>-1
+                        ||simulate.indexOf('Msessage/self_message')>-1||simulate.indexOf('Message/department_message')>-1
+                        ||simulate.indexOf('Favourite/index')>-1||isSuper">
                     <ul>
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="font-size: 20px;">
@@ -241,28 +245,28 @@
                                 <li>
                                     <p class="yellow">您有 {{new_info.count}} 条新消息</p>
                                 </li>
-                                <li>
+                                <li v-if="simulate.indexOf('System/index')>-1||isSuper">
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'sys_mess'}}">
                                         <span class="label label-success" style="padding: 2px 4px;"><i
                                                 class="fa fa-volume-up"></i></span>
                                         您有&nbsp;<span class="text-danger">{{new_info.sys_mess}}</span>&nbsp;条系统公告未读
                                     </router-link>
                                 </li>
-                                <li>
+                                <li v-if="simulate.indexOf('Approval/index')>-1||isSuper">
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'appr_mess'}}">
                                         <span class="label label-success" style="padding: 2px 4px;"><i
                                                 class="fa fa-volume-up"></i></span>
                                         您有&nbsp;<span class="text-danger">{{new_info.appr_mess}}</span>&nbsp;条审批提醒未读
                                     </router-link>
                                 </li>
-                                <li>
+                                <li v-if="simulate.indexOf('Remind/index')>-1||isSuper">
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'remind_mess'}}">
                                         <span class="label label-success" style="padding: 2px 4px;"><i
                                                 class="fa fa-volume-up"></i></span>
                                         您有&nbsp;<span class="text-danger">{{new_info.remind_mess}}</span>&nbsp;条待办提醒未读
                                     </router-link>
                                 </li>
-                                <li>
+                                <li v-if="simulate.indexOf('Secretary/index')>-1||isSuper">
                                     <router-link :to="{path:'/messageCenter',query: {nameId: 'secre_mess'}}">
                                         <span class="label label-success" style="padding: 2px 4px;"><i
                                                 class="fa fa-volume-up"></i></span>
@@ -343,7 +347,10 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('Collect/contractList')>-1||simulate.indexOf('Rent/contractList')>-1
+                        ||simulate.indexOf('Collect/Rent/MoveOrder')>-1
+                        ||simulate.indexOf('ContractNumberRecord/index') > -1||isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-file-text"></i>
                             <span>合同管理</span>
@@ -359,7 +366,7 @@
                                     <span>租房合同</span>
                                 </router-link>
                             </li>
-                            <li class="sub-menu">
+                            <li class="sub-menu" v-show="simulate.indexOf('Collect/Rent/MoveOrder')>-1||isSuper">
                                 <a href="javascript:;">
                                     <span>订单迁移</span>
                                 </a>
@@ -710,7 +717,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li :class="{'active': isActive == 32}" @click='pitch_on(32)'>
+                    <li :class="{'active': isActive == 32}" @click='pitch_on(32)'
+                        v-show="simulate.indexOf('System/index')>-1||simulate.indexOf('Approval/index')>-1
+                        ||simulate.indexOf('Remind/index')>-1||simulate.indexOf('Secretary/index')>-1
+                        ||simulate.indexOf('Msessage/self_message')>-1||simulate.indexOf('Message/department_message')>-1
+                        ||simulate.indexOf('Favourite/index')>-1||isSuper">
                         <router-link to='/messageCenter'>
                             <i class="fa fa-bell-o"></i>
                             <span>消息中心</span>
