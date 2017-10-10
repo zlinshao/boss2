@@ -37,7 +37,7 @@
                     对比
                 </router-link>
                 <button class="btn btn-primary" @click="inform" v-if="contract_status!=1&&(simulate.indexOf('Rent/inform')>-1||isSuper)">通知</button>
-                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1&&(simulate.index('Rent/review')>-1||isSuper)">
+                <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1&&(simulate.indexOf('Rent/review')>-1||isSuper)">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1 && contract_status!=1">
