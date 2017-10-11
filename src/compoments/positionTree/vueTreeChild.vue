@@ -16,7 +16,10 @@
 							</span>
 						</span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
-							   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						   v-if="simulate.indexOf('Department/position_update')>-1||simulate.indexOf('Department/position_insert')>-1
+						   ||simulate.indexOf('Department/position_insert')>-1||simulate.indexOf('Department/position_parent')>-1
+						   ||simulate.indexOf('Role/auth')>-1||simulate.indexOf('Department/position_delete')>-1||isSuper">
 						</i>
 
 						<ul class="dropdown-menu dropdown-menu-right" style="padding: 0 0 0 0px;">
