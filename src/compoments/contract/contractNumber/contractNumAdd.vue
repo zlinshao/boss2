@@ -510,20 +510,20 @@
                 switch (num){
                     case 1 :
                         if(this.extra_sf_num>0){
+                            this.extra_ljsf.pop();
                             this.extra_sf_num--;
                             if (this.extra_sf_num==0){
                                 this.is_extra_sf = false;
                             }
-                            this.extra_ljzf.pop();
                         }
                         break;
                     case 2 :
                         if(this.extra_zf_num>0){
+                            this.extra_ljzf.pop();
                             this.extra_zf_num--;
                             if (this.extra_zf_num==0){
                                 this.is_extra_zf = false;
                             }
-                            this.extra_ljsf.pop();
                         }
                 }
             },
