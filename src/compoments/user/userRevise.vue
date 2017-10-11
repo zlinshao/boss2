@@ -88,7 +88,7 @@
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >薪资</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="salary" placeholder="薪资">
+                                            <input type="text" class="form-control" v-model="salary" placeholder="薪资" @keyup="salary = salary.replace(/[^\d]/g,'');">
                                         </div>
                                     </div>
                                     <div class="row">
