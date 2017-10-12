@@ -28,14 +28,11 @@
                         <span v-if="type==2">作废详情</span>
                         <span v-if="type==3">上缴详情</span>
                         <!--编辑-->
-                        <!--<div class="btn-group pull-right">
-                            <a data-toggle="dropdown" aria-expanded="false">
+                        <div class="btn-group pull-right" data-toggle="modal" data-target="#contractNumEdit">
+                            <a>
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <ul role="menu" class="dropdown-menu">
-                                <li><a href="javascript:;">sdfsdf</a></li>
-                            </ul>
-                        </div>-->
+                        </div>
                     </h4>
                 </header>
                 <section class="panel" v-if="public!=''">
@@ -47,17 +44,27 @@
                                     <div class="text-primary" v-if="type==2">作废日期：</div>
                                     <div class="text-primary" v-if="type==3">上缴日期：</div>
                                     <div v-if="type==1">{{public.receiver_time}}</div>
+                                    <div v-if="type==2">{{public.report_time}}</div>
                                     <div v-if="type==3">{{public.paid_time}}</div>
+                                </div>
+                                <div v-if="type==2">
+                                    <div class="text-primary" v-if="type==2">实到日期：</div>
+                                    <div>{{public.actual_time}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取合同数(收)：</div>
+                                    <div class="text-primary" v-if="type==2">作废合同数(收)：</div>
                                     <div class="text-primary" v-if="type==3">上缴合同数(收)：</div>
                                     <div>{{msg.num[0].sf_numbers}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary" v-if="type==1">本次领取合同编号(收)：</div>
+                                    <div class="text-primary" v-if="type==2">本次作废合同编号(收)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(收)：</div>
                                     <div v-if="type==1">
+                                        <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
+                                    </div>
+                                    <div v-if="type==2">
                                         <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
                                     </div>
                                     <div v-if="type==3">
@@ -73,23 +80,33 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div>
-                                    <span class="text-primary">剩余合同编号(收)：</span>
-                                    <span>asdasd</span>
-                                </div>-->
-                                <!--<div>
-                                    <span class="text-primary">当前剩余合同编号(收)：</span>
-                                    <span>asdasd</span>
-                                </div>-->
+                                <div>
+                                    <div class="text-primary">剩余合同数(收)：</div>
+                                    <div>{{msg.num[0].rest_sf_number}}</div>
+                                </div>
+                                <div>
+                                    <div class="text-primary">当前剩余合同编号(收)：</div>
+                                    <div>
+                                        <span v-for="item in remian_sf">{{item}}&emsp;</span>
+                                        <!--<span>
+                                            {{msg.num[0].sf_contract_number.split(',')}}
+                                        </span>-->
+                                    </div>
+                                </div>
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取合同数(租)：</div>
+                                    <div class="text-primary" v-if="type==2">作废合同数(租)：</div>
                                     <div class="text-primary" v-if="type==3">上缴合同数(租)：</div>
                                     <div>{{msg.num[0].zf_numbers}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary" v-if="type==1">本次领取合同编号(租)：</div>
+                                    <div class="text-primary" v-if="type==2">本次作废合同编号(租)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(租)：</div>
                                     <div v-if="type==1">
+                                        <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
+                                    </div>
+                                    <div v-if="type==2">
                                         <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
                                     </div>
                                     <div v-if="type==3">
@@ -103,30 +120,41 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div>
-                                    <span class="text-primary">剩余合同编号(租)：</span>
-                                    <span>asdasd</span>
-                                </div>-->
-                                <!--<div>
-                                    <span class="text-primary">当前剩余合同编号(租)：</span>
-                                    <span>asdasd</span>
-                                </div>-->
+                                <div>
+                                    <div class="text-primary">剩余合同数(租)：</div>
+                                    <div>{{msg.num[0].rest_zf_number}}</div>
+                                </div>
+                                <div>
+                                    <div class="text-primary">当前剩余合同编号(租)：</div>
+                                    <div>
+                                        <span v-for="item in remian_zf">{{item}}&emsp;</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取人：</div>
+                                    <div class="text-primary" v-if="type==2">报备人：</div>
                                     <div class="text-primary" v-if="type==3">上缴人：</div>
                                     <div>{{public.receiver_name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">所属部门：</div>
-                                    <div>{{public.department_id[0]}}</div>
+                                    <div>{{public.department_id.name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">截图凭证：</div>
-                                    <div>
+                                    <div v-if="type==1">
                                         <img :src="img.small" @click="showLargePic(index)"
                                              v-for="(img,index) in public.album.pz_pic">
+                                    </div>
+                                    <div v-if="type==2">
+                                        <img :src="img.small" @click="showLargePic(index)"
+                                             v-for="(img,index) in public.album.scrap_pic">
+                                    </div>
+                                    <div v-if="type==3">
+                                        <img :src="img.small" @click="showLargePic(index)"
+                                             v-for="(img,index) in public.album.paid_pic">
                                     </div>
                                 </div>
                                 <div>
@@ -140,13 +168,15 @@
             </div>
         </section>
         <PicModal :largePic="largePic"></PicModal>
+        <ContractNumEdit :type="type" :request_time="request_time"></ContractNumEdit>
     </div>
 </template>
 
 <script>
     import PicModal from  '../../common/largePic.vue'
+    import ContractNumEdit from './contractNumEdit.vue'
     export default{
-        components: {PicModal},
+        components: {PicModal,ContractNumEdit},
         data(){
             return {
                 params : {},
@@ -158,6 +188,10 @@
                 public : '',
                 srcs : {},
                 largePic : [],
+
+                remian_sf : [],
+                remian_zf : [],
+
             }
         },
         mounted () {
@@ -180,6 +214,12 @@
                         this.public = this.msg.sf[0];
                     } else {
                         this.public = this.msg.zf[0];
+                    }
+                    if (this.msg.num[0].sf_contract_number!=null){
+                        this.remian_sf = this.msg.num[0].sf_contract_number.split(',');
+                    }
+                    if (this.msg.num[0].zf_contract_number!=null){
+                        this.remian_zf = this.msg.num[0].zf_contract_number.split(',');
                     }
                 }
 //                console.log(this.public)

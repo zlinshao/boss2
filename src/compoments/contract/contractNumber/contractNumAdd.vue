@@ -20,7 +20,7 @@
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="new_status" @change="close_empty">
                                                 <option value="1">领取</option>
-                                                <!--<option value="2">作废</option>-->
+                                                <option value="2">作废</option>
                                                 <option value="3">上缴</option>
                                             </select>
                                         </div>
@@ -47,7 +47,7 @@
                                     <div class="form-group" v-if="new_status == 2">
                                         <label class="col-sm-2 control-label">实到日期<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
+                                            <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate1"
                                                         :idName="'receiveDate2'"
                                                         @sendDate="getDate2"></DatePicker>
                                         </div>
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领用合同数(收)<sup class="required">*</sup></label>
+                                        <label class="col-sm-2 control-label" v-if="new_status == 1">领取合同数(收)<sup class="required">*</sup></label>
                                         <label class="col-sm-2 control-label" v-if="new_status == 2">作废合同数(收)<sup class="required">*</sup></label>
                                         <label class="col-sm-2 control-label" v-if="new_status == 3">上缴合同数(收)<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
@@ -151,11 +151,19 @@
                                     <!--作废-->
                                     <div v-if="new_status == 2">
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">合同编号记录</label>
+                                            <div class="col-sm-6 padd0" v-for="(item,index) in scrap_ljsf">
+                                                <label class="col-xs-12 col-sm-4 control-label">合同编号记录(收)</label>
+                                                <div class="col-xs-5 col-sm-8">
+                                                    <input type="text" class="form-control" v-model="scrap_ljsf[index]">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">
+                                            <label class="col-sm-2 control-label">合同编号记录(收)</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="record_num_rent">
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <!--<div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
                                             <div class="col-sm-10">
@@ -163,15 +171,23 @@
                                             </div>
                                         </div>-->
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">作废合同</label>
+                                            <label class="col-sm-2 control-label">作废合同数(租)</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="rent_num">
+                                                <input type="text" class="form-control" v-model="rent_num" @keyup="rent_num = rent_num.replace(/[^\d]/g,'');">
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <!--<div class="form-group">
                                             <label class="col-sm-2 control-label">合同编号录入(租)</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="record_num_collect">
+                                            </div>
+                                        </div>-->
+                                        <div class="form-group">
+                                            <div class="col-sm-6 padd0" v-for="(item,index) in scrap_ljzf">
+                                                <label class="col-xs-12 col-sm-4 control-label">合同编号记录(租)</label>
+                                                <div class="col-xs-5 col-sm-8">
+                                                    <input type="text" class="form-control" v-model="scrap_ljzf[index]">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -313,6 +329,9 @@
                 extra_zf_num:0,     // 点击录入租房个数
                 extra_ljsf : [],
 
+                scrap_ljsf : [],   // 作废收房合同
+                scrap_ljzf : [],   // 作废租房合同
+
                 collect_turn_num: [],
                 rent_turn_num: [],
                 new_status: 1,
@@ -334,8 +353,8 @@
                 rent_num_start: '',             //从X
                 rent_num_end: '',               //到X
 //                作废
-                record_num_rent: '',            //合同编号记录 收
-                record_num_collect: '',         //合同编号记录 租
+//                record_num_rent: '',            //合同编号记录 收
+//                record_num_collect: '',         //合同编号记录 租
 
                 rent_surplus: '',               //剩余合同数(租)
 
@@ -347,6 +366,7 @@
 
 
                 currentDate: [],                //时间组件
+                currentDate1: [],                //时间组件
                 dateConfigure: [                //时间组件
                     {
                         range: false,
@@ -382,6 +402,48 @@
             },
             rent_turn_num (val) {
 //                console.log(val);
+            },
+            collect_num(val,oldVal){
+//                console.log(val);
+//                console.log(oldVal);
+                if (this.new_status==2){
+                    if (isNaN(parseInt(oldVal))){
+                        oldVal = 0;
+                    }
+                    if (isNaN(parseInt(val))||val==0){
+//                        val = 0;
+                        this.scrap_ljsf = [];
+                    }
+                    if (val<oldVal){
+                        this.scrap_ljsf.splice(val-1,oldVal-val);
+                    } else if (val>oldVal){
+                        let a = val-oldVal;
+                        for (let i = 0;i<a;i++){
+                            this.scrap_ljsf.push('');
+                        }
+                    }
+                }
+            },
+            rent_num(val,oldVal){
+//                console.log(val);
+//                console.log(oldVal);
+                if (this.new_status==2){
+                    if (isNaN(parseInt(oldVal))){
+                        oldVal = 0;
+                    }
+                    if (isNaN(parseInt(val))||val==0){
+//                        val = 0;
+                        this.scrap_ljzf = [];
+                    }
+                    if (val<oldVal){
+                        this.scrap_ljzf.splice(val-1,oldVal-val);
+                    } else if (val>oldVal){
+                        let a = val-oldVal;
+                        for (let i = 0;i<a;i++){
+                            this.scrap_ljzf.push('');
+                        }
+                    }
+                }
             }
         },
         mounted(){
@@ -399,6 +461,7 @@
         methods: {
 //            上缴合同数 收
             turn_in_collect (){
+                // 上缴
                 this.collect_turn_num = [];
                 if (this.collect_num !== '') {
                     for (let i = 0; i < this.collect_num; i++) {
@@ -410,7 +473,12 @@
                     }
                 }
 
+                // 领取
                 this.getCollectEnd();
+
+                // 作废
+
+
             },
 //            上缴合同数 租
             turn_in_rent (){
@@ -544,6 +612,7 @@
                 this.rent_pitch = [];
                 this.receiver_time = '';              //领取时间
                 this.currentDate = [];                //领取时间显示
+                this.currentDate1 = [];                //实到时间显示
                 this.receiver_name = '';              //领取人
                 this.receiver_id = '';                //领取人ID
                 this.department = '';                 //所属部门
@@ -555,8 +624,8 @@
                 this.rent_num = '';                   //领取合同数(租)
                 this.rent_num_start = '';             //从X
                 this.rent_num_end = '';               //到X
-                this.record_num_rent = '';            //合同编号记录 收
-                this.record_num_collect = '';         //合同编号记录 租
+                this.scrap_ljsf = [];                 //合同编号记录 收
+                this.scrap_ljzf = [];                 //合同编号记录 租
 
                 this.rent_surplus = '';               //剩余合同数(租)
 //                this.operate_man = '';                //操作人
@@ -648,7 +717,7 @@
 //                    ljzf_record_end: this.rent_num_end,
 //                    extra_ljzf: [],
 //                    extra_ljsf: [],
-                    pz_pic: this.photos.cus_idPhoto,
+//                    pz_pic: this.photos.cus_idPhoto,
 //                    paid_ljsf : this.collect_turn_num,
 //                    paid_ljzf : this.rent_turn_num
                 };
@@ -663,14 +732,22 @@
                     data.ljzf_record_end = this.rent_num_end;
                     data.extra_ljzf = this.extra_ljzf;
                     data.extra_ljsf = this.extra_ljsf;
+                    data.pz_pic = this.photos.cus_idPhoto;
                 } else if (this.new_status==2){
                     // 废除
+                    data.report_time = this.receiver_time;
+                    data.actual_time = this.reality_time;
+                    data.reporter_id = this.receiver_id;
+                    data.scrap_ljsf = this.scrap_ljsf;
+                    data.scrap_ljzf = this.scrap_ljzf;
+                    data.scrap_pic = this.photos.cus_idPhoto;
                 } else {
                     // 上缴
                     data.paid_time = this.receiver_time;
                     data.paid_id = this.receiver_id;
                     data.paid_ljsf = this.collect_turn_num;
                     data.paid_ljzf = this.rent_turn_num;
+                    data.paid_pic = this.photos.cus_idPhoto;
                 }
 
                 console.log(data)

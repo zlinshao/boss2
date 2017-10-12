@@ -69,11 +69,11 @@
                             领取
                         </a>
                     </li>
-                    <!--<li :class="{'active': params.type === 2}" @click="tabs(2)">
+                    <li :class="{'active': params.type === 2}" @click="tabs(2)">
                         <a data-toggle="tab" href="#void">
                             作废
                         </a>
-                    </li>-->
+                    </li>
                     <li :class="{'active': params.type === 3}" @click="tabs(3)">
                         <a data-toggle="tab" href="#turnOver">
                             上缴
@@ -93,8 +93,8 @@
                                 <th class="text-center">领取时间</th>
                                 <th class="text-center">领取合同数(收)</th>
                                 <th class="text-center">领取合同数(租)</th>
-                                <!--<th class="text-center">剩余合同数(收)</th>-->
-                                <!--<th class="text-center">剩余合同数(租)</th>-->
+                                <th class="text-center">剩余合同数(收)</th>
+                                <th class="text-center">剩余合同数(租)</th>
                                 <th class="text-center">领取人</th>
                                 <th class="text-center">所属部门</th>
                                 <th class="text-center">详情</th>
@@ -113,10 +113,10 @@
                                 <td>{{item.receiver_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
-                                <!--<td>{{item.zf_numbers}}</td>-->
-                                <!--<td>{{item.zf_numbers}}</td>-->
+                                <td>{{item.rest_sf_number}}</td>
+                                <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.receiver_name}}</td>
-                                <td>{{item.department_id[0]}}</td>
+                                <td>{{item.department_id.name}}</td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
                                     query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}"
@@ -146,24 +146,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-center" v-for="item in 9">
+                            <tr class="text-center" v-for="item in myData">
                                 <td>
-                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item) > -1,
-                                            'c_off':pitch.indexOf(item)==-1}"
-                                           @click.prevent="checked_id(item, $event)">
+                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
+                                            'c_off':pitch.indexOf(item.id)==-1}"
+                                           @click.prevent="checked_id(item.id, $event)">
                                         <input type="checkbox" class="pull-left"
-                                               :checked="pitch.indexOf(item) > -1">
+                                               :checked="pitch.indexOf(item.id) > -1">
                                     </label>
                                 </td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
-                                <td>{{item}}</td>
+                                <td>{{item.actual_time}}</td>
+                                <td>{{item.sf_numbers}}</td>
+                                <td>{{item.zf_numbers}}</td>
+                                <td>{{item.rest_sf_number}}</td>
+                                <td>{{item.rest_zf_number}}</td>
+                                <td>{{item.reporter_name}}</td>
+                                <td>{{item.department_id.name}}</td>
                                 <td>
-                                    <router-link to="/contractNumDetail">详情</router-link>
+                                    <router-link  :to="{path : '/contractNumDetail',
+                                    query:{request_time:item.scrap_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
@@ -181,8 +182,8 @@
                                 <th class="text-center">上缴时间</th>
                                 <th class="text-center">上缴合同数(收)</th>
                                 <th class="text-center">上缴合同数(租)</th>
-                                <!--<th class="text-center">剩余合同数(收)</th>-->
-                                <!--<th class="text-center">剩余合同数(租)</th>-->
+                                <th class="text-center">剩余合同数(收)</th>
+                                <th class="text-center">剩余合同数(租)</th>
                                 <th class="text-center">上缴人</th>
                                 <th class="text-center">所属部门</th>
                                 <th class="text-center">详情</th>
@@ -201,8 +202,10 @@
                                 <td>{{item.paid_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
+                                <td>{{item.rest_sf_number}}</td>
+                                <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.paid_name}}</td>
-                                <td>{{item.department_id[0]}}</td>
+                                <td>{{item.department_id.name}}</td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
                                     query:{request_time:item.paid_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
