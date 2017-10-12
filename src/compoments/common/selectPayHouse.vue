@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <div class="modal fade selectHouse" id="selectHouse" data-backdrop="static">
+        <div class="modal fade selectHouse" id="selectHouse" data-backdrop="static" style="z-index: 1080;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

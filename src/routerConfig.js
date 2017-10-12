@@ -45,6 +45,7 @@ import ContractNumDetail from "./compoments/contract/contractNumber/contractNumD
 
 import  Comparecontract from  './compoments/contract/Compare.vue'
 
+import Organization from './compoments/finance/organization/organization.vue'                   //组织架构财务
 import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'                     //财务房东管理
 import NewRenter from './compoments/finance/clientManage/newRenter.vue'                         //财务租客管理
 import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'             //财务房东管理详情
@@ -70,6 +71,7 @@ import Personal from './compoments/salary/personal.vue'                         
 import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
 import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                 // 周期表
 import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                                 // 周期表详情
+
 
 
 // import GeneralRecord from './compoments/finance/generalRecord.vue'                           // 总账操作记录
@@ -103,14 +105,14 @@ import BatchApply from './compoments/office/batchApply.vue'                     
 import OfficeLibrary from './compoments/office/officeLibrary/officeLibrary.vue'                 // 办公用品库管理
 import OfficeDetail from './compoments/office/officeManage/officeDetail.vue'                    // 办公用品详情
 
-import Square from './compoments/staffSquare/square/staffSquare.vue'                    // 员工广场
-import SquareDetail from './compoments/staffSquare/square/squareDetail.vue'                    // 员工广场详情
-import Article from './compoments/staffSquare/article/article.vue'                    // 发布文章
-import ArticleDetail from './compoments/staffSquare/article/articleDetail.vue'                    // 文章详情
-import PostArticle from './compoments/staffSquare/article/postArticle.vue'                    // 发布
-import ModifyArticle from './compoments/staffSquare/article/modifyAriticle.vue'                    // 编辑
+import Square from './compoments/staffSquare/square/staffSquare.vue'                            // 员工广场
+import SquareDetail from './compoments/staffSquare/square/squareDetail.vue'                     // 员工广场详情
+import Article from './compoments/staffSquare/article/article.vue'                              // 发布文章
+import ArticleDetail from './compoments/staffSquare/article/articleDetail.vue'                  // 文章详情
+import PostArticle from './compoments/staffSquare/article/postArticle.vue'                      // 发布
+import ModifyArticle from './compoments/staffSquare/article/modifyAriticle.vue'                 // 编辑
 
-import Organize from  './compoments/user/organization.vue'                                      //组织架构
+import Organize from  './compoments/user/organization.vue'                                      //业绩生成
 import PositionManage from './compoments/user/positionManage.vue'
 
 import Question from  './compoments/questionnaire/questionList.vue'             //问卷调查
@@ -126,6 +128,10 @@ export default[
         path: '/index',             //主页
         name: 'index',
         component: Index
+    }, {
+        path: '/organization',             //业绩生成
+        name: 'organization',
+        component: Organization
     },
     {
         path: '/power',             //权限管理
