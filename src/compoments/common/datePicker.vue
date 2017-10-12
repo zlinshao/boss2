@@ -47,9 +47,9 @@
         <div v-else="range">
             <!--<div class="input-group">-->
             <!--<label>-->
-            <input @click="remindData" type="text" name="addtime" :placeholder="placeholder==undefined?'选择时间':placeholder" v-model="date"
+            <input @click="remindData" type="text" name="addtime" :placeholder="placeholder == undefined?'选择时间':placeholder" v-model="date"
                    :id="idName"
-                   class="form-control" readonly style="margin-bottom: 18px;">
+                   class="form-control" readonly style="margin-bottom: ">
             <!--</label>-->
             <!--</div>-->
         </div>
@@ -99,13 +99,10 @@
         components: {Status},
         created () {
 //            判断是否pc
-//            console.log(this.IsPC());
             this.isPC = this.IsPC();
-//            console.log(this.dateConfigure[0]);
             this.range = this.dateConfigure[0].range;
             this.hour = this.dateConfigure[0].needHour;
             this.dateId = this.dateConfigure[0].date_id;
-//            console.log(this.hour);
             this.setDate();
 //            this.ifNeedHour();
 //            this.remindData();
@@ -113,16 +110,12 @@
         },
         watch: {
             dateConfigure(val){
-                console.log(val[0]);
                 this.range = val[0].range;
                 this.hour = val[0].needHour;
-//                console.log(val[0].currentDate);
-//                console.log(this.hour);
 //                this.ifNeedHour();
 //                this.remindData();
             },
             currentDate(val){
-//                console.log(val);
                 this.setDate();
             },
         },
