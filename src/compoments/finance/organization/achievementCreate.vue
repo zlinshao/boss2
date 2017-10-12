@@ -42,9 +42,9 @@
                         <li>
                             <h5><a @click="not_generate">不生成业绩</a></h5>
                         </li>
-                        <li>
-                            <h5><a @click="delete_info">删除</a></h5>
-                        </li>
+                        <!--<li>-->
+                            <!--<h5><a @click="delete_info">删除</a></h5>-->
+                        <!--</li>-->
                     </ul>
                 </div>
 
@@ -161,7 +161,7 @@
         <Page :pg="paging" @pag="create_ach" :beforePage="params.page"></Page>
 
 
-        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
 
         <!--房东-->
         <NewClientAdd :list="myLandlordList" @success_="search"></NewClientAdd>
@@ -216,7 +216,7 @@
                         needHour: true,
                     }
                 ],
-                confirmMsg: [],                     //删除
+//                confirmMsg: [],                     //删除
                 info: {                             //提示信息
                     //成功状态 ***
                     state_success: false,
@@ -445,17 +445,17 @@
                     this.leader_id = '';
                 }
             },
-//            删除
-            delete_info (){
-                this.confirmMsg = {msg: '确定删除吗？'};
-                $('#confirm').modal('show');
-            },
-//            确定删除
-            getConfirm (){
-                this.$http.post('').then((res) => {
-
-                })
-            },
+////            删除
+//            delete_info (){
+//                this.confirmMsg = {msg: '确定删除吗？'};
+//                $('#confirm').modal('show');
+//            },
+////            确定删除
+//            getConfirm (){
+//                this.$http.post('').then((res) => {
+//
+//                })
+//            },
             successMsg(msg){
                 //成功提示信息
                 this.info.success = msg;
