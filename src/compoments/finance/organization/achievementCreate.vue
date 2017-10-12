@@ -70,23 +70,29 @@
                 <tr v-for="item in ach_create" :class="{'red': item.salary_candidate == 2}">
                     <td class="text-left">
                         <!--房东-->
-                        <label v-if="item.identity == 1 && item.salary_candidate != 2"
+                        <label v-if="item.identity == 1 && item.salary_candidate != 2 && item.generate_time == null"
                                :class="{'label_check':true,'c_on':col_pitch.indexOf(item.id) > -1,'c_off':col_pitch.indexOf(item.id)==-1}"
                                @click.prevent="pitchId(item.id, $event,item.identity)">
                             <input type="checkbox" class="pull-left"
                                    :checked="col_pitch.indexOf(item.id) > -1">
                         </label>
                         <!--租客-->
-                        <label v-if="item.identity == 2 && item.salary_candidate != 2"
+                        <label v-if="item.identity == 2 && item.salary_candidate != 2 && item.generate_time == null"
                                :class="{'label_check':true,'c_on':ren_pitch.indexOf(item.id) > -1,'c_off':ren_pitch.indexOf(item.id)==-1}"
                                @click.prevent="pitchId(item.id, $event,item.identity)">
                             <input type="checkbox" class="pull-left"
                                    :checked="ren_pitch.indexOf(item.id) > -1">
                         </label>
-                        <label v-if="(item.identity == 1 || 2) && item.salary_candidate == 2"
+
+                        <label v-if="(item.identity == 1 || 2) && item.salary_candidate == 2 && item.generate_time == null"
                                @click="create_generate(item.id, item.identity)">
-                            <i class="fa fa fa-rotate-left" style="padding-left: 3px;"></i>
+                            <i class="fa fa-rotate-left" style="padding-left: 3px;font-size: 16px;"></i>
                         </label>
+
+                        <label v-if="(item.identity != 1 || 2) && item.generate_time != null">
+                            <i class="fa fa-check-circle" style="font-size: 22px; color: #0EC641;"></i>
+                        </label>
+
                     </td>
                     <td>{{item.create_time}}</td>
                     <td>
