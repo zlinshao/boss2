@@ -291,7 +291,7 @@
                             <li><a @click="addReminds"><i class="fa fa-plus"></i>增加提醒</a></li>
                             <li><a @click="lookRemind"><i class="fa fa-eye"></i>查看提醒</a></li>
                             <li>
-                                <router-link to="/HeaderMemorandum"><i class="fa fa-book"></i>备忘录</router-link>
+                                <router-link to="/HeaderMemorandum"><i class="fa fa-book"></i>记事簿</router-link>
                             </li>
                             <li><a @click="lock_screen(lockScreen,1)"><i class="fa fa fa-lock"></i>锁屏</a></li>
                             <li><a @click="lock_state"><i class="fa fa-key"></i>修改锁屏密码</a></li>
