@@ -62,7 +62,7 @@
 
         <!--表格-->
         <div>
-            <section class="panel table table-responsive">
+            <section class="panel table table-responsive has-js">
                 <table class="table table-striped table-advance table-hover">
                     <thead>
                         <tr>
@@ -252,7 +252,7 @@
             picked (item,e){  //复选框单选并保存选中的id
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
-                if(evInput){
+                if(evInput.checked){
                     this.contractSeleted = item.id;
                 }else {
                     this.contractSeleted = 0;
