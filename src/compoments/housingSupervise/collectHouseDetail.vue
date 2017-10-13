@@ -17,7 +17,7 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;{{item.address}}
-                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" ></a>
+                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" v-show="simulate.indexOf('Villa/updateVilla_success')>-1||isSuper"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">
@@ -304,28 +304,32 @@
                                             <img :src="img.small" @click="showLargePic('house_pic',index)">
                                         </a>
                                     </div>
-                                    <div>
+                                    <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">产权证照片：</span>
                                         <a v-for="(img,index) in item.album.property_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
                                             <img :src="img.small" @click="showLargePic('property_pic',index)">
                                         </a>
                                     </div>
-                                    <div>
+                                    <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">水卡照片：</span>
                                         <a v-for="(img,index) in item.album.water_card_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
                                             <img :src="img.small" @click="showLargePic('water_card_pic',index)">
                                         </a>
                                     </div>
-                                    <div>
+                                    <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">电卡照片：</span>
                                         <a v-for="(img,index) in item.album.elec_card_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
                                             <img :src="img.small" @click="showLargePic('elec_card_pic',index)">
                                         </a>
                                     </div>
-                                    <div>
+                                    <div v-show="simulate.indexOf('Villa/readVilla_pic_self')>-1||simulate.indexOf('Villa/readVilla_pic_group')>-1
+                                    ||simulate.indexOf('Villa/readVilla_pic_area')>-1||simulate.indexOf('Villa/readVilla_pic_all')>-1||isSuper">
                                         <span class="text-primary">燃气卡照片：</span>
                                         <a v-for="(img,index) in item.album.gas_card_pic"
                                            style="margin: 10px 10px 0 0;display: inline-block;">
@@ -345,7 +349,7 @@
         <Distribution></Distribution>
 
         <!--房屋 新增/编辑-->
-        <HouseEdit :dictionary="dictionary" :HouseRevise="houseRevise" @reviseHouse="alreadyRevise"></HouseEdit>
+        <HouseEdit :dictionary="dictionary" :HouseRevise="houseRevise" :simulate="simulate" @reviseHouse="alreadyRevise"></HouseEdit>
     </div>
 </template>
 
@@ -354,6 +358,7 @@
     import HouseEdit from './houseEdit.vue'
     import PicModal from '../common/largePic.vue'
     export default {
+        props:['simulate','isSuper'],
         components: {
             Distribution,
             HouseEdit,

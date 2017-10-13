@@ -34,21 +34,21 @@
                     <i class="fa fa-unlock"  v-if="item.villa_id.status ===1"  title="已解锁"></i>
                 </span>
                 <!--<button class="btn btn-primary" @click="compareContract">对比</button>-->
-                <router-link class="btn btn-primary" :to="{path:'/comparecontract',query:{houseId : houseId}}">
+                <router-link class="btn btn-primary" :to="{path:'/comparecontract',query:{houseId : houseId}}" v-show="simulate.indexOf('Collect/Rent/compare')>-1||isSuper">
                     对比
                 </router-link>
-                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1">通知</button>
+                <button class="btn btn-primary" @click="inform" v-if="contract_status!=1&&simulate.indexOf('Collect/inform')>-1||isSuper">通知</button>
                 <button class="btn btn-primary" @click="returnVisit" v-if="item.reviewed ===2 && contract_status!=1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1 && contract_status!=1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" @click="passContract" v-if="contract_status!=1"
+                <button class="btn btn-primary" @click="passContract" v-if="contract_status!=1&&(simulate.indexOf('ContractCheck/checkContract_collect')>-1||isSuper)"
                         :disabled = " contract_pass===5 || contract_pass===1">
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
-                <button class="btn btn-warning" v-if="contract_pass > 2 && contract_status!=1" @click='overrule'>驳回</button>
+                <button class="btn btn-warning" v-if="contract_pass > 2 && contract_status!=1&&(simulate.indexOf('ContractCheck/reject_collect')>-1)||isSuper" @click='overrule'>驳回</button>
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -56,18 +56,18 @@
                         更多
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li>
+                        <li v-if="simulate.indexOf('Collect/updateContract')>-1">
                             <button class="btn btn-white btn-block" @click="editContract"
-                                    :disabled="(contract_pass>4||contract_status==1) && simulate.indexOf('core/cmo') == -1" >
+                                    :disabled="(contract_pass>4||contract_status==1) && (simulate.indexOf('Collect/update_success') == -1||isSuper)" >
                                 编辑
                             </button>
                         </li>
-                        <li>
+                        <li v-show="simulate.indexOf('Collect/continued')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="renewContract" :disabled="contract_status==1">
                                 续约
                             </button>
                         </li>
-                        <li>
+                        <li v-show="simulate.indexOf('Collect/readContract_easy')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="openSimpleConvenient">
                                 简版
                             </button>
@@ -722,7 +722,7 @@
 
     import Convenient from './collectSimpleConvenient.vue'
     export default{
-        props : ['simulate'],
+        props : ['simulate','isSuper'],
         components: {
             Transfer,   //转账
             Contract,   //合同信息

@@ -541,14 +541,14 @@
                                                      :result="'handoverPic'" :idPhotos="handoverPic"></up-load>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1">
+                                    <div class="row" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <label class="col-lg-2 control-label">退租交接单</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="retreatHandoverPicId" @delete="picDelete" @complete="complete"
                                                      :result="'retreatHandoverPic'" :idPhotos="retreatHandoverPic"></up-load>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1">
+                                    <div class="row" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <label class="col-lg-2 control-label">退组结算单</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="retreatBalancePicId" @delete="picDelete" @complete="complete"
@@ -582,7 +582,7 @@
     import SelectHouse from  '../common/selectHouse.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
-        props:['contractEitId','dictionary','isEditRent','simulate'],
+        props:['contractEitId','dictionary','isEditRent','simulate','isSuper'],
         components:{
             SelectClient,
             upLoad,

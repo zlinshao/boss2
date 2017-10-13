@@ -38,7 +38,7 @@
                                 重置
                             </button>
                         </div>
-                        <div class="pull-right" style="margin: 8px">
+                        <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('User/saveUser')>-1">
                             <button class="btn btn-primary" @click="addUser">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增员工
                             </button>
@@ -69,7 +69,10 @@
                         <th class="text-center">第一次合同</th>
                         <th class="text-center">第二次合同</th>
                         <th class="text-center">详情</th>
-                        <th class="text-center">操作</th>
+                        <th class="text-center"
+                            v-if="simulate.indexOf('User/updateUser')>-1||simulate.indexOf('User/dismiss')>-1
+                            ||simulate.indexOf('User/disable_enable')>-1||simulate.indexOf('User/disable_stop')>-1
+                            ||simulate.indexOf('User/softDelete')>-1||simulate.indexOf('Login/logins') > -1||isSuper">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -108,44 +111,47 @@
                             <router-link :to="{path:'/userDetail',query: {UserId: item.id,params : params,departmentName:department_name}}">详情
                             </router-link>
                         </td>
-                        <td class="dropdown text-center">
+                        <td class="dropdown text-center"
+                            v-if="simulate.indexOf('User/updateUser')>-1||simulate.indexOf('User/dismiss')>-1
+                            ||simulate.indexOf('User/disable_enable')>-1||simulate.indexOf('User/disable_stop')>-1
+                            ||simulate.indexOf('User/softDelete')>-1||simulate.indexOf('Login/logins') > -1||isSuper">
                             <a href="#"
                                class="dropdown-toggle fa fa-gear"
                                data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" style="padding: 0;margin:0">
-                                <li @click="edit(item.id)">
+                                <li @click="edit(item.id)" v-if="simulate.indexOf('User/updateUser')>-1||isSuper">
                                     <button type="button" class="btn btn-default btn-lg btn-block">编辑
                                     </button>
                                 </li>
                                 <li role="separator" class="divider" style="margin: 0"></li>
-                                <li @click="leaveAccount(item.id)">
+                                <li @click="leaveAccount(item.id)" v-if="simulate.indexOf('User/dismiss')>-1||isSuper">
                                     <button type="button" class="btn btn-default btn-lg btn-block"
                                             :disabled="item.status==3">离职
                                     </button>
                                 </li>
                                 <li role="separator" class="divider" style="margin: 0"></li>
-                                <li @click="startAccount(item.id)">
+                                <li @click="startAccount(item.id)" v-if="simulate.indexOf('User/disable_enable')>-1||isSuper">
                                     <button type="button" class="btn btn-default btn-lg btn-block"
                                             :disabled="item.status==1">启用账号
                                     </button>
                                 </li>
                                 <li role="separator" class="divider" style="margin: 0"></li>
-                                <li @click="suspendAccount(item.id)">
+                                <li @click="suspendAccount(item.id)" v-if="simulate.indexOf('User/disable_stop')>-1||isSuper">
                                     <button type="button" class="btn btn-default btn-lg btn-block"
                                             :disabled="item.status==3 || item.status==2">禁用账号
                                     </button>
                                 </li>
                                 <li role="separator" class="divider" style="margin: 0"></li>
-                                <li @click="deleteAccount(item.id)">
+                                <li @click="deleteAccount(item.id)" v-if="simulate.indexOf('User/softDelete')>-1||isSuper">
                                     <button type="button" class="btn btn-default btn-lg btn-block">
                                         删除账号
                                     </button>
                                 </li>
                                 <li role="separator" class="divider" style="margin: 0"></li>
-                                <li v-if="simulate.indexOf('staff/logins') > -1"
-                                    @click="simulates(item.id, 'staff/logins')">
+                                <li v-if="simulate.indexOf('Login/logins') > -1||isSuper"
+                                    @click="simulates(item.id, 'Login/logins')">
                                     <button type="button" class="btn btn-default btn-lg btn-block">
                                         模拟登陆
                                     </button>
@@ -185,7 +191,7 @@
     import UserAdd from './userAdd.vue';
 
     export default{
-        props: ['simulate'],
+        props: ['simulate','isSuper'],
         components: { Page, Department, Status, Confirm, Loading,AdvancedSearch,UserAdd,UserRevise},
         data(){
             return {

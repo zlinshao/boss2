@@ -12,17 +12,20 @@
 							<span class="department">{{model.name}}</span>
                         </span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
-						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						   v-show="simulate.indexOf('Department/updateDpm')>-1||simulate.indexOf('Department/saveDpm')>-1
+						   ||simulate.indexOf('Department/saveDpm')>-1||simulate.indexOf('Department/softDelete')>-1
+						   ||simulate.indexOf('Department/department_move')>-1||isSuper">
 						</i>
 
 						<ul class="dropdown-menu dropdown-menu-left" style="padding: 0 0 0 0px;">
-							<li>
+							<li v-if="simulate.indexOf('Department/updateDpm')>-1||isSuper">
 								<a @click="edit($event)">编辑部门</a>
 							</li>
-							<li>
+							<li v-if="simulate.indexOf('Department/saveDpm')>-1||isSuper">
 								<a @click="insertDeparment($event)">新建下级部门</a>
 							</li>
-							<li v-if="model.id === 1">
+							<li v-if="model.id === 1&&(simulate.indexOf('Department/saveDpm')>-1||isSuper)">
 								<a @click="addDeparment($event)">新建平级部门</a>
 							</li>
 							<!--<li>-->
@@ -31,10 +34,10 @@
 							<!--<li>-->
 								<!--<a @click="stopDepartment($event)" v-if="model.status == 1">停用部门</a>-->
 							<!--</li>-->
-							<li>
+							<li v-if="simulate.indexOf('Department/softDelete')>-1||isSuper">
 								<a @click="deleteDepartment($event)">删除部门</a>
 							</li>
-							<li>
+							<li v-if="simulate.indexOf('Department/department_move')>-1||isSuper">
 								<a @click="transferDepartment($event)">调迁部门</a>
 							</li>
 						</ul>
@@ -57,7 +60,8 @@
         components:{},
         data(){
             return{
-
+                simulate: [],
+                isSuper : false
             }
         },
 		props: {
@@ -93,7 +97,9 @@
 				type:Function
 			}
 		},
-
+        mounted(){
+            this.login_status();
+        },
 		computed:{
 			// 给（根 和 子树）赋值不同的样式
 			rootClass(){
@@ -152,6 +158,22 @@
 			},
 		},
 		methods:{
+            // 登陆状态/权限列表
+            login_status (){
+                this.$http.get('staff/info').then((res) => {
+                    if (res.data.code === 80019) {
+                        window.location.href = 'login.html'
+                    } else {
+                        globalConfig.urlName = res.data.name;
+                        this.urlName = res.data.name;
+                        this.urlCard = res.data.avatar;
+                        for (let i = 0; i < res.data.auth_all.length; i++) {
+                            this.simulate.push(res.data.auth_all[i].name);
+                        }
+                        this.isSuper = res.data.super_auth.indexOf(res.data.id)>-1;
+                    }
+                });
+            },
 			Func(val,e){
 				// 查找点击的子节点
 				let recurFunc = (data,list) => {

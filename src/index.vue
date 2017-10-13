@@ -3,21 +3,32 @@
 
         <div class="row">
             <div class="col-md-9">
-                <section class="panel">
+                <section class="panel"
+                         v-show="simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1
+                         ||simulate.indexOf('Villa/receivedVillaList')>-1||simulate.indexOf('Villa/villaList')>-1
+                         ||simulate.indexOf('User/searchUser')>-1||simulate.indexOf('Manager/index')>-1
+                         ||simulate.indexOf('System/index')>-1||simulate.indexOf('Approval/index')>-1
+                         ||simulate.indexOf('Remind/index')>-1||simulate.indexOf('Secretary/index')>-1
+                         ||simulate.indexOf('Msessage/self_message')>-1||simulate.indexOf('Message/department_message')>-1
+                         ||simulate.indexOf('Favourite/index')>-1||isSuper">
                     <div class="panel-body">
                         <a class="btn">快捷入口：</a>
-                        <router-link class="btn btn-link" to="/custom">客户</router-link>  <!--客户-->
-                        <router-link class="btn btn-link" to="/customerPool">客户池</router-link>  <!--客户池-->
-                        <router-link class="btn btn-link" to="/OkCollect">公司房源</router-link>  <!--公司房源-->
-                        <router-link class="btn btn-link" to="/noCollect">待收房源</router-link>  <!--待收房源-->
-                        <router-link class="btn btn-link" to="/reportedRenting">租房报备</router-link>  <!--租房报备-->
-                        <router-link class="btn btn-link" to="/reportedCollect">收房报备</router-link>  <!--收房报备-->
-                        <router-link class="btn btn-link" to="/user">员工管理</router-link>  <!--用户管理-->
+                        <router-link class="btn btn-link" to="/custom" v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">客户</router-link>  <!--客户-->
+                        <router-link class="btn btn-link" to="/customerPool" v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">客户池</router-link>  <!--客户池-->
+                        <router-link class="btn btn-link" to="/OkCollect" v-show="simulate.indexOf('Villa/receivedVillaList')>-1||isSuper">公司房源</router-link>  <!--公司房源-->
+                        <router-link class="btn btn-link" to="/noCollect" v-show="simulate.indexOf('Villa/villaList')>-1||isSuper">待收房源</router-link>  <!--待收房源-->
+                        <!--<router-link class="btn btn-link" to="/reportedRenting">租房报备</router-link>  &lt;!&ndash;租房报备&ndash;&gt;-->
+                        <!--<router-link class="btn btn-link" to="/reportedCollect">收房报备</router-link>  &lt;!&ndash;收房报备&ndash;&gt;-->
+                        <router-link class="btn btn-link" to="/user" v-show="simulate.indexOf('User/searchUser')>-1||isSuper">员工管理</router-link>  <!--用户管理-->
                         <!--<router-link class="btn btn-link" to="/periodicForGcompany">公司业绩</router-link>  &lt;!&ndash;公司业绩&ndash;&gt;-->
                         <!--<router-link class="btn btn-link" to="/periodicForGroup">小组业绩</router-link>  &lt;!&ndash;小组业绩&ndash;&gt;-->
                         <!--<router-link class="btn btn-link" to="/periodicForPeople">个人业绩</router-link>  &lt;!&ndash;个人业绩&ndash;&gt;-->
-                        <router-link class="btn btn-link" to="/leadingOut">客户导出</router-link>  <!--客户导出-->
-                        <router-link class="btn btn-link" to="/messageCenter">消息中心</router-link>  <!--消息中心-->
+                        <router-link class="btn btn-link" to="/leadingOut" v-show="simulate.indexOf('Manager/index')>-1||isSuper">客户导出</router-link>  <!--客户导出-->
+                        <router-link class="btn btn-link" to="/messageCenter"
+                                     v-show="simulate.indexOf('System/index')>-1||simulate.indexOf('Approval/index')>-1
+                                    ||simulate.indexOf('Remind/index')>-1||simulate.indexOf('Secretary/index')>-1
+                                    ||simulate.indexOf('Msessage/self_message')>-1||simulate.indexOf('Message/department_message')>-1
+                                    ||simulate.indexOf('Favourite/index')>-1||isSuper">消息中心</router-link>  <!--消息中心-->
                     </div>
                 </section>
                 <!--<section class="panel">-->
@@ -468,8 +479,8 @@
     import DatePicker from './compoments/common/datePicker.vue'
     import Status from './compoments/common/status.vue';              //提示信息
     export default {
-        props: ['id'],
         components: {DatePicker, Status, Question},
+        props: ['id','simulate','isSuper'],
         data (){
             return {
                 birth_show: 6,

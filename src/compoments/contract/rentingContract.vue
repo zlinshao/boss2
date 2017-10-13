@@ -61,16 +61,16 @@
                         <!--</label>-->
                         <!--</div>-->
                         <div class="pull-right" style="margin: 8px">
-                            <button class="btn btn-primary" @click="collectAdd"
+                            <!--<button class="btn btn-primary" @click="collectAdd"
                                     :disabled="simulate.indexOf('core/group') == -1 &&
                                     simulate.indexOf('core/area') == -1 && simulate.indexOf('core/up_contract') == -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
-                            </button>
-                            <!--<button class="btn btn-primary" @click="collectAdd" v-show="simulate.indexOf('Rent/saveContract') > -1">
-                                <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
                             </button>-->
+                            <button class="btn btn-primary" @click="collectAdd" v-show="simulate.indexOf('Rent/saveContract') > -1||isSuper">
+                                <i class="fa fa-plus-square"></i>&nbsp;新增租房合同
+                            </button>
                         </div>
-                        <div class="pull-right pro-sort" style="margin: 8px">
+                        <div class="pull-right pro-sort" style="margin: 8px" v-if="simulate.indexOf('Memo/MemoList_rent')>-1||isSuper">
                             <router-link :to="{path:'/Memorandum',query: {flag: 'rent'}}" class="btn btn-primary">
                                 &nbsp;查看备忘录
                             </router-link>
@@ -94,11 +94,13 @@
                 <div class="panel-body" v-if="contractSeleted.length > 0" style="padding: 0;">
                     <ul>
                         <li>已选中&nbsp; {{contractSeleted.length}} &nbsp;项</li>
-                        <li class="operate" v-if="contractSeleted.length ===1">
+                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/mark') > -1||isSuper)">
+                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <i class="fa fa-star" v-if="mark == 1" @click="marked"> 标记</i>
                             <i class="fa fa-star" v-if="mark == 2" @click="marked"> 取消标记</i>
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1">
+                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/delete') > -1||isSuper)">
+                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li class="operate" v-if="contractSeleted.length ===1">
@@ -108,18 +110,22 @@
                         <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1"  >
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="simulate.indexOf('core/up_contract') > -1">
+                        <!--<li class="operate" v-if="simulate.indexOf('core/up_contract') > -1">
+                            <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
+                        </li>-->
+                        <li class="operate" v-if="simulate.indexOf('MoveOrder/stopContract_rent') > -1">
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1">
+                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Rent/readContract_review') > -1||isSuper)">
+                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <router-link tag="i" class="fa fa-eye" :to="{path:'/rentingDetail',
                                 query: {ContractId: contractSeleted,flag:'review'}}">查看回访记录
                             </router-link>
                         </li>
-                        <li class="operate" @click="distribution">
+                        <li class="operate" @click="distribution" v-if="simulate.indexOf('MoveOrder/moveOrder_rent') > -1||isSuper">
                             <i class="fa fa-sitemap">按人员分配</i>&nbsp;
                         </li>
-                        <li class="operate" @click="distributionDpm">
+                        <li class="operate" @click="distributionDpm" v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_rent') > -1||isSuper">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
                     </ul>
@@ -155,7 +161,7 @@
                         <th class="text-center width80">审核状态</th>
                         <th class="text-center width50">锁定</th>
                         <th class="text-center width50">置顶</th>
-                        <th class="text-center width50">详情</th>
+                        <th class="text-center width50" v-if="simulate.indexOf('Rent/readContract')>-1||isSuper">详情</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
@@ -210,7 +216,7 @@
                         <td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
                         </td>
-                        <td>
+                        <td v-if="simulate.indexOf('Rent/readContract')>-1||isSuper">
                             <router-link :to="{path:'/rentingDetail',
                             query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">
                                 详情
@@ -246,7 +252,7 @@
 
     import Contract from './rentingAdd.vue'
     export default{
-        props : ['simulate'],
+        props : ['simulate','isSuper'],
         components: {DatePicker, Page, Staff, Status, Confirm, Loading ,Contract},
         data(){
             return {

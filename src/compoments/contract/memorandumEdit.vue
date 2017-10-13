@@ -83,7 +83,7 @@
             },
             reviseMemo(){
                 this.$http.post('core/memo/updatememo',{
-//                    type:this.type,
+                    type:this.type,
                     id:this.MemorandumId,
                     content:this.preContent,
                 }).then((res) =>{
