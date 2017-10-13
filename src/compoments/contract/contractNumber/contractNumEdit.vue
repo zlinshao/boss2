@@ -457,17 +457,24 @@
                         this.sf_remian_num = val.num[0].rest_sf_number ;
                         this.zf_remian_num = val.num[0].rest_zf_number ;
 
-                        this.sf_num = val.sf.length;
+                        this.sf_num = val.num[0].sf_numbers;
                         this.sf_contract = [];
-                        for (let i = 0 ; i<val.sf.length ; i++){
-                            this.sf_contract.push(val.sf[i].contract_number);
+                        if (val.num[0].sf_contract_number!=null){
+                            this.sf_contract = val.num[0].sf_contract_number.split(',');
                         }
 
-                        this.zf_num = val.zf.length;
+                        /*for (let i = 0 ; i<val.sf.length ; i++){
+                            this.sf_contract.push(val.sf[i].contract_number);
+                        }*/
+
+                        this.zf_num = val.num[0].zf_numbers;
                         this.zf_contract = [];
-                        for (let i = 0 ; i<val.zf.length ; i++){
-                            this.zf_contract.push(val.zf[i].contract_number);
+                        if (val.num[0].zf_contract_number!=null){
+                            this.zf_contract = val.num[0].zf_contract_number.split(',');
                         }
+                        /*for (let i = 0 ; i<val.zf.length ; i++){
+                            this.zf_contract.push(val.zf[i].contract_number);
+                        }*/
 //                        console.log(this.type)
                         switch (parseInt(this.type)){
                             case 1:

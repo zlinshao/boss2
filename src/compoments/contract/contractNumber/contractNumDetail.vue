@@ -62,10 +62,12 @@
                                     <div class="text-primary" v-if="type==2">本次作废合同编号(收)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(收)：</div>
                                     <div v-if="type==1">
-                                        <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
+                                        <!--<span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>-->
+                                        <span v-for="item in sf_contract_now">{{item}}&emsp;</span>
                                     </div>
                                     <div v-if="type==2">
-                                        <span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>
+                                        <!--<span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>-->
+                                        <span v-for="item in sf_contract_now">{{item}}&emsp;</span>
                                     </div>
                                     <div v-if="type==3">
                                         <div v-for="item in msg.sf">
@@ -87,7 +89,7 @@
                                 <div>
                                     <div class="text-primary">当前剩余合同编号(收)：</div>
                                     <div>
-                                        <span v-for="item in remian_sf">{{item}}&emsp;</span>
+                                        <span v-for="item in msg.num[0].rest_sf_contract">{{item}}&emsp;</span>
                                         <!--<span>
                                             {{msg.num[0].sf_contract_number.split(',')}}
                                         </span>-->
@@ -104,10 +106,12 @@
                                     <div class="text-primary" v-if="type==2">本次作废合同编号(租)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(租)：</div>
                                     <div v-if="type==1">
-                                        <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
+                                        <!--<span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>-->
+                                        <span v-for="item in zf_contract_now">{{item}}&emsp;</span>
                                     </div>
                                     <div v-if="type==2">
-                                        <span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>
+                                        <!--<span v-for="item in msg.zf">{{item.contract_number}}&emsp;</span>-->
+                                        <span v-for="item in zf_contract_now">{{item}}&emsp;</span>
                                     </div>
                                     <div v-if="type==3">
                                         <div v-for="item in msg.zf">
@@ -127,7 +131,7 @@
                                 <div>
                                     <div class="text-primary">当前剩余合同编号(租)：</div>
                                     <div>
-                                        <span v-for="item in remian_zf">{{item}}&emsp;</span>
+                                        <span v-for="item in msg.num[0].rest_zf_contract">{{item}}&emsp;</span>
                                     </div>
                                 </div>
                             </div>
@@ -189,8 +193,8 @@
                 srcs : {},
                 largePic : [],
 
-                remian_sf : [],
-                remian_zf : [],
+                sf_contract_now : [],
+                zf_contract_now : [],
 
             }
         },
@@ -228,10 +232,10 @@
                             this.public = this.msg.zf[0];
                         }
                         if (this.msg.num[0].sf_contract_number!=null){
-                            this.remian_sf = this.msg.num[0].rest_sf_contract;
+                            this.sf_contract_now = this.msg.num[0].sf_contract_number.split(',');
                         }
                         if (this.msg.num[0].zf_contract_number!=null){
-                            this.remian_zf = this.msg.num[0].rest_zf_contract;
+                            this.zf_contract_now = this.msg.num[0].zf_contract_number.split(',');
                         }
                     }
 //                console.log(this.public)

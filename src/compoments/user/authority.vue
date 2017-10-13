@@ -51,7 +51,15 @@
                             </div>
                         </section>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer has-js">
+                        <label :class="{'label_check':true,'c_on':authorityArr.length!=0&&authorityArr.length==allModules.length,
+                                            'c_off':authorityArr.length!=0&&authorityArr.length<=allModules.length}"
+                               @click.prevent="checkAll($event)"
+                               style="margin-right: 10px">
+                            <input type="checkbox" class="pull-left"
+                                   :checked="authorityArr.length!=0&&authorityArr.length==allModules.length">
+                            全选
+                        </label>
                         <button type="button" class="btn btn-default" data-dismiss="modal" @click="getAlready">取消</button>
                         <button type="button" class="btn btn-primary" @click="sure">确定</button>
                     </div>
@@ -151,6 +159,16 @@
                     let index = this.authorityArr.indexOf(id);
                     if (index > -1) {
                         this.authorityArr.splice(index, 1);
+                    }
+                }
+            },
+            checkAll(ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                this.authorityArr = [];
+                if (evInput.checked) {
+                    for (let i in this.allModules){
+                        this.authorityArr.push(this.allModules[i].id)
                     }
                 }
             }
