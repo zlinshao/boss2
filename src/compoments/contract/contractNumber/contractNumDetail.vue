@@ -228,10 +228,10 @@
                             this.public = this.msg.zf[0];
                         }
                         if (this.msg.num[0].sf_contract_number!=null){
-                            this.remian_sf = this.msg.num[0].sf_contract_number.split(',');
+                            this.remian_sf = this.msg.num[0].rest_sf_contract;
                         }
                         if (this.msg.num[0].zf_contract_number!=null){
-                            this.remian_zf = this.msg.num[0].zf_contract_number.split(',');
+                            this.remian_zf = this.msg.num[0].rest_zf_contract;
                         }
                     }
 //                console.log(this.public)
