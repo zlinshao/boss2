@@ -173,16 +173,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label col-lg-2">用户组</label>
-                                        <div class="col-lg-10">
-                                            <label class="checkbox-inline check first" v-for="item in roleList">
-                                                <input type="checkbox" class="pull-left" :value="item.id"
-                                                       @click="rules(item.id,$event)"
-                                                > {{item.role}}
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <!--<div class="row">-->
+                                        <!--<label class="col-sm-2 control-label col-lg-2">用户组</label>-->
+                                        <!--<div class="col-lg-10">-->
+                                            <!--<label class="checkbox-inline check first" v-for="item in roleList">-->
+                                                <!--<input type="checkbox" class="pull-left" :value="item.id"-->
+                                                       <!--@click="rules(item.id,$event)"-->
+                                                <!--&gt; {{item.role}}-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <hr>
                                     <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >账号状态</label>
@@ -304,7 +304,7 @@
             return {
                 //字典列表
 
-                roleList:[],
+//                roleList:[],
                 positionList:[],
                 levelList:[],
                 department_name : '',
@@ -380,7 +380,7 @@
             }
         },
         created(){
-            this.searchRoles();    //请求角色列表
+//            this.searchRoles();    //请求角色列表
             this.getLevel();       //请求等级字典
             this.getDictionary();
         },
@@ -411,11 +411,11 @@
                     this.position_id = ''
                 });
             },
-            searchRoles(){
-                this.$http.get('manager/user/searchRoles').then((res)=>{
-                    this.roleList=res.data.data;
-                })
-            },
+//            searchRoles(){
+//                this.$http.get('manager/user/searchRoles').then((res)=>{
+//                    this.roleList=res.data.data;
+//                })
+//            },
             getLevel(){
                 this.$http.get('manager/user/level').then((res)=>{
                     this.levelList=res.data.data;
@@ -436,23 +436,23 @@
                 }
             },
             //            增删数组
-            indexOf (val) {
-                for (let i = 0; i < this.length; i++) {
-                    if (this[i] === val) return i;
-                }
-                return -1;
-            },
-            rules (rul, eve){
-                if (eve.target.checked === true) {
-                    this.role.push(rul);
-                }
-                if (eve.target.checked === false) {
-                    let index = this.role.indexOf(rul);
-                    if (index > -1) {
-                        this.role.splice(index, 1);
-                    }
-                }
-            },
+//            indexOf (val) {
+//                for (let i = 0; i < this.length; i++) {
+//                    if (this[i] === val) return i;
+//                }
+//                return -1;
+//            },
+//            rules (rul, eve){
+//                if (eve.target.checked === true) {
+//                    this.role.push(rul);
+//                }
+//                if (eve.target.checked === false) {
+//                    let index = this.role.indexOf(rul);
+//                    if (index > -1) {
+//                        this.role.splice(index, 1);
+//                    }
+//                }
+//            },
             selectDep(){
                 this.myResult==[];
             },
@@ -564,7 +564,7 @@
                 this.thirdDepart=[];
                 this.fourDepart=[];
                 this.fiveDepart=[];
-                this.roleList=[];
+//                this.roleList=[];
                 this.positionList=[];
                 this.levelList=[];
                 this.firstId='';
@@ -574,7 +574,7 @@
                 this.fiveId='';
                 this.idPic.cus_idPhoto=[];
                 this.idPic.cus_idPhotos={};
-                this.searchRoles();    //请求角色列表
+//                this.searchRoles();    //请求角色列表
                 this.getLevel();       //请求等级字典
                 $("#myModalAdd").modal("hide");//关闭模态框
             },
