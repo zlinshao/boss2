@@ -22,7 +22,8 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="科目名称"  @keydown.enter.prevent="search(1)" v-model="params.search">
+                            <input type="text" class="form-control" placeholder="科目名称"
+                                   @keydown.enter.prevent="search(1)" v-model="params.search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
@@ -74,7 +75,7 @@
                                     <input type="checkbox" :value="item.id" :checked="operId===item.id">
                                 </label>
                             </td>
-                            <td>{{item.root_id==0?'':dict.subject_root[item.root_id]}}</td>
+                            <td>{{item.root_id == 0 ? '' : dict.subject_root[item.root_id]}}</td>
                             <td>{{item.title}}</td>
                             <td>{{dict.er_type[item.er_type]}}</td>
                             <td>{{item.remark}}</td>
@@ -106,10 +107,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">上级科目</label>
                                     <div class="col-sm-8 selectSubject">
-                                        <input type="text" class="form-control" readonly @click="getBaseSubject" v-model="Superior_name"/>
+                                        <input type="text" class="form-control" readonly @click="getBaseSubject"
+                                               v-model="Superior_name"/>
                                         <div class="subjectList" v-show="showChooseSubject">
                                             <ul>
-                                                <li @click="changeCurId(value,key)" :class="{'active':curSuperior_id == value}" v-for="(key,value) in subjectData">{{key}}</li>
+                                                <li @click="changeCurId(value,key)"
+                                                    :class="{'active':curSuperior_id == value}"
+                                                    v-for="(key,value) in subjectData">{{key}}
+                                                </li>
                                             </ul>
                                             <div class="choose">
                                                 <ul class="clearFix">
@@ -135,8 +140,10 @@
                                     <label class="col-sm-2 control-label">类型<sup class="required">*</sup></label>
                                     <div class="col-sm-10">
                                         <div class="dropdown">
-                                            <select name="" class="form-control" v-model="formData.er_type" :disabled="formData.superior_id==0">
-                                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}</option>
+                                            <select name="" class="form-control" v-model="formData.er_type"
+                                                    :disabled="formData.superior_id==0">
+                                                <option :value="value" v-for="(key,value) in dict.er_type">{{key}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -153,7 +160,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default"  @click="clearForm">取消</button>
+                            <button type="button" class="btn btn-default" @click="clearForm">取消</button>
                             <button type="button" class="btn btn-primary" v-show="isAdd" @click="add">保存</button>
                             <button type="button" class="btn btn-primary" v-show="!isAdd" @click="modify">修改</button>
                         </div>
@@ -180,42 +187,42 @@
     import Confirm from '../../common/confirm.vue'
 
     export default{
-        components: {Page,Status,Confirm},
+        components: {Page, Status, Confirm},
         data(){
             return {
-                beforePage : 1,
-                dict : {},
+                beforePage: 1,
+                dict: {},
 
-                isShow : false,
+                isShow: false,
 
-                operId : 0,
-                paging : '',
-                page : '',
+                operId: 0,
+                paging: '',
+                page: '',
 
-                title : '',
-                isAdd : true,       // 是否新增
+                title: '',
+                isAdd: true,       // 是否新增
 
                 myData: [],      //列表数据
 
-                params : {
-                    belong : '',
-                    er_type : '',
-                    search : ''
+                params: {
+                    belong: '',
+                    er_type: '',
+                    search: ''
                 },
 
-                showChooseSubject : false,
-                subjectData : [],
-                curSuperior_id : 0,
-                Superior_name : '',
+                showChooseSubject: false,
+                subjectData: [],
+                curSuperior_id: 0,
+                Superior_name: '',
 
-                formData : {
-                    title : '',
-                    er_type : 3,
-                    superior_id : 0,
-                    remark : ''
+                formData: {
+                    title: '',
+                    er_type: 3,
+                    superior_id: 0,
+                    remark: ''
 
                 },
-                info:{
+                info: {
                     //成功状态 ***
                     state_success: false,
                     //失败状态 ***
@@ -241,14 +248,14 @@
                 );
 
             let _this = this;
-            $('body').bind('click',function (e) {
+            $('body').bind('click', function (e) {
 //                console.log(e.target)
 //                console.log(this.showChooseSubject)
 //                if (this.showChooseSubject){
                 let subjects = document.getElementsByClassName('subjectList')[0];
-                if (_this.showChooseSubject){
+                if (_this.showChooseSubject) {
                     let input = $(subjects).prev()[0];
-                    if (!(e.target==subjects || subjects.contains(e.target) || e.target==input)){
+                    if (!(e.target == subjects || subjects.contains(e.target) || e.target == input)) {
                         _this.reset();
                     }
                 }
@@ -257,24 +264,24 @@
             })
 
         },
-        watch : {
-            'formData.superior_id' : {
+        watch: {
+            'formData.superior_id': {
                 handler(val){
-                    if (val==0){
+                    if (val == 0) {
                         this.formData.er_type = 3;
                     }
                 }
             }
         },
-        methods : {
-            changeIndex(ev,id){
+        methods: {
+            changeIndex(ev, id){
 //                console.log("一开始"+this.operId);
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
-                if (evInput.checked){
+                if (evInput.checked) {
                     this.operId = id;
 //                    console.log(this.operId);
-                }else {
+                } else {
                     this.operId = 0;
                 }
 
@@ -283,7 +290,7 @@
             subjectList(){
                 this.$http.get('account/subject').then((res) => {
 //                    console.log(res.data);
-                    if (res.data.code==18300){
+                    if (res.data.code == 18300) {
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.isShow = false;
@@ -304,10 +311,10 @@
                 this.title = '编辑科目';
                 this.isAdd = false;
 //                console.log(this.operId);
-                this.$http.get('account/subject/'+this.operId)
+                this.$http.get('account/subject/' + this.operId)
                     .then(
 //                        console.log
-                        (res) =>{
+                        (res) => {
 //                            console.log(res.data.data);
                             let val = res.data.data;
                             this.formData.title = val.title;
@@ -316,8 +323,8 @@
                             this.formData.remark = val.remark;
                             this.curSuperior_id = val.superior_id;
 
-                            if (this.formData.superior_id!=0){
-                                this.$http.get('account/subject/'+this.formData.superior_id).then((res) => this.Superior_name = res.data.data.title)
+                            if (this.formData.superior_id != 0) {
+                                this.$http.get('account/subject/' + this.formData.superior_id).then((res) => this.Superior_name = res.data.data.title)
                             }
 
                         }
@@ -349,40 +356,38 @@
             filter(val){
                 this.beforePage = val;
                 this.operId = 0;
-                this.$http.get('account/subject?page='+val,{
-                    params : this.params
-                })
-                    .then(
-                        (res) => {
-                            if (res.data.code==18300){
-                                this.myData = res.data.data.data;
-                                this.paging = res.data.data.pages;
-                                this.isShow = false;
-                            } else {
-                                this.myData = [];
-                                this.paging = 1;
-                                this.isShow = true;
-                            }
+                this.$http.get('account/subject?page=' + val, {
+                    params: this.params
+                }).then((res) => {
+                        if (res.data.code == 18300) {
+                            this.myData = res.data.data.data;
+                            this.paging = res.data.data.pages;
+                            this.isShow = false;
+                        } else {
+                            this.myData = [];
+                            this.paging = 1;
+                            this.isShow = true;
                         }
-                    )
+                    }
+                )
             },
 
 
-            changeCurId(id,name){
+            changeCurId(id, name){
                 this.curSuperior_id = id;
                 this.Superior_name = name;
             },
             // 获取科目
             getBaseSubject(){
-                if(this.showChooseSubject){
+                if (this.showChooseSubject) {
                     this.reset();
                 } else {
                     this.showChooseSubject = !this.showChooseSubject;
                     this.curSuperior_id = 0;
                     this.Superior_name = '';
-                    if (this.showChooseSubject){
-                        this.$http.get('account/subject/next/'+this.curSuperior_id).then((res)=>{
-                            if (res.data.code==18300){
+                    if (this.showChooseSubject) {
+                        this.$http.get('account/subject/next/' + this.curSuperior_id).then((res) => {
+                            if (res.data.code == 18300) {
                                 // 成功
                                 this.subjectData = res.data.data;
 //                            console.log(this.subjectData)
@@ -395,8 +400,8 @@
             },
             // 获取下级科目
             getNext(){
-                this.$http.get('account/subject/next/'+this.curSuperior_id).then((res)=>{
-                    if (res.data.code==18300){
+                this.$http.get('account/subject/next/' + this.curSuperior_id).then((res) => {
+                    if (res.data.code == 18300) {
                         // 成功
                         this.subjectData = res.data.data;
 //                        console.log(this.subjectData)
@@ -418,9 +423,9 @@
 
             // 新增
             add(){
-                this.$http.post('account/subject',this.formData).then((res)=>{
+                this.$http.post('account/subject', this.formData).then((res) => {
                     console.log(res);
-                    if (res.data.code==18310){
+                    if (res.data.code == 18310) {
                         // 成功
                         this.info.success = '新增科目成功';
                         //显示失败弹窗 ***
@@ -450,9 +455,9 @@
             },
             // 编辑
             modify(){
-                this.$http.put('account/subject/'+this.operId,this.formData)
-                    .then((res) =>{
-                        if (res.data.code==18310){
+                this.$http.put('account/subject/' + this.operId, this.formData)
+                    .then((res) => {
+                        if (res.data.code == 18310) {
                             // 成功
                             this.info.success = '修改科目成功';
                             //显示失败弹窗 ***
@@ -487,8 +492,8 @@
             },
             // 删除
             getConfirm(){
-                this.$http.get('account/subject/delete/'+this.operId).then((res)=>{
-                    if (res.data.code==18310){
+                this.$http.get('account/subject/delete/' + this.operId).then((res) => {
+                    if (res.data.code == 18310) {
                         // 成功
                         this.info.success = '删除科目成功';
                         //显示失败弹窗 ***
@@ -497,7 +502,7 @@
                         setTimeout(() => {
                             this.info.state_success = false;
                         }, 2000);
-                        this.filter();
+                        this.filter(this.beforePage);
                     } else {
                         this.info.error = res.data.msg;
                         //显示失败弹窗 ***
@@ -514,19 +519,21 @@
 </script>
 
 <style scoped>
-    tbody tr input[type=checkbox]{
+    tbody tr input[type=checkbox] {
         width: 17px;
         height: 17px;
     }
+
     .table-hover > tbody > tr.lightYellow {
         background-color: #fffcd9;
     }
 
-    .selectSubject{
+    .selectSubject {
         position: relative;
     }
-    .subjectList{
-        top:37px;
+
+    .subjectList {
+        top: 37px;
         width: 85%;
         position: absolute;
         background: white;
@@ -535,15 +542,18 @@
         border: 1px solid #ddd;
         box-shadow: 1px 1px 2px #ddd;
     }
+
     ul {
         margin: 0;
         padding: 0;
     }
-    .subjectList>ul{
+
+    .subjectList > ul {
         padding: 12px 20px;
         line-height: 25px;
     }
-    .subjectList>ul>li{
+
+    .subjectList > ul > li {
         font-size: 13px;
         background: #f5f5f5;
         border: 1px solid #f5f5f5;
@@ -555,17 +565,20 @@
         border-radius: 5px;
         cursor: pointer;
     }
-    .subjectList>ul>li:hover{
+
+    .subjectList > ul > li:hover {
         background: #08c;
         border: 1px solid #08c;
         color: #fff;
     }
-    .subjectList>ul>li.active{
+
+    .subjectList > ul > li.active {
         background: #08c;
         border: 1px solid #08c;
         color: #fff;
     }
-    .subjectList:before{
+
+    .subjectList:before {
         position: absolute;
         top: -7px;
         left: 9px;
@@ -576,7 +589,8 @@
         /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
         content: '';
     }
-    .subjectList:after{
+
+    .subjectList:after {
         position: absolute;
         top: -6px;
         left: 10px;
@@ -587,7 +601,7 @@
         content: '';
     }
 
-    .choose ul li{
+    .choose ul li {
         float: left;
         width: 50%;
         text-align: center;
@@ -596,22 +610,26 @@
         display: inline-block;
         padding: 10px 0;
     }
-    .choose ul li:nth-of-type(1){
+
+    .choose ul li:nth-of-type(1) {
         border-bottom-left-radius: 4px;
     }
-    .choose ul li:nth-of-type(2){
+
+    .choose ul li:nth-of-type(2) {
         border-bottom-right-radius: 4px;
     }
-    .choose ul li+li{
+
+    .choose ul li + li {
         box-sizing: border-box;
         border-left: 1px solid #ddd;
     }
 
-    textarea{
+    textarea {
         max-width: 100%;
     }
+
     @media (max-width: 798px) {
-        .panel-body .form-inline .input-group{
+        .panel-body .form-inline .input-group {
             margin-bottom: 5px;
         }
     }
