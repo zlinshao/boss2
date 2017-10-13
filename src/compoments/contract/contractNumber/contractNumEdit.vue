@@ -83,7 +83,7 @@
                                                 </div>
                                                 <div v-for="(item,index) in sf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="sf_contract_add[index]">
+                                                        <input type="text" class="form-control" v-model="sf_contract_add[index]" minlength="13" maxlength="13">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(1,index)"></i>
@@ -145,7 +145,7 @@
                                                 <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                                 <div class="col-sm-9 padd0 icon">
                                                     <div class="col-xs-5 col-sm-5">
-                                                        <input type="text" class="form-control" v-model="pay_sf_contract_add[index].contract_number">
+                                                        <input type="text" class="form-control" v-model="pay_sf_contract_add[index].contract_number" minlength="13" maxlength="13">
                                                     </div>
                                                     <div class="col-xs-1 text-center padd0" style="line-height: 30px;">
                                                         地址
@@ -221,7 +221,7 @@
                                                 </div>
                                                 <div v-for="(item,index) in zf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]">
+                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" minlength="13" maxlength="13">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(2,index)"></i>
@@ -271,7 +271,7 @@
                                                 <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                                 <div class="col-sm-9 padd0 icon">
                                                     <div class="col-xs-5 col-sm-5">
-                                                        <input type="text" class="form-control" v-model="pay_zf_contract_add[index].contract_number">
+                                                        <input type="text" class="form-control" v-model="pay_zf_contract_add[index].contract_number" minlength="13" maxlength="13">
                                                     </div>
                                                     <div class="col-xs-1 text-center padd0" style="line-height: 30px;">
                                                         地址
@@ -848,6 +848,7 @@
                 let data = {
                     request_time : this.request_time,
                     type: this.type,
+                    area : this.area,
                     department_id: this.department_id,
                     ljsf : this.sf_num,
                     ljzf : this.zf_num,
@@ -855,7 +856,7 @@
                 switch (parseInt(this.type)){
                     case 1 :
                         // 领取
-                        data.area = this.area;
+//                        data.area = this.area;
                         data.receiver_time = this.receiver_time;
                         data.receiver_id = this.receiver_id;
                         data.add_sf = this.sf_contract_add;
@@ -868,6 +869,9 @@
                         data.report_time = this.receiver_time;
                         data.actual_time = this.reality_time;
                         data.reporter_id = this.receiver_id;
+                        data.add_sf = this.sf_contract_add;
+                        data.add_zf = this.zf_contract_add;
+                        data.del_contract = this.del_contract;
                         data.scrap_pic = this.photos.cus_idPhoto;
                         break;
                     case 3 :
@@ -879,7 +883,7 @@
                 console.log(data);
                 this.$http.post('code/Contract_Number_Record/edit',data).then((res)=>{
                     console.log(res.data);
-                    if(res.data.code==30039){
+                    if(res.data.code==30099){
                         // 成功
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***

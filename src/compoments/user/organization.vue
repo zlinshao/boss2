@@ -65,7 +65,7 @@
         <PositionHigh :position_id="position_id" :position_name="position_name" :department_name="department_name"
                       :department_id="department_id" @success = 'addHighSuccess'></PositionHigh>
 
-        <Authority :authorityId = 'position_id' @success="authoritySuccess"></Authority>
+        <Authority :authorityId = 'position_id' :simulate="simulate" :isSuper="isSuper" @success="authoritySuccess"></Authority>
 
     </div>
 </template>

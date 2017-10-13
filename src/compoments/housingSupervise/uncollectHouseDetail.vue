@@ -93,7 +93,7 @@
         </section>
 
         <!--房屋 编辑-->
-        <HouseEdit :dictionary="dictionary" :HouseRevise="houseRevise" @reviseHouse="alreadyRevise"></HouseEdit>
+        <HouseEdit :dictionary="dictionary" :HouseRevise="houseRevise" :simulate="simulate" @reviseHouse="alreadyRevise"></HouseEdit>
         <PicModal :largePic="largePic"></PicModal>
     </div>
 </template>
