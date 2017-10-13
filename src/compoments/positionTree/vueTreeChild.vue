@@ -36,7 +36,7 @@
 							<li v-if="model.parent_id === 1&&(simulate.indexOf('Department/position_parent')>-1||isSuper)">
 								<a @click="insertHighPosition($event)">新建上级岗位</a>
 							</li>
-							<li v-if="simulate.indexOf('Role/auth')>-1||isSuper">
+							<li v-if="simulate.indexOf('Role/auth')>-1||simulate.indexOf('Revenue/auth')>-1||isSuper">
 								<a @click="positionRole($event)">岗位权限</a>
 							</li>
 							<li v-if="simulate.indexOf('Department/position_delete')>-1||isSuper">
