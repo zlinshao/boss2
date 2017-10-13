@@ -458,7 +458,7 @@
                 <!--</section>-->
             </div>
         </div>
-        <Question :questionId = 'questionId' @success="successVote"></Question>
+        <Question :questionId='questionId' @success="successVote"></Question>
         <Status :state='info'></Status>
     </div>
 </template>
@@ -569,7 +569,7 @@
 //            问卷
             isDone(){
                 this.$http.get('code/Mission/checkIsWrite').then((res) => {
-                    if(res.data.code === '30080'){
+                    if (res.data.code === '30080') {
                         this.questionId = res.data.data;
                         $('.questionnaire').modal('show');
                     }
