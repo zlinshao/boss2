@@ -13,7 +13,7 @@
                         </span>
 						<i class="glyphicon glyphicon-cog dropdown-toggle" @click="dropDownList"  title="操作"
 						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						   v-if="simulate.indexOf('Department/updateDpm')>-1||simulate.indexOf('Department/saveDpm')>-1
+						   v-show="simulate.indexOf('Department/updateDpm')>-1||simulate.indexOf('Department/saveDpm')>-1
 						   ||simulate.indexOf('Department/saveDpm')>-1||simulate.indexOf('Department/softDelete')>-1
 						   ||simulate.indexOf('Department/department_move')>-1||isSuper">
 						</i>
