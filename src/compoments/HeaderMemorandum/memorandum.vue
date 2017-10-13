@@ -94,11 +94,11 @@
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button" @click="clear_info">取消
                         </button>
-                        <button class="btn btn-success" v-if="mem_status" type="button" @click="add_memorandum">确定
+                        <button class="btn btn-success" v-if="mem_status && simulate.indexOf('Memo/write') > -1" type="button" @click="add_memorandum">确定
                         </button>
 
-                        <button class="btn btn-warning" v-if="!mem_status" @click="mem_revise" type="button">修改</button>
-                        <button class="btn btn-danger pull-left" @click="mem_delete" v-if="!mem_status" type="button">
+                        <button class="btn btn-warning" v-if="!mem_status && simulate.indexOf('Memo/update') > -1" @click="mem_revise" type="button">修改</button>
+                        <button class="btn btn-danger pull-left" @click="mem_delete" v-if="!mem_status && simulate.indexOf('Memo/delete') > -1" type="button">
                             删除
                         </button>
                     </div>
@@ -114,6 +114,7 @@
 <script>
     import Status from '../common/status.vue';
     export default {
+        props: ['simulate'],
         components: {Status},
         data (){
             return {
@@ -218,15 +219,22 @@
                 this.$http.post('clock/memo/delete', {
                     id: this.mem_id,
                 }).then((res) => {
-                    $('#remindDaily').modal('hide');
-                    //成功信息 ***
-                    this.info.success = res.data.msg;
-                    //关闭失败弹窗 ***
-                    this.info.state_error = false;
-                    //显示成功弹窗 ***
-                    this.info.state_success = true;
+                    if (res.data.code === '30025') {
+                        $('#remindDaily').modal('hide');
+                        //成功信息 ***
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
 
-                    $('#calendar').fullCalendar('removeEvents', this.mem_id);
+                        $('#calendar').fullCalendar('removeEvents', this.mem_id);
+                    } else {
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
                 });
             },
 //            修改备忘录
