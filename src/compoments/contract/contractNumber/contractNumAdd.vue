@@ -577,7 +577,7 @@
 //                console.log(this.collect_turn_num)
 //                console.log(this.rent_turn_num)
 
-                /*this.$http.post('code/Contract_Number_Record/add', data).then((res) => {
+                this.$http.post('code/Contract_Number_Record/add', data).then((res) => {
                     console.log(res.data);
                     if (res.data.code==30012){
                         // 成功
@@ -595,7 +595,7 @@
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                     }
-                })*/
+                })
             },
         }
     }
