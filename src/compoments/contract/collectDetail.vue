@@ -50,13 +50,15 @@
                 </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2 && contract_status!=1&&(simulate.indexOf('ContractCheck/reject_collect')>-1)||isSuper" @click='overrule'>驳回</button>
 
-                <div class="btn-group">
+                <div class="btn-group"
+                     v-if="simulate.indexOf('Collect/updateContract')>-1||simulate.indexOf('Collect/continued')>-1
+                     ||simulate.indexOf('Collect/readContract_easy')>-1||isSuper">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         更多
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li v-if="simulate.indexOf('Collect/updateContract')>-1">
+                        <li v-if="simulate.indexOf('Collect/updateContract')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="editContract"
                                     :disabled="(contract_pass>4||contract_status==1) && (simulate.indexOf('Collect/update_success') == -1||isSuper)" >
                                 编辑
@@ -206,12 +208,12 @@
                                     <i class="fa  fa-paperclip"></i>合同附件
                                 </a>
                             </li>
-                            <li :class="{active:tabActive === 'review'}">
+                            <li :class="{active:tabActive === 'review'}" v-if="simulate.indexOf('Collect/readContract_review')>-1||isSuper">
                                 <a data-toggle="tab" href="#review" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;回访日志
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="" v-if="simulate.indexOf('Memo/saveMemo_collect')>-1||isSuper">
                                 <a data-toggle="tab" href="#memorandum" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;新增备忘录
                                 </a>
@@ -260,14 +262,14 @@
                                                     {{item.checkin_collect_id.months}}月
                                                 </span>
                                             </div>
-                                            <div class="infoList" v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                            <div class="infoList" v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined" v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>付款方式：</span>
                                                 <span v-for="(pay,index) in item.checkin_collect_id.pay_type">
                                                     <span v-if="index>0">第{{index+1}}期</span>
                                                     {{dictionary.pay_type[pay]}}&nbsp;
                                                 </span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>月单价<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
@@ -275,19 +277,19 @@
                                                     </span>
                                                 </span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>开户行：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{dictionary.bank[item.checkin_collect_id.bank]}}
                                                 </span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>银行卡号：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>中介费用：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.cost_medi}}
@@ -299,7 +301,7 @@
                                                 <span>打房租日期：</span>
                                                 <span v-if="item.pay_date > 0">每期{{item.pay_date}}号</span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>押金：</span>
                                                 <span v-if="item.checkin_collect_id !== null
                                                 && item.checkin_collect_id !== undefined">
@@ -538,14 +540,14 @@
                                                   v-for="(img,index) in item.customer_id.album.id_pic">
                                         </span>
                                     </div>
-                                    <div class="infoList clearFix">
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                         <span class="col-lg-1">银行卡<sup>*</sup></span>
                                         <span class="col-lg-11"  v-if="item.album.bank_pic !==undefined">
                                              <img :src="img.small" @click="showLargePic('bank_pic',index)"
                                                   v-for="(img,index) in item.album.bank_pic">
                                         </span>
                                     </div>
-                                    <div class="infoList clearFix">
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                         <span class="col-lg-1">合同照片<sup>*</sup></span>
                                         <span class="col-lg-11">
                                              <img :src="img.small" @click="showLargePic('contract_pic',index)"
@@ -587,7 +589,7 @@
                                                  v-for="(img,index) in item.album.proxy_pic">
                                         </span>
                                     </div>
-                                    <div class="infoList clearFix">
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                         <span class="col-lg-1">押金收条</span>
                                         <span class="col-lg-11" >
                                             <img :src="img.small" @click="showLargePic('receipt_pic',index)"

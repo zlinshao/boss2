@@ -132,7 +132,7 @@
                             <th class="text-center width80">房屋特色</th>
                             <th class="text-center width80">个人/中介</th>
                             <th class="text-center width80">负责人</th>
-                            <th class="text-center width50">详情</th>
+                            <th class="text-center width50" v-if="simulate.indexOf('Villa/readVilla')>-1||isSuper">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -158,7 +158,7 @@
                             <td class="text-center">{{dictionary.house_feature[item.house_feature]}}</td>
                             <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
                             <td class="text-center">{{item.staff_id}}</td>
-                            <td class="text-center">
+                            <td class="text-center" v-if="simulate.indexOf('Villa/readVilla')>-1||isSuper">
                                 <router-link :to="{path:'/collectMore',query: {unCollectId: item.id,params:params}}">
                                     详情
                                 </router-link>
@@ -289,6 +289,9 @@
                         this.villalist = [];
                         this.pages = 1;
                         this.isShow = true;
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
                     }
 
                 });
@@ -330,7 +333,8 @@
                 $('#collectAdd').modal('show');
             },
             alreadyAdd(){
-                this.searchUncollect();
+                setTimeout(this.searchUncollect,2000);
+//                this.searchUncollect();
             },
             //删除房屋
             deleteHouse(){

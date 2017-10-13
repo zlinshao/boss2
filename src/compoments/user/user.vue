@@ -151,7 +151,7 @@
                                 </li>
                                 <li role="separator" class="divider" style="margin: 0"></li>
                                 <li v-if="simulate.indexOf('Login/logins') > -1||isSuper"
-                                    @click="simulates(item.id, 'Login/logins')">
+                                    @click="simulates(item.id, 'staff/logins')">
                                     <button type="button" class="btn btn-default btn-lg btn-block">
                                         模拟登陆
                                     </button>

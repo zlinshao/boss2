@@ -162,13 +162,14 @@
                                             <input type="text" class="form-control" readonly placeholder="选择部门" v-model="department_name">
                                         </div>
                                     </div>
-                                    <div class="row" v-if="!isSelectPosition">
+                                    <!--<div class="row" v-if="!isSelectPosition">
                                         <label class="col-sm-2 control-label col-lg-2" >职务</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" readonly v-model="positionName">
                                         </div>
-                                    </div>
-                                    <div class="row" v-if="isSelectPosition">
+                                    </div>-->
+                                    <!--<div class="row" v-if="isSelectPosition">-->
+                                    <div class="row">
                                         <label class="col-sm-2 control-label col-lg-2" >职务</label>
                                         <div class="col-lg-10">
                                             <select  class="form-control" v-model="positionId">
@@ -452,6 +453,7 @@
         },
         watch:{
             editDate(val) {
+//                console.log(val);
                 this.isSelectPosition =false;
                 this.myAccount = val;
                 this.checkboxModel=[];
@@ -473,6 +475,8 @@
                     this.department_name=this.myResult.department[0].name;
                 }
 
+                this.positionList = this.myResult.position_list;
+//                this.getPositionList();
                 if(this.myResult.position_id.length >0){
                     this.positionId=this.myResult.position_id[0].id;
                     this.positionName=this.myResult.position_id[0].vocation;

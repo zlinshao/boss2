@@ -48,13 +48,15 @@
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
                 <button class="btn btn-warning" v-if="contract_pass > 2&&contract_status!=1" @click='overrule'>驳回</button>
-                <div class="btn-group">
+                <div class="btn-group"
+                     v-if="simulate.indexOf('Rent/updateContract')>-1||simulate.indexOf('Rent/continued')>-1
+                     ||simulate.indexOf('Rent/turn')>-1||simulate.indexOf('Rent/readContract_easy')>-1||isSuper">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         更多
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li v-show="simulate.indexOf('Rent/updateContract')>-1">
+                        <li v-show="simulate.indexOf('Rent/updateContract')>-1||isSuper">
                             <button class="btn btn-white btn-block" @click="editContract"
                                     :disabled="(contract_pass>4||contract_status==1) && (simulate.indexOf('Rent/update_success') == -1||isSuper)">
                                 编辑
@@ -210,12 +212,12 @@
                             <li class="">
                                 <a data-toggle="tab" href="#contract" aria-expanded="false">合同附件</a>
                             </li>
-                            <li :class="{active:tabActive === 'review'}">
+                            <li :class="{active:tabActive === 'review'}" v-if="simulate.indexOf('Collect/readContract_review')>-1">
                                 <a data-toggle="tab" href="#home" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;回访日志
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="" v-if="simulate.indexOf('Memo/saveMemo_rent')>-1||isSuper">
                                 <a data-toggle="tab" href="#memorandum" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;新增备忘录
                                 </a>
