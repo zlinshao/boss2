@@ -308,7 +308,7 @@
 
 <script>
     import DatePicker from '../common/datePicker.vue'           //时间
-    import lookRemark from '../salary/lookRemark.vue'           //备注
+    import lookRemark from './lookRemark.vue'                   //备注
     import STAFF from  '../common/oraganization.vue'            //部门搜索
     import Page from '../common/page.vue'
     export default {

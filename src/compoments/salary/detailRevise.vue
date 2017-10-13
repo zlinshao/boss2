@@ -8,7 +8,7 @@
                     <div class="modal-content roll">
                         <!--新增客户-->
                         <div class="modal-header">
-                            <button type="button" class="close" @click="close_remark" aria-hidden="true">×</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">编辑</h4>
                         </div>
 
@@ -16,20 +16,20 @@
                         <div class="modal-body has-js">
                             <form class="form-horizontal" role="form">
 
-                                <!--合同编号-->
+                                <!--收租状态-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">合同编号</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" v-model="contract_num" class="form-control" placeholder=""
-                                               readonly>
+                                    <label class="col-lg-2 col-sm-2 control-label">收租状态</label>
+                                    <div class="col-lg-10" v-for="key in col_rent_status">
+                                        <input type="text" :value="dict.typical[key]"
+                                               class="form-control" placeholder="" readonly>
                                     </div>
                                 </div>
 
-                                <!--客户姓名-->
+                                <!--月份-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">客户姓名</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">月份</label>
                                     <div class="col-lg-10">
-                                        <input type="text" v-model="customer_name" class="form-control" placeholder=""
+                                        <input type="text" v-model="months" class="form-control" placeholder=""
                                                readonly>
                                     </div>
                                 </div>
@@ -60,6 +60,22 @@
                                     </div>
                                 </div>
 
+                                <!--收房付款方式奖励-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">收房付款方式奖励</label>
+                                    <div class="col-lg-10 iconic-input right">
+                                        <input type="text" v-model="col_pay_reward" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+
+                                <!--收房年限奖励-->
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">收房年限奖励</label>
+                                    <div class="col-lg-10 iconic-input right">
+                                        <input type="text" v-model="year_period" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+
                                 <!--价格差奖励-->
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">价格差奖励</label>
@@ -77,43 +93,21 @@
                                     </div>
                                 </div>
 
-                                <!--合同-->
+                                <!--未发比例-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">合同</label>
+                                    <label class="col-lg-2 col-sm-2 control-label">未发比例</label>
                                     <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="contract" class="form-control" placeholder="">
+                                        <input type="text" v-model="not_send_scale" class="form-control" placeholder=""
+                                               readonly>
                                     </div>
                                 </div>
 
-                                <!--资料-->
-                                <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">资料</label>
+                                <div class="form-group" v-for="key in cells">
+                                    <label class="col-lg-2 col-sm-2 control-label">{{dict.cell_category[key.category]}}</label>
                                     <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="datum" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-
-                                <!--交接-->
-                                <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">交接</label>
-                                    <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="connect" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-
-                                <!--客诉-->
-                                <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">客诉</label>
-                                    <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="complaints" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-
-                                <!--尾款-->
-                                <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">尾款</label>
-                                    <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="final_payment" class="form-control" placeholder="">
+                                        <input type="text" v-model="key.amount_actual" class="form-control"
+                                               :disabled="key.status == 1"
+                                               placeholder="">
                                     </div>
                                 </div>
 
@@ -137,14 +131,14 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">备注</label>
                                     <div class="col-lg-10">
-                                        <input type="text" v-model="remarks" class="form-control" placeholder="">
+                                        <textarea class="form-control" v-model="remarks"></textarea>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-default" type="button" @click="close_remark">取消</button>
-                            <button class="btn btn-primary" type="button" @click="remark_ok">确定</button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal">取消</button>
+                            <button class="btn btn-primary" type="button" @click="remark_ok(cells)">确定</button>
                         </div>
                     </div>
                 </div>
@@ -155,16 +149,21 @@
 
 <script>
     export default {
-        props: [''],
+        props: ['msg', 'dicts'],
         data (){
             return {
-                contract_num: '',                   //合同编号
-                customer_name: '',                  //客户姓名
+                dict: {},
+                col_rent_status: [],                //收租状态
+                months: '',                         //月份
                 house_address: '',                  //房屋地址
                 staff_name: '',                     //开单人
                 vacant_period: '',                  //空置期奖励
+                col_pay_reward: '',                 //收房付款方式奖励
+                year_period: '',                    //收房年限奖励
                 price_gap: '',                      //价格差奖励
                 achievement_up: '',                 //业绩提成
+                not_send_scale: '',                 //未发比例
+                cells: [],                          //合同、资料、交接、客诉、尾款
                 contract: '',                       //合同
                 datum: '',                          //资料
                 connect: '',                        //交接
@@ -175,54 +174,98 @@
                 remarks: '',                        //备注
             }
         },
-        methods: {
-//            确认编辑
-            remark_ok (){
-                this.$http.post('http://httpbin.org', {
-                    a: this.contract_num,           //合同编号
-                    a: this.customer_name,          //客户姓名
-                    a: this.house_address,          //房屋地址
-                    a: this.staff_name,             //开单人
-                    a: this.vacant_period,          //空置期奖励
-                    a: this.price_gap,              //价格差奖励
-                    a: this.achievement_up,         //业绩提成
-                    a: this.contract,               //合同
-                    a: this.datum,                  //资料
-                    a: this.connect,                //交接
-                    a: this.complaints,             //客诉
-                    a: this.final_payment,          //尾款
-                    a: this.brokerage_fee,          //中介费
-                    a: this.in_all,                 //共计
-                    a: this.remarks,                //备注
-                }).then((res) => {
-
-                })
-            },
-
-//            关闭模态框
-            close_remark (){
-                this.clear_remark();
-                $('#detailRevise').modal('hide');        //成功关闭模态框
-            },
-
-//            清空
-            clear_remark (){
-                this.contract_num = '';                   //合同编号
-                this.customer_name = '';                  //客户姓名
-                this.house_address = '';                  //房屋地址
-                this.staff_name = '';                     //开单人
-                this.vacant_period = '';                  //空置期奖励
-                this.price_gap = '';                      //价格差奖励
-                this.achievement_up = '';                 //业绩提成
+        watch: {
+            msg (val){
+                this.col_rent_status = [];
+                this.col_rent_status.push(val.typical);                //收租状态
+                this.months = val.months;                         //月份
+                this.house_address = val.address;                  //房屋地址
+                this.staff_name = val.staff_name;                     //开单人
+                this.vacant_period = val.bonus_vacancy;                  //空置期奖励
+                this.col_pay_reward = val.bonus_pay_type;                 //收房付款方式奖励
+                this.year_period = val.bonus_year;                          //收房年限奖励
+                this.price_gap = val.bonus_price;                           //价格差奖励
+                this.achievement_up = val.achv;                             //业绩提成
+                this.not_send_scale = val.percentage_remain;                 //未发比例
+                this.cells = val.simple_cells;
                 this.contract = '';                       //合同
                 this.datum = '';                          //资料
                 this.connect = '';                        //交接
                 this.complaints = '';                     //客诉
                 this.final_payment = '';                  //尾款
-                this.brokerage_fee = '';                  //中介费
-                this.in_all = '';                         //共计
-                this.remarks = '';                        //备注
+                this.brokerage_fee = val.medi_cost;                  //中介费
+                this.in_all = val.amount_actual;                     //共计
+                this.remarks = val.remark;                        //备注
+            },
+            dicts (val){
+                this.dict = val;
             }
+        },
+        methods: {
+//            确认编辑
+            remark_ok (val){
+                let cell = {};
+                for (let key in val) {
+                    cell[val[key].id] = val[key].amount_actual
+                }
+                this.$http.put('achv/commission/' + this.msg.id, {
+                    typical: this.col_rent_status,        //收租状态
+                    months: this.months,                 //月份
+                    address: this.house_address,          //房屋地址
+                    staff_name: this.staff_name,             //开单人
+                    bonus_vacancy: this.vacant_period,          //空置期奖励
+                    bonus_pay_type: this.col_pay_reward,         //收房付款方式奖励
+                    bonus_year: this.year_period,            //收房年限奖励
+                    bonus_price: this.price_gap,              //价格差奖励
+                    achv: this.achievement_up,                  //业绩提成
+                    percentage_remain: this.not_send_scale,         //未发比例
+                    cells: cell,                            //合同、资料、交接、客诉、尾款
+                    medi_cost: this.brokerage_fee,          //中介费
+                    amount_actual: this.in_all,                 //共计
+                    remark: this.remarks,                //备注
+                }).then((res) => {
+                    if (res.data.code === '70000') {
+                        $('#detailRevise').modal('hide');        //成功关闭模态框
+                        this.$emit('success');
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
+
+//            清空
+//            clear_remark (){
+//                this.col_rent_status = '';                //收租状态
+//                this.months = '';                         //月份
+//                this.house_address = '';                  //房屋地址
+//                this.staff_name = '';                     //开单人
+//                this.vacant_period = '';                  //空置期奖励
+//                this.col_pay_reward = '';                 //收房付款方式奖励
+//                this.price_gap = '';                      //价格差奖励
+//                this.year_period = '';                    //收房年限奖励
+//                this.achievement_up = '';                 //业绩提成
+//                this.not_send_scale = '';                 //未发比例
+//                this.contract = '';                       //合同
+//                this.datum = '';                          //资料
+//                this.connect = '';                        //交接
+//                this.complaints = '';                     //客诉
+//                this.final_payment = '';                  //尾款
+//                this.brokerage_fee = '';                  //中介费
+//                this.in_all = '';                         //共计
+//                this.remarks = '';                        //备注
+//            }
         }
     }
 </script>

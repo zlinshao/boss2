@@ -14,8 +14,11 @@
                         <li>
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>
-                        <li>
+                        <li v-if="tabs == 1">
                             <h5><a @click="personal_rev">编辑</a></h5>
+                        </li>
+                        <li v-if="tabs != 1">
+                            <h5><a @click="detailRevise">编辑</a></h5>
                         </li>
                         <li>
                             <h5><a @click="already_salary">已发款项</a></h5>
@@ -33,16 +36,16 @@
             <section class="panel">
                 <header class="panel-heading tab-bg-dark-navy-blue ">
                     <ul class="nav nav-tabs">
-                        <li @click="personal(personal_id, 1)" :class="{'active': tabs == 1}">
+                        <li @click="tab_personal(personal_id, 1)" :class="{'active': tabs == 1}">
                             <a data-toggle="tab" href="#salary_bill" aria-expanded="true">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;工资条</a>
                         </li>
-                        <li @click="personal(personal_id, 2)" :class="{'active': tabs == 2}">
+                        <li @click="tab_personal(personal_id, 2)" :class="{'active': tabs == 2}">
                             <a data-toggle="tab" href="#Insightful" aria-expanded="false">
                                 过往未发工资明细
                             </a>
                         </li>
-                        <li @click="personal(personal_id, 3)" :class="{'active': tabs == 3}">
+                        <li @click="tab_personal(personal_id, 3)" :class="{'active': tabs == 3}">
                             <a data-toggle="tab" href="#sto_sent" aria-expanded="false">
                                 本月工资明细
                             </a>
@@ -57,47 +60,89 @@
                                 <h4>工资条</h4>
                             </header>
                             <!--工资条-->
-                            <table class="table table-advance table-hover" style="margin-bottom: 20px;">
+                            <table class="table table-advance table-hover has-js" style="margin-bottom: 20px;"
+                                   v-for="item in salaryBar">
                                 <tbody class="text-center">
                                 <tr class="text-center">
-                                    <td class="width100">月工资</td>
-                                    <td class="width100">底薪</td>
+                                    <td rowspan="2">
+                                        <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
+                        'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event)">
+                                            <input type="checkbox" class="pull-left"
+                                                   :checked="pitch.indexOf(item.id) > -1">
+                                        </label>
+                                    </td>
+                                    <td class="width80" rowspan="2">{{item.staff_name}}</td>
+                                    <td class="width80">底薪</td>
                                     <td class="width80">业绩提成</td>
-                                    <td class="width100">收房奖励</td>
+                                    <td class="width80">收房奖励</td>
+                                    <td class="width80">收房未发金额</td>
                                     <td class="width80">租房奖励</td>
-                                    <td class="width80">扣款</td>
-                                    <td class="width80">过往未发工资</td>
+                                    <td class="width80">租房未发金额</td>
+                                    <td class="width80">行政扣款</td>
+                                    <td class="width80">社保扣款</td>
+                                    <td class="width80">财务扣款</td>
+                                    <td class="width80">住宿扣款</td>
+                                    <td class="width80">购车扣款</td>
+                                    <td class="width80">其他扣款</td>
+                                    <td class="width100">过往未发工资</td>
                                     <td class="width80">套餐类型</td>
                                     <td class="width80">应发工资</td>
                                     <td class="width80">实发工资</td>
                                     <td class="width80">工资状态</td>
                                     <td class="width50">备注</td>
                                 </tr>
-                                <tr class="text-center" v-for="item in salaryBar">
-                                    <td>
-                                        <div>{{item.staff_name}}</div>
-                                    </td>
+                                <tr class="text-center">
                                     <td>{{item.base}}</td>
                                     <td>{{item.commission}}</td>
                                     <td>{{item.bonus_collect}}</td>
+                                    <td>{{item.collect_remain}}</td>
                                     <td>{{item.bonus_rent}}</td>
-                                    <td>{{item.deduction}}</td>
+                                    <td>{{item.rent_remain}}</td>
+                                    <td>{{item.amount_admin_deduction}}</td>
+                                    <td>{{item.amount_soc_secu_deduction}}</td>
+                                    <td>{{item.amount_finance_deduction}}</td>
+                                    <td>{{item.amount_accomm_deduction}}</td>
+                                    <td>{{item.amount_car_deduction}}</td>
+                                    <td>{{item.amount_other_deduction}}</td>
                                     <td>{{item.history_rc}}</td>
                                     <td>{{dict.package[item.package]}}</td>
                                     <td>{{item.amount_due}}</td>
                                     <td>{{item.amount_actual}}</td>
                                     <td>{{dict.salary_status[item.status]}}</td>
-                                    <td rowspan="2"><i class="fa fa-book" @click="lookRemark"></i></td>
+                                    <td>
+                                        <i class="fa fa-book" @click="lookRemark(item.remark)"
+                                           v-if="item.remark != ''"></i>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <div class="col-xs-12" style="padding: 0">
+                            <div class="col-xs-12" style="padding: 0" v-for="item in salaryBar">
                                 <header class="col-xs-12">
                                     <h4>扣款明细</h4>
                                 </header>
                                 <div>
-                                    <span class="text-primary">具体明细：</span>
-                                    <span v-for="item in salaryDetail">{{item.deduction_remark}}</span>
+                                    <span class="text-primary">行政扣款：</span>
+                                    <span>{{item.amount_admin_deduction}}元</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">社保扣款：</span>
+                                    <span>{{item.amount_soc_secu_deduction}}元</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">财务扣款：</span>
+                                    <span>{{item.amount_finance_deduction}}元</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">住宿扣款：</span>
+                                    <span>{{item.amount_accomm_deduction}}元</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">购车扣款：</span>
+                                    <span>{{item.amount_car_deduction}}元</span>
+                                </div>
+                                <div>
+                                    <span class="text-primary">其他扣款：</span>
+                                    <span>{{item.amount_other_deduction}}元</span>
                                 </div>
                             </div>
                         </div>
@@ -114,17 +159,17 @@
                                     <th class="text-center width80">收租状态</th>
                                     <th class="text-center width50">月份</th>
                                     <th class="text-center width150">房屋地址</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">空置期奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">价格差奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">收房付款方式奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">收房年限奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">业绩提成</th>
+                                    <th class="text-center width80">空置期奖励</th>
+                                    <th class="text-center width80">价格差奖励</th>
+                                    <th class="text-center width80">收房付款方式奖励</th>
+                                    <th class="text-center width80">收房年限奖励</th>
+                                    <th class="text-center width80">业绩提成</th>
                                     <th class="text-center width80">未发比例</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">合同</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">资料</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">交接</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">客诉</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">尾款</th>
+                                    <th class="text-center width50">合同</th>
+                                    <th class="text-center width50">资料</th>
+                                    <th class="text-center width50">交接</th>
+                                    <th class="text-center width50">客诉</th>
+                                    <th class="text-center width50">尾款</th>
                                     <th class="text-center width80">中介费</th>
                                     <th class="text-center width50">共计</th>
                                     <th class="text-center width50">备注</th>
@@ -144,36 +189,36 @@
                                     <td>{{dict.typical[item.typical]}}</td>
                                     <td>{{item.generate_date}}</td>
                                     <td>{{item.address}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_vacancy}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_price}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_pay_type}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_year}}</td>
-                                    <td v-if="portion_show == 2">{{item.achv}}</td>
+                                    <td>{{item.bonus_vacancy}}</td>
+                                    <td>{{item.bonus_price}}</td>
+                                    <td>{{item.bonus_pay_type}}</td>
+                                    <td>{{item.bonus_year}}</td>
+                                    <td>{{item.achv}}</td>
                                     <td>{{item.percentage_remain}}</td>
 
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
                                         :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
-                                         <span v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                         <span v-for="key in item.simple_cells"
                                                :class="{'deduct_marks': key.status == 1}"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
@@ -182,8 +227,7 @@
                                     </td>
                                     <td>{{item.medi_cost}}</td>
                                     <td>{{item.total_price}}</td>
-                                    <td><i class="fa fa-book" @click="lookRemark"></i></td>
-                                    <td><i class="fa fa-pencil" @click="detailRevise"></i></td>
+                                    <td><i class="fa fa-book" @click="lookRemark" v-if="item.remark != ''"></i></td>
                                 </tr>
                                 <tr v-show="isShow2">
                                     <td colspan="19" class="text-center text-muted">
@@ -205,21 +249,20 @@
                                     <th class="text-center width80">收租状态</th>
                                     <th class="text-center width50">月份</th>
                                     <th class="text-center width150">房屋地址</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">空置期奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">价格差奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">收房付款方式奖励</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">收房年限奖励</th>
-                                    <th class="text-center width80" v-if="portion_show == 2">业绩提成</th>
+                                    <th class="text-center width80">空置期奖励</th>
+                                    <th class="text-center width80">价格差奖励</th>
+                                    <th class="text-center width80">收房付款方式奖励</th>
+                                    <th class="text-center width80">收房年限奖励</th>
+                                    <th class="text-center width80">业绩提成</th>
                                     <th class="text-center width80">未发比例</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">合同</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">资料</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">交接</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">客诉</th>
-                                    <th class="text-center width50" v-if="portion_show == 2">尾款</th>
+                                    <th class="text-center width50">合同</th>
+                                    <th class="text-center width50">资料</th>
+                                    <th class="text-center width50">交接</th>
+                                    <th class="text-center width50">客诉</th>
+                                    <th class="text-center width50">尾款</th>
                                     <th class="text-center width80">中介费</th>
                                     <th class="text-center width50">共计</th>
                                     <th class="text-center width50">备注</th>
-                                    <th class="text-center width50">编辑</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -235,36 +278,36 @@
                                     <td>{{dict.typical[item.typical]}}</td>
                                     <td>{{item.generate_date}}</td>
                                     <td>{{item.address}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_vacancy}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_price}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_pay_type}}</td>
-                                    <td v-if="portion_show == 2">{{item.bonus_year}}</td>
-                                    <td v-if="portion_show == 2">{{item.achv}}</td>
+                                    <td>{{item.bonus_vacancy}}</td>
+                                    <td>{{item.bonus_price}}</td>
+                                    <td>{{item.bonus_pay_type}}</td>
+                                    <td>{{item.bonus_year}}</td>
+                                    <td>{{item.achv}}</td>
                                     <td>{{item.percentage_remain}}</td>
 
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
-                                    <td v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                    <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
                                         :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
-                                         <span v-if="portion_show == 2" v-for="key in item.simple_cells"
+                                         <span v-for="key in item.simple_cells"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
                                     <td v-else>
@@ -272,8 +315,10 @@
                                     </td>
                                     <td>{{item.medi_cost}}</td>
                                     <td>{{item.total_price}}</td>
-                                    <td><i class="fa fa-book" @click="lookRemark"></i></td>
-                                    <td><i class="fa fa-pencil" @click="detailRevise"></i></td>
+                                    <td>
+                                        <i class="fa fa-book" @click="lookRemark(item.remark)"
+                                           v-if="item.remark != ''"></i>
+                                    </td>
                                 </tr>
                                 <tr v-show="isShow3">
                                     <td colspan="19" class="text-center text-muted">
@@ -317,26 +362,26 @@
             </div>
         </div>
 
-        <!--编辑-->
-        <personalRevise></personalRevise>
+        <!--个人工资编辑-->
+        <personalRevise :salaryBar="salaryBar_object" :msg="dict" @success="search"></personalRevise>
 
         <!--查看备注-->
-        <lookRemark :msg="1" :personal="personalRem" :look="lookRem"></lookRemark>
+        <salaryRemark :look="lookRem"></salaryRemark>
 
-        <!--合同工资编辑-->
-        <DetailRevise></DetailRevise>
+        <!--工资明细编辑-->
+        <DetailRevise :msg="salary_detail" :dicts="dict" @success="search"></DetailRevise>
 
         <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
-    import lookRemark from './lookRemark.vue'
+    import salaryRemark from './salaryRemark.vue'
     import personalRevise from  './personalRevise.vue'      //备注编辑
     import DetailRevise from  './detailRevise.vue'          //合同工资编辑
     import Status from '../common/status.vue';              //提示信息
     export default {
-        components: {lookRemark, personalRevise, DetailRevise, Status},
+        components: {salaryRemark, personalRevise, DetailRevise, Status},
         data (){
             return {
                 tabs: 1,
@@ -346,12 +391,12 @@
                 simple_cells: [],
                 isShow2: false,
                 isShow3: false,
-                portion_show: 2,
                 salaryDetail: [],       //工资明细
+                salary_detail: {},      //工资明细详情
                 salaryBar: [],          //工资条
-                salary_time: '',         //工资条
+                salaryBar_object: {},   //工资条
+                salary_time: '',        //工资条时间
                 personal_id: '',        //ID
-                personalRem: '',        //备注对象
                 lookRem: '',            //备注内容
                 info: {
                     //成功状态 ***
@@ -370,17 +415,26 @@
             this.personal(this.$route.query.nameId, 1);
         },
         methods: {
+            search (){
+                this.pitch = [];
+                this.personal(this.personal_id, this.tabs);
+            },
+//            标签页切换
+            tab_personal (val, tab){
+                this.pitch = [];
+                this.personal(val, tab);
+            },
 //            详情
             personal (val, tab){
                 this.$http.get('salary/Commission/dict').then((res) => {
                     this.dict = res.data;
-                    this.salaryDetail = [];
                     this.salaryBar = [];
-                    this.pitch = [];
+                    this.salaryDetail = [];
                     this.tabs = tab;
                     if (tab === 1) {
                         this.$http.get('salary/view/' + val).then((res) => {
                             this.salaryBar.push(res.data.data);
+                            this.salaryBar_object = res.data.data;
                             this.salary_time = res.data.data.target_month.substring(0, 7);
                         })
                     }
@@ -412,19 +466,28 @@
                 this.cell_pitch = [];
                 $('#already_salary').modal({backdrop: 'static',});
             },
-//            编辑
+//            编辑工资条
             personal_rev (){
+                this.personal(this.personal_id, 1);
                 $('#personalModel').modal({backdrop: 'static',});
             },
 
 //            查看备注
-            lookRemark (){
-                $('#lookRemark').modal({backdrop: 'static',});
+            lookRemark (val){
+                this.lookRem = val;
+                $('#salaryRemark').modal({backdrop: 'static',});
             },
 
-//            编辑个人工资
+//            编辑工资明细
             detailRevise (){
-                $('#detailRevise').modal({backdrop: 'static',});
+                this.$http.get('/achv/commission/salarified/' + this.pitch).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.salary_detail = res.data.data;
+                        $('#detailRevise').modal({backdrop: 'static',});
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                });
             },
 //            选中
             pitchId (rul, ev, cell){
@@ -462,21 +525,23 @@
                     if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');
                         this.personal(this.personal_id, this.tabs);
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
-            }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
+
         },
     }
 </script>

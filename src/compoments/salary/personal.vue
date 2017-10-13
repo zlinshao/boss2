@@ -38,7 +38,9 @@
                         <li>
                             <h5><a>已选中&nbsp;1&nbsp;项</a></h5>
                         </li>
-                        <li><h5><a @click="personal_rev">编辑</a></h5></li>
+                        <li>
+                            <h5><a @click="personal_rev">编辑</a></h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -55,13 +57,20 @@
                                    :checked="pitch.indexOf(item.id) > -1">
                         </label>
                     </td>
-                    <td class="width100">月工资</td>
-                    <td class="width100">底薪</td>
+                    <td class="width80" rowspan="2">{{item.staff_name}}</td>
+                    <td class="width80">底薪</td>
                     <td class="width80">业绩提成</td>
-                    <td class="width100">收房奖励</td>
+                    <td class="width80">收房奖励</td>
+                    <td class="width80">收房未发金额</td>
                     <td class="width80">租房奖励</td>
-                    <td class="width80">扣款</td>
-                    <td class="width80">过往未发工资</td>
+                    <td class="width80">租房未发金额</td>
+                    <td class="width80">行政扣款</td>
+                    <td class="width80">社保扣款</td>
+                    <td class="width80">财务扣款</td>
+                    <td class="width80">住宿扣款</td>
+                    <td class="width80">购车扣款</td>
+                    <td class="width80">其他扣款</td>
+                    <td class="width100">过往未发工资</td>
                     <td class="width80">套餐类型</td>
                     <td class="width80">应发工资</td>
                     <td class="width80">实发工资</td>
@@ -70,21 +79,25 @@
                     <td class="width50">详情</td>
                 </tr>
                 <tr class="text-center">
-                    <td>
-                        <div>{{item.staff_name}}</div>
-                    </td>
                     <td>{{item.base}}</td>
                     <td>{{item.commission}}</td>
                     <td>{{item.bonus_collect}}</td>
+                    <td>{{item.collect_remain}}</td>
                     <td>{{item.bonus_rent}}</td>
-                    <td>{{item.deduction}}</td>
+                    <td>{{item.rent_remain}}</td>
+                    <td>{{item.amount_admin_deduction}}</td>
+                    <td>{{item.amount_soc_secu_deduction}}</td>
+                    <td>{{item.amount_finance_deduction}}</td>
+                    <td>{{item.amount_accomm_deduction}}</td>
+                    <td>{{item.amount_car_deduction}}</td>
+                    <td>{{item.amount_other_deduction}}</td>
                     <td>{{item.history_rc}}</td>
                     <td>{{dict.package[item.package]}}</td>
                     <td>{{item.amount_due}}</td>
                     <td>{{item.amount_actual}}</td>
                     <td>{{dict.salary_status[item.status]}}</td>
                     <td>
-                        <i class="fa fa-book" @click="lookRemark()"></i>
+                        <i class="fa fa-book" @click="lookRemark(item.remark)" v-if="item.remark != ''"></i>
                     </td>
                     <td>
                         <router-link :to="{path:'/personalDetail',query: {nameId: item.id}}">
@@ -110,27 +123,28 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--编辑-->
-        <personalRevise></personalRevise>
+        <personalRevise :salaryBar="salaryBar" :msg="dict" @success="search"></personalRevise>
 
         <!--查看备注-->
-        <lookRemark :msg="1" :personal="personalRem" :look="lookRem"></lookRemark>
+        <salaryRemark :look="lookRem"></salaryRemark>
     </div>
 </template>
 
 <script>
     import DatePicker from '../common/datePicker.vue'
     import Page from '../common/page.vue'
-    import lookRemark from './lookRemark.vue'
+    import salaryRemark from './salaryRemark.vue'
     import STAFF from  '../common/oraganization.vue'     //部门搜索
     import personalRevise from  './personalRevise.vue'   //个人工资编辑
     export default {
-        components: {DatePicker, STAFF, personalRevise, lookRemark, Page},
+        components: {DatePicker, STAFF, personalRevise, salaryRemark, Page},
         data (){
             return {
-                pitch: [],
-                dict: {},
-                salary: [],
-                isShow: false,
+                pitch: [],                  //选中ID
+                dict: {},                   //字典
+                salaryBar: {},              //编辑详情
+                salary: [],                 //公司列表
+                isShow: false,              //暂无数据
                 dateConfigure: [
                     {
                         range: true,            //日期组件参数
@@ -148,8 +162,6 @@
                 },
                 paging: '',                     //总页数
                 beforePage: 1,                  //当前页
-                addRemark: '',                  //新增备注
-                personalRem: '',                //备注对象
                 lookRem: '',                    //备注内容
             }
         },
@@ -170,11 +182,11 @@
                     this.$http.get('salary/view', {
                         params: this.params
                     }).then((res) => {
-                        if(res.data.code === '70010'){
+                        if (res.data.code === '70010') {
                             this.salary = res.data.data.data;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
-                        }else{
+                        } else {
                             this.isShow = true;
                         }
                     })
@@ -195,7 +207,7 @@
 //            部门搜索
             select(){
                 $('.selectCustom:eq(0)').modal({backdrop: 'static',});
-                this.configure = {type: 'department',length: 1};
+                this.configure = {type: 'department', length: 1};
             },
 
 //            部门搜索
@@ -228,15 +240,18 @@
                     }
                 }
             },
-
 //            编辑
             personal_rev (){
-                $('#personalModel').modal({backdrop: 'static',});
+                this.$http.get('salary/view/' + this.pitch).then((res) => {
+                    this.salaryBar = res.data.data;
+                    $('#personalModel').modal({backdrop: 'static',});
+                })
             },
 
 //            查看备注
-            lookRemark (){
-                $('#lookRemark').modal({backdrop: 'static',});
+            lookRemark (val){
+                this.lookRem = val;
+                $('#salaryRemark').modal({backdrop: 'static',});
             }
         }
     }
