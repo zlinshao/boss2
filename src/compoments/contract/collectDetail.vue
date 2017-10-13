@@ -208,7 +208,7 @@
                                     <i class="fa  fa-paperclip"></i>合同附件
                                 </a>
                             </li>
-                            <li :class="{active:tabActive === 'review'}" v-if="simulate.indexOf('Collect/readContract_review')>-1||isSuper">
+                            <li :class="{active:tabActive === 'review'}" v-if="simulate.indexOf('ReviewLog/saveReview_collect')>-1||isSuper">
                                 <a data-toggle="tab" href="#review" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;回访日志
                                 </a>
@@ -647,7 +647,7 @@
                                 </div>
 
                                 <!--跟进记录-->
-                                <div style="margin-top: 20px" class="row" v-if="item.review_log !== null && item.review_log !== undefined">
+                                <div style="margin-top: 20px" class="row" v-if="item.review_log !== null && item.review_log !== undefined" v-show="simulate.indexOf('Collect/readContract_review')>-1">
                                     <div class="panel col-sm-6" v-for="record in item.review_log"
                                              style="margin-bottom: 0;padding-bottom: 0;" >
                                         <div class="panel-body">
