@@ -48,7 +48,7 @@
                         :disabled = " contract_pass===5 || contract_pass===1">
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
-                <button class="btn btn-warning" v-if="contract_pass > 2 && contract_status!=1&&(simulate.indexOf('ContractCheck/reject_collect')>-1)||isSuper" @click='overrule'>驳回</button>
+                <button class="btn btn-warning" v-if="contract_pass > 2 && contract_status!=1&&(simulate.indexOf('ContractCheck/reject_collect')>-1||isSuper)" @click='overrule'>驳回</button>
 
                 <div class="btn-group"
                      v-if="simulate.indexOf('Collect/updateContract')>-1||simulate.indexOf('Collect/continued')>-1
