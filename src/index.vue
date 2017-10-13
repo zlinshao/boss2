@@ -458,17 +458,18 @@
                 <!--</section>-->
             </div>
         </div>
-
+        <Question :questionId = 'questionId' @success="successVote"></Question>
         <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Question from './compoments/questionnaire/questionnaire.vue'
     import DatePicker from './compoments/common/datePicker.vue'
     import Status from './compoments/common/status.vue';              //提示信息
     export default {
         props: ['id'],
-        components: {DatePicker, Status},
+        components: {DatePicker, Status, Question},
         data (){
             return {
                 birth_show: 6,
@@ -508,7 +509,7 @@
                 main_birthday: [],              //寿星
                 main_ranking: [],               //龙虎榜
                 main_message: [],               //公告
-
+                questionId: '',                 //问卷调查
                 main_customer: [],              //图表
                 myChart: [],
                 check_inData: [],               //入住
@@ -562,8 +563,24 @@
             this.home_system();
             this.line_list();
             this.online();
+            this.isDone();
         },
         methods: {
+//            问卷
+            isDone(){
+                this.$http.get('code/Mission/checkIsWrite').then((res) => {
+                    if(res.data.code === '30080'){
+                        this.questionId = res.data.data;
+                        $('.questionnaire').modal('show');
+                    }
+                })
+            },
+            successVote(val){
+                this.info.success = val;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+//            生日
             birth_show_more (){
                 if (this.birth_show === 6) {
                     this.birth_show = this.main_birthday.length;
@@ -571,6 +588,7 @@
                     this.birth_show = 6;
                 }
             },
+//            用户信息
             line_list (){
                 this.$http.get('staff/info').then((res) => {
                     this.proposer = res.data.name;
