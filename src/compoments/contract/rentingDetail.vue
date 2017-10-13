@@ -212,7 +212,7 @@
                             <li class="">
                                 <a data-toggle="tab" href="#contract" aria-expanded="false">合同附件</a>
                             </li>
-                            <li :class="{active:tabActive === 'review'}" v-if="simulate.indexOf('Collect/readContract_review')>-1">
+                            <li :class="{active:tabActive === 'review'}" v-if="simulate.indexOf('ReviewLog/saveReview_rent')>-1">
                                 <a data-toggle="tab" href="#home" aria-expanded="false">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;回访日志
                                 </a>
@@ -662,7 +662,7 @@
                                 </div>
 
                                 <!--跟进记录-->
-                                <div style="margin-top: 20px" class="row" v-if="item.review_log !== null && item.review_log !== undefined">
+                                <div style="margin-top: 20px" class="row" v-if="item.review_log !== null && item.review_log !== undefined" v-show="simulate.indexOf('Rent/readContract_review')>-1">
                                     <div class="panel col-sm-6" v-for="record in item.review_log"
                                          style="margin-bottom: 0;padding-bottom: 0;">
                                         <div class="panel-body">
