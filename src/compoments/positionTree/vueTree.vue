@@ -5,7 +5,7 @@
 				<ul class="ztree">
 					<ztreeItem v-for='(val,i) in treeDataSource' :key='i' :model.sync="val"
 							   :num.sync='i' root='0' :nodes.sync='treeDataSource.length' :callback='func'
-							   :expandfunc='expand' :cxtmenufunc='contextmenu' :trees.sync='treeDataSource'>
+							   :expandfunc='expand' :cxtmenufunc='contextmenu' :trees.sync='treeDataSource' :simulate="simulate">
 					</ztreeItem>
 				</ul>
 			</div>
@@ -52,6 +52,9 @@
                 type:Boolean,
                 twoWay:true,
 //			default:false
+            },
+            simulate : {
+                type:Array,
             }
         },
         watch:{

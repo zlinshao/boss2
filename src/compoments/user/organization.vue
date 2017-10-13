@@ -38,7 +38,7 @@
                             <span class="pull-left" style="margin-top: 8px;">岗位管理</span>
                             <button class="btn btn-primary btn-sm" style="visibility: hidden">岗位添加</button>
                         </h5>
-                        <positionTree :list.sync='positionList' :func='positionClick'
+                        <positionTree :list.sync='positionList' :func='positionClick' :simulate="simulate"
                                    :contextmenu='rightClick' :is-open='true'>
                         </positionTree>
                         <div v-if="noPosition">
