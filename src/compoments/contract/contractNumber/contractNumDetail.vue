@@ -168,7 +168,7 @@
             </div>
         </section>
         <PicModal :largePic="largePic"></PicModal>
-        <ContractNumEdit :type="type" :request_time="request_time"></ContractNumEdit>
+        <ContractNumEdit :type="type" :request_time="request_time" @success="getDetail"></ContractNumEdit>
     </div>
 </template>
 
@@ -203,27 +203,7 @@
             this.type = this.$route.query.type;
 //            console.log(this.request_time);
 //            console.log(this.type);
-            this.$http.post('code/Contract_Number_Record/showDetail',{
-                request_time : this.request_time,
-                type : this.type
-            }).then((res)=>{
-//                console.log(res.data)
-                if (res.data.code==30070){
-                    this.msg = res.data.data;
-                    if (this.msg.sf.length>0){
-                        this.public = this.msg.sf[0];
-                    } else {
-                        this.public = this.msg.zf[0];
-                    }
-                    if (this.msg.num[0].sf_contract_number!=null){
-                        this.remian_sf = this.msg.num[0].sf_contract_number.split(',');
-                    }
-                    if (this.msg.num[0].zf_contract_number!=null){
-                        this.remian_zf = this.msg.num[0].zf_contract_number.split(',');
-                    }
-                }
-//                console.log(this.public)
-            })
+            this.getDetail();
         },
         methods: {
             showLargePic(index){
@@ -233,6 +213,29 @@
                     i: index
                 }];
                 $('.largePic:eq(0)').modal('show');
+            },
+            getDetail(){
+                this.$http.post('code/Contract_Number_Record/showDetail',{
+                    request_time : this.request_time,
+                    type : this.type
+                }).then((res)=>{
+//                console.log(res.data)
+                    if (res.data.code==30070){
+                        this.msg = res.data.data;
+                        if (this.msg.sf.length>0){
+                            this.public = this.msg.sf[0];
+                        } else {
+                            this.public = this.msg.zf[0];
+                        }
+                        if (this.msg.num[0].sf_contract_number!=null){
+                            this.remian_sf = this.msg.num[0].sf_contract_number.split(',');
+                        }
+                        if (this.msg.num[0].zf_contract_number!=null){
+                            this.remian_zf = this.msg.num[0].zf_contract_number.split(',');
+                        }
+                    }
+//                console.log(this.public)
+                })
             }
         }
     }

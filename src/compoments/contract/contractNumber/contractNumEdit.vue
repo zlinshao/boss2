@@ -25,14 +25,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="type == 1">
-                                        <label class="col-sm-2 control-label">地区</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" v-model="area">
-                                                <option :value="value" v-for="(key,value) in dict.area">{{key}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" v-if="type == 1">领用日期<sup class="required">*</sup></label>
@@ -98,7 +90,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-2 icon">
+                                            <div class="col-sm-2 icon" style="text-align: right">
                                                 <i class="fa fa-plus-circle" @click="plus(1)"></i>
                                             </div>
                                         </div>
@@ -193,7 +185,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-1 icon">
+                                        <div class="col-sm-1 icon" style="text-align: right">
                                             <i class="fa fa-plus-circle" @click="plusPay(1)"></i>
                                         </div>
                                     </div>
@@ -236,7 +228,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-2 icon">
+                                            <div class="col-sm-2 icon" style="text-align: right">
                                                 <i class="fa fa-plus-circle" @click="plus(2)"></i>
                                             </div>
                                         </div>
@@ -264,13 +256,13 @@
                                                 'c_off':pay_zf_contract[index].other.indexOf(1) == -1}"
                                                                @click.prevent="pitchOld(1, $event,index,2)">
                                                             <input type="checkbox" class="pull-left"
-                                                                   :checked="pay_sf_contract[index].other.indexOf(1) > -1">交接单
+                                                                   :checked="pay_zf_contract[index].other.indexOf(1) > -1">交接单
                                                         </label>
                                                         <label :class="{'label_check':true,'c_on':pay_zf_contract[index].other.indexOf(2) > -1,
                                                 'c_off':pay_zf_contract[index].other.indexOf(2) == -1}"
                                                                @click.prevent="pitchOld(2, $event,index,2)">
                                                             <input type="checkbox" class="pull-left"
-                                                                   :checked="pay_sf_contract[index].other.indexOf(2) > -1">收条
+                                                                   :checked="pay_zf_contract[index].other.indexOf(2) > -1">收条
                                                         </label>
                                                     </div>
                                                 </div>
@@ -307,7 +299,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-1 icon">
+                                        <div class="col-sm-1 icon" style="text-align: right">
                                             <i class="fa fa-plus-circle" @click="plusPay(2)"></i>
                                         </div>
                                     </div>
@@ -391,6 +383,7 @@
                 pay_zf_contract : [],           // 上缴租房合同
                 pay_zf_contract_add : [],       // 新增上缴租房合同
 
+                del_contract : [],              // 删除的合同
 
                 currentDate: [],                //时间组件
                 currentDate1: [],                //时间组件
@@ -476,8 +469,8 @@
                             this.zf_contract.push(val.zf[i].contract_number);
                         }
 //                        console.log(this.type)
-                        switch (this.type){
-                            case '1':
+                        switch (parseInt(this.type)){
+                            case 1:
                                 // 领取
                                 this.receiver_time = publicVal.receiver_time;
                                 this.receiver_id = publicVal.receiver_id;
@@ -486,7 +479,7 @@
                                     this.photos.cus_idPhoto.push(i);
                                 }
                                 break;
-                            case '2':
+                            case 2:
                                 // 作废
                                 this.receiver_time = publicVal.report_time;
                                 this.receiver_id = publicVal.reporter_id;
@@ -496,7 +489,7 @@
                                     this.photos.cus_idPhoto.push(i);
                                 }
                                 break;
-                            case '3':
+                            case 3:
                                 // 上缴
                                 this.receiver_time = publicVal.receiver_time;
                                 this.receiver_id = publicVal.receiver_id;
@@ -505,42 +498,48 @@
                                     this.photos.cus_idPhoto.push(i);
                                 }
 
-                                for (let i = 0 ; i<val.sf.length ; i++){
-                                    let other = [];
-                                    if (val.sf[i].delivery_receitp==1){
-                                        other.push('1');
+                                if (val.sf.length>0){
+                                    for (let i = 0 ; i<val.sf.length ; i++){
+                                        let other = [];
+                                        if (val.sf[i].delivery_receitp==1){
+                                            other.push(1);
+                                        }
+                                        if (val.sf[i].receipt==1){
+                                            other.push(2);
+                                        }
+                                        if (val.sf[i].idcard_copy==1){
+                                            other.push(3);
+                                        }
+                                        if (val.sf[i].house_property==1){
+                                            other.push(4);
+                                        }
+                                        this.pay_sf_contract.push({
+                                            contract_number : val.sf[i].contract_number,
+                                            address : val.sf[i].address,
+                                            other : other
+                                        })
                                     }
-                                    if (val.sf[i].receipt==1){
-                                        other.push('2');
-                                    }
-                                    if (val.sf[i].idcard_copy==1){
-                                        other.push('3');
-                                    }
-                                    if (val.sf[i].house_property==1){
-                                        other.push('4');
-                                    }
-                                    this.pay_sf_contract.push({
-                                        contract_number : val.sf[i].contract_number,
-                                        address : val.sf[i].address,
-                                        other : other
-                                    })
                                 }
+
 //                                console.log(this.pay_sf_contract)
 //                                console.log(val.zf.length)
-                                for (let j = 0 ; j<val.zf.length ; j++){
-                                    let other1 = [];
-                                    if (val.zf[j].delivery_receitp==1){
-                                        other1.push('1');
+                                if (val.zf.length>0){
+                                    for (let j = 0 ; j<val.zf.length ; j++){
+                                        let other1 = [];
+                                        if (val.zf[j].delivery_receitp==1){
+                                            other1.push(1);
+                                        }
+                                        if (val.zf[j].receipt==1){
+                                            other1.push(2);
+                                        }
+                                        this.pay_zf_contract.push({
+                                            contract_number : val.zf[j].contract_number,
+                                            address : val.zf[j].address,
+                                            other : other1
+                                        })
                                     }
-                                    if (val.zf[j].receipt==1){
-                                        other1.push('2');
-                                    }
-                                    this.pay_zf_contract.push({
-                                        contract_number : val.zf[j].contract_number,
-                                        address : val.zf[j].address,
-                                        other : other1
-                                    })
                                 }
+
 //                                console.log(this.pay_zf_contract)
 
                         }
@@ -575,6 +574,8 @@
                 this.pay_sf_contract_add = [];               // 新增上缴收房合同
                 this.pay_zf_contract = [];               // 上缴租房合同
                 this.pay_zf_contract_add = [];               // 新增上缴租房合同
+
+                this.del_contract = [];
 
                 this.photos= {
                     cus_idPhotos: {},           //修改图片ID
@@ -639,20 +640,61 @@
                 switch (num){
                     case 1:
                         // 收房
-//                        if (this.sf_num>1){
-                            this.sf_contract.splice(i,1);
-//                        } else if (this.sf_num==1){
-//                            this.sf_contract = [''];
-//                        }
+                        switch (parseInt(this.type)){
+                            case 1 :
+                                // 领取
+                                this.$http.post('code/Contract_Number_Record/checkDelete',{
+                                    contract_number : this.sf_contract[i]
+                                }).then((res)=>{
+//                                    console.log(res.data)
+                                    if (res.data.code==30028){
+                                        // 可删除
+                                        this.del_contract.push(this.sf_contract[i]);
+                                        this.sf_contract.splice(i,1);
+                                    } else {
+                                        // 不可删除
+                                        this.info.error = res.data.msg;
+                                        //显示失败弹窗 ***
+                                        this.info.state_error = true;
+                                    }
+                                });
+                                break;
+                            case 2 :
+                                // 作废
+                                this.del_contract.push(this.sf_contract[i]);
+                                this.sf_contract.splice(i,1);
+                        }
+                        /*this.del_contract.push(this.sf_contract[i]);
+                        this.sf_contract.splice(i,1);*/
                         break;
                     case 2:
                         // 租房
-//                        if (this.zf_num>1){
-                            this.zf_contract.splice(i,1);
-//                        } else if (this.zf_num==1){
-//                            this.zf_contract = [''];
-//                        }
-
+                        switch (parseInt(this.type)){
+                            case 1 :
+                                // 领取
+                                this.$http.post('code/Contract_Number_Record/checkDelete',{
+                                    contract_number : this.zf_contract[i]
+                                }).then((res)=>{
+//                                    console.log(res.data)
+                                    if (res.data.code==30028){
+                                        // 可删除
+                                        this.del_contract.push(this.zf_contract[i]);
+                                        this.zf_contract.splice(i,1);
+                                    } else {
+                                        // 不可删除
+                                        this.info.error = res.data.msg;
+                                        //显示失败弹窗 ***
+                                        this.info.state_error = true;
+                                    }
+                                });
+                                break;
+                            case 2 :
+                                // 作废
+                                this.del_contract.push(this.zf_contract[i]);
+                                this.zf_contract.splice(i,1);
+                        }
+                        /*this.del_contract.push(this.zf_contract[i]);
+                        this.zf_contract.splice(i,1);*/
                 }
                 this.changeNum(num);
             },
@@ -810,21 +852,50 @@
                     ljsf : this.sf_num,
                     ljzf : this.zf_num,
                 };
-                switch (this.type){
-                    case '1' :
+                switch (parseInt(this.type)){
+                    case 1 :
                         // 领取
                         data.area = this.area;
-                        data.add_sf = this.sf_contract;
-                        data.add_zf = this.zf_contract;
+                        data.receiver_time = this.receiver_time;
+                        data.receiver_id = this.receiver_id;
+                        data.add_sf = this.sf_contract_add;
+                        data.add_zf = this.zf_contract_add;
                         data.pz_pic = this.photos.cus_idPhoto;
-
+                        data.del_contract = this.del_contract;
                         break;
-                    case '2' :
+                    case 2 :
                         // 作废
+                        data.report_time = this.receiver_time;
+                        data.actual_time = this.reality_time;
+                        data.reporter_id = this.receiver_id;
+                        data.scrap_pic = this.photos.cus_idPhoto;
                         break;
-                    case '3' :
+                    case 3 :
                         // 上缴
+                        data.paid_time = this.receiver_time;
+                        data.paid_id = this.receiver_id;
+                        data.paid_pic = this.photos.cus_idPhoto;
                 }
+                console.log(data);
+                this.$http.post('code/Contract_Number_Record/edit',data).then((res)=>{
+                    console.log(res.data);
+                    if(res.data.code==30039){
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.close_();
+                        $('#contractNumEdit').modal('hide');
+                        this.$emit('success');
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             }
 
         }
