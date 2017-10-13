@@ -29,7 +29,7 @@
                                                 <!--<div id="description" class="tab-pane active">
                                                     但是开单幅懒得看浪费
                                                 </div>-->
-                                                <div :id="value" :class="{'tab-pane':true,'active':(simulate.indexOf('Revenue/auth')==-1&&value=='Revenue')||(simulate.indexOf('Revenue/auth')>-1&&index==8)}" v-for="(key,value,index) in dict.role.module" v-if="!(simulate.indexOf('Revenue/auth')>-1&&value!='Revenue')">
+                                                <div :id="value" :class="{'tab-pane':true,'active':(simulate.indexOf('Revenue/auth')==-1&&index==0)||(simulate.indexOf('Revenue/auth')>-1&&value=='Revenue')}" v-for="(key,value,index) in dict.role.module" v-if="!(simulate.indexOf('Revenue/auth')>-1&&value!='Revenue')">
                                                     <div class="classify" v-for="(key1,value1) in dict.role.child_module" v-if="value1==value" >
                                                         <div v-for="(key2,value2) in key1">
                                                             <h4 style="line-height: 30px;">{{key2}}</h4>

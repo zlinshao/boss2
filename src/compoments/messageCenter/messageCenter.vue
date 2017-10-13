@@ -667,6 +667,10 @@
                     $('#announceDetail').modal({
                         backdrop: 'static',         //空白处不消失
                     });
+                } else {
+                    this.info.error = '您无权查看消息详情';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
                 }
             },
 

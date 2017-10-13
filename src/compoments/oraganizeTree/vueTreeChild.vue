@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<ul :class="ulClassVal" v-show='model.isFolder'>
-					<ztree-item v-for="(item,i) in model.son" :key='i' :callback='callback'
+					<ztree-item v-for="(item,i) in model.son" :key='i' :callback='callback' :simulate="simulate"
 								:expandfunc='expandfunc' :cxtmenufunc='cxtmenufunc' :model.sync="item" :num.sync='i'
 								root='1' :nodes.sync='model.son.length' :trees.sync='trees'>
 					</ztree-item>
@@ -60,7 +60,7 @@
         components:{},
         data(){
             return{
-                simulate: [],
+//                simulate: [],
                 isSuper : false
             }
         },
@@ -95,10 +95,13 @@
 			},
 			cxtmenufunc:{
 				type:Function
-			}
+			},
+            simulate : {
+                type:Array,
+            }
 		},
         mounted(){
-            this.login_status();
+//            this.login_status();
         },
 		computed:{
 			// 给（根 和 子树）赋值不同的样式
@@ -158,7 +161,7 @@
 			},
 		},
 		methods:{
-            // 登陆状态/权限列表
+           /* // 登陆状态/权限列表
             login_status (){
                 this.$http.get('staff/info').then((res) => {
                     if (res.data.code === 80019) {
@@ -173,7 +176,7 @@
                         this.isSuper = res.data.super_auth.indexOf(res.data.id)>-1;
                     }
                 });
-            },
+            },*/
 			Func(val,e){
 				// 查找点击的子节点
 				let recurFunc = (data,list) => {
