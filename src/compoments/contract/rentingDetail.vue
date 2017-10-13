@@ -43,11 +43,11 @@
                 <button class="btn btn-warning" disabled v-if="item.reviewed ===1 && contract_status!=1">
                     {{dictionary.reviewed[item.reviewed]}}
                 </button>
-                <button class="btn btn-primary" @click="passContract" v-if="contract_status!=1"
+                <button class="btn btn-primary" @click="passContract" v-if="contract_status!=1&&(simulate.indexOf('ContractCheck/checkContract_rent')>-1||isSuper)"
                         :disabled = " contract_pass===5 || contract_pass===1">
                     {{dictionary.passed_submit[contract_pass]}}
                 </button>
-                <button class="btn btn-warning" v-if="contract_pass > 2&&contract_status!=1" @click='overrule'>驳回</button>
+                <button class="btn btn-warning" v-if="contract_pass > 2&&contract_status!=1&&(simulate.indexOf('ContractCheck/reject_rent')>-1||isSuper)" @click='overrule'>驳回</button>
                 <div class="btn-group"
                      v-if="simulate.indexOf('Rent/updateContract')>-1||simulate.indexOf('Rent/continued')>-1
                      ||simulate.indexOf('Rent/turn')>-1||simulate.indexOf('Rent/readContract_easy')>-1||isSuper">
