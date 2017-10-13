@@ -7,7 +7,7 @@
         <section class="panel">
             <div class="panel-body">
                 <!--http://test.v2.api.boss.lejias.cn/-->
-                <div class="pull-right" style="margin-left: 20px;" v-if="!isShow">
+                <div class="pull-right" style="margin-left: 20px;" v-if="!isShow && simulate.indexOf('Manager/export')>-1||isSuper">
                     <a class="btn btn-success"
                        :href="address_url + 'export/manager/export/village_name/' + sea_con">
                         <i class="fa  fa-share-square-o"></i>&nbsp;导出Excel
@@ -72,6 +72,7 @@
     import Status from '../common/status.vue';
     import Page from '../common/page.vue';
     export default {
+        props:['simulate','isSuper'],
         components: {Status, Page},
         data (){
             return {

@@ -151,8 +151,8 @@
                                             <option :value="key"  v-for="(value,key) in myDictionary.house_type">{{value}}</option>
                                         </select>
                                     </div>
-                                    <label class="col-lg-2 col-sm-2 control-label">房屋特色</label>
-                                    <div class="col-lg-4">
+                                    <label class="col-lg-2 col-sm-2 control-label" v-show="simulate.indexOf('Villa/saveVilla_house_feature')>-1">房屋特色</label>
+                                    <div class="col-lg-4" v-show="simulate.indexOf('Villa/saveVilla_house_feature')>-1">
                                         <select class="form-control" v-model="houseEdit.house_feature">
                                             <option :value="key"  v-for="(value,key) in myDictionary.house_feature">{{value}}</option>
                                         </select>
@@ -276,7 +276,7 @@
     import Status from '../common/status.vue'
     export default {
         components:{ChooseAddress,upLoad,Status},
-        props: ['dictionary','HouseRevise'],
+        props: ['dictionary','HouseRevise','simulate'],
         data (){
             return {
                 myDictionary :[],

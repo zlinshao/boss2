@@ -150,7 +150,7 @@
                             <th class="text-center width80">负责人</th>
                             <!--<th class="text-center">锁定</th>-->
                             <th class="text-center width50">置顶</th>
-                            <th class="text-center width50">详情</th>
+                            <th class="text-center width50" v-if="simulate.indexOf('Villa/readVilla')>-1||isSuper">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -191,7 +191,7 @@
                                     <i class="fa fa-thumb-tack"></i>
                                 </a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" v-if="simulate.indexOf('Villa/readVilla')>-1||isSuper">
                                 <router-link :to="{path:'/collectDetail',
                                     query:{CollectId: item.id,params:params,departmentName,departmentName}}">
                                     详情
@@ -221,6 +221,7 @@
     import SelectDpm from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
     export default {
+        props:['simulate','isSuper'],
         components: {Page,SelectDpm,Status},
         data (){
             return {
@@ -338,9 +339,9 @@
                         this.houseList=res.data.data.list;
                         this.isShow=false;
                         this.pages=res.data.data.pages;
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+//                        this.info.success = res.data.msg;
+//                        显示成功弹窗 ***
+//                        this.info.state_success = true;
                     }else {
                         this.houseList=[];
                         this.pages=1;

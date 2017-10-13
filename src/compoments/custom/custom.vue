@@ -75,7 +75,7 @@
                         <div class="pro-sort">
                             <button class="btn btn-success" type="button" @click="collectList(1)">重置</button>
                         </div>
-                        <div class="pull-right">
+                        <div class="pull-right" v-if="simulate.indexOf('Customer/saveCustomer')>-1">
                             <a class="btn btn-success"
                                @click="customers_new('new')">
                                 <i class="fa fa-plus-square"></i>&nbsp;增加客户
@@ -107,15 +107,15 @@
                             <h5><a @click="add_state('daily')"><i
                                     class="fa fa-file-text"></i>&nbsp;增加沟通日志</a></h5>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('Customer/putInPool')>-1||isSuper">
                             <h5><a @click="add_state('pool')"><i
                                     class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('CustomerPool/allotCustomer')>-1||isSuper">
                             <h5><a @click="distribution_"><i class="fa fa-sitemap"></i>&nbsp;分配</a>
                             </h5>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('Customer/updateCustomer')>-1||isSuper">
                             <h5><a @click="customers_rev('rev')"><i class="fa fa-pencil"></i>&nbsp;编辑</a>
                             </h5>
                         </li>
@@ -166,7 +166,7 @@
                             <th class="text-center width80">个人/中介</th>
                             <th class="text-center width80">负责人</th>
                             <th class="text-center width50">置顶</th>
-                            <th class="text-center width50">详情</th>
+                            <th class="text-center width50" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -204,7 +204,7 @@
                                     <i class="fa fa-thumb-tack"></i>
                                 </a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">
                                 <router-link :to="{path:'/details',query: {nameId: list.id, cus: 1, sear: return_sea}}">
                                     详情
                                 </router-link>
@@ -225,7 +225,7 @@
         <remindDaily @pitches="collectList" :state="bool" :msg="pitch"></remindDaily>
 
         <!--客户 新增/修改-->
-        <new-add @cus_list="succ" :msg="revise_state" :revise="revise_cus" :selects="select_list"></new-add>
+        <new-add @cus_list="succ" :msg="revise_state" :revise="revise_cus" :selects="select_list" :simulate="simulate" :isSuper="isSuper"></new-add>
 
         <!--分配-->
         <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
@@ -250,6 +250,7 @@
     import Loading from '../loading/Loading.vue'                        //Loading
 
     export default {
+        props:['simulate','isSuper'],
         components: {Page, Distribution, newAdd, remindDaily, Status, Loading},
         data (){
             return {
