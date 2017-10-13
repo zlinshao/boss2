@@ -439,7 +439,7 @@
                     request_time : this.request_time,
                     type : this.type
                 }).then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
                     if (res.data.code==30070){
                         let val = res.data.data;
                         let publicVal = {};
@@ -482,6 +482,7 @@
                             case 2:
                                 // 作废
                                 this.receiver_time = publicVal.report_time;
+                                this.reality_time = publicVal.actual_time;
                                 this.receiver_id = publicVal.reporter_id;
                                 this.photos.cus_idPhotos = publicVal.album.scrap_pic;
                                 console.log(this.photos.cus_idPhotos);
@@ -821,6 +822,7 @@
                         switch (type){
                             case 'o' :
                                 // old
+                                this.del_contract.push(this.pay_sf_contract[i]);
                                 this.pay_sf_contract.splice(i,1);
                                 break;
                             case 'n' :
@@ -834,6 +836,7 @@
                         switch (type){
                             case 'o' :
                                 // old
+                                this.del_contract.push(this.pay_zf_contract[i]);
                                 this.pay_zf_contract.splice(i,1);
                                 break;
                             case 'n' :
@@ -878,11 +881,14 @@
                         // 上缴
                         data.paid_time = this.receiver_time;
                         data.paid_id = this.receiver_id;
+                        data.add_sf = this.pay_sf_contract.concat(this.pay_sf_contract_add);
+                        data.add_zf = this.pay_zf_contract.concat(this.pay_zf_contract_add);
+                        data.del_contract = this.del_contract;
                         data.paid_pic = this.photos.cus_idPhoto;
                 }
                 console.log(data);
                 this.$http.post('code/Contract_Number_Record/edit',data).then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
                     if(res.data.code==30099){
                         // 成功
                         this.info.success = res.data.msg;

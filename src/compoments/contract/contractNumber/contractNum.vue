@@ -42,12 +42,7 @@
                 <div class="col-lg-12 remind" v-show="pitch.length === 1">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li style="display: none">
-                            <h5>
-                                <a><i class="fa fa-pencil"></i>&nbsp;编辑</a>
-                            </h5>
-                        </li>
-                        <li style="display: none">
+                        <li>
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                         <li style="display: none">
@@ -103,11 +98,11 @@
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
                                 <td>
-                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                                            'c_off':pitch.indexOf(item.id)==-1}"
-                                           @click.prevent="checked_id(item.id, $event)">
+                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.request_time) > -1,
+                                            'c_off':pitch.indexOf(item.request_time)==-1}"
+                                           @click.prevent="checked_id(item.request_time, $event)">
                                         <input type="checkbox" class="pull-left"
-                                               :checked="pitch.indexOf(item.id) > -1">
+                                               :checked="pitch.indexOf(item.request_time) > -1">
                                     </label>
                                 </td>
                                 <td>{{item.receiver_time}}</td>
@@ -148,11 +143,11 @@
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
                                 <td>
-                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                                            'c_off':pitch.indexOf(item.id)==-1}"
-                                           @click.prevent="checked_id(item.id, $event)">
+                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.scrap_request_time) > -1,
+                                            'c_off':pitch.indexOf(item.scrap_request_time)==-1}"
+                                           @click.prevent="checked_id(item.scrap_request_time, $event)">
                                         <input type="checkbox" class="pull-left"
-                                               :checked="pitch.indexOf(item.id) > -1">
+                                               :checked="pitch.indexOf(item.scrap_request_time) > -1">
                                     </label>
                                 </td>
                                 <td>{{item.actual_time}}</td>
@@ -192,11 +187,11 @@
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
                                 <td>
-                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                                            'c_off':pitch.indexOf(item.id)==-1}"
-                                           @click.prevent="checked_id(item.id, $event)">
+                                    <label :class="{'label_check':true,'c_on':pitch.indexOf(item.paid_request_time) > -1,
+                                            'c_off':pitch.indexOf(item.paid_request_time)==-1}"
+                                           @click.prevent="checked_id(item.paid_request_time, $event)">
                                         <input type="checkbox" class="pull-left"
-                                               :checked="pitch.indexOf(item.id) > -1">
+                                               :checked="pitch.indexOf(item.paid_request_time) > -1">
                                     </label>
                                 </td>
                                 <td>{{item.paid_time}}</td>
@@ -382,14 +377,36 @@
 
 //            删除提醒
             delete_num(){
-                this.confirmMsg.id = this.pitch;
+                this.confirmMsg.request_time = this.pitch[0];
+//                console.log(this.pitch)
                 this.confirmMsg.msg = '确定删除吗？';
                 $('#confirm').modal('show');
             },
 
 //            确认删除
             getConfirm (){
-
+                this.$http.post('code/Contract_Number_Record/delete',{
+                    type : this.params.type,
+                    request_time : this.confirmMsg.request_time
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==30031){
+                        // 成功
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.confirmMsg.request_time = '';
+                        this.pitch = [];
+                        this.contract_list(1);
+                    } else {
+                        // 失败
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             },
 
 //            时间搜索
