@@ -175,7 +175,6 @@
             departmentClick(val) {
                 this.department_id = val.id;
                 this.department_name = val.name;
-                this.msg.leader_id = val.leader.id;
                 this.parentDpartmentId = '';
                 switch (val.contentHtml) {
                     case '编辑部门' :
