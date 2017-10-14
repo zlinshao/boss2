@@ -43,7 +43,8 @@
                             </div>
                         </div>
                         <div class="pro-sort" style="margin-left: 10px;margin-top: 15px">
-                            <label style="padding-right: 25px" :class="{'label_check':true,'c_on':contractSearchInfo.become_due,'c_off':!contractSearchInfo.become_due}"
+                            <label style="padding-right: 25px"
+                                   :class="{'label_check':true,'c_on':contractSearchInfo.become_due,'c_off':!contractSearchInfo.become_due}"
                                    @click.prevent="trid($event)">
                                 <input type="checkbox" v-model="contractSearchInfo.become_due">
                                 30天内快到期
@@ -64,11 +65,13 @@
                                     simulate.indexOf('core/area') == -1 && simulate.indexOf('core/up_contract') == -1">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
                             </button>-->
-                            <button class="btn btn-primary" @click="collectAdd" v-show="simulate.indexOf('Collect/saveContract') > -1||isSuper">
+                            <button class="btn btn-primary" @click="collectAdd"
+                                    v-show="simulate.indexOf('Collect/saveContract') > -1||isSuper">
                                 <i class="fa fa-plus-square"></i>&nbsp;新增收房合同
                             </button>
                         </div>
-                        <div class="pull-right pro-sort" style="margin: 8px" v-if="simulate.indexOf('Memo/MemoList_collect')>-1||isSuper">
+                        <div class="pull-right pro-sort" style="margin: 8px"
+                             v-if="simulate.indexOf('Memo/MemoList_collect')>-1||isSuper">
                             <router-link :to="{path:'/Memorandum',query: {flag: 'collect'}}" class="btn btn-primary">
                                 &nbsp;查看备忘录
                             </router-link>
@@ -92,39 +95,47 @@
                 <div class="panel-body" v-if="contractSeleted.length > 0" style="padding: 0;">
                     <ul>
                         <li>已选中&nbsp; {{contractSeleted.length}} &nbsp;项</li>
-                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/mark') > -1||isSuper)">
-                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
+                        <li class="operate"
+                            v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/mark') > -1||isSuper)">
+                            <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <i class="fa fa-star" v-if="mark == 1" @click="marked"> 标记</i>
                             <i class="fa fa-star" v-if="mark == 2" @click="marked"> 取消标记</i>
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/delete') > -1||isSuper)">
-                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
+                        <li class="operate"
+                            v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/delete') > -1||isSuper)">
+                            <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li class="operate" v-if="contractSeleted.length ===1">
-                            <i class="fa fa-arrow-up" v-if="top == 1" @click="stick"> 置顶</i>
-                            <i class="fa fa-times-circle" v-if="top == 2" @click="stick"> 取消置顶</i>&nbsp;
+                            <i class="fa fa-arrow-up" v-if="top == null" @click="stick(contractSeleted,'core/core_common/stick')">
+                                置顶</i>
+                            <i class="fa fa-times-circle" v-if="top != null" @click="stick(contractSeleted,'core/core_common/unstick')">
+                                取消置顶</i>&nbsp;
                         </li>
-                        <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1" >
+                        <li class="operate" v-if="status !== 1 && contractSeleted.length ===1">
                             <i class="fa fa-unlock" @click="deblocking"> 解锁</i>&nbsp;
                         </li>
                         <!--<li class="operate" v-if="simulate.indexOf('core/up_contract') > -1 && contractSeleted.length ===1">
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>-->
-                        <li class="operate" v-if="(simulate.indexOf('MoveOrder/stopContract_collect') > -1||isSuper) && contractSeleted.length ===1">
+                        <li class="operate"
+                            v-if="(simulate.indexOf('MoveOrder/stopContract_collect') > -1||isSuper) && contractSeleted.length ===1">
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/readContract_review') > -1||isSuper)">
-                        <!--<li class="operate" v-if="contractSeleted.length ===1">-->
+                        <li class="operate"
+                            v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/readContract_review') > -1||isSuper)">
+                            <!--<li class="operate" v-if="contractSeleted.length ===1">-->
                             <!--<i class="fa fa-eye"> 查看回访记录</i>&nbsp;-->
                             <router-link tag="i" class="fa fa-eye" :to="{path:'/contractDetail',
                                 query: {ContractId: contractSeleted[0],flag:'review'}}">查看回访记录
                             </router-link>
                         </li>
-                        <li class="operate" @click="distribution" v-if="simulate.indexOf('MoveOrder/moveOrder_collect') > -1||isSuper">
+                        <li class="operate" @click="distribution"
+                            v-if="simulate.indexOf('MoveOrder/moveOrder_collect') > -1||isSuper">
                             <i class="fa fa-sitemap">按人员分配</i>&nbsp;
                         </li>
-                        <li class="operate" @click="distributionDpm" v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_collect') > -1||isSuper">
+                        <li class="operate" @click="distributionDpm"
+                            v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_collect') > -1||isSuper">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
 
@@ -142,7 +153,8 @@
                             <label for="allCheck"
                                    :class="{'label_check':true,'c_on':contractSeleted.length==params.length&&params.length!=0,'c_off':contractSeleted.length!=params.length}"
                                    @click.prevent="pickedAll($event)">
-                                <input id="allCheck" type="checkbox" :checked="contractSeleted.length==params.length&&params.length!=0">
+                                <input id="allCheck" type="checkbox"
+                                       :checked="contractSeleted.length==params.length&&params.length!=0">
                             </label>
                         </th>
                         <th class="text-center width50">标记</th>
@@ -159,7 +171,8 @@
                         <th class="text-center width80">审核状态</th>
                         <th class="text-center width50">锁定</th>
                         <th class="text-center width50">置顶</th>
-                        <th class="text-center width50" v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">详情</th>
+                        <th class="text-center width50" v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">详情
+                        </th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
@@ -193,25 +206,26 @@
                             <span class="label label-success" v-if="item.passed > 4 ">
                                 已完成
                             </span>
-                            <span class="label label-primary" v-if="item.passed === 1">
+                            <span class="label label-primary" v-if="item.passed == 1">
                                 {{dictionary.passed[item.passed]}}
                             </span>
-                            <span class="label label-default" v-if="item.passed === 2">
+                            <span class="label label-default" v-if="item.passed == 2">
                                 {{dictionary.passed[item.passed]}}
                             </span>
-                            <span class="label label-warning" v-if="item.passed === 3">
+                            <span class="label label-warning" v-if="item.passed == 3">
                                 {{dictionary.passed[item.passed]}}
                             </span>
-                            <span class="label label-warning" v-if="item.passed === 4">
+                            <span class="label label-warning" v-if="item.passed == 4">
                                 {{dictionary.passed[item.passed]}}
                             </span>
                         </td>
                         <td class=" myIcon">
-                            <i class="fa fa-lock" v-if="item.status !== 1" ></i>
-                            <i class="fa fa-unlock" v-if="item.status === 1" ></i>
+                            <i class="fa fa-lock" v-if="item.status != 1"></i>
+                            <i class="fa fa-unlock" v-if="item.status == 1"></i>
                         </td>
                         <td class=" myIcon">
-                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
+                            <i class="fa fa-thumb-tack" v-if="item.top != null"
+                               @click="stick(item.id,'core/core_common/unstick')"></i>
                         </td>
                         <td v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">
                             <router-link :to="{path:'/contractDetail',
@@ -237,7 +251,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <Loading v-if='Waiting'></Loading>
 
-        <AddContract  :dictionary="dictionary"></AddContract>
+        <AddContract :dictionary="dictionary"></AddContract>
     </div>
 </template>
 <script>
@@ -250,8 +264,8 @@
 
     import AddContract from './collectAdd.vue'
     export default{
-        props : ['simulate','isSuper'],
-        components: {DatePicker, Page, Staff, Status, Confirm, Loading,AddContract},
+        props: ['simulate', 'isSuper'],
+        components: {DatePicker, Page, Staff, Status, Confirm, Loading, AddContract},
         data(){
             return {
                 flag: true,
@@ -385,7 +399,7 @@
             selectDpm(){ //选择部门
                 $('.selectCustom:eq(0)').modal('show');
                 this.configureType = 'selectDpm';
-                this.configure = {type:'department',length: 1};
+                this.configure = {type: 'department', length: 1};
             },
             dpmSeleted(val){
                 if (this.configureType === 'selectDpm') {
@@ -442,7 +456,6 @@
 
             },
             getDate(val){
-                console.log(val)
                 this.contractSearchInfo.start = val.split('to')[0];
                 this.contractSearchInfo.end = val.split('to')[1];
                 this.search();
@@ -480,9 +493,17 @@
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
                     this.houseId.push(item.house_id);
-                    item.top === 2 ? this.top = 1 : this.top = 2;
                     item.mark === 2 ? this.mark = 1 : this.mark = 2;
                     item.status !== 1 ? this.status = 2 : this.status = 1;
+                    this.$http.get('core/collect/readcontract/id/' + item.id).then((res)=>{
+                        if(res.data.code === '70020'){
+                            this.top = res.data.data.top;
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
                 } else {
                     for (let i = 0; i < this.contractSeleted.length; i++) {
                         if (item.id === this.contractSeleted[i]) {
@@ -502,7 +523,7 @@
 //                this.allCheck = evInput.checked;
                 if (evInput.checked) {
                     this.contractSeleted = [];
-                    for (let i = 0;i<this.params.length;i++){
+                    for (let i = 0; i < this.params.length; i++) {
                         this.contractSeleted.push(this.params[i].id)
                     }
 //                    this.contractSeleted = this.allId;
@@ -510,9 +531,13 @@
                     this.contractSeleted = [];
                 }
             },
-            stick(){  //top
-                this.$http.get('core/collect/stick/id/' + this.contractSeleted[0] + '/top/' + this.top).then((res) => {
-                    if (res.data.code === '70090') {
+            stick(id, addr){
+                let table_id = String(id);
+                this.$http.post(addr, {
+                    table_id: table_id,
+                    category: 'collect'
+                }).then((res) => {
+                    if (res.data.code === '20020') {
                         this.search();
                         this.contractSeleted = [];
                         this.info.success = res.data.msg;
@@ -588,7 +613,7 @@
                         }
                     })
                 } else if (this.msgFlag === 'cancel') {
-                    this.$http.get('core/move_order/stopContract/type/collect/id/' + this.contractSeleted[0] ).then((res) => {
+                    this.$http.get('core/move_order/stopContract/type/collect/id/' + this.contractSeleted[0]).then((res) => {
                         if (res.data.code === '70030') {
                             this.search();
                             this.houseId = [];
@@ -606,12 +631,12 @@
             },
             distribution(){
                 $('#selectCustom').modal('show');
-                this.configure = {type:'staff',length: 1};
+                this.configure = {type: 'staff', length: 1};
                 this.configureType = 'distribution';
             },
             distributionDpm(){
                 $('#selectCustom').modal('show');
-                this.configure = {type:'department',length: 1};
+                this.configure = {type: 'department', length: 1};
                 this.configureType = 'distributionDpm';
             },
 
@@ -708,13 +733,15 @@
     .selected {
         background: #fffcd9 !important;
     }
-    .cancel{
+
+    .cancel {
         display: inline-block;
         width: 20px;
         height: 20px;
         border-radius: 50%;
     }
-    .cancel>img{
+
+    .cancel > img {
         width: 20px;
         height: 20px;
         border-radius: 50%;

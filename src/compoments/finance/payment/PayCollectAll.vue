@@ -423,7 +423,6 @@
         mounted (){
             if (this.$route.query.sear === 1) {
                 this.params = this.$route.query.myParam;
-                console.log(this.$route.query.myParam);
                 this.selected = this.$route.query.selected;
                 this.payCollect();
             } else {

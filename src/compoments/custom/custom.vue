@@ -57,7 +57,9 @@
                         </div>
 
                         <div class="pro-sort" style="height: 39px;">
-                            <label style="margin-top: 8px;padding-left: 25px;" :class="{'label_check':true,'c_on':return_sea.Trid,'c_off':!return_sea.Trid}" @click.prevent="trid($event,1)">
+                            <label style="margin-top: 8px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':return_sea.Trid,'c_off':!return_sea.Trid}"
+                                   @click.prevent="trid($event,1)">
                                 <input type="checkbox" class="pull-left">三天内未成交
                             </label>
                         </div>
@@ -120,9 +122,11 @@
                             </h5>
                         </li>
                         <li>
-                            <h5><a v-if="top === 1" @click="stick(pitch,top)"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
+                            <h5><a v-if="top == null" @click="stick(pitch,'core/core_common/stick')">
+                                <i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
                             </h5>
-                            <h5><a v-if="top === 2" @click="stick(pitch,top)"><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a>
+                            <h5><a v-if="top != null" @click="stick(pitch,'core/core_common/unstick')">
+                                <i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a>
                             </h5>
                         </li>
                     </ul>
@@ -166,7 +170,9 @@
                             <th class="text-center width80">个人/中介</th>
                             <th class="text-center width80">负责人</th>
                             <th class="text-center width50">置顶</th>
-                            <th class="text-center width50" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情</th>
+                            <th class="text-center width50"
+                                v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -200,7 +206,7 @@
                             <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
-                                <a v-if="list.top === 1" @click="stick(list.id,2)">
+                                <a v-if="list.top != null" @click="stick(list.id,'core/core_common/unstick')">
                                     <i class="fa fa-thumb-tack"></i>
                                 </a>
                             </td>
@@ -225,7 +231,8 @@
         <remindDaily @pitches="collectList" :state="bool" :msg="pitch"></remindDaily>
 
         <!--客户 新增/修改-->
-        <new-add @cus_list="succ" :msg="revise_state" :revise="revise_cus" :selects="select_list" :simulate="simulate" :isSuper="isSuper"></new-add>
+        <new-add @cus_list="succ" :msg="revise_state" :revise="revise_cus" :selects="select_list" :simulate="simulate"
+                 :isSuper="isSuper"></new-add>
 
         <!--分配-->
         <Distribution @distribution="collectList" :pit="pitch" :msg="cus_name"></Distribution>
@@ -250,7 +257,7 @@
     import Loading from '../loading/Loading.vue'                        //Loading
 
     export default {
-        props:['simulate','isSuper'],
+        props: ['simulate', 'isSuper'],
         components: {Page, Distribution, newAdd, remindDaily, Status, Loading},
         data (){
             return {
@@ -326,7 +333,6 @@
             },
 //            三天内未成交
             trid(val, pag) {
-//                console.log(val.target.getElementsByTagName('input')[0]);
                 let valInput = val.target.getElementsByTagName('input')[0];
                 valInput.checked = !valInput.checked;
                 this.return_sea.Trid = valInput.checked;
@@ -456,7 +462,6 @@
             },
 //            增删数组
             rules (rul, eve, cus){
-//                console.log(eve.target.getElementsByTagName('input')[0])
                 let evInput = eve.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -465,11 +470,7 @@
                     this.$http.get('core/customer/readCustomer/id/' + rul).then((res) => {
                         this.temporary_save = {};
                         this.temporary_save = res.data.data;
-                        if (res.data.data.top === 1) {
-                            this.top = 2;
-                        } else if (res.data.data.top === 2) {
-                            this.top = 1;
-                        }
+                        this.top = res.data.data.top;
                     });
                 }
                 if (!evInput.checked) {
@@ -517,18 +518,18 @@
                 });
             },
 
-//            置顶
-            stick (val, num){
-                this.$http.get('core/customer/stick/id/' + val + '/top/' + num).then((res) => {
+//            置顶/取消
+            stick (id, val){
+                let table_id = String(id);
+                this.$http.post(val, {
+                    table_id: table_id,
+                    category: 'customer',
+                }).then((res) => {
                     //成功信息 ***
                     this.info.success = res.data.msg;
                     //显示成功弹窗 ***
                     this.info.state_success = true;
-                    if (this.top === 1) {
-                        this.top = 2;
-                    } else if (this.top === 2) {
-                        this.top = 1;
-                    }
+
                     this.$http.post('core/customer/customerList').then((res) => {
                         this.custom_list = res.data.data.list;
                         this.return_sea.paging = res.data.data.pages;

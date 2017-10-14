@@ -1,8 +1,8 @@
 <template>
     <div>
         <ol class="breadcrumb">
-            <li>人资管理</li>
-            <li class="active">组织架构</li>
+            <li>财务账本</li>
+            <li class="active">业绩生成</li>
         </ol>
 
         <div class="row">

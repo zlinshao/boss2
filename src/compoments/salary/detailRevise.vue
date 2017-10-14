@@ -226,7 +226,7 @@
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#detailRevise').modal('hide');        //成功关闭模态框
-                        this.$emit('success');
+                        this.$emit('success_cells');
                         this.successMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);

@@ -1,17 +1,27 @@
 <template>
     <div>
-        <ol class="breadcrumb">
-            <li>财务账本</li>
+        <ol class="breadcrumb" v-show="cus == 1">
+            <li>财务账本{{cus}}</li>
             <li>
-                <router-link to="/newLandlord">
-                    客户管理
-                </router-link>
+                <router-link to="/newLandlord">客户管理</router-link>
             </li>
             <li>房东详情</li>
 
             <li class="pull-right" v-show="cus === 1">
                 <router-link :to="{path:'/newLandlord',query: { sea: seaLand, land: 1}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
+        </ol>
+        <ol class="breadcrumb" v-if="cus == 2">
+            <li>财务账本{{cus}}</li>
+            <li>
+                <router-link to="/rentLordAll">客户管理</router-link>
+            </li>
+            <li class="active">房东详情</li>
+            <li class="pull-right" v-show="cus === 2">
+                <router-link :to="{path:'/rentLordAll',query:{sea:seaLand, land: 1}}"><i
+                        class="fa fa-angle-double-left"></i> 返回上一步
                 </router-link>
             </li>
         </ol>
@@ -43,7 +53,7 @@
                 <div class="panel-body table-responsive client_info">
                     <div class="row" v-for="item in myLandlordList">
                         <div class="col-sm-4 col-xs-12">
-                            <h5>基本信息&nbsp;<span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span></h5></h5>
+                            <h5>基本信息&nbsp;<span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span></h5>
                             <div>
                                 <div>
                                     <span class="text-primary">客户姓名：</span>

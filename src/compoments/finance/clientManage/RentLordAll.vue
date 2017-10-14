@@ -1,8 +1,8 @@
-<template>
+    <template>
     <div>
         <ol class="breadcrumb">
             <li>财务账本</li>
-            <li>房东/租客管理</li>
+            <li>房东&nbsp;|&nbsp;租客管理</li>
         </ol>
         <section class="panel">
             <div class="panel-body">
@@ -153,7 +153,7 @@
                     </td>
                     <td class="text-center">
                         <router-link
-                                :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
+                                :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 2,freeze: item.freeze}}">
                             详情
                         </router-link>
                     </td>
@@ -251,7 +251,7 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 1}}">
+                        <router-link :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 2}}">
                             详情
                         </router-link>
                     </td>
@@ -338,7 +338,13 @@
             }
         },
         mounted(){
-            this.getLandlordList();
+            if (this.$route.query.sear === 1) {
+                this.params = this.$route.query.myParam;
+                this.selecteds = this.$route.query.selected;
+                this.getLandlordList();
+            } else {
+                this.getLandlordList();
+            }
         },
         methods: {
 //            恢复

@@ -7,13 +7,13 @@
         <section class="panel has-js">
             <!--未选中-->
             <div class="panel-body clearFix">
-                <div v-if="houseSeleted===0">
+                <div v-if="houseSeleted === 0">
                     <div v-if="flag">
                         <div class="pro-sort">
                             <label>
                                 <select class="form-control" v-model="params.house_type" @change="search">
                                     <option value="">房屋类型</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.house_type">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.house_type">{{value}}</option>
                                 </select>
                             </label>
                         </div>
@@ -21,7 +21,7 @@
                             <label>
                                 <select class="form-control" v-model="params.rooms" @change="search">
                                     <option value="">房型</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.rooms">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.rooms">{{value}}</option>
                                 </select>
                             </label>
                         </div>
@@ -29,7 +29,7 @@
                             <label>
                                 <select class="form-control" v-model="params.decoration" @change="search">
                                     <option value="">房屋装修</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.decoration">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.decoration">{{value}}</option>
                                 </select>
                             </label>
                         </div>
@@ -37,7 +37,7 @@
                             <label>
                                 <select class="form-control" v-model="params.reference" @change="search">
                                     <option value="">参考价格</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.reference">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.reference">{{value}}</option>
                                 </select>
                             </label>
                         </div>
@@ -45,7 +45,8 @@
                             <label>
                                 <select class="form-control" v-model="params.house_feature" @change="search">
                                     <option value="">房屋特色</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.house_feature">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.house_feature">{{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
@@ -53,7 +54,7 @@
                             <label>
                                 <select class="form-control" v-model="params.area" @change="search">
                                     <option value="">面积</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.area">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.area">{{value}}</option>
                                 </select>
                             </label>
                         </div>
@@ -61,7 +62,8 @@
                             <label>
                                 <select class="form-control" v-model="params.status" @change="search">
                                     <option value="">房屋状态</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.villa_status">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.villa_status">{{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
@@ -69,7 +71,7 @@
                             <label>
                                 <select class="form-control" v-model="params.belong" @change="search">
                                     <option value="">房屋所属</option>
-                                    <option :value="key"  v-for="(value,key) in dictionary.belong">{{value}}</option>
+                                    <option :value="key" v-for="(value,key) in dictionary.belong">{{value}}</option>
                                 </select>
                             </label>
                         </div>
@@ -80,11 +82,14 @@
                             </label>
                         </div>
                         <div class="pro-sort" style="height: 39px;">
-                            <label style="margin-top: 8px;padding-right: 25px" :class="{'label_check':true,'c_on':params.our_group,'c_off':!params.our_group}" @click.prevent="trid($event)">
+                            <label style="margin-top: 8px;padding-right: 25px"
+                                   :class="{'label_check':true,'c_on':params.our_group,'c_off':!params.our_group}"
+                                   @click.prevent="trid($event)">
                                 <input type="checkbox" class="pull-left" v-model="params.our_group">显示本组房屋
                             </label>
                         </div>
-                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding: 0;margin-right: 20px">
+                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
+                             style="padding: 0;margin-right: 20px">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="请输入房屋地址"
                                        v-model="params.keywords" @keydown.enter="search">
@@ -113,14 +118,22 @@
                 </div>
 
                 <!--选中-->
-                <div class="col-lg-12 remind" v-if="houseSeleted>0">
+                <div class="col-lg-12 remind" v-if="houseSeleted > 0">
                     <ul>
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a v-if="top == 1" @click="stick(houseSeleted,top)"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a></h5>
-                            <h5><a v-if="top == 2" @click="stick(houseSeleted,top)"><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a></h5>
+                            <h5>
+                                <a v-if="top == null" @click="stick(houseSeleted,'core/core_common/stick')">
+                                    <i class="fa fa-arrow-up"></i>&nbsp;置顶
+                                </a>
+                            </h5>
+                            <h5>
+                                <a v-if="top != null" @click="stick(houseSeleted,'core/core_common/unstick')">
+                                    <i class="fa fa-times-circle-o"></i>&nbsp;取消置顶
+                                </a>
+                            </h5>
                         </li>
                     </ul>
                 </div>
@@ -150,7 +163,8 @@
                             <th class="text-center width80">负责人</th>
                             <!--<th class="text-center">锁定</th>-->
                             <th class="text-center width50">置顶</th>
-                            <th class="text-center width50" v-if="simulate.indexOf('Villa/readVilla')>-1||isSuper">详情</th>
+                            <th class="text-center width50" v-if="simulate.indexOf('Villa/readVilla')>-1||isSuper">详情
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -158,8 +172,8 @@
                             <td class="text-center">
                                 <label :class="{'label_check':true,'c_on':houseSeleted===item.id,'c_off':houseSeleted!==item.id}"
                                        @click.prevent="picked(item.id,$event,item.top)">
-                                    <input type="checkbox" class="pull-left"  :value="item.id"
-                                           :checked="houseSeleted===item.id">
+                                    <input type="checkbox" class="pull-left" :value="item.id"
+                                           :checked="houseSeleted === item.id">
                                 </label>
 
                             </td>
@@ -183,11 +197,11 @@
                             </td>
                             <td class="text-center">{{item.staff_id}}</td>
                             <!--<td class="text-center">-->
-                                <!--&lt;!&ndash;<i class="fa fa-unlock-alt" ></i>&ndash;&gt;-->
-                                <!--<i class="fa fa-unlock" ></i>-->
+                            <!--&lt;!&ndash;<i class="fa fa-unlock-alt" ></i>&ndash;&gt;-->
+                            <!--<i class="fa fa-unlock" ></i>-->
                             <!--</td>-->
                             <td class="text-center">
-                                <a v-if="item.top===1" @click="stick(item.id,2)">
+                                <a v-if="item.top != null" @click="stick(item.id,'core/core_common/unstick')">
                                     <i class="fa fa-thumb-tack"></i>
                                 </a>
                             </td>
@@ -221,19 +235,19 @@
     import SelectDpm from '../common/oraganization.vue'
     import Status from '../common/status.vue';                          //提示信息
     export default {
-        props:['simulate','isSuper'],
-        components: {Page,SelectDpm,Status},
+        props: ['simulate', 'isSuper'],
+        components: {Page, SelectDpm, Status},
         data (){
             return {
                 flag: true,
                 flag1: false,
                 /*********/
-                dictionary:[],      //字典列表
-                configure:[],       //配置项
-                houseList:[],
-                isShow:false,
-                checkboxModel:[],
-                houseSeleted:0,
+                dictionary: [],      //字典列表
+                configure: [],       //配置项
+                houseList: [],
+                isShow: false,
+                checkboxModel: [],
+                houseSeleted: 0,
                 top: '',            //置顶/取消置顶
                 info: {
                     //成功状态 ***
@@ -245,42 +259,42 @@
                     //失败信息 ***
                     error: ''
                 },
-                params:{
-                    house_type:"",//房屋类型
-                    rooms:'',     //房型
-                    decoration:'',//装修
-                    reference:'', //参考价格
-                    house_feature:'',//房屋特色
-                    area:'',    //面积
-                    status:'',//房屋状态
-                    belong:'',    //房屋所属
-                    keywords:'',
-                    our_group:false,
-                    department_id:'',
-                    page:'',
+                params: {
+                    house_type: "",//房屋类型
+                    rooms: '',     //房型
+                    decoration: '',//装修
+                    reference: '', //参考价格
+                    house_feature: '',//房屋特色
+                    area: '',    //面积
+                    status: '',//房屋状态
+                    belong: '',    //房屋所属
+                    keywords: '',
+                    our_group: false,
+                    department_id: '',
+                    page: '',
                 },
-                departmentName:'',
-                pages:'',   // 总页数
-                keepStatus : false,
+                departmentName: '',
+                pages: '',   // 总页数
+                keepStatus: false,
             }
         },
-        watch:{
-            'params.our_group':{
-                deep:true,
-                handler(val,oldVal){
-                    if(val){
+        watch: {
+            'params.our_group': {
+                deep: true,
+                handler(val, oldVal){
+                    if (val) {
                         this.params.house_type = '';
                         this.params.rooms = '';
                         this.params.decoration = '';
                         this.params.reference = '';
-                        this.params.area='';
+                        this.params.area = '';
                         this.params.house_feature = '';
                         this.params.status = '';
                         this.params.belong = '';
-                        this.params.keywords='';
-                        this.params.department_id='';
-                        this.params.page=1;
-                        this.departmentName='';
+                        this.params.keywords = '';
+                        this.params.department_id = '';
+                        this.params.page = 1;
+                        this.departmentName = '';
                     }
                 }
             }
@@ -313,39 +327,35 @@
             //字典列表
             getDictionary(){
                 this.$http.get('core/customer/dict').then((res) => {
-                    this.dictionary=res.data;
+                    this.dictionary = res.data;
 
-                    if(this.$route.query.params !== undefined && this.$route.query.params.keywords !== undefined){
+                    if (this.$route.query.params !== undefined && this.$route.query.params.keywords !== undefined) {
                         this.params = this.$route.query.params;
                         this.departmentName = this.$route.query.departmentName;
                         this.keepStatus = true;
-                    }else {
+                    } else {
                         this.keepStatus = false;
                     }
-
                     this.searchHouseList();
                 });
             },
             //搜索
             search(){
-                this.params.page=1;
+                this.params.page = 1;
                 this.searchHouseList();
             },
 
             //搜索房屋列表
             searchHouseList(){
-                this.$http.post('core/villa/receivedvillalist',this.params).then((res) => {
-                    if(res.data.code==='80030'){
-                        this.houseList=res.data.data.list;
-                        this.isShow=false;
-                        this.pages=res.data.data.pages;
-//                        this.info.success = res.data.msg;
-//                        显示成功弹窗 ***
-//                        this.info.state_success = true;
-                    }else {
-                        this.houseList=[];
-                        this.pages=1;
-                        this.isShow=true;
+                this.$http.post('core/villa/receivedvillalist', this.params).then((res) => {
+                    if (res.data.code === '80030') {
+                        this.houseList = res.data.data.list;
+                        this.isShow = false;
+                        this.pages = res.data.data.pages;
+                    } else {
+                        this.houseList = [];
+                        this.pages = 1;
+                        this.isShow = true;
                     }
 
 
@@ -354,12 +364,12 @@
             //选择部门
             selectDpm(){
                 $('#selectCustom').modal('show');
-                this.configure = {type:'department',length: 1};
+                this.configure = {type: 'department', length: 1};
             },
             dpmSeleted(val){
-                if(val.department.length){
-                    this.departmentName=val.department[0].name;
-                    this.params.department_id=val.department[0].id;
+                if (val.department.length) {
+                    this.departmentName = val.department[0].name;
+                    this.params.department_id = val.department[0].id;
                     this.search();
                 }
             },
@@ -372,27 +382,32 @@
             },
 
             //选中的checkout框
-            picked (id,e,top){
+            picked (id, e){
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
-                if(evInput.checked){
+                if (evInput.checked) {
                     this.houseSeleted = id;
-                    top === 2? this.top = 1:this.top = 2;
-                }else {
+                    this.$http.get('core/villa/readvilla/id/' + id).then((res) => {
+                        this.top = res.data.data.top;
+                    });
+                } else {
                     this.houseSeleted = 0;
                 }
             },
             // 置顶
-            stick (val, num){
-                this.$http.get('core/villa/stick/id/' + val + '/top/' + num).then((res) => {
-                    if(res.data.code==='80090'){
+            stick (num, val){
+                this.$http.post(val, {
+                    table_id: num,
+                    category: 'villa',
+                }).then((res) => {
+                    if (res.data.code === '20020') {
+                        this.searchHouseList();
+                        this.houseSeleted = 0;
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_success = true;
-                        this.top === 1 ? this.top =2 : this.top = 1;
-                        this.houseSeleted = 0;
                         this.search();
-                    }else{
+                    } else {
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_error = true;
@@ -407,16 +422,16 @@
                 this.params.house_feature = '';
                 this.params.status = '';
                 this.params.belong = '';
-                this.params.area='';
-                this.params.page=1;
-                this.params.keywords='',
-                this.departmentName='';
-                this.params.department_id='';
+                this.params.area = '';
+                this.params.page = 1;
+                this.params.keywords = '';
+                this.departmentName = '';
+                this.params.department_id = '';
                 this.search();
             },
             //分页搜索
             pageSearch(val){
-                this.params.page=val;
+                this.params.page = val;
                 this.searchHouseList();
             },
 
@@ -432,6 +447,7 @@
         width: 17px;
         height: 17px;
     }
+
     .remind li {
         float: left;
     }
@@ -445,7 +461,7 @@
     }
 
     input, select {
-         margin-bottom: 0px;
+        margin-bottom: 0px;
     }
 
     .pro-sort {
@@ -455,7 +471,8 @@
     .pro-sort select.form-control {
         padding: 6px 8px;
     }
-    .nav-tabs>li {
-         margin-bottom: 0;
-     }
+
+    .nav-tabs > li {
+        margin-bottom: 0;
+    }
 </style>
