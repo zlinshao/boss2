@@ -81,7 +81,7 @@
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-2 control-label">本次领取合同编号记录(收)<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="collect_num_start" @blur="getCollectEnd" @keyup="collect_num_start = collect_num_start.replace(/[^\d]/g,'');">
+                                                <input type="text" class="form-control" v-model="collect_num_start" minlength="7" maxlength="7" @blur="getCollectEnd" @keyup="collect_num_start = collect_num_start.replace(/[^\d]/g,'');">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px;">
                                                 到
@@ -122,7 +122,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">本次领取合同编号记录(租)<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="rent_num_start" @blur="getRentEnd" @keyup="setNum(2)">
+                                                <input type="text" class="form-control" v-model="rent_num_start" minlength="7" maxlength="7" @blur="getRentEnd" @keyup="setNum(2)">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px;">
                                                 到
