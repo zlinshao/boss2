@@ -472,11 +472,11 @@
                                     <span>待处理项</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 47}" @click='pitch_on(47)'>
-                                <router-link to="/organization">
-                                    <span>业绩生成</span>
-                                </router-link>
-                            </li>
+                            <!--<li :class="{'active': isActive == 47}" @click='pitch_on(47)'>-->
+                                <!--<router-link to="/organization">-->
+                                    <!--<span>业绩生成</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
                             <!--<li class="sub-menu">
                                <a href="javascript:;">
                                    <span>科目管理</span>
@@ -539,24 +539,24 @@
                     <!--</ul>-->
                     <!--</li>-->
 
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>业绩管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
-                                <router-link to="/personal">
-                                    <span>个人工资</span>
-                                </router-link>
-                            </li>
-                            <li :class="{'active': isActive == 45}" @click='pitch_on(45)'>
-                                <router-link to="/periodicFor">
-                                    <span>周期表</span>
-                                </router-link>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="sub-menu">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-bar-chart-o"></i>-->
+                            <!--<span>业绩管理</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li :class="{'active': isActive == 19}" @click='pitch_on(19)'>-->
+                                <!--<router-link to="/personal">-->
+                                    <!--<span>个人工资</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li :class="{'active': isActive == 45}" @click='pitch_on(45)'>-->
+                                <!--<router-link to="/periodicFor">-->
+                                    <!--<span>周期表</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
 
                     <!--<li class="sub-menu">-->
                     <!--<a href="javascript:;">-->
