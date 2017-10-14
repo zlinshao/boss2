@@ -233,10 +233,16 @@
                         }
                         if (this.msg.num[0].sf_contract_number!=null){
                             this.sf_contract_now = this.msg.num[0].sf_contract_number.split(',');
+                        }else {
+                            this.sf_contract_now = [];
                         }
                         if (this.msg.num[0].zf_contract_number!=null){
                             this.zf_contract_now = this.msg.num[0].zf_contract_number.split(',');
+                        }else {
+                            this.zf_contract_now = [];
                         }
+                    } else {
+                        this.$router.push({path: '/contractNum',query:{myParam:this.params,page:this.page,select:this.select}});
                     }
 //                console.log(this.public)
                 })
