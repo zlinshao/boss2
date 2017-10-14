@@ -423,6 +423,7 @@
                 if (this.tabs === 1) {
                     this.selecteds = val.department[0].name;
                     this.params.salary_department_id = val.department[0].id;
+                    this.search(1);
                 } else if (this.tabs === 2) {
                     this.department_name = val.department[0].name;
                     this.department_id = val.department[0].id;

@@ -182,6 +182,7 @@
             },
             configure(val){
                 this.myConfigure = val;
+                this.getNextLevel(0);
                 if (val.type === 'department') {
                     this.onlyStaff = false;
                     this.onlyDepartment = true;
