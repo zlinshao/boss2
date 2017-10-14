@@ -213,6 +213,7 @@
                     department_id: [],
                     staff_id: [],
                     generate_date: '',
+                    house_id: '',
                     search: '',
                     page: 1
                 },
@@ -321,7 +322,7 @@
             },
 //              房屋信息
             getHouse(data){
-                this.params.search = data.address;
+                this.params.house_id = data.id;
                 this.search(1);
             },
 //            重置部门搜索

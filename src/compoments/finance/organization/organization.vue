@@ -117,7 +117,11 @@
                     month: this.msg.time,
                     rank: this.msg.period,
                 }).then((res) => {
-                    console.log(res.data);
+                    if (res.data.code === '70000') {
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
                 })
             },
 //            组织架构时间
