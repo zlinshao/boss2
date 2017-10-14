@@ -451,6 +451,7 @@
                         } else {
                             publicVal = val.zf[0];
                         }
+                        this.area = publicVal.area;
                         this.operate_man = publicVal.operator.name;
                         this.department = publicVal.department_id.name;
                         this.department_id = publicVal.department_id.id;
