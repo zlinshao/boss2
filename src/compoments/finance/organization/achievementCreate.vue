@@ -271,7 +271,9 @@
                             this.ach_create = res.data.data.data;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
-                            this.$http.get('finance/customer/urc').then((res) => {
+                            this.$http.get('finance/customer/urc',{
+                                params: this.params,
+                            }).then((res) => {
                                 if (res.data.code === '90010') {
                                     this.unrelated_num = res.data.data;
                                 }
