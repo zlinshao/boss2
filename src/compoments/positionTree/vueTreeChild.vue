@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div>
-			<!--{{simulate}}-->
+			<!--{{isSuper}}-->
 			<li :class="liClassVal" >
 				<span :class="spanClassVal" @click='open(model)'></span>
 				<div :class="aClassVal" @click='Func(model,$event)' @contextmenu.prevent='cxtmenufunc'>
@@ -47,7 +47,8 @@
 					</div>
 				</div>
 				<ul :class="ulClassVal" v-show='model.isFolder'>
-					<ztree-item v-for="(item,i) in model.position" :key='i' :callback='callback' :simulate="simulate"
+					<ztree-item v-for="(item,i) in model.position" :key='i' :callback='callback'
+								:simulate="simulate"  :isSuper="isSuper"
 								:expandfunc='expandfunc' :cxtmenufunc='cxtmenufunc' :model.sync="item" :num.sync='i'
 								root='1' :nodes.sync='model.position.length' :trees.sync='trees'>
 					</ztree-item>
@@ -64,7 +65,7 @@
         data(){
             return{
 //                simulate: [],
-                isSuper : false
+//                isSuper : false
             }
         },
         props: {
@@ -101,6 +102,9 @@
             },
             simulate : {
                 type:Array,
+            },
+            isSuper : {
+                type:Boolean
             }
         },
 		mounted(){

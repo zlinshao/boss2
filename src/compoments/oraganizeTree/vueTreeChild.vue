@@ -44,7 +44,8 @@
 					</div>
 				</div>
 				<ul :class="ulClassVal" v-show='model.isFolder'>
-					<ztree-item v-for="(item,i) in model.son" :key='i' :callback='callback' :simulate="simulate"
+					<ztree-item v-for="(item,i) in model.son" :key='i' :callback='callback'
+								:simulate="simulate" :isSuper="isSuper"
 								:expandfunc='expandfunc' :cxtmenufunc='cxtmenufunc' :model.sync="item" :num.sync='i'
 								root='1' :nodes.sync='model.son.length' :trees.sync='trees'>
 					</ztree-item>
@@ -61,7 +62,7 @@
         data(){
             return{
 //                simulate: [],
-                isSuper : false
+//                isSuper : false
             }
         },
 		props: {
@@ -98,6 +99,9 @@
 			},
             simulate : {
                 type:Array,
+            },
+            isSuper : {
+                type:Boolean
             }
 		},
         mounted(){

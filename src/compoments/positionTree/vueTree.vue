@@ -5,7 +5,8 @@
 				<ul class="ztree">
 					<ztreeItem v-for='(val,i) in treeDataSource' :key='i' :model.sync="val"
 							   :num.sync='i' root='0' :nodes.sync='treeDataSource.length' :callback='func'
-							   :expandfunc='expand' :cxtmenufunc='contextmenu' :trees.sync='treeDataSource' :simulate="simulate">
+							   :expandfunc='expand' :cxtmenufunc='contextmenu' :trees.sync='treeDataSource'
+							   :simulate="simulate"  :isSuper="isSuper">
 					</ztreeItem>
 				</ul>
 			</div>
@@ -55,6 +56,9 @@
             },
             simulate : {
                 type:Array,
+            },
+            isSuper : {
+                type:Boolean
             }
         },
         watch:{
