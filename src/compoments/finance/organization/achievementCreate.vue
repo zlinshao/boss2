@@ -10,7 +10,7 @@
                     <form class="form-inline clearFix" role="form">
                         <div class="form-group">
                             <select class="form-control" v-model="url_address" @change="search(1)">
-                                <option value="candidate">关联</option>
+                                <option value="candidate">全部</option>
                                 <option value="unrelated">未关联</option>
                             </select>
                         </div>
@@ -165,7 +165,7 @@
         <Department :configure="configure" @Staff="selectDateSend"></Department>
 
         <!--分页-->
-        <Page :pg="paging" @pag="create_ach" :beforePage="params.page"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
 
 
         <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
@@ -310,7 +310,6 @@
             empty_pitch (){
                 this.col_pitch = [];
                 this.ren_pitch = [];
-                this.search(1);
             },
 //            清空部门标记ID
             close_ (){
@@ -329,7 +328,8 @@
                 }).then((res) => {
                     if (res.data.code === '90000') {
                         $('#revise').modal('hide');
-                        this.search(1);
+                        console.log(this.params.page);
+                        this.search(this.params.page);
                         this.successMsg(res.data.msg);
                         this.empty_pitch();
                     } else {
@@ -421,12 +421,6 @@
                 if (this.tabs === 1) {
                     this.selecteds = val.department[0].name;
                     this.params.salary_department_id = val.department[0].id;
-                    this.search(1);
-//                    for (let i = 0; i < val.department.length; i++) {
-//                        this.selecteds.push(val.department[i].name);
-//                        this.params.salary_department_id.push(val.department[i].id);
-//                    }
-//                    this.search(1);
                 } else if (this.tabs === 2) {
                     this.department_name = val.department[0].name;
                     this.department_id = val.department[0].id;
@@ -437,7 +431,6 @@
                 } else if (this.tabs === 3) {
                     this.staff_name = val.staff[0].name;
                     this.leader_id = val.staff[0].id;
-                    this.search(this.params.page);
                 }
             },
 //            筛选清空部门
