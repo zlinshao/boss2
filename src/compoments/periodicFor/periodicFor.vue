@@ -1,6 +1,7 @@
 <template>
     <div>
         <ol class="breadcrumb">
+            <li>业绩管理</li>
             <li>周期表</li>
         </ol>
         <section class="panel">

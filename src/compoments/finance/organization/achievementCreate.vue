@@ -3,9 +3,17 @@
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
+                <div style="margin: 0 0 6px 2px;">
+                    收租地址不符：<span class="text-danger">{{unrelated_num}}</span>&nbsp;条
+                </div>
                 <div v-if="col_pitch.length == 0 && ren_pitch.length == 0">
                     <form class="form-inline clearFix" role="form">
-
+                        <div class="form-group">
+                            <select class="form-control" v-model="url_address" @change="search(1)">
+                                <option value="candidate">关联</option>
+                                <option value="unrelated">未关联</option>
+                            </select>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="selecteds" @click='select(1)' readonly>
@@ -43,11 +51,10 @@
                             <h5><a @click="not_generate">不生成业绩</a></h5>
                         </li>
                         <!--<li>-->
-                            <!--<h5><a @click="delete_info">删除</a></h5>-->
+                        <!--<h5><a @click="delete_info">删除</a></h5>-->
                         <!--</li>-->
                     </ul>
                 </div>
-
             </div>
         </section>
         <section class="panel table table-responsive roll has-js">
@@ -187,6 +194,8 @@
         components: {Organization, Page, Status, Department, DatePicker, NewClientAdd, NewRenterAdd, Confirm},
         data(){
             return {
+                unrelated_num: '',
+                url_address: 'candidate',         //关联/未关联筛选
                 myLandlordList: {},
                 myRentlordList: {},
                 dict: {},
@@ -209,7 +218,7 @@
                 leader_id: '',                       //负责人ID
                 staff_name: '',                     //负责人名称
 
-                currentDate: ['111'],
+                currentDate: [],
                 dateConfigure: [                    //日期范围选择
                     {
                         range: true,
@@ -255,13 +264,18 @@
                 this.$http.get('salary/Commission/dict').then((res) => {
                     this.dict = res.data;
 
-                    this.$http.get('finance/customer/candidate', {
+                    this.$http.get('finance/customer/' + this.url_address, {
                         params: this.params,
                     }).then((res) => {
                         if (res.data.code === '90010') {
                             this.ach_create = res.data.data.data;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
+                            this.$http.get('finance/customer/urc').then((res) => {
+                                if (res.data.code === '90010') {
+                                    this.unrelated_num = res.data.data;
+                                }
+                            })
                         } else {
                             this.isShow = true;
                         }
@@ -386,7 +400,7 @@
 //            时间搜索
             getDate(data){
                 this.params.range = data;
-                this.search();
+                this.search(1);
             },
 //            筛选部门选择
             select(val){

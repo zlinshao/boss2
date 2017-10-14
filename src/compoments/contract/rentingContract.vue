@@ -104,8 +104,10 @@
                             <i class="fa fa-times-circle" @click="deleteContract"> 删除</i>
                         </li>
                         <li class="operate" v-if="contractSeleted.length ===1">
-                            <i class="fa fa-arrow-up" v-if="top == 1" @click="stick"> 置顶</i>
-                            <i class="fa fa-times-circle-o" v-if="top == 2" @click="stick"> 取消置顶</i>
+                            <i class="fa fa-arrow-up" v-if="top == null" @click="stick(contractSeleted,'core/core_common/stick')">
+                                置顶</i>
+                            <i class="fa fa-times-circle" v-if="top != null" @click="stick(contractSeleted,'core/core_common/unstick')">
+                                取消置顶</i>&nbsp;
                         </li>
                         <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1"  >
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
@@ -214,7 +216,8 @@
                             <i class="fa fa-unlock" v-if="item.status === 1" ></i>
                         </td>
                         <td class=" myIcon">
-                            <i class="fa fa-thumb-tack" v-if="item.top === 1"></i>
+                            <i class="fa fa-thumb-tack" v-if="item.top != null"
+                               @click="stick(item.id,'core/core_common/unstick')"></i>
                         </td>
                         <td v-if="simulate.indexOf('Rent/readContract')>-1||isSuper">
                             <router-link :to="{path:'/rentingDetail',
@@ -478,9 +481,17 @@
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
                     this.houseId.push(item.house_id);
-                    item.top === 2 ? this.top = 1 : this.top = 2;
                     item.mark === 2 ? this.mark = 1 : this.mark = 2;
                     item.status !== 1 ? this.status = 2 : this.status = 1;
+                    this.$http.get('core/rent/readcontract/id/' + item.id).then((res)=>{
+                        if(res.data.code === '80020'){
+                            this.top = res.data.data.top;
+                        }else {
+                            this.info.error = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                        }
+                    })
                 } else {
                     for (let i = 0; i < this.contractSeleted.length; i++) {
                         if (item.id === this.contractSeleted[i]) {
@@ -508,9 +519,13 @@
                     this.contractSeleted = [];
                 }
             },
-            stick(){  //top
-                this.$http.get('core/rent/stick/id/' + this.contractSeleted[0] + '/top/' + this.top).then((res) => {
-                    if (res.data.code === '80090') {
+            stick(id, addr){  //top
+                let table_id = String(id);
+                this.$http.post(addr,{
+                    table_id: table_id,
+                    category: 'rent',
+                }).then((res) => {
+                    if (res.data.code === '20020') {
                         this.search();
                         this.contractSeleted = [];
                         this.info.success = res.data.msg;

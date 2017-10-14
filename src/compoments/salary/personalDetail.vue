@@ -369,7 +369,7 @@
         <salaryRemark :look="lookRem"></salaryRemark>
 
         <!--工资明细编辑-->
-        <DetailRevise :msg="salary_detail" :dicts="dict" @success="search"></DetailRevise>
+        <DetailRevise :msg="salary_detail" :dicts="dict" @success_cells="search"></DetailRevise>
 
         <Status :state='info'></Status>
     </div>
