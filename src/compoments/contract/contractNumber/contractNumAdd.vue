@@ -585,10 +585,12 @@
                     case 1 :
                         this.is_extra_sf = true;
                         this.extra_sf_num = 1;
+                        this.extra_ljsf.push('');
                         break;
                     case 2 :
                         this.is_extra_zf = true;
                         this.extra_zf_num = 1;
+                        this.extra_ljzf.push('');
                 }
             },
             // 点击录入 加
@@ -597,13 +599,13 @@
                     case 1 :
                         if(this.extra_sf_num<10){
                             this.extra_sf_num++;
-                            this.extra_ljzf.push('');
+                            this.extra_ljsf.push('');
                         }
                         break;
                     case 2 :
                         if(this.extra_zf_num<10){
                             this.extra_zf_num++;
-                            this.extra_ljsf.push('');
+                            this.extra_ljzf.push('');
                         }
                 }
             },
@@ -612,7 +614,8 @@
                 switch (num){
                     case 1 :
                         if(this.extra_sf_num>0){
-                            this.extra_ljsf.pop();
+//                            this.extra_ljsf.pop();
+                            this.extra_ljsf.splice(this.extra_sf_num-1,1)
                             this.extra_sf_num--;
                             if (this.extra_sf_num==0){
                                 this.is_extra_sf = false;
@@ -621,7 +624,8 @@
                         break;
                     case 2 :
                         if(this.extra_zf_num>0){
-                            this.extra_ljzf.pop();
+//                            this.extra_ljzf.pop();
+                            this.extra_ljzf.splice(this.extra_zf_num-1,1)
                             this.extra_zf_num--;
                             if (this.extra_zf_num==0){
                                 this.is_extra_zf = false;
