@@ -421,7 +421,7 @@
             },
 //            筛选部门选择
             selectDateSend (val){
-                if (val.department.length > 0) {
+                if (val.department.length > 0 || val.staff.length > 0) {
                     if (this.tabs === 1) {
                         this.selecteds = val.department[0].name;
                         this.params.salary_department_id = val.department[0].id;

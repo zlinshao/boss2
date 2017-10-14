@@ -45,7 +45,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">收租状态</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" v-for="key in dict" v-model="typical">
+                                            <select class="form-control" v-model="typical">
                                                 <option value="">请选择</option>
                                                 <option v-for="(list,index) in dict.typical" :value="index">{{list}}
                                                 </option>

@@ -13,16 +13,25 @@
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
-                                <div class="row" v-if="parent_id !== 0">
-                                    <label class="col-sm-2 control-label col-lg-2" style="padding-top: 8px;">上级部门</label>
+                                <div v-if="parent_id !== 0">
+                                    <label class="col-sm-2 control-label col-lg-2"
+                                           style="padding-top: 8px;">上级部门</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" readonly v-model="highDpm">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <label class="col-sm-2 control-label col-lg-2" style="padding-top: 8px;">部门名称</label>
+                                <div>
+                                    <label class="col-sm-2 control-label col-lg-2"
+                                           style="padding-top: 8px;">部门名称</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="department">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="col-sm-2 control-label col-lg-2" style="padding-top: 8px;">负责人</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" placeholder="点击选择负责人"
+                                               v-model="staff_name" @click='select' readonly>
                                     </div>
                                 </div>
                             </div>
@@ -36,18 +45,25 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
+
+        <!--人资选择负责人-->
+        <Department :configure="configure" @Staff="selectDateSend"></Department>
     </div>
 </template>
 <script>
     import Status from '../../common/status.vue';
+    import Department from '../../common/oraganization.vue'
     export default {
         props: ['department_name', 'parentDpartmentId', 'msg'],
-        components: {Status},
+        components: {Status, Department},
         data(){
             return {
-                department: '',
-                parent_id: '',
+                leader_id: '',          //负责人ID
+                staff_name: '',         //负责人
+                department: '',         //部门名称
+                parent_id: '',          //父部门ID
                 highDpm: '',
+                configure: {},
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -67,6 +83,8 @@
             },
             parentDpartmentId(val){
                 this.parent_id = val;
+                this.staff_name = '';
+                this.leader_id = '';
             },
 
         },
@@ -74,7 +92,7 @@
             responsible(){
                 this.$http.post('achv/department', {
                     name: this.department,
-                    leader_id: this.msg.leader_id,
+                    leader_id: this.leader_id,
                     rank: this.msg.period,
                     month: this.msg.time,
                     parent_id: this.parent_id,
@@ -96,8 +114,19 @@
                         //显示失败弹窗 ***
                         this.info.state_error = true;
                     }
-
                 })
+            },
+//            选择负责人
+            select(){
+                $('.selectCustom:eq(3)').modal({backdrop: 'static',});
+                this.configure = {type: 'staff', length: 1};
+            },
+            selectDateSend (val){
+                if (val.staff.length > 0) {
+                    this.staff_name = val.staff[0].name;
+                    this.leader_id = val.staff[0].id;
+
+                }
             },
         }
     }
@@ -108,6 +137,7 @@
         padding-top: 15px;
         padding-bottom: 0;
     }
+
     .modal-body > .panel {
         margin-bottom: 0;
     }
