@@ -39,20 +39,20 @@
                     </form>
                 </div>
 
-                <div class="col-lg-12 remind" v-show="pitch.length === 1">
+                <!--<div class="col-lg-12 remind" v-show="pitch.length === 1">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <!--<li>
+                        &lt;!&ndash;<li>
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
-                        </li>-->
+                        </li>&ndash;&gt;
                         <li style="display: none">
                             <h5>
                                 <a><i class="fa fa-star"></i>&nbsp;标记</a>
-                                <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
+                                &lt;!&ndash;<a><i class="fa fa-star"></i>&nbsp;取消标记</a>&ndash;&gt;
                             </h5>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>
         </section>
 
@@ -84,7 +84,7 @@
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center"></th>
+                                <!--<th class="text-center"></th>-->
                                 <th class="text-center">领取时间</th>
                                 <th class="text-center">领取合同数(收)</th>
                                 <th class="text-center">领取合同数(租)</th>
@@ -97,14 +97,14 @@
                             </thead>
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
-                                <td>
+                                <!--<td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.request_time) > -1,
                                             'c_off':pitch.indexOf(item.request_time)==-1}"
                                            @click.prevent="checked_id(item.request_time, $event)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.request_time) > -1">
                                     </label>
-                                </td>
+                                </td>-->
                                 <td>{{item.receiver_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
@@ -129,7 +129,7 @@
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center"></th>
+                                <!--<th class="text-center"></th>-->
                                 <th class="text-center">实到时间</th>
                                 <th class="text-center">作废合同数(收)</th>
                                 <th class="text-center">作废合同数(租)</th>
@@ -142,14 +142,14 @@
                             </thead>
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
-                                <td>
+                                <!--<td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.scrap_request_time) > -1,
                                             'c_off':pitch.indexOf(item.scrap_request_time)==-1}"
                                            @click.prevent="checked_id(item.scrap_request_time, $event)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.scrap_request_time) > -1">
                                     </label>
-                                </td>
+                                </td>-->
                                 <td>{{item.actual_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
@@ -173,7 +173,7 @@
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center"></th>
+                                <!--<th class="text-center"></th>-->
                                 <th class="text-center">上缴时间</th>
                                 <th class="text-center">上缴合同数(收)</th>
                                 <th class="text-center">上缴合同数(租)</th>
@@ -186,14 +186,14 @@
                             </thead>
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
-                                <td>
+                                <!--<td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.paid_request_time) > -1,
                                             'c_off':pitch.indexOf(item.paid_request_time)==-1}"
                                            @click.prevent="checked_id(item.paid_request_time, $event)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.paid_request_time) > -1">
                                     </label>
-                                </td>
+                                </td>-->
                                 <td>{{item.paid_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
