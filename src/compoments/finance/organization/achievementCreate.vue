@@ -347,6 +347,7 @@
                     rent: this.ren_pitch,
                 }).then((res) => {
                     if (res.data.code === '90000') {
+                        this.search(this.params.page);
                         this.successMsg(res.data.msg);
                         this.empty_pitch();
                     } else {
@@ -369,7 +370,7 @@
                 }).then((res) => {
                     if (res.data.code === '90000') {
                         this.successMsg(res.data.msg);
-                        this.search(1);
+                        this.search(this.params.page);
                     } else {
                         this.errorMsg(res.data.msg);
                     }
