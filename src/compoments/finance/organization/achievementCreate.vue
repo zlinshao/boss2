@@ -271,7 +271,7 @@
                             this.ach_create = res.data.data.data;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
-                            this.$http.get('finance/customer/urc',{
+                            this.$http.get('finance/customer/urc', {
                                 params: this.params,
                             }).then((res) => {
                                 if (res.data.code === '90010') {
@@ -336,7 +336,7 @@
                         this.empty_pitch();
                     } else {
                         this.errorMsg(res.data.msg);
-                        this.close_();
+                        this.close_();             
                     }
                 })
             },
@@ -409,7 +409,7 @@
                 this.tabs = val;
                 if (val === 1) {
                     $('.OrganizationChoose:eq(0)').modal({backdrop: 'static',});
-                    this.configure = {type: 'department',length: 1};
+                    this.configure = {type: 'department', length: 1};
                 } else if (val === 2) {
                     $('.OrganizationChoose:eq(1)').modal({backdrop: 'static',});
                     this.configure = {type: 'department', length: 1};
@@ -420,20 +420,22 @@
             },
 //            筛选部门选择
             selectDateSend (val){
-                if (this.tabs === 1) {
-                    this.selecteds = val.department[0].name;
-                    this.params.salary_department_id = val.department[0].id;
-                    this.search(1);
-                } else if (this.tabs === 2) {
-                    this.department_name = val.department[0].name;
-                    this.department_id = val.department[0].id;
-                    this.$http.get('achv/department/' + val.department[0].id).then((res) => {
-                        this.staff_name = res.data.data.leader.real_name;
-                        this.leader_id = res.data.data.leader.id;
-                    });
-                } else if (this.tabs === 3) {
-                    this.staff_name = val.staff[0].name;
-                    this.leader_id = val.staff[0].id;
+                if (val.department.length > 0) {
+                    if (this.tabs === 1) {
+                        this.selecteds = val.department[0].name;
+                        this.params.salary_department_id = val.department[0].id;
+                        this.search(1);
+                    } else if (this.tabs === 2) {
+                        this.department_name = val.department[0].name;
+                        this.department_id = val.department[0].id;
+                        this.$http.get('achv/department/' + val.department[0].id).then((res) => {
+                            this.staff_name = res.data.data.leader.real_name;
+                            this.leader_id = res.data.data.leader.id;
+                        });
+                    } else if (this.tabs === 3) {
+                        this.staff_name = val.staff[0].name;
+                        this.leader_id = val.staff[0].id;
+                    }
                 }
             },
 //            筛选清空部门
