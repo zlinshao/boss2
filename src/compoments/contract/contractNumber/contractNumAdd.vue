@@ -73,7 +73,7 @@
                                         <label class="col-sm-2 control-label" v-if="new_status == 3">上缴合同数(收)<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" v-model="collect_num" class="form-control"
-                                                   @blur="turn_in_collect" @keyup="collect_num = collect_num.replace(/[^\d]/g,'');">
+                                                   @blur="turn_in_collect" @keyup="setNum(1)">
                                         </div>
                                     </div>
                                     <!--领取-->
@@ -115,14 +115,14 @@
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-2 control-label">领取合同数(租)<sup class="required">*</sup></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="rent_num" @blur="turn_in_rent" @keyup="rent_num = rent_num.replace(/[^\d]/g,'');" >
+                                                <input type="text" class="form-control" v-model="rent_num" @blur="turn_in_rent" @keyup="setNum(2)">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">本次领取合同编号记录(租)<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="rent_num_start" @blur="getRentEnd" @keyup="rent_num_start = rent_num_start.replace(/[^\d]/g,'');">
+                                                <input type="text" class="form-control" v-model="rent_num_start" @blur="getRentEnd" @keyup="setNum(2)">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px;">
                                                 到
@@ -173,7 +173,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">作废合同数(租)</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="rent_num" @keyup="rent_num = rent_num.replace(/[^\d]/g,'');">
+                                                <input type="text" class="form-control" v-model="rent_num" @keyup="setNum(2)">
                                             </div>
                                         </div>
                                         <!--<div class="form-group">
@@ -479,6 +479,26 @@
                 // 作废
 
 
+            },
+
+            setNum(num){
+                switch (parseInt(num)){
+                    case 1 :
+                        // 收房
+                        this.collect_num = this.collect_num.replace(/[^\d]/g,'');
+                        if (parseInt(this.collect_num)>30){
+                            this.collect_num = '30';
+                        }
+//                        this.setMax(this.collect_num);
+                        break;
+                    case 2 :
+                        // 租房
+                        this.rent_num = this.rent_num.replace(/[^\d]/g,'');
+                        if (parseInt(this.rent_num)>30){
+                            this.rent_num = '30';
+                        }
+//                        this.setMax(this.rent_num);
+                }
             },
 //            上缴合同数 租
             turn_in_rent (){
