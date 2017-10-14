@@ -236,7 +236,7 @@
                                                 <span>合同编号<sup>*</sup>：</span>
                                                 <span>{{item.contract_num}}</span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>年限(月)<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{item.checkin_rent_id.months}} 月
@@ -250,7 +250,7 @@
                                                 <span>合同结束日期：</span>
                                                 <span>{{item.end_date}}</span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>付款类型：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                      押 {{item.checkin_rent_id.bet}}&nbsp;&nbsp;
@@ -259,7 +259,7 @@
                                                     </span>
                                                 </span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>月单价：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     <span v-for="(price,index) in item.checkin_rent_id.price">
@@ -276,7 +276,7 @@
                                             <!--</div>-->
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>已收 （定金）<sup>*</sup>：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{item.checkin_rent_id.received_amount}} 元
@@ -290,7 +290,7 @@
                                                 </span>
                                                 </div>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>未收：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{item.checkin_rent_id.remain_amount}} 元
@@ -317,7 +317,7 @@
                                                 <span>中介名<sup>*</sup>：</span>
                                                 <span>{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>中介费用：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{item.checkin_rent_id.cost_medi}}
