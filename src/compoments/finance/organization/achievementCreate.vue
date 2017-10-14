@@ -409,7 +409,7 @@
                 this.tabs = val;
                 if (val === 1) {
                     $('.OrganizationChoose:eq(0)').modal({backdrop: 'static',});
-                    this.configure = {type: 'department'};
+                    this.configure = {type: 'department',length: 1};
                 } else if (val === 2) {
                     $('.OrganizationChoose:eq(1)').modal({backdrop: 'static',});
                     this.configure = {type: 'department', length: 1};
