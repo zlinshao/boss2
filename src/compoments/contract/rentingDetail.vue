@@ -284,7 +284,7 @@
                                             </div>
                                             <div class="infoList" v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                 <div v-for="pay in item.checkin_rent_id.payment">
-                                                    <span>付款方式 （{{dictionary.money_type[pay.payment_id]}}）：</span>
+                                                    <span>付款方式 （{{dictionary.rent_payment[pay.payment_id]}}）：</span>
                                                     <span>
                                                     {{pay.money}} 元
                                                 </span>
@@ -296,7 +296,7 @@
                                                     {{item.checkin_rent_id.remain_amount}} 元
                                                 </span>
                                             </div>
-                                            <div class="infoList">
+                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>租房状态：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{dictionary.rent_type[item.checkin_rent_id.rent_type]}}
