@@ -43,10 +43,13 @@
 
         <AddDpm :department_name="department_name" :parentDpartmentId='parentDpartmentId'
                 :msg="msg" @success='changeDpm'></AddDpm>
+
+        <Status :state='info'></Status>
     </div>
 </template>
 
 <script>
+    import Status from '../../common/status.vue'
     import vueZtree from './vueTree.vue'
     import editDpm from  './editDpm.vue';
     import Confirm from '../../common/confirm.vue'
@@ -54,7 +57,7 @@
     import AddDpm from  './addDubordinateDpm.vue'
     import AchievementCreate from  './achievementCreate.vue'
     export default {
-        components: {vueZtree, editDpm, Confirm, AddDpm, DatePicker, AchievementCreate},
+        components: {vueZtree, editDpm, Confirm, AddDpm, DatePicker, AchievementCreate, Status},
         data () {
             return {
                 departmentList: [],         //部门数据
