@@ -106,12 +106,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--<div class="form-group">
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="collect_surplus">
+                                                <input type="text" class="form-control" v-model="collect_surplus" readonly>
                                             </div>
-                                        </div>-->
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-2 control-label">领取合同数(租)<sup class="required">*</sup></label>
                                             <div class="col-sm-10">
@@ -164,12 +164,12 @@
                                                 <input type="text" class="form-control" v-model="record_num_rent">
                                             </div>
                                         </div>-->
-                                        <!--<div class="form-group">
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="collect_surplus">
+                                                <input type="text" class="form-control" v-model="collect_surplus" readonly>
                                             </div>
-                                        </div>-->
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">作废合同数(租)</label>
                                             <div class="col-sm-10">
@@ -231,12 +231,12 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <!--<div class="form-group">
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">剩余合同数(收)</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" v-model="collect_surplus">
+                                                <input type="text" class="form-control" v-model="collect_surplus" readonly>
                                             </div>
-                                        </div>-->
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">上缴合同数(租)<sup class="required">*</sup></label>
                                             <div class="col-sm-10">
@@ -273,12 +273,12 @@
                                         </div>
                                     </div>
 
-                                    <!--<div class="form-group">
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">剩余合同数(租)</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="rent_surplus" readonly>
                                         </div>
-                                    </div>-->
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">截图凭证</label>
                                         <div class="col-sm-10">
@@ -348,7 +348,7 @@
 //                领取
                 collect_num_start: '',          //从X
                 collect_num_end: '',            //到X
-                collect_surplus: '',            //剩余合同数(收)
+                collect_surplus: 0,            //剩余合同数(收)
                 rent_num: '',                   //领取合同数(租)
                 rent_num_start: '',             //从X
                 rent_num_end: '',               //到X
@@ -356,7 +356,7 @@
 //                record_num_rent: '',            //合同编号记录 收
 //                record_num_collect: '',         //合同编号记录 租
 
-                rent_surplus: '',               //剩余合同数(租)
+                rent_surplus: 0,               //剩余合同数(租)
 
                 operate_man: '',                //操作人
 //                operate_man_id: '',             //操作人ID
@@ -528,6 +528,20 @@
                     this.department = res.data.data.departmnet_name;
                     this.department_id = res.data.data.department_id;
                 })
+                this.$http.post('code/Contract_Number_Record/getRemainContractById',{
+                    id : this.receiver_id
+                }).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.code==30010){
+                        // 成功
+                        this.collect_surplus = res.data.data.num.sy_sf_numbers;
+                        this.rent_surplus = res.data.data.num.sy_zf_numbers;
+                    } else {
+                        // 失败
+                        this.collect_surplus = 0;
+                        this.rent_surplus = 0;
+                    }
+                })
             },
 //            照片ID
             idNumber (val){
@@ -620,14 +634,14 @@
                 this.collect_num = '';                //领取合同数(收)
                 this.collect_num_start = '';          //从X
                 this.collect_num_end = '';            //到X
-                this.collect_surplus = '';            //剩余合同数(收)
+                this.collect_surplus = 0;            //剩余合同数(收)
                 this.rent_num = '';                   //领取合同数(租)
                 this.rent_num_start = '';             //从X
                 this.rent_num_end = '';               //到X
                 this.scrap_ljsf = [];                 //合同编号记录 收
                 this.scrap_ljzf = [];                 //合同编号记录 租
 
-                this.rent_surplus = '';               //剩余合同数(租)
+                this.rent_surplus = 0;               //剩余合同数(租)
 //                this.operate_man = '';                //操作人
 //                this.operate_man_id = '';             //操作人
                 $('.rem_div').remove();

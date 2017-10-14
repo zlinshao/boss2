@@ -26,6 +26,7 @@
                             <button class="btn btn-primary btn-xs pull-right" @click="changeView" v-if="simulate.indexOf('Department/position')>-1||isSuper">组织架构图</button>
                         </h5>
                         <vue-ztree :list.sync='departmentList' :func='departmentClick' :simulate="simulate"
+                                   :isSuper="isSuper"
                                    :contextmenu='rightClick' :is-open='true'>
                         </vue-ztree>
                     </div>
@@ -39,7 +40,8 @@
                             <button class="btn btn-primary btn-sm" style="visibility: hidden">岗位添加</button>
                         </h5>
                         <positionTree :list.sync='positionList' :func='positionClick' :simulate="simulate"
-                                   :contextmenu='rightClick' :is-open='true'>
+                                      :isSuper="isSuper"
+                                      :contextmenu='rightClick' :is-open='true'>
                         </positionTree>
                         <div v-if="noPosition">
                             <a class="addPosition"  @click="addPosition">

@@ -49,8 +49,11 @@
                                         <label class="col-sm-2 control-label" v-if="type == 2">报备人<sup class="required">*</sup></label>
                                         <label class="col-sm-2 control-label" v-if="type == 3">上缴人<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" placeholder="点击选择员工"
-                                                   v-model="receiver_name" @click='select' readonly>
+                                            <input type="text" class="form-control"
+                                                   v-model="receiver_name"
+                                                   readonly>
+                                            <!--placeholder="点击选择员工"
+                                                @click='select' -->
                                         </div>
                                     </div>
                                     <div class="form-group">

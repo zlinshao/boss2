@@ -555,7 +555,7 @@
                                                   v-for="(img,index) in item.customer_id.album.id_pic">
                                         </span>
                                     </div>
-                                    <div class="infoList clearFix">
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                         <span class="col-lg-1">合同照片<sup>*</sup></span>
                                         <span class="col-lg-11">
                                              <img :src="img.small" @click="showLargePic('contract_pic',index)"
