@@ -165,7 +165,6 @@
                     if (res.data.code === '70040') {
                         this.departmentList = res.data.data.data;
                         this.range_time();
-                        this.successMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);
                     }
