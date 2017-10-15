@@ -110,7 +110,7 @@
             },
 //            选择负责人
             select(){
-                $('.selectCustom:eq(4)').modal({backdrop: 'static',});
+                $('.selectCustom:eq(3)').modal({backdrop: 'static',});
                 this.configure = {type: 'staff', length: 1};
             },
             selectDateSend (val){
