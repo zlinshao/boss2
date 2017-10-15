@@ -53,7 +53,7 @@
                                     <div style="margin: 10px 0;" class="clearfix">
                                         <div class="col-xs-6">
                                             <input @click="remindData" type="text" placeholder="选择日期"
-                                                   class="form-control" id="datetime" v-model="msg.time" readonly>
+                                                   class="form-control datetime" v-model="msg.time" readonly>
                                         </div>
                                         <div class="col-xs-6">
                                             <select class="form-control" @change="rank_choose()"
@@ -287,7 +287,7 @@
 //            月份
             remindData (){
                 this.oneAsk = true;
-                $('#datetime').datetimepicker({
+                $('.datetime').datetimepicker({
                     format: 'yyyy-mm',
                     startView: 3,
                     minView: 3,

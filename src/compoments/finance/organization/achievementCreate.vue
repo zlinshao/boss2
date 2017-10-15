@@ -330,7 +330,6 @@
                 }).then((res) => {
                     if (res.data.code === '90000') {
                         $('#revise').modal('hide');
-                        console.log(this.params.page);
                         this.search(this.params.page);
                         this.successMsg(res.data.msg);
                         this.empty_pitch();
