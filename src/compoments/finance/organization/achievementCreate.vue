@@ -105,7 +105,7 @@
                     <td>
                         {{item.address}}
                         <span v-if="item.related == 2" class="fa fa-home text-danger" style="cursor: pointer"
-                              @click="selectHouse(item.id, item.identity)"></span>
+                              @click="selectHouse(item.id)"></span>
                     </td>
                     <td>{{dict.typical[item.typical]}}</td>
                     <td>{{item.months}}</td>
@@ -167,14 +167,8 @@
         <!--分页-->
         <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
 
-
-        <!--<Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>-->
-
-        <!--房东-->
-        <NewClientAdd :list="myLandlordList" @success_="search"></NewClientAdd>
-
         <!--租客-->
-        <NewRenterAdd :list="myRentlordList" @success_="search"></NewRenterAdd>
+        <NewRenterAdd :list="myRentlordList" @success_="house_search" :house="house_status"></NewRenterAdd>
 
         <Status :state='info'></Status>
     </div>
@@ -194,9 +188,9 @@
         components: {Organization, Page, Status, Department, DatePicker, NewClientAdd, NewRenterAdd, Confirm},
         data(){
             return {
+                house_status: '',               //房屋新增不显示
                 unrelated_num: '',
                 url_address: 'candidate',         //关联/未关联筛选
-                myLandlordList: {},
                 myRentlordList: {},
                 dict: {},
                 tabs: '',
@@ -255,6 +249,9 @@
 //            搜索
             search(val){
                 this.create_ach(val);
+            },
+            house_search (){
+                this.create_ach(this.params.page);
             },
 //            列表
             create_ach (val){
@@ -335,7 +332,7 @@
                         this.empty_pitch();
                     } else {
                         this.errorMsg(res.data.msg);
-                        this.close_();             
+                        this.close_();
                     }
                 })
             },
@@ -381,22 +378,14 @@
                 $('#revise').modal({backdrop: 'static',});
             },
 //            编辑房屋
-            selectHouse (id, iden){
-                if (iden === 1) {
-                    $('#newClientAdd').modal({backdrop: 'static',});
-                    this.$http.get('finance/customer/collect/' + id).then((res) => {
-                        if (res.data.code === '90010') {
-                            this.myLandlordList = res.data.data;
-                        }
-                    })
-                } else if (iden === 2) {
-                    $('#newRenterAdd').modal({backdrop: 'static',});
-                    this.$http.get('finance/customer/rent/' + id).then((res) => {
-                        if (res.data.code === '90010') {
-                            this.myRentlordList = res.data.data;
-                        }
-                    })
-                }
+            selectHouse (id){
+                this.$http.get('finance/customer/rent/' + id).then((res) => {
+                    if (res.data.code === '90010') {
+                        $('#newRenterAdd').modal({backdrop: 'static',});
+                        this.house_status = 1;
+                        this.myRentlordList = res.data.data;
+                    }
+                })
             },
 
 //            时间搜索

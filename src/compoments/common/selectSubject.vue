@@ -36,7 +36,6 @@
                 if (val==''){
                     this.Superior_name = '';
                 } else {
-                    console.log(val);
                     this.Superior_name = this.dict.account_subject[val];
 //                    console.log(this.dict.account_subject[val])
                 }

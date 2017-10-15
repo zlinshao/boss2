@@ -154,7 +154,7 @@
         </section>
 
         <!--NEW新增客户-->
-        <NewRenterAdd :list="myLandlordList" @success_="search"></NewRenterAdd>
+        <NewRenterAdd :list="myLandlordList" @success_="search" :house="house_status"></NewRenterAdd>
 
         <!--删除-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
@@ -179,6 +179,7 @@
         components: {Department, Page, Status, NewRenterAdd, Confirm, DatePicker},
         data(){
             return {
+                house_status: '',
                 confirmMsg: '',                     //删除信息
                 pitch: [],
                 LandlordDict: {},                   //字典
@@ -261,12 +262,11 @@
             },
 //            编辑
             reviseLand (){
-                $('#newRenterAdd').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
                 this.$http.get('finance/customer/rent/' + this.pitch).then((res) => {
                     if (res.data.code === '90010') {
                         this.myLandlordList = res.data.data;
+                        this.house_status = 2;
+                        $('#newRenterAdd').modal({backdrop: 'static',});
                     }
                 })
             },
