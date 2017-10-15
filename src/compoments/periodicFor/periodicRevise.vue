@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">充公人</label>
                                 <div class="col-lg-10">
-                                    <select v-model="confiscate" class="form-control">
+                                    <select v-model="confiscate" class="form-control" @change="commission">
                                         <option value="">请选择充公人</option>
                                         <option :value="msg.collect_staff_id">{{msg.collect_staff_name}}</option>
                                         <option :value="msg.rent_staff_id">{{msg.rent_staff_name}}</option>
@@ -91,6 +91,7 @@
         props: ['msg', 'id'],
         data (){
             return {
+                commission_id: '',                  //充公单子
                 confiscate: '',                     //充公人
                 confiscate_cause: '',               //充公原因
                 remarks: '',                        //备注
@@ -107,28 +108,36 @@
             }
         },
         methods: {
+
+//            充公单子
+            commission (){
+//                if (this.confiscate !== '') {
+//                    if (this.msg.collect_staff_id !== this.confiscate) {
+//                        this.commission_id = this.msg.collect_commission_id;
+//                    } else if (this.msg.rent_staff_id !== this.confiscate) {
+//                        this.commission_id = this.msg.rent_commission_id;
+//                    }
+//                }
+                if (this.msg.collect_staff_id === this.confiscate) {
+                    this.commission_id = this.msg.collect_commission_id;
+                } else if (this.msg.rent_staff_id === this.confiscate) {
+                    this.commission_id = this.msg.rent_commission_id;
+                }
+            },
 //            确定编辑
             periodicRevise (){
                 this.$http.post('achv/commission/confiscate/' + this.id, {
-                    blame_staff_id: this.confiscate,             //充公人
-                    remark: this.remarks,                        //备注
-                    reason: this.confiscate_cause,               //充公原因
+                    blame_staff_id: this.confiscate,            //充公人
+                    commission_id: this.commission_id,          //充公单子
+                    remark: this.remarks,                       //备注
+                    reason: this.confiscate_cause,              //充公原因
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         this.close_();
-                        this.$emit('confiscate',1);
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.$emit('confiscate', 1);
+                        this.successMsg(res.data.msg);
                     } else {
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -144,7 +153,17 @@
                 this.confiscate = '';                     //充公人
                 this.confiscate_cause = '';               //充公原因
                 this.remarks = '';                        //备注
-            }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>

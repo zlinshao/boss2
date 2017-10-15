@@ -299,8 +299,8 @@
         <!--查看备注-->
         <lookRemark @Remark="search" :msg="remark_term"></lookRemark>
 
-        <!--部门搜索-->
-        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <!--人资筛选-->
+        <Organization :configure="configure" @Staff="selectDateSend" :msg="msg"></Organization>
 
         <!--分页-->
         <Page @pag="search_page" :pg="paging" :beforePage="beforePage"></Page>
@@ -308,12 +308,12 @@
 </template>
 
 <script>
-    import DatePicker from '../common/datePicker.vue'           //时间
-    import lookRemark from './lookRemark.vue'                   //备注
-    import STAFF from  '../common/oraganization.vue'            //部门搜索
+    import DatePicker from '../common/datePicker.vue'                               //时间
+    import lookRemark from './lookRemark.vue'                                       //备注
+    import Organization from  '../finance/organization/organization_choose.vue'     //部门搜索
     import Page from '../common/page.vue'
     export default {
-        components: {DatePicker, STAFF, lookRemark, Page},
+        components: {DatePicker, Organization, lookRemark, Page},
         data (){
             return {
                 generating: '',                     //月份选择
@@ -365,7 +365,10 @@
                 group_show: false,
                 personal: [],                       //个人
                 per_show: false,
-
+                msg: {
+                    period: '',             //周期
+                    time: '',               //时间
+                },
             }
         },
         mounted (){
@@ -571,9 +574,13 @@
                 }
             },
 //            部门搜索
-            select(){
-                $('.selectCustom:eq(0)').modal({backdrop: 'static',});
-                this.configure = {type: 'department', length: 1};
+            select (){
+                this.$http.get('salary/calendar/current').then((res) => {
+                    this.msg.time = res.data.data.month;
+                    this.msg.period = res.data.data.rank;
+                    $('.OrganizationChoose:eq(0)').modal({backdrop: 'static',});
+                    this.configure = {type: 'department', length: 1};
+                });
             },
 
 //            部门搜索
