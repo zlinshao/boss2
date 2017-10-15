@@ -7,7 +7,7 @@
                     <span :class="{loadSyncNode:model.loadNode == 1}" v-if='model.loadNode == 1'></span>
                     <div class="dropdown">
                         <span @click="currentNode($event)" data-toggle="dropdown">
-							<span class="department">{{model.name}}</span>
+							<span class="department">{{model.name}}&nbsp;->&nbsp;{{model.leader.real_name}}</span>
                         </span>
 
                         <ul class="dropdown-menu dropdown-menu-left" style="padding: 0;">
