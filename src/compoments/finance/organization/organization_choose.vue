@@ -20,9 +20,9 @@
                                             <a class="tagsinput-remove-link" @click="deleteName(item)"></a>
                                         </span>
                                         <!--<input v-model="keywords" @keyup="search($event)" @keydown.8="backSpace"-->
-                                               <!--style="width: 85px"-->
-                                               <!--placeholder="搜索" class="focusInput" @keydown.down="changeDown"-->
-                                               <!--@keydown.up="changeUp" @keydown.13='keyDownAdd'>-->
+                                        <!--style="width: 85px"-->
+                                        <!--placeholder="搜索" class="focusInput" @keydown.down="changeDown"-->
+                                        <!--@keydown.up="changeUp" @keydown.13='keyDownAdd'>-->
                                     </div>
                                     <div class="searchList box-body scoll" id="searchList" style="max-height: 348px">
                                         <ul>
@@ -50,9 +50,21 @@
                             <div class="col-lg-5 col-sm-5">
                                 <div class="box">
                                     <div class="boxHead">组织架构</div>
+                                    <div style="margin: 10px 0;" class="clearfix">
+                                        <div class="col-xs-6">
+                                            <input @click="remindData" type="text" placeholder="选择日期"
+                                                   class="form-control" id="datetime" v-model="msg.time" readonly>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <select class="form-control" @change="rank_choose()"
+                                                    v-model="msg.period">
+                                                <option v-for="key in 6" :value="key">第{{key}}周期</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <ul class="breadcrumb-wrapper">
-                                        <li class="breadcrumb">
-                                            <a @click="breadcrumbSearch(0)">组织架构</a>
+                                        <li class="breadcrumb" style="margin-bottom: 0;">
+                                            <a @click="breadcrumbSearch(0)" style="padding-left: 10px;">组织架构</a>
                                             <a v-for="(item,index) in breadcrumbList">
                                                 <span @click="breadcrumbSearch(item,index)">&nbsp;&gt;&nbsp;{{item.name}}</span>
                                             </a>
@@ -77,10 +89,12 @@
                                                     <div class="head">
                                                         <img :src="item.avatar" v-if="item.avatar !== ''"
                                                              style="vertical-align: top">
-                                                        <img src="../../../assets/img/head.png" v-if="item.avatar === ''"
+                                                        <img src="../../../assets/img/head.png"
+                                                             v-if="item.avatar === ''"
                                                              style="vertical-align: top">
                                                         <!--对号-->
-                                                        <span class="fa" :class="{'fa-check': shadeList.indexOf(item.id) > -1}"></span>
+                                                        <span class="fa"
+                                                              :class="{'fa-check': shadeList.indexOf(item.id) > -1}"></span>
                                                         <!--遮罩-->
                                                         <span :class="{'shade': shadeList.indexOf(item.id) > -1}"></span>
 
@@ -93,7 +107,6 @@
                                             </li>
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -112,7 +125,7 @@
 <script>
     import Status from '../../common/status.vue'
     export default {
-        props: ['configure','msg'],
+        props: ['configure', 'msg'],
         components: {Status},
         data(){
             return {
@@ -146,8 +159,9 @@
                 onlyDepartment: false,    //只选部门
                 onlyStaff: false,         //只选员工
                 myConfigure: [],          //配置项
-                lengthLimit : false,      //选择长度限制
-                shadeList : [],           //遮罩层id 列表
+                lengthLimit: false,      //选择长度限制
+                shadeList: [],           //遮罩层id 列表
+                oneAsk: '',
             }
         },
         created(){
@@ -155,6 +169,7 @@
                 this.msg.time = res.data.data.month;
                 this.msg.period = res.data.data.rank;
                 this.getNextLevel(0);
+                this.remindData();
             })
         },
         watch: {
@@ -169,14 +184,14 @@
                         }
                     }
                 }
-                if(this.lengthLimit && val.length > this.myConfigure.length){
-                    val.splice(this.myConfigure.length,1);
+                if (this.lengthLimit && val.length > this.myConfigure.length) {
+                    val.splice(this.myConfigure.length, 1);
                     this.errorInfo('选择超过限制');
                 }
             },
-            shadeList(val,oldVal){   //遮罩层
-                if(this.lengthLimit && val.length > this.myConfigure.length){
-                    val.splice(this.myConfigure.length,1);
+            shadeList(val, oldVal){   //遮罩层
+                if (this.lengthLimit && val.length > this.myConfigure.length) {
+                    val.splice(this.myConfigure.length, 1);
                     this.errorInfo('选择超过限制');
                 }
             },
@@ -193,10 +208,10 @@
                     this.onlyDepartment = false;
                     this.onlyStaff = false;
                 }
-                if(val.length !== '' && val.length !== undefined){
+                if (val.length !== '' && val.length !== undefined) {
                     this.lengthLimit = true;
                 }
-                if(val.id !== '' && val.id !== undefined){
+                if (val.id !== '' && val.id !== undefined) {
                     this.getNextLevel(val)
                 }
             }
@@ -204,11 +219,11 @@
         methods: {
             /*******************************右侧组织架构***************************************/
             getOrganize(id){              //请求部门数据
-                this.$http.get('achv/department/next',{
+                this.$http.get('achv/department/next', {
                     params: {
                         month: this.msg.time,
                         rank: this.msg.period,
-                        parent_id:  id
+                        parent_id: id
                     }
                 }).then((res) => {
                     if (res.data.code === '70010') {
@@ -263,6 +278,32 @@
                         }
                     }
                 }
+            },
+//            周期
+            rank_choose (){
+                this.breadcrumbList = [];
+                this.getOrganize(0);
+            },
+//            月份
+            remindData (){
+                this.oneAsk = true;
+                $('#datetime').datetimepicker({
+                    format: 'yyyy-mm',
+                    startView: 3,
+                    minView: 3,
+                    language: 'zh-CN',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition: 'bottom-right',
+                }).on('changeDate', function (ev) {
+                    if (this.oneAsk === true) {
+                        this.msg.time = ev.target.value;
+                        this.getOrganize(0);
+                        this.breadcrumbList = [];
+                        this.oneAsk = false;
+                    }
+                }.bind(this));
             },
             /*******************************左侧选人框***************************************/
 //            search(e){  //关键词搜索事件
@@ -324,7 +365,7 @@
             },
             //键盘enter事件
             keyDownAdd(){
-                if(!Array.isArray(this.hoverMember)){
+                if (!Array.isArray(this.hoverMember)) {
                     let exist;
                     exist = this.isExist(this.hoverMember, this.memberList);
                     if (!exist) {
@@ -384,7 +425,7 @@
                 }
                 return result;
             },
-            isShade(a,b){       //遮罩层是否存在
+            isShade(a, b){       //遮罩层是否存在
                 let result = [];
                 for (let i = 0; i < a.length; i++) {
                     for (let j = 0; j < b.length; j++) {
@@ -407,13 +448,13 @@
             confirmSelect(){    //确认选择
                 for (let i = 0; i < this.memberList.length; i++) {
 //                    if (this.memberList[i].type === 'department') {
-                        this.organize.department.push(this.memberList[i]);
+                    this.organize.department.push(this.memberList[i]);
 //                    }
 //                    else {
 //                        this.organize.staff.push(this.memberList[i]);
 //                    }
                 }
-                this.$emit('Staff',this.organize);
+                this.$emit('Staff', this.organize);
                 this.closeModal();
             },
         },
@@ -498,7 +539,7 @@
         cursor: pointer;
     }
 
-    input {
+    input, select {
         margin-bottom: 0;
     }
 
@@ -561,11 +602,13 @@
         border-radius: 50%;
         opacity: .6
     }
-    .modal{
+
+    .modal {
         z-index: 1100;
     }
+
     @media (min-width: 768px) {
-        .modal-dialog{
+        .modal-dialog {
             width: 676px;
         }
     }

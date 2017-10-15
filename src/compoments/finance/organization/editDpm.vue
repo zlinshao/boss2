@@ -21,6 +21,14 @@
                                                v-model="departmentName">
                                     </div>
                                 </div>
+                                <div class="row" style="margin-top: 18px;">
+                                    <label class="col-sm-2 control-label col-lg-2"
+                                           style="padding-top: 6px;">部门名称</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" placeholder="点击选择部门"
+                                               v-model="leader_name" @click='select' readonly>
+                                    </div>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -32,13 +40,17 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <Status :state='info'></Status>
+
+        <!--人资-->
+        <Department :configure="configure" @Staff="selectDateSend"></Department>
     </div>
 </template>
 <script>
     import Status from '../../common/status.vue';
+    import Department from '../../common/oraganization.vue'
     export default {
         props: ['department_name', 'department_id'],
-        components: {Status},
+        components: {Status, Department},
         data(){
             return {
 //                depart:{
@@ -58,6 +70,9 @@
                     //失败信息 ***
                     error: ''
                 },
+                configure: {},
+                leader_id: '',              //负责人ID
+                leader_name: '',            //负责人
                 departmentName: '',
                 departmentId: '',
 
@@ -88,25 +103,38 @@
         methods: {
             responsible(){
                 this.$http.put('achv/department/rename/' + this.departmentId, {
-                        name: this.departmentName,
-                    }).then((res) => {
+                    name: this.departmentName,
+                    leader_id: this.leader_id,
+                }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#myModalEditDpm').modal('hide');
                         this.$emit('editDdp', this.depart);
-                        this.info.success = res.data.msg;
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        this.info.state_success = false;
+                        this.successMsg(res.data.msg);
                     } else {
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
+            },
+//            负责人
+            select(){
+                $('.selectCustom:eq(3)').modal({backdrop: 'static',});
+                this.configure = {type: 'staff', length: 1};
+            },
+            selectDateSend(val){
+                if (val.staff.length > 0) {
+                    this.leader_name = val.staff[0].name;
+                    this.leader_id = val.staff[0].id;
+                }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }
@@ -116,6 +144,6 @@
     .modal-body {
         position: relative;
         padding-top: 30px;
-        padding-bottom: 0px;
+        padding-bottom: 0;
     }
 </style>

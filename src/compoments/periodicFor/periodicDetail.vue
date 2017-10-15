@@ -158,8 +158,8 @@
         <!--分页-->
         <Page @pag="search" :pg="paging" :beforePage="beforePage"></Page>
 
-        <!--部门搜索-->
-        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <!--人资筛选-->
+        <Organization :configure="configure" @Staff="selectDateSend" :msg="msg"></Organization>
 
         <!--充公选择-->
         <PeriodicRevise :msg="blames" :id="periodic_id" @confiscate="personalList"></PeriodicRevise>
@@ -183,17 +183,17 @@
     import PeriodicRevise from './periodicRevise.vue'       //充公
     import PeriodicInfo from './periodic_info.vue'          //充公详情
     import Page from '../common/page.vue'
-    import STAFF from  '../common/oraganization.vue'        //部门搜索
+    import Organization from  '../finance/organization/organization_choose.vue'     //部门搜索
     import Confirm from '../common/confirm.vue'
     export default {
-        components: {DatePicker, STAFF, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit},
+        components: {DatePicker, Organization, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit},
         data (){
             return {
                 isActive: '',
                 simple_status: '',              //选择充公状态
                 revise_info: {},                //编辑
                 dict: {},
-                periodic_id: '',
+                periodic_id: '',                //单条业绩ID
                 confiscate_info: '',            //充公详情
                 blames: {},                     //认责人
                 pitch: [],
@@ -205,6 +205,10 @@
                         needHour: false
                     }
                 ],
+                msg: {
+                    period: '',                 //周期
+                    time: '',                   //时间
+                },
                 configure: {},                  //部门组件参数
                 selected: [],                   //部门搜索
                 currentDate: [],                //日期组件参数
@@ -300,8 +304,12 @@
 
 //            部门搜索
             select(){
-                $('.selectCustom:eq(0)').modal({backdrop: 'static',});
-                this.configure = {type: 'department'};
+                this.$http.get('salary/calendar/current').then((res) => {
+                    this.msg.time = res.data.data.month;
+                    this.msg.period = res.data.data.rank;
+                    $('.OrganizationChoose:eq(0)').modal({backdrop: 'static',});
+                    this.configure = {type: 'department', length: 1};
+                });
             },
 
 //            部门搜索
