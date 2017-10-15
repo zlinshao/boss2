@@ -395,7 +395,9 @@
 //            生成工资
             generating_ok (){
                 this.$http.get('salary/view/generate/' + this.generating).then((res) => {
-
+                    if(res.data.code === '70010'){
+                        $('#time_choose').modal('hide');
+                    }
                 })
             },
             search (val){
