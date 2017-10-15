@@ -122,27 +122,45 @@
                                 </header>
                                 <div>
                                     <span class="text-primary">行政扣款：</span>
-                                    <span>{{item.amount_admin_deduction}}元</span>
+                                    <span>{{item.amount_admin_deduction}}元
+                                        <span v-show="item.remark_admin_deduction != ''">&nbsp;->&nbsp;</span>
+                                        {{item.remark_admin_deduction}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">社保扣款：</span>
-                                    <span>{{item.amount_soc_secu_deduction}}元</span>
+                                    <span>{{item.amount_soc_secu_deduction}}元
+                                        <span v-show="item.remark_soc_secu_deduction != ''">&nbsp;->&nbsp;</span>
+                                        {{item.remark_soc_secu_deduction}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">财务扣款：</span>
-                                    <span>{{item.amount_finance_deduction}}元</span>
+                                    <span>{{item.amount_finance_deduction}}元
+                                        <span v-show="item.remark_finance_deduction != ''">&nbsp;->&nbsp;</span>
+                                        {{item.remark_finance_deduction}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">住宿扣款：</span>
-                                    <span>{{item.amount_accomm_deduction}}元</span>
+                                    <span>{{item.amount_accomm_deduction}}元
+                                        <span v-show="item.remark_accomm_deduction != ''">&nbsp;->&nbsp;</span>
+                                        {{item.remark_accomm_deduction}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">购车扣款：</span>
-                                    <span>{{item.amount_car_deduction}}元</span>
+                                    <span>{{item.amount_car_deduction}}元
+                                        <span v-show="item.remark_car_deduction != ''">&nbsp;->&nbsp;</span>
+                                        {{item.remark_car_deduction}}
+                                    </span>
                                 </div>
                                 <div>
                                     <span class="text-primary">其他扣款：</span>
-                                    <span>{{item.amount_other_deduction}}元</span>
+                                    <span>{{item.amount_other_deduction}}元
+                                        <span v-show="item.remark_other_deduction != ''">&nbsp;->&nbsp;
+                                        </span>{{item.remark_other_deduction}}
+                                    </span>
                                 </div>
                             </div>
                         </div>
