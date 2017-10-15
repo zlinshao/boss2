@@ -564,7 +564,7 @@
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
         <!--房屋选择-->
-        <SelectHouse @House="getHouse" :msg="staffId"></SelectHouse>
+        <SelectHouse @House="getHouse" :msg="staffId" :house_status="house"></SelectHouse>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -585,7 +585,7 @@
 
     export default{
         components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject,DatePicker},
-        props: ['list'],
+        props: ['list','house'],
         data(){
             return {
                 surplus: '',                            //剩余月数
@@ -963,24 +963,19 @@
                 ;
             },
 //              修改客户收款方式
-            changeCustomerPayment()
-            {
+            changeCustomerPayment(){
                 this.account_owner = '';
                 this.account_subbank = '';
                 this.bank = 1;
                 this.account = '';
-            }
-            ,
-            //               选择签约人
-            selectStaff()
-            {
+            },
+//               选择签约人
+            selectStaff(){
                 this.configure = {length: 1, type: 'staff'};
                 $('.selectCustom:eq(0)').modal('show');
-            }
-            ,
-            //               签约人信息
-            selectDateSendAdd(data)
-            {
+            },
+//               签约人信息
+            selectDateSendAdd(data){
                 this.staff = data.staff[0].name;
                 this.staffId = data.staff[0].id;
                 this.$http.get('finance/staff_info/' + data.staff[0].id).then((res) => {
@@ -991,21 +986,16 @@
                         this.person_id = res.data.data.leader_id;               //负责人ID
                     }
                 });
-            }
-            ,
-            //              选择房屋
-            selectHouse()
-            {
+            },
+//              选择房屋
+            selectHouse(){
                 $('.selectHouse:eq(0)').modal('show');
-            }
-            ,
-            //              房屋信息
-            getHouse(data)
-            {
+            },
+//              房屋信息
+            getHouse(data){
                 this.house_id = data.id;
                 this.house_name = data.address;
-            }
-            ,
+            },
             //              选择客户
             //            selectClient(){
             //                $('.selectClient:eq(0)').modal('show');
@@ -1060,34 +1050,18 @@
                         $('#newRenterAdd').modal('hide');
                         this.$emit('success_');
                         this.closeModal();
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/rent/generate') {
                         this.$emit('success_');
                         this.closeModal();
                         $('#clientAdd1').modal('hide');
                         $('#newRenterAdd').modal('hide');
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else if (res.data.code === '90030') {
                         this.renter_id = res.data.data;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 });
             }
@@ -1129,18 +1103,10 @@
                         this.$emit('success_');
                         this.closeModal();
                         $('#newRenterAdd').modal('hide');
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                       this.successMsg(res.data.msg);
                     }
                     else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 });
             },
@@ -1149,7 +1115,17 @@
             },
             getDate1(val){
                 this.pendingContract = val;
-            }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>
