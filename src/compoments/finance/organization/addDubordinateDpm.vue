@@ -85,6 +85,7 @@
                 this.parent_id = val;
                 this.staff_name = '';
                 this.leader_id = '';
+                this.department = '';
             },
 
         },
@@ -101,24 +102,15 @@
                         this.department = '';
                         $('#myModalAddDpm').modal('hide');
                         this.$emit('success');
-                        this.info.success = res.data.msg;
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭成功信息弹窗 ***
-                        this.info.state_success = false;
+                       this.successMsg(res.data.msg);
                     } else {
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
 //            选择负责人
             select(){
-                $('.selectCustom:eq(3)').modal({backdrop: 'static',});
+                $('.selectCustom:eq(4)').modal({backdrop: 'static',});
                 this.configure = {type: 'staff', length: 1};
             },
             selectDateSend (val){
@@ -127,6 +119,16 @@
                     this.leader_id = val.staff[0].id;
 
                 }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }

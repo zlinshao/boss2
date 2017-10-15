@@ -6,7 +6,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true" @click="close_()">&times;</span>
                         </button>
                         <h4 class="modal-title">编辑部门</h4>
                     </div>
@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="row" style="margin-top: 18px;">
                                     <label class="col-sm-2 control-label col-lg-2"
-                                           style="padding-top: 6px;">部门名称</label>
+                                           style="padding-top: 6px;">负责人</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" placeholder="点击选择部门"
                                                v-model="leader_name" @click='select' readonly>
@@ -33,7 +33,7 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="close_()">取消</button>
                         <button type="button" class="btn btn-primary" @click="responsible">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -89,10 +89,10 @@
 //                this.depart.reName=this.myAccount.reName;
 //            },
             department_name(val){
-                this.departmentName = val
+                this.departmentName = val;
             },
             department_id(val){
-                this.departmentId = val
+                this.departmentId = val;
             }
         },
 //        computed : {
@@ -110,10 +110,15 @@
                         $('#myModalEditDpm').modal('hide');
                         this.$emit('editDdp', this.depart);
                         this.successMsg(res.data.msg);
+                        this.close_();
                     } else {
                         this.errorMsg(res.data.msg);
                     }
                 })
+            },
+            close_ (){
+                this.leader_name = '';
+                this.leader_id = '';
             },
 //            负责人
             select(){
