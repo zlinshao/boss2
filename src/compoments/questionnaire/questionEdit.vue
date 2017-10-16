@@ -54,11 +54,13 @@
                                 <i class="fa fa-minus-circle" @click="reduce(index)"></i>
                             </div>
                             <div class="col-sm-10 col-xs-8 text-right">
-                                <a v-if="item.option !== undefined && hasEdit.indexOf(index) == -1"
-                                   @click="editOption(item,index)">修改选项</a>
-                                <span v-if="item.option !== undefined && hasEdit.indexOf(index) > -1"  style="color: #e8403f">
+                                <!--<a v-if="item.option !== undefined && hasEdit.indexOf(index) == -1"
+                                   @click="editOption(item,index)">修改选项</a>-->
+                                <a @click="editOption(item,index)">修改选项</a>
+                                <i @click="copy(index)" class="fa fa-copy icon-copy"></i>
+                                <!--<span v-if="item.option !== undefined && hasEdit.indexOf(index) > -1"  style="color: #e8403f">
                                     已修改
-                                </span>
+                                </span>-->
                             </div>
                         </div>
                     </div>
@@ -145,18 +147,19 @@
             },
             getQuestionnaire(){
                 this.questionInfo = {
+                    effective_time : '',
+                    mission_object : '',
                     id : '',
                     title : '',
                     type : '',
                     question : []
-
                 };
+                this.currentDate = [];
                 this.$http.get('code/Mission/showDetail/id/' + this.questionId).then((res) => {
                     let val = res.data.data[0];
                     this.questionInfo.effective_time = val.effective_time;
                     this.questionInfo.mission_object = val.mission_object.id;
                     this.department = val.mission_object.name;
-                    this.currentDate = [];
                     this.currentDate.push(val.effective_time)
 
                     this.questionInfo.title = val.title;
@@ -201,7 +204,15 @@
                 this.hasEdit.push (this.order);
                 this.questionInfo.question.splice(this.order,1,value);
             },
-
+            copy(key){
+                let data = {
+                    is_picture:this.questionInfo.question[key].is_picture,
+                    option:this.questionInfo.question[key].option,
+                    question:this.questionInfo.question[key].question,
+                    question_type : this.questionInfo.question[key].question_type
+                }
+                this.questionInfo.question.push(data);
+            },
             confirmAdd(){
                 for (let i=0; i<this.questionInfo.question.length;i++){
                     if(this.questionInfo.question[i].is_picture == 1){
@@ -277,5 +288,13 @@
     }
     .flexBox i:hover{
         color: #999;
+    }
+    i.icon-copy{
+        margin-left: 10px;
+        cursor: pointer;
+        color: #aaa;
+    }
+    i.icon-copy:hover{
+        color: #0f0f0f;
     }
 </style>
