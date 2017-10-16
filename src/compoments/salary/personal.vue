@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="签收人/房屋地址/价格" v-model="params.search"
+                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="params.search"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -117,7 +117,7 @@
         </section>
 
         <!--分页-->
-        <Page @pag="search" :pg="paging" :beforePage="beforePage"></Page>
+        <Page @pag="search" :pg="paging" :beforePage="params.page"></Page>
 
         <!--部门搜索-->
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
@@ -161,7 +161,6 @@
                     page: 1,
                 },
                 paging: '',                     //总页数
-                beforePage: 1,                  //当前页
                 lookRem: '',                    //备注内容
             }
         },
@@ -174,7 +173,6 @@
                 this.$http.get('salary/Commission/dict').then((res) => {
                     this.dict = res.data;
 
-                    this.beforePage = val;
                     this.params.page = val;
                     this.paging = '';
                     this.salary = [];

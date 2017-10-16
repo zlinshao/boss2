@@ -418,8 +418,10 @@
                         this.department_name = val.department[0].name;
                         this.department_id = val.department[0].id;
                         this.$http.get('achv/department/' + val.department[0].id).then((res) => {
-                            this.staff_name = res.data.data.leader.real_name;
-                            this.leader_id = res.data.data.leader.id;
+                            if (res.data.data.leader !== null) {
+                                this.staff_name = res.data.data.leader.real_name;
+                                this.leader_id = res.data.data.leader.id;
+                            }
                         });
                     } else if (this.tabs === 3) {
                         this.staff_name = val.staff[0].name;

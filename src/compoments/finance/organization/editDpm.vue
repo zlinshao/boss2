@@ -25,7 +25,7 @@
                                     <label class="col-sm-2 control-label col-lg-2"
                                            style="padding-top: 6px;">负责人</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="点击选择部门"
+                                        <input type="text" class="form-control" placeholder="点击选择负责人"
                                                v-model="leader_name" @click='select' readonly>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
         <Status :state='info'></Status>
 
         <!--人资-->
-        <Department :configure="configure" @Staff="selectDateSend"></Department>
+        <!--<Department :configure="configure" @Staff="selectDateSend"></Department>-->
     </div>
 </template>
 <script>
@@ -122,7 +122,7 @@
             },
 //            负责人
             select(){
-                $('.selectCustom:eq(3)').modal({backdrop: 'static',});
+                $('.selectCustom:eq(3)').modal({backdrop: 'static',}); 
                 this.configure = {type: 'staff', length: 1};
             },
             selectDateSend(val){
