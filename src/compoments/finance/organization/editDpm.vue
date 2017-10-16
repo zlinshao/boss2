@@ -42,7 +42,7 @@
         <Status :state='info'></Status>
 
         <!--人资-->
-        <!--<Department :configure="configure" @Staff="selectDateSend"></Department>-->
+        <Department :configure="configure" @Staff="selectDateSend"></Department>
     </div>
 </template>
 <script>
