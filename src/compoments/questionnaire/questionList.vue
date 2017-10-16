@@ -244,6 +244,8 @@
                 this.search();
             },
             successEdit(){
+                this.selectId = '';
+                this.status = '';
                 if(typeof (val) === 'string'){
                     this.search();
                 }
