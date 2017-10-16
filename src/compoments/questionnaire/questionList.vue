@@ -134,11 +134,11 @@
                 </section>
             </div>
         </div>
-        <Add @Add="successAdd"></Add>
         <Page :pg="pages" @pag="getPage" :beforePage="params.page"></Page>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <Status :state='info'></Status>
         <Edit :questionId="selectId" :startEdit="startEdit" @Edit="successEdit"></Edit>
+        <Add @Add="successAdd"></Add>
         <NoWrite :selectId="selectId"></NoWrite>
 
         <Loading v-if='Waiting'></Loading>

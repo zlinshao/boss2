@@ -21,6 +21,20 @@
                             </div>
                         </div>
                         <div class="row">
+                            <label class="col-sm-3 control-label">有效时间</label>
+                            <div class="col-sm-9">
+                                <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" :idName="'effectiveEdit'"
+                                            @sendDate="getDate"></DatePicker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-3 control-label">任务对象</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="点击选择部门"
+                                       v-model="department" @click='select' readonly>
+                            </div>
+                        </div>
+                        <div class="row">
                             <label class="col-sm-3 control-label">标题</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="questionInfo.title">
@@ -57,14 +71,17 @@
         </div>
         <Status :state='info'></Status>
         <OptionEdit :optionInfo="optionInfo" @option="getOption"></OptionEdit>
+        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
     </div>
 </template>
 
 <script>
     import Status from '../common/status.vue';
     import OptionEdit from './optionEdit.vue'
+    import STAFF from  '../common/oraganization.vue'
+    import DatePicker from '../common/datePicker.vue'
     export default {
-        components : {Status,OptionEdit},
+        components : {Status,OptionEdit,STAFF,DatePicker},
         props :['questionId','startEdit'],
         data(){
             return{
@@ -72,7 +89,9 @@
                     id : '',
                     title : '',
                     type : '',
-                    question : []
+                    question : [],
+                    effective_time : '',
+                    mission_object : '',
 
                 },
                 info:{
@@ -88,6 +107,15 @@
                 optionInfo : [],
                 order : '',
                 hasEdit :[],
+                department : '',
+                configure : {},
+                dateConfigure: [                    //时间控件
+                    {
+                        range: false,
+                        needHour: false
+                    }
+                ],
+                currentDate: [],                    //时间控件
             }
         },
         watch :{
@@ -125,6 +153,12 @@
                 };
                 this.$http.get('code/Mission/showDetail/id/' + this.questionId).then((res) => {
                     let val = res.data.data[0];
+                    this.questionInfo.effective_time = val.effective_time;
+                    this.questionInfo.mission_object = val.mission_object.id;
+                    this.department = val.mission_object.name;
+                    this.currentDate = [];
+                    this.currentDate.push(val.effective_time)
+
                     this.questionInfo.title = val.title;
                     this.questionInfo.id = val.id;
                     this.questionInfo.type = val.type;
@@ -206,6 +240,17 @@
                 this.order = '';
                 $('.questionEdit').modal('hide');
             },
+            getDate(val){
+                this.questionInfo.effective_time = val;
+            },
+            select(){
+                this.configure = {type: 'department', length: 1};
+                $('.selectCustom:eq(0)').modal('show');
+            },
+            selectDateSend(val){
+                this.department = val.department[0].name;
+                this.questionInfo.mission_object = val.department[0].id;
+            }
         }
     }
 </script>
