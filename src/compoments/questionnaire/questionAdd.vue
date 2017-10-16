@@ -22,7 +22,7 @@
                         </div>
                         <div class="row">
                             <label class="col-sm-2 control-label">有效时间</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10" style="padding-top: 9px">
                                 <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate" :idName="'effective'"
                                             @sendDate="getDate"></DatePicker>
                             </div>
