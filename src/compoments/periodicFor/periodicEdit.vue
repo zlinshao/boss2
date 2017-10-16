@@ -9,7 +9,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" aria-label="Close">
                                 <span aria-hidden="true" data-dismiss="modal">&times;</span></button>
-                            <h4 class="modal-title">编辑客户</h4>
+                            <h4 class="modal-title">编辑</h4>
                         </div>
                         <div class="modal-body clearFix">
                             <form class="form-horizontal" role="form">

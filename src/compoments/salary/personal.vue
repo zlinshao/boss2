@@ -123,7 +123,7 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--编辑-->
-        <personalRevise :salaryBar="salaryBar" :msg="dict" @success="search"></personalRevise>
+        <personalRevise :salaryBar="salaryBar" :msg="dict" @success="revise_search"></personalRevise>
 
         <!--查看备注-->
         <salaryRemark :look="lookRem"></salaryRemark>
@@ -194,6 +194,10 @@
 //            搜索
             search (val){
                 this.personalList(val);
+            },
+//            编辑成功
+            revise_search (){
+                this.personalList(this.params.page);
             },
 
 //            日期搜索
