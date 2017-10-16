@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="params.search"
+                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="params.staff_name"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -157,7 +157,7 @@
                 params: {
                     department_id: '',
                     range: '',
-                    search: '',
+                    staff_name: '',
                     page: 1,
                 },
                 paging: '',                     //总页数
