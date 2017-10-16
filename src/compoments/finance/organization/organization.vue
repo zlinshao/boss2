@@ -18,7 +18,7 @@
                             </div>
                             <div class="col-sm-4" style="padding: 0;margin-right: 6px;height: 39px;">
                                 <select class="form-control" style="padding: 6px 8px;margin-bottom: 0"
-                                        v-model="msg.period" @click="getDepartementList">
+                                        v-model="msg.period" @change="getDepartementList">
                                     <option v-for="key in 6" :value="key">第{{key}}周期</option>
                                 </select>
                             </div>
