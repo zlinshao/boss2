@@ -47,7 +47,7 @@
 </template>
 <script>
     import Status from '../../common/status.vue';
-    import Department from '../../common/oraganization.vue'
+    import Department from './oraganization_revise.vue'
     export default {
         props: ['department_name', 'department_id'],
         components: {Status, Department},
@@ -122,7 +122,7 @@
             },
 //            负责人
             select(){
-                $('.selectCustom:eq(3)').modal({backdrop: 'static',}); 
+                $('.oraganization_revise:eq(0)').modal({backdrop: 'static',});
                 this.configure = {type: 'staff', length: 1};
             },
             selectDateSend(val){
