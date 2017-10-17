@@ -227,7 +227,6 @@
                                     <a class="btn btn-default btn-sm" @click='subject_show(2)'>取消</a>
                                     <a class="btn btn-success btn-sm" @click="subject_hide(item.id)">保存</a>
                                 </span>
-
                             </td>
                             <td>
                                 <span @click="able_show(1,item.amount_payable,item.id)" v-if="isActive !== item.id"
@@ -464,10 +463,10 @@
         data(){
             return {
                 rev: {subject_id: ''},         //列表编辑科目
+                sub_isActive: '',
                 leadingOut: '',             //导出
                 rollback_id: [],               //回滚ID
                 rollbacks: {},               //回滚
-                sub_isActive: '',
                 isActive: '',
                 amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站

@@ -176,8 +176,8 @@
                             <th class="text-center" v-if="recycle_bin"></th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
-                            <th class="text-center width80" :class="{red: !recycle_bin}">收入科目</th>
-                            <th class="text-center width110" :class="{red: !recycle_bin}">应收金额</th>
+                            <th class="text-center width120" :class="{red: !recycle_bin}">收入科目</th>
+                            <th class="text-center width120" :class="{red: !recycle_bin}">应收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">实收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
@@ -200,10 +200,26 @@
                             <td>{{item.pay_date}}</td>
                             <td>
                                 {{item.customer == undefined ? '' : item.customer.address}}
-                                <span style="line-height: 9px;" v-if="item.identity === 1" class="btn btn-danger btn-xs">F</span>
-                                <span style="line-height: 9px;" v-if="item.identity === 2" class="btn btn-danger btn-xs">Z</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 1"
+                                      class="btn btn-danger btn-xs">F</span>
+                                <span style="line-height: 9px;" v-if="item.identity === 2"
+                                      class="btn btn-danger btn-xs">Z</span>
                             </td>
-                            <td>{{dict.account_subject[item.subject_id]}}</td>
+                            <td>
+                                  <span @click="subject_show(1, item.id)" v-if="sub_isActive !== item.id"
+                                        style="cursor: pointer;">
+                                    {{dict.account_subject[item.subject_id]}}
+                                </span>
+                                <span v-if="sub_isActive === item.id">
+                                    <span style="display: inline-block;margin-bottom: 5px;">
+                                        <SelectSubject @choose="subject_revise"
+                                                       :current="rev.subject_id"></SelectSubject>
+                                    </span>
+                                    <a class="btn btn-default btn-sm" @click='subject_show(2)'>取消</a>
+                                    <a class="btn btn-success btn-sm" @click="subject_hide(item.id)">保存</a>
+                                </span>
+
+                            </td>
                             <td>
                                 <span @click="able_show(1,item.amount_receivable,item.id)" v-if="isActive !== item.id"
                                       style="cursor: pointer;">
@@ -212,16 +228,14 @@
                                 <span v-if="isActive === item.id">
                                     <input type="text" class="form-control" v-model="amount"
                                            style="margin-bottom: 5px;">
-                                    <a class="btn btn-default btn-xs" @click='able_show(2)'>取消</a>
-                                    <a class="btn btn-success btn-xs" @click="able_save(item.id)">保存</a>
+                                    <a class="btn btn-default btn-sm" @click='able_show(2)'>取消</a>
+                                    <a class="btn btn-success btn-sm" @click="able_save(item.id)">保存</a>
                                 </span>
                             </td>
                             <td>{{item.amount_received}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
-                            <td>
-                                {{item.description}}
-                            </td>
+                            <td>{{item.description}}</td>
                             <td>
                                 <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3,'jingdong':item.status===4}">
                                     {{dict.account_should_status[item.status]}}
@@ -264,7 +278,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">收款时间<sup class="required">*</sup></label>
                                 <div class="col-sm-10">
-                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'recieveTime'" :currentDate="[formData.pay_date]" :placeholder="'收款时间'" @sendDate="getDate1"></DatePicker>
+                                    <DatePicker :dateConfigure="dateConfigure1" :idName="'recieveTime'"
+                                                :currentDate="[formData.pay_date]" :placeholder="'收款时间'"
+                                                @sendDate="getDate1"></DatePicker>
                                     <!--<input @click="remindData" type="text" name="addtime" value="" placeholder="收款时间"
                                            class="form-control form_datetime" readonly v-model="formData.pay_date">-->
                                     <!--<DatePicker :dateConfigure="dateConfigure1" @sendDate="getCollectTime"></DatePicker>-->
@@ -358,7 +374,7 @@
                         <h5 v-for="(key,index) in rollbacks">
                             <label :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
                                     'c_off':rollback_id.indexOf(index) == -1}"
-                                    @click.prevent="change_index($event,index)">
+                                   @click.prevent="change_index($event,index)">
                                 <input type="checkbox"
                                        :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
                             </label>
@@ -426,6 +442,8 @@
 
         data(){
             return {
+                rev: {subject_id: ''},         //列表编辑科目
+                sub_isActive: '',
                 leadingOut: '',             //导出
                 rollback_id: [],            //回滚ID
                 rollbacks: {},              //回滚
@@ -512,10 +530,10 @@
                     id: '',
                     msg: ''
                 },
-                dateConfigure1 : [
+                dateConfigure1: [
                     {
-                        range : false,
-                        needHour : false,
+                        range: false,
+                        needHour: false,
                     }
                 ],
 
@@ -557,10 +575,10 @@
         methods: {
 //            导出
             leading_out (){
-                this.$http.get('account/receivable/export',{
+                this.$http.get('account/receivable/export', {
                     params: this.params
                 }).then((res) => {
-                    if(res.data.code === '18510'){
+                    if (res.data.code === '18510') {
                         this.leadingOut = res.data.data;
                         $('#leading_out').modal({
                             backdrop: 'static',         //空白处模态框不消失
@@ -578,7 +596,7 @@
 //              房屋信息
             getHouse(data){
                 this.params.search = data.address;
-                this. search(1);
+                this.search(1);
             },
 //            清空科目
             search_empty (val){
@@ -589,6 +607,32 @@
             houseSubject(val){
                 this.params.subject_id = val;
                 this.search(1);
+            },
+//            编辑列表科目
+            subject_show (val, id){
+                if (val === 1) {
+                    this.sub_isActive = id;
+                } else if (val === 2) {
+                    this.sub_isActive = '';
+                }
+            },
+//            选择科目
+            subject_revise (val){
+                this.rev.subject_id = val;
+            },
+//            确定修改列表科目
+            subject_hide (id){
+                this.$http.put('account/receivable/subject/' + id, {
+                    subject_id: this.rev.subject_id,
+                }).then((res) => {
+                    if (res.data.code === '18510') {
+                        this.search(this.beforePage);
+                        this.sub_isActive = '';
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
 //            编辑金额
             able_show (val, m, id){
@@ -608,18 +652,9 @@
                     if (res.data.code === '18510') {
                         this.search(this.beforePage);
                         this.amount = '';
-
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -724,17 +759,9 @@
                     if (res.data.code === '18510') {
                         $('#Rollback').modal('hide');
                         this.search(this.beforePage);
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -786,8 +813,6 @@
                         this.pitch.push(this.myData[i].id);
                     }
                 }
-
-//                console.log(this.pitch);
             },
             changeIndex(ev, id, status, index){
                 let evInput = ev.target.getElementsByTagName('input')[0];
@@ -847,8 +872,6 @@
 
             select(){
                 $('#selectCustom').modal('show');
-//                this.configure={id:[],class:'department'};
-//                this.configure={length:2,class:'amount'};
             },
             selectDateSend(val){
                 for (let i = 0; i < val.department.length; i++) {
@@ -902,26 +925,12 @@
 
             save(){
                 this.$http.post('account/receivable', this.formData).then((res) => {
-                    if (res.data.code == 18510) {
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_success = false;
-                        }, 2000);
+                    if (res.data.code === '18510') {
+                        this.successMsg(res.data.msg);
                         this.clearForm();
                         this.search(1);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        setTimeout(() => {
-                            this.info.state_error = false;
-                        }, 2000);
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -979,20 +988,10 @@
                 this.$http.post('account/receivable/delete/' + this.pitch).then((res) => {
                     if (res.data.code === '18510') {
                         this.pitch = [];
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_success = false;
                         this.search(this.beforePage);
+                        this.successMsg(res.data.msg);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_error = false;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -1004,27 +1003,26 @@
                     pay_date: val
                 }).then((res) => {
                     if (res.data.code === '18510') {
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_success = false;
+                        this.successMsg(res.data.msg);
                         this.pitch.splice(0, this.pitch.length);
                         this.search(this.beforePage);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_error = false;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
             getDate1(val){
                 this.formData.pay_date = val;
-//                console.log(this.contractRenew.start_date)
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }
