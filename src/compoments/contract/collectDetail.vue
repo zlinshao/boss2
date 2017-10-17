@@ -708,6 +708,7 @@
         <Convenient :convenientList ='contractList' :dictionary ='dictionary'></Convenient>
         <CollectRenew :contractEitId="contractEitId" :contractRenewList="contractRenewList"
                      @Close="closeRenew" :dictionary="dictionary" :startRenew="startRenew"></CollectRenew>
+        <Order @order="sendOrder"></Order>
     </div>
 </template>
 <script>
@@ -717,6 +718,7 @@
     import Contract from  './contractInfo.vue'
     import ContractEit from './collectEdit.vue'
     import PicModal from  '../common/largePic.vue'
+    import Order from  './selectOrder.vue'
 //    import Comparison from  './contractCompare.vue'
     import Confirm from '../common/confirm.vue'
 
@@ -735,7 +737,8 @@
             Confirm,    //confirmMsg
             CollectRenew,    //合同续约
             Loading,
-            Convenient
+            Convenient,
+            Order
         },
         data(){
             return {
@@ -931,18 +934,8 @@
                         }
                     })
                 }else if(this.msgFlag === 'inform'){
-                    this.$http.get('core/collect/inform/id/' + this.contractEitId).then((res) => {
-                        if(res.data.code === '70040'){
-                            this.info.success = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            this.contractDetail();
-                        }else {
-                            this.info.error = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_error = true;
-                        }
-                    });
+                    $('#orderModal').modal('show');
+
                 }else if(this.msgFlag === 'returnVisit'){
                     this.$http.get('core/collect/review/id/' + this.contractEitId).then((res) => {
                         if(res.data.code === '70030'){
@@ -1014,6 +1007,27 @@
             openSimpleConvenient(){ //打开简版
                 $('#collectSimpleConvenient').modal('show');
             },
+
+            // 发送通知
+            sendOrder(val){
+                console.log(val);
+                this.$http.get('core/collect/inform/id/' + this.contractEitId,{
+                    params : {
+                        staff_id : val
+                    }
+                }).then((res) => {
+                    if(res.data.code === '70040'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
+            }
         }
     }
 </script>

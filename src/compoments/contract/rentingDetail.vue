@@ -722,6 +722,7 @@
         <Loading v-if="waiting"></Loading>
 
         <Convenient :convenientList ='contractList' :dictionary ='dictionary'></Convenient>
+        <Order @order="sendOrder"></Order>
     </div>
 </template>
 <script>
@@ -735,6 +736,7 @@
     import Convenient from './rentSimpleConvenient.vue'
     import Confirm from '../common/confirm.vue'
     import AddModal from './rentingRenew.vue'
+    import Order from  './selectOrder.vue'
     export default{
         props:['simulate','isSuper'],
         components: {
@@ -747,7 +749,8 @@
             Confirm,    //confirmMsg
             AddModal,    //合同续约
             Loading,
-            Convenient
+            Convenient,
+            Order
         },
         data(){
             return {
@@ -939,18 +942,8 @@
                         }
                     })
                 }else if(this.msgFlag === 'inform'){
-                    this.$http.get('core/rent/inform/id/' + this.contractEitId).then((res) => {
-                        if(res.data.code === '70040'){
-                            this.info.success = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_success = true;
-                            this.contractDetail();
-                        }else {
-                            this.info.error = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_error = true;
-                        }
-                    });
+                    $('#orderModal').modal('show');
+
                 }else if(this.msgFlag === 'returnVisit'){
                     this.$http.get('core/rent/review/id/' + this.contractEitId).then((res) => {
                         if(res.data.code === '70030'){
@@ -1021,6 +1014,25 @@
             openSimpleConvenient(){ //打开简版
                 $('#rentSimpleConvenient').modal('show');
             },
+            // 发送通知
+            sendOrder(val){
+                this.$http.get('core/rent/inform/id/' + this.contractEitId, {
+                    params: {
+                        staff_id: val
+                    }
+                }).then((res) => {
+                    if(res.data.code === '80040'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.contractDetail();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
+            }
 
         }
     }
