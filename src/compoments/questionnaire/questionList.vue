@@ -32,9 +32,9 @@
                            </span>
                         </div>
                     </div>
-                    <div class="pro-sort pull-right">
-                        <!--v-if="simulate.indexOf('Mission/add_administration')>-1||simulate.indexOf('Mission/add_district')>-1-->
-                        <!--||simulate.indexOf('Mission/add_chargehand')>-1"-->
+                    <div class="pro-sort pull-right"
+                         v-if="simulate.indexOf('Mission/add_administration')>-1||simulate.indexOf('Mission/add_district')>-1
+                        ||simulate.indexOf('Mission/add_chargehand')>-1">
                         <div class="input-group">
                             <button class="btn btn-primary" @click="createQuestion">创建任务</button>
                         </div>

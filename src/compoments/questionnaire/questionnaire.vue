@@ -96,7 +96,7 @@
             },
             getQuestionInfo(){
                 if(this.questionId !== ''){
-                    this.$http.get('code/Mission/showDetail/id/' + this.questionId).then((res) => {
+                    this.$http.get('code/Mission/showDetail?id=' + this.questionId+'&from='+1).then((res) => {
                         this.questionInfo = res.data.data[0];
                         this.getQuestionId(this.questionInfo);
                     })

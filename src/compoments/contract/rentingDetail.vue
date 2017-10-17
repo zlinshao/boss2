@@ -893,7 +893,8 @@
             inform(){   //通知
                 this.confirmMsg = {msg:'您确定通知相关（开单人，组长，区长）吗'};
                 this.msgFlag = 'inform';
-                $('#confirm').modal('show');
+//                $('#confirm').modal('show');
+                $('#orderModal').modal('show');
             },
             passContract(){ //合同通过
                 if(this.contract_pass >2){
@@ -942,7 +943,7 @@
                         }
                     })
                 }else if(this.msgFlag === 'inform'){
-                    $('#orderModal').modal('show');
+//                    $('#orderModal').modal('show');
 
                 }else if(this.msgFlag === 'returnVisit'){
                     this.$http.get('core/rent/review/id/' + this.contractEitId).then((res) => {
