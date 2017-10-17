@@ -33,6 +33,8 @@
                         </div>
                     </div>
                     <div class="pro-sort pull-right">
+                        <!--v-if="simulate.indexOf('Mission/add_administration')>-1||simulate.indexOf('Mission/add_district')>-1-->
+                        <!--||simulate.indexOf('Mission/add_chargehand')>-1"-->
                         <div class="input-group">
                             <button class="btn btn-primary" @click="createQuestion">创建任务</button>
                         </div>
@@ -45,23 +47,23 @@
                         <li>
                             <h5><a>已选中&nbsp; 1 &nbsp;项</a></h5>
                         </li>
-                        <li @click="editQuestion" v-if="status == 1">
+                        <li @click="editQuestion" v-if="status == 1&&simulate.indexOf('Mission/edit')>-1">
                             <h5><a><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a></h5>
                         </li>
-                        <li @click="publicQuestion">
+                        <li @click="publicQuestion" v-if="simulate.indexOf('Mission/public')>-1">
                             <h5><a><i class="fa fa-arrow-up"></i>&nbsp;发布</a></h5>
                         </li>
-                        <li @click="undercarriage">
+                        <li @click="undercarriage" v-if="simulate.indexOf('Mission/offMission')>-1">
                             <h5><a><i class="fa fa-arrow-down"></i>&nbsp;下架</a></h5>
                         </li>
 
-                        <li @click="deleteQuestion">
+                        <li @click="deleteQuestion" v-if="simulate.indexOf('Mission/delete')>-1">
                             <h5><a><i class="fa fa-times-circle"></i>&nbsp;删除</a></h5>
                         </li>
-                        <li @click="noWrite">
+                        <li @click="noWrite" v-if="simulate.indexOf('Mission/showDetail')>-1">
                             <h5><a><i class="fa fa-user"></i>&nbsp;未填写员工</a></h5>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('Mission/showResult')>-1">
                             <h5>
                                 <router-link :to="{path:'/questionResult',query:{questionId : selectId}}">
                                     <i class="fa fa-eye"></i>&nbsp;查看结果
@@ -88,6 +90,8 @@
                             <th class="text-center">类型</th>
                             <th class="text-center">发布人</th>
                             <th class="text-center">发布时间</th>
+                            <th class="text-center">有效时间</th>
+                            <th class="text-center">任务对象</th>
                             <th class="text-center">回复量</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">详情</th>
@@ -106,6 +110,8 @@
                             <td class="text-center">{{dictionary.staff_id[item.public_id]}}</td>
                             <td class="text-center" v-if="item.update_time == undefined">{{item.create_time}}</td>
                             <td class="text-center" v-if="item.update_time != undefined">{{item.update_time}}</td>
+                            <td class="text-center">{{item.effective_time}}</td>
+                            <td class="text-center">{{item.mission_object.name}}</td>
                             <td class="text-center">{{item.comment_nums}}</td>
                             <td class="text-center">
                                 <label class="label label-default" v-if="item.status === 1">
@@ -154,6 +160,7 @@
     import NoWrite from './noWrite.vue'
     import Loading from '../loading/Loading.vue'
     export default {
+        props:['simulate','isSuper'],
         components :{Add,Page,Confirm,Status,Edit,NoWrite,Loading},
         data(){
             return{

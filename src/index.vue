@@ -471,6 +471,7 @@
         </div>
         <Question :questionId='questionId' @success="successVote"></Question>
         <Status :state='info'></Status>
+        <AllNoWrite :allNoWriteList="allNoWriteList"></AllNoWrite>
     </div>
 </template>
 
@@ -478,8 +479,9 @@
     import Question from './compoments/questionnaire/questionnaire.vue'
     import DatePicker from './compoments/common/datePicker.vue'
     import Status from './compoments/common/status.vue';              //提示信息
+    import AllNoWrite from './compoments/questionnaire/allNoWrite.vue'
     export default {
-        components: {DatePicker, Status, Question},
+        components: {DatePicker, Status, Question,AllNoWrite},
         props: ['id','simulate','isSuper'],
         data (){
             return {
@@ -536,6 +538,8 @@
                     //失败信息 ***
                     error: ''
                 },
+
+                allNoWriteList : [],        // 未填写的调查问卷
             }
         },
 //        mounted (){
@@ -581,8 +585,15 @@
             isDone(){
                 this.$http.get('code/Mission/checkIsWrite').then((res) => {
                     if (res.data.code === '30080') {
-                        this.questionId = res.data.data;
-                        $('.questionnaire').modal('show');
+//                        console.log(res.data.data);
+                        this.allNoWriteList = res.data.data;
+                        if (this.allNoWriteList.length==1){
+                            this.questionId = this.allNoWriteList[0].id;
+                            $('.questionnaire:eq(0)').modal('show');
+                        } else {
+                            $('.allNoWrite').modal('show');
+                        }
+
                     }
                 })
             },

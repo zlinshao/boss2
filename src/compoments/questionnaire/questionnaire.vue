@@ -4,7 +4,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" @click="close" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">问卷调查</h4>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" @click="close">关闭</button>
                         <button type="button" class="btn btn-primary" @click="vote">确定</button>
                     </div>
                 </div>
@@ -137,13 +137,19 @@
                 this.$http.post('code/Mission/Vote',this.params).then((res) => {
                     if(res.data.code === '30025'){
                         this.$emit('success',res.data.msg)
-                        $('.questionnaire').modal('hide');
+                        this.close();
                     }else {
                         this.info.error = res.data.msg;
                         //显示成功弹窗 ***
                         this.info.state_error = true;
                     }
                 })
+            },
+            close(){
+                this.params.radio_id = [];
+                this.params.checkbox_id = [];
+                this.params.question = [];
+                $('.questionnaire').modal('hide');
             }
         }
     }

@@ -24,14 +24,15 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li @click="editQuestion" v-if="questionInfo.status == 1"><span>编辑</span></li>
-                                <li @click="publicQuestion"><span>发布</span></li>
-                                <li @click="undercarriage"><span>下架</span></li>
+                                <li @click="editQuestion" v-if="questionInfo.status == 1&&simulate.indexOf('Mission/edit')>-1"><span>编辑</span></li>
+                                <li @click="publicQuestion" v-if="simulate.indexOf('Mission/public')>-1"><span>发布</span></li>
+                                <li @click="undercarriage" v-if="simulate.indexOf('Mission/offMission')>-1"><span>下架</span></li>
                                 <!--<li @click="deleteQuestion"><span>删除</span></li>-->
-                                <li @click="noWrite">
+                                <li @click="noWrite" v-if="simulate.indexOf('Mission/showDetail')>-1">
                                     <span>未填写员工</span>
                                 </li>
-                                <router-link tag="li" :to="{path:'/questionResult',query:{questionId : editId,type : 'detail'}}">
+                                <router-link tag="li" :to="{path:'/questionResult',query:{questionId : editId,type : 'detail'}}"
+                                             v-if="simulate.indexOf('Mission/showResult')>-1">
                                     <span>查看结果</span>
                                 </router-link>
                             </ul>
@@ -93,6 +94,7 @@
     import NoWrite from './noWrite.vue'
     import Status from '../common/status.vue';
     export default {
+        props:['simulate','isSuper'],
         components : {Confirm,Edit,NoWrite,Status},
         data(){
             return{
