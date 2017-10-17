@@ -94,7 +94,7 @@
                             <th class="text-center">任务对象</th>
                             <th class="text-center">回复量</th>
                             <th class="text-center">状态</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center" v-if="simulate.indexOf('Mission/showDetail')>-1">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -124,7 +124,7 @@
                                     {{dictionary.mission_status[item.status]}}
                                 </label>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" v-if="simulate.indexOf('Mission/showDetail')>-1">
                                 <router-link :to="{path:'/questionnaire',query:{questionId : item.id}}">
                                     详情
                                 </router-link>

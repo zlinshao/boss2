@@ -149,7 +149,11 @@
                 this.params.radio_id = [];
                 this.params.checkbox_id = [];
                 this.params.question = [];
+                $('#questionnaire textarea').val('');
+                $('#questionnaire input[type=radio]').prop('checked',false);
+                $('#questionnaire input[type=checkbox]').prop('checked',false);
                 $('.questionnaire').modal('hide');
+                console.log(this.params)
             }
         }
     }
