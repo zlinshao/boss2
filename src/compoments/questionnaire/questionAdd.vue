@@ -156,13 +156,13 @@
             confirmAdd(){
                 /*let arr = $.extend(true,[],this.arr);
                 let question = [];
-                for(let i=0;i<this.questionList.question.length;i++){
-                    question.push(this.questionList.question[i].question);
+                for(let i=0;i<this.arr.length;i++){
+                    question.push(this.arr[i].question);
                 }
                 for(let i=0; i < arr.length;i++){
                     for(let j=0;j<question.length;j++){
                         if(arr[i] === question[j]){
-                            arr.splice(i,1,this.questionList.question[j])
+                            arr.splice(i,1,this.arr[j])
                         }
                     }
                 }
@@ -171,10 +171,20 @@
                         let c = {question : arr[i]}
                         arr.splice(i,1,c)
                     }
+                }*/
+
+//                console.log(arr)
+                for (let i = 0 ; i<this.arr.length ; i++){
+                    if (this.arr[i].option.length==0||this.arr[i].option==undefined){
+                        this.info.error = '您有问题未设置选项';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                        return
+                    }
                 }
-                this.questionList.question = [];*/
+                this.questionList.question = [];
                 this.questionList.question = this.arr;
-                console.log(this.questionList.question)
+//                console.log(this.questionList.question)
 
                 this.$http.post('code/Mission/addMission',this.questionList).then((res) => {
                     if(res.data.code==='30020'){
@@ -192,6 +202,8 @@
             },
             closeModal(){
                 this.questionList = {
+                    effective_time : '',
+                    mission_object : '',
                     title : '',
                     type : '1',
                     question : []
@@ -206,6 +218,9 @@
                 this.order = '';
                 this.question = {};
                 this.selectOption = [];
+                this.department = '';
+                this.currentDate = [];
+
                 $('.questionAdd').modal('hide');
             },
 

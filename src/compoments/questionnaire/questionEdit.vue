@@ -242,11 +242,15 @@
                 this.$emit('Edit',val);
                 this.hasEdit = [];
                 let question = {
+                    effective_time : '',
+                    mission_object : '',
                     is_picture : '',
                     question : '',
                     question_type : '',
                     option : [],
                 };
+                this.department = '';
+                this.currentDate = [];
                 this.optionInfo = [];
                 this.order = '';
                 $('.questionEdit').modal('hide');
