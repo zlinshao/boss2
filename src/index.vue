@@ -583,6 +583,7 @@
         methods: {
 //            问卷
             isDone(){
+                alert(1111)
                 this.$http.get('code/Mission/checkIsWrite').then((res) => {
                     if (res.data.code === '30080') {
 //                        console.log(res.data.data);
