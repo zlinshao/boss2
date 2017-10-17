@@ -225,6 +225,16 @@
                         }
                     }
                 }
+                if (this.questionInfo.type==1){
+                    for (let i = 0 ; i<this.questionInfo.question.length ; i++){
+                        if (this.questionInfo.question[i].option.length==0||this.questionInfo.question[i].option==undefined){
+                            this.info.error = '您有问题未设置选项';
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                            return
+                        }
+                    }
+                }
                 this.$http.post('code/Mission/updateMission',this.questionInfo).then((res) => {
                     if(res.data.code==='30020'){
                         this.closeModal(res.data.code);
