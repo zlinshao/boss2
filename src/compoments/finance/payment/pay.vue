@@ -182,12 +182,8 @@
                             </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">付款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
-                            <!--<th class="text-center">签约人</th>-->
-                            <!--<th class="text-center">房屋地址</th>-->
-                            <!--<th class="text-center">付款方式</th>-->
-                            <!--<th class="text-center">月单价</th>-->
-                            <th class="text-center width80" :class="{red: !recycle_bin}">支出科目</th>
-                            <th class="text-center width110" :class="{red: !recycle_bin}">应付金额</th>
+                            <th class="text-center width120" :class="{red: !recycle_bin}">支出科目</th>
+                            <th class="text-center width120" :class="{red: !recycle_bin}">应付金额</th>
                             <th class="text-center width110" :class="{red: !recycle_bin}">实付金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
@@ -218,7 +214,21 @@
                                 <span style="line-height: 9px;" v-if="item.identity === 2"
                                       class="btn btn-danger btn-xs">Z</span>
                             </td>
-                            <td>{{dict.account_subject[item.subject_id]}}</td>
+                            <td>
+                                <span @click="subject_show(1, item.id)" v-if="sub_isActive !== item.id"
+                                      style="cursor: pointer;">
+                                    {{dict.account_subject[item.subject_id]}}
+                                </span>
+                                <span v-if="sub_isActive === item.id">
+                                    <span style="display: inline-block;margin-bottom: 5px;">
+                                        <SelectSubject @choose="subject_revise"
+                                                       :current="rev.subject_id"></SelectSubject>
+                                    </span>
+                                    <a class="btn btn-default btn-sm" @click='subject_show(2)'>取消</a>
+                                    <a class="btn btn-success btn-sm" @click="subject_hide(item.id)">保存</a>
+                                </span>
+
+                            </td>
                             <td>
                                 <span @click="able_show(1,item.amount_payable,item.id)" v-if="isActive !== item.id"
                                       style="cursor: pointer;">
@@ -227,10 +237,9 @@
                                 <span v-if="isActive === item.id">
                                     <input type="text" class="form-control" v-model="amount"
                                            style="margin-bottom: 5px;">
-                                    <a class="btn btn-default btn-xs" @click='able_show(2)'>取消</a>
-                                    <a class="btn btn-success btn-xs" @click="able_save(item.id)">保存</a>
+                                    <a class="btn btn-default btn-sm" @click='able_show(2)'>取消</a>
+                                    <a class="btn btn-success btn-sm" @click="able_save(item.id)">保存</a>
                                 </span>
-
                             </td>
                             <td>{{item.amount_paid}}</td>
                             <td>{{item.balance}}</td>
@@ -454,9 +463,11 @@
 
         data(){
             return {
+                rev: {subject_id: ''},         //列表编辑科目
                 leadingOut: '',             //导出
                 rollback_id: [],               //回滚ID
                 rollbacks: {},               //回滚
+                sub_isActive: '',
                 isActive: '',
                 amount: '',                     //编辑列表金额
                 recycle_bin: true,            //回收站
@@ -598,7 +609,7 @@
                 this.search(1);
             },
 //            清空科目
-            search_empty (val){
+            search_empty (){
                 this.params.subject_id = '';
                 this.search(1);
             },
@@ -606,6 +617,32 @@
             houseSubject(val){
                 this.params.subject_id = val;
                 this.search(1);
+            },
+//            编辑列表科目
+            subject_show (val, id){
+                if (val === 1) {
+                    this.sub_isActive = id;
+                } else if (val === 2) {
+                    this.sub_isActive = '';
+                }
+            },
+//            选择科目
+            subject_revise (val){
+                this.rev.subject_id = val;
+            },
+//            确定修改列表科目
+            subject_hide (id){
+                this.$http.put('account/payable/subject/' + id, {
+                    subject_id: this.rev.subject_id,
+                }).then((res) => {
+                    if(res.data.code === '18410'){
+                        this.search(this.beforePage);
+                        this.sub_isActive = '';
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
 //            编辑金额
             able_show (val, m, id){
@@ -626,17 +663,9 @@
                         this.search(this.beforePage);
                         this.amount = '';
                         this.isActive = '';
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -740,17 +769,9 @@
                     if (res.data.code === '18410') {
                         this.search(this.beforePage);
                         $('#Rollback').modal('hide');
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -771,6 +792,9 @@
                         this.pitch = [];
                         $('#addRemarks').modal('hide');
                         this.search(this.beforePage);
+                        this.successMsg(res.data.msg);
+                    }else{
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -804,17 +828,9 @@
                     if (res.data.code === '18410') {
                         this.clearForm();
                         this.search(1);
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -912,8 +928,6 @@
 //            人资
             select(){
                 $('#selectCustom').modal('show');
-//                this.configure={id:[],class:'department'};
-//                this.configure={length:2,class:'amount'};
             },
 //            人资
             selectDateSend(val){
@@ -963,7 +977,7 @@
                 this.cus_id = data.id;
                 this.identity = data.identity;
                 this.cus_name = data.address
-//                this.formData.customer = data;
+
             },
             getSubject(val){
                 this.subject = val;
@@ -979,21 +993,11 @@
                 this.$http.post('account/payable/delete/' + this.pitch).then((res) => {
                     if (res.data.code === '18410') {
                         this.pitch = [];
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_success = false;
+                        this.successMsg(res.data.msg);
                         this.pitch = 0;
                         this.search(this.beforePage);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_error = false;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -1004,27 +1008,26 @@
                     pay_date: val
                 }).then((res) => {
                     if (res.data.code === '18410') {
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_success = false;
+                        this.successMsg(res.data.msg);
                         this.pitch.splice(0, this.pitch.length);
                         this.search(this.beforePage);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_error = false;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
             getDate1(val){
                 this.pay_time = val;
-//                console.log(this.contractRenew.start_date)
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }

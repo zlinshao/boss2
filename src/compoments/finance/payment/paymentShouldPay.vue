@@ -74,14 +74,16 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">账户类型</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly v-model="dict.payment[list.customer_account_type]">
+                                    <input type="text" class="form-control" readonly
+                                           v-model="dict.payment[list.customer_account_type]">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">账户账号</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="list.customer_account_num" readonly>
+                                    <input type="text" class="form-control" v-model="list.customer_account_num"
+                                           readonly>
                                 </div>
                             </div>
 
@@ -102,7 +104,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">补齐日期</label>
                                 <div class="col-sm-10">
-                                    <DatePicker :dateConfigure="dateConfigure" :idName="'completeTime'" :currentDate="[complete_time]" :placeholder="'补齐日期'" @sendDate="getDate"></DatePicker>
+                                    <DatePicker :dateConfigure="dateConfigure" :idName="'completeTime'"
+                                                :currentDate="[complete_time]" :placeholder="'补齐日期'"
+                                                @sendDate="getDate"></DatePicker>
 
                                     <!--<input @click="remindData1" type="text" placeholder="补齐日期"
                                            class="form-control form_datetime1" readonly>-->
@@ -145,9 +149,10 @@
     import SelectClient from '../../common/selectClient.vue'
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
+    import SelectSubject from '../../common/selectSubject.vue'      //科目
     export default{
         props: ['details'],
-        components: {SelectClient, Status,DatePicker},
+        components: {SelectClient, Status, DatePicker, SelectSubject},
         data(){
             return {
                 dict: {},
@@ -169,13 +174,14 @@
                     //失败信息 ***
                     error: ''
                 },
-                dateConfigure : [
+                dateConfigure: [
                     {
-                        range : false,
-                        needHour : false,
-                        position : 'top-right'
+                        range: false,
+                        needHour: false,
+                        position: 'top-right'
                     }
                 ],
+                subject_id: ''          //科目
 
             }
         },
@@ -197,6 +203,10 @@
             }
         },
         methods: {
+//            科目
+            houseSubject(val){
+                this.subject_id = val;
+            },
 //            根据收款方式获取收款账户
             getAccount(){
                 this.$http.get('account/manage/readbycate/' + this.cate).then((res) => {
@@ -219,7 +229,7 @@
                     if (res.data.code === '18410') {
                         this.revise();
                         $('#payFor').modal('hide');
-                        this.$emit('pay_succ',1);
+                        this.$emit('pay_succ', 1);
 //                        this.$emit('pay');
                         //成功信息 ***
                         this.info.success = res.data.msg;
@@ -260,7 +270,7 @@
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
-                    pickerPosition : 'top-right'
+                    pickerPosition: 'top-right'
 
                 }).on('changeDate', function (ev) {
                     this.complete_time = ev.target.value;
