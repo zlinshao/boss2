@@ -174,14 +174,17 @@
                 }*/
 
 //                console.log(arr)
-                for (let i = 0 ; i<this.arr.length ; i++){
-                    if (this.arr[i].option.length==0||this.arr[i].option==undefined){
-                        this.info.error = '您有问题未设置选项';
-                        //显示成功弹窗 ***
-                        this.info.state_error = true;
-                        return
+                if (this.questionList.type==1){
+                    for (let i = 0 ; i<this.arr.length ; i++){
+                        if (this.arr[i].option.length==0||this.arr[i].option==undefined){
+                            this.info.error = '您有问题未设置选项';
+                            //显示成功弹窗 ***
+                            this.info.state_error = true;
+                            return
+                        }
                     }
                 }
+
                 this.questionList.question = [];
                 this.questionList.question = this.arr;
 //                console.log(this.questionList.question)
