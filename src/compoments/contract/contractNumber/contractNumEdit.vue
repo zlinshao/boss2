@@ -10,7 +10,7 @@
                             <button type="button" class="close" data-dismiss="modal">
                                 <span aria-hidden="true" @click="close_">&times;</span>
                             </button>
-                            <h4 class="modal-title">编辑任务任务</h4>
+                            <h4 class="modal-title">编辑任务</h4>
                         </div>
                         <div class="modal-body has-js">
                             <div class="panel-body">

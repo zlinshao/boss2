@@ -82,7 +82,16 @@
                                     <input id="allCheck" type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length">
                                 </label>
                             </th>
-                            <th class="text-center"></th>
+                            <th class="text-center">录入时间</th>
+                            <th class="text-center">客户姓名</th>
+                            <th class="text-center">房屋地址</th>
+                            <th class="text-center">联系电话</th>
+                            <th class="text-center">约定维修时间</th>
+                            <th class="text-center">认责人</th>
+                            <th class="text-center">状态</th>
+                            <th class="text-center">开单人</th>
+                            <th class="text-center">部门</th>
+                            <th class="text-center">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -95,6 +104,22 @@
                                 </label>
                             </td>
                             <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>{{item}}</td>
+                            <td>
+                                <router-link to="repairLogDetail">详情</router-link>
+                            </td>
+                        </tr>
+                        <tr class="text-center" v-show="isShow">
+                            <td colspan="11" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -107,7 +132,8 @@
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <Status :state='info'></Status>
-
+        <!--编辑-->
+        <EditRepair></EditRepair>
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
     </div>
 </template>
@@ -116,13 +142,14 @@
     import Status from '../common/status.vue'
     import DatePicker from '../common/datePicker.vue'
     import STAFF from  '../common/oraganization.vue'
+    import EditRepair from './repaireLogEdit.vue'
     export default {
-        components: {Page, Status, DatePicker, STAFF},
+        components: {Page, Status, DatePicker, STAFF,EditRepair},
         data() {
             return {
                 pitch: [],
                 beforePage: 1,                      //当前页
-                paging: 1,                        //总页数
+                paging: 5,                        //总页数
 
                 myData : [],
                 isShow : false,
@@ -162,11 +189,15 @@
                 this.search(1);
             },
 
-            //            搜索
+//            搜索
             search(val){
-//                this.contract_list(val);
+                this.getList(val);
             },
-            //            部门搜索模态框
+//            获取列表
+            getList(val){
+
+            },
+//            部门搜索模态框
             select(){
                 this.configure = {type: 'department', length: 1};
                 $('.selectCustom:eq(0)').modal('show');
