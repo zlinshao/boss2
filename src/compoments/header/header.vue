@@ -821,7 +821,7 @@
                     </li>
                     <li :class="{'active': isActive == 'repair'}" @click='pitch_on("repair")'>
                         <router-link to="/repairLog">
-                            <i class="fa fa-map-marker"></i>
+                            <i class="fa fa-briefcase"></i>
                             <span>维修记录</span>
                         </router-link>
                     </li>
