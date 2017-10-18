@@ -819,6 +819,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li :class="{'active': isActive == 'repair'}" @click='pitch_on("repair")'>
+                        <router-link to="/checkIn">
+                            <i class="fa fa-map-marker"></i>
+                            <span>维修记录</span>
+                        </router-link>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
