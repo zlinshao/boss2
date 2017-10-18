@@ -119,6 +119,9 @@ import Question from  './compoments/questionnaire/questionList.vue'             
 import Questionnaire from './compoments/questionnaire/questionDetail.vue'
 import QuestionResult from './compoments/questionnaire/questionResult.vue'
 
+import RepairLog from './compoments/repairLog/repaireLogList.vue'                                // 维修记录
+import RepairLogDetail from './compoments/repairLog/repaireLogDetail.vue'                                // 维修记录
+
 export default[
     {
         path: '/',                  //重定向主页
@@ -614,5 +617,15 @@ export default[
         path: '/questionResult',
         name: 'QuestionResult',
         component: QuestionResult
+    },
+    {       //维修记录
+        path: '/repairLog',
+        name: 'RepairLog',
+        component: RepairLog
+    },
+    {       //维修记录
+        path: '/repairLogDetail',
+        name: 'RepairLogDetail',
+        component: RepairLogDetail
     },
 ]
