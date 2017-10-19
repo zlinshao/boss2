@@ -6,8 +6,8 @@
                 <router-link to="/payPayment">应付款项</router-link>
             </li>
             <li class="active">应付款项详情</li>
-            <li class="pull-right" v-show="typeof params!='string'">
-                <router-link :to="{path:'/payPayment',query:{myParam:params,page:page,selected:selected}}"><i
+            <li class="pull-right"  v-if="cus === 1">
+                <router-link :to="{path:'/payPayment', query:{myParam:params, page:page, selected:selected}}"><i
                         class="fa fa-angle-double-left"></i> 返回上一步
                 </router-link>
             </li>

@@ -46,8 +46,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">支出科目</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"
-                                           v-model="dict.account_subject[list.subject_id]" readonly>
+                                    <SelectSubject @choose="subject_revise" :current="subject_id"></SelectSubject>
                                 </div>
                             </div>
 
@@ -127,7 +126,6 @@
                                 </div>
                             </div>
 
-
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -199,12 +197,13 @@
         },
         watch: {
             details(val){
-                this.account_id = val[0].id
+                this.account_id = val[0].id;
+                this.subject_id = val[0].subject_id;
             }
         },
         methods: {
 //            科目
-            houseSubject(val){
+            subject_revise(val){
                 this.subject_id = val;
             },
 //            根据收款方式获取收款账户

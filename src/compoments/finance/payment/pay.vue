@@ -342,7 +342,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" v-model="accountType">
                                         <option value="">--请选择--</option>
-                                        <option v-for="(list,index) in select_info.payment" :value="index">{{list}}
+                                        <option v-for="(list,index) in dict.payment" :value="index">{{list}}
                                         </option>
                                     </select>
                                 </div>
@@ -478,7 +478,6 @@
                 accountType: '',                    //账户类型
                 accountNumber: '',                  //账户账号
                 details_info: [],                   //应入
-                select_info: {},                    //字典
                 pay_time: '',                       //付款日期
                 cus_id: '',                         //客户ID
                 cus_name: '',                       //客户姓名
@@ -634,7 +633,7 @@
                 this.$http.put('account/payable/subject/' + id, {
                     subject_id: this.rev.subject_id,
                 }).then((res) => {
-                    if(res.data.code === '18410'){
+                    if (res.data.code === '18410') {
                         this.search(this.beforePage);
                         this.sub_isActive = '';
                         this.successMsg(res.data.msg);
@@ -792,7 +791,7 @@
                         $('#addRemarks').modal('hide');
                         this.search(this.beforePage);
                         this.successMsg(res.data.msg);
-                    }else{
+                    } else {
                         this.errorMsg(res.data.msg);
                     }
                 })
@@ -892,22 +891,19 @@
                 this.$http.get('staff/info').then((res) => {
                     this.pay_man = res.data.name;
                 });
-                this.$http.get('revenue/glee_collect/dict').then((res) => {
-                    this.select_info = res.data;
 
-                    this.$http.get('account/payable').then((res) => {
+                this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
-                        if (res.data.code === '18400') {
-                            this.myData = res.data.data.data;
-                            this.paging = res.data.data.pages;
-                            this.setTips(res.data.data, true);
-                            this.isShow = false;
-                        } else {
-                            this.isShow = true;
-                            this.setTips({}, false);
-                        }
-                    })
-                });
+                    if (res.data.code === '18400') {
+                        this.myData = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.setTips(res.data.data, true);
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        this.setTips({}, false);
+                    }
+                })
             },
 //            时间控件
             remindData (){
