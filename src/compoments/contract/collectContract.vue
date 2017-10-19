@@ -138,6 +138,10 @@
                             v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_collect') > -1||isSuper">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
+                        <li class="operate" v-if="contractSeleted.length ===1" @click="createRepair">
+                            <i class="fa fa-briefcase"></i>
+                            创建维修单
+                        </li>
 
                     </ul>
                 </div>
@@ -252,6 +256,8 @@
         <Loading v-if='Waiting'></Loading>
 
         <AddContract :dictionary="dictionary"></AddContract>
+        <!--编辑-->
+        <EditRepair :isAdd="true" :contractId="currentContractId" :isCollect="true" @close="closeRepair"></EditRepair>
     </div>
 </template>
 <script>
@@ -263,9 +269,10 @@
     import DatePicker from '../common/datePicker.vue'
 
     import AddContract from './collectAdd.vue'
+    import EditRepair from '../repairLog/repaireLogEdit.vue'
     export default{
         props: ['simulate', 'isSuper'],
-        components: {DatePicker, Page, Staff, Status, Confirm, Loading, AddContract},
+        components: {DatePicker, Page, Staff, Status, Confirm, Loading, AddContract,EditRepair},
         data(){
             return {
                 flag: true,
@@ -318,7 +325,9 @@
                 staff_id: '',
                 allCheck: '',
                 allId: [],
-                keepStatus: false
+                keepStatus: false,
+
+                currentContractId : '',     // 创建维修单
             }
         },
         watch: {
@@ -645,6 +654,15 @@
                 $('.rem_div').remove();
                 $('#contractAdd').modal('show');
             },
+            // 创建维修单
+            createRepair(){
+                this.currentContractId = this.contractSeleted[0];
+                $('#repairLogEdit').modal('show');
+            },
+            closeRepair(){
+                this.currentContractId='';
+                this.contractSeleted = [];
+            }
         }
     }
 </script>

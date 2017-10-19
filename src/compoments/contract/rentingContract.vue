@@ -130,6 +130,10 @@
                         <li class="operate" @click="distributionDpm" v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_rent') > -1||isSuper">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
+                        <li class="operate" v-if="contractSeleted.length ===1" @click="createRepair">
+                            <i class="fa fa-briefcase"></i>
+                            创建维修单
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -243,6 +247,8 @@
         <Loading v-if='waiting'></Loading>
 
         <Contract :dictionary="dictionary"></Contract>
+        <!--编辑-->
+        <EditRepair :isAdd="true" :contractId="currentContractId" :isCollect="false" @close="closeRepair"></EditRepair>
     </div>
 </template>
 <script>
@@ -254,9 +260,10 @@
     import DatePicker from '../common/datePicker.vue'
 
     import Contract from './rentingAdd.vue'
+    import EditRepair from '../repairLog/repaireLogEdit.vue'
     export default{
         props : ['simulate','isSuper'],
-        components: {DatePicker, Page, Staff, Status, Confirm, Loading ,Contract},
+        components: {DatePicker, Page, Staff, Status, Confirm, Loading ,Contract,EditRepair},
         data(){
             return {
                 flag: true,
@@ -310,6 +317,8 @@
                 allCheck: '',
                 allId: [],
                 keepStatus: false,
+
+                currentContractId : ''
             }
         },
         watch: {
@@ -631,6 +640,15 @@
                 $('.rem_div').remove();
                 $('#contractAdd').modal('show');
             },
+            // 创建维修单
+            createRepair(){
+                this.currentContractId = this.contractSeleted[0];
+                $('#repairLogEdit').modal('show');
+            },
+            closeRepair(){
+                this.currentContractId='';
+                this.contractSeleted = [];
+            }
         }
     }
 </script>

@@ -6,11 +6,12 @@
 
         <section class="panel">
             <div class="panel-body">
-                <div class="has-js">
+                <div class="has-js" v-if="pitch.length==0">
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
-                            <select class="form-control" @change="search" v-model="params.status">
+                            <select class="form-control" @change="search(1)" v-model="params.status">
                                 <option value="">维修状态</option>
+                                <option :value="value" v-for="(key,value) in dict.status">{{key}}</option>
                             </select>
                         </div>
                         <div class="input-group">
@@ -26,34 +27,37 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="合同编号/领取人"
-                                   @keydown.enter.prevent="search(1)" v-model="params.keywords">
+                            <input type="text" class="form-control" placeholder="合同号/客户姓名/手机号"
+                                   @keydown.enter.prevent="search(1)" v-model="params.keyword">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
                         <div class="input-group">
                             <label style="padding-right: 25px;margin-left: 10px;"
-                                   :class="{'label_check':true,'c_on':params.become_due,'c_off':!params.become_due}"
+                                   :class="{'label_check':true,'c_on':params.week,'c_off':!params.week}"
                                    @click.prevent="trid($event)">
-                                <input type="checkbox" v-model="params.become_due">
+                                <input type="checkbox" v-model="params.week">
                                 一周内维修完成
                             </label>
                         </div>
 
-                        <div class="form-group pull-right"
+                        <!--<div class="form-group pull-right"
                              data-toggle="modal" data-target="#contractNumAdd">
                             <a class="btn btn-success">
                                 <i class="fa fa-plus-square"></i>&nbsp;新建任务
                             </a>
-                        </div>
+                        </div>-->
 
                     </form>
                 </div>
 
-                <div class="col-lg-12 remind">
+                <div class="col-lg-12 remind" v-else="">
                     <ul class="clearFix">
-                        <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
+                        <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
+                        <li>
+                            <h5 @click="edit"><a><i class="fa fa-edit"></i>&nbsp;编辑</a></h5>
+                        </li>
                         <li>
                             <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
@@ -61,6 +65,12 @@
                             <h5>
                                 <a><i class="fa fa-star"></i>&nbsp;标记</a>
                                 <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
+                            </h5>
+                        </li>
+                        <li>
+                            <h5>
+                                <a><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
+                                <!--<a><i class="fa fa-arrow-up"></i>&nbsp;取消置顶</a>-->
                             </h5>
                         </li>
                     </ul>
@@ -83,6 +93,8 @@
                                 </label>
                             </th>
                             <th class="text-center">录入时间</th>
+                            <th class="text-center">合同类型</th>
+                            <th class="text-center">合同号</th>
                             <th class="text-center">客户姓名</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">联系电话</th>
@@ -95,29 +107,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="item in 10">
+                        <tr class="text-center" v-for="item in myData">
                             <td>
-                                <label :class="{'label_check':true,'c_on':pitch.indexOf(item) > -1,'c_off':pitch.indexOf(item) == -1}"
-                                       @click.prevent="changeIndex($event,item)">
+                                <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
+                                       @click.prevent="changeIndex($event,item.id)">
                                     <input type="checkbox"
-                                           :checked="pitch.indexOf(item) > -1">
+                                           :checked="pitch.indexOf(item.id) > -1">
                                 </label>
                             </td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
-                            <td>{{item}}</td>
+                            <td>{{item.create_time}}</td>
+                            <td>{{dict.contract_type[item.contract_type]}}</td>
+                            <td>{{item.contract_num}}</td>
+                            <td>{{item.customer_name}}</td>
+                            <td>{{item.detailed_address}}</td>
+                            <td>{{item.customer_mobile}}</td>
+                            <td>{{item.repair_time}}</td>
+                            <td>{{dict.person_liable[item.person_liable]}}</td>
+                            <td>{{dict.status[item.status]}}</td>
+                            <td>{{item.real_name}}</td>
+                            <td>{{item.department_name}}</td>
                             <td>
-                                <router-link to="repairLogDetail">详情</router-link>
+                                <router-link :to="{path:'repairLogDetail/',query:{repairId:item.id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="11" class="text-center text-muted">
+                            <td colspan="12" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -127,13 +141,11 @@
             </div>
         </div>
 
-
-
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <Status :state='info'></Status>
         <!--编辑-->
-        <EditRepair></EditRepair>
+        <EditRepair :isAdd="false" :repairId="repairId"></EditRepair>
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
     </div>
 </template>
@@ -147,18 +159,21 @@
         components: {Page, Status, DatePicker, STAFF,EditRepair},
         data() {
             return {
+                dict : {},
+
                 pitch: [],
                 beforePage: 1,                      //当前页
-                paging: 5,                        //总页数
+                paging: 1,                        //总页数
 
                 myData : [],
                 isShow : false,
 
                 params: {
+                    time : '',
                     status : '',
                     department_id : '',
-                    keywords : '',
-                    become_due : false
+                    keyword : '',
+                    week : false
                 },
                 selected : [],
                 dateConfigure: [                    //时间控件
@@ -179,13 +194,39 @@
                     //失败信息 ***
                     error: ''
                 },
+                repairId : ''
             }
+        },
+        mounted(){
+            let params = this.$route.query.myParam;
+            let page = this.$route.query.page;
+            let select = this.$route.query.select;
+
+            this.$http.get('maint/record/dict').then((res)=>{
+//                console.log(res.data);
+                this.dict = res.data.Repair;
+                if (page!=undefined){
+                    this.page = page;
+                    this.beforePage = page;
+                    if (params!=undefined&&typeof params!='string'){
+                        this.params = params;
+                        if (params.start!=''&&params.end!=''){
+                            this.currentDate = params.time.split('to');
+                        }
+                    }
+                    this.selected = select;
+                    this.search(this.beforePage);
+                } else {
+                    this.search(1);
+                }
+            })
+
         },
         methods: {
             trid(ev){
                 let valInput = ev.target.getElementsByTagName('input')[0];
                 valInput.checked = !valInput.checked;
-                this.params.become_due = valInput.checked;
+                this.params.week = valInput.checked;
                 this.search(1);
             },
 
@@ -195,7 +236,23 @@
             },
 //            获取列表
             getList(val){
-
+                this.params.page = val;
+                this.$http.get('maint/record/listRepair',{
+                    params : this.params
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==10010){
+                        // 成功
+                        this.paging = res.data.data.page;
+                        this.myData = res.data.data.data;
+                        this.isShow = false;
+                    } else {
+                        // 失败
+                        this.paging = 1;
+                        this.myData = [];
+                        this.isShow = true;
+                    }
+                })
             },
 //            部门搜索模态框
             select(){
@@ -210,24 +267,17 @@
             },
 //            清空部门搜索
             clearSelect(){
-                if (this.selected.length === 0) {
+                /*if (this.selected.length === 0) {
                     return;
-                }
-                this.params.department_id = [];
-                this.params.staff_id = [];
+                }*/
+                this.params.department_id = '';
                 this.selected = [];
                 this.search(1);
             },
             //            时间搜索
             getDate(val){
-                console.log(val)
-                /*if (val!=''){
-                    this.params.start = val.split('to')[0];
-                    this.params.end = val.split('to')[1];
-                } else {
-                    this.params.start = '';
-                    this.params.end = '';
-                }*/
+                console.log(val);
+                this.params.time = val;
 
                 this.search(1);
             },
@@ -257,6 +307,10 @@
                     }
                     this.operId = 0;
                 }
+            },
+//            编辑
+            edit(){
+                $('#repairLogEdit').modal('show');
             }
         }
     }
