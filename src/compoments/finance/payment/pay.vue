@@ -562,6 +562,11 @@
             let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.dict = res.data;
+                
+                this.$http.get('staff/info').then((res) => {
+                    this.pay_man = res.data.name;
+                });
+
                 if (page !== undefined) {
                     this.page = page;
                     this.beforePage = page;
@@ -888,10 +893,6 @@
             },
 //            列表
             payFlowList(){
-                this.$http.get('staff/info').then((res) => {
-                    this.pay_man = res.data.name;
-                });
-
                 this.$http.get('account/payable').then((res) => {
 //                    this.collectList = res.data.data.gleeFulCollect;
                     if (res.data.code === '18400') {
