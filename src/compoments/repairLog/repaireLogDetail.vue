@@ -46,6 +46,10 @@
                                     <div>{{msg.customer_name}}</div>
                                 </div>
                                 <div>
+                                    <div class="text-primary">客户性别：</div>
+                                    <div>{{msg.sex==1?'先生':'女士'}}</div>
+                                </div>
+                                <div>
                                     <div class="text-primary">联系电话：</div>
                                     <div>{{msg.customer_mobile}}</div>
                                 </div>

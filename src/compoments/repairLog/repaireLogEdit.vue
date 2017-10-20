@@ -355,7 +355,7 @@
             edit(){
                 this.formData.id = this.repairId;
                 this.$http.put('maint/record/updateRepair',this.formData).then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
                     if (res.data.code==10030){
                         // success
                         this.info.success = res.data.msg;
