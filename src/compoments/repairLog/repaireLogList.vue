@@ -251,6 +251,7 @@
                     this.params.page = val;
                 }
                 this.pitch = [];
+                this.stick = [];
                 this.$http.get('maint/record/listRepair',{
                     params : this.params
                 }).then((res)=>{
