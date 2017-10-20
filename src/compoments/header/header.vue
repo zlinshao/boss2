@@ -326,12 +326,10 @@
                             <span>客户管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 1}" @click='pitch_on(1)'
-                                v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">
                                 <router-link to='/custom'>客户</router-link>
                             </li>
-                            <li :class="{'active': isActive == 2}" @click='pitch_on(2)'
-                                v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">
+                            <li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">
                                 <router-link to='/customerPool'>客户池</router-link>
                             </li>
                         </ul>
@@ -343,12 +341,10 @@
                             <span>房源管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 3}" @click='pitch_on(3)'
-                                v-show="simulate.indexOf('Villa/receivedVillaList')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Villa/receivedVillaList')>-1||isSuper">
                                 <router-link to='/okCollect'>公司房源</router-link>
                             </li>
-                            <li :class="{'active': isActive == 4}" @click='pitch_on(4)'
-                                v-show="simulate.indexOf('Villa/villaList')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Villa/villaList')>-1||isSuper">
                                 <router-link to='/noCollect'>待收房源</router-link>
                             </li>
                         </ul>
@@ -362,14 +358,12 @@
                             <span>合同管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 24}" @click='pitch_on(24)'
-                                v-show="simulate.indexOf('Collect/contractList')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Collect/contractList')>-1||isSuper">
                                 <router-link to="/collectContract">
                                     <span>收房合同</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 25}" @click='pitch_on(25)'
-                                v-show="simulate.indexOf('Rent/contractList')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Rent/contractList')>-1||isSuper">
                                 <router-link to="/rentingContract">
                                     <span>租房合同</span>
                                 </router-link>
@@ -379,16 +373,15 @@
                                     <span>订单迁移</span>
                                 </a>
                                 <ul class="sub">
-                                    <li :class="{'active': isActive == 'collect'}" @click='pitch_on("collect")'>
+                                    <li @click='pitch_on("collect")'>
                                         <router-link to="/collectContractTransfer">收房订单</router-link>
                                     </li>
-                                    <li :class="{'active': isActive == 'rent'}" @click='pitch_on("rent")'>
+                                    <li @click='pitch_on("rent")'>
                                         <router-link to="/rentingContractTransfer">租房订单</router-link>
                                     </li>
                                 </ul>
                             </li>
-                            <li :class="{'active': isActive == 'contractNum'}" @click='pitch_on("contractNum")'
-                                v-show="simulate.indexOf('ContractNumberRecord/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('ContractNumberRecord/index') > -1||isSuper">
                                 <router-link to="/contractNum">
                                     <span>编号记录</span>
                                 </router-link>
@@ -431,42 +424,42 @@
                                     <span>客户管理</span>
                                 </a>
                                 <ul class="sub">
-                                    <li :class="{'active': isActive == 40}" @click='pitch_on(40)'>
+                                    <li>
                                         <router-link to="/newLandlord">房东</router-link>
                                     </li>
-                                    <li :class="{'active': isActive == 41}" @click='pitch_on(41)'>
+                                    <li>
                                         <router-link to="/newRenter">租客</router-link>
                                     </li>
-                                    <li :class="{'active': isActive == 42}" @click='pitch_on(42)'>
+                                    <li>
                                         <router-link to="/rentLordAll">房东/租客总汇</router-link>
                                     </li>
                                 </ul>
                             </li>
-                            <li :class="{'active': isActive == 24}" @click='pitch_on(24)'>
+                            <li>
                                 <router-link to="/account">
                                     <span>账户管理</span>
                                 </router-link>
                             </li>
 
-                            <li :class="{'active': isActive == 25}" @click='pitch_on(25)'>
+                            <li>
                                 <router-link to="/subject">
                                     <span>科目管理</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 26}" @click='pitch_on(26)'>
+                            <li>
                                 <router-link to="/payPayment">
                                     <span>应付款项</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 27}" @click='pitch_on(27)'>
+                            <li>
                                 <router-link to="/collectPayment">
                                     <span>应收款项</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 43}" @click='pitch_on(43)'>
+                            <li>
                                 <router-link to="/payCllentAll">应收/应付总汇</router-link>
                             </li>
-                            <li :class="{'active': isActive == 28}" @click='pitch_on(28)'>
+                            <li>
                                 <router-link to="/incomeFlow">
                                     <span>收支流水</span>
                                 </router-link>
@@ -476,12 +469,12 @@
                             <!--<span>转账操作记录</span>-->
                             <!--</router-link>-->
                             <!--</li>-->
-                            <li :class="{'active': isActive == 30}" @click='pitch_on(30)'>
+                            <li>
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 47}" @click='pitch_on(47)'>
+                            <li>
                                 <router-link to="/organization">
                                     <span>业绩生成</span>
                                 </router-link>
@@ -554,12 +547,12 @@
                             <span>业绩管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 19}" @click='pitch_on(19)'>
+                            <li>
                                 <router-link to="/personal">
                                     <span>个人工资</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 45}" @click='pitch_on(45)'>
+                            <li>
                                 <router-link to="/periodicFor">
                                     <span>周期表</span>
                                 </router-link>
@@ -664,22 +657,20 @@
                             <span>人资管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 'organize'}" @click='pitch_on("organize")'
-                                v-show="simulate.indexOf('Department/department_all')>-1||simulate.indexOf('Department/position')>-1
+                            <li v-show="simulate.indexOf('Department/department_all')>-1||simulate.indexOf('Department/position')>-1
                                 ||simulate.indexOf('Department/position_index')>-1||isSuper">
                                 <router-link to='/organize'>组织架构</router-link>
                             </li>
-                            <li :class="{'active': isActive == 8}" @click='pitch_on(8)'
-                                v-show="simulate.indexOf('User/searchUser')>-1||isSuper">
+                            <li v-show="simulate.indexOf('User/searchUser')>-1||isSuper">
                                 <router-link to='/user'>用户管理</router-link>
                             </li>
                             <!--<li :class="{'active': isActive == 'positionManage'}" @click='pitch_on("positionManage")'>-->
                             <!--<router-link to='/positionManage'>职位管理</router-link>-->
                             <!--</li>-->
-                            <li :class="{'active': isActive == 9}" @click='pitch_on(9)' v-show="isSuper">
+                            <li v-show="isSuper">
                                 <router-link to='/role'>角色管理</router-link>
                             </li>
-                            <li :class="{'active': isActive == 10}" @click='pitch_on(10)' v-show="isSuper">
+                            <li v-show="isSuper">
                                 <router-link to='/power'>权限管理</router-link>
                             </li>
                             <!--<li class="sub-menu">-->
@@ -710,8 +701,7 @@
                             <span>日志管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 31}" @click='pitch_on(31)'
-                                v-show="simulate.indexOf('Log/log')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Log/log')>-1||isSuper">
                                 <router-link to='/logRecord'>操作记录</router-link>
                             </li>
                         </ul>
@@ -722,8 +712,7 @@
                             <span>导出管理</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 36}" @click='pitch_on(36)'
-                                v-show="simulate.indexOf('Manager/index')>-1||isSuper">
+                            <li v-show="simulate.indexOf('Manager/index')>-1||isSuper">
                                 <router-link to='/leadingOut'>客户导出</router-link>
                             </li>
                         </ul>
@@ -739,22 +728,19 @@
                         </router-link>
                     </li>
 
-                    <li v-if="simulate.indexOf('Mission/index') > -1"
-                        :class="{'active': isActive == 'question'}" @click='pitch_on("question")'>
+                    <li v-if="simulate.indexOf('Mission/index') > -1" @click='pitch_on("question")'>
                         <router-link to="/question">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>问卷调查</span>
                         </router-link>
                     </li>
-                    <li :class="{'active': isActive == 33}" @click='pitch_on(33)'
-                        v-show="simulate.indexOf('Sign/index')>-1||isSuper">
+                    <li v-show="simulate.indexOf('Sign/index')>-1||isSuper">
                         <router-link to="/checkIn">
                             <i class="fa fa-map-marker"></i>
                             <span>带看打卡</span>
                         </router-link>
                     </li>
-                    <li :class="{'active': isActive == 37}" @click='pitch_on(37)'
-                        v-show="simulate.indexOf('Index/index')>-1||isSuper">
+                    <li v-show="simulate.indexOf('Index/index')>-1||isSuper">
                         <router-link to="/punchRecord">
                             <i class="fa fa-map-marker"></i>
                             <span>打卡记录</span>
@@ -769,26 +755,22 @@
                             <span>办公用品</span>
                         </a>
                         <ul class="sub">
-                            <li :class="{'active': isActive == 'officeLibrary'}" @click='pitch_on("officeLibrary")'
-                                v-if="simulate.indexOf('manager/approver') > -1||isSuper">
+                            <li v-if="simulate.indexOf('manager/approver') > -1||isSuper">
                                 <router-link to="/officeLibrary">
                                     <span>办公用品类型管理</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 'officeSupplies'}" @click='pitch_on("officeSupplies")'
-                                v-if="simulate.indexOf('manager/approver') > -1||isSuper">
+                            <li v-if="simulate.indexOf('manager/approver') > -1||isSuper">
                                 <router-link to="/officeSupplies">
                                     <span>办公用品管理</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 'officeApply'}" @click='pitch_on("officeApply")'
-                                v-if="(simulate.indexOf('manager/approver') > -1||simulate.indexOf('manager/management') > -1)||isSuper">
+                            <li v-if="(simulate.indexOf('manager/approver') > -1||simulate.indexOf('manager/management') > -1)||isSuper">
                                 <router-link to="/officeApply">
                                     <span>申领记录</span>
                                 </router-link>
                             </li>
-                            <li :class="{'active': isActive == 'batchApply'}" @click='pitch_on("batchApply")'
-                                v-if="simulate.indexOf('manager/management') > -1||isSuper">
+                            <li v-if="simulate.indexOf('manager/management') > -1||isSuper">
                                 <router-link to="/batchApply">
                                     <span>办公用品批量申领</span>
                                 </router-link>
@@ -807,19 +789,19 @@
                                     <span>员工广场</span>
                                 </router-link>
                             </li>-->
-                            <li :class="{'active': isActive == 'square'}" @click='pitch_on("square")'>
+                            <li>
                                 <a href="../../../staffSquare.html" target="_blank">
                                     <span>员工广场</span>
                                 </a>
                             </li>
-                            <li :class="{'active': isActive == 'article'}" @click='pitch_on("article")'>
+                            <li>
                                 <router-link to="/article">
                                     <span>发布文章</span>
                                 </router-link>
                             </li>
                         </ul>
                     </li>
-                    <li :class="{'active': isActive == 'repair'}" @click='pitch_on("repair")'>
+                    <li>
                         <router-link to="/repairLog">
                             <i class="fa fa-briefcase"></i>
                             <span>维修记录</span>
@@ -1093,10 +1075,10 @@
             lock_empty (){
                 this.lockScreen = '';
             },
-//            左侧栏点击颜色
+/*//            左侧栏点击颜色
             pitch_on (n){
                 this.isActive = n;
-            },
+            },*/
             logOut (){
                 this.$http.post('staff/logout').then(() => {
                     let keys = document.cookie.match(/[^ =;]+(?=\=)/g);
@@ -1287,5 +1269,8 @@
 
     .sub-menu i {
         width: 21px;
+    }
+    .router-link-exact-active.router-link-active{
+        color: #FF6C60
     }
 </style>
