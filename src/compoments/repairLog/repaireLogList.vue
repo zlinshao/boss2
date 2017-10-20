@@ -55,22 +55,22 @@
                 <div class="col-lg-12 remind" v-else="">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
-                        <li>
+                        <li v-if="pitch.length==1">
                             <h5 @click="edit"><a><i class="fa fa-edit"></i>&nbsp;编辑</a></h5>
                         </li>
                         <li>
-                            <h5><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
+                            <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
-                        <li>
+                        <!--<li>
                             <h5>
                                 <a><i class="fa fa-star"></i>&nbsp;标记</a>
-                                <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
+                                &lt;!&ndash;<a><i class="fa fa-star"></i>&nbsp;取消标记</a>&ndash;&gt;
                             </h5>
-                        </li>
-                        <li>
+                        </li>-->
+                        <li v-if="pitch.length==1">
                             <h5>
-                                <a><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
-                                <!--<a><i class="fa fa-arrow-up"></i>&nbsp;取消置顶</a>-->
+                                <a v-show="!stick[0]" @click="stickUp"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
+                                <a v-show="stick[0]"><i class="fa fa-arrow-up"></i>&nbsp;取消置顶</a>
                             </h5>
                         </li>
                     </ul>
@@ -103,6 +103,7 @@
                             <th class="text-center">状态</th>
                             <th class="text-center">开单人</th>
                             <th class="text-center">部门</th>
+                            <th class="text-center">置顶</th>
                             <th class="text-center">详情</th>
                         </tr>
                         </thead>
@@ -110,7 +111,7 @@
                         <tr class="text-center" v-for="item in myData">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
-                                       @click.prevent="changeIndex($event,item.id)">
+                                       @click.prevent="changeIndex($event,item.id,item.top!=null)">
                                     <input type="checkbox"
                                            :checked="pitch.indexOf(item.id) > -1">
                                 </label>
@@ -127,7 +128,10 @@
                             <td>{{item.real_name}}</td>
                             <td>{{item.department_name}}</td>
                             <td>
-                                <router-link :to="{path:'repairLogDetail/',query:{repairId:item.id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                <a @click="unstick(item.id)" v-show="item.top!=null"><i class="fa fa-thumb-tack"></i></a>
+                            </td>
+                            <td>
+                                <router-link :to="{path:'repairLogDetail',query:{repairId:item.id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -145,8 +149,9 @@
 
         <Status :state='info'></Status>
         <!--编辑-->
-        <EditRepair :isAdd="false" :repairId="repairId"></EditRepair>
+        <EditRepair :isAdd="false" :repairId="repairId" @editSuccess="search"></EditRepair>
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 <script>
@@ -155,13 +160,15 @@
     import DatePicker from '../common/datePicker.vue'
     import STAFF from  '../common/oraganization.vue'
     import EditRepair from './repaireLogEdit.vue'
+    import Confirm from '../common/confirm.vue'
     export default {
-        components: {Page, Status, DatePicker, STAFF,EditRepair},
+        components: {Page, Status, DatePicker, STAFF,EditRepair,Confirm},
         data() {
             return {
                 dict : {},
 
                 pitch: [],
+                stick : [],
                 beforePage: 1,                      //当前页
                 paging: 1,                        //总页数
 
@@ -194,7 +201,11 @@
                     //失败信息 ***
                     error: ''
                 },
-                repairId : ''
+                confirmMsg: {
+                    name : '',
+                    msg: ''
+                },
+                repairId : '',
             }
         },
         mounted(){
@@ -236,7 +247,10 @@
             },
 //            获取列表
             getList(val){
-                this.params.page = val;
+                if (val!=undefined){
+                    this.params.page = val;
+                }
+                this.pitch = [];
                 this.$http.get('maint/record/listRepair',{
                     params : this.params
                 }).then((res)=>{
@@ -294,23 +308,101 @@
                 }
             },
             // 选择
-            changeIndex(ev,id){
+            changeIndex(ev,id,isTop){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.pitch.push(id);
                     this.operId = id;
+                    this.stick.push(isTop);
                 } else {
                     let index = this.pitch.indexOf(id);
                     if (index > -1) {
                         this.pitch.splice(index, 1);
+                        this.stick.splice(index, 1);
                     }
                     this.operId = 0;
                 }
             },
 //            编辑
             edit(){
+                this.repairId = this.pitch[0];
                 $('#repairLogEdit').modal('show');
+            },
+//            删除
+            dele(){
+                this.confirmMsg.msg = '确定删除吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                // delete
+                this.$http.get('maint/record/deleteRepair',{
+                    params : {
+                        id : this.pitch
+                    }
+                }).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.code==10040){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.getList(1)
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+//            置顶
+            stickUp(){
+                this.$http.post('core/core_common/stick',{
+                    category : 'repair',
+                    table_id : this.pitch[0]
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==20020){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.getList(1)
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+//            取消置顶
+            unstick(id){
+                this.$http.post('core/core_common/unstick',{
+                    category : 'repair',
+                    table_id : id
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==20020){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.getList(1)
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             }
         }
     }

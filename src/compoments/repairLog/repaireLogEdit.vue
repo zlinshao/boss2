@@ -141,7 +141,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" @click="close">取消</button>
                             <button type="button" class="btn btn-primary" v-if="isAdd" @click="addRepair">添加</button>
-                            <button type="button" class="btn btn-primary" v-else="">修改</button>
+                            <button type="button" class="btn btn-primary" v-else="" @click="edit">修改</button>
                         </div>
                     </div>
                 </div>
@@ -239,9 +239,13 @@
                         }
                     })
                 }
+            },
+            repairId(val){
+                console.log(val);
+                this.getRepairDetail()
             }
         },
-        mounted(){
+        created(){
             this.$http.get('maint/record/dict').then((res)=>{
 //                console.log(res.data);
                 this.dict = res.data.Repair;
@@ -252,6 +256,39 @@
             });
         },
         methods: {
+            getRepairDetail(){
+                this.$http.get('maint/record/readRepair?id='+this.repairId).then((res)=>{
+                    if (res.data.code==10020){
+                        // success
+                        let val = res.data.data;
+                        this.showInfo.contract_num = val.contract_num;
+                        this.showInfo.house_address = val.detailed_address;
+                        this.showInfo.signatory = val.real_name;
+                        this.showInfo.leader_name = val.leader_name;
+                        this.showInfo.department = val.department_name;
+
+                        this.formData.contract_id = val.contract_id;
+                        this.formData.customer_name = val.customer_name;
+                        this.formData.customer_mobile = val.customer_mobile;
+                        this.formData.sex = val.sex;
+                        this.formData.content = val.content;
+                        this.formData.repair_time = val.repair_time;
+                        this.currentDate = [];
+                        this.currentDate.push(val.repair_time);
+                        this.formData.repair_master = val.repair_master;
+                        this.formData.repair_result = val.repair_result;
+                        this.formData.repair_money = val.repair_money;
+                        this.formData.status = val.status;
+                        this.formData.person_liable = val.person_liable;
+//                        this.formData.operator_id = val.operator_id;
+                        this.formData.remark = val.remark;
+
+
+                    } else {
+                        // fail
+                    }
+                })
+            },
             setInfo(val){
                 this.showInfo.contract_num = val.contract_num;
                 this.showInfo.house_address = val.villa_id.detailed_address;
@@ -283,6 +320,9 @@
                 this.currentDate = [];
                 $('#repairLogEdit').modal('hide');
                 this.$emit('close');
+                if (this.repairId!=undefined&&this.repairId!=''){
+                    this.getRepairDetail();
+                }
             },
             addRepair(){
                 if (this.isCollect){
@@ -304,6 +344,29 @@
                         this.close();
                     } else {
                         // 失败
+                        this.info.state_success = false;
+                        //失败信息 ***
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+            edit(){
+                this.formData.id = this.repairId;
+                this.$http.put('maint/record/updateRepair',this.formData).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.code==10030){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.$emit('editSuccess');
+                        this.close();
+                    } else {
+                        // fail
                         this.info.state_success = false;
                         //失败信息 ***
                         this.info.error = res.data.msg;

@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div>
                     <span>录入时间</span>
-                    <span>2017.08.06 10:05</span>
+                    <span v-if="msg!=''">{{msg.create_time}}</span>
                 </div>
             </div>
         </section>
@@ -33,75 +33,75 @@
                         </div>
                     </h4>
                 </header>
-                <section class="panel">
+                <section class="panel" v-if="msg!=''">
                     <div class="panel-body table-responsive client_info">
                         <div class="col-md-12">
                             <div class="col-md-6">
                                 <div>
                                     <div class="text-primary">合同编号：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.contract_num}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">客户姓名：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.customer_name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">联系电话：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.customer_mobile}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">房屋地址：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.detailed_address}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">约定维修时间：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.repair_time}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">维修内容：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.content}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">维修师傅：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.repair_master}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">维修结果：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.repair_result}}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div>
                                     <div class="text-primary">维修金额：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.repair_money}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">维修状态：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{dict.status[msg.status]}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">认责人：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{dict.person_liable[msg.person_liable]}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">备注：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.remark}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">操作人：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.operator_name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">签约人：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.real_name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">负责人：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.leader_name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">所属部门：</div>
-                                    <div>asdasdasd</div>
+                                    <div>{{msg.department_name}}</div>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
             </div>
         </section>
         <!--编辑-->
-        <EditRepair :isAdd="false" :repairId="repairId"></EditRepair>
+        <EditRepair :isAdd="false" :repairId="repairId" @editSuccess="getDetail"></EditRepair>
     </div>
 </template>
 <script>
@@ -119,6 +119,9 @@
         components: {EditRepair},
         data() {
             return {
+                dict : {},
+
+                msg : '',
                 repairId: '',
                 params : {},
                 page : '',
@@ -129,8 +132,27 @@
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
             this.select = this.$route.query.select;
+
+            this.repairId = this.$route.query.repairId;
+            this.$http.get('maint/record/dict').then((res)=> {
+//                console.log(res.data);
+                this.dict = res.data.Repair;
+                this.getDetail()
+            })
         },
-        methods: {}
+        methods: {
+            getDetail(){
+                this.$http.get('maint/record/readRepair?id='+this.repairId).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==10020){
+                        // success
+                        this.msg = res.data.data;
+                    } else {
+                        // fail
+                    }
+                })
+            }
+        }
     }
 </script>
 <style scoped>
