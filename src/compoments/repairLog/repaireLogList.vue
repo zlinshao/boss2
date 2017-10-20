@@ -70,7 +70,7 @@
                         <li v-if="pitch.length==1">
                             <h5>
                                 <a v-show="!stick[0]" @click="stickUp"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
-                                <a v-show="stick[0]"><i class="fa fa-arrow-up"></i>&nbsp;取消置顶</a>
+                                <a v-show="stick[0]" @click="unstick(pitch[0])"><i class="fa fa-arrow-up"></i>&nbsp;取消置顶</a>
                             </h5>
                         </li>
                     </ul>

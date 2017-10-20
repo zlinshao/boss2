@@ -241,7 +241,7 @@
                 }
             },
             repairId(val){
-                console.log(val);
+//                console.log(val);
                 this.getRepairDetail()
             }
         },
