@@ -73,6 +73,9 @@
                             <div><span
                                     class="text-primary">客户来源：</span><span>{{select_list.source[info.source]}}</span>
                             </div>
+                            <div><span
+                                    class="text-primary">小区地址：</span><span>{{info.amap_id.villageAddress}}</span>
+                            </div>
                         </div>
                     </div>
                     <div v-if="open_on" class="col-md-12">
