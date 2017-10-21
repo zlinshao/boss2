@@ -239,7 +239,7 @@
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>空置期起始日期：</span>
+                                                <span>空置期开始日期：</span>
                                                 <span>{{item.vac_start_date}}</span>
                                             </div>
                                             <div class="infoList">
@@ -337,7 +337,7 @@
                                     <div class="infoContainer clearFix">
                                         <div class="col-lg-4">
                                             <div class="infoList">
-                                                <span>客户姓名<sup>*</sup>：</span>
+                                                <span>业主姓名<sup>*</sup>：</span>
                                                 <span>{{item.customer_id.name}}</span>
                                             </div>
                                             <div class="infoList">

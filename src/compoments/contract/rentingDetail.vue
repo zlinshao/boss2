@@ -237,13 +237,17 @@
                                                 <span>{{item.contract_num}}</span>
                                             </div>
                                             <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
-                                                <span>年限(月)<sup>*</sup>：</span>
+                                                <span>租房月数<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{item.checkin_rent_id.months}} 月
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>合同起始日期：</span>
+                                                <span>租房类型：</span>
+                                                <span>{{dictionary.shared_house[item.checkin_rent_id.is_shared]}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>合同开始日期：</span>
                                                 <span>{{item.start_date}}</span>
                                             </div>
                                             <div class="infoList">
@@ -301,6 +305,18 @@
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
                                                     {{dictionary.rent_type[item.checkin_rent_id.rent_type]}}
                                                 </span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>管理费：</span>
+                                                <span>{{item.checkin_rent_id.manage_fee}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>物业费：</span>
+                                                <span>{{item.checkin_rent_id.property_fee}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>中介汇款方式：</span>
+                                                <span>{{dictionary.money_type[item.checkin_rent_id.medi_account_type]}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>资料补齐日期：</span>
