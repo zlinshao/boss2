@@ -38,7 +38,7 @@
                                    :class="{'label_check':true,'c_on':params.week,'c_off':!params.week}"
                                    @click.prevent="trid($event)">
                                 <input type="checkbox" v-model="params.week">
-                                一周内维修完成
+                                一周内维修未完成
                             </label>
                         </div>
 
