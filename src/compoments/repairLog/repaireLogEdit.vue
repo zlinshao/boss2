@@ -91,7 +91,7 @@
                                         <label class="col-sm-2 control-label">维修状态</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="formData.status">
-                                                <option value="">--请选择--</option>
+                                                <option value="0">--请选择--</option>
                                                 <option :value="value" v-for="(key,value) in dict.status">{{key}}</option>
                                             </select>
                                         </div>
@@ -100,7 +100,7 @@
                                         <label class="col-sm-2 control-label">认责人</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="formData.person_liable">
-                                                <option value="">--请选择--</option>
+                                                <option value="0">--请选择--</option>
                                                 <option :value="value" v-for="(key,value) in dict.person_liable">{{key}}</option>
                                             </select>
                                         </div>
@@ -196,8 +196,8 @@
                     repair_master : '',             // 维修师傅
                     repair_result : '',             // 维修结果
                     repair_money : '',              // 维修金额
-                    status : '',                    // 维修状态
-                    person_liable : '',             // 认责人
+                    status : 0,                    // 维修状态
+                    person_liable : 0,             // 认责人
                     operator_id : '',               // 操作人
                     remark : ''                     // 备注
                 }
@@ -314,8 +314,8 @@
                 this.formData.repair_master = '';
                 this.formData.repair_result = '';
                 this.formData.repair_money = '';
-                this.formData.status = '';
-                this.formData.person_liable = '';
+                this.formData.status = 0;
+                this.formData.person_liable = 0;
                 this.formData.remark = '';
                 this.currentDate = [];
                 $('#repairLogEdit').modal('hide');
