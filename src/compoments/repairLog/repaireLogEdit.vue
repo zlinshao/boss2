@@ -23,7 +23,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">客户姓名</label>
+                                        <label class="col-sm-2 control-label">报修人姓名</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="formData.customer_name">
                                         </div>
@@ -35,7 +35,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group has-js">
-                                        <label class="col-sm-2 control-label">客户性别</label>
+                                        <label class="col-sm-2 control-label">报修人性别</label>
                                         <div class="col-sm-10 status1">
                                             <!--<label :class="{'label_radio':true,'r_on':formData.sex==1,'r_off':formData.sex!=1}">
                                                 <input type="radio" name="gender" value="1" class="pull-left" v-model="formData.sex">先生

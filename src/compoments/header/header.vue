@@ -373,10 +373,10 @@
                                     <span>订单迁移</span>
                                 </a>
                                 <ul class="sub">
-                                    <li @click='pitch_on("collect")'>
+                                    <li>
                                         <router-link to="/collectContractTransfer">收房订单</router-link>
                                     </li>
-                                    <li @click='pitch_on("rent")'>
+                                    <li>
                                         <router-link to="/rentingContractTransfer">租房订单</router-link>
                                     </li>
                                 </ul>
@@ -717,8 +717,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li :class="{'active': isActive == 32}" @click='pitch_on(32)'
-                        v-show="simulate.indexOf('System/index')>-1||simulate.indexOf('Approval/index')>-1
+                    <li v-show="simulate.indexOf('System/index')>-1||simulate.indexOf('Approval/index')>-1
                         ||simulate.indexOf('Remind/index')>-1||simulate.indexOf('Secretary/index')>-1
                         ||simulate.indexOf('Msessage/self_message')>-1||simulate.indexOf('Message/department_message')>-1
                         ||simulate.indexOf('Favourite/index')>-1||isSuper">
@@ -728,7 +727,7 @@
                         </router-link>
                     </li>
 
-                    <li v-if="simulate.indexOf('Mission/index') > -1" @click='pitch_on("question")'>
+                    <li v-if="simulate.indexOf('Mission/index') > -1">
                         <router-link to="/question">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>问卷调查</span>
