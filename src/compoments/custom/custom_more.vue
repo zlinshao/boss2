@@ -10,10 +10,14 @@
             </li>
             <li>客户详情</li>
             <li v-show="custom === 1" class="pull-right">
-                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>&nbsp;返回上一步</router-link>
+                <router-link :to="{path:'/custom',query: { sear: custom_sear, cus: 1 }}"><i
+                        class="fa fa-angle-double-left"></i>&nbsp;返回上一步
+                </router-link>
             </li>
             <li v-show="custom === 2" class="pull-right">
-                <router-link :to="{path:'/customerPool',query: { sear: custom_sear, cus: 1 }}"><i class="fa fa-angle-double-left"></i>&nbsp;返回上一步</router-link>
+                <router-link :to="{path:'/customerPool',query: { sear: custom_sear, cus: 1 }}"><i
+                        class="fa fa-angle-double-left"></i>&nbsp;返回上一步
+                </router-link>
             </li>
         </ol>
         <!--头部-->
@@ -28,7 +32,8 @@
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li @click="customers_rev('rev')" v-show="simulate.indexOf('Customer/updateCustomer')>-1||isSuper"><a>编辑</a></li>
+                                <li @click="customers_rev('rev')"
+                                    v-show="simulate.indexOf('Customer/updateCustomer')>-1||isSuper"><a>编辑</a></li>
                                 <!--<li @click="remind_id"><a>增加提醒</a></li>-->
                                 <li @click="sharing"><a>共享客户</a></li>
                                 <!--<li class="divider"></li>-->
@@ -74,7 +79,7 @@
                                     class="text-primary">客户来源：</span><span>{{select_list.source[info.source]}}</span>
                             </div>
                             <div><span
-                                    class="text-primary">小区地址：</span><span>{{info.amap_id.villageAddress}}</span>
+                                    class="text-primary">小区地址：</span><span v-if="info.amap_id != null">{{info.amap_id.villageAddress}}</span>
                             </div>
                         </div>
                     </div>
@@ -97,7 +102,9 @@
                             <div><span
                                     class="text-primary">个人/中介：</span><span>{{select_list.person_medium[info.person_medium]}}</span>
                             </div>
-                            <div><span class="text-primary">证件类型：</span><span>{{select_list.credentials[info.id_type]}}</span></div>
+                            <div><span
+                                    class="text-primary">证件类型：</span><span>{{select_list.credentials[info.id_type]}}</span>
+                            </div>
                             <div><span class="text-primary">证件号：</span><span>{{info.id_num}}</span></div>
                             <div><span class="text-primary">证件照片：</span>
                                 <a v-for="(pic,index) in photos"
@@ -314,7 +321,7 @@
     import PicModal from '../common/largePic.vue'               //查看大图
     import Sharing from './sharing.vue'                         //共享客户
     export default {
-        props:['simulate','isSuper'],
+        props: ['simulate', 'isSuper'],
         components: {New_add, PicModal, Status, Sharing},
         data (){
             return {
@@ -354,6 +361,13 @@
             this.cus_Id = this.$route.query.nameId;
             this.custom_sear = this.$route.query.sear;
             this.custom = this.$route.query.cus;
+            this.$http.post('index/country/index', {
+                name: ''
+            }).then((res) => {
+                if (res.data.data) {
+                    this.all_count = res.data.data;
+                }
+            });
             this.detailed_info(this.cus_Id);
         },
         methods: {
@@ -380,13 +394,6 @@
                 this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
 
-                    this.$http.post('index/country/index', {
-                        name: ''
-                    }).then((res) => {
-                        if (res.data.data) {
-                            this.all_count = res.data.data;
-                        }
-                    });
 //                    客户信息
                     this.$http.get('core/customer/readCustomer/id/' + val).then((res) => {
                         this.revise_info = res.data.data;
@@ -397,10 +404,10 @@
                             this.card.push(this.photos[i].big);
                         }
                         if (res.data.data.nationality) {
-                            this.cus_nationality = res.data.data.nationality;                             //国籍ID
-                            for(let key in this.all_count){
-                                if(this.all_count[key].id === res.data.data.nationality)
+                            for (let key in this.all_count) {
+                                if (this.all_count[key].id === res.data.data.nationality){
                                     this.cus_nationality_name = this.all_count[key].zh_name;    //国籍
+                                }
                             }
                         }
                     });
@@ -562,11 +569,13 @@
     .paddingTop {
         padding-top: 13px;
     }
+
     .breadcrumb > li:last-child:before {
         padding: 0 5px;
         color: #ccc;
         content: "";
     }
+
     .breadcrumb > li:nth-child(5):before {
         padding: 0 5px;
         color: #ccc;
