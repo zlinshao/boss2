@@ -135,7 +135,7 @@
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="12" class="text-center text-muted">
+                            <td colspan="14" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
