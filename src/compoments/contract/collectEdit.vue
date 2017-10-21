@@ -349,14 +349,14 @@
                                                      :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                    <div class="row" v-if="simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <label class="col-lg-2 control-label">退租交接单</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="retreatHandoverPicId" @delete="picDelete" @complete="complete"
                                                      :result="'retreatHandoverPic'" :idPhotos="retreatHandoverPic"></up-load>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                    <div class="row" v-if="simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <label class="col-lg-2 control-label">退组结算单</label>
                                         <div class="col-lg-10">
                                             <up-load @photo="retreatBalancePicId" @delete="picDelete" @complete="complete"
