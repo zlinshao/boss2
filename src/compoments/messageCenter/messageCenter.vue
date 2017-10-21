@@ -257,7 +257,7 @@
                                 </tbody>
                             </table>
                             <!--个人发件箱-->
-                            <table class="table table-striped table-advance table-hover" v-if="isNew1&&(simulate.indexOf('Msessage/self_message')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover" v-if="isNew1&&(simulate.indexOf('Message/self_message')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">发件时间</th>
