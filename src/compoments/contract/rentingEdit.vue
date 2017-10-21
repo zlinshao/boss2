@@ -90,7 +90,7 @@
                                                    <!--@click="selectDate"  placeholder="合同结束时间">-->
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <label class="col-sm-3 col-lg-2 control-label">租房类型<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
@@ -576,8 +576,8 @@
         <SelectClient :collectRent="collectRent" @clientAdd="receiveClient"> </SelectClient>
         <Status :state='info'></Status>
         <SelectHouse @House="getHouse" :isNewAddHouse="isNewAddHouse"></SelectHouse>
-        
-        
+
+
     </div>
 </template>
 <script>
@@ -963,7 +963,7 @@
                             this.contractEdit.deal_time = contractList.checkin_rent_id.deal_time;
                             this.contractEdit.received_type = contractList.checkin_rent_id.received_type;
                             this.contractEdit.received_amount = contractList.checkin_rent_id.received_amount;
-                            
+
                             if (contractList.checkin_rent_id.customer != null) {
                                 this.is_medi = contractList.checkin_rent_id.customer.person_medium;
                             }
@@ -1109,7 +1109,7 @@
                 }
             },
             editContract(){
-                
+
                 this.contractEdit.payment = this.payments.slice(0, this.more_pay_way);
 
                 this.contractEdit.pay = [];
@@ -1120,7 +1120,7 @@
                     // 不变
                     this.contractEdit.pay.push(this.one_type);
                 }
-                
+
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
                     this.$http.get('api/picture/poll').then((res) => {
