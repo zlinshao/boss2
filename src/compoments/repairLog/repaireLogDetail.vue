@@ -42,11 +42,11 @@
                                     <div>{{msg.contract_num}}</div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">客户姓名：</div>
+                                    <div class="text-primary">报修人姓名：</div>
                                     <div>{{msg.customer_name}}</div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">客户性别：</div>
+                                    <div class="text-primary">报修人性别：</div>
                                     <div>{{msg.sex==1?'先生':'女士'}}</div>
                                 </div>
                                 <div>
