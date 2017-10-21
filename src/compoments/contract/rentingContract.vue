@@ -130,7 +130,7 @@
                         <li class="operate" @click="distributionDpm" v-if="simulate.indexOf('MoveOrder/moveOrderByDpm_rent') > -1||isSuper">
                             <i class="fa fa-sitemap">按部门分配</i>&nbsp;
                         </li>
-                        <li class="operate" v-if="contractSeleted.length ===1" @click="createRepair">
+                        <li class="operate" v-if="contractSeleted.length ===1&&(simulate.indexOf('Record/saveRepair')>-1||isSuper)" @click="createRepair">
                             <i class="fa fa-briefcase"></i>
                             创建维修单
                         </li>

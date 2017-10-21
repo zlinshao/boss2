@@ -801,7 +801,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
                         <router-link to="/repairLog">
                             <i class="fa fa-briefcase"></i>
                             <span>维修记录</span>

@@ -55,10 +55,10 @@
                 <div class="col-lg-12 remind" v-else="">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
-                        <li v-if="pitch.length==1">
+                        <li v-if="pitch.length==1&&(simulate.indexOf('Record/updateRepair_finished')>-1||simulate.indexOf('Record/updateRepair_unfinished')>-1||isSuper)">
                             <h5 @click="edit"><a><i class="fa fa-edit"></i>&nbsp;编辑</a></h5>
                         </li>
-                        <li>
+                        <li v-if="simulate.indexOf('Record/deleteRepair')>-1||isSuper">
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                         <!--<li>
@@ -104,7 +104,7 @@
                             <th class="text-center">开单人</th>
                             <th class="text-center">部门</th>
                             <th class="text-center">置顶</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center" v-if="simulate.indexOf('Record/readRepair')>-1||isSuper">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -130,7 +130,7 @@
                             <td>
                                 <a @click="unstick(item.id)" v-show="item.top!=null"><i class="fa fa-thumb-tack"></i></a>
                             </td>
-                            <td>
+                            <td v-if="simulate.indexOf('Record/readRepair')>-1||isSuper">
                                 <router-link :to="{path:'repairLogDetail',query:{repairId:item.id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                             </td>
                         </tr>
@@ -162,6 +162,7 @@
     import EditRepair from './repaireLogEdit.vue'
     import Confirm from '../common/confirm.vue'
     export default {
+        props : ['simulate','isSuper'],
         components: {Page, Status, DatePicker, STAFF,EditRepair,Confirm},
         data() {
             return {
@@ -249,6 +250,7 @@
             getList(val){
                 if (val!=undefined){
                     this.params.page = val;
+                    this.beforePage = val;
                 }
                 this.pitch = [];
                 this.stick = [];
