@@ -30,7 +30,7 @@
                                     <i class=" fa fa-github"></i>BOSS小秘书
                                 </a>
                             </li>
-                            <li @click="new1(1)" v-if="simulate.indexOf('Msessage/self_message')>-1||isSuper"><!--:class="{active: act === 'secre_mess'}"-->
+                            <li @click="new1(1)" v-if="simulate.indexOf('Message/self_message')>-1||isSuper"><!--:class="{active: act === 'secre_mess'}"-->
                                 <a href="#">
                                     <i class=" fa fa-male"></i>个人发件箱
                                 </a>
