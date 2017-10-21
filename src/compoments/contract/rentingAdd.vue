@@ -336,6 +336,12 @@
                                             <div class="col-sm-2"></div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">收据编号</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="contractAdd.receipt_number">
+                                        </div>
+                                    </div>
 
                                     <!--中介信息-->
                                     <div>
@@ -629,7 +635,7 @@
                     handover_pic:[],        //交接单照片
 
                     payment_pic :[],        //转账凭证
-
+                    receipt_number :'',     // 收据编号
 
 
                     villa_id: '',

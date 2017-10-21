@@ -698,7 +698,7 @@
         <Contract></Contract>
 
         <ContractEit :contractEitId="contractEitId" :isEditCollect="isEditCollect"
-                     :dictionary="dictionary" @EditStatus="editSuccess"></ContractEit>
+                     :dictionary="dictionary" @EditStatus="editSuccess" :simulate="simulate" :isSuper="isSuper"></ContractEit>
         <PicModal :largePic="largePic"></PicModal>
         <Status :state='info'></Status>
 
