@@ -335,6 +335,12 @@
                                             <div class="col-sm-2"></div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">收据编号</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="contractEdit.receipt_number">
+                                        </div>
+                                    </div>
 
                                     <!--中介信息-->
                                     <div>
@@ -651,6 +657,7 @@
                     refund_form_pic:[],         //退出结算单照片
 
                     payment_pic :[],            //转账凭证
+                    receipt_number :'',     // 收据编号
 
                     villa_id: '',
                     customer_id: '',
@@ -937,6 +944,7 @@
 
                             this.contractEdit.is_shared = contractList.checkin_rent_id.is_shared;
                             this.contractEdit.shared_part = contractList.checkin_rent_id.shared_part;
+                            this.contractEdit.receipt_number = contractList.checkin_rent_id.receipt_number;
 
                             this.money_change = contractList.checkin_rent_id.price.length>1;
 

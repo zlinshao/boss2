@@ -294,6 +294,12 @@
                                                 </span>
                                                 </div>
                                             </div>
+                                            <div class="infoList">
+                                                <div v-for="pay in item.checkin_rent_id.payment">
+                                                    <span>收据编号：</span>
+                                                    <span>{{item.receipt_number}}</span>
+                                                </div>
+                                            </div>
                                             <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <span>未收：</span>
                                                 <span  v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
