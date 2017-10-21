@@ -626,6 +626,14 @@
                         this.gasPic.cus_idPhoto = [];
                         this.contractEdit.gas_card_pic = [];
 
+                        this.contractEdit.surrender_order_pic = [];
+                        this.retreatHandoverPic.cus_idPhotos = {};
+                        this.retreatHandoverPic.cus_idPhoto = [];
+
+                        this.contractEdit.refund_form_pic = [];
+                        this.retreatBalancePic.cus_idPhotos = {};
+                        this.retreatBalancePic.cus_idPhoto = [];
+
                         let contractList =res.data.data;
                         this.contractEdit.id = contractList.id;
                         if(contractList.relative_customer !== undefined && contractList.relative_customer !== null){

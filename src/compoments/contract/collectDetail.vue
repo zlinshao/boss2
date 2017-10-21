@@ -596,6 +596,20 @@
                                                  v-for="(img,index) in item.album.receipt_pic">
                                         </span>
                                     </div>
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                        <span class="col-lg-1">退租交接单照片</span>
+                                        <span class="col-lg-11">
+                                            <img :src="img.small" @click="showLargePic('surrender_order_pic',index)"
+                                                 v-for="(img,index) in item.album.surrender_order_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix" v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                        <span class="col-lg-1">退租结算单照片</span>
+                                        <span class="col-lg-11">
+                                            <img :src="img.small" @click="showLargePic('refund_form_pic',index)"
+                                                 v-for="(img,index) in item.album.refund_form_pic">
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
