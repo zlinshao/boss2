@@ -295,42 +295,42 @@
                                                  v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
                                                 <span>汇款方式：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{dictionary.money_type[item.checkin_collect_id.medi_account_type]}}
+                                                    {{dictionary.money_type[item.checkin_collect_id.payment]}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.medi_account_type == 1 || item.checkin_collect_id.medi_account_type == 4)">
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
                                                 <span>收款人姓名：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.medi_account_owner}}
+                                                    {{item.checkin_collect_id.account_owner}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.medi_account_type == 1 || item.checkin_collect_id.medi_account_type == 4)">
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
                                                 <span>开户行：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{dictionary.bank[item.checkin_collect_id.medi_account_bank]}}
+                                                    {{dictionary.bank[item.checkin_collect_id.bank]}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.medi_account_type == 1 || item.checkin_collect_id.medi_account_type == 4)">
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
                                                 <span>支行：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.medi_account_subbank}}
+                                                    {{item.checkin_collect_id.account_subbank}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && item.checkin_collect_id.medi_account_type == 2">
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && item.checkin_collect_id.payment == 2">
                                                 <span>支付宝姓名：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.medi_account_owner}}
+                                                    {{item.checkin_collect_id.account_owner}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
                                                  v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
                                                 <span>账号：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.medi_account_num}}
+                                                    {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
