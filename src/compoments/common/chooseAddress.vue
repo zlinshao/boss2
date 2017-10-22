@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="z-index: 1081;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
