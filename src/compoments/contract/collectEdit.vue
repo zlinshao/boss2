@@ -185,7 +185,7 @@
                                     <h4>客户信息</h4>
                                     <div>
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">客户汇款方式</label>
+                                            <label class="col-sm-2 control-label">汇款方式</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractEdit.payment" @change="changeCustomerPayment">
                                                     <option value="">请选择</option>
@@ -194,7 +194,7 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractEdit.payment==1||contractEdit.payment==4">
-                                            <label class="col-sm-2 control-label">客户收款人姓名</label>
+                                            <label class="col-sm-2 control-label">收款人姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractEdit.account_owner">
                                             </div>
