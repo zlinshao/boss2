@@ -105,7 +105,7 @@
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group col-sm-12" style="padding: 0;">
-                                        <label class="col-sm-2 control-label">押金</label>
+                                        <label class="col-sm-2 control-label">押金<span class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="deposit">
                                         </div>

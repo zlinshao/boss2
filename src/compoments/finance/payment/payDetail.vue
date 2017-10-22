@@ -6,7 +6,7 @@
                 <router-link to="/payPayment">应付款项</router-link>
             </li>
             <li class="active">应付款项详情</li>
-            <li class="pull-right"  v-if="cus === 1">
+            <li class="pull-right" v-if="cus === 1">
                 <router-link :to="{path:'/payPayment', query:{myParam:params, page:page, selected:selected}}"><i
                         class="fa fa-angle-double-left"></i> 返回上一步
                 </router-link>
@@ -38,9 +38,7 @@
                 <div class="pro-sort">
                     <button class="status btn btn-success">房屋地址</button>
                 </div>
-                <div class="pro-sort">
-                    <button class="status btn btn-success">{{address}}</button>
-                </div>
+                <div class="pro-sort address">{{address}}</div>
                 <div class="pro-sort status1">
                     <button class="btn btn-warning" v-if="status === 1">待入帐</button>
                     <button class="btn" v-if="status === 2" style="background-color: #FF9999;">待结清</button>
@@ -91,10 +89,10 @@
                                 <!--<div><span class="text-primary">月单价：</span><span>dfsdf</span></div>-->
 
                                 <!--<div>-->
-                                    <!--<span class="text-primary">汇款方式：</span>-->
-                                    <!--<span>-->
-                                        <!--{{select_info.payment[list.customer.account_type]}}-->
-                                    <!--</span>-->
+                                <!--<span class="text-primary">汇款方式：</span>-->
+                                <!--<span>-->
+                                <!--{{select_info.payment[list.customer.account_type]}}-->
+                                <!--</span>-->
                                 <!--</div>-->
                                 <div>
                                     <span class="text-primary">收款人姓名：</span>
@@ -109,10 +107,10 @@
                                     </span>
                                 </div>
                                 <!--<div>-->
-                                    <!--<span class="text-primary">账号：</span>-->
-                                    <!--<span>-->
-                                        <!--{{list.customer.account_num}}-->
-                                    <!--</span>-->
+                                <!--<span class="text-primary">账号：</span>-->
+                                <!--<span>-->
+                                <!--{{list.customer.account_num}}-->
+                                <!--</span>-->
                                 <!--</div>-->
                             </div>
                             <div class="col-md-6">
@@ -569,5 +567,11 @@
         padding: 0 5px;
         color: #ccc;
         content: "";
+    }
+
+    .address {
+        margin-top: 5px;
+        margin-right: 8px;
+        font-size: 16px;
     }
 </style>
