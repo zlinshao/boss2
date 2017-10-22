@@ -333,6 +333,8 @@
                                                     {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
+                                        </div>
+                                        <div class="col-lg-4">
                                             <div class="infoList"
                                                  v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>中介费用：</span>
@@ -340,8 +342,6 @@
                                                     {{item.checkin_collect_id.cost_medi}}
                                                 </span>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>打房租日期：</span>
                                                 <span v-if="item.pay_date > 0">每期{{item.pay_date}}号</span>
