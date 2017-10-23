@@ -53,7 +53,7 @@
                 <div class="col-lg-12 remind" v-if="pitch.length>0">
                     <ul>
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
-                        <li v-if="statusId!=2&&pitch.length==1">
+                        <li v-if="statusId!=2&&pitch.length==1&&(simulate.indexOf('StaffSquare/editArticle')>-1||isSuper)">
                             <h5><router-link :to="{path : '/modifyArticle',query:{articleId : operId}}"><i class="fa fa-pencil"></i>&nbsp;编辑</router-link></h5>
                         </li>
                         <li v-if="statusId==2&&pitch.length==1&&(simulate.indexOf('StaffSquare/offArticle')>-1||isSuper)">
