@@ -28,7 +28,7 @@
                 <span class="cancel" v-if="contract_status == 1">
                     <img src="../../assets/img/cancel.png" alt="">
                 </span>
-                <span class="remind" v-if="contract_pass > 4">审核已完成，部分资料已无法查看，请联系组长</span>
+                <span class="remind" v-if="contract_pass > 4 && (simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">审核已完成，部分资料已无法查看，请联系组长</span>
             </div>
             <div class="pull-right dropdown" v-for="item in contractList">
                 <span v-if="contract_status!=1">
@@ -283,7 +283,7 @@
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                 v-if="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                 <span>月单价<sup>*</sup>：</span>
                                                 <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">

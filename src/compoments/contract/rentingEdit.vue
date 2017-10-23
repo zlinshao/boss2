@@ -944,7 +944,7 @@
 
                             this.contractEdit.is_shared = contractList.checkin_rent_id.is_shared;
                             this.contractEdit.shared_part = contractList.checkin_rent_id.shared_part;
-                            this.contractEdit.receipt_number = contractList.checkin_rent_id.receipt_number;
+                            this.contractEdit.receipt_number = contractList.receipt_number;
 
                             this.money_change = contractList.checkin_rent_id.price.length>1;
 
