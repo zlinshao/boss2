@@ -42,7 +42,7 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
-                        <div class="form-group pull-right">
+                        <div class="form-group pull-right" v-if="simulate.indexOf('StaffSquare/addArticle')>-1||isSuper">
                             <router-link to="/postArticle" class="btn btn-success">
                                 <i class="fa fa-plus-square"></i>&nbsp;文章发布
                             </router-link>
@@ -56,10 +56,10 @@
                         <li v-if="statusId!=2&&pitch.length==1">
                             <h5><router-link :to="{path : '/modifyArticle',query:{articleId : operId}}"><i class="fa fa-pencil"></i>&nbsp;编辑</router-link></h5>
                         </li>
-                        <li v-if="statusId==2&&pitch.length==1">
+                        <li v-if="statusId==2&&pitch.length==1&&(simulate.indexOf('StaffSquare/offArticle')>-1||isSuper)">
                             <h5 @click="oper(1)"><a><i class="fa fa-cloud-download"></i>&nbsp;下架</a></h5>
                         </li>
-                        <li v-if="statusId!=2&&pitch.length==1">
+                        <li v-if="statusId!=2&&pitch.length==1&&(simulate.indexOf('StaffSquare/publicArticle')>-1||isSuper)">
                             <h5 @click="oper(2)"><a><i class="fa fa-cloud-upload"></i>&nbsp;发布</a></h5>
                         </li>
                         <li v-if="statusId!=2">
@@ -91,7 +91,7 @@
                             <th class="text-center">评论</th>
                             <th class="text-center">点赞</th>
                             <th class="text-center">状态</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center" v-if="simulate.indexOf('StaffSquare/showDetails')>-1||isSuper">详情</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -115,7 +115,7 @@
                                     {{dict.article_status[item.status]}}
                                 </label>
                             </td>
-                            <td>
+                            <td v-if="simulate.indexOf('StaffSquare/showDetails')>-1||isSuper">
                                 <router-link :to="{path : '/articleDetail',query:{articleId : item.id,page:beforePage,myParams:params}}">
                                     详情
                                 </router-link>
@@ -150,6 +150,7 @@
     import Status from '../../common/status.vue';
 
     export default{
+        props : ['simulate','isSuper'],
         components: {Page,Confirm,Status},
         data(){
             return {

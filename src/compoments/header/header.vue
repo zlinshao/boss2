@@ -793,7 +793,7 @@
                                     <span>员工广场</span>
                                 </a>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('StaffSquare/index')>-1||isSuper">
                                 <router-link to="/article">
                                     <span>发布文章</span>
                                 </router-link>

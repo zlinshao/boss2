@@ -27,7 +27,7 @@
                     <img src="../../assets/img/cancel.png" alt="">
                 </span>
                 <span class="remind" v-if="contract_pass > 4">审核已完成，部分资料已无法查看，请联系组长</span>
-            </div>
+        </div>
             <div class="pull-right dropdown" v-for="item in contractList">
                 <span v-if="contract_status!=1">
                     <i class="fa fa-lock" v-if="item.villa_id.status !==1" @click="unLock" title="点击解锁"></i>

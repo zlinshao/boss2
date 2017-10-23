@@ -95,7 +95,7 @@
                             <th class="text-center">录入时间</th>
                             <th class="text-center">合同类型</th>
                             <th class="text-center">合同号</th>
-                            <th class="text-center">客户姓名</th>
+                            <th class="text-center">报修人姓名</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">联系电话</th>
                             <th class="text-center">约定维修时间</th>
