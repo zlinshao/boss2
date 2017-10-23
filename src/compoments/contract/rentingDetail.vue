@@ -312,6 +312,51 @@
                                                     {{dictionary.rent_type[item.checkin_rent_id.rent_type]}}
                                                 </span>
                                             </div>
+
+                                            <div class="infoList"
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
+                                                <span>汇款方式：</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{dictionary.money_type[item.checkin_rent_id.medi_account_type]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList"
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4)">
+                                                <span>收款人姓名：</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{item.checkin_rent_id.medi_account_owner}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList"
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4)">
+                                                <span>开户行：</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{dictionary.bank[item.checkin_rent_id.medi_account_bank]}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList"
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4)">
+                                                <span>支行：</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{item.checkin_rent_id.medi_account_subbank}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList"
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && item.checkin_rent_id.medi_account_type == 2">
+                                                <span>支付宝姓名：</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{item.checkin_rent_id.medi_account_owner}}
+                                                </span>
+                                            </div>
+                                            <div class="infoList"
+                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
+                                                <span>账号：</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{item.checkin_rent_id.medi_account_num}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>管理费：</span>
                                                 <span>{{item.checkin_rent_id.manage_fee}}</span>
@@ -320,21 +365,6 @@
                                                 <span>物业费：</span>
                                                 <span>{{item.checkin_rent_id.property_fee}}</span>
                                             </div>
-                                            <div class="infoList">
-                                                <span>中介汇款方式：</span>
-                                                <span>{{dictionary.money_type[item.checkin_rent_id.medi_account_type]}}</span>
-                                            </div>
-                                            <div class="infoList">
-                                                <span>资料补齐日期：</span>
-                                                <span>
-                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
-                                                </span>
-                                                <span style="color: #e8403f">
-                                                    {{item.complete_date[2]}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>中介名<sup>*</sup>：</span>
                                                 <span>{{dictionary.person_medium[item.customer_id.person_medium]}}</span>
@@ -356,6 +386,15 @@
                                             <div class="infoList">
                                                 <span>审核人：</span>
                                                 <span>{{item.checker}}</span>
+                                            </div>
+                                            <div class="infoList">
+                                                <span>资料补齐日期：</span>
+                                                <span>
+                                                    {{item.complete_date[0]}}&nbsp;&nbsp;
+                                                </span>
+                                                <span style="color: #e8403f">
+                                                    {{item.complete_date[2]}}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
