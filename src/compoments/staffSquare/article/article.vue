@@ -62,7 +62,7 @@
                         <li v-if="statusId!=2&&pitch.length==1&&(simulate.indexOf('StaffSquare/publicArticle')>-1||isSuper)">
                             <h5 @click="oper(2)"><a><i class="fa fa-cloud-upload"></i>&nbsp;发布</a></h5>
                         </li>
-                        <li v-if="statusId!=2">
+                        <li v-if="statusId!=2&&(simulate.indexOf('StaffSquare/deleteArticle')>-1||isSuper)">
                             <h5 @click="oper(3)"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                     </ul>
