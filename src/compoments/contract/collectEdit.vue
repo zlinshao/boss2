@@ -185,7 +185,7 @@
                                     <h4>客户信息</h4>
                                     <div>
                                         <div class="row">
-                                            <label class="col-sm-2 control-label">客户汇款方式</label>
+                                            <label class="col-sm-2 control-label">汇款方式</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" v-model="contractEdit.payment" @change="changeCustomerPayment">
                                                     <option value="">请选择</option>
@@ -194,7 +194,7 @@
                                             </div>
                                         </div>
                                         <div class="row" v-show="contractEdit.payment==1||contractEdit.payment==4">
-                                            <label class="col-sm-2 control-label">客户收款人姓名</label>
+                                            <label class="col-sm-2 control-label">收款人姓名</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" v-model="contractEdit.account_owner">
                                             </div>
@@ -349,6 +349,20 @@
                                                      :result="'receiptPic'" :idPhotos="receiptPic"></up-load>
                                         </div>
                                     </div>
+                                    <div class="row" v-if="simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                        <label class="col-lg-2 control-label">退租交接单</label>
+                                        <div class="col-lg-10">
+                                            <up-load @photo="retreatHandoverPicId" @delete="picDelete" @complete="complete"
+                                                     :result="'retreatHandoverPic'" :idPhotos="retreatHandoverPic"></up-load>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-if="simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                        <label class="col-lg-2 control-label">退组结算单</label>
+                                        <div class="col-lg-10">
+                                            <up-load @photo="retreatBalancePicId" @delete="picDelete" @complete="complete"
+                                                     :result="'retreatBalancePic'" :idPhotos="retreatBalancePic"></up-load>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                     </div>
@@ -375,7 +389,7 @@
     import SelectHouse from  '../common/selectHouse.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
-        props:['contractEitId','dictionary','isEditCollect',],
+        props:['contractEitId','dictionary','isEditCollect'],
         components:{
             SelectClient,
             upLoad,
@@ -386,6 +400,8 @@
         },
         data(){
             return {
+                simulate: [],
+                isSuper: [],
                 collectRent : '',
                 complete_ok:'ok',
                 bankPic : {
@@ -421,6 +437,14 @@
                     cus_idPhotos : {},    //押金收条ID
                     cus_idPhoto : [],     //押金收条照片
                 },
+                retreatHandoverPic : {
+                    cus_idPhotos : {},    //退出交接单
+                    cus_idPhoto : [],     //
+                },
+                retreatBalancePic : {
+                    cus_idPhotos : {},    //退出结算单
+                    cus_idPhoto : [],     //
+                },
                 customer_name:'',
                 relative_customer : [],
                 contractEdit : {
@@ -442,6 +466,8 @@
                     proxy_pic:[],           //委托书照片
                     handover_pic:[],        //交接单照片
                     receipt_pic:[],         //押金收条
+                    surrender_order_pic:[],     //退出交接单照片
+                    refund_form_pic:[],         //退出结算单照片
 
                     villa_id :'',           //fangwuid
                     months : '',
@@ -557,9 +583,20 @@
                 }
             },
         },
+        mounted (){
+            this.login_status()
+        },
         methods : {
             changeisClick(){
                 this.isClick = true;
+            },
+            login_status (){
+                this.$http.get('staff/info').then((res) => {
+                    for (let i = 0; i < res.data.auth_all.length; i++) {
+                        this.simulate.push(res.data.auth_all[i].name);
+                    }
+                    this.isSuper = res.data.super_auth.indexOf(res.data.id) > -1;
+                });
             },
             gitContractInfo(){
                 if(this.myContractEitId !== ''){
@@ -588,6 +625,14 @@
                         this.gasPic.cus_idPhotos = [];
                         this.gasPic.cus_idPhoto = [];
                         this.contractEdit.gas_card_pic = [];
+
+                        this.contractEdit.surrender_order_pic = [];
+                        this.retreatHandoverPic.cus_idPhotos = {};
+                        this.retreatHandoverPic.cus_idPhoto = [];
+
+                        this.contractEdit.refund_form_pic = [];
+                        this.retreatBalancePic.cus_idPhotos = {};
+                        this.retreatBalancePic.cus_idPhoto = [];
 
                         let contractList =res.data.data;
                         this.contractEdit.id = contractList.id;
@@ -651,6 +696,16 @@
                             for (let i in this.gasPic.cus_idPhotos) {
                                 this.gasPic.cus_idPhoto.push(i);
                                 this.contractEdit.gas_card_pic.push(i);
+                            }
+                            this.retreatHandoverPic.cus_idPhotos = contractList.album.surrender_order_pic;
+                            for (let i in this.retreatHandoverPic.cus_idPhotos) {
+                                this.retreatHandoverPic.cus_idPhoto.push(i);
+                                this.contractEdit.surrender_order_pic.push(i);
+                            }
+                            this.retreatBalancePic.cus_idPhotos = contractList.album.refund_form_pic;
+                            for (let i in this.retreatBalancePic.cus_idPhotos) {
+                                this.retreatBalancePic.cus_idPhoto.push(i);
+                                this.contractEdit.refund_form_pic.push(i);
                             }
                             this.contractEdit.staff_id = contractList.staff_id;
 
@@ -791,6 +846,12 @@
             receiptPicId(val){      //获取成功上传押金收条 id 数组
                 this.contractEdit.receipt_pic = val;
             },
+            retreatHandoverPicId (val){    //退租交接单
+                this.contractEdit.surrender_order_pic = val;
+            },
+            retreatBalancePicId (val){     //退租结算单
+                this.contractEdit.refund_form_pic = val;
+            },
             //图片上传完成
             complete(val){          //监控上传进度
                 this.complete_ok = val;
@@ -829,6 +890,14 @@
                 let receipt = this.contractEdit.receipt_pic.indexOf(val);
                 if (receipt > -1) {
                     this.contractEdit.receipt_pic.splice(receipt, 1);
+                }
+                let surrender_order = this.contractEdit.surrender_order_pic.indexOf(val);
+                if (surrender_order > -1) {
+                    this.contractEdit.surrender_order_pic.splice(surrender_order, 1);
+                }
+                let refund_form = this.contractEdit.refund_form_pic.indexOf(val);
+                if (refund_form > -1) {
+                    this.contractEdit.refund_form_pic.splice(refund_form, 1);
                 }
             },
             editContract(){
