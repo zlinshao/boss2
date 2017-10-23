@@ -111,15 +111,17 @@
 
         <!--提醒-->
         <Status :state="info"></Status>
-
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 
 <script>
     import Status from '../common/status.vue'
+    import Confirm from '../common/confirm.vue'
     export default {
         components: {
             Status,
+            Confirm
         },
         data (){
             return {
@@ -139,6 +141,10 @@
                     state_error: false,     //错误状态
                     error: '',              //成功信息
                     success: '',            //错误信息
+                },
+                confirmMsg: {
+                    oper : '',
+                    msg: '',
                 },
             }
         },
@@ -333,9 +339,8 @@
 
             },
 
-            // 删除
-            dele(id){
-                this.$http.get('manager/Role/deleteGroup/id/'+id).then((res)=>{
+            getConfirm(){
+                this.$http.get('manager/Role/deleteGroup/id/'+this.confirmMsg.oper).then((res)=>{
 //                    console.log(res.data);
                     if (res.data.code==40040){
                         // success
@@ -352,6 +357,12 @@
                         this.info.state_error = true;
                     }
                 })
+            },
+            // 删除
+            dele(id){
+                this.confirmMsg.oper = id;
+                this.confirmMsg.msg = '确定删除吗？';
+                $('#confirm').modal('show');
             }
         }
     };

@@ -5,7 +5,7 @@
             <li class="active">权限管理</li>
         </ol>
 
-        <Status :state="info"></Status>
+
         <!--新增权限管理-->
         <section class="panel">
             <div class="panel-body">
@@ -60,6 +60,7 @@
                             <th>ID</th>
                             <th>规则名</th>
                             <th>描述</th>
+                            <th>删除</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -67,6 +68,11 @@
                             <td>{{item.id}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.title}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" @click="dele(item.id)">
+                                    删除
+                                </button>
+                            </td>
                         </tr>
                         <tr v-show="myData.length == 0">
                             <td colspan="4" class="text-center text-muted">
@@ -78,13 +84,16 @@
                 </section>
             </div>
         </div>
+        <Status :state="info"></Status>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
     </div>
 </template>
 <script>
     import Status from '../common/status.vue'
+    import Confirm from '../common/confirm.vue'
     export default {
         components: {
-            Status
+            Status,Confirm
         },
         data (){
             return {
@@ -97,6 +106,10 @@
                     state_error: false,     //错误状态
                     error: '',              //成功信息
                     success: '',            //错误信息
+                },
+                confirmMsg: {
+                    oper : '',
+                    msg: '',
                 },
             }
         },
@@ -115,6 +128,30 @@
                         this.myData = [];
                     }
                 });
+            },
+            dele(id){
+                this.confirmMsg.oper = id;
+                this.confirmMsg.msg = '确定删除吗？';
+                $('#confirm').modal('show');
+            },
+            getConfirm(){
+                this.$http.get('manager/Role/deleteRole/id/'+this.confirmMsg.oper).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==40040){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.list_power(1);
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
             },
 
 //            新增按钮
@@ -158,7 +195,7 @@
                         this.info.state_error = true;
                     }
                 });
-            }
+            },
         }
     };
 
