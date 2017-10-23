@@ -22,9 +22,10 @@
                         <li @click="selectDay(8)" :class="{'active' : isActive==8}">本季度</li>
                         <li @click="selectDay(9)" :class="{'active' : isActive==9}">上一年</li>
                         <li @click="selectDay(10)" :class="{'active' : isActive==10}">本年</li>
-                        <li @click="selectDay(12)" :class="{'active' : isActive==10}">未来一个月</li>
-                        <li @click="selectDay(13)" :class="{'active' : isActive==10}">未来一年</li>
-                        <li @click="selectDay(14)" :class="{'active' : isActive==10}">未来一百年</li>
+                        <li @click="selectDay(12)" :class="{'active' : isActive==12}">未来一个月</li>
+                        <li @click="selectDay(13)" :class="{'active' : isActive==13}">未来一年</li>
+                        <li @click="selectDay(14)" :class="{'active' : isActive==14}">未来一百年</li>
+                        <li @click="selectDay(15)" :class="{'active' : isActive==15}">前后十年</li>
                         <li @click="selectDay(11)" :class="{'active' : isActive==11}">自定义</li>
                     </ul>
                     <div v-show="isCustom">
@@ -193,6 +194,7 @@
                         '本年': [moment().subtract('days', this.yearDates), moment()],
                         '未来一个月': [moment(),moment().add('months', 1)],
                         '未来一年': [moment(),moment().add('years', 1)],
+                        '前后十年': [moment().add('years', -10),moment().add('years', 10)],
                         '未来一百年': [moment(),moment().add('years', 100)],
                     },
                     locale: {
@@ -326,6 +328,11 @@
                             // 未来一百年
                             from = moment().format('YYYY-MM-DD');
                             to = moment().add('years', 100).format('YYYY-MM-DD');
+//                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
+                        } else if (num == 15) {
+                            // 未来一百年
+                            from = moment().add('years', -10).format('YYYY-MM-DD');
+                            to = moment().add('years', 10).format('YYYY-MM-DD');
 //                            date = moment().subtract('days', this.yearDates).format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         }
                         date = from + "至" + to;
