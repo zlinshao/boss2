@@ -42,11 +42,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <div class="form-group pull-left">
-                                <button type="button" class="btn btn-primary" @click="add_power ()">添加</button>
-                                <input type="reset" value="重置" class="btn btn-danger">
-                            </div>
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                            <button type="button" class="btn btn-primary" @click="add_power ()">添加</button>
                         </div>
                     </div>
 

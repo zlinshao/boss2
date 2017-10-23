@@ -34,26 +34,33 @@
                                     <!--title-->
                                     <input type="text" id="title1" class="form-control" placeholder="描述" v-model="title">
                                 </div>
-                                <div v-for="role in myData" class="check">
-                                    <label><!--多选框-->
-                                    <input @click="rules(role.id, $event)" type='checkbox' class="pull-left"
-                                           v-model='checkboxModel'
-                                           :value='role.id'>{{role.title}}</label>
+                                <div class="form-group">
+                                    <label for="title1">模块</label>
+                                    <input type="text" class="form-control" placeholder="模块" v-model="module">
+                                </div>
+                                <div class="form-group">
+                                    <label for="title1">子模块</label>
+                                    <input type="text" class="form-control" placeholder="子模块" v-model="child_module">
+                                </div>
+                                <div v-for="role in myData" class="check has-js">
+                                    <label @click.prevent="changeTitle($event,role.id,role.title)" :class="{'label_radio':true,'r_on':checkboxModel==role.id,'r_off':checkboxModel!=role.id}"><!--多选框-->
+                                    <input type='radio' name="role" class="pull-left"
+                                           :checked='checkboxModel==role.id'
+                                           :value='role.id'>{{role.title}}
+                                        <!--@click="rules(role.id, $event)"-->
+                                    </label>
                                 </div>
                             </form>
                         </div>
 
                         <div class="modal-footer">
-                            <div class="form-group pull-left">
-                                <button v-if="status1" class="btn btn-primary" @click="add_power">
-                                    添加
-                                </button>
-
-                                <button v-if="status2" class="btn btn-primary"
-                                        @click="revise_power">修改
-                                </button>
-                            </div>
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                            <button v-if="status1" class="btn btn-primary" @click="add_power">
+                                添加
+                            </button>
+                            <button v-if="status2" class="btn btn-primary"
+                                    @click="revise_power">修改
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -68,22 +75,31 @@
                         <tr>
                             <th>ID</th>
                             <th>描述</th>
+                            <th>module</th>
+                            <th>child_module</th>
                             <th>修改</th>
+                            <th>删除</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in role_info">
                             <td>{{item.id}}</td>
                             <td>{{item.title}}</td>
+                            <td>{{item.module}}</td>
+                            <td>{{item.child_module}}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" href="#new_add"
-                                        @click="revise_btn(item.id, item.title)">修改
+                                        @click="revise_btn(item.id, item.title,item.module,item.child_module)">修改
                                 </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        @click="dele(item.id)">删除</button>
                             </td>
                         </tr>
 
                         <tr v-show="role_info.length == 0">
-                            <td colspan="4" class="text-center text-muted">
+                            <td colspan="6" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -111,8 +127,10 @@
                 role_info: [],       //角色列表
                 data_id: [],            //权限ID
                 role_id: [],            //角色rules
-                checkboxModel: [],      //选中ID
+                checkboxModel: '',      //选中ID
                 title: "",              //Title
+                module : '',            // 模块
+                child_module : '',      // 子模块
                 revise_id: '',          //修改ID
                 status1: true,          //增加
                 status2: false,         //修改
@@ -128,7 +146,7 @@
             this.list_role();
         },
         watch: {//深度 watcher
-            'checkboxModel': {
+            /*'checkboxModel': {
                 handler: function (val, oldVal) {
                     if(this.checkboxModel.length === this.myData.length) {
                         this.checked = true;
@@ -137,7 +155,7 @@
                     }
                 },
                 deep: true
-            }
+            }*/
         },
         methods: {
 //            数组查询
@@ -149,7 +167,7 @@
             },
 
             list_role (){
-                this.$http.get('manager/Role/rolesList').then(res => {
+                this.$http.get('manager/Role/groupList').then(res => {
                     if(res.data.code === '40010'){
                         this.role_info = res.data.data;
                     }else {
@@ -158,8 +176,9 @@
 
                 });
 
-                this.$http.get('manager/Auth/authList/page/1').then(res => {
-                    if(res.data.code === '30010'){
+                this.$http.get('manager/Role/rolesList').then(res => {
+//                    console.log(res.data)
+                    if(res.data.code === '40010'){
                         this.myData = res.data.data;
                     }else {
                         this.myData = [];
@@ -169,12 +188,14 @@
             },
 
 //            修改按钮
-            revise_btn (rol, title){
+            revise_btn (rol, title,module,child_module){
                 this.revise_id = rol;
                 this.role_id = [];
                 this.data_id = [];
                 this.checkboxModel = [];
                 this.title = title;
+                this.module = module;
+                this.child_module = child_module;
                 this.$http.get('manager/Role/readRole/id/' + rol).then(res => {
                     for (let i = 0; i < res.data.data.rules.length; i++) {
                         this.role_id.push((parseInt(res.data.data.rules[i])));
@@ -199,9 +220,11 @@
 //             确认修改
             revise_power (){
                 this.$http.post('manager/Role/updateRole', {
-                        id: String(this.revise_id),
-                        title: String(this.title),
-                        rules: String(this.checkboxModel)
+                        id: this.revise_id,
+                        title: this.title,
+                        module: this.module,
+                        child_module: this.child_module,
+                        rules: this.checkboxModel
                     },
                     {
                         headers: {
@@ -221,6 +244,7 @@
                         setTimeout(() => {
                             this.info.state_success = false
                         }, 1000);
+                        this.list_role();
                     }else{
 //                        关闭成功弹窗
                         this.info.state_success = false;
@@ -236,7 +260,7 @@
             add_btn (){
                 this.role_id = [];
                 this.data_id = [];
-                this.checkboxModel = [];
+                this.checkboxModel = '';
                 this.title = '';
                 this.status1 = true;
                 this.status2 = false;
@@ -247,7 +271,9 @@
                 this.$http.post('manager/Role/saveRole',
                     {
                         title: this.title,
-                        rules: this.checkboxModel.join(",")
+                        module: this.module,
+                        child_module: this.child_module,
+                        rules: this.checkboxModel
                     },
                     {
                         headers: {
@@ -267,6 +293,7 @@
                             id: res.data.data.id,
                             title: res.data.data.title
                         });
+                        this.list_role();
                     }else{
 //                        关闭成功弹窗
                         this.info.state_success = false;
@@ -282,20 +309,56 @@
             rules (rul, eve){
                 if (eve.target.checked === true) {
                     this.checkboxModel.push(rul);
+                    this.checkboxModel = rul;
                 }
                 if (eve.target.checked === false) {
-                    let index = this.checkboxModel.indexOf(rul);
+                    /*let index = this.checkboxModel.indexOf(rul);
                     if (index > -1) {
                         this.checkboxModel.splice(index, 1);
-                    }
+                    }*/
+                    this.checkboxModel = '';
                 }
             },
+            changeTitle(ev,id,title){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+//                evInput.checked = true;
+                if (evInput.checked){
+                    this.checkboxModel = id;
+                    this.title = title;
+                } else {
+                    this.checkboxModel = '';
+                    this.title = ''
+                }
+
+            },
+
+            // 删除
+            dele(id){
+                this.$http.get('manager/Role/deleteGroup/id/'+id).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==40040){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.list_role();
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            }
         }
     };
 </script>
 
 <style scoped>
-    input[type=checkbox] {
+    input[type=radio] {
         margin-right: 8px;
         margin-top: 2px;
         width: 17px;
