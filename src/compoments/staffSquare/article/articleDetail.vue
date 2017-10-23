@@ -18,8 +18,8 @@
                         {{msg.title}}
                         <!--编辑-->
                         <div class="btn-group pull-right"
-                             v-if="simulate.indexOf('StaffSquare/editArticle')>-1||simulate.indexOf('StaffSquare/offArticle')>-1||
-                             simulate.indexOf('StaffSquare/publicArticle')>-1||simulate.indexOf('StaffSquare/deleteArticle')>-1||isSuper">
+                             v-if="(msg.status!=2&&(simulate.indexOf('StaffSquare/editArticle')>-1||simulate.indexOf('StaffSquare/deleteArticle')>-1||isSuper))
+                             ||(msg.status==2&&(simulate.indexOf('StaffSquare/offArticle')>-1||isSuper))||(msg.status==1&&(simulate.indexOf('StaffSquare/publicArticle')>-1||isSuper))">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
