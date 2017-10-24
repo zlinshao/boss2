@@ -431,6 +431,9 @@
                                         <router-link to="/newRenter">租客</router-link>
                                     </li>
                                     <li>
+                                        <router-link to="/noPriorLease">未收先租</router-link>
+                                    </li>
+                                    <li>
                                         <router-link to="/rentLordAll">房东/租客总汇</router-link>
                                     </li>
                                 </ul>
