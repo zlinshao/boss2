@@ -145,7 +145,6 @@
                 this.$http.get('revenue/customer/dict').then((res) => {
                     this.dictionary = res.data;
                     this.identity = res.data.customer.identity;
-                    this.search();
                 })
             },
             search(){
