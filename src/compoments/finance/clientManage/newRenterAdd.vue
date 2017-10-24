@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="modal fade full-width-modal-right" id="newRenterAdd" tabindex="-1" role="dialog"
-             data-backdrop="static"
+             data-backdrop="static" style="z-index: 1048;"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -491,7 +491,7 @@
 
     export default{
         components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject, DatePicker},
-        props: ['list', 'house'],
+        props: ['list', 'house', 'show_add'],
         data(){
             return {
                 surplus: '',                            //剩余月数
@@ -895,7 +895,12 @@
             },
 //              选择房屋
             selectHouse(){
-                $('.selectHouse:eq(0)').modal('show');
+                if (this.house === 1 && this.show_add === 'hide') {
+                    $('.selectHouse:eq(1)').modal('show');
+                } else {
+                    $('.selectHouse:eq(0)').modal('show');
+                }
+
             },
 //              房屋信息
             getHouse(data){
