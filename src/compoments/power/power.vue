@@ -188,6 +188,7 @@
                             name: res.data.data.name,
                             title: res.data.data.title,
                         });
+                        this.list_power(1);
                     }
                     else {
                         this.info.state_success = false;
