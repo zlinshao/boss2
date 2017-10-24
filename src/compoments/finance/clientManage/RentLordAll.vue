@@ -1,4 +1,4 @@
-    <template>
+<template>
     <div>
         <ol class="breadcrumb">
             <li>财务账本</li>
@@ -274,7 +274,7 @@
         <NewClientAdd :list="detailLand" @success_="search"></NewClientAdd>
 
         <!--租客-->
-        <NewRenterAdd :list="detailRenter" @success_="search"></NewRenterAdd>
+        <NewRenterAdd :list="detailRenter" @success_="search" :house="house_status" :show_add="'hide'"></NewRenterAdd>
 
         <!--删除-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
@@ -296,6 +296,7 @@
         components: {DatePicker, Department, NewClientAdd, NewRenterAdd, Confirm, Status, Page},
         data(){
             return {
+                house_status: '',
                 paging1: '',                    //房东总页数
                 paging2: '',                    //租客总页数
                 confirmMsg: '',                 //删除信息
@@ -419,7 +420,7 @@
             },
 //            模糊搜索
             search (){
-                this.params.collect_page =1;
+                this.params.collect_page = 1;
                 this.params.rent_page = 1;
                 this.getLandlordList();
             },
@@ -467,23 +468,16 @@
             },
 //            房东 / 租客编辑
             reviseLand (val){
-                if (val === 'finance/customer/collect/') {
-                    $('#newClientAdd').modal({
-                        backdrop: 'static',         //空白处模态框不消失
-                    });
-                }
-                if (val === 'finance/customer/rent/') {
-                    $('#newRenterAdd').modal({
-                        backdrop: 'static',         //空白处模态框不消失
-                    });
-                }
                 this.$http.get(val + this.pitch).then((res) => {
                     if (res.data.code === '90010') {
                         if (val === 'finance/customer/collect/') {
                             this.detailLand = res.data.data;
+                            $('#newClientAdd').modal({backdrop: 'static',});
                         }
                         if (val === 'finance/customer/rent/') {
                             this.detailRenter = res.data.data;
+                            this.house_status = 1;
+                            $('#newRenterAdd').modal({backdrop: 'static',});
                         }
                     }
                 })

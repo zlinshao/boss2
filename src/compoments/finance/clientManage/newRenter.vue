@@ -52,6 +52,9 @@
                         <li>
                             <h5><a @click="deleteClient">删除</a></h5>
                         </li>
+                        <li>
+                            <h5><a @click="cancel_rename">取消重命名标记</a></h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -154,7 +157,7 @@
         </section>
 
         <!--NEW新增客户-->
-        <NewRenterAdd :list="myLandlordList" @success_="search" :house="house_status"></NewRenterAdd>
+        <NewRenterAdd :list="myLandlordList" @success_="search" :house="house_status" :show_add="'renHide'"></NewRenterAdd>
 
         <!--删除-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
@@ -225,6 +228,10 @@
 
         },
         methods: {
+//            取消重命名标记
+            cancel_rename (){
+
+            },
 //            恢复
             recover (val){
                 this.$http.post('account/pending/recover', {
