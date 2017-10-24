@@ -15,6 +15,7 @@
                             <label class="col-sm-2 control-label col-lg-2">客户名称</label>
                             <div class="col-lg-4">
                                 <select class="form-control" v-model="client_staff" @change="search">
+                                    <option value="-1">—请选择—</option>
                                     <option value="">全部</option>
                                     <option v-for="(key,index) in identity" :value="index">{{key}}</option>
                                 </select>
@@ -106,7 +107,7 @@
         data(){
             return {
                 keywords: '',
-                client_staff: '',
+                client_staff: '-1',
                 customerList: [],
                 nationalityList: [],
                 person_medium: [],
@@ -148,19 +149,20 @@
                 })
             },
             search(){
-                this.$http.post('finance/customer/search', {
-                    keywords: this.keywords,
-                    identity: this.client_staff,
-                }).then((res) => {
-                    if (res.data.code === '20020') {
-                        this.customerList = res.data.data.data;
-                        this.isShow = false;
-                    } else {
-                        this.customerList = [];
-                        this.isShow = true;
-                        this.errorMsg(res.data.msg);
-                    }
-                })
+                if (this.client_staff !== '-1') {
+                    this.$http.post('finance/customer/search', {
+                        keywords: this.keywords,
+                        identity: this.client_staff,
+                    }).then((res) => {
+                        if (res.data.code === '20020') {
+                            this.customerList = res.data.data.data;
+                            this.isShow = false;
+                        } else {
+                            this.customerList = [];
+                            this.isShow = true;
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
 //                else if (this.client_staff === '2') {
 //                    this.$http.get('index/profile/searchStaff/keywords/' + this.keywords).then((res) => {
 //                        if (res.data.code === '90010') {
@@ -174,6 +176,10 @@
 //                        }
 //                    })
 //                }
+                }else{
+                    this.customerList = [];
+                    this.isShow = true;
+                }
             },
             selectClient(ev, item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked', 'true');
