@@ -52,6 +52,9 @@
                         <li>
                             <h5><a @click="deleteClient">删除</a></h5>
                         </li>
+                        <li>
+                            <h5><a>取消重命名标记</a></h5>
+                        </li>
                     </ul>
                 </div>
             </div>

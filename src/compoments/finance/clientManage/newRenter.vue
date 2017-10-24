@@ -265,7 +265,7 @@
                 this.$http.get('finance/customer/rent/' + this.pitch).then((res) => {
                     if (res.data.code === '90010') {
                         this.myLandlordList = res.data.data;
-                        this.house_status = 2;
+                        this.house_status = 1;
                         $('#newRenterAdd').modal({backdrop: 'static',});
                     }
                 })
@@ -322,6 +322,7 @@
 
 //            new新增客户
             newAddRenter (){
+                this.house_status = 1;
                 this.myLandlordList = {};
                 $('#newRenterAdd').modal({
                     backdrop: 'static',         //空白处模态框不消失
