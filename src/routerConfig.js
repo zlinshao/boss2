@@ -50,6 +50,8 @@ import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'     
 import NewRenter from './compoments/finance/clientManage/newRenter.vue'                         //财务租客管理
 import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'             //财务房东管理详情
 import NewLandlordDetail from './compoments/finance/clientManage/newLandlordDetail.vue'         //财务租客管理详情
+import NoPriorLease from './compoments/finance/clientManage/noPriorLease.vue'                   //财务未收先租
+import NoPriorLeaseDetail from './compoments/finance/clientManage/noPriorLeaseDetail.vue'       //财务未收先租详情
 import RentLordAll from './compoments/finance/clientManage/RentLordAll.vue'                     //财务房东/租客管理总汇
 
 import ClientManageDetail from './compoments/finance/clientManage/clientManageDetail.vue'       //财务客户管理
@@ -270,6 +272,16 @@ export default[
         path: '/rentLordAll',
         name: 'rentLordAll',                        //财务房东/租客总汇
         component: RentLordAll
+    },
+    {
+        path: '/noPriorLease',
+        name: 'noPriorLease',                        //未收先租
+        component: NoPriorLease
+    },
+    {
+        path: '/noPriorLeaseDetail',
+        name: 'noPriorLeaseDetail',                        //未收先租详情
+        component: NoPriorLeaseDetail
     },
     {
         path: '/payCllentAll',
@@ -527,12 +539,12 @@ export default[
         path: '/collectContractTransfer',
         name: 'CollectContractTransfer',
         component: CollectContractTransfer
-    },,
+    },
     {
         path: '/contractNum',
         name: 'contractNum',
         component: ContractNum
-    },,
+    },
     {
         path: '/contractNumDetail',
         name: 'contractNumDetail',

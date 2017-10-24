@@ -40,25 +40,26 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">客户姓名</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="cus_name">
-                                        </div>
-                                    </div>
+                                    <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label">客户姓名</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<input type="text" class="form-control" v-model="cus_name">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">客户手机号</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="cus_phone" maxlength="11">
-                                        </div>
-                                    </div>
+                                    <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label">客户手机号</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                    <!--<input type="text" class="form-control" v-model="cus_phone" maxlength="11">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">房屋地址</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="house_name"
-                                                   @click="selectHouse" readonly>
+                                            <input type="text" class="form-control" v-model="house_name">
+                                            <!--<input type="text" class="form-control" v-model="house_name"-->
+                                            <!--@click="selectHouse" readonly>-->
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -235,12 +236,6 @@
                                     <!--</option>-->
                                     <!--</select>-->
                                     <!--</div>-->
-                                    <!--<div class="col-sm-6">-->
-                                    <!--<label class="col-sm-4 control-label">金额</label>-->
-                                    <!--<div class="col-sm-8">-->
-                                    <!--<input type="text" class="form-control" v-model="payments[2].money">-->
-                                    <!--</div>-->
-                                    <!--</div>-->
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">签约日期</label>
@@ -253,6 +248,7 @@
                                                     class="form-control form_datetime" readonly>-->
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">尾款补齐时间</label>
                                         <div class="col-sm-10">
@@ -396,36 +392,14 @@
                                 </div>
                             </form>
                         </div>
-
-                        <div class="modal-footer" v-if="reviseStatus === 1">
+                        <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary" @click="revise()">修改</button>
-                                <button type="button" class="btn btn-warning"
-                                        @click="save(2,'finance/customer/rent/freeze')">不生成后续款项
+                                <button type="button" class="btn btn-primary" v-if="reviseStatus === 1"
+                                        @click="save()">保存为草稿
                                 </button>
-                                <button type="button" class="btn btn-warning"
-                                        @click="save(3,'finance/customer/rent/generate')">生成后续款项
-                                </button>
-                            </div>
-                        </div>
-                        <div class="modal-footer" v-if="reviseStatus === 2 || reviseStatus === 3">
-                            <div>
-                                <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary" @click="revise()">修改</button>
-                            </div>
-                        </div>
-                        <div class="modal-footer" v-if="reviseStatus === 4">
-                            <div>
-                                <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                                <button type="button" class="btn btn-primary"
-                                        @click="save(1,'finance/customer/rent')">保存为草稿
-                                </button>
-                                <button type="button" class="btn btn-warning"
-                                        @click="save(2,'finance/customer/rent/freeze')">不生成后续款项
-                                </button>
-                                <button type="button" class="btn btn-warning"
-                                        @click="save(3,'finance/customer/rent/generate')">生成后续款项
+                                <button type="button" v-if="reviseStatus === 2" class="btn btn-primary"
+                                        @click="revise()">修改
                                 </button>
                             </div>
                         </div>
@@ -470,7 +444,7 @@
         <STAFF :configure="configure" @Staff="selectDateSendAdd"></STAFF>
 
         <!--房屋选择-->
-        <SelectHouse @House="getHouse" :msg="staffId" :house_status="house"></SelectHouse>
+        <!--<SelectHouse @House="getHouse" :msg="staffId" :house_status="house"></SelectHouse>-->
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -490,7 +464,7 @@
     import DatePicker from '../../common/datePicker.vue'
 
     export default{
-        components: {STAFF, SelectHouse, FlexBox, Status, SelectClient, SelectSubject, DatePicker},
+        components: {STAFF, FlexBox, Status, SelectClient, SelectSubject, DatePicker},
         props: ['list', 'house'],
         data(){
             return {
@@ -506,10 +480,10 @@
                 person_id: '',                          //负责人ID
                 person: '',                             //负责人
 
-                cus_name: '',                           //客户
-                cus_phone: '',                          //客户联系方式
+//                cus_name: '',                           //客户
+//                cus_phone: '',                          //客户联系方式
 
-                house_id: '',                           //房屋ID
+//                house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
                 shared_house: 2,                        //租房类型
                 shared_part: 0,                         //房间类型
@@ -638,10 +612,10 @@
             },
             list (val){
                 if (JSON.stringify(val) === "{}") {
-                    this.reviseStatus = 4;
+                    this.reviseStatus = 1;
                 } else {
                     this.cus_id = val.id;
-                    this.reviseStatus = val.status;
+                    this.reviseStatus = 2;
                     if (val.staff !== null && val.staff !== undefined) {
                         this.staff = val.staff.real_name;                               //签约人
                         this.staffId = val.staff.id;                                    //签约人ID
@@ -652,9 +626,9 @@
                         this.person_id = val.leader.id;                                 //负责人ID
                         this.person = val.leader.real_name;                             //负责人
                     }
-                    this.cus_name = val.customer_name;                                  //客户
-                    this.cus_phone = val.contact;                                       //客户联系电话
-                    this.house_id = val.house_id;                                       //房屋ID
+//                    this.cus_name = val.customer_name;                                  //客户
+//                    this.cus_phone = val.contact;                                       //客户联系电话
+//                    this.house_id = val.house_id;                                       //房屋ID
                     this.house_name = val.address;                                      //房屋地址
                     this.months = val.months;                                           //年限
 
@@ -705,7 +679,7 @@
 
         methods: {
             more_pay (val){
-                this.$http.post('finance/customer/rent/remain', {
+                this.$http.post('finance/customer/unknown/remain', {
                     months: this.months,
                     pays: this.pay_type,
                 }).then((res) => {
@@ -808,9 +782,9 @@
                 this.branch = '';                           //所属部门
                 this.person_id = '';                        //负责人ID
                 this.person = '';                           //负责人
-                this.cus_name = '';                         //客户
-                this.cus_phone = '';                        //客户联系电话
-                this.house_id = '';                         //房屋ID
+//                this.cus_name = '';                         //客户
+//                this.cus_phone = '';                        //客户联系电话
+//                this.house_id = '';                         //房屋ID
                 this.house_name = '';                       //房屋地址
                 this.months = '';                           //年限
                 this.shared_house = 2;                      //租房类型
@@ -894,14 +868,14 @@
                 });
             },
 //              选择房屋
-            selectHouse(){
-                $('.selectHouse:eq(0)').modal('show');
-            },
+//            selectHouse(){
+//                $('.selectHouse:eq(0)').modal('show');
+//            },
 //              房屋信息
-            getHouse(data){
-                this.house_id = data.id;
-                this.house_name = data.address;
-            },
+//            getHouse(data){
+//                this.house_id = data.id;
+//                this.house_name = data.address;
+//            },
             //              选择客户
             //            selectClient(){
             //                $('.selectClient:eq(0)').modal('show');
@@ -918,18 +892,18 @@
             //                });
             //            },
             //              新增
-            save(num, address){
+            save(){
 //                保存为草稿
-                this.$http.post(address, {
+                this.$http.post('finance/customer/unknown', {
                     id: this.renter_id,
-                    staff_id: this.staffId,                     //签约人
-                    contact: this.cus_phone,                    //客户联系方式
                     department_id: this.branch_id,              //所属部门
                     leader_id: this.person_id,                  //负责人
-                    house_id: this.house_id,                    //房屋
-                    customer_name: this.cus_name,               //客户
+                    address: this.house_name,                    //房屋
+//                    customer_name: this.cus_name,               //客户
+//                    contact: this.cus_phone,                    //客户联系方式
                     is_shared: this.shared_house,              //房屋类型
                     shared_part: this.shared_part,              //房间类型
+                    staff_id: this.staffId,                     //签约人
                     rent_type: this.rent_type,                  //房间状态
                     months: this.months,                        //收房月数
                     prices: this.price,                         //收房月单价
@@ -952,20 +926,11 @@
                     account_num: this.account,                  //账户
                     subject_id: this.subject_id,
                 }).then((res) => {
-                    if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/rent/generate') {
+                    if (res.data.code === '90000') {
                         $('#newRenterAdd').modal('hide');
                         this.$emit('success_');
                         this.closeModal();
                         this.successMsg(res.data.msg);
-                    } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/rent/generate') {
-                        this.$emit('success_');
-                        this.closeModal();
-                        $('#clientAdd1').modal('hide');
-                        $('#newRenterAdd').modal('hide');
-                        this.successMsg(res.data.msg);
-                    } else if (res.data.code === '90030') {
-                        this.renter_id = res.data.data;
-                        this.errorMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);
                     }
@@ -974,13 +939,13 @@
             ,
             //            修改
             revise(){
-                this.$http.put('finance/customer/rent/' + this.cus_id, {
-                    staff_id: this.staffId,                     //签约人
-                    contact: this.cus_phone,                    //客户联系方式
+                this.$http.put('finance/customer/unknown/' + this.cus_id, {
                     department_id: this.branch_id,              //所属部门
                     leader_id: this.person_id,                  //负责人
-                    house_id: this.house_id,                    //房屋
-                    customer_name: this.cus_name,               //客户
+                    address: this.house_name,                    //房屋
+//                    customer_name: this.cus_name,               //客户
+//                    contact: this.cus_phone,                    //客户联系方式
+                    staff_id: this.staffId,                     //签约人
                     is_shared: this.shared_house,               //房屋类型
                     shared_part: this.shared_part,              //房间类型
                     rent_type: this.rent_type,                  //房间状态

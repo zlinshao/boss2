@@ -3,13 +3,14 @@
         <ol class="breadcrumb">
             <li>财务账本</li>
             <li>客户管理</li>
-            <li>房东管理</li>
+            <li>未收先租</li>
         </ol>
         <section class="panel">
             <!--未选中-->
             <div class="panel-body clearFix">
                 <div v-if="pitch.length === 0">
                     <form class="form-inline clearFix" role="form">
+
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="params.selecteds" @click='select' readonly>
@@ -17,14 +18,13 @@
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
                             </span>
                         </div>
-
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="params.search" placeholder="房屋地址/客户名"
+                            <input type="text" class="form-control" v-model="params.search" placeholder="房屋地址"
                                    @keyup.enter="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" @click="search">搜索</button>
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="pro-sort pull-right">
-                            <button class="btn btn-success" type="button" @click="newAddClient">
+                            <button class="btn btn-success" type="button" @click="newAddRenter">
                                 <i class="fa fa-plus-square"></i>
                                 新增客户
                             </button>
@@ -63,17 +63,16 @@
                     <th></th>
                     <th class="text-center width100">生成时间</th>
                     <th class="text-center width100">房屋地址</th>
-                    <th class="text-center width80">客户姓名</th>
-                    <th class="text-center width80">收房月数</th>
-                    <th class="text-center width100">付款方式</th>
-                    <th class="text-center width100">月单价</th>
+                    <!--<th class="text-center width80">客户姓名</th>-->
+                    <th class="text-center width80">租房月数</th>
+                    <th class="text-center" style="min-width: 110px;">付款方式</th>
+                    <th class="text-center" style="min-width: 90px;">月单价</th>
+                    <th class="text-center width80">租房类型</th>
+                    <th class="text-center width80">租房状态</th>
                     <th class="text-center width100">待签约日期</th>
-                    <th class="text-center" style="min-width: 130px;">第一次打房租日期</th>
-                    <th class="text-center width100">客户付款方式</th>
-                    <th class="text-center width150">账号</th>
                     <th class="text-center width80">签约人</th>
                     <th class="text-center width80">状态</th>
-                    <th class="text-center width50">详情</th>
+                    <th class="text-center" style="min-width: 50px;">详情</th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
@@ -82,12 +81,12 @@
                     <td>
                         <label v-if="item.freeze !== 1"
                                :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id)==-1}"
-                               @click.prevent="pitchId(item.id, $event)">
+                               @click.prevent="pitchId(item.id, $event, item.name)">
                             <input type="checkbox" class="pull-left"
                                    :checked="pitch.indexOf(item.id) > -1">
                         </label>
                         <!--<input type="checkbox" :checked="pitch.indexOf(item.id) > -1"
-                               v-if="item.freeze !== 1" @click="pitchId(item.id, $event)">-->
+                               @click="pitchId(item.id, $event)">-->
                         <span v-if="item.freeze === 1" @click="recover(item.id)"
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
@@ -96,16 +95,17 @@
                         {{item.address}}&nbsp;
                         <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
                     </td>
-                    <td class="text-center">{{item.customer_name}}</td>
+                    <!--<td class="text-center">{{item.customer_name}}</td>-->
                     <td class="text-center">{{item.months}}</td>
                     <td class="text-center">
-                        <span v-if="item.pay_types.length !== 0">
-                            {{LandlordDict.pay_type[item.pay_types[0]]}}
+                        押{{item.bet}}付
+                        <span v-if="item.pay.length !== 0">
+                            {{item.pay[0]}}
                         </span>
-                        <span class="text-primary" v-if="item.pay_types.length > 1">
+                        <span class="text-primary" v-if="item.pay.length > 1">
                             变化
                         </span>
-                        <span v-if="item.pay_types.length === 0">
+                        <span v-if="item.pay.length === 0">
                             —
                         </span>
                     </td>
@@ -120,13 +120,9 @@
                             —
                         </span>
                     </td>
+                    <td class="text-center">{{LandlordDict.shared_house[item.is_shared]}}</td>
+                    <td class="text-center">{{LandlordDict.rent_type[item.rent_type]}}</td>
                     <td class="text-center">{{item.deal_date}}</td>
-                    <td class="text-center">{{item.first_pay_date}}</td>
-                    <td class="text-center">{{LandlordDict.payment[item.account_type]}}</td>
-                    <td class="text-center">
-                        <span v-if="item.account_num !== ''">{{item.account_num}}</span>
-                        <span v-if="item.account_num === ''">—</span>
-                    </td>
                     <td class="text-center">
                         <span v-if="item.staff != null">{{item.staff.real_name}}</span>
                         <span v-if="item.staff == null">—</span>
@@ -143,8 +139,7 @@
                         </label>
                     </td>
                     <td class="text-center">
-                        <router-link
-                                :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 1,freeze: item.freeze}}">
+                        <router-link :to="{path:'/noPriorLeaseDetail',query: {nameId: item.id, sea: params, cus: 1}}">
                             详情
                         </router-link>
                     </td>
@@ -159,7 +154,7 @@
         </section>
 
         <!--NEW新增客户-->
-        <NewClientAdd :list="myLandlordList" @success_="search"></NewClientAdd>
+        <NoPriorLeaseAdd :list="myLandlordList" @success_="search" :house="house_status"></NoPriorLeaseAdd>
 
         <!--删除-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
@@ -176,14 +171,15 @@
 <script>
     import Status from '../../common/status.vue'
     import Department from '../../common/oraganization.vue'
-    import NewClientAdd from  './newLandlordAdd.vue'
+    import NoPriorLeaseAdd from  './noPriorLeaseAdd.vue'
     import Page from  '../../common/page.vue'
     import Confirm from '../../common/confirm.vue'
     import DatePicker from '../../common/datePicker.vue'
     export default{
-        components: {Department, Page, Status, NewClientAdd, Confirm, DatePicker},
+        components: {Department, Page, Status, NoPriorLeaseAdd, Confirm, DatePicker},
         data(){
             return {
+                house_status: '',
                 confirmMsg: '',                     //删除信息
                 pitch: [],
                 LandlordDict: {},                   //字典
@@ -226,13 +222,14 @@
             } else {
                 this.getLandlordList(1);
             }
+
         },
         methods: {
 //            恢复
             recover (val){
                 this.$http.post('account/pending/recover', {
                     customer_id: val,
-                    identity: 1,
+                    identity: 2,
                 }).then((res) => {
                     if (res.data.code === '18810') {
                         this.search();
@@ -256,7 +253,6 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.pitch.push(rul);
-
                 } else {
                     let index = this.pitch.indexOf(rul);
                     if (index > -1) {
@@ -266,18 +262,16 @@
             },
 //            编辑
             reviseLand (){
-                $('#newClientAdd').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
-                this.$http.get('finance/customer/collect/' + this.pitch).then((res) => {
+                this.$http.get('finance/customer/unknown/' + this.pitch).then((res) => {
                     if (res.data.code === '90010') {
                         this.myLandlordList = res.data.data;
+                        this.house_status = 2;
+                        $('#newRenterAdd').modal({backdrop: 'static',});
                     }
                 })
             },
 //            搜索
             search(){
-                this.pitch = [];
                 this.getLandlordList(1);
             },
 //              时间搜索
@@ -290,7 +284,7 @@
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.LandlordDict = res.data;
                     this.paging = '';
-                    this.$http.get('finance/customer/collect?page=' + val, {
+                    this.$http.get('finance/customer/unknown?page=' + val, {
                         params: this.params
                     }).then((res) => {
                         if (res.data.code === '90010') {
@@ -327,9 +321,9 @@
             },
 
 //            new新增客户
-            newAddClient (){
+            newAddRenter (){
                 this.myLandlordList = {};
-                $('#newClientAdd').modal({
+                $('#newRenterAdd').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
@@ -343,7 +337,7 @@
             },
 //            删除回调
             getConfirm(){
-                this.$http.post('finance/customer/collect/delete', {
+                this.$http.post('finance/customer/unknown/delete', {
                     ids: this.pitch
                 }).then((res) => {
                     if (res.data.code === '90010') {
