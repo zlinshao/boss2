@@ -433,7 +433,7 @@
                     ids: ids
                 }).then((res) => {
                     if (res.data.code === '90010') {
-                        this.$router.replace({path: '/newRenter'});
+                        this.$router.replace({path: '/noPriorLease'});
                     }
                 })
             },
