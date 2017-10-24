@@ -89,7 +89,7 @@
                             <td>{{item.child_module}}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" href="#new_add"
-                                        @click="revise_btn(item.id, item.title,item.module,item.child_module)">修改
+                                        @click="revise_btn(item.id)">修改
                                 </button>
                             </td>
                             <td>
@@ -194,30 +194,35 @@
             },
 
 //            修改按钮
-            revise_btn (rol, title,module,child_module){
+            revise_btn (rol){
                 this.revise_id = rol;
-                this.role_id = [];
-                this.data_id = [];
-                this.checkboxModel = [];
-                this.title = title;
-                this.module = module;
-                this.child_module = child_module;
+//                this.role_id = [];
+//                this.data_id = [];
+                this.checkboxModel = '';
                 this.$http.get('manager/Role/readRole/id/' + rol).then(res => {
-                    for (let i = 0; i < res.data.data.rules.length; i++) {
+                    let val = res.data.data;
+                    this.checkboxModel = val.rules;
+
+                    this.title = val.title;
+                    this.module = val.module;
+                    this.child_module = val.child_module;
+
+//                    console.log(res.data)
+                    /*for (let i = 0; i < res.data.data.rules.length; i++) {
                         this.role_id.push((parseInt(res.data.data.rules[i])));
                     }
                     //                权限ID
                     for (let i = 0; i < this.myData.length; i++) {
                         this.data_id.push(this.myData[i].id);
-                    }
+                    }*/
 //                角色ID/权限ID 公共值
-                    for (let s in this.data_id) {
+                    /*for (let s in this.data_id) {
                         for (let x in this.role_id) {
                             if (this.data_id[s] === this.role_id[x]) {
                                 this.checkboxModel.push(this.data_id[s]);
                             }
                         }
-                    }
+                    }*/
                 });
                 this.status1 = false;
                 this.status2 = true;
