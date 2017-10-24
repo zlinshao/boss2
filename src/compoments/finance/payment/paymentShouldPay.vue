@@ -15,8 +15,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">付款时间</label>
                                 <div class="col-sm-10">
-                                    <input type="text" v-model="list.current_pay_date"
-                                           placeholder="付款时间" class="form-control" readonly>
+                                    <DatePicker :dateConfigure="datePayConfigure" :idName="'pay_date'"
+                                                :currentDate="[pay_date]" :placeholder="'付款时间'"
+                                                @sendDate="getPayDate"></DatePicker>
                                 </div>
                             </div>
 
@@ -156,6 +157,7 @@
                 dict: {},
                 pay_acc: [],            //收款账户
                 cate: '',
+                pay_date: '',           //付款时间
                 account_id: '',         //客户ID
                 pay_account: '',        //付款账户
                 payable: '',            //实付金额
@@ -179,13 +181,17 @@
                         position: 'top-right'
                     }
                 ],
+                datePayConfigure: [
+                    {
+                        range: false,
+                        needHour: false,
+                    }
+                ],
                 subject_id: ''          //科目
 
             }
         },
-        updated (){
-            this.remindData1();
-        },
+
         mounted(){
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.dict = res.data;
@@ -199,6 +205,7 @@
             details(val){
                 this.account_id = val[0].id;
                 this.subject_id = val[0].subject_id;
+                this.pay_date = val[0].current_pay_date;
             }
         },
         methods: {
@@ -221,6 +228,7 @@
             okPayment (){
                 this.$http.post('account/payable/pay/' + this.account_id, {
                     account_id: this.pay_account,
+                    pay_date: this.pay_date,
                     amount_paid: this.payable,
                     complete_date: this.complete_time,
                     remark: this.remarks
@@ -261,22 +269,25 @@
             },
 
 //            补齐时间
-            remindData1 (){
-                $('.form_datetime1').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-                    pickerPosition: 'top-right'
-
-                }).on('changeDate', function (ev) {
-                    this.complete_time = ev.target.value;
-                }.bind(this));
-            },
+//            remindData1 (){
+//                $('.form_datetime1').datetimepicker({
+//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+//                    pickerPosition: 'top-right'
+//
+//                }).on('changeDate', function (ev) {
+//                    this.complete_time = ev.target.value;
+//                }.bind(this));
+//            },
             getDate(val){
                 this.complete_time = val;
+            },
+            getPayDate(val){
+                this.pay_date = val;
             }
         }
     }

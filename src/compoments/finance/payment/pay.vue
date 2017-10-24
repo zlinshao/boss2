@@ -551,10 +551,6 @@
                 ],
             }
         },
-        updated (){
-            this.remindData();
-//            时间选择
-        },
 
         mounted (){
             let params = this.$route.query.myParam;
@@ -907,20 +903,20 @@
                 })
             },
 //            时间控件
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-//                    clearBtn: true,                     //清除按钮
-                }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '付款时间') {
-                        this.pay_time = ev.target.value
-                    }
-                }.bind(this));
-            },
+//            remindData (){
+//                $('.form_datetime').datetimepicker({
+//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+////                    clearBtn: true,                     //清除按钮
+//                }).on('changeDate', function (ev) {
+//                    if (ev.target.placeholder === '付款时间') {
+//                        this.pay_time = ev.target.value
+//                    }
+//                }.bind(this));
+//            },
 //            人资
             select(){
                 $('#selectCustom').modal('show');
