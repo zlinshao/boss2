@@ -804,13 +804,13 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu">
+                    <li class="sub-menu" v-show="simulate.indexOf('Approvals/approval_list')>-1||simulate.indexOf('Record/listRepair')>-1|isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-briefcase"></i>
                             <span>客服中心</span>
                         </a>
                         <ul class="sub">
-                            <li class="sub-menu">
+                            <li class="sub-menu" v-show="simulate.indexOf('Approvals/approval_list')>-1||isSuper">
                                 <a href="javascript:;">
                                     <span>申请记录</span>
                                 </a>
@@ -846,28 +846,21 @@
                                         </router-link>
                                     </li>
                                     <li v-show="simulate.indexOf('Approvals/approval_list')>-1||isSuper">
+                                        <router-link to="/serviceList">
+                                            <span>维修申请</span>
+                                        </router-link>
+                                    </li>
+                                    <li v-show="simulate.indexOf('Approvals/approval_list')>-1||isSuper">
                                         <router-link to="/problemList">
                                             <span>房屋问题申报</span>
                                         </router-link>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="sub-menu">
-                                <a href="javascript:;">
+                            <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
+                                <router-link to="/repairLog">
                                     <span>维修记录</span>
-                                </a>
-                                <ul class="sub">
-                                    <li v-show="simulate.indexOf('Approvals/approval_list')>-1||isSuper">
-                                        <router-link to="/serviceList">
-                                            <span>维修申请</span>
-                                        </router-link>
-                                    </li>
-                                    <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
-                                        <router-link to="/repairLog">
-                                            <span>维修记录</span>
-                                        </router-link>
-                                    </li>
-                                </ul>
+                                </router-link>
                             </li>
                         </ul>
                     </li>
