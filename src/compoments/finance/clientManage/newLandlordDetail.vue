@@ -14,7 +14,7 @@
             </li>
         </ol>
         <ol class="breadcrumb" v-if="cus == 2">
-            <li>财务账本{{cus}}</li>
+            <li>财务账本</li>
             <li>
                 <router-link to="/rentLordAll">客户管理</router-link>
             </li>
