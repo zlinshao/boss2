@@ -146,6 +146,7 @@
                 this.customerList = [];
                 this.client_staff = '-1';
                 this.isShow = true;
+                this.keywords = '';
 
             },
             getDictionary(){
@@ -159,7 +160,7 @@
                 if (this.keywords !== '') {
                     this.search_ask();
                 }
-                if(this.client_staff === '-1' && this.keywords === ''){
+                if (this.client_staff === '-1' && this.keywords === '') {
                     this.close_();
                 }
             },
