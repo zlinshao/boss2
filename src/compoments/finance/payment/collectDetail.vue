@@ -1,7 +1,7 @@
 <template>
     <div>
         <ol class="breadcrumb" v-if="cus == 1">
-            <li>财务账本{{cus}}</li>
+            <li>财务账本</li>
             <li>
                 <router-link to="/CollectPayment">应收款项</router-link>
             </li>
