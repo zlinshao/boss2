@@ -6,7 +6,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true" @click="close_">&times;</span>
                         </button>
                         <h4 class="modal-title">选择客户</h4>
                     </div>
@@ -89,7 +89,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="close_">关闭</button>
                         <button type="button" class="btn btn-primary" @click="clientAdd">确定</button>
                     </div>
                 </div>
@@ -109,8 +109,8 @@
                 keywords: '',
                 client_staff: '-1',
                 customerList: [],
-                nationalityList: [],
-                person_medium: [],
+//                nationalityList: [],
+//                person_medium: [],
                 selectPayClients: [],
                 isShow: true,
                 info: {
@@ -142,6 +142,12 @@
             this.getDictionary();
         },
         methods: {
+            close_ (){
+                this.customerList = [];
+                this.client_staff = '-1';
+                this.isShow = true;
+
+            },
             getDictionary(){
                 this.$http.get('revenue/customer/dict').then((res) => {
                     this.dictionary = res.data;
@@ -204,6 +210,7 @@
                     this.info.state_error = true;
                 } else {
                     this.$emit('clientPayAdd', this.selectPayClients);
+                    this.close_();
                     $('#selectPayClient').modal('hide');
                     this.customerList = [];
                     this.selectPayClients = [];

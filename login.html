@@ -151,7 +151,7 @@
                     }, 1000);
                 } else if (data.code === '80005') {
                     remind(JSON.parse(data.msg).body, 1000);
-                    console.log(JSON.parse(data.msg).body);
+//                    console.log(JSON.parse(data.msg).body);
                     $('#code').css('display', 'block');
                     $('.identifying_code').attr('disabled', true);
                     let time = JSON.parse(data.msg).extra;
@@ -181,7 +181,6 @@
             url: globalConfig.server + 'auth/login/validateSms?code=' + code,
             success: function (data) {
                 window.location.href = url_index;
-                console.log(data);
             }
         })
     });
@@ -204,7 +203,6 @@
             + '&response_type=code&scope=snsapi_login&state=' + globalConfig.state
             + '&redirect_uri=' + globalConfig.server
             + 'staff/fromqr&loginTmpCode=' + loginTmpCode;
-        console.log(event);
     };
     if (typeof window.addEventListener != 'undefined') {
         window.addEventListener('message', hanndleMessage, false);
