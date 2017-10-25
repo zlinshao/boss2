@@ -815,6 +815,41 @@
                                     <span>客服部续租申请</span>
                                 </router-link>
                             </li>
+                            <li>
+                                <router-link to="/sublettingRentList">
+                                    <span>客服部转租申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/transferRentList">
+                                    <span>客服部调房申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/outRentList">
+                                    <span>客服部退租申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cusServiceList">
+                                    <span>客服部维修申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cusProblemList">
+                                    <span>客服部问题申报</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/serviceList">
+                                    <span>维修申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/problemList">
+                                    <span>房屋问题申报</span>
+                                </router-link>
+                            </li>
                             <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
                                 <router-link to="/repairLog">
                                     <span>维修记录</span>

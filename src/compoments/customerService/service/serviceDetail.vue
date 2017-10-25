@@ -3,11 +3,11 @@
         <ol class="breadcrumb">
             <li>客服中心</li>
             <li>
-                <router-link to="/renewedRentList">客服部续租申请</router-link>
+                <router-link to="/serviceList">维修申请</router-link>
             </li>
-            <li>客服部续租申请详情</li>
+            <li>维修申请详情</li>
             <li class="pull-right" v-show="typeof (params) === 'object'">
-                <router-link :to="{path:'/renewedRentList',query: {myParam:params,page:page,select:select}}">
+                <router-link :to="{path:'/serviceList',query: {myParam:params,page:page,select:select}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
             </li>
@@ -79,11 +79,15 @@
                                 <!--<div>
                                     <div class="text-primary">备注：</div>
                                     <div>奥术大师大所多</div>
-                                </div>
-                                <div>
-                                    <div class="text-primary">审批记录：</div>
-                                    <div>奥术大师大所多</div>
                                 </div>-->
+                                <div>
+                                    <div class="text-primary">认责人：</div>
+                                    <div>
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='责任人'">
+                                            {{list.value}}
+                                        </span>
+                                    </div>
+                                </div>
                                 <div>
                                     <div class="text-primary">历史审批人姓名：</div>
                                     <div>{{msg.approver_userid_list}}</div>
