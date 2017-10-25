@@ -23,10 +23,10 @@
                             <div class="iconic-input right col-lg-4">
                                 <i class="fa fa-search"></i>
                                 <input type="text" class="form-control" placeholder="请输入客户名" v-model="keywords"
-                                       @keydown.enter.prevent="search">
+                                       @keydown.enter.prevent="search_keywords">
                             </div>
                             <div class="col-lg-2">
-                                <a class="btn btn-success" @click="search">搜索</a>
+                                <a class="btn btn-success" @click="search_keywords">搜索</a>
                             </div>
                         </div>
                         <div class="table table-responsive roll">
@@ -148,21 +148,16 @@
                     this.identity = res.data.customer.identity;
                 })
             },
+//            关键字搜索
+            search_keywords (){
+                if (this.keywords !== '') {
+                    this.search_ask();
+                }
+            },
             search(){
-                if (this.client_staff !== '-1') {
-                    this.$http.post('finance/customer/search', {
-                        keywords: this.keywords,
-                        identity: this.client_staff,
-                    }).then((res) => {
-                        if (res.data.code === '20020') {
-                            this.customerList = res.data.data.data;
-                            this.isShow = false;
-                        } else {
-                            this.customerList = [];
-                            this.isShow = true;
-                            this.errorMsg(res.data.msg);
-                        }
-                    })
+                if (this.client_staff !== '-1' || this.keywords !== '') {
+                    this.search_ask();
+
 //                else if (this.client_staff === '2') {
 //                    this.$http.get('index/profile/searchStaff/keywords/' + this.keywords).then((res) => {
 //                        if (res.data.code === '90010') {
@@ -176,11 +171,28 @@
 //                        }
 //                    })
 //                }
-                }else{
+                } else {
                     this.customerList = [];
                     this.isShow = true;
                 }
             },
+//            搜索请求
+            search_ask (){
+                this.$http.post('finance/customer/search', {
+                    keywords: this.keywords,
+                    identity: this.client_staff,
+                }).then((res) => {
+                    if (res.data.code === '20020') {
+                        this.customerList = res.data.data.data;
+                        this.isShow = false;
+                    } else {
+                        this.customerList = [];
+                        this.isShow = true;
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+
             selectClient(ev, item){// 点击行选中
                 $(ev.currentTarget).find('input').prop('checked', 'true');
                 this.selectPayClients = [];
