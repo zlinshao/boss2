@@ -671,6 +671,7 @@
             },
 //            切换
             playback (){
+                this.pitch = [];
                 this.recycle_bin = !this.recycle_bin;
                 if (this.recycle_bin === false) {
                     this.clear_info();
