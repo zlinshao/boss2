@@ -2,7 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>客服中心</li>
-            <li>客服部续租申请</li>
+            <li>客服部调房申请</li>
         </ol>
 
         <section class="panel">
@@ -77,7 +77,7 @@
                             <td>{{item.name}}</td>
 
                             <td>
-                                <router-link :to="{path:'renewedRentDetail',query:{id:item.process_instance_id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                <router-link :to="{path:'/transferRentDetail',query:{id:item.process_instance_id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -172,7 +172,7 @@
 //            获取列表
             getList(val){
                 this.params.page = val;
-                this.params.code = 'PROC-HFMKHA3W-6ZCNL0TPNSUBN2CB7VEQ3-O8Z5O86J-U';
+                this.params.code = 'PROC-QQXJ732V-G0DNE98BMEH0RS04IOSS1-O7A7O86J-K1';
                 this.$http.get('core/approvals/approval_list',{
                     params : this.params
                 }).then((res)=>{

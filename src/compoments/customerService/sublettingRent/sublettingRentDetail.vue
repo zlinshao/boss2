@@ -3,11 +3,11 @@
         <ol class="breadcrumb">
             <li>客服中心</li>
             <li>
-                <router-link to="/renewedRentList">客服部续租申请</router-link>
+                <router-link to="/sublettingRentList">客服部转租申请</router-link>
             </li>
-            <li>客服部续租申请详情</li>
+            <li>客服部转租申请详情</li>
             <li class="pull-right" v-show="typeof (params) === 'object'">
-                <router-link :to="{path:'/renewedRentList',query: {myParam:params,page:page,select:select}}">
+                <router-link :to="{path:'/sublettingRentList',query: {myParam:params,page:page,select:select}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
             </li>

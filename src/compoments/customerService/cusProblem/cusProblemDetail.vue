@@ -3,11 +3,11 @@
         <ol class="breadcrumb">
             <li>客服中心</li>
             <li>
-                <router-link to="/renewedRentList">客服部续租申请</router-link>
+                <router-link to="/cusProblemList">客服部问题申报</router-link>
             </li>
-            <li>客服部续租申请详情</li>
+            <li>客服部问题申报详情</li>
             <li class="pull-right" v-show="typeof (params) === 'object'">
-                <router-link :to="{path:'/renewedRentList',query: {myParam:params,page:page,select:select}}">
+                <router-link :to="{path:'/cusProblemList',query: {myParam:params,page:page,select:select}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
             </li>
@@ -35,34 +35,32 @@
                         <div class="col-md-12">
                             <div class="col-md-6">
                                 <div>
-                                    <div class="text-primary">房屋地址：</div>
+                                    <div class="text-primary">报销类别：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='房屋地址'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='报销类别'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">联系电话：</div>
+                                    <div class="text-primary">报销明细：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='租客电话'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='费用明细'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">申请内容：</div>
+                                    <div class="text-primary">报销金额(元)：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='申请内容'">
-                                            {{list.value}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="text-primary">用途：</div>
-                                    <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='用途'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='报销类别'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
@@ -78,10 +76,6 @@
                             <div class="col-md-6">
                                 <!--<div>
                                     <div class="text-primary">备注：</div>
-                                    <div>奥术大师大所多</div>
-                                </div>
-                                <div>
-                                    <div class="text-primary">审批记录：</div>
                                     <div>奥术大师大所多</div>
                                 </div>-->
                                 <div>
