@@ -121,8 +121,12 @@ import Question from  './compoments/questionnaire/questionList.vue'             
 import Questionnaire from './compoments/questionnaire/questionDetail.vue'
 import QuestionResult from './compoments/questionnaire/questionResult.vue'
 
-import RepairLog from './compoments/repairLog/repaireLogList.vue'                                // 维修记录
-import RepairLogDetail from './compoments/repairLog/repaireLogDetail.vue'                                // 维修记录
+
+// 客服中心
+import RepairLog from './compoments/customerService/repairLog/repaireLogList.vue'                                // 维修记录
+import RepairLogDetail from './compoments/customerService/repairLog/repaireLogDetail.vue'                                // 维修记录
+import RenewedRentList from './compoments/customerService/renewedRent/renewedRentList.vue'                                // 续租申请
+import RenewedRentDetail from './compoments/customerService/renewedRent/renewedRentDetail.vue'                                // 续租申请详情
 
 export default[
     {
@@ -639,5 +643,15 @@ export default[
         path: '/repairLogDetail',
         name: 'RepairLogDetail',
         component: RepairLogDetail
+    },
+    {       //续租申请
+        path: '/renewedRentList',
+        name: 'RenewedRentList',
+        component: RenewedRentList
+    },
+    {       //续租申请
+        path: '/renewedRentDetail',
+        name: 'RenewedRentDetail',
+        component: RenewedRentDetail
     },
 ]

@@ -803,12 +803,27 @@
                             </li>
                         </ul>
                     </li>
-                    <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
-                        <router-link to="/repairLog">
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
                             <i class="fa fa-briefcase"></i>
-                            <span>维修记录</span>
-                        </router-link>
+                            <span>客服中心</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to="/renewedRentList">
+                                    <span>客服部续租申请</span>
+                                </router-link>
+                            </li>
+                            <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
+                                <router-link to="/repairLog">
+                                    <span>维修记录</span>
+                                </router-link>
+                            </li>
+                        </ul>
                     </li>
+
+
                 </ul>
                 <!-- sidebar menu end-->
             </div>
