@@ -159,6 +159,9 @@
                 if (this.keywords !== '') {
                     this.search_ask();
                 }
+                if(this.client_staff === '-1' && this.keywords === ''){
+                    this.close_();
+                }
             },
             search(){
                 if (this.client_staff !== '-1' || this.keywords !== '') {
