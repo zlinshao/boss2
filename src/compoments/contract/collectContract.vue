@@ -269,7 +269,7 @@
     import DatePicker from '../common/datePicker.vue'
 
     import AddContract from './collectAdd.vue'
-    import EditRepair from '../repairLog/repaireLogEdit.vue'
+    import EditRepair from '../customerService/repairLog/repaireLogEdit.vue'
     export default{
         props: ['simulate', 'isSuper'],
         components: {DatePicker, Page, Staff, Status, Confirm, Loading, AddContract,EditRepair},
