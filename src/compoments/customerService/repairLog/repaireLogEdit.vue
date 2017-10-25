@@ -151,8 +151,8 @@
     </div>
 </template>
 <script>
-    import Status from '../common/status.vue'
-    import DatePicker from '../common/datePicker.vue'
+    import Status from '../../common/status.vue'
+    import DatePicker from '../../common/datePicker.vue'
     export default {
         props : ['isAdd','contractId','repairId','isCollect'],
         components: {DatePicker,Status},

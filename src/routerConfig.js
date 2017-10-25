@@ -121,8 +121,26 @@ import Question from  './compoments/questionnaire/questionList.vue'             
 import Questionnaire from './compoments/questionnaire/questionDetail.vue'
 import QuestionResult from './compoments/questionnaire/questionResult.vue'
 
-import RepairLog from './compoments/repairLog/repaireLogList.vue'                                // 维修记录
-import RepairLogDetail from './compoments/repairLog/repaireLogDetail.vue'                                // 维修记录
+
+// 客服中心
+import RepairLog from './compoments/customerService/repairLog/repaireLogList.vue'                                // 维修记录
+import RepairLogDetail from './compoments/customerService/repairLog/repaireLogDetail.vue'                                // 维修记录
+import RenewedRentList from './compoments/customerService/renewedRent/renewedRentList.vue'                                // 续租申请
+import RenewedRentDetail from './compoments/customerService/renewedRent/renewedRentDetail.vue'                                // 续租申请详情
+import SublettingRentList from './compoments/customerService/sublettingRent/sublettingRentList.vue'                                // 转租申请
+import SublettingRentDetail from './compoments/customerService/sublettingRent/sublettingRentDetail.vue'                                // 转租申请详情
+import TransferRentList from './compoments/customerService/transferRent/transferRentList.vue'                                // 调房申请
+import TransferRentDetail from './compoments/customerService/transferRent/transferRentDetail.vue'                                // 调房申请详情
+import OutRentList from './compoments/customerService/outRent/outRentList.vue'                                // 退租申请
+import OutRentDetail from './compoments/customerService/outRent/outRentDetail.vue'                                // 退租申请详情
+import CusServiceList from './compoments/customerService/cusService/cusServiceList.vue'                                // 客服部维修申请
+import CusServiceDetail from './compoments/customerService/cusService/cusServiceDetail.vue'                                // 客服部维修申请详情
+import ServiceList from './compoments/customerService/service/serviceList.vue'                                // 维修申请
+import ServiceDetail from './compoments/customerService/service/serviceDetail.vue'                                // 维修申请详情
+import CusProblemList from './compoments/customerService/cusProblem/cusProblemList.vue'                                // 客服部问题申报
+import CusProblemDetail from './compoments/customerService/cusProblem/cusProblemDetail.vue'                                // 客服部问题申报详情
+import ProblemList from './compoments/customerService/problem/problemList.vue'                                // 房屋问题申报
+import ProblemDetail from './compoments/customerService/problem/problemDetail.vue'                                // 房屋问题申报详情
 
 export default[
     {
@@ -639,5 +657,85 @@ export default[
         path: '/repairLogDetail',
         name: 'RepairLogDetail',
         component: RepairLogDetail
+    },
+    {       //续租申请
+        path: '/renewedRentList',
+        name: 'RenewedRentList',
+        component: RenewedRentList
+    },
+    {       //续租申请
+        path: '/renewedRentDetail',
+        name: 'RenewedRentDetail',
+        component: RenewedRentDetail
+    },
+    {       //转租申请
+        path: '/sublettingRentList',
+        name: 'SublettingRentList',
+        component: SublettingRentList
+    },
+    {       //转租申请
+        path: '/sublettingRentDetail',
+        name: 'SublettingRentDetail',
+        component: SublettingRentDetail
+    },
+    {       //调房申请
+        path: '/transferRentList',
+        name: 'TransferRentList',
+        component: TransferRentList
+    },
+    {       //调房申请
+        path: '/transferRentDetail',
+        name: 'TransferRentDetail',
+        component: TransferRentDetail
+    },
+    {       //退租申请
+        path: '/outRentList',
+        name: 'OutRentList',
+        component: OutRentList
+    },
+    {       //退租申请
+        path: '/outRentDetail',
+        name: 'OutRentDetail',
+        component: OutRentDetail
+    },
+    {       //客服部维修申请
+        path: '/cusServiceList',
+        name: 'CusServiceList',
+        component: CusServiceList
+    },
+    {       //客服部维修申请
+        path: '/cusServiceDetail',
+        name: 'CusServiceDetail',
+        component: CusServiceDetail
+    },
+    {       //维修申请
+        path: '/serviceList',
+        name: 'ServiceList',
+        component: ServiceList
+    },
+    {       //维修申请
+        path: '/serviceDetail',
+        name: 'ServiceDetail',
+        component: ServiceDetail
+    },
+    {       //客服部问题申报
+        path: '/cusProblemList',
+        name: 'CusProblemList',
+        component: CusProblemList
+    },
+    {       //客服部问题申报详情
+        path: '/cusProblemDetail',
+        name: 'CusProblemDetail',
+        component: CusProblemDetail
+    },
+    {       //房屋问题申报
+        path: '/problemList',
+        name: 'ProblemList',
+        component: ProblemList
+    },
+    {       //房屋问题申报详情
+        path: '/problemDetail',
+        name: 'ProblemDetail',
+        component: ProblemDetail
     },
 ]

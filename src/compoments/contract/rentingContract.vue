@@ -260,7 +260,7 @@
     import DatePicker from '../common/datePicker.vue'
 
     import Contract from './rentingAdd.vue'
-    import EditRepair from '../repairLog/repaireLogEdit.vue'
+    import EditRepair from '../customerService/repairLog/repaireLogEdit.vue'
     export default{
         props : ['simulate','isSuper'],
         components: {DatePicker, Page, Staff, Status, Confirm, Loading ,Contract,EditRepair},

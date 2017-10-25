@@ -796,19 +796,69 @@
                                     <span>员工广场</span>
                                 </a>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('StaffSquare/index')>-1||isSuper">
                                 <router-link to="/article">
                                     <span>发布文章</span>
                                 </router-link>
                             </li>
                         </ul>
                     </li>
-                    <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
-                        <router-link to="/repairLog">
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
                             <i class="fa fa-briefcase"></i>
-                            <span>维修记录</span>
-                        </router-link>
+                            <span>客服中心</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to="/renewedRentList">
+                                    <span>客服部续租申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/sublettingRentList">
+                                    <span>客服部转租申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/transferRentList">
+                                    <span>客服部调房申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/outRentList">
+                                    <span>客服部退租申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cusServiceList">
+                                    <span>客服部维修申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cusProblemList">
+                                    <span>客服部问题申报</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/serviceList">
+                                    <span>维修申请</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/problemList">
+                                    <span>房屋问题申报</span>
+                                </router-link>
+                            </li>
+                            <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
+                                <router-link to="/repairLog">
+                                    <span>维修记录</span>
+                                </router-link>
+                            </li>
+                        </ul>
                     </li>
+
+
                 </ul>
                 <!-- sidebar menu end-->
             </div>

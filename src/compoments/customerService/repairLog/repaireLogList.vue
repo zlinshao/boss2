@@ -1,6 +1,7 @@
 <template>
     <div>
         <ol class="breadcrumb">
+            <li>客服中心</li>
             <li>维修记录</li>
         </ol>
 
@@ -95,7 +96,7 @@
                             <th class="text-center">录入时间</th>
                             <th class="text-center">合同类型</th>
                             <th class="text-center">合同号</th>
-                            <th class="text-center">客户姓名</th>
+                            <th class="text-center">报修人姓名</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">联系电话</th>
                             <th class="text-center">约定维修时间</th>
@@ -155,12 +156,12 @@
     </div>
 </template>
 <script>
-    import Page from '../common/page.vue'
-    import Status from '../common/status.vue'
-    import DatePicker from '../common/datePicker.vue'
-    import STAFF from  '../common/oraganization.vue'
+    import Page from '../../common/page.vue'
+    import Status from '../../common/status.vue'
+    import DatePicker from '../../common/datePicker.vue'
+    import STAFF from  '../../common/oraganization.vue'
     import EditRepair from './repaireLogEdit.vue'
-    import Confirm from '../common/confirm.vue'
+    import Confirm from '../../common/confirm.vue'
     export default {
         props : ['simulate','isSuper'],
         components: {Page, Status, DatePicker, STAFF,EditRepair,Confirm},

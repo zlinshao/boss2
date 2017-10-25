@@ -17,15 +17,17 @@
                     <h4>
                         {{msg.title}}
                         <!--编辑-->
-                        <div class="btn-group pull-right">
+                        <div class="btn-group pull-right"
+                             v-if="(msg.status!=2&&(simulate.indexOf('StaffSquare/editArticle')>-1||simulate.indexOf('StaffSquare/deleteArticle')>-1||isSuper))
+                             ||(msg.status==2&&(simulate.indexOf('StaffSquare/offArticle')>-1||isSuper))||(msg.status==1&&(simulate.indexOf('StaffSquare/publicArticle')>-1||isSuper))">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li v-if="msg.status!=2"><router-link :to="{path : '/modifyArticle',query:{articleId : msg.id}}">编辑</router-link></li>
-                                <li @click="oper(1)" v-if="msg.status==2"><a>下架</a></li>
-                                <li @click="oper(2)" v-if="msg.status==1"><a>发布</a></li>
-                                <li @click="oper(3)" v-if="msg.status!=2"><a>删除</a></li>
+                                <li v-if="msg.status!=2&&(simulate.indexOf('StaffSquare/editArticle')>-1||isSuper)"><router-link :to="{path : '/modifyArticle',query:{articleId : msg.id}}">编辑</router-link></li>
+                                <li @click="oper(1)" v-if="msg.status==2&&(simulate.indexOf('StaffSquare/offArticle')>-1||isSuper)"><a>下架</a></li>
+                                <li @click="oper(2)" v-if="msg.status==1&&(simulate.indexOf('StaffSquare/publicArticle')>-1||isSuper)"><a>发布</a></li>
+                                <li @click="oper(3)" v-if="msg.status!=2&&(simulate.indexOf('StaffSquare/deleteArticle')>-1||isSuper)"><a>删除</a></li>
                             </ul>
                         </div>
                     </h4>
@@ -125,6 +127,7 @@
     import Status from '../../common/status.vue';
 
     export default{
+        props : ['simulate','isSuper'],
         components: {Confirm,Status},
         data(){
             return {
