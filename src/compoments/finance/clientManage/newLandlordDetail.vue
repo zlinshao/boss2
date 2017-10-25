@@ -1,7 +1,7 @@
 <template>
     <div>
         <ol class="breadcrumb" v-show="cus == 1">
-            <li>财务账本{{cus}}</li>
+            <li>财务账本</li>
             <li>
                 <router-link to="/newLandlord">客户管理</router-link>
             </li>
