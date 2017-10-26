@@ -181,7 +181,7 @@
                                     <FlexBox :flexData="Math.ceil(contractAdd.months/12)" :datas="contractAdd.price"
                                              :change="false" :title="'出租月单价'" @sendData="getFlexData"></FlexBox>
 
-                                    <div class="form-group">
+                                    <div class="row col-sm-12" style="padding: 0;">
                                         <label class="col-sm-2 control-label">已收类型<sup>*</sup></label>
                                         <div class="col-sm-10">
                                             <div class="col-sm-4 padding_0">

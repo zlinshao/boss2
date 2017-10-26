@@ -31,6 +31,21 @@
                             </span>
                         </div>
 
+                        <!--<div class="input-group" style="margin-left: 16px;">-->
+                            <!--<span style="padding: 0 6px;">-->
+                                <!--<i style="padding-right: 6px" class="fa fa-circle text-danger"></i>-->
+                                <!--手机-->
+                            <!--</span>-->
+                            <!--<span style="padding: 0 6px;">-->
+                                <!--<i style="padding-right: 6px" class="fa fa-circle text-warning"></i>-->
+                                <!--客户姓名-->
+                            <!--</span>-->
+                            <!--<span style="padding: 0 6px;">-->
+                                <!--<i style="padding-right: 6px" class="fa fa-circle text-primary"></i>-->
+                                <!--地址-->
+                            <!--</span>-->
+                        <!--</div>-->
+
                         <div class="pro-sort pull-right">
                             <button class="btn btn-success" type="button" @click="newAddRenter">
                                 <i class="fa fa-plus-square"></i>
@@ -55,6 +70,20 @@
                         <li>
                             <h5><a @click="cancel_rename">取消重命名标记</a></h5>
                         </li>
+                        <!--<li><h5 style="border-left: 1px solid #aaaaaa;">-->
+                            <!--<span style="padding: 0 6px;">-->
+                                <!--<i style="padding-right: 6px" class="fa fa-circle text-danger"></i>-->
+                                <!--手机-->
+                            <!--</span>-->
+                            <!--<span style="padding: 0 6px;">-->
+                                <!--<i style="padding-right: 6px" class="fa fa-circle text-warning"></i>-->
+                                <!--客户姓名-->
+                            <!--</span>-->
+                            <!--<span style="padding: 0 6px;">-->
+                                <!--<i style="padding-right: 6px" class="fa fa-circle text-primary"></i>-->
+                                <!--地址-->
+                            <!--</span>-->
+                        <!--</h5></li>-->
                     </ul>
                 </div>
             </div>
@@ -64,6 +93,8 @@
                 <thead class="text-center">
                 <tr>
                     <th></th>
+                    <!--<th class="width80"-->
+                        <!--v-show="rent_phone.length > 0 || rent_name.length > 0 || rent_address.length > 0"></th>-->
                     <th class="text-center width100">生成时间</th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">客户姓名</th>
@@ -93,6 +124,11 @@
                         <span v-if="item.freeze === 1" @click="recover(item.id)"
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
+                    <!--<td v-show="rent_phone.length > 0 || rent_name.length > 0 || rent_address.length > 0">-->
+                        <!--<i v-show="tab_status.indexOf(rent_phone) > -1" class="fa fa-circle text-danger"></i>-->
+                        <!--<i v-show="tab_status.indexOf(rent_name) > -1" class="fa fa-circle text-warning"></i>-->
+                        <!--<i v-show="tab_status.indexOf(rent_address) > -1" class="fa fa-circle text-primary"></i>-->
+                    <!--</td>-->
                     <td class="text-center">{{item.create_time}}</td>
                     <td class="text-center">
                         {{item.address}}&nbsp;
@@ -157,7 +193,8 @@
         </section>
 
         <!--NEW新增客户-->
-        <NewRenterAdd :list="myLandlordList" @success_="search" :house="house_status" :show_add="'renHide'"></NewRenterAdd>
+        <NewRenterAdd :list="myLandlordList" @success_="search" :house="house_status"
+                      :show_add="'renHide'"></NewRenterAdd>
 
         <!--删除-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
@@ -182,6 +219,10 @@
         components: {Department, Page, Status, NewRenterAdd, Confirm, DatePicker},
         data(){
             return {
+                rent_address: [],                   //标记地址
+                rent_name: [],                      //标记客户姓名
+                rent_phone: [],                     //标记手机
+                tab_status: [],                     //所有ID
                 house_status: '',
                 confirmMsg: '',                     //删除信息
                 pitch: [],
@@ -291,6 +332,7 @@
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.LandlordDict = res.data;
                     this.paging = '';
+                    this.tab_status = [];
                     this.$http.get('finance/customer/rent?page=' + val, {
                         params: this.params
                     }).then((res) => {
@@ -298,6 +340,18 @@
                             this.LandlordList = res.data.data.data;
                             this.paging = res.data.data.pages;
                             this.isShow = false;
+                            for (let i = 0; i < res.data.data.data.length; i++) {
+                                this.tab_status.push(res.data.data.data[i].id);
+                            }
+                            this.$http.post('finance/customer/rent/duplication', {
+                                ads: this.tab_status,
+                            }).then((res) => {
+                                if (res.data.code === '90010') {
+                                    this.rent_address = res.data.data.address;
+                                    this.rent_name = res.data.data.name;
+                                    this.rent_phone = res.data.data.phone;
+                                }
+                            });
                         } else {
                             this.LandlordList = [];
                             this.isShow = true;
