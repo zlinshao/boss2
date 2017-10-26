@@ -14,7 +14,9 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">收款时间</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly :value="msg.current_pay_date">
+                                    <DatePicker :dateConfigure="datePayConfigure" :idName="'pay_date'"
+                                                :currentDate="[formData.pay_date]" :placeholder="'付款时间'"
+                                                @sendDate="getPayDate"></DatePicker>
                                 </div>
                             </div>
 
@@ -154,7 +156,7 @@
         data(){
             return {
                 dict: {},
-                msg: '',
+                msg: {},
                 currentId: '',
                 largePic: [],
                 srcs: {},
@@ -163,6 +165,7 @@
                 cate: '',
                 logName: '',
                 formData: {
+                    pay_date: '',               //收款时间
                     account_id: '',            // 账户id
                     amount_received: '',      // 收款金额
                     complete_date: '',     // 补齐时间
@@ -187,10 +190,14 @@
                         position : 'top-right'
                     }
                 ],
+                datePayConfigure: [
+                    {
+                        range: false,
+                        needHour: false,
+                    }
+                ],
+                pay_date: '',           //付款时间
             }
-        },
-        updated (){
-            this.remindData();
         },
         watch: {
             id(val){
@@ -223,27 +230,26 @@
                 $('#collectFor').modal('hide');
             },
 
-            remindData (){
-                $('.form_datetime').datetimepicker({
-                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-                    pickerPosition: 'top-right'
-                }).on('changeDate', function (ev) {
-                    if (ev.target.placeholder === '补齐时间') {
-                        this.formData.complete_date = ev.target.value;
-                    }
-//                    console.log(ev.target.value);
-//                    console.log(ev.target.placeholder);
-                }.bind(this));
-            },
+//            remindData (){
+//                $('.form_datetime').datetimepicker({
+//                    minView: "month",                     //选择日期后，不会再跳转去选择时分秒
+//                    language: 'zh-CN',
+//                    format: 'yyyy-mm-dd',
+//                    todayBtn: 1,
+//                    autoclose: 1,
+//                    clearBtn: true,                     //清除按钮
+//                    pickerPosition: 'top-right'
+//                }).on('changeDate', function (ev) {
+//                    if (ev.target.placeholder === '补齐时间') {
+//                        this.formData.complete_date = ev.target.value;
+//                    }
+//                }.bind(this));
+//            },
 
             getDetails(){
                 this.$http.get('account/receivable/' + this.currentId).then((res) => {
                     this.msg = res.data.data;
+                    this.pay_date = res.data.data.current_pay_date;
                     if (res.data.data.album !== undefined) {
                         this.srcs = this.msg.album.receipt_pic;
                     }
@@ -294,21 +300,10 @@
 
             getDate(val){
                 this.formData.complete_date = val;
+            },
+            getPayDate(val){
+                this.formData.pay_date = val;
             }
-
-//            计算剩余款项
-//            getBalance(){
-//                console.log(this.formData.amount_received);
-//                console.log(this.msg.balance)
-//                console.log(this.msg.balance - this.formData.amount_received)
-//                if (this.formData.amount_received != '' && (this.msg.balance - this.formData.amount_received) >= 0) {
-//                    this.msg.balance = this.msg.balance - this.formData.amount_received;
-//                } else {
-//                    this.formData.amount_received = '';
-//                    this.msg.balance = this.beforeBalance;
-//
-//                }
-//            }
         }
     }
 </script>

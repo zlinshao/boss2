@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">详情</label>
                                 <div class="col-sm-10">
-                                    <textarea type="text" class="form-control" readonly rows="4"
+                                    <textarea class="form-control" readonly rows="4"
                                               style="margin-bottom: 18px">{{list.description}}</textarea>
                                 </div>
                             </div>
@@ -157,7 +157,6 @@
                 dict: {},
                 pay_acc: [],            //收款账户
                 cate: '',
-                pay_date: '',           //付款时间
                 account_id: '',         //客户ID
                 pay_account: '',        //付款账户
                 payable: '',            //实付金额
@@ -187,6 +186,7 @@
                         needHour: false,
                     }
                 ],
+                pay_date: '',           //付款时间
                 subject_id: ''          //科目
 
             }

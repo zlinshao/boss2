@@ -147,9 +147,11 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <FlexBox :flexData="Math.ceil(contractAdd.months/12)" :datas="contractAdd.price" :change="false"
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
-                                    <div class="row">
+
+                                    <div class="row col-sm-12" style="padding: 0;">
                                         <label class="col-sm-2 control-label">押金<sup>*</sup></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="contractAdd.cost_deposit">

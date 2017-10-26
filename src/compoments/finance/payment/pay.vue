@@ -92,7 +92,7 @@
                             <h5 @click="payables"><a><i class="fa fa-pencil"></i>&nbsp;应付入账</a>
                             </h5>
                         </li>
-                        <li v-show="pitch.length == 1 && rollbacks !== null">
+                        <li v-show="pitch.length == 1 && rollbacks != null">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li v-show="pitch.length == 1">
@@ -120,11 +120,11 @@
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" v-if="remarks_status === 1">新增备注</h4>
-                        <h4 class="modal-title" v-if="remarks_status === 2">查看备注</h4>
+                        <h4 class="modal-title" v-if="remarks_status == 1">新增备注</h4>
+                        <h4 class="modal-title" v-if="remarks_status == 2">查看备注</h4>
                     </div>
 
-                    <div class="modal-body" v-if="remarks_status === 1">
+                    <div class="modal-body" v-if="remarks_status == 1">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <div class="col-lg-12">
@@ -134,15 +134,15 @@
                         </form>
                     </div>
 
-                    <div class="modal-body" v-if="remarks_status === 2">
+                    <div class="modal-body" v-if="remarks_status == 2">
                         {{look_remark}}
                     </div>
 
-                    <div class="modal-footer" v-if="remarks_status === 1">
+                    <div class="modal-footer" v-if="remarks_status == 1">
                         <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
                         <button class="btn btn-success" type="button" @click="addRem"> 确定</button>
                     </div>
-                    <div class="modal-footer" v-if="remarks_status === 2">
+                    <div class="modal-footer" v-if="remarks_status == 2">
                         <button data-dismiss="modal" class="btn btn-success" type="button">确定</button>
                     </div>
                 </div>
@@ -197,7 +197,7 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in myData"
-                            :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1}">
+                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1}">
                             <td v-if="recycle_bin">
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                         'c_off':pitch.indexOf(item.id) == -1}"
@@ -209,17 +209,17 @@
                             <td>{{item.pay_date}}</td>
                             <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
-                                <span style="line-height: 9px;" v-if="item.identity === 1"
+                                <span style="line-height: 9px;" v-if="item.identity == 1"
                                       class="btn btn-danger btn-xs">F</span>
-                                <span style="line-height: 9px;" v-if="item.identity === 2"
+                                <span style="line-height: 9px;" v-if="item.identity == 2"
                                       class="btn btn-danger btn-xs">Z</span>
                             </td>
                             <td>
-                                <span @click="subject_show(1, item.id)" v-if="sub_isActive !== item.id"
+                                <span @click="subject_show(1, item.id)" v-if="sub_isActive != item.id"
                                       style="cursor: pointer;">
                                     {{dict.account_subject[item.subject_id]}}
                                 </span>
-                                <span v-if="sub_isActive === item.id">
+                                <span v-if="sub_isActive == item.id">
                                     <span style="display: inline-block;margin-bottom: 5px;">
                                         <SelectSubject @choose="subject_revise"
                                                        :current="rev.subject_id"></SelectSubject>
@@ -229,11 +229,11 @@
                                 </span>
                             </td>
                             <td>
-                                <span @click="able_show(1,item.amount_payable,item.id)" v-if="isActive !== item.id"
+                                <span @click="able_show(1,item.amount_payable,item.id)" v-if="isActive != item.id"
                                       style="cursor: pointer;">
                                     {{item.amount_payable}}
                                 </span>
-                                <span v-if="isActive === item.id">
+                                <span v-if="isActive == item.id">
                                     <input type="text" class="form-control" v-model="amount"
                                            style="margin-bottom: 5px;">
                                     <a class="btn btn-default btn-sm" @click='able_show(2)'>取消</a>
@@ -247,13 +247,13 @@
                                 {{item.description}}
                             </td>
                             <td>
-                                <label :class="{'label':true,'status':true,'yellow':item.status===1,'red':item.status===2,'green':item.status===3,'jingdong':item.status===4}">
+                                <label :class="{'label':true,'status':true,'yellow':item.status==1,'red':item.status==2,'green':item.status==3,'jingdong':item.status==4}">
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
                             <td>
-                                <span v-if="item.tag === ''"></span>
-                                <span @click="look_tag(item.tag)" v-if="item.tag !== ''" class="fa fa-book"></span>
+                                <span v-if="item.tag == ''"></span>
+                                <span @click="look_tag(item.tag)" v-if="item.tag != ''" class="fa fa-book"></span>
                             </td>
                             <td v-if="recycle_bin">
                                 <router-link
@@ -558,7 +558,7 @@
             let selected = this.$route.query.selected;
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.dict = res.data;
-                
+
                 this.$http.get('staff/info').then((res) => {
                     this.pay_man = res.data.name;
                 });
