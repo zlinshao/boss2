@@ -288,6 +288,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">备注</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" v-model="remark"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">操作人</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="operate_man" disabled>
@@ -358,6 +364,7 @@
 
                 rent_surplus: 0,               //剩余合同数(租)
 
+                remark : '',                    // 备注
                 operate_man: '',                //操作人
 //                operate_man_id: '',             //操作人ID
 
@@ -664,7 +671,7 @@
                 this.rent_num_end = '';               //到X
                 this.scrap_ljsf = [];                 //合同编号记录 收
                 this.scrap_ljzf = [];                 //合同编号记录 租
-
+                this.remark = '';
                 this.rent_surplus = 0;               //剩余合同数(租)
 //                this.operate_man = '';                //操作人
 //                this.operate_man_id = '';             //操作人
@@ -758,6 +765,7 @@
 //                    pz_pic: this.photos.cus_idPhoto,
 //                    paid_ljsf : this.collect_turn_num,
 //                    paid_ljzf : this.rent_turn_num
+                    remark : this.remark
                 };
                 if (this.new_status==1){
                     // 领取
@@ -837,5 +845,8 @@
     .padd0{
         padding-left: 0;
         padding-right: 0;
+    }
+    textarea{
+        resize: none;
     }
 </style>
