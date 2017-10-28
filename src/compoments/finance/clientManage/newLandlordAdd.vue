@@ -105,7 +105,8 @@
                                              :title="'收房月单价'" @sendData="getFlexData"></FlexBox>
 
                                     <div class="form-group col-sm-12" style="padding: 0;">
-                                        <label class="col-sm-2 control-label">押金<span class="text-danger">*</span></label>
+                                        <label class="col-sm-2 control-label">押金<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="deposit">
                                         </div>
@@ -618,11 +619,11 @@
                     if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate') {
                         this.closeModal();
                         $('#newClientAdd').modal('hide');
-                        this.$emit('success_');
+                        this.$emit('success_', 1);
                         this.successMsg(res.data.msg);
                     } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate') {
                         this.closeModal();
-                        this.$emit('success_');
+                        this.$emit('success_', 1);
                         $('#clientAdd1').modal('hide');
                         $('#newClientAdd').modal('hide');
                         this.successMsg(res.data.msg);
@@ -659,7 +660,7 @@
                     subject_id: this.subject_id,
                 }).then((res) => {
                     if (res.data.code === '90000') {
-                        this.$emit('success_');
+                        this.$emit('success_', 1);
                         this.closeModal();
                         $('#newClientAdd').modal('hide');
                         this.successMsg(res.data.msg);

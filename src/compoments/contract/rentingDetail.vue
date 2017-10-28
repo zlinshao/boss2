@@ -26,7 +26,8 @@
                 <span class="cancel" v-if="contract_status == 1">
                     <img src="../../assets/img/cancel.png" alt="">
                 </span>
-                <span class="remind" v-if="contract_pass > 4 && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)" >审核已完成，部分资料已无法查看，请联系组长</span>
+                <span class="remind"
+                      v-if="contract_pass > 4 && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)">审核已完成，部分资料已无法查看，请联系组长</span>
             </div>
             <div class="pull-right dropdown" v-for="item in contractList">
                 <span v-if="contract_status!=1">
@@ -256,7 +257,9 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>租房类型：</span>
-                                                <span>{{dictionary.shared_house[item.checkin_rent_id.is_shared]}}</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                    {{dictionary.shared_house[item.checkin_rent_id.is_shared]}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>合同开始日期：</span>
@@ -310,7 +313,8 @@
                                                 </span>
                                                 </div>
                                             </div>
-                                            <div class="infoList" v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList"
+                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                 <div v-for="pay in item.checkin_rent_id.payment">
                                                     <span>收据编号：</span>
                                                     <span>{{item.receipt_number}}</span>
@@ -377,11 +381,11 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>管理费：</span>
-                                                <span>{{item.checkin_rent_id.manage_fee}}</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">{{item.checkin_rent_id.manage_fee}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>物业费：</span>
-                                                <span>{{item.checkin_rent_id.property_fee}}</span>
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">{{item.checkin_rent_id.property_fee}}</span>
                                             </div>
                                             <div class="infoList">
                                                 <span>中介名<sup>*</sup>：</span>

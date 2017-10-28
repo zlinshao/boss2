@@ -347,6 +347,9 @@
                             <li v-show="simulate.indexOf('Villa/villaList')>-1||isSuper">
                                 <router-link to='/noCollect'>待收房源</router-link>
                             </li>
+                            <li>
+                                <router-link to='/blackboard'>小黑板</router-link>
+                            </li>
                         </ul>
                     </li>
                     <li class="sub-menu"
