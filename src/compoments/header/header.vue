@@ -422,7 +422,7 @@
                             <!--<span>客户管理</span>-->
                             <!--</router-link>-->
                             <!--</li>-->
-                            <li class="sub-menu">
+                            <li class="sub-menu" v-show="simulate.indexOf('Revenue/Customer') > -1||isSuper">
                                 <a href="javascript:;">
                                     <span>客户管理</span>
                                 </a>
