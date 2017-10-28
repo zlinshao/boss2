@@ -959,11 +959,11 @@
                 }).then((res) => {
                     if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/rent/generate') {
                         $('#newRenterAdd').modal('hide');
-                        this.$emit('success_');
+                        this.$emit('success_', 1);
                         this.closeModal();
                         this.successMsg(res.data.msg);
                     } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/rent/generate') {
-                        this.$emit('success_');
+                        this.$emit('success_', 1);
                         this.closeModal();
                         $('#clientAdd1').modal('hide');
                         $('#newRenterAdd').modal('hide');
@@ -1011,7 +1011,7 @@
                     subject_id: this.subject_id,
                 }).then((res) => {
                     if (res.data.code === '90000') {
-                        this.$emit('success_');
+                        this.$emit('success_', 1);
                         this.closeModal();
                         $('#newRenterAdd').modal('hide');
                         this.successMsg(res.data.msg);

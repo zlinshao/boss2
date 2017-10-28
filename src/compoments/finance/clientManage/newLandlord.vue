@@ -25,23 +25,27 @@
 
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="params.search" placeholder="房屋地址/客户名"
-                                   @keyup.enter="search">
+                                   @keyup.enter="search(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" type="button" @click="search">搜索</button>
+                                <button class="btn btn-success" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
 
-                        <!--<div class="input-group" style="margin-left: 16px;">-->
-                            <!--<span style="padding: 0 6px;">-->
-                                <!--<i style="padding-right: 3px" class="fa fa-circle text-danger"></i>手机-->
-                            <!--</span>-->
-                            <!--<span style="padding: 0 6px;">-->
-                                <!--<i style="padding-right: 3px" class="fa fa-circle text-warning"></i>客户姓名-->
-                            <!--</span>-->
-                            <!--<span style="padding: 0 6px;">-->
-                                <!--<i style="padding-right: 3px" class="fa fa-circle text-primary"></i>地址-->
-                            <!--</span>-->
-                        <!--</div>-->
+                        <div class="input-group" style="margin-left: 16px;">
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-circle text-danger"></i>手机
+                            </span>
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-circle text-warning"></i>客户姓名
+                            </span>
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-circle text-primary"></i>地址
+                            </span>
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-eye-slash"></i>
+                                忽略重复
+                            </span>
+                        </div>
 
                         <div class="pro-sort pull-right">
                             <button class="btn btn-success" type="button" @click="newAddClient">
@@ -65,13 +69,26 @@
                             <h5><a @click="deleteClient">删除</a></h5>
                         </li>
                         <li>
-                            <h5><a @click="cancel_rename">取消重命名标记</a></h5>
+                            <h5><a @click="cancel_rename">取消重名标记</a></h5>
                         </li>
-                        <!--<li><h5><a>-->
-                            <!--<i class="fa fa-circle text-danger"></i>手机-->
-                            <!--<i class="fa fa-circle text-warning"></i>客户姓名-->
-                            <!--<i class="fa fa-circle text-primary"></i>地址-->
-                        <!--</a></h5></li>-->
+                        <li><h5 style="border-left: 1px solid #aaaaaa;">
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-circle text-danger"></i>
+                                手机
+                            </span>
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-circle text-warning"></i>
+                                客户姓名
+                            </span>
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-circle text-primary"></i>
+                                地址
+                            </span>
+                            <span style="padding: 0 6px;">
+                                <i style="padding-right: 6px" class="fa fa-eye-slash"></i>
+                                忽略重复
+                            </span>
+                        </h5></li>
                     </ul>
                 </div>
             </div>
@@ -81,8 +98,8 @@
                 <thead class="text-center">
                 <tr>
                     <th></th>
-                    <!--<th class="width80"-->
-                        <!--v-show="rent_phone.length > 0 || rent_name.length > 0 || rent_address.length > 0"></th>-->
+                    <th class="width80"
+                        v-show="rent_phone.length > 0 || rent_name.length > 0 || rent_address.length > 0 || suppress_dup.length > 0"></th>
                     <th class="text-center width100">生成时间</th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">客户姓名</th>
@@ -113,11 +130,12 @@
                         <span v-if="item.freeze === 1" @click="recover(item.id)"
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
-                    <!--<td v-show="rent_phone.length > 0 || rent_name.length > 0 || rent_address.length > 0">-->
-                        <!--<i v-show="tab_status.indexOf(rent_phone) > -1" class="fa fa-circle text-danger"></i>-->
-                        <!--<i v-show="tab_status.indexOf(rent_name) > -1" class="fa fa-circle text-warning"></i>-->
-                        <!--<i v-show="tab_status.indexOf(rent_address) > -1" class="fa fa-circle text-primary"></i>-->
-                    <!--</td>-->
+                    <td v-show="rent_phone.length > 0 || rent_name.length > 0 || rent_address.length > 0 || suppress_dup.length > 0">
+                        <i v-show="rent_phone.indexOf(item.id) > -1" class="fa fa-circle text-danger"></i>
+                        <i v-show="rent_name.indexOf(item.id) > -1" class="fa fa-circle text-warning"></i>
+                        <i v-show="rent_address.indexOf(item.id) > -1" class="fa fa-circle text-primary"></i>
+                        <i v-show="item.suppress_dup == 1" @click="reply_rename(item.id)" class="fa fa-eye-slash"></i>
+                    </td>
                     <td class="text-center">{{item.create_time}}</td>
                     <td class="text-center">
                         {{item.address}}&nbsp;
@@ -194,7 +212,7 @@
         <!--人资-->
         <Department :configure="configure" @Staff="selectDateSend"></Department>
 
-        <Page :pg="paging" @pag="getLandlordList" :beforePage="params.beforePage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="params.beforePage"></Page>
 
         <Status :state='info'></Status>
     </div>
@@ -214,6 +232,7 @@
                 rent_address: [],                   //标记地址
                 rent_name: [],                      //标记客户姓名
                 rent_phone: [],                     //标记手机
+                suppress_dup: [],                     //恢复标记
                 tab_status: [],                     //所有ID
                 confirmMsg: '',                     //删除信息
                 pitch: [],
@@ -259,9 +278,30 @@
             }
         },
         methods: {
-//            取消重命名标记
+//            取消重名标记
             cancel_rename (){
-
+                this.$http.post('finance/customer/collect/duplication/suppress', {
+                    ids: this.pitch,
+                }).then((res) => {
+                    if (res.data.code === '90000') {
+                        this.pitch = [];
+                        this.search(this.params.beforePage);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+//            恢复重名标记
+            reply_rename (val){
+                this.$http.put('finance/customer/collect/duplication/' + val).then((res) => {
+                    if (res.data.code === '90000') {
+                        this.search(this.params.beforePage);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                });
             },
 //            恢复
             recover (val){
@@ -270,18 +310,10 @@
                     identity: 1,
                 }).then((res) => {
                     if (res.data.code === '18810') {
-                        this.search();
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.search(this.params.beforePage);
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -311,20 +343,21 @@
                 })
             },
 //            搜索
-            search(){
+            search(val){
                 this.pitch = [];
-                this.getLandlordList(1);
+                this.getLandlordList(val);
             },
 //              时间搜索
             getDate(data){
                 this.params.range = data;
-                this.search();
+                this.search(1);
             },
             getLandlordList(val){
                 this.params.beforePage = val;
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.LandlordDict = res.data;
                     this.paging = '';
+                    this.tab_status = [];
                     this.$http.get('finance/customer/collect?page=' + val, {
                         params: this.params
                     }).then((res) => {
@@ -334,9 +367,12 @@
                             this.isShow = false;
                             for (let i = 0; i < res.data.data.data.length; i++) {
                                 this.tab_status.push(res.data.data.data[i].id);
+                                if (res.data.data.data[i].suppress_dup === 1) {
+                                    this.suppress_dup.push(res.data.data.data[i].suppress_dup);
+                                }
                             }
-                            this.$http.post('finance/customer/rent/duplication', {
-                                ads: this.tab_status,
+                            this.$http.post('finance/customer/collect/duplication', {
+                                ids: this.tab_status,
                             }).then((res) => {
                                 if (res.data.code === '90010') {
                                     this.rent_address = res.data.data.address;
@@ -362,7 +398,7 @@
                     this.params.selecteds.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
                 }
-                this.search();
+                this.search(1);
             },
             clearSelect(){
                 if (this.params.selecteds.length === 0) {
@@ -370,7 +406,7 @@
                 }
                 this.params.department_id = [];
                 this.params.selecteds = [];
-                this.search();
+                this.search(1);
             },
 
 //            new新增客户
@@ -395,9 +431,19 @@
                 }).then((res) => {
                     if (res.data.code === '90010') {
                         this.pitch = [];
-                        this.getLandlordList(1);
+                        this.search(this.params.beforePage);
                     }
                 })
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }

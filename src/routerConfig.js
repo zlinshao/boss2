@@ -31,6 +31,7 @@ import OkCollect from "./compoments/housingSupervise/collectHouse.vue";         
 import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";               //已收房源更多
 import NoCollect from "./compoments/housingSupervise/uncollectHouse.vue";                       //未收房源
 import Collect_More from "./compoments/housingSupervise/uncollectHouseDetail.vue";              //未收房源更多
+import Blackboard from "./compoments/housingSupervise/blackboard.vue";                          //小黑板
 import CollectContract from "./compoments/contract/collectContract.vue";                        //收房合同
 import RentingContract from "./compoments/contract/rentingContract.vue";                        //租房合同
 import ContractDetail from './compoments/contract/collectDetail.vue'                            //收房合同详情
@@ -255,6 +256,11 @@ export default[
         path: '/noCollect',                         //待收房源
         name: 'noCollect',
         component: NoCollect
+    },
+    {
+        path: '/blackboard',                       //小黑板
+        name: 'blackboard',
+        component: Blackboard
     },
     {
         path: '/details',                           //客户详情
