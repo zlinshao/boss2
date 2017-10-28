@@ -245,8 +245,8 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>空置期(天)<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.vacancy}} 天
+                                                <span>
+                                                    {{item.checkin_collect_vacancy}} 天
                                                 </span>
                                             </div>
                                             <div class="infoList">
@@ -269,8 +269,8 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>收房月数<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
-                                                    {{item.checkin_collect_id.months}}月
+                                                <span>
+                                                    {{item.checkin_collect_months}}月
                                                 </span>
                                             </div>
                                             <div class="infoList">

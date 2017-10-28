@@ -250,18 +250,18 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>租房月数<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
-                                                    {{item.checkin_rent_id.months}} 月
+                                                <span v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                                    {{item.checkin_rent_months}} 月
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>租房类型：</span>
-                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
-                                                    {{dictionary.shared_house[item.checkin_rent_id.is_shared]}}
+                                                <span>
+                                                    {{dictionary.shared_house[item.checkin_rent_is_shared]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>合同开始日期：</span>
+                                                <span>合同开始日期：1</span>
                                                 <span>{{item.start_date}}</span>
                                             </div>
                                             <div class="infoList">
@@ -304,7 +304,9 @@
                                                 <div>
                                                     <span>付款方式
                                                         <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)">
-                                                            （{{dictionary.rent_payment[pay.payment_id]}}）
+                                                            <span v-for="pay in item.checkin_rent_id.payment">
+                                                                （{{dictionary.rent_payment[pay.payment_id]}}）
+                                                            </span>
                                                         </span>：
                                                     </span>
                                                     <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)">
