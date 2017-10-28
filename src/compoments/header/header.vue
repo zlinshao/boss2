@@ -348,7 +348,7 @@
                                 <router-link to='/noCollect'>待收房源</router-link>
                             </li>
                             <!--<li>-->
-                                <!--<router-link to='/blackboard'>小黑板</router-link>-->
+                            <!--<router-link to='/blackboard'>小黑板</router-link>-->
                             <!--</li>-->
                         </ul>
                     </li>
@@ -409,7 +409,8 @@
                     <!--</ul>-->
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
-                    <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('revenue/index') > -1||simulate.indexOf('Revenue/Customer') > -1||isSuper">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -422,11 +423,12 @@
                             <!--<span>客户管理</span>-->
                             <!--</router-link>-->
                             <!--</li>-->
-                            <li class="sub-menu" v-show="simulate.indexOf('Revenue/Customer') > -1||isSuper">
+                            <li class="sub-menu"
+                                v-show="simulate.indexOf('Revenue/Customer') > -1 && simulate.indexOf('Revenue/Customer') > -1||isSuper">
                                 <a href="javascript:;">
                                     <span>客户管理</span>
                                 </a>
-                                <ul class="sub">
+                                <ul class="sub" v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                     <li>
                                         <router-link to="/newLandlord">房东</router-link>
                                     </li>
@@ -441,31 +443,31 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/account">
                                     <span>账户管理</span>
                                 </router-link>
                             </li>
 
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/subject">
                                     <span>科目管理</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/payPayment">
                                     <span>应付款项</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/collectPayment">
                                     <span>应收款项</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/payCllentAll">应收/应付总汇</router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/incomeFlow">
                                     <span>收支流水</span>
                                 </router-link>
@@ -475,12 +477,12 @@
                             <!--<span>转账操作记录</span>-->
                             <!--</router-link>-->
                             <!--</li>-->
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/organization">
                                     <span>业绩生成</span>
                                 </router-link>
@@ -1130,10 +1132,10 @@
             lock_empty (){
                 this.lockScreen = '';
             },
-/*//            左侧栏点击颜色
-            pitch_on (n){
-                this.isActive = n;
-            },*/
+            /*//            左侧栏点击颜色
+             pitch_on (n){
+             this.isActive = n;
+             },*/
             logOut (){
                 this.$http.post('staff/logout').then(() => {
                     let keys = document.cookie.match(/[^ =;]+(?=\=)/g);
@@ -1325,7 +1327,8 @@
     .sub-menu i {
         width: 21px;
     }
-    .router-link-exact-active.router-link-active{
+
+    .router-link-exact-active.router-link-active {
         color: #FF6C60
     }
 </style>
