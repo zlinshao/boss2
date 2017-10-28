@@ -15,7 +15,7 @@
                     <div class="modal-body">
                             <div class="panel-body">
                                 <form class="form-horizontal tasi-form">
-                                    <div v-if="simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic')==-1||isSuper">
+                                    <div v-if="simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic')==-1||simulate.indexOf('Collect/updateContract')>-1||isSuper">
                                         <h4 style="margin-top: -15px">基本信息</h4>
                                         <div class="row">
                                             <label class="col-sm-2 control-label">客户姓名<sup>*</sup></label>

@@ -67,7 +67,7 @@
                         更多
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li v-if="simulate.indexOf('Collect/updateContract')>-1||isSuper">
+                        <li v-if="simulate.indexOf('Collect/updateContract')>-1||simulate.indexOf('Collect/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                             <button class="btn btn-white btn-block" @click="editContract"
                                     :disabled="(contract_pass>4||contract_status==1) && (simulate.indexOf('Collect/update_success') == -1||isSuper)">
                                 编辑
