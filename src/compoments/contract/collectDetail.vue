@@ -275,14 +275,13 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>付款方式：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
-                                                    <span v-for="(pay,index) in item.checkin_collect_id.pay_type" v-if="index>0">第{{index + 1}}期</span>
-                                                    {{dictionary.pay_type[pay]}}&nbsp;
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                    <span v-for="(pay,index) in item.checkin_collect_id.pay_type" v-if="index>0">第{{index + 1}}期{{dictionary.pay_type[pay]}}&nbsp;</span>
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>月单价<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
                                                         第{{index + 1}}期{{price}}元&nbsp;&nbsp;
                                                     </span>
@@ -290,41 +289,41 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>汇款方式：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{dictionary.money_type[item.checkin_collect_id.payment]}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
+                                                 v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined" v-show="item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4">
                                                 <span>收款人姓名：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span>
                                                     {{item.checkin_collect_id.account_owner}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
+                                                 v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined" v-show="(item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
                                                 <span>开户行：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span>
                                                     {{dictionary.bank[item.checkin_collect_id.bank]}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && (item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
+                                                 v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined" v-show="(item.checkin_collect_id.payment == 1 || item.checkin_collect_id.payment == 4)">
                                                 <span>支行：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span>
                                                     {{item.checkin_collect_id.account_subbank}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper) && item.checkin_collect_id.payment == 2">
+                                                 v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined" v-show="item.checkin_collect_id.payment == 2">
                                                 <span>支付宝姓名：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span>
                                                     {{item.checkin_collect_id.account_owner}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>账号：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
@@ -332,7 +331,7 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.cost_medi}}
                                                 </span>
                                             </div>
@@ -342,7 +341,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>押金：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
                                                     {{item.checkin_collect_id.cost_deposit}}
                                                 </span>
                                             </div>
