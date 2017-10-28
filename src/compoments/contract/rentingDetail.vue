@@ -248,10 +248,9 @@
                                                 <span>合同编号<sup>*</sup>：</span>
                                                 <span>{{item.contract_num}}</span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>租房月数<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
+                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                     {{item.checkin_rent_id.months}} 月
                                                 </span>
                                             </div>
@@ -269,20 +268,18 @@
                                                 <span>合同结束日期：</span>
                                                 <span>{{item.end_date}}</span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>付款类型：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
+                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                      押 {{item.checkin_rent_id.bet}}&nbsp;&nbsp;
                                                     <span v-for="(pay,index) in item.checkin_rent_id.pay">
                                                         第{{index + 1}}年{{pay}}月付&nbsp;&nbsp;
                                                     </span>
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>月单价：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
+                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                     <span v-for="(price,index) in item.checkin_rent_id.price">
                                                         <span v-if="index>0">第{{index + 1}}期</span>
                                                         {{price}}元&nbsp;&nbsp;
@@ -297,48 +294,51 @@
                                             <!--</div>-->
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>已收 （定金）<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
+                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                     {{item.checkin_rent_id.received_amount}} 元
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)">
-                                                <div v-for="pay in item.checkin_rent_id.payment">
-                                                    <span>付款方式 （{{dictionary.rent_payment[pay.payment_id]}}）：</span>
-                                                    <span>
-                                                    {{pay.money}} 元
-                                                </span>
+                                            <div class="infoList">
+                                                <div>
+                                                    <span>付款方式
+                                                        <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)">
+                                                            （{{dictionary.rent_payment[pay.payment_id]}}）
+                                                        </span>：
+                                                    </span>
+                                                    <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && (simulate.indexOf('Rent/readContract_pic')>-1||isSuper)">
+                                                        <span v-for="pay in item.checkin_rent_id.payment">
+                                                            {{pay.money}} 元
+                                                        </span>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
-                                                <div v-for="pay in item.checkin_rent_id.payment">
+                                            <div class="infoList">
+                                                <div>
                                                     <span>收据编号：</span>
-                                                    <span>{{item.receipt_number}}</span>
+                                                    <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                                        <span v-for="pay in item.checkin_rent_id.payment">{{item.receipt_number}}</span>
+                                                    </span>
+
                                                 </div>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>未收：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
+                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                     {{item.checkin_rent_id.remain_amount}} 元
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>租房状态：</span>
-                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined">
+                                                <span v-if="item.checkin_rent_id !==null && item.checkin_rent_id !==undefined && simulate.indexOf('Rent/readContract_pic')>-1||isSuper">
                                                     {{dictionary.rent_type[item.checkin_rent_id.rent_type]}}
                                                 </span>
                                             </div>
 
-                                            <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
+                                            <div class="infoList">
                                                 <span>汇款方式：</span>
-                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
+                                                <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                     {{dictionary.money_type[item.checkin_rent_id.medi_account_type]}}
                                                 </span>
                                             </div>

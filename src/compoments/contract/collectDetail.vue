@@ -273,28 +273,24 @@
                                                     {{item.checkin_collect_id.months}}月
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined"
-                                                 v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>付款方式：</span>
-                                                <span v-for="(pay,index) in item.checkin_collect_id.pay_type">
-                                                    <span v-if="index>0">第{{index + 1}}期</span>
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                                    <span v-for="(pay,index) in item.checkin_collect_id.pay_type" v-if="index>0">第{{index + 1}}期</span>
                                                     {{dictionary.pay_type[pay]}}&nbsp;
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-if="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>月单价<sup>*</sup>：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                     <span v-for="(price,index) in item.checkin_collect_id.price">
                                                         第{{index + 1}}期{{price}}元&nbsp;&nbsp;
                                                     </span>
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
+                                            <div class="infoList">
                                                 <span>汇款方式：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                     {{dictionary.money_type[item.checkin_collect_id.payment]}}
                                                 </span>
                                             </div>
@@ -326,19 +322,17 @@
                                                     {{item.checkin_collect_id.account_owner}}
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-show="(simulate.indexOf('Collect/readContract_pic')>-1||isSuper)">
+                                            <div class="infoList">
                                                 <span>账号：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                     {{item.checkin_collect_id.account}}
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="infoList"
-                                                 v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>中介费用：</span>
-                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                     {{item.checkin_collect_id.cost_medi}}
                                                 </span>
                                             </div>
@@ -346,11 +340,9 @@
                                                 <span>打房租日期：</span>
                                                 <span v-if="item.pay_date > 0">每期{{item.pay_date}}号</span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-show="simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
+                                            <div class="infoList">
                                                 <span>押金：</span>
-                                                <span v-if="item.checkin_collect_id !== null
-                                                && item.checkin_collect_id !== undefined">
+                                                <span v-if="item.checkin_collect_id !== null && item.checkin_collect_id !== undefined && simulate.indexOf('Collect/readContract_pic')>-1||isSuper">
                                                     {{item.checkin_collect_id.cost_deposit}}
                                                 </span>
                                             </div>
