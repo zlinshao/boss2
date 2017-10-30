@@ -39,20 +39,25 @@
                     </form>
                 </div>
 
-                <!--<div class="col-lg-12 remind" v-show="pitch.length === 1">
+                <div class="col-lg-12 remind" v-show="pitch.length === 1">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        &lt;!&ndash;<li>
+                        <!--<li>
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
-                        </li>&ndash;&gt;
+                        </li>-->
                         <li style="display: none">
                             <h5>
                                 <a><i class="fa fa-star"></i>&nbsp;标记</a>
-                                &lt;!&ndash;<a><i class="fa fa-star"></i>&nbsp;取消标记</a>&ndash;&gt;
+                                <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
+                            </h5>
+                        </li>
+                        <li>
+                            <h5 data-toggle="modal" data-target="#addRemark">
+                                <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
                     </ul>
-                </div>-->
+                </div>
             </div>
         </section>
 
@@ -84,7 +89,7 @@
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
-                                <!--<th class="text-center"></th>-->
+                                <th class="text-center"></th>
                                 <th class="text-center">领取时间</th>
                                 <th class="text-center">领取合同数(收)</th>
                                 <th class="text-center">领取合同数(租)</th>
@@ -92,19 +97,20 @@
                                 <th class="text-center">剩余合同数(租)</th>
                                 <th class="text-center">领取人</th>
                                 <th class="text-center">所属部门</th>
+                                <th class="text-center">备注</th>
                                 <th class="text-center">详情</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
-                                <!--<td>
+                                <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.request_time) > -1,
                                             'c_off':pitch.indexOf(item.request_time)==-1}"
-                                           @click.prevent="checked_id(item.request_time, $event)">
+                                           @click.prevent="checked_id(item.request_time, $event,item.id)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.request_time) > -1">
                                     </label>
-                                </td>-->
+                                </td>
                                 <td>{{item.receiver_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
@@ -112,6 +118,11 @@
                                 <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.receiver_name}}</td>
                                 <td>{{item.department_id.name}}</td>
+                                <td>
+                                    <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
+                                        <i class="fa fa-book"></i>
+                                    </a>
+                                </td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
                                     query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}"
@@ -129,7 +140,7 @@
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
-                                <!--<th class="text-center"></th>-->
+                                <th class="text-center"></th>
                                 <th class="text-center">实到时间</th>
                                 <th class="text-center">作废合同数(收)</th>
                                 <th class="text-center">作废合同数(租)</th>
@@ -137,19 +148,20 @@
                                 <th class="text-center">剩余合同数(租)</th>
                                 <th class="text-center">报备人</th>
                                 <th class="text-center">所属部门</th>
+                                <th class="text-center">备注</th>
                                 <th class="text-center">详情</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
-                                <!--<td>
+                                <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.scrap_request_time) > -1,
                                             'c_off':pitch.indexOf(item.scrap_request_time)==-1}"
-                                           @click.prevent="checked_id(item.scrap_request_time, $event)">
+                                           @click.prevent="checked_id(item.scrap_request_time, $event,item.id)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.scrap_request_time) > -1">
                                     </label>
-                                </td>-->
+                                </td>
                                 <td>{{item.actual_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
@@ -157,6 +169,11 @@
                                 <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.reporter_name}}</td>
                                 <td>{{item.department_id.name}}</td>
+                                <td>
+                                    <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
+                                        <i class="fa fa-book"></i>
+                                    </a>
+                                </td>
                                 <td>
                                     <router-link  :to="{path : '/contractNumDetail',
                                     query:{request_time:item.scrap_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
@@ -173,7 +190,7 @@
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
-                                <!--<th class="text-center"></th>-->
+                                <th class="text-center"></th>
                                 <th class="text-center">上缴时间</th>
                                 <th class="text-center">上缴合同数(收)</th>
                                 <th class="text-center">上缴合同数(租)</th>
@@ -181,19 +198,20 @@
                                 <th class="text-center">剩余合同数(租)</th>
                                 <th class="text-center">上缴人</th>
                                 <th class="text-center">所属部门</th>
+                                <th class="text-center">备注</th>
                                 <th class="text-center">详情</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="text-center" v-for="item in myData">
-                                <!--<td>
+                                <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.paid_request_time) > -1,
                                             'c_off':pitch.indexOf(item.paid_request_time)==-1}"
-                                           @click.prevent="checked_id(item.paid_request_time, $event)">
+                                           @click.prevent="checked_id(item.paid_request_time, $event,item.id)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.paid_request_time) > -1">
                                     </label>
-                                </td>-->
+                                </td>
                                 <td>{{item.paid_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
@@ -201,6 +219,11 @@
                                 <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.paid_name}}</td>
                                 <td>{{item.department_id.name}}</td>
+                                <td>
+                                    <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
+                                        <i class="fa fa-book"></i>
+                                    </a>
+                                </td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
                                     query:{request_time:item.paid_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
@@ -227,6 +250,61 @@
 
         <AddModal :msg="params.type" @success="successAdd"></AddModal>
 
+        <!--备注-->
+        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="addRemark"
+             aria-labelledby="mySmallModalLabel" data-backdrop="static">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" @click="closeAddRemark">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">添加备注</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body">
+                            <form class="form-horizontal tasi-form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">备注</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" v-model="addRemark"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" @click="closeAddRemark">取消</button>
+                        <button type="button" class="btn btn-primary" @click="remarkAdd">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--显示备注-->
+        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="showRemark"
+             aria-labelledby="mySmallModalLabel" data-backdrop="static">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">备注</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body">
+                            <div v-for="item in remark">
+                                {{item.other_remark}}@{{item.remark_name}}@{{item.remark_time}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -244,6 +322,7 @@
             return {
                 dict : {},
 
+                operId : '',
                 pitch: [],
                 beforePage: 1,                      //当前页
                 paging: 1,                        //总页数
@@ -281,6 +360,9 @@
                     //失败信息 ***
                     error: ''
                 },
+
+                addRemark : '',             // 添加备注
+                remark : '',                // 显示备注
             }
         },
         mounted (){
@@ -424,23 +506,66 @@
             },
 
 //            选中
-            checked_id (rul, ev){
+            checked_id (rul, ev,id){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
                 if (evInput.checked) {
                     this.pitch.push(rul);
+                    this.operId = id;
                 } else {
                     let index = this.pitch.indexOf(rul);
                     if (index > -1) {
                         this.pitch.splice(index, 1);
                     }
+                    this.operId = '';
                 }
             },
 
             // 新增成功
             successAdd(){
                 this.contract_list(1);
+            },
+
+//            关闭新增备注
+            closeAddRemark(){
+                this.addRemark = '';
+                $('#addRemark').modal('hide');
+            },
+//            新增备注
+            remarkAdd(){
+                console.log(this.pitch[0])
+                this.$http.post('/code/Contract_Number_Record/addRemark',{
+                    id : this.operId,
+                    remark : this.addRemark
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==30099){
+                        // success
+                        this.info.success = res.data.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.closeAddRemark();
+                        this.contract_list(this.beforePage);
+                        this.operId = '';
+                        this.pitch = []
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
+                })
+            },
+//            显示备注
+            showRemark(remark){
+//                console.log(remark);
+//                console.log(JSON.parse(remark));
+
+                this.remark = JSON.parse(remark);
+                $('#showRemark').modal('show')
             }
         }
     }
@@ -457,5 +582,8 @@
     }
     .table {
         margin-bottom: 0;
+    }
+    textarea{
+        max-width: 100%;
     }
 </style>
