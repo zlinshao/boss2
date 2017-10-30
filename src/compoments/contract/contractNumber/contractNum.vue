@@ -294,8 +294,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="panel-body">
-                            <div v-for="item in remark">
-                                {{item.other_remark}}@{{item.remark_name}}@{{item.remark_time}}
+                            <div v-for="(item,index) in remark" style="padding: 5px;border-bottom: 1px solid #ddd">
+                                {{index+1}}.&emsp;{{item.remark_time}}&emsp;&emsp;{{item.other_remark}}@{{item.remark_name}}
                             </div>
                         </div>
                     </div>
