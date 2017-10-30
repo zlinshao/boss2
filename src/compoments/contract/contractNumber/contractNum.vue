@@ -539,6 +539,7 @@
                     this.info.error = '请填写备注信息';
                     //显示失败弹窗 ***
                     this.info.state_error = true;
+                    return
                 }
                 this.$http.post('/code/Contract_Number_Record/addRemark',{
                     id : this.operId,
