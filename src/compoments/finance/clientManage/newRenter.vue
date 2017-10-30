@@ -33,27 +33,22 @@
 
                         <div class="input-group">
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>
-                                手机
+                                <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>手机
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-circle text-warning"></i>
-                                客户姓名
+                                <i style="padding-right: 3px" class="fa fa-circle text-warning"></i>客户姓名
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-circle text-primary"></i>
-                                地址
+                                <i style="padding-right: 3px" class="fa fa-circle text-primary"></i>地址
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-eye-slash"></i>
-                                忽略重复
+                                <i style="padding-right: 3px" class="fa fa-eye-slash"></i>忽略重复
                             </span>
                         </div>
 
                         <div class="pro-sort pull-right">
                             <button class="btn btn-success" type="button" @click="newAddRenter">
-                                <i class="fa fa-plus-square"></i>
-                                新增客户
+                                <i class="fa fa-plus-square"></i>新增客户
                             </button>
                         </div>
                     </form>
@@ -76,20 +71,16 @@
                         </li>
                         <li><h5 style="border-left: 1px solid #aaaaaa">
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>
-                                手机
+                                <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>手机
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-circle text-warning"></i>
-                                客户姓名
+                                <i style="padding-right: 3px" class="fa fa-circle text-warning"></i>客户姓名
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-circle text-primary"></i>
-                                地址
+                                <i style="padding-right: 3px" class="fa fa-circle text-primary"></i>地址
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 3px" class="fa fa-eye-slash"></i>
-                                忽略重复
+                                <i style="padding-right: 3px" class="fa fa-eye-slash"></i>忽略重复
                             </span>
                         </h5></li>
                     </ul>
@@ -432,6 +423,9 @@
                     if (res.data.code === '90010') {
                         this.pitch = [];
                         this.search(this.params.beforePage);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
