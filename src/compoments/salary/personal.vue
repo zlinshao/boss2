@@ -172,10 +172,7 @@
             personalList (val){
                 this.$http.get('salary/Commission/dict').then((res) => {
                     this.dict = res.data;
-
                     this.params.page = val;
-                    this.paging = '';
-                    this.salary = [];
                     this.pitch = [];
                     this.$http.get('salary/view', {
                         params: this.params
@@ -185,6 +182,8 @@
                             this.paging = res.data.data.pages;
                             this.isShow = false;
                         } else {
+                            this.paging = '';
+                            this.salary = [];
                             this.isShow = true;
                         }
                     })

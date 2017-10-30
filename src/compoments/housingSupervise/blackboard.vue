@@ -153,8 +153,6 @@
 //            小黑板列表
             blackboard (val){
                 this.params.page = val;
-                this.blackboardList = [];
-                this.paging = '';
                 this.$http.get('finance/house/dashboard', {
                     params: this.params,
                 }).then((res) => {
@@ -164,6 +162,8 @@
                         this.isShow = false;
                     } else {
                         this.isShow = true;
+                        this.blackboardList = [];
+                        this.paging = '';
                         this.errorMsg(res.data.msg);
                     }
                 })
