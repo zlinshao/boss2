@@ -76,7 +76,11 @@
                             <a class="btn btn-success btn-sm" @click="able_save(item.id)">保存</a>
                         </span>
                     </td>
-                    <td>{{dict.villa_status[item.status]}}</td>
+                    <td>
+                        <span v-if="item.status == 1">已出租</span>
+                        <span v-if="item.status == 2">未出租</span>
+                        <span v-if="item.status == 3">已结束</span>
+                    </td>
                     <td>{{item.real_name}}</td>
                     <td>{{item.department}}</td>
                 </tr>
