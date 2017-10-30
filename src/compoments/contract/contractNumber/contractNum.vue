@@ -570,7 +570,7 @@
 //                console.log(remark);
 //                console.log(JSON.parse(remark));
 
-                this.remark = JSON.parse(remark);
+                this.remark = JSON.parse(remark).reverse();
                 $('#showRemark').modal('show')
             }
         }
