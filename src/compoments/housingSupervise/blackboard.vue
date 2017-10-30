@@ -6,48 +6,71 @@
         </ol>
         <section class="panel">
             <div class="panel-body clearFix has-js">
-                <form class="form-inline clearFix" role="form">
-                    <div class="input-group">
-                        <select class="form-control" v-model="params.status" @change="search(1)">
-                            <option value="">全部</option>
-                            <option :value="value" v-for="(key,value) in dict.villa_status">{{key}}
-                            </option>
-                        </select>
-                    </div>
+                <div v-if="pitch.length == 0">
+                    <form class="form-inline clearFix" role="form">
+                        <div class="input-group">
+                            <select class="form-control" v-model="params.status" @change="search(1)">
+                                <option value="">全部</option>
+                                <option :value="value" v-for="(key,value) in dict.villa_status">{{key}}
+                                </option>
+                            </select>
+                        </div>
 
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="点击选择部门"
-                               v-model="selected" @click='select' :readonly="!disabled_id" :disabled="disabled_id">
-                        <span class="input-group-btn">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="点击选择部门"
+                                   v-model="selected" @click='select' :readonly="!disabled_id" :disabled="disabled_id">
+                            <span class="input-group-btn">
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
                             </span>
-                    </div>
+                        </div>
 
-                    <div class="input-group">
-                        <input type="text" class="form-control" v-model="params.keyword" placeholder="房屋地址/客户名"
-                               @keyup.enter="search(1)">
-                        <span class="input-group-btn">
+                        <div class="input-group">
+                            <input type="text" class="form-control" v-model="params.keyword" placeholder="房屋地址/客户名"
+                                   @keyup.enter="search(1)">
+                            <span class="input-group-btn">
                             <button class="btn btn-success" type="button" @click="search(1)">搜索</button>
                         </span>
-                    </div>
+                        </div>
 
-                    <div class="input-group" style="margin: 0 12px;">
-                        <label :class="{'label_check':true, 'c_on': thisGroup, 'c_off':thisGroup}"
-                               @change.prevent="this_group($event)">
-                            <input type="checkbox" class="pull-left">显示本组房屋
-                        </label>
-                    </div>
+                        <div class="input-group" style="margin: 0 12px;">
+                            <label :class="{'label_check':true, 'c_on': thisGroup, 'c_off':thisGroup}"
+                                   @change.prevent="this_group($event)">
+                                <input type="checkbox" class="pull-left">显示本组房屋
+                            </label>
+                        </div>
 
-                    <div class="form-group">
-                        <button class="btn btn-success" type="button" @click="resetting">重置</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="button" @click="resetting">重置</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-12 remind" v-if="pitch.length > 0">
+                    <ul>
+                        <li>
+                            <h5><a>已选中&nbsp; {{pitch.length}} &nbsp;项</a></h5>
+                        </li>
+                        <li>
+                            <h5>
+                                <a @click="distribution">
+                                    <i class="fa fa-sitemap"></i>&nbsp;按部门分配
+                                </a>
+                            </h5>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
         <section class="panel table table-responsive roll has-js">
             <table class="table table-advance table-hover">
                 <thead class="text-center">
                 <tr>
+                    <td style="border-bottom: 2px solid #dddddd;">
+                        <label :class="{'label_check':true,'c_on':pitch.length == 12,'c_off':pitch.length != 12}"
+                               @click.prevent="all_id($event)">
+                            <input type="checkbox" class="pull-left"
+                                   :checked="pitch.length == 12">
+                        </label>
+                    </td>
                     <th class="text-center width130">地址</th>
                     <th class="text-center width130">房型</th>
                     <th class="text-center width80">参考租金</th>
@@ -58,6 +81,14 @@
                 </thead>
                 <tbody class="text-center">
                 <tr v-for="item in blackboardList">
+                    <td class="text-center">
+                        <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,'c_off':pitch.indexOf(item.id) == -1}"
+                               @click.prevent="pitchId(item.id, $event)">
+                            <input type="checkbox" class="pull-left"
+                                   :checked="pitch.indexOf(item.id) > -1">
+                        </label>
+
+                    </td>
                     <td>{{item.detailed_address}}</td>
                     <td>
                         {{item.rooms.rooms}}室
@@ -93,7 +124,11 @@
             </table>
         </section>
 
+        <!--部门筛选-->
         <Department :configure="configure" @Staff="selectDateSend"></Department>
+
+        <!--部门分配-->
+        <Department :configure="configure" @Staff="select_distribution"></Department>
 
         <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
 
@@ -109,6 +144,7 @@
         components: {Department, Page, Status,},
         data(){
             return {
+                pitch: [],
                 dict: {},                           //字典
                 blackboardList: [],                 //列表
                 isActive: '',                       //现实编辑金额
@@ -150,6 +186,17 @@
             })
         },
         methods: {
+//            全选
+            all_id (ev){
+                this.pitch = [];
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    for (let i = 0; i < this.blackboardList.length; i++) {
+                        this.pitch.push(this.blackboardList[i].id);
+                    }
+                }
+            },
 //            搜索
             search(val){
                 this.blackboard(val);
@@ -192,6 +239,27 @@
                 this.selected = '';
                 this.search(1);
             },
+//            部门分配
+            distribution (){
+                $('.selectCustom:eq(1)').modal({backdrop: 'static',});
+                this.configure = {type: 'department', length: 1};
+            },
+//            部门分配
+            select_distribution (val){
+                let department_id = val.department[0].id;
+                this.$http.post('finance/house/migrate', {
+                    ids: this.pitch,
+                    department_id: department_id
+                }).then((res) => {
+                    if (res.data.code === '90010') {
+                        this.pitch = [];
+                        this.search(this.params.page);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                });
+            },
 //            重置
             resetting (){
                 this.params.status = '';
@@ -226,6 +294,19 @@
                         this.errorMsg(res.data.msg);
                     }
                 })
+            },
+//            选中
+            pitchId (rul, ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.pitch.push(rul);
+                } else {
+                    let index = this.pitch.indexOf(rul);
+                    if (index > -1) {
+                        this.pitch.splice(index, 1);
+                    }
+                }
             },
 //            显示本组房屋
             this_group (ev){
@@ -300,5 +381,9 @@
     .freeze {
         background-color: #D6D6D6;
         color: #E4393C;
+    }
+
+    thead > tr > th.text-center {
+        vertical-align: middle;
     }
 </style>
