@@ -61,10 +61,10 @@
                                         <input type="text" class="form-control" v-model="houseEdit.building" placeholder="栋/座">
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="number" class="form-control" v-model="houseEdit.unit" placeholder="栋/座">
+                                        <input type="number" class="form-control" v-model="houseEdit.unit" placeholder="单元">
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="number" class="form-control" v-model="houseEdit.house_number" placeholder="门牌号">
+                                        <input type="text" class="form-control" v-model="houseEdit.house_number" placeholder="门牌号">
                                     </div>
                                 </div>
                                 <div class="form-group">

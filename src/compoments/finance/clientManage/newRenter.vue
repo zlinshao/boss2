@@ -31,21 +31,21 @@
                             </span>
                         </div>
 
-                        <div class="input-group" style="margin-left: 16px;">
+                        <div class="input-group">
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-circle text-danger"></i>
+                                <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>
                                 手机
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-circle text-warning"></i>
+                                <i style="padding-right: 3px" class="fa fa-circle text-warning"></i>
                                 客户姓名
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-circle text-primary"></i>
+                                <i style="padding-right: 3px" class="fa fa-circle text-primary"></i>
                                 地址
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-eye-slash"></i>
+                                <i style="padding-right: 3px" class="fa fa-eye-slash"></i>
                                 忽略重复
                             </span>
                         </div>
@@ -74,21 +74,21 @@
                         <li>
                             <h5><a @click="cancel_rename">取消重名标记</a></h5>
                         </li>
-                        <li><h5 style="border-left: 1px solid #aaaaaa;">
+                        <li><h5 style="border-left: 1px solid #aaaaaa">
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-circle text-danger"></i>
+                                <i style="padding-right: 3px" class="fa fa-circle text-danger"></i>
                                 手机
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-circle text-warning"></i>
+                                <i style="padding-right: 3px" class="fa fa-circle text-warning"></i>
                                 客户姓名
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-circle text-primary"></i>
+                                <i style="padding-right: 3px" class="fa fa-circle text-primary"></i>
                                 地址
                             </span>
                             <span style="padding: 0 6px;">
-                                <i style="padding-right: 6px" class="fa fa-eye-slash"></i>
+                                <i style="padding-right: 3px" class="fa fa-eye-slash"></i>
                                 忽略重复
                             </span>
                         </h5></li>
