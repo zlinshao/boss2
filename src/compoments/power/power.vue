@@ -25,7 +25,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">新增权限</h4>
+                            <h4 class="modal-title">{{modalName}}</h4>
                         </div>
                         <div class="modal-body">
                             <form role="form">
@@ -43,7 +43,8 @@
                         </div>
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                            <button type="button" class="btn btn-primary" @click="add_power ()">添加</button>
+                            <button type="button" class="btn btn-primary" @click="add_power ()" v-if="isAdd">添加</button>
+                            <button type="button" class="btn btn-primary" @click="edit_power ()" v-else="isAdd">修改</button>
                         </div>
                     </div>
 
@@ -60,6 +61,7 @@
                             <th>ID</th>
                             <th>规则名</th>
                             <th>描述</th>
+                            <th>修改</th>
                             <th>删除</th>
                         </tr>
                         </thead>
@@ -69,13 +71,18 @@
                             <td>{{item.name}}</td>
                             <td>{{item.title}}</td>
                             <td>
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        @click="revise_btn(item.id,item.name,item.title)">修改
+                                </button>
+                            </td>
+                            <td>
                                 <button type="button" class="btn btn-danger btn-sm" @click="dele(item.id)">
                                     删除
                                 </button>
                             </td>
                         </tr>
                         <tr v-show="myData.length == 0">
-                            <td colspan="4" class="text-center text-muted">
+                            <td colspan="5" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -111,6 +118,9 @@
                     oper : '',
                     msg: '',
                 },
+                modalName:'',
+                isAdd:true,
+                editId : ''
             }
         },
         created (){
@@ -157,7 +167,10 @@
 //            新增按钮
             add_btn (){
                 this.username = '';
-                this.title = ''
+                this.title = '';
+                this.modalName = '新增权限';
+                this.isAdd = true;
+
             },
 //             确认新增
             add_power () {
@@ -197,6 +210,40 @@
                     }
                 });
             },
+
+//          修改
+            revise_btn(id,name,title){
+                this.editId = id;
+                this.username = name;
+                this.title = title;
+                this.modalName = '编辑权限';
+                this.isAdd = false;
+                $('#new_add').modal('show')
+            },
+            edit_power(){
+                this.$http.put('manager/Auth/updateAuth',{
+                    id : this.editId,
+                    name: this.username,
+                    title: this.title
+                }).then((res)=>{
+//                    console.log(res.data);
+                    if (res.data.code==30020){
+                        // success
+                        this.info.success = res.data.msg;
+//                        显示成功信息
+                        this.info.state_error = false;
+                        this.info.state_success = true;
+                        $('#new_add').modal('hide');
+                        this.editId = '';
+                        this.list_power(1);
+                    } else {
+                        // fail
+                        this.info.state_success = false;
+                        this.info.error = res.data.msg;
+                        this.info.state_error = true;
+                    }
+                })
+            }
         }
     };
 

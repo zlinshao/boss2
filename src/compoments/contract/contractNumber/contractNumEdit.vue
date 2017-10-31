@@ -324,6 +324,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">备注</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" v-model="remark"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">操作人</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="operate_man" disabled>
@@ -388,6 +394,7 @@
 
                 del_contract : [],              // 删除的合同
 
+                remark : '',                    // 备注
                 currentDate: [],                //时间组件
                 currentDate1: [],                //时间组件
                 dateConfigure: [                //时间组件
@@ -456,6 +463,7 @@
                         this.department = publicVal.department_id.name;
                         this.department_id = publicVal.department_id.id;
                         this.receiver_name = publicVal.receiver_name;
+                        this.remark = publicVal.remark;
                         this.currentDate = [publicVal.receiver_time];
                         this.currentDate1 = [publicVal.actual_time];
                         this.sf_remian_num = val.num[0].rest_sf_number ;
@@ -588,7 +596,7 @@
                 this.pay_zf_contract_add = [];               // 新增上缴租房合同
 
                 this.del_contract = [];
-
+                this.remark = '';
                 this.photos= {
                     cus_idPhotos: {},           //修改图片ID
                     cus_idPhoto: [],            //证件照片
@@ -866,6 +874,7 @@
                     department_id: this.department_id,
                     ljsf : this.sf_num,
                     ljzf : this.zf_num,
+                    remark : this.remark
                 };
                 switch (parseInt(this.type)){
                     case 1 :
@@ -942,5 +951,8 @@
     .padd0{
         padding-left: 0;
         padding-right: 0;
+    }
+    textarea{
+        resize: none;
     }
 </style>

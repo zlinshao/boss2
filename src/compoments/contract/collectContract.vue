@@ -95,12 +95,12 @@
                 <div class="panel-body" v-if="contractSeleted.length > 0" style="padding: 0;">
                     <ul>
                         <li>已选中&nbsp; {{contractSeleted.length}} &nbsp;项</li>
-                        <li class="operate"
+                        <!--<li class="operate"
                             v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/mark') > -1||isSuper)">
-                            <!--<li class="operate" v-if="contractSeleted.length ===1">-->
+                            &lt;!&ndash;<li class="operate" v-if="contractSeleted.length ===1">&ndash;&gt;
                             <i class="fa fa-star" v-if="mark == 1" @click="marked"> 标记</i>
                             <i class="fa fa-star" v-if="mark == 2" @click="marked"> 取消标记</i>
-                        </li>
+                        </li>-->
                         <li class="operate"
                             v-if="contractSeleted.length ===1&&(simulate.indexOf('Collect/delete') > -1||isSuper)">
                             <!--<li class="operate" v-if="contractSeleted.length ===1">-->
@@ -161,10 +161,12 @@
                                        :checked="contractSeleted.length==params.length&&params.length!=0">
                             </label>
                         </th>
-                        <th class="text-center width50">标记</th>
+                        <!--<th class="text-center width50">标记</th>-->
                         <th class="text-center width100">合同编号</th>
                         <th class="text-center width100">上传时间</th>
                         <th class="text-center width80">开单人</th>
+                        <th class="text-center width80">部门</th>
+                        <th class="text-center width80">负责人</th>
                         <th class="text-center width80">业主姓名</th>
                         <th class="text-center width110">地址</th>
                         <th class="text-center width110">手机号码</th>
@@ -173,7 +175,7 @@
                         <th class="text-center width80">过期情况</th>
                         <th class="text-center width80">回访情况</th>
                         <th class="text-center width80">审核状态</th>
-                        <th class="text-center width50">锁定</th>
+                        <!--<th class="text-center width50">锁定</th>-->
                         <th class="text-center width50">置顶</th>
                         <th class="text-center width50" v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">详情
                         </th>
@@ -190,15 +192,17 @@
                             </label>
 
                         </td>
-                        <td class=" myIcon">
+                        <!--<td class=" myIcon">
                             <i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>
                             <i class="cancel" v-if="item.contract_status == 1">
                                 <img src="../../assets/img/cancel.png" alt="">
                             </i>
-                        </td>
+                        </td>-->
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
                         <td>{{item.drawer}}</td>
+                        <td>{{dictionary.department_all[item.department_id]}}</td>
+                        <td>{{item.leader_Name}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.detailed_address}}</td>
                         <td>{{item.mobile}}</td>
@@ -223,10 +227,10 @@
                                 {{dictionary.passed[item.passed]}}
                             </span>
                         </td>
-                        <td class=" myIcon">
+                        <!--<td class=" myIcon">
                             <i class="fa fa-lock" v-if="item.status != 1"></i>
                             <i class="fa fa-unlock" v-if="item.status == 1"></i>
-                        </td>
+                        </td>-->
                         <td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top != null"
                                @click="stick(item.id,'core/core_common/unstick')"></i>

@@ -162,6 +162,10 @@
                                     </div>
                                 </div>
                                 <div>
+                                    <div class="text-primary">备注：</div>
+                                    <div>{{public.remark}}</div>
+                                </div>
+                                <div>
                                     <div class="text-primary">操作人：</div>
                                     <div>{{public.operator.name}}</div>
                                 </div>

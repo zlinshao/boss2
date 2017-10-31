@@ -64,7 +64,7 @@
                         更多
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li v-show="simulate.indexOf('Rent/updateContract')>-1||isSuper">
+                        <li v-show="simulate.indexOf('Rent/updateContract')>-1||simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                             <button class="btn btn-white btn-block" @click="editContract"
                                     :disabled="(contract_pass>4||contract_status==1) && (simulate.indexOf('Rent/update_success') == -1||isSuper)">
                                 编辑
@@ -707,7 +707,7 @@
                                         </span>
                                     </div>
                                     <div class="infoList clearFix"
-                                         v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                         v-if="simulate.indexOf('Rent/readContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <span class="col-lg-1">退租交接单照片</span>
                                         <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('surrender_order_pic',index)"
@@ -715,7 +715,7 @@
                                         </span>
                                     </div>
                                     <div class="infoList clearFix"
-                                         v-if="simulate.indexOf('Rent/updateContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
+                                         v-if="simulate.indexOf('Rent/readContract_surrender_order_pic_refund_form_pic') > -1||isSuper">
                                         <span class="col-lg-1">退租结算单照片</span>
                                         <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('refund_form_pic',index)"
