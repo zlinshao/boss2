@@ -205,7 +205,17 @@
             details(val){
                 this.account_id = val[0].id;
                 this.subject_id = val[0].subject_id;
-                this.pay_date = val[0].current_pay_date;
+                let date = new Date(),
+                    year = date.getFullYear(),
+                    month = date.getMonth() + 1,
+                    day = date.getDate();
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                if (day < 10) {
+                    day = '0' + day;
+                }
+                this.pay_date = year + '-' + month + '-' + day;
             }
         },
         methods: {

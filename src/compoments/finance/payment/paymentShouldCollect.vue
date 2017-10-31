@@ -148,8 +148,6 @@
     import PicModal from '../../common/largePic.vue'
     import Status from '../../common/status.vue';
     import DatePicker from '../../common/datePicker.vue'
-
-
     export default{
         props: ['id'],
         components: {PicModal, Status,DatePicker},
@@ -196,7 +194,6 @@
                         needHour: false,
                     }
                 ],
-                pay_date: '',           //付款时间
             }
         },
         watch: {
@@ -205,6 +202,17 @@
                 this.largePic = [];
                 this.srcs = {};
                 this.getDetails();
+                let date = new Date(),
+                    year = date.getFullYear(),
+                    month = date.getMonth() + 1,
+                    day = date.getDate();
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                if (day < 10) {
+                    day = '0' + day;
+                }
+                this.formData.pay_date = year + '-' + month + '-' + day;
             }
         },
         mounted (){
@@ -249,7 +257,6 @@
             getDetails(){
                 this.$http.get('account/receivable/' + this.currentId).then((res) => {
                     this.msg = res.data.data;
-                    this.pay_date = res.data.data.current_pay_date;
                     if (res.data.data.album !== undefined) {
                         this.srcs = this.msg.album.receipt_pic;
                     }
