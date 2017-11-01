@@ -164,9 +164,6 @@
                         <!--<th class="text-center width50">标记</th>-->
                         <th class="text-center width100">合同编号</th>
                         <th class="text-center width100">上传时间</th>
-                        <th class="text-center width80">开单人</th>
-                        <th class="text-center width80">部门</th>
-                        <th class="text-center width80">负责人</th>
                         <th class="text-center width80">业主姓名</th>
                         <th class="text-center width110">地址</th>
                         <th class="text-center width110">手机号码</th>
@@ -174,6 +171,9 @@
                         <th class="text-center width100">资料补齐时间</th>
                         <th class="text-center width80">过期情况</th>
                         <th class="text-center width80">回访情况</th>
+                        <th class="text-center width80">开单人</th>
+                        <th class="text-center width80">负责人</th>
+                        <th class="text-center width80">部门</th>
                         <th class="text-center width80">审核状态</th>
                         <!--<th class="text-center width50">锁定</th>-->
                         <th class="text-center width50">置顶</th>
@@ -200,9 +200,6 @@
                         </td>-->
                         <td>{{item.contract_num}}</td>
                         <td>{{item.create_time}}</td>
-                        <td>{{item.drawer}}</td>
-                        <td>{{dictionary.department_all[item.department_id]}}</td>
-                        <td>{{item.leader_Name}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.detailed_address}}</td>
                         <td>{{item.mobile}}</td>
@@ -210,6 +207,9 @@
                         <td>{{item.complete_date[0]}}</td>
                         <td>{{item.complete_date[2]}}</td>
                         <td>{{dictionary.reviewed[item.reviewed]}}</td>
+                        <td>{{item.drawer}}</td>
+                        <td>{{item.leader_Name}}</td>
+                        <td>{{dictionary.department_all[item.department_id]}}</td>
                         <td>
                             <span class="label label-success" v-if="item.passed > 4 ">
                                 已完成

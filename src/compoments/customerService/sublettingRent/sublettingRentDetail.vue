@@ -2,6 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>客服中心</li>
+            <li>申请记录</li>
             <li>
                 <router-link to="/sublettingRentList">客服部转租申请</router-link>
             </li>

@@ -4,11 +4,11 @@
             <li>客服中心</li>
             <li>申请记录</li>
             <li>
-                <router-link to="/cusServiceList">客服部维修申请</router-link>
+                <router-link to="/hydropowerGasList">水电燃物业公摊费申报</router-link>
             </li>
-            <li>客服部维修申请详情</li>
+            <li>水电燃物业公摊费申报详情</li>
             <li class="pull-right" v-show="typeof (params) === 'object'">
-                <router-link :to="{path:'/cusServiceList',query: {myParam:params,page:page,select:select}}">
+                <router-link :to="{path:'/hydropowerGasList',query: {myParam:params,page:page,select:select}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
             </li>
@@ -38,32 +38,50 @@
                                 <div>
                                     <div class="text-primary">房屋地址：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='房屋地址'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='房屋地址'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="text-primary">联系电话：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='租客电话'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='租客电话'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">申请内容：</div>
+                                    <div class="text-primary">报销类别：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='申请内容'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='报销类别'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="text-primary">用途：</div>
+                                    <div class="text-primary">报销明细：</div>
                                     <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='用途'">
-                                            {{list.value}}
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='费用明细'">
+                                                {{a.value}}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-primary">报销金额(元)：</div>
+                                    <div>
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='报销类别'">
+                                                {{a.value}}
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
@@ -80,19 +98,7 @@
                                 <!--<div>
                                     <div class="text-primary">备注：</div>
                                     <div>奥术大师大所多</div>
-                                </div>
-                                <div>
-                                    <div class="text-primary">审批记录：</div>
-                                    <div>奥术大师大所多</div>
                                 </div>-->
-                                <div>
-                                    <div class="text-primary">认责人：</div>
-                                    <div>
-                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='责任人'">
-                                            {{list.value}}
-                                        </span>
-                                    </div>
-                                </div>
                                 <div>
                                     <div class="text-primary">历史审批人姓名：</div>
                                     <div>{{msg.approver_userid_list}}</div>
