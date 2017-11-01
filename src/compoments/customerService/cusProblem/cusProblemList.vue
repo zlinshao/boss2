@@ -2,6 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>客服中心</li>
+            <li>申请记录</li>
             <li>客服部问题申报</li>
         </ol>
 
@@ -47,6 +48,8 @@
                         <thead>
                         <tr>
                             <th class="text-center">申请时间</th>
+                            <th class="text-center">房屋地址</th>
+                            <th class="text-center">联系电话</th>
                             <th class="text-center">报销类别</th>
                             <th class="text-center">报销金额</th>
                             <!--<th class="text-center">总报销金额</th>-->
@@ -61,6 +64,20 @@
                         <tbody>
                         <tr class="text-center" v-for="item in myData">
                             <td>{{item.create_time}}</td>
+                            <td>
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    <span v-for="msg in list.value[0]" v-if="msg.label=='小区名称'">
+                                        {{msg.value}}
+                                    </span>
+                                </span>
+                            </td>
+                            <td>
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    <span v-for="msg in list.value[0]" v-if="msg.label=='联系电话'">
+                                        {{msg.value}}
+                                    </span>
+                                </span>
+                            </td>
                             <td>
                                 <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
                                     <span v-for="msg in list.value[0]" v-if="msg.label=='报销类别'">

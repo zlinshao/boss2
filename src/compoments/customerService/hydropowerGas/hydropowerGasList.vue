@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li>客服中心</li>
             <li>申请记录</li>
-            <li>客服部退租申请</li>
+            <li>水电燃物业公摊费申报</li>
         </ol>
 
         <section class="panel">
@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="地址/提交人/手机号"
+                            <input type="text" class="form-control" placeholder="提交人"
                                    @keydown.enter.prevent="search(1)" v-model="params.keyword">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -50,6 +50,9 @@
                             <th class="text-center">申请时间</th>
                             <th class="text-center">房屋地址</th>
                             <th class="text-center">联系电话</th>
+                            <th class="text-center">报销类别</th>
+                            <th class="text-center">报销金额</th>
+                            <!--<th class="text-center">总报销金额</th>-->
                             <th class="text-center">审批状态</th>
                             <th class="text-center">审批结果</th>
                             <th class="text-center">完成时间</th>
@@ -62,15 +65,38 @@
                         <tr class="text-center" v-for="item in myData">
                             <td>{{item.create_time}}</td>
                             <td>
-                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='房屋地址'">
-                                    {{list.value}}
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    <span v-for="msg in list.value[0]" v-if="msg.label=='房屋地址'">
+                                        {{msg.value}}
+                                    </span>
                                 </span>
                             </td>
                             <td>
-                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='租客电话'">
-                                    {{list.value}}
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    <span v-for="msg in list.value[0]" v-if="msg.label=='租客电话'">
+                                        {{msg.value}}
+                                    </span>
                                 </span>
                             </td>
+                            <td>
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    <span v-for="msg in list.value[0]" v-if="msg.label=='报销类别'">
+                                        {{msg.value}}
+                                    </span>
+                                </span>
+                            </td>
+                            <td>
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    <span v-for="msg in list.value[0]" v-if="msg.label=='报销金额(元)'">
+                                        {{msg.value}}
+                                    </span>
+                                </span>
+                            </td>
+                            <!--<td>
+                                <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                    {{list.value}}
+                                </span>
+                            </td>-->
                             <td>{{dict.status[item.status]}}</td>
                             <td>{{dict.process_instance_result[item.process_instance_result]}}</td>
                             <td>{{item.finish_time}}</td>
@@ -78,7 +104,7 @@
                             <td>{{item.name}}</td>
 
                             <td>
-                                <router-link :to="{path:'/outRentDetail',query:{id:item.process_instance_id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                <router-link :to="{path:'/hydropowerGasDetail',query:{id:item.process_instance_id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -173,7 +199,7 @@
 //            获取列表
             getList(val){
                 this.params.page = val;
-                this.params.code = 'PROC-TXEKLZ3V-LQCNL5WHUKM9HHJH5BMS1-LBW4O86J-01';
+                this.params.code = 'PROC-NWDKIKJV-7SNPFY9WUP4NH0H0KA253-VF4DEF9J-3';
                 this.$http.get('core/approvals/approval_list',{
                     params : this.params
                 }).then((res)=>{

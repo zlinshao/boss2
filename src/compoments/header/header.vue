@@ -852,12 +852,17 @@
                                     </li>
                                     <li v-show="simulate.indexOf('Approvals/approval_list')>-1||isSuper">
                                         <router-link to="/serviceList">
-                                            <span>维修申请</span>
+                                            <span>维修申请(停用)</span>
                                         </router-link>
                                     </li>
                                     <li v-show="simulate.indexOf('Approvals/approval_list')>-1||isSuper">
                                         <router-link to="/problemList">
-                                            <span>房屋问题申报</span>
+                                            <span>房屋问题申报(停用)</span>
+                                        </router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/hydropowerGasList">
+                                            <span>水电燃物业公摊费申报</span>
                                         </router-link>
                                     </li>
                                 </ul>

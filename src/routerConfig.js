@@ -142,6 +142,8 @@ import CusProblemList from './compoments/customerService/cusProblem/cusProblemLi
 import CusProblemDetail from './compoments/customerService/cusProblem/cusProblemDetail.vue'                                // 客服部问题申报详情
 import ProblemList from './compoments/customerService/problem/problemList.vue'                                // 房屋问题申报
 import ProblemDetail from './compoments/customerService/problem/problemDetail.vue'                                // 房屋问题申报详情
+import HydropowerGasList from './compoments/customerService/hydropowerGas/hydropowerGasList.vue'                                // 水电燃物业、公摊费申报申报
+import HydropowerGasDetail from './compoments/customerService/hydropowerGas/hydropowerGasDetail.vue'                                // 水电燃物业、公摊费申报申报详情
 
 export default[
     {
@@ -743,5 +745,15 @@ export default[
         path: '/problemDetail',
         name: 'ProblemDetail',
         component: ProblemDetail
+    },
+    {       //水电燃物业、公摊费申报申报
+        path: '/hydropowerGasList',
+        name: 'HydropowerGasList',
+        component: HydropowerGasList
+    },
+    {       //水电燃物业、公摊费申报申报
+        path: '/hydropowerGasDetail',
+        name: 'HydropowerGasDetail',
+        component: HydropowerGasDetail
     },
 ]

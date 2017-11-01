@@ -2,6 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>客服中心</li>
+            <li>申请记录</li>
             <li>
                 <router-link to="/cusProblemList">客服部问题申报</router-link>
             </li>
@@ -34,6 +35,26 @@
                     <div class="panel-body table-responsive client_info">
                         <div class="col-md-12">
                             <div class="col-md-6">
+                                <div>
+                                    <div class="text-primary">房屋地址：</div>
+                                    <div>
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='小区名称'">
+                                                {{a.value}}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-primary">联系电话：</div>
+                                    <div>
+                                        <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
+                                            <span v-for="a in list.value[0]" v-if="a.label=='联系电话'">
+                                                {{a.value}}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
                                 <div>
                                     <div class="text-primary">报销类别：</div>
                                     <div>

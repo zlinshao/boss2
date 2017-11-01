@@ -2,6 +2,7 @@
     <div>
         <ol class="breadcrumb">
             <li>客服中心</li>
+            <li>申请记录</li>
             <li>房屋问题申报</li>
         </ol>
 
