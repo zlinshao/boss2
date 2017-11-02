@@ -285,11 +285,11 @@
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="rent_turn_num[index].other.indexOf(2) > -1">收条
                                                 </label>
-                                                <label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
-                                                'c_off':collect_turn_num[index].other.indexOf(3) == -1}"
+                                                <label :class="{'label_check':true,'c_on':rent_turn_num[index].other.indexOf(3) > -1,
+                                                'c_off':rent_turn_num[index].other.indexOf(3) == -1}"
                                                        @click.prevent="collect_id(3, $event,index)">
                                                     <input type="checkbox" class="pull-left"
-                                                           :checked="collect_turn_num[index].other.indexOf(3) > -1">钥匙
+                                                           :checked="rent_turn_num[index].other.indexOf(3) > -1">钥匙
                                                 </label>
                                             </div>
                                         </div>
@@ -816,7 +816,7 @@
                     data.scrap_pic = this.photos.cus_idPhoto;
                 } else {
                     // 上缴
-//                    data.contract_type = this.contract_type;
+                    data.contract_way = this.contract_type;
                     if (this.contract_type==1){
                         data.area = this.area;
                     }

@@ -133,6 +133,12 @@
                                                 'c_off':pay_sf_contract[index].other.indexOf(3) == -1}"
                                                                @click.prevent="pitchOld(3, $event,index,1)">
                                                             <input type="checkbox" class="pull-left"
+                                                                   :checked="pay_sf_contract[index].other.indexOf(3) > -1">钥匙
+                                                        </label>
+                                                        <!--<label :class="{'label_check':true,'c_on':pay_sf_contract[index].other.indexOf(3) > -1,
+                                                'c_off':pay_sf_contract[index].other.indexOf(3) == -1}"
+                                                               @click.prevent="pitchOld(3, $event,index,1)">
+                                                            <input type="checkbox" class="pull-left"
                                                                    :checked="pay_sf_contract[index].other.indexOf(3) > -1">身份证
                                                         </label>
                                                         <label :class="{'label_check':true,'c_on':pay_sf_contract[index].other.indexOf(4) > -1,
@@ -140,7 +146,7 @@
                                                                @click.prevent="pitchOld(4, $event,index,1)">
                                                             <input type="checkbox" class="pull-left"
                                                                    :checked="pay_sf_contract[index].other.indexOf(4) > -1">房产证复印件
-                                                        </label>
+                                                        </label>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,6 +182,12 @@
                                                 'c_off':pay_sf_contract_add[index].other.indexOf(3) == -1}"
                                                                @click.prevent="pitchNew(3, $event,index,1)">
                                                             <input type="checkbox" class="pull-left"
+                                                                   :checked="pay_sf_contract_add[index].other.indexOf(3) > -1">钥匙
+                                                        </label>
+                                                        <!--<label :class="{'label_check':true,'c_on':pay_sf_contract_add[index].other.indexOf(3) > -1,
+                                                'c_off':pay_sf_contract_add[index].other.indexOf(3) == -1}"
+                                                               @click.prevent="pitchNew(3, $event,index,1)">
+                                                            <input type="checkbox" class="pull-left"
                                                                    :checked="pay_sf_contract_add[index].other.indexOf(3) > -1">身份证
                                                         </label>
                                                         <label :class="{'label_check':true,'c_on':pay_sf_contract_add[index].other.indexOf(4) > -1,
@@ -183,7 +195,7 @@
                                                                @click.prevent="pitchNew(4, $event,index,1)">
                                                             <input type="checkbox" class="pull-left"
                                                                    :checked="pay_sf_contract_add[index].other.indexOf(4) > -1">房产证复印件
-                                                        </label>
+                                                        </label>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -267,6 +279,12 @@
                                                             <input type="checkbox" class="pull-left"
                                                                    :checked="pay_zf_contract[index].other.indexOf(2) > -1">收条
                                                         </label>
+                                                        <label :class="{'label_check':true,'c_on':pay_zf_contract[index].other.indexOf(3) > -1,
+                                                'c_off':pay_zf_contract[index].other.indexOf(3) == -1}"
+                                                               @click.prevent="pitchOld(3, $event,index,2)">
+                                                            <input type="checkbox" class="pull-left"
+                                                                   :checked="pay_zf_contract[index].other.indexOf(3) > -1">钥匙
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -297,6 +315,12 @@
                                                                @click.prevent="pitchNew(2, $event,index,2)">
                                                             <input type="checkbox" class="pull-left"
                                                                    :checked="pay_zf_contract_add[index].other.indexOf(2) > -1">收条
+                                                        </label>
+                                                        <label :class="{'label_check':true,'c_on':pay_zf_contract_add[index].other.indexOf(3) > -1,
+                                                'c_off':pay_zf_contract_add[index].other.indexOf(3) == -1}"
+                                                               @click.prevent="pitchNew(3, $event,index,2)">
+                                                            <input type="checkbox" class="pull-left"
+                                                                   :checked="pay_zf_contract_add[index].other.indexOf(3) > -1">钥匙
                                                         </label>
                                                     </div>
                                                 </div>
