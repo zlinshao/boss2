@@ -9,7 +9,7 @@
             <div class="panel-body">
                 <div v-show="pitch.length === 0">
                     <form class="form-inline clearFix" role="form">
-                        <a v-if="params.type == 3">
+                        <!--<a v-if="params.type == 3">
                             <div class="input-group">
                                 <select class="form-control" v-model="params.style" @change="search(1)">
                                     <option value="">收租房</option>
@@ -25,7 +25,7 @@
                                     <option value="3">收条</option>
                                 </select>
                             </div>
-                        </a>
+                        </a>-->
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="selected" @click='select' readonly>
@@ -364,8 +364,8 @@
                 configure: {},                      //组织架构
                 selected: [],                       //部门名称
                 params: {
-                    style : '',                  // 收租房
-                    condition : 4,              // 缺少字段
+//                    style : '',                  // 收租房
+//                    condition : 4,              // 缺少字段
                     type: 1,
                     department_id: '',             //筛选
                     start : '',
@@ -444,8 +444,8 @@
                 this.params.start = '';
                 this.params.end = '';
                 this.params.type = val;
-                this.params.style = '';
-                this.params.condition = 4;
+//                this.params.style = '';
+//                this.params.condition = 4;
                 this.selected = [];
                 this.contract_num = '';
                 this.currentDate = [];
