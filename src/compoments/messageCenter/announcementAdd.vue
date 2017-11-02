@@ -20,25 +20,36 @@
                                             <input type="text" class="form-control" v-model="titles" placeholder="标题">
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-if="staffId.length == 0">
                                         <label class="col-sm-2 control-label col-lg-2">选择部门</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="选择部门"
-                                                   v-model="departmentName" readonly @click="selectDep">
+                                            <div class="input-group" style="margin-bottom: 16px;">
+                                                <input type="text" class="form-control" placeholder="选择部门"
+                                                       v-model="departmentName" readonly @click="selectDep">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-warning" type="button" @click="clearSelect(1)">清空</button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-if="departmentId.length == 0">
                                         <label class="col-sm-2 control-label col-lg-2">接受人</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="接收人"
-                                                   v-model="staffName" readonly @click="staffDep">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="接收人"
+                                                       v-model="staffName" readonly @click="staffDep">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-warning" type="button" @click="clearSelect(2)">清空</button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label col-sm-2">内容</label>
                                         <div class="col-sm-10 ">
-                                              <textarea class="form-control" name="editor1" v-model="contents" rows="6"></textarea>
+                                            <textarea class="form-control" name="editor1" v-model="contents"
+                                                      rows="6"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -46,7 +57,8 @@
                         </section>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="empty_info">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="empty_info">关闭
+                        </button>
                         <button type="button" class="btn btn-primary" @click="add_info">添加</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -95,7 +107,7 @@
             },
             selectedDpm(val){
                 for (let i = 0; i < val.department.length; i++) {
-                    if(this.departmentId.indexOf(val.department[i].id) === -1){
+                    if (this.departmentId.indexOf(val.department[i].id) === -1) {
                         this.departmentName.push(val.department[i].name);
                         this.departmentId.push(val.department[i].id);
                     }
@@ -108,7 +120,7 @@
             },
             staffDpm (val){
                 for (let i = 0; i < val.staff.length; i++) {
-                    if(this.staffId.indexOf(val.staff[i].id) === -1){
+                    if (this.staffId.indexOf(val.staff[i].id) === -1) {
                         this.staffName.push(val.staff[i].name);
                         this.staffId.push(val.staff[i].id);
                     }
@@ -143,12 +155,23 @@
                     }
                 });
             },
+            clearSelect (val){
+                if(val === 1){
+                    this.departmentName = [];     //部门名称
+                    this.departmentId = [];       //部门ID
+                }else if(val === 2){
+                    this.staffName = [];          //接收人
+                    this.staffId = [];            //接收人ID
+                }
+            },
 //            清空信息
             empty_info (){
                 this.titles = '';             //标题
                 this.contents = '';           //公告内容
                 this.departmentName = [];     //部门名称
                 this.departmentId = [];       //部门ID
+                this.staffName = [];          //接收人
+                this.staffId = [];            //接收人ID
             }
         }
     }
