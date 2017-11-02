@@ -25,8 +25,18 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="new_status == 1">
-                                        <label class="col-sm-2 control-label">地区</label>
+                                    <div class="form-group" v-if="new_status == 3">
+                                        <label class="col-sm-2 control-label">合同类型</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" v-model="contract_type" @change="area='01'">
+                                                <option value="1">公司合同</option>
+                                                <option value="2">中介合同</option>
+                                                <!--<option :value="value" v-for="(key,value) in dict.area">{{key}}</option>-->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-show="contract_type!=2">
+                                        <label class="col-sm-2 control-label">城市</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="area" @change="getStatic">
                                                 <option :value="value" v-for="(key,value) in dict.area">{{key}}</option>
@@ -221,6 +231,12 @@
                                                 'c_off':collect_turn_num[index].other.indexOf(3) == -1}"
                                                        @click.prevent="collect_id(3, $event,index)">
                                                     <input type="checkbox" class="pull-left"
+                                                           :checked="collect_turn_num[index].other.indexOf(3) > -1">钥匙
+                                                </label>
+                                                <!--<label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
+                                                'c_off':collect_turn_num[index].other.indexOf(3) == -1}"
+                                                       @click.prevent="collect_id(3, $event,index)">
+                                                    <input type="checkbox" class="pull-left"
                                                            :checked="collect_turn_num[index].other.indexOf(3) > -1">身份证
                                                 </label>
                                                 <label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(4) > -1,
@@ -228,7 +244,7 @@
                                                        @click.prevent="collect_id(4, $event,index)">
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="collect_turn_num[index].other.indexOf(4) > -1">房产证复印件
-                                                </label>
+                                                </label>-->
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -268,6 +284,12 @@
                                                        @click.prevent="rent_id(2, $event,index)">
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="rent_turn_num[index].other.indexOf(2) > -1">收条
+                                                </label>
+                                                <label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
+                                                'c_off':collect_turn_num[index].other.indexOf(3) == -1}"
+                                                       @click.prevent="collect_id(3, $event,index)">
+                                                    <input type="checkbox" class="pull-left"
+                                                           :checked="collect_turn_num[index].other.indexOf(3) > -1">钥匙
                                                 </label>
                                             </div>
                                         </div>
@@ -344,6 +366,7 @@
                 area  : '01',
                 collect_pitch: [],
                 rent_pitch: [],
+                contract_type : 1,              // 合同类型
                 receiver_time: '',              //领取日期
                 reality_time: '',               //实际日期
                 receiver_name: '',              //领取人
@@ -532,14 +555,17 @@
 
             // 获取默认起始编号
             getStatic(){
-                this.$http.post('code/Contract_Number_Record/getMaxContractNumber',{
+                if (this.new_status==1){
+                    this.$http.post('code/Contract_Number_Record/getMaxContractNumber',{
 //                    contract_type : 1,
-                    area : this.area
-                }).then((res)=>{
-                    console.log(res.data.data);
-                    this.collect_num_start = res.data.data.sf;
-                    this.rent_num_start = res.data.data.zf;
-                })
+                        area : this.area
+                    }).then((res)=>{
+                        console.log(res.data.data);
+                        this.collect_num_start = res.data.data.sf;
+                        this.rent_num_start = res.data.data.zf;
+                    })
+                }
+
             },
 
 //            组织架构
@@ -781,6 +807,7 @@
                     data.pz_pic = this.photos.cus_idPhoto;
                 } else if (this.new_status==2){
                     // 废除
+                    data.area = this.area;
                     data.report_time = this.receiver_time;
                     data.actual_time = this.reality_time;
                     data.reporter_id = this.receiver_id;
@@ -789,6 +816,10 @@
                     data.scrap_pic = this.photos.cus_idPhoto;
                 } else {
                     // 上缴
+//                    data.contract_type = this.contract_type;
+                    if (this.contract_type==1){
+                        data.area = this.area;
+                    }
                     data.paid_time = this.receiver_time;
                     data.paid_id = this.receiver_id;
                     data.paid_ljsf = this.collect_turn_num;

@@ -17,7 +17,9 @@
                 <header>
                     <h4 class="row">
                         <i class="fa fa-home"></i>&nbsp;{{item.address}}
-                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect" v-show="simulate.indexOf('Villa/updateVilla_success')>-1||isSuper"></a>
+                        <a data-toggle="modal" class="pull-right fa fa-pencil-square-o" @click="editcollect"
+                           v-show="(simulate.indexOf('Villa/updateVilla_success')>-1&&item.passed>4)||
+                           (simulate.indexOf('Villa/updateVilla')>-1&&item.passed<=4)||isSuper"></a>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive client_info">

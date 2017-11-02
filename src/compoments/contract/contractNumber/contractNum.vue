@@ -9,6 +9,22 @@
             <div class="panel-body">
                 <div v-show="pitch.length === 0">
                     <form class="form-inline clearFix" role="form">
+                        <a v-if="params.type == 3">
+                            <div class="input-group">
+                                <select class="form-control" v-model="params.style" @change="search(1)">
+                                    <option value="1">收房</option>
+                                    <option value="2">租房</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <select class="form-control" v-model="params.condition" @change="search(1)">
+                                    <option value="4">缺少资料</option>
+                                    <option value="1">钥匙</option>
+                                    <option value="2">交接单</option>
+                                    <option value="3">收条</option>
+                                </select>
+                            </div>
+                        </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="selected" @click='select' readonly>
@@ -22,11 +38,14 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="合同编号/领取人"
+                            <input type="text" class="form-control" placeholder="合同编号/领取人/房屋地址"
                                    @keydown.enter.prevent="search(1)" v-model="params.keywords">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
+                        </div>
+                        <div class="input-group" v-if="params.type == 3">
+                            <button class="btn btn-success" type="button" @click="exportTable">导出</button>
                         </div>
 
                         <div class="form-group pull-right"
@@ -117,7 +136,7 @@
                                 <td>{{item.rest_sf_number}}</td>
                                 <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.receiver_name}}</td>
-                                <td>{{item.department_id.name}}</td>
+                                <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
                                     <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
                                         <i class="fa fa-book"></i>
@@ -168,7 +187,7 @@
                                 <td>{{item.rest_sf_number}}</td>
                                 <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.reporter_name}}</td>
-                                <td>{{item.department_id.name}}</td>
+                                <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
                                     <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
                                         <i class="fa fa-book"></i>
@@ -218,7 +237,7 @@
                                 <td>{{item.rest_sf_number}}</td>
                                 <td>{{item.rest_zf_number}}</td>
                                 <td>{{item.paid_name}}</td>
-                                <td>{{item.department_id.name}}</td>
+                                <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
                                     <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
                                         <i class="fa fa-book"></i>
@@ -344,6 +363,8 @@
                 configure: {},                      //组织架构
                 selected: [],                       //部门名称
                 params: {
+                    style : 1,                  // 收租房
+                    condition : 4,              // 缺少字段
                     type: 1,
                     department_id: '',             //筛选
                     start : '',
@@ -422,6 +443,8 @@
                 this.params.start = '';
                 this.params.end = '';
                 this.params.type = val;
+                this.params.style = 1;
+                this.params.condition = 4;
                 this.selected = [];
                 this.contract_num = '';
                 this.currentDate = [];
@@ -572,6 +595,10 @@
 
                 this.remark = JSON.parse(remark).reverse();
                 $('#showRemark').modal('show')
+            },
+//            导出
+            exportTable(){
+
             }
         }
     }
