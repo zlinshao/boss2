@@ -47,6 +47,8 @@ import ContractNumDetail from "./compoments/contract/contractNumber/contractNumD
 import  Comparecontract from  './compoments/contract/Compare.vue'
 
 import Organization from './compoments/finance/organization/organization.vue'                   //组织架构财务
+import FlatShare from './compoments/finance/organization/flatShare.vue'                         //合租房
+import NoPerformance from './compoments/finance/organization/noPerformance.vue'                 //未生成业绩
 import NewLandlord from './compoments/finance/clientManage/newLandlord.vue'                     //财务房东管理
 import NewRenter from './compoments/finance/clientManage/newRenter.vue'                         //财务租客管理
 import NewRenterDetail from './compoments/finance/clientManage/newRenterDetail.vue'             //财务房东管理详情
@@ -286,27 +288,37 @@ export default[
     },
     {
         path: '/newLandlord',
-        name: 'newLandlord',                        //财务房东管理
+        name: 'newLandlord',                       //财务房东管理
         component: NewLandlord
     },
     {
+        path: '/flatShare',
+        name: 'flatShare',                          //合租房
+        component: FlatShare
+    },
+    {
+        path: '/noPerformance',
+        name: 'noPerformance',                      //未生成业绩
+        component: NoPerformance
+    },
+    {
         path: '/newLandlordDetail',
-        name: 'newLandlordDetail',                  //财务房东管理详情
+        name: 'newLandlordDetail',                 //财务房东管理详情
         component: NewLandlordDetail
     },
     {
         path: '/rentLordAll',
-        name: 'rentLordAll',                        //财务房东/租客总汇
+        name: 'rentLordAll',                       //财务房东/租客总汇
         component: RentLordAll
     },
     {
         path: '/noPriorLease',
-        name: 'noPriorLease',                        //未收先租
+        name: 'noPriorLease',                      //未收先租
         component: NoPriorLease
     },
     {
         path: '/noPriorLeaseDetail',
-        name: 'noPriorLeaseDetail',                        //未收先租详情
+        name: 'noPriorLeaseDetail',                //未收先租详情
         component: NoPriorLeaseDetail
     },
     {
