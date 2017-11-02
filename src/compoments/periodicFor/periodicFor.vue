@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="params.staff_name"
+                            <input type="text" class="form-control" placeholder="业务员姓名/地址" v-model="params.staff_name"
                                    @keydown.enter.prevent="search(remark_term.tabs, 1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button"
@@ -35,7 +35,7 @@
                             <a class="btn btn-success" @click="time_choose">生成工资</a>
                         </div>
                         <div class="pull-right">
-                            <router-link class="btn btn-success" :to="{path:'/periodicDetail',query: {nameId: 1}}">详情
+                            <router-link class="btn btn-success" :to="{path:'/periodicDetail',query: {sear: params, department: selected}}">详情
                             </router-link>
                         </div>
                     </form>

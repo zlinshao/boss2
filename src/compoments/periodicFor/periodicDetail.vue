@@ -41,6 +41,9 @@
                         <div class="form-group">
                             <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
                         </div>
+                        <div class="form-group">
+                            <a class="btn btn-success" type="button" @click="resetting">重置</a>
+                        </div>
                     </form>
                 </div>
 
@@ -199,6 +202,7 @@
                 pitch: [],
                 isShow: false,
                 detail_list: [],                //详情列表
+                currentDate: [],                //日期组件参数
                 dateConfigure: [
                     {
                         range: true,            //日期组件参数
@@ -210,16 +214,14 @@
                     time: '',                   //时间
                 },
                 configure: {},                  //部门组件参数
-                selected: [],                   //部门搜索
-                currentDate: [],                //日期组件参数
+                selected: '',                   //部门搜索
                 params: {
                     typical: '',
-                    department_id: [],
-                    staff_id: [],
+                    department_id: '',
                     generate_date: '',
                     house_id: '',
                     search: '',
-                    page: 1
+                    page: 1,
                 },
                 paging: '',                     //总页数
                 beforePage: 1,                  //当前页
@@ -228,9 +230,29 @@
             }
         },
         mounted (){
+            this.params.department_id = this.$route.query.sear.department_id;
+            this.params.generate_date = this.$route.query.sear.generate_date;
+            this.selected = this.$route.query.department;
+            let time = this.$route.query.sear.generate_date;
+            if (time) {
+                this.currentDate = [time.split('to')[0], time.split('to')[1]];
+            }
+            this.params.search = this.$route.query.sear.staff_name;
             this.personalList(1);
         },
+
         methods: {
+//            重置
+            resetting (){
+                this.params.typical = '';
+                this.params.department_id = '';
+                this.selected = '';
+                this.params.generate_date = '';
+//                this.params.house_id = '';
+                this.params.search = '';
+                this.params.page = 1;
+                this.search(1);
+            },
             enter_overflow (val){
                 this.isActive = val;
             },
@@ -314,14 +336,8 @@
 
 //            部门搜索
             selectDateSend(val){
-                for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
-                }
-                for (let j = 0; j < val.staff.length; j++) {
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id);
-                }
+                this.selected = val.department[0].name;
+                this.params.department_id = val.department[0].id;
                 this.search(1);
             },
 //              选择房屋
@@ -330,17 +346,17 @@
             },
 //              房屋信息
             getHouse(data){
-                this.params.house_id = data.id;
+//                this.params.house_id = data.id;
+                this.params.search = data.address;
                 this.search(1);
             },
-//            重置部门搜索
+//            清空部门搜索
             clearSelect(){
                 if (this.selected.length === 0) {
                     return;
                 }
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
+                this.params.department_id = '';
+                this.selected = '';
                 this.search(1);
             },
 //            选中

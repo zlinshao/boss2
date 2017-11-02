@@ -441,8 +441,8 @@
                 Examines: [],               //审批提醒
                 Substitutes: [],            //代办提醒
                 Secretarys: [],             //BOSS小秘书
-                news1: [],                  //新增1
-                news2: [],                  //新增2
+                news1: [],                  //个人发件箱
+                news2: [],                  //部门发件箱
                 Messages: [],               //收藏
 
                 isSystem: true,             //系统公告
@@ -455,10 +455,10 @@
                 Secretarys_s: false,        //BOSS小秘书暂无数据
                 isMessage: false,           //收藏
                 Messages_s: false,          //收藏暂无数据
-                isNew1: false,              //新增1
-                New1: false,                //新增1暂无数据
-                isNew2: false,              //新增2
-                New2: false,                //新增2暂无数据
+                isNew1: false,              //个人发件箱
+                New1: false,                //个人发件箱暂无数据
+                isNew2: false,              //部门发件箱
+                New2: false,                //部门发件箱暂无数据
                 configure: [],              //人资
                 time_status: true,
                 params: {
@@ -490,86 +490,27 @@
             let self = this.simulate.indexOf('Msessage/self_message') > -1 || this.isSuper;             // 个人发件箱
             let depart = this.simulate.indexOf('Message/department_message') > -1 || this.isSuper;      // 部门发件箱
             let fav = this.simulate.indexOf('Favourite/index') > -1 || this.isSuper;                    // 收藏
-            if ((this.act === 'sys_mess' || this.act === undefined) && sys) {
-                this.System(1);
-            }
-            if (this.act === 'appr_mess' && approval) {
-                this.Examine(1);
-            }
-            if (this.act === 'remind_mess' && remind) {
-                this.Substitute(1);
-            }
-            if (this.act === 'secre_mess' && boss) {
-                this.Secretary(1);
-            }
 
-            if (!sys) {
-                // 没有系统公告权限
-                this.isSystem = false;
-                this.isExamine = true;
-                this.message = '审批提醒';
-                this.font = 'fa-user';
-                if (approval) {
-                    this.Examine(1);
-                }
-            }
-            if (!approval) {
-                // 没有审批权限
-                this.isExamine = false;
-                this.isSubstitute = true;
-                this.message = '待办提醒';
-                this.font = 'fa-bell';
-                if (remind) {
-                    this.Substitute(1);
-                }
-            }
-            if (!remind) {
-                // 没有待办提醒权限
-                this.isSubstitute = false;
-                this.isSecretary = true;
-                this.message = 'BOSS小秘书';
-                this.font = 'fa-github';
-                if (boss) {
-                    this.Secretary(1);
-                }
-            }
-            if (!boss) {
-                // 没有BOSS权限
-                this.isSecretary = false;
-                this.isNew1 = true;
-                this.message = '个人发件箱';
-                this.font = 'fa-male';
-                if (self) {
-                    this.new1(1);
-                }
-            }
-            if (!self) {
-                // 没有个人发件箱权限
-                this.isNew1 = false;
-                this.isNew2 = true;
-                this.message = '部门发件箱';
-                this.font = 'fa-users';
-                if (depart) {
-                    this.new2(1);
-                }
-            }
-            if (!depart) {
-                // 没有部门发件箱权限
-                this.isNew2 = false;
-                this.isMessage = true;
-                this.message = '收藏';
-                this.font = 'fa-heart';
-                if (fav) {
-                    this.Message(1);
-                }
-            }
-            if (!fav) {
+            if (sys) {
+                this.System(1);
+            } else if (approval) {
+                this.Examine(1);
+            } else if (remind) {
+                this.Substitute(1);
+            } else if (boss) {
+                this.Secretary(1);
+            } else if (self) {
+                this.new1(1);
+            } else if (depart) {
+                this.new2(1);
+            } else if (fav) {
+                this.Message(1);
+            }else{
                 // 没有查看收藏权限
                 this.isMessage = false;
                 this.message = '';
                 this.font = '';
             }
-
         },
         computed: {
             act () {
