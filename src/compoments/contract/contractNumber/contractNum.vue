@@ -12,8 +12,8 @@
                         <a v-if="params.type == 3">
                             <div class="input-group">
                                 <select class="form-control" v-model="params.style" @change="search(1)">
-                                    <option value="1">收房</option>
-                                    <option value="2">租房</option>
+                                    <option value="2">收房</option>
+                                    <option value="1">租房</option>
                                 </select>
                             </div>
                             <div class="input-group">
