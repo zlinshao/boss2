@@ -12,6 +12,7 @@
                         <a v-if="params.type == 3">
                             <div class="input-group">
                                 <select class="form-control" v-model="params.style" @change="search(1)">
+                                    <option value="">收租房</option>
                                     <option value="2">收房</option>
                                     <option value="1">租房</option>
                                 </select>
@@ -149,7 +150,7 @@
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
-                                <td colspan="9" style="font-size: 22px;">暂无数据......</td>
+                                <td colspan="10" style="font-size: 22px;">暂无数据......</td>
                             </tr>
                             </tbody>
                         </table>
@@ -199,7 +200,7 @@
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
-                                <td colspan="9" style="font-size: 22px;">暂无数据......</td>
+                                <td colspan="10" style="font-size: 22px;">暂无数据......</td>
                             </tr>
                             </tbody>
                         </table>
@@ -249,7 +250,7 @@
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
-                                <td colspan="9" style="font-size: 22px;">暂无数据......</td>
+                                <td colspan="10" style="font-size: 22px;">暂无数据......</td>
                             </tr>
                             </tbody>
                         </table>
@@ -363,7 +364,7 @@
                 configure: {},                      //组织架构
                 selected: [],                       //部门名称
                 params: {
-                    style : 1,                  // 收租房
+                    style : '',                  // 收租房
                     condition : 4,              // 缺少字段
                     type: 1,
                     department_id: '',             //筛选
@@ -443,7 +444,7 @@
                 this.params.start = '';
                 this.params.end = '';
                 this.params.type = val;
-                this.params.style = 1;
+                this.params.style = '';
                 this.params.condition = 4;
                 this.selected = [];
                 this.contract_num = '';
