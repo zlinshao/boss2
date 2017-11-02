@@ -54,7 +54,7 @@
                         </ul>
                     </aside>
                     <aside class="lg-side">
-                        <div class="inbox-head">
+                        <div class="inbox-head" style="padding: 18px;">
                             <h3 style="font-size: 20px;padding-top: 10px;margin-bottom: 12px;">
                                 <i :class="[fa,font]"></i>&nbsp;&nbsp;{{message}}
                             </h3>
