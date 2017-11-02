@@ -27,6 +27,13 @@
                                                    v-model="departmentName" readonly @click="selectDep">
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label col-lg-2">接受人</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" placeholder="接收人"
+                                                   v-model="staffName" readonly @click="staffDep">
+                                        </div>
+                                    </div>
                                     <hr>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label col-sm-2">内容</label>
@@ -49,6 +56,8 @@
         <Status :state='info'></Status>
 
         <DepartmentSelect :configure="configure" @Staff="selectedDpm"></DepartmentSelect>
+
+        <DepartmentSelect :configure="configure" @Staff="staffDpm"></DepartmentSelect>
     </div>
 </template>
 
@@ -64,6 +73,8 @@
                 contents: '',           //公告内容
                 departmentName: [],     //部门名称
                 departmentId: [],       //部门ID
+                staffName: [],          //接收人
+                staffId: [],            //接收人id
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -77,6 +88,7 @@
             }
         },
         methods: {
+//            部门
             selectDep(){
                 $('.selectCustom:eq(1)').modal('show');
                 this.configure = {type: 'department'};
@@ -89,9 +101,24 @@
                     }
                 }
             },
+//            接收人
+            staffDep(){
+                $('.selectCustom:eq(2)').modal('show');
+                this.configure = {type: 'staff'};
+            },
+            staffDpm (val){
+                for (let i = 0; i < val.staff.length; i++) {
+                    if(this.staffId.indexOf(val.staff[i].id) === -1){
+                        this.staffName.push(val.staff[i].name);
+                        this.staffId.push(val.staff[i].id);
+                    }
+                }
+            },
+
             add_info (){
                 this.$http.post('message/system/write', {
                     department_id: this.departmentId,
+                    staff_id: this.staffId,
                     title: this.titles,
                     content: this.contents
                 }).then((res) => {

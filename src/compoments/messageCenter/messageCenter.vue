@@ -10,32 +10,38 @@
                             </div>
                         </div>
                         <ul class="inbox-nav inbox-divider" style="border-bottom: 0;">
-                            <li @click="System(1)" v-if="simulate.indexOf('System/index')>-1||isSuper"><!--:class="{active: act === 'sys_mess'}"-->
+                            <li @click="System(1)" v-if="simulate.indexOf('System/index')>-1||isSuper">
+                                <!--:class="{active: act === 'sys_mess'}"-->
                                 <a href="#">
                                     <i class="fa fa-volume-up"></i>系统公告
                                 </a>
                             </li>
-                            <li @click="Examine(1)" v-if="simulate.indexOf('Approval/index')>-1||isSuper"><!--:class="{active: act === 'appr_mess'}"-->
+                            <li @click="Examine(1)" v-if="simulate.indexOf('Approval/index')>-1||isSuper">
+                                <!--:class="{active: act === 'appr_mess'}"-->
                                 <a href="#">
                                     <i class="fa fa-user"></i>审批提醒
                                 </a>
                             </li>
-                            <li @click="Substitute(1)" v-if="simulate.indexOf('Remind/index')>-1||isSuper"><!--:class="{active: act === 'remind_mess'}"-->
+                            <li @click="Substitute(1)" v-if="simulate.indexOf('Remind/index')>-1||isSuper">
+                                <!--:class="{active: act === 'remind_mess'}"-->
                                 <a href="#">
                                     <i class="fa fa-bell"></i>待办提醒
                                 </a>
                             </li>
-                            <li @click="Secretary(1)" v-if="simulate.indexOf('Secretary/index')>-1||isSuper"><!--:class="{active: act === 'secre_mess'}"-->
+                            <li @click="Secretary(1)" v-if="simulate.indexOf('Secretary/index')>-1||isSuper">
+                                <!--:class="{active: act === 'secre_mess'}"-->
                                 <a href="#">
                                     <i class=" fa fa-github"></i>BOSS小秘书
                                 </a>
                             </li>
-                            <li @click="new1(1)" v-if="simulate.indexOf('Message/self_message')>-1||isSuper"><!--:class="{active: act === 'secre_mess'}"-->
+                            <li @click="new1(1)" v-if="simulate.indexOf('Message/self_message')>-1||isSuper">
+                                <!--:class="{active: act === 'secre_mess'}"-->
                                 <a href="#">
                                     <i class=" fa fa-male"></i>个人发件箱
                                 </a>
                             </li>
-                            <li @click="new2(1)" v-if="simulate.indexOf('Message/department_message')>-1||isSuper"><!--:class="{active: act === 'secre_mess'}"-->
+                            <li @click="new2(1)" v-if="simulate.indexOf('Message/department_message')>-1||isSuper">
+                                <!--:class="{active: act === 'secre_mess'}"-->
                                 <a href="#">
                                     <i class=" fa fa-users"></i>部门发件箱
                                 </a>
@@ -52,7 +58,8 @@
                             <h3 style="font-size: 20px;padding-top: 10px;margin-bottom: 12px;">
                                 <i :class="[fa,font]"></i>&nbsp;&nbsp;{{message}}
                             </h3>
-                            <form class="pull-right position" action="#" v-if="this.simulate.indexOf('System/index')>-1||this.isSuper">
+                            <form class="pull-right position" action="#"
+                                  v-if="this.simulate.indexOf('System/index')>-1||this.isSuper">
                                 <div class="input-append" v-if="isSystem">
                                     <button type="button" class="btn btn-primary" @click="addAnnouncement"
                                             style="padding: 11px 12px;">
@@ -62,21 +69,25 @@
                             </form>
 
                             <!--部门发件箱-->
-                            <form class="pull-right position" action="#" v-if="simulate.indexOf('Message/department_message')>-1||isSuper">
+                            <form class="pull-right position" action="#"
+                                  v-if="simulate.indexOf('Message/department_message')>-1||isSuper">
                                 <div class="input-append pull-right" v-if="isNew2">
                                     <button type="button" class="btn btn-primary" @click="resetting"
                                             style="background-color: #00A6B2;margin: 4px 0 0 15px;">重置
                                     </button>
                                 </div>
                             </form>
-                            <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper" class="pull-right col-xs-12 col-md-4 col-lg-2"
+                            <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper"
+                                 class="pull-right col-xs-12 col-md-4 col-lg-2"
                                  style="margin-top: 4px;">
                                 <div class="form-group pull-right" style="margin-bottom: 0;">
-                                    <input title="请点击选择" type="text" class="form-control" readonly style="margin-bottom: 0;"
+                                    <input title="请点击选择" type="text" class="form-control" readonly
+                                           style="margin-bottom: 0;"
                                            v-model="params.staff" @click="selectStaff" placeholder='选择收件人'>
                                 </div>
                             </div>
-                            <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper" class="pull-right col-xs-12 col-md-4"
+                            <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper"
+                                 class="pull-right col-xs-12 col-md-4"
                                  style="margin-top: 4px;">
                                 <div class="form-group">
                                     <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
@@ -86,7 +97,8 @@
                         </div>
                         <div class="inbox-body panel table table-responsive roll">
                             <!--系统公告-->
-                            <table class="table table-striped table-advance table-hover" v-if="isSystem&&(simulate.indexOf('System/index')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isSystem&&(simulate.indexOf('System/index')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">发布时间</th>
@@ -119,10 +131,12 @@
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
-                                        <i class="fa fa-heart" v-if="sys.favourite_status === '已收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
+                                        <i class="fa fa-heart"
+                                           v-if="sys.favourite_status === '已收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
                                            @click.stop="isCollect(sys.mess_id)"
                                            style="color: #e4393c"></i>
-                                        <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
+                                        <i class="fa fa-heart-o"
+                                           v-if="sys.favourite_status === '未收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
                                            @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
@@ -134,7 +148,8 @@
                                 </tbody>
                             </table>
                             <!--审批提醒-->
-                            <table class="table table-striped table-advance table-hover" v-if="isExamine&&(simulate.indexOf('Approval/index')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isExamine&&(simulate.indexOf('Approval/index')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">申请时间</th>
@@ -179,7 +194,8 @@
                                 </tbody>
                             </table>
                             <!--待办提醒-->
-                            <table class="table table-striped table-advance table-hover" v-if="isSubstitute&&(simulate.indexOf('Remind/index')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isSubstitute&&(simulate.indexOf('Remind/index')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">提醒时间</th>
@@ -202,10 +218,12 @@
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
-                                        <i class="fa fa-heart" v-if="sys.favourite_status === '已收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
+                                        <i class="fa fa-heart"
+                                           v-if="sys.favourite_status === '已收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
                                            @click.stop="isCollect(sys.mess_id)"
                                            style="color: #e4393c"></i>
-                                        <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
+                                        <i class="fa fa-heart-o"
+                                           v-if="sys.favourite_status === '未收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
                                            @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
@@ -217,7 +235,8 @@
                                 </tbody>
                             </table>
                             <!--BOSS小秘书-->
-                            <table class="table table-striped table-advance table-hover" v-if="isSecretary&&(simulate.indexOf('Secretary/index')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isSecretary&&(simulate.indexOf('Secretary/index')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">时间</th>
@@ -242,10 +261,12 @@
                                            v-if="sys.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read_time != '未读'"></i>
 
-                                        <i class="fa fa-heart" v-if="sys.favourite_status === '已收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
+                                        <i class="fa fa-heart"
+                                           v-if="sys.favourite_status === '已收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
                                            @click.stop="isCollect(sys.mess_id)"
                                            style="color: #e4393c"></i>
-                                        <i class="fa fa-heart-o" v-if="sys.favourite_status === '未收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
+                                        <i class="fa fa-heart-o"
+                                           v-if="sys.favourite_status === '未收藏'&&(simulate.indexOf('Message/favourite')>-1||isSuper)"
                                            @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
@@ -257,7 +278,8 @@
                                 </tbody>
                             </table>
                             <!--个人发件箱-->
-                            <table class="table table-striped table-advance table-hover" v-if="isNew1&&(simulate.indexOf('Message/self_message')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isNew1&&(simulate.indexOf('Message/self_message')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">发件时间</th>
@@ -285,7 +307,8 @@
                                 </tbody>
                             </table>
                             <!--部门发件箱-->
-                            <table class="table table-striped table-advance table-hover" v-if="isNew2&&(simulate.indexOf('Message/department_message')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isNew2&&(simulate.indexOf('Message/department_message')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">发件时间</th>
@@ -317,7 +340,8 @@
                                 </tbody>
                             </table>
                             <!--收藏-->
-                            <table class="table table-striped table-advance table-hover" v-if="isMessage&&(simulate.indexOf('Favourite/index')>-1||isSuper)">
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isMessage&&(simulate.indexOf('Favourite/index')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
                                     <th class="text-center">收藏时间时间</th>
@@ -343,7 +367,8 @@
                                            v-if="sys.read.read_time === '未读'"></i>
                                         <i class="fa fa-folder-open-o" v-if="sys.read.read_time != '未读'"></i>
 
-                                        <i class="fa fa-heart" style="color: #e4393c" v-show="simulate.indexOf('Message/favourite')>-1||isSuper"
+                                        <i class="fa fa-heart" style="color: #e4393c"
+                                           v-show="simulate.indexOf('Message/favourite')>-1||isSuper"
                                            @click.stop="isCollect(sys.mess_id)"></i>
                                     </td>
                                 </tr>
@@ -382,7 +407,7 @@
     import STAFF from  '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
     export default{
-        props:['simulate','isSuper'],
+        props: ['simulate', 'isSuper'],
         components: {
             AnnouncementAdd,
             AnnouncementDetail,
@@ -458,87 +483,87 @@
             }
         },
         mounted (){
-            let sys = this.simulate.indexOf('System/index')>-1||this.isSuper;                       // 系统公告
-            let approval = this.simulate.indexOf('Approval/index')>-1||this.isSuper;                // 审批
-            let remind = this.simulate.indexOf('Remind/index')>-1||this.isSuper;                    // 待办提醒
-            let boss = this.simulate.indexOf('Secretary/index')>-1||this.isSuper;                   // boss小秘书
-            let self = this.simulate.indexOf('Msessage/self_message')>-1||this.isSuper;             // 个人发件箱
-            let depart = this.simulate.indexOf('Message/department_message')>-1||this.isSuper;      // 部门发件箱
-            let fav = this.simulate.indexOf('Favourite/index')>-1||this.isSuper;                    // 收藏
-            if ((this.act === 'sys_mess' || this.act === undefined)&&sys) {
+            let sys = this.simulate.indexOf('System/index') > -1 || this.isSuper;                       // 系统公告
+            let approval = this.simulate.indexOf('Approval/index') > -1 || this.isSuper;                // 审批
+            let remind = this.simulate.indexOf('Remind/index') > -1 || this.isSuper;                    // 待办提醒
+            let boss = this.simulate.indexOf('Secretary/index') > -1 || this.isSuper;                   // boss小秘书
+            let self = this.simulate.indexOf('Msessage/self_message') > -1 || this.isSuper;             // 个人发件箱
+            let depart = this.simulate.indexOf('Message/department_message') > -1 || this.isSuper;      // 部门发件箱
+            let fav = this.simulate.indexOf('Favourite/index') > -1 || this.isSuper;                    // 收藏
+            if ((this.act === 'sys_mess' || this.act === undefined) && sys) {
                 this.System(1);
             }
-            if (this.act === 'appr_mess'&&approval) {
+            if (this.act === 'appr_mess' && approval) {
                 this.Examine(1);
             }
-            if (this.act === 'remind_mess'&&remind) {
+            if (this.act === 'remind_mess' && remind) {
                 this.Substitute(1);
             }
-            if (this.act === 'secre_mess'&&boss) {
+            if (this.act === 'secre_mess' && boss) {
                 this.Secretary(1);
             }
 
-            if(!sys){
+            if (!sys) {
                 // 没有系统公告权限
                 this.isSystem = false;
                 this.isExamine = true;
                 this.message = '审批提醒';
                 this.font = 'fa-user';
-                if (approval){
+                if (approval) {
                     this.Examine(1);
                 }
             }
-            if (!approval){
+            if (!approval) {
                 // 没有审批权限
                 this.isExamine = false;
                 this.isSubstitute = true;
                 this.message = '待办提醒';
                 this.font = 'fa-bell';
-                if (remind){
+                if (remind) {
                     this.Substitute(1);
                 }
             }
-            if (!remind){
+            if (!remind) {
                 // 没有待办提醒权限
                 this.isSubstitute = false;
                 this.isSecretary = true;
                 this.message = 'BOSS小秘书';
                 this.font = 'fa-github';
-                if (boss){
+                if (boss) {
                     this.Secretary(1);
                 }
             }
-            if (!boss){
+            if (!boss) {
                 // 没有BOSS权限
                 this.isSecretary = false;
                 this.isNew1 = true;
                 this.message = '个人发件箱';
                 this.font = 'fa-male';
-                if (self){
+                if (self) {
                     this.new1(1);
                 }
             }
-            if (!self){
+            if (!self) {
                 // 没有个人发件箱权限
                 this.isNew1 = false;
                 this.isNew2 = true;
                 this.message = '部门发件箱';
                 this.font = 'fa-users';
-                if (depart){
+                if (depart) {
                     this.new2(1);
                 }
             }
-            if (!depart){
+            if (!depart) {
                 // 没有部门发件箱权限
                 this.isNew2 = false;
                 this.isMessage = true;
                 this.message = '收藏';
                 this.font = 'fa-heart';
-                if (fav){
+                if (fav) {
                     this.Message(1);
                 }
             }
-            if (!fav){
+            if (!fav) {
                 // 没有查看收藏权限
                 this.isMessage = false;
                 this.message = '';
@@ -656,7 +681,7 @@
 
             },
             announceDetail(val7, val1, val2, val3, val4, val5, val6, val8){
-                if (val7 === '系统公告'&&this.simulate.indexOf('System/content')>-1) {
+                if (val7 === '系统公告' && this.simulate.indexOf('System/content') > -1) {
                     this.info_details.get_title = val1;
                     this.info_details.get_department_name = val2;
                     this.info_details.get_create_time = val3;

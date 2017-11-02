@@ -32,6 +32,12 @@
                                 <button class="btn btn-success" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+                        <!--<div class="input-group pull-right">-->
+                            <!--<router-link :to="{path: '/flatShare', query: {id: 1}}" class="btn btn-warning">合租房</router-link>-->
+                            <!--<router-link :to="{path: '/noPerformance', query: {id: 1}}" class="btn btn-warning"-->
+                                         <!--style="margin-left: 10px;">未生成业绩-->
+                            <!--</router-link>-->
+                        <!--</div>-->
                     </form>
                 </div>
 
