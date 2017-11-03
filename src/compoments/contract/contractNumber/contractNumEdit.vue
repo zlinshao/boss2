@@ -551,7 +551,7 @@
                                         if (val.sf[i].receipt==1){
                                             other.push(2);
                                         }
-                                        f (val.sf[i].house_key  ==1){
+                                        if (val.sf[i].house_key==1){
                                             other.push(3);
                                         }
                                         /*if (val.sf[i].idcard_copy==1){
@@ -579,7 +579,7 @@
                                         if (val.zf[j].receipt==1){
                                             other1.push(2);
                                         }
-                                        if (val.zf[j].house_key  ==1){
+                                        if (val.zf[j].house_key==1){
                                             other1.push(3);
                                         }
                                         this.pay_zf_contract.push({
