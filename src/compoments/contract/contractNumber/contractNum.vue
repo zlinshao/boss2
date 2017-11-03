@@ -9,7 +9,7 @@
             <div class="panel-body">
                 <div v-show="pitch.length === 0">
                     <form class="form-inline clearFix" role="form">
-                        <!--<a v-if="params.type == 3">
+                        <a v-if="params.type == 3">
                             <div class="input-group">
                                 <select class="form-control" v-model="params.style" @change="search(1)">
                                     <option value="">收租房</option>
@@ -25,7 +25,7 @@
                                     <option value="3">收条</option>
                                 </select>
                             </div>
-                        </a>-->
+                        </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
                                    v-model="selected" @click='select' readonly>
@@ -325,6 +325,26 @@
                 </div>
             </div>
         </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out" data-backdrop="static">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>生成 成功！</h5>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                        <a :href="leadingOut" class="btn btn-success btn-md" @click="downLoadTable">下载</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -364,8 +384,8 @@
                 configure: {},                      //组织架构
                 selected: [],                       //部门名称
                 params: {
-//                    style : '',                  // 收租房
-//                    condition : 4,              // 缺少字段
+                    style : '',                  // 收租房
+                    condition : 4,              // 缺少字段
                     type: 1,
                     department_id: '',             //筛选
                     start : '',
@@ -385,6 +405,7 @@
 
                 addRemark : '',             // 添加备注
                 remark : '',                // 显示备注
+                leadingOut : ''             // 导出
             }
         },
         mounted (){
@@ -444,8 +465,8 @@
                 this.params.start = '';
                 this.params.end = '';
                 this.params.type = val;
-//                this.params.style = '';
-//                this.params.condition = 4;
+                this.params.style = '';
+                this.params.condition = 4;
                 this.selected = [];
                 this.contract_num = '';
                 this.currentDate = [];
@@ -599,7 +620,16 @@
             },
 //            导出
             exportTable(){
-
+                this.$http.post('code/Contract_Number_Record/outDataByCondition', this.params).then((res) => {
+                    if (res.data.code === '18410') {
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal('show');
+                    }
+                    console.log(res.data)
+                })
+            },
+            downLoadTable(){
+                $('#leading_out').modal('hide');
             }
         }
     }
