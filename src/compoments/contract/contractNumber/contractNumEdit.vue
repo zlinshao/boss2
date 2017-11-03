@@ -116,7 +116,8 @@
                                                     <div class="col-xs-5 col-sm-1">
                                                         <i class="fa fa-minus-circle" @click="minusPay(1,'o',index)"></i>
                                                     </div>
-                                                    <div class="col-xs-12 text-right">
+                                                    <div class="col-xs-12 text-right"
+                                                         v-if="simulate.indexOf('ContractNumberRecord/checkNode')>-1||isSuper">
                                                         <label :class="{'label_check':true,'c_on':pay_sf_contract[index].other.indexOf(1) > -1,
                                                 'c_off':pay_sf_contract[index].other.indexOf(1) == -1}"
                                                                @click.prevent="pitchOld(1, $event,index,1)">
@@ -266,7 +267,7 @@
                                                     <div class="col-xs-5 col-sm-1">
                                                         <i class="fa fa-minus-circle" @click="minusPay(2,'o',index)"></i>
                                                     </div>
-                                                    <div class="col-xs-12 text-right">
+                                                    <div class="col-xs-12 text-right" v-if="simulate.indexOf('ContractNumberRecord/checkNode')>-1||isSuper">
                                                         <label :class="{'label_check':true,'c_on':pay_zf_contract[index].other.indexOf(1) > -1,
                                                 'c_off':pay_zf_contract[index].other.indexOf(1) == -1}"
                                                                @click.prevent="pitchOld(1, $event,index,2)">
@@ -381,7 +382,7 @@
     import upLoad from '../../common/upload.vue'            //图片上传
     import Status from '../../common/status.vue'
     export default {
-        props:['type','request_time'],
+        props:['type','request_time','isSuper','simulate'],
         components: {DatePicker, STAFF, upLoad,Status},
         data() {
             return {

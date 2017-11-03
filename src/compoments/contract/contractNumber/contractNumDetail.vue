@@ -28,7 +28,8 @@
                         <span v-if="type==2">作废详情</span>
                         <span v-if="type==3">上缴详情</span>
                         <!--编辑-->
-                        <div class="btn-group pull-right" data-toggle="modal" data-target="#contractNumEdit">
+                        <div class="btn-group pull-right" data-toggle="modal" data-target="#contractNumEdit"
+                             v-if="simulate.indexOf('ContractNumberRecord/edit')>-1||isSuper">
                             <a>
                                 <i class="fa fa-edit"></i>
                             </a>
@@ -182,7 +183,7 @@
             </div>
         </section>
         <PicModal :largePic="largePic"></PicModal>
-        <ContractNumEdit :type="type" :request_time="request_time" @success="getDetail"></ContractNumEdit>
+        <ContractNumEdit :type="type" :request_time="request_time" @success="getDetail" :simulate="simulate" :isSuper="isSuper"></ContractNumEdit>
     </div>
 </template>
 
@@ -190,6 +191,7 @@
     import PicModal from  '../../common/largePic.vue'
     import ContractNumEdit from './contractNumEdit.vue'
     export default{
+        props:['simulate','isSuper'],
         components: {PicModal,ContractNumEdit},
         data(){
             return {
