@@ -621,11 +621,11 @@
 //            导出
             exportTable(){
                 this.$http.post('code/Contract_Number_Record/outDataByCondition', this.params).then((res) => {
-                    if (res.data.code === '18410') {
+                    if (res.data.code === '30010') {
                         this.leadingOut = res.data.data;
                         $('#leading_out').modal('show');
                     }
-                    console.log(res.data)
+//                    console.log(res.data)
                 })
             },
             downLoadTable(){
