@@ -227,13 +227,13 @@
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="collect_turn_num[index].other.indexOf(2) > -1">收条
                                                 </label>
-                                                <!--<label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
+                                                <label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
                                                 'c_off':collect_turn_num[index].other.indexOf(3) == -1}"
                                                        @click.prevent="collect_id(3, $event,index)">
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="collect_turn_num[index].other.indexOf(3) > -1">钥匙
-                                                </label>-->
-                                                <label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
+                                                </label>
+                                                <!--<label :class="{'label_check':true,'c_on':collect_turn_num[index].other.indexOf(3) > -1,
                                                 'c_off':collect_turn_num[index].other.indexOf(3) == -1}"
                                                        @click.prevent="collect_id(3, $event,index)">
                                                     <input type="checkbox" class="pull-left"
@@ -244,7 +244,7 @@
                                                        @click.prevent="collect_id(4, $event,index)">
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="collect_turn_num[index].other.indexOf(4) > -1">房产证复印件
-                                                </label>
+                                                </label>-->
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -285,12 +285,12 @@
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="rent_turn_num[index].other.indexOf(2) > -1">收条
                                                 </label>
-                                                <!--<label :class="{'label_check':true,'c_on':rent_turn_num[index].other.indexOf(3) > -1,
+                                                <label :class="{'label_check':true,'c_on':rent_turn_num[index].other.indexOf(3) > -1,
                                                 'c_off':rent_turn_num[index].other.indexOf(3) == -1}"
                                                        @click.prevent="collect_id(3, $event,index)">
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="rent_turn_num[index].other.indexOf(3) > -1">钥匙
-                                                </label>-->
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -807,7 +807,7 @@
                     data.pz_pic = this.photos.cus_idPhoto;
                 } else if (this.new_status==2){
                     // 废除
-//                    data.area = this.area;
+                    data.area = this.area;
                     data.report_time = this.receiver_time;
                     data.actual_time = this.reality_time;
                     data.reporter_id = this.receiver_id;
@@ -816,10 +816,10 @@
                     data.scrap_pic = this.photos.cus_idPhoto;
                 } else {
                     // 上缴
-                    /*data.contract_way = this.contract_type;
+                    data.contract_way = this.contract_type;
                     if (this.contract_type==1){
                         data.area = this.area;
-                    }*/
+                    }
                     data.paid_time = this.receiver_time;
                     data.paid_id = this.receiver_id;
                     data.paid_ljsf = this.collect_turn_num;
