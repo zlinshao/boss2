@@ -551,12 +551,15 @@
                                         if (val.sf[i].receipt==1){
                                             other.push(2);
                                         }
-                                        if (val.sf[i].idcard_copy==1){
+                                        f (val.sf[i].house_key  ==1){
+                                            other.push(3);
+                                        }
+                                        /*if (val.sf[i].idcard_copy==1){
                                             other.push(3);
                                         }
                                         if (val.sf[i].house_property==1){
                                             other.push(4);
-                                        }
+                                        }*/
                                         this.pay_sf_contract.push({
                                             contract_number : val.sf[i].contract_number,
                                             address : val.sf[i].address,
@@ -575,6 +578,9 @@
                                         }
                                         if (val.zf[j].receipt==1){
                                             other1.push(2);
+                                        }
+                                        if (val.zf[j].house_key  ==1){
+                                            other1.push(3);
                                         }
                                         this.pay_zf_contract.push({
                                             contract_number : val.zf[j].contract_number,
