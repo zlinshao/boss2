@@ -19,6 +19,7 @@
                             </div>
                             <div class="input-group">
                                 <select class="form-control" v-model="params.condition" @change="search(1)">
+                                    <option value="5">资料齐全</option>
                                     <option value="4">缺少资料</option>
                                     <option value="1">钥匙</option>
                                     <option value="2">交接单</option>
@@ -385,7 +386,7 @@
                 selected: [],                       //部门名称
                 params: {
                     style : '',                  // 收租房
-                    condition : 4,              // 缺少字段
+                    condition : 5,              // 缺少字段
                     type: 1,
                     department_id: '',             //筛选
                     start : '',
@@ -466,7 +467,7 @@
                 this.params.end = '';
                 this.params.type = val;
                 this.params.style = '';
-                this.params.condition = 4;
+                this.params.condition = 5;
                 this.selected = [];
                 this.contract_num = '';
                 this.currentDate = [];
