@@ -551,7 +551,7 @@
                                         if (val.sf[i].receipt==1){
                                             other.push(2);
                                         }
-                                        if (val.sf[i].house_key  ==1){
+                                        if (val.sf[i].house_key==1){
                                             other.push(3);
                                         }
                                         /*if (val.sf[i].idcard_copy==1){
