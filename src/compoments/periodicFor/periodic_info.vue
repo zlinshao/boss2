@@ -41,6 +41,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button class="btn btn-danger pull-left" type="button" @click="recover">恢复</button>
                         <button class="btn btn-default" type="button" @click="close_">取消</button>
                         <button class="btn btn-primary" type="button" @click="periodicRevise()">修改</button>
                     </div>
@@ -81,6 +82,17 @@
             }
         },
         methods: {
+            recover (){
+                this.$http.post('achv/confiscation/' + this.msg.confiscation_id).then((res) => {
+                    if (res.data.code === '70000') {
+                        this.close_();
+                        this.$emit('confiscate', this.msg.page);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
 //            确定编辑
             periodicRevise (){
                 this.$http.put('achv/confiscation/' + this.msg.id, {
@@ -88,35 +100,36 @@
                 }).then((res) => {
                     if (res.data.code === '70010') {
                         this.close_();
-                        this.$emit('confiscate',1);
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.$emit('confiscate', this.msg.page);
+                        this.successMsg(res.data.msg);
                     } else {
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
 
 //            关闭模态框
             close_ (){
-                this.clear_content();
+//                this.clear_content();
                 $('#periodicInfo').modal('hide');          //成功关闭模态框
             },
 
 //            清空内容
-            clear_content (){
-                this.confiscate = '';                     //充公人
-                this.confiscate_cause = '';               //充公原因
-                this.remarks = '';                        //备注
-            }
+//            clear_content (){
+//                this.confiscate = '';                     //充公人
+//                this.confiscate_cause = '';               //充公原因
+//                this.remarks = '';                        //备注
+//            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>

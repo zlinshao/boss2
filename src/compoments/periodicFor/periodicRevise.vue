@@ -134,7 +134,7 @@
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         this.close_();
-                        this.$emit('confiscate', 1);
+                        this.$emit('confiscate', this.msg.page);
                         this.successMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);
