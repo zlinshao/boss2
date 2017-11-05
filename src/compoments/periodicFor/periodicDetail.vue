@@ -168,7 +168,7 @@
         <PeriodicRevise :msg="blames" :id="periodic_id" @confiscate="personalList"></PeriodicRevise>
 
         <!--充公详情-->
-        <PeriodicInfo :msg="confiscate_info"></PeriodicInfo>
+        <PeriodicInfo :msg="confiscate_info" @confiscate="personalList"></PeriodicInfo>
 
         <!--房屋地址搜索-->
         <SelectHouse @House="getHouse" :house_status="'1'"></SelectHouse>
@@ -197,7 +197,7 @@
                 revise_info: {},                //编辑
                 dict: {},
                 periodic_id: '',                //单条业绩ID
-                confiscate_info: '',            //充公详情
+                confiscate_info: {},            //充公详情
                 blames: {},                     //认责人
                 pitch: [],
                 isShow: false,
@@ -266,6 +266,7 @@
                 this.$http.get('achv/commission/blame/' + this.pitch).then((res) => {
                     if (res.data.code === '70010') {
                         this.blames = res.data.data;
+                        this.blames.page = this.params.page;
                         $('#periodicRevise').modal({backdrop: 'static',});
                     }
                 });
@@ -274,6 +275,8 @@
             confiscate (val){
                 this.$http.get('achv/confiscation/' + val).then((res) => {
                     this.confiscate_info = res.data.data;
+                    this.confiscate_info.confiscation_id = val;
+                    this.confiscate_info.page = this.params.page;
                     $('#periodicInfo').modal({backdrop: 'static'});
                 });
             },
