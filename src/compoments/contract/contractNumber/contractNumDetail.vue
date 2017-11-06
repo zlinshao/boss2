@@ -49,9 +49,17 @@
                                     <div v-if="type==3">{{public.paid_time}}</div>
                                 </div>
                                 <div v-if="type==2">
-                                    <div class="text-primary" v-if="type==2">实到日期：</div>
+                                    <div class="text-primary">实到日期：</div>
                                     <div>{{public.actual_time}}</div>
                                 </div>
+                                <!--<div v-if="type==3">
+                                    <div class="text-primary">合同类型：</div>
+                                    <div>{{public.contract_type==1?'公司合同':'中介合同'}}</div>
+                                </div>
+                                <div v-if="!(type==3&&public.contract_type==2)">
+                                    <div class="text-primary">城市：</div>
+                                    <div>{{dict.area[public.area]}}</div>
+                                </div>-->
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取合同数(收)：</div>
                                     <div class="text-primary" v-if="type==2">作废合同数(收)：</div>
@@ -100,6 +108,8 @@
                                         </span>-->
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取合同数(租)：</div>
                                     <div class="text-primary" v-if="type==2">作废合同数(租)：</div>
@@ -141,8 +151,6 @@
                                         <span v-for="item in msg.num[0].rest_zf_contract">{{item}}&emsp;</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取人：</div>
                                     <div class="text-primary" v-if="type==2">报备人：</div>
@@ -195,6 +203,8 @@
         components: {PicModal,ContractNumEdit},
         data(){
             return {
+                dict : {},
+
                 params : {},
                 page : '',
                 select : '',
@@ -219,7 +229,12 @@
             this.type = this.$route.query.type;
 //            console.log(this.request_time);
 //            console.log(this.type);
-            this.getDetail();
+            this.$http.get('code/Contract_Number_Record/dict').then((res)=>{
+//                console.log(res.data.area);
+                this.dict = res.data;
+                this.getDetail();
+            });
+
         },
         methods: {
             showLargePic(index){

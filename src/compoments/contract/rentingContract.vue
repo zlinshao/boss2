@@ -109,9 +109,9 @@
                             <i class="fa fa-times-circle" v-if="top != null" @click="stick(contractSeleted,'core/core_common/unstick')">
                                 取消置顶</i>&nbsp;
                         </li>
-                        <li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1"  >
+                        <!--<li  class="operate"  v-if="status !== 1 && contractSeleted.length ===1"  >
                             <i class="fa fa fa-lock" @click="deblocking"> 解锁</i>&nbsp;
-                        </li>
+                        </li>-->
                         <!--<li class="operate" v-if="simulate.indexOf('core/up_contract') > -1">
                             <i class="fa fa-scissors" @click="cancel">作废</i>&nbsp;
                         </li>-->
@@ -153,6 +153,7 @@
                             <!--<input id="allCheck" type="checkbox" v-model="allCheck" @click="pickedAll($event)">
                             <label for="allCheck"></label>-->
                         </th>
+                        <th class="text-center width50">置顶</th>
                         <!--<th class="text-center width50">标记</th>-->
                         <th class="text-center width100">合同编号</th>
                         <th class="text-center width100">上传时间</th>
@@ -168,7 +169,7 @@
                         <th class="text-center width80">部门</th>
                         <th class="text-center width80">审核状态</th>
                         <!--<th class="text-center width50">锁定</th>-->
-                        <th class="text-center width50">置顶</th>
+                        <!--<th class="text-center width50">置顶</th>-->
                         <th class="text-center width50" v-if="simulate.indexOf('Rent/readContract')>-1||isSuper">详情</th>
                     </tr>
                     </thead>
@@ -184,8 +185,15 @@
                             <!--<input type="checkbox" @click="picked(item,$event)"
                                    :value="item.id" v-model="checkboxModel">-->
                         </td>
+                        <td class=" myIcon">
+                            <i class="fa fa-thumb-tack" v-if="item.top != null"
+                               @click="stick(item.id,'core/core_common/unstick')"></i>
+                            <i class="cancel" v-if="item.contract_status == 1">
+                                <img src="../../assets/img/cancel.png" alt="">
+                            </i>
+                        </td>
                         <!--<td class=" myIcon">
-                            <i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>
+                            &lt;!&ndash;<i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>&ndash;&gt;
                             <i class="cancel" v-if="item.contract_status == 1">
                                 <img src="../../assets/img/cancel.png" alt="">
                             </i>
@@ -223,10 +231,10 @@
                             <i class="fa fa-lock" v-if="item.status !== 1" ></i>
                             <i class="fa fa-unlock" v-if="item.status === 1" ></i>
                         </td>-->
-                        <td class=" myIcon">
+                        <!--<td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top != null"
                                @click="stick(item.id,'core/core_common/unstick')"></i>
-                        </td>
+                        </td>-->
                         <td v-if="simulate.indexOf('Rent/readContract')>-1||isSuper">
                             <router-link :to="{path:'/rentingDetail',
                             query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">

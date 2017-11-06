@@ -123,7 +123,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-center" v-for="item in myData">
+                            <router-link tag="tr" :to="{path : '/contractNumDetail',
+                                    query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}"
+                                         class="text-center" v-for="item in myData" :key="item.request_time">
                                 <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.request_time) > -1,
                                             'c_off':pitch.indexOf(item.request_time)==-1}"
@@ -149,7 +151,7 @@
                                     query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}"
                                     >详情</router-link>
                                 </td>
-                            </tr>
+                            </router-link>
                             <tr class="text-center" v-show="isShow">
                                 <td colspan="10" style="font-size: 22px;">暂无数据......</td>
                             </tr>

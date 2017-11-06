@@ -237,7 +237,7 @@
                                                 </div>
                                                 <div v-for="(item,index) in zf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" minlength="13" maxlength="13">
+                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(2,index)"></i>
@@ -293,7 +293,7 @@
                                                 <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                                 <div class="col-sm-9 padd0 icon">
                                                     <div class="col-xs-5 col-sm-5">
-                                                        <input type="text" class="form-control" v-model="pay_zf_contract_add[index].contract_number" minlength="13" maxlength="13">
+                                                        <input type="text" class="form-control" v-model="pay_zf_contract_add[index].contract_number" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
                                                     </div>
                                                     <div class="col-xs-1 text-center padd0" style="line-height: 30px;">
                                                         地址
@@ -420,6 +420,8 @@
                 del_contract : [],              // 删除的合同
 
                 remark : '',                    // 备注
+
+                contract_type : 1,              // 合同类型
                 currentDate: [],                //时间组件
                 currentDate1: [],                //时间组件
                 dateConfigure: [                //时间组件
@@ -489,6 +491,7 @@
                         this.department_id = publicVal.department_id.id;
                         this.receiver_name = publicVal.receiver_name;
                         this.remark = publicVal.remark;
+//                        this.contract_type = publicVal.contract_type ;
                         this.currentDate = [publicVal.receiver_time];
                         this.currentDate1 = [publicVal.actual_time];
                         this.sf_remian_num = val.num[0].rest_sf_number ;
@@ -503,7 +506,6 @@
                         /*for (let i = 0 ; i<val.sf.length ; i++){
                             this.sf_contract.push(val.sf[i].contract_number);
                         }*/
-
                         this.zf_num = val.num[0].zf_numbers;
                         this.zf_contract = [];
                         if (val.num[0].zf_contract_number!=null){
@@ -513,6 +515,7 @@
                             this.zf_contract.push(val.zf[i].contract_number);
                         }*/
 //                        console.log(this.type)
+
                         switch (parseInt(this.type)){
                             case 1:
                                 // 领取
