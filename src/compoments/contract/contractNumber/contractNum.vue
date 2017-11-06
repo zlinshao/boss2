@@ -123,7 +123,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-center" v-for="item in myData" :key="item.request_time">
+                            <tr class="text-center" v-for="item in myData">
                                 <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.request_time) > -1,
                                             'c_off':pitch.indexOf(item.request_time)==-1}"
