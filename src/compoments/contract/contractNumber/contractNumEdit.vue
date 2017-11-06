@@ -237,7 +237,7 @@
                                                 </div>
                                                 <div v-for="(item,index) in zf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
+                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" minlength="13" maxlength="13">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(2,index)"></i>
