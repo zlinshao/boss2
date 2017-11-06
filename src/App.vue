@@ -1,6 +1,5 @@
 <template>
-    <div id="app">
-        <div v-if="isShow" style="position: absolute;left: 0;top: 0;right: 0;bottom: 0;background: #F1F2F7;z-index: 999999;"></div>
+    <div id="app" v-if="isShow">
         <section id="container">
             <!--header-->
             <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates" :isSuper="superManager"></HeaderVue>
@@ -165,7 +164,7 @@
 //        props: ['simulate','isSuper'],
         data (){
             return {
-                isShow: true,
+                isShow: false,
                 simulates: [],
                 superManager: false,
 
@@ -219,10 +218,10 @@
                 this.$http.get('staff/info').then((res) => {
                     if (res.data.code === 80019) {
                         window.location.href = 'login.html';
-                        this.isShow = true;
+                        this.isShow = false;
                     } else {
                         globalConfig.urlName = res.data.name;
-                        this.isShow = false;
+                        this.isShow = true;
                         this.urlName = res.data.name;
                         this.urlCard = res.data.avatar;
                         for (let i = 0; i < res.data.auth_all.length; i++) {
