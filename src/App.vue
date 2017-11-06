@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <div v-if="isShow" style="position: absolute;left: 0;top: 0;right: 0;bottom: 0;background: #F1F2F7;z-index: 999999;"></div>
         <section id="container">
             <!--header-->
             <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates" :isSuper="superManager"></HeaderVue>
@@ -56,22 +57,36 @@
                     <div class="modal-body">
                         <section class="panel">
                             <div class="panel-body">
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/custom" v-show="simulates.indexOf('Customer/customerList')>-1||superManager">客户</router-link>                    <!--客户-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/customerPool" v-show="simulates.indexOf('CustomerPool/customerPool')>-1||superManager">客户池</router-link>            <!--客户池-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/OkCollect" v-show="simulates.indexOf('Villa/receivedVillaList')>-1||superManager">公司房源</router-link>             <!--公司房源-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/noCollect" v-show="simulates.indexOf('Villa/villaList')>-1||superManager">待收房源</router-link>             <!--待收房源-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/custom"
+                                             v-show="simulates.indexOf('Customer/customerList')>-1||superManager">客户
+                                </router-link>                    <!--客户-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/customerPool"
+                                             v-show="simulates.indexOf('CustomerPool/customerPool')>-1||superManager">
+                                    客户池
+                                </router-link>            <!--客户池-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/OkCollect"
+                                             v-show="simulates.indexOf('Villa/receivedVillaList')>-1||superManager">公司房源
+                                </router-link>             <!--公司房源-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/noCollect"
+                                             v-show="simulates.indexOf('Villa/villaList')>-1||superManager">待收房源
+                                </router-link>             <!--待收房源-->
                                 <!--<router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedRenting">租房报备</router-link>       &lt;!&ndash;租房报备&ndash;&gt;-->
                                 <!--<router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/reportedCollect">收房报备</router-link>       &lt;!&ndash;收房报备&ndash;&gt;-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/user" v-show="simulates.indexOf('User/searchUser')>-1||superManager">员工管理</router-link>                  <!--用户管理-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/user"
+                                             v-show="simulates.indexOf('User/searchUser')>-1||superManager">员工管理
+                                </router-link>                  <!--用户管理-->
                                 <!--<router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGcompany">公司业绩</router-link>   &lt;!&ndash;公司业绩&ndash;&gt;-->
                                 <!--<router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForGroup">小组业绩</router-link>      &lt;!&ndash;小组业绩&ndash;&gt;-->
                                 <!--<router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/periodicForPeople">个人业绩</router-link>     &lt;!&ndash;个人业绩&ndash;&gt;-->
-                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/leadingOut" v-show="simulates.indexOf('Manager/index')>-1||superManager">客户导出</router-link>            <!--客户导出-->
+                                <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/leadingOut"
+                                             v-show="simulates.indexOf('Manager/index')>-1||superManager">客户导出
+                                </router-link>            <!--客户导出-->
                                 <router-link data-dismiss="modal" class="btn btn-link col-xs-6" to="/messageCenter"
                                              v-show="simulates.indexOf('System/index')>-1||simulates.indexOf('Approval/index')>-1
                                             ||simulates.indexOf('Remind/index')>-1||simulates.indexOf('Secretary/index')>-1
                                             ||simulates.indexOf('Msessage/self_message')>-1||simulates.indexOf('Message/department_message')>-1
-                                            ||simulates.indexOf('Favourite/index')>-1||superManager">消息中心</router-link>         <!--消息中心-->
+                                            ||simulates.indexOf('Favourite/index')>-1||superManager">消息中心
+                                </router-link>         <!--消息中心-->
                             </div>
                         </section>
                     </div>
@@ -150,8 +165,9 @@
 //        props: ['simulate','isSuper'],
         data (){
             return {
+                isShow: true,
                 simulates: [],
-                superManager : false,
+                superManager: false,
 
                 urlName: '',
                 urlCard: '',
@@ -202,15 +218,17 @@
             login_status (){
                 this.$http.get('staff/info').then((res) => {
                     if (res.data.code === 80019) {
-                        window.location.href = 'login.html'
+                        window.location.href = 'login.html';
+                        this.isShow = true;
                     } else {
                         globalConfig.urlName = res.data.name;
+                        this.isShow = false;
                         this.urlName = res.data.name;
                         this.urlCard = res.data.avatar;
                         for (let i = 0; i < res.data.auth_all.length; i++) {
                             this.simulates.push(res.data.auth_all[i].name);
                         }
-                        this.superManager = res.data.super_auth.indexOf(res.data.id)>-1;
+                        this.superManager = res.data.super_auth.indexOf(res.data.id) > -1;
                     }
                 });
             },
