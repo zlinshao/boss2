@@ -658,11 +658,12 @@
                     this.house_name = val.address;                                      //房屋地址
                     this.months = val.months;                                           //年限
 
-                    this.pay_type = val.one_type;                                       //付款方式
+                    this.pay_type = val.pay;                                            //付款方式
                     this.more_type = val.pay;                                           //付款年份个数
                     if (val.pay.length > 1) {
                         this.pay_typeChange = true;
                     } else if (val.pay.length === 1) {
+                        this.one_type = val.pay[0];
                         this.pay_typeChange = false;
                     }
 
