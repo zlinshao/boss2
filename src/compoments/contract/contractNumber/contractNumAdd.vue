@@ -555,7 +555,7 @@
 
             // 获取默认起始编号
             getStatic(){
-                if (this.new_status==1){
+//                if (this.new_status==1){
                     this.$http.post('code/Contract_Number_Record/getMaxContractNumber',{
 //                    contract_type : 1,
                         area : this.area
@@ -564,7 +564,7 @@
                         this.collect_num_start = res.data.data.sf;
                         this.rent_num_start = res.data.data.zf;
                     })
-                }
+//                }
 
             },
 
