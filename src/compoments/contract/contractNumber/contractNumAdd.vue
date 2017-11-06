@@ -206,7 +206,7 @@
                                         <div class="form-group" v-for="(item, index) in collect_turn_num">
                                             <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="collect_turn_num[index].contract_number" minlength="13" maxlength="13">
+                                                <input type="text" class="form-control" v-model="collect_turn_num[index].contract_number" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px; padding: 0;">
                                                 地址
@@ -264,7 +264,7 @@
                                         <div class="form-group" v-for="(item,index) in rent_turn_num">
                                             <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="rent_turn_num[index].contract_number" minlength="13" maxlength="13">
+                                                <input type="text" class="form-control" v-model="rent_turn_num[index].contract_number" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px; padding: 0;">
                                                 地址
@@ -560,7 +560,7 @@
 //                    contract_type : 1,
                         area : this.area
                     }).then((res)=>{
-                        console.log(res.data.data);
+//                        console.log(res.data.data);
                         this.collect_num_start = res.data.data.sf;
                         this.rent_num_start = res.data.data.zf;
                     })
@@ -701,6 +701,7 @@
                 this.rent_surplus = 0;               //剩余合同数(租)
 //                this.operate_man = '';                //操作人
 //                this.operate_man_id = '';             //操作人
+                this.contract_type = 1;
                 $('.rem_div').remove();
                 this.photos.cus_idPhoto = [];
                 this.getStatic();

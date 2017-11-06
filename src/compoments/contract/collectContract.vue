@@ -162,6 +162,7 @@
                             </label>
                         </th>
                         <!--<th class="text-center width50">标记</th>-->
+                        <th class="text-center width50">置顶</th>
                         <th class="text-center width100">合同编号</th>
                         <th class="text-center width100">上传时间</th>
                         <th class="text-center width80">业主姓名</th>
@@ -176,7 +177,7 @@
                         <th class="text-center width80">部门</th>
                         <th class="text-center width80">审核状态</th>
                         <!--<th class="text-center width50">锁定</th>-->
-                        <th class="text-center width50">置顶</th>
+                        <!--<th class="text-center width50">置顶</th>-->
                         <th class="text-center width50" v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">详情
                         </th>
                     </tr>
@@ -192,8 +193,16 @@
                             </label>
 
                         </td>
+                        <td class=" myIcon">
+                            <!--{{item.contract_status}}-->
+                            <i class="fa fa-thumb-tack" v-if="item.top != null"
+                               @click="stick(item.id,'core/core_common/unstick')"></i>
+                            <i class="cancel" v-if="item.contract_status == 1">
+                                <img src="../../assets/img/cancel.png" alt="">
+                            </i>
+                        </td>
                         <!--<td class=" myIcon">
-                            <i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>
+                            &lt;!&ndash;<i class="fa fa-star" style="color: #f1c500" v-if="item.mark === 1"></i>&ndash;&gt;
                             <i class="cancel" v-if="item.contract_status == 1">
                                 <img src="../../assets/img/cancel.png" alt="">
                             </i>
@@ -231,10 +240,10 @@
                             <i class="fa fa-lock" v-if="item.status != 1"></i>
                             <i class="fa fa-unlock" v-if="item.status == 1"></i>
                         </td>-->
-                        <td class=" myIcon">
+                        <!--<td class=" myIcon">
                             <i class="fa fa-thumb-tack" v-if="item.top != null"
                                @click="stick(item.id,'core/core_common/unstick')"></i>
-                        </td>
+                        </td>-->
                         <td v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">
                             <router-link :to="{path:'/contractDetail',
                             query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName }}">
