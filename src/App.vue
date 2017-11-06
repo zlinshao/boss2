@@ -1,5 +1,5 @@
 <template>
-    <div id="app" v-if="isShow">
+    <div id="app" v-show="isShow">
         <section id="container">
             <!--header-->
             <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates" :isSuper="superManager"></HeaderVue>
