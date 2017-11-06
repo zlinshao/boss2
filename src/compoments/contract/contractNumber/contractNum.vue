@@ -23,6 +23,7 @@
                                     <option value="1">钥匙</option>
                                     <option value="2">交接单</option>
                                     <option value="3">收条</option>
+                                    <option value="5">资料齐全</option>
                                 </select>
                             </div>
                         </a>
