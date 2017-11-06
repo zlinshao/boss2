@@ -169,10 +169,20 @@
                                     <td class="text-center width180">{{sys.message.data.content}}</td>
                                     <td class="text-center width80">{{sys.message.data.approval_name}}</td>
                                     <td class="text-center width60">
-                                        <span v-if="sys.message.data.approval_status > 4 "
+                                        <span v-if="sys.message.data.approval_status > 4"
                                               class="label label-success">已完成</span>
-                                        <span v-if="sys.message.data.approval_status < 5 "
-                                              class="label label-warning">{{select_list.passed[sys.message.data.approval_status]}}</span>
+                                        <span v-if="sys.message.data.approval_status == 4" class="label label-warning">
+                                            {{select_list.passed[sys.message.data.approval_status]}}
+                                        </span>
+                                        <span v-if="sys.message.data.approval_status == 3" class="label label-warning">
+                                            待组长审核
+                                        </span>
+                                        <span v-if="sys.message.data.approval_status == 2" class="label label-default">
+                                            未提交
+                                        </span>
+                                        <span v-if="sys.message.data.approval_status == 1" class="label label-primary">
+                                            新订单
+                                        </span>
                                     </td>
                                     <td class="text-center" style="min-width: 60px;">
                                         <i class="fa fa-folder"
