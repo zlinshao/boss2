@@ -52,14 +52,14 @@
                                     <div class="text-primary">实到日期：</div>
                                     <div>{{public.actual_time}}</div>
                                 </div>
-                                <!--<div v-if="type==3">
+                                <div v-if="type==3">
                                     <div class="text-primary">合同类型：</div>
-                                    <div>{{public.contract_type==1?'公司合同':'中介合同'}}</div>
+                                    <div>{{public.contract_way==0?'公司合同':'中介合同'}}</div>
                                 </div>
-                                <div v-if="!(type==3&&public.contract_type==2)">
+                                <div v-if="!(type==3&&public.contract_way==1)">
                                     <div class="text-primary">城市：</div>
                                     <div>{{dict.area[public.area]}}</div>
-                                </div>-->
+                                </div>
                                 <div>
                                     <div class="text-primary" v-if="type==1">领取合同数(收)：</div>
                                     <div class="text-primary" v-if="type==2">作废合同数(收)：</div>

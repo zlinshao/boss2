@@ -86,7 +86,7 @@
                                                 </div>
                                                 <div v-for="(item,index) in sf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="sf_contract_add[index]" minlength="13" maxlength="13">
+                                                        <input type="text" class="form-control" v-model="sf_contract_add[index]" :minlength="contract_type==0?13:0" :maxlength="contract_type==0?13:40">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(1,index)"></i>
@@ -237,7 +237,7 @@
                                                 </div>
                                                 <div v-for="(item,index) in zf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" minlength="13" maxlength="13">
+                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" :minlength="contract_type==0?13:0" :maxlength="contract_type==0?13:40">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(2,index)"></i>
@@ -491,9 +491,9 @@
                         this.department_id = publicVal.department_id.id;
                         this.receiver_name = publicVal.receiver_name;
                         this.remark = publicVal.remark;
-//                        this.contract_type = publicVal.contract_type ;
-                        this.currentDate = [publicVal.receiver_time];
-                        this.currentDate1 = [publicVal.actual_time];
+                        this.contract_type = publicVal.contract_way;
+                        /*this.currentDate = [publicVal.receiver_time];
+                        this.currentDate1 = [publicVal.actual_time];*/
                         this.sf_remian_num = val.num[0].rest_sf_number ;
                         this.zf_remian_num = val.num[0].rest_zf_number ;
 
@@ -520,6 +520,8 @@
                             case 1:
                                 // 领取
                                 this.receiver_time = publicVal.receiver_time;
+                                this.receiver_name = publicVal.receiver_name;
+                                this.currentDate = [publicVal.receiver_time];
                                 this.receiver_id = publicVal.receiver_id;
                                 this.photos.cus_idPhotos = publicVal.album.pz_pic;
                                 for (let i in this.photos.cus_idPhotos) {
@@ -530,6 +532,9 @@
                                 // 作废
                                 this.receiver_time = publicVal.report_time;
                                 this.reality_time = publicVal.actual_time;
+                                this.currentDate = [publicVal.report_time];
+                                this.currentDate1 = [publicVal.actual_time];
+                                this.receiver_name = publicVal.reporter_name;
                                 this.receiver_id = publicVal.reporter_id;
                                 this.photos.cus_idPhotos = publicVal.album.scrap_pic;
                                 console.log(this.photos.cus_idPhotos);
@@ -539,7 +544,9 @@
                                 break;
                             case 3:
                                 // 上缴
-                                this.receiver_time = publicVal.receiver_time;
+                                this.receiver_time = publicVal.paid_time;
+                                this.currentDate = [publicVal.paid_time];
+                                this.receiver_name = publicVal.paid_name;
                                 this.receiver_id = publicVal.receiver_id;
                                 this.photos.cus_idPhotos = publicVal.album.paid_pic;
                                 for (let i in this.photos.cus_idPhotos) {
@@ -940,7 +947,7 @@
                         data.del_contract = this.del_contract;
                         data.paid_pic = this.photos.cus_idPhoto;
                 }
-                console.log(data);
+//                console.log(data);
                 this.$http.post('code/Contract_Number_Record/edit',data).then((res)=>{
 //                    console.log(res.data);
                     if(res.data.code==30099){

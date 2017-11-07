@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="合同号/客户姓名/手机号"
+                            <input type="text" class="form-control" placeholder="合同号/客户姓名/手机号/操作人"
                                    @keydown.enter.prevent="search(1)" v-model="params.keyword">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
