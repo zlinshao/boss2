@@ -547,7 +547,7 @@
                                 this.receiver_time = publicVal.paid_time;
                                 this.currentDate = [publicVal.paid_time];
                                 this.receiver_name = publicVal.paid_name;
-                                this.receiver_id = publicVal.receiver_id;
+                                this.receiver_id = publicVal.paid_id;
                                 this.photos.cus_idPhotos = publicVal.album.paid_pic;
                                 for (let i in this.photos.cus_idPhotos) {
                                     this.photos.cus_idPhoto.push(i);
