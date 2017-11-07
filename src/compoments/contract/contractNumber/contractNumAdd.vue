@@ -287,7 +287,7 @@
                                                 </label>
                                                 <label :class="{'label_check':true,'c_on':rent_turn_num[index].other.indexOf(3) > -1,
                                                 'c_off':rent_turn_num[index].other.indexOf(3) == -1}"
-                                                       @click.prevent="collect_id(3, $event,index)">
+                                                       @click.prevent="rent_id(3, $event,index)">
                                                     <input type="checkbox" class="pull-left"
                                                            :checked="rent_turn_num[index].other.indexOf(3) > -1">钥匙
                                                 </label>
@@ -713,7 +713,7 @@
             },
 //            上缴选中 收
             collect_id (rul, ev,index){
-                console.log(index)
+//                console.log(index)
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -828,12 +828,12 @@
                     data.paid_pic = this.photos.cus_idPhoto;
                 }
 
-                console.log(data)
+//                console.log(data)
 //                console.log(this.collect_turn_num)
 //                console.log(this.rent_turn_num)
 
                 this.$http.post('code/Contract_Number_Record/add', data).then((res) => {
-                    console.log(res.data);
+//                    console.log(res.data);
                     if (res.data.code==30012){
                         // 成功
                         this.info.success = res.data.msg;
