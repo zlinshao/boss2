@@ -5,7 +5,7 @@
                 <router-link to="repairLog">维修记录</router-link></li>
             <li>维修记录详情</li>
             <li class="pull-right" v-show="typeof (params) === 'object'">
-                <router-link :to="{path:'/repairLog',query: {myParam:params,page:page,select:select}}">
+                <router-link :to="{path:'/repairLog',query: {myParam:params,page:page,select:select,oper_name:oper_name}}">
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
             </li>
@@ -130,12 +130,14 @@
                 params : {},
                 page : '',
                 select : '',
+                oper_name : []
             }
         },
         mounted(){
             this.params = this.$route.query.myParams;
             this.page = this.$route.query.page;
             this.select = this.$route.query.select;
+            this.oper_name = this.$route.query.oper_name;
 
             this.repairId = this.$route.query.repairId;
             this.$http.get('maint/record/dict').then((res)=> {

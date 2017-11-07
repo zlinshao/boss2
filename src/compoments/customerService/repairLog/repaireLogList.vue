@@ -22,13 +22,20 @@
                                 <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
                             </span>
                         </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="点击选择操作人"
+                                   v-model="oper_name" @click='selectOper' readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" @click="clearOper">清空</button>
+                            </span>
+                        </div>
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="合同号/客户姓名/手机号/操作人"
+                            <input type="text" class="form-control" placeholder="合同号/客户姓名/手机号"
                                    @keydown.enter.prevent="search(1)" v-model="params.keyword">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -132,7 +139,7 @@
                                 <a @click="unstick(item.id)" v-show="item.top!=null"><i class="fa fa-thumb-tack"></i></a>
                             </td>
                             <td v-if="simulate.indexOf('Record/readRepair')>-1||isSuper">
-                                <router-link :to="{path:'repairLogDetail',query:{repairId:item.id,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                <router-link :to="{path:'repairLogDetail',query:{repairId:item.id,page:beforePage,myParams:params,select:selected,oper_name:oper_name}}">详情</router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
@@ -181,10 +188,13 @@
                     time : '',
                     status : '',
                     department_id : '',
+                    operator_id : [],
                     keyword : '',
                     week : false
                 },
                 selected : [],
+                oper_name : [],
+
                 dateConfigure: [                    //时间控件
                     {
                         range: true,
@@ -214,6 +224,7 @@
             let params = this.$route.query.myParam;
             let page = this.$route.query.page;
             let select = this.$route.query.select;
+            let oper_name = this.$route.query.oper_name;
 
             this.$http.get('maint/record/dict').then((res)=>{
 //                console.log(res.data);
@@ -228,6 +239,7 @@
                         }
                     }
                     this.selected = select;
+                    this.oper_name = oper_name;
                     this.search(this.beforePage);
                 } else {
                     this.search(1);
@@ -277,10 +289,27 @@
                 this.configure = {type: 'department', length: 1};
                 $('.selectCustom:eq(0)').modal('show');
             },
+            selectOper(){
+                this.configure = {type: 'staff'};
+                $('.selectCustom:eq(0)').modal('show');
+            },
 //            部门搜索
             selectDateSend(val){
-                this.selected = val.department[0].name;
-                this.params.department_id = val.department[0].id;
+                if (this.configure.type=='department'){
+                    this.selected = val.department[0].name;
+                    this.params.department_id = val.department[0].id;
+                } else {
+                    console.log(val);
+                    let _this = this;
+                    if (val.staff.length>0){
+                        (val.staff).forEach(function (item) {
+                            _this.oper_name.push(item.name);
+                            _this.params.operator_id.push(item.id)
+                        })
+                    }
+                    /*this.oper_name = val.department[0].name;
+                    this.params.operator_id = val.department[0].id;*/
+                }
                 this.search(1);
             },
 //            清空部门搜索
@@ -290,6 +319,14 @@
                 }*/
                 this.params.department_id = '';
                 this.selected = [];
+                this.search(1);
+            },
+            clearOper(){
+                /*if (this.selected.length === 0) {
+                    return;
+                }*/
+                this.params.operator_id = [];
+                this.oper_name = [];
                 this.search(1);
             },
             //            时间搜索
