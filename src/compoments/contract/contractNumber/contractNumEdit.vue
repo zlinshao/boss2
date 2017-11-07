@@ -10,7 +10,7 @@
                             <button type="button" class="close" data-dismiss="modal">
                                 <span aria-hidden="true" @click="close_">&times;</span>
                             </button>
-                            <h4 class="modal-title">编辑任务</h4>
+                            <h4 class="modal-title">编辑任务{{photos}}</h4>
                         </div>
                         <div class="modal-body has-js">
                             <div class="panel-body">
@@ -642,7 +642,7 @@
                     cus_idPhotos: {},           //修改图片ID
                     cus_idPhoto: [],            //证件照片
                 };
-
+                $('.rem_div').remove();
                 $('#contractNumEdit').modal('hide');
                 this.getDetails();
             },
