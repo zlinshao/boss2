@@ -819,7 +819,7 @@
                     // 上缴
                     data.contract_way = this.contract_type;
                     if (this.contract_type==1){
-                        data.area = this.area;
+//                        data.area = this.area;
                     }
                     data.paid_time = this.receiver_time;
                     data.paid_id = this.receiver_id;
