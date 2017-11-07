@@ -250,10 +250,10 @@
 //                console.log(res.data);
                 this.dict = res.data.Repair;
             })
-            this.$http.get('staff/info').then((res) => {
+            /*this.$http.get('staff/info').then((res) => {
                 this.operName = res.data.name;
                 this.formData.operator_id = res.data.id;
-            });
+            });*/
         },
         methods: {
             getRepairDetail(){
@@ -261,6 +261,7 @@
                     if (res.data.code==10020){
                         // success
                         let val = res.data.data;
+                        this.operName = val.operator_name
                         this.showInfo.contract_num = val.contract_num;
                         this.showInfo.house_address = val.detailed_address;
                         this.showInfo.signatory = val.real_name;
@@ -282,6 +283,7 @@
                         this.formData.person_liable = val.person_liable;
 //                        this.formData.operator_id = val.operator_id;
                         this.formData.remark = val.remark;
+                        this.formData.operator_id = val.operator_id;
 
 
                     } else {
