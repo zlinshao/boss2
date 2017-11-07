@@ -35,7 +35,7 @@
                                             </select>
                                         </div>
                                     </div>-->
-                                    <div class="form-group" v-show="contract_type!=2">
+                                    <div class="form-group" v-show="new_status!=3">
                                         <label class="col-sm-2 control-label">城市</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="area" @change="getStatic">
