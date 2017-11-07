@@ -772,6 +772,12 @@
 
 //            上缴新增
             personal_add (){
+                if (this.complete_ok!='ok'){
+                    this.info.error = '图片正在上传';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                    return
+                }
 //                console.log(this.photos.cus_idPhoto)
                 let data = {
                     type: this.new_status,
