@@ -26,7 +26,7 @@
                                     <option value="5">资料齐全</option>
                                 </select>
                             </div>
-                            <div class="input-group">
+                            <!--<div class="input-group">
                                 <select class="form-control">
                                     <option value="">编号状态</option>
                                     <option value="1">全部</option>
@@ -34,7 +34,7 @@
                                     <option value="3">未审核</option>
                                     <option value="5">未录入</option>
                                 </select>
-                            </div>
+                            </div>-->
                         </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
@@ -86,7 +86,7 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
-                        <!--<li>
+                        <li>
                             <h5>
                                 <a @click="payControl('收回')">收回</a>
                                 <a @click="payControl('取消收回')">取消收回</a>
@@ -103,7 +103,7 @@
                                 <a @click="payControl('录入')">录入</a>
                                 <a @click="payControl('取消录入')">取消录入</a>
                             </h5>
-                        </li>-->
+                        </li>
                     </ul>
                 </div>
             </div>
