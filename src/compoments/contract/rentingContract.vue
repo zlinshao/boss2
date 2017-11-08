@@ -134,6 +134,10 @@
                             <i class="fa fa-briefcase"></i>
                             创建维修单
                         </li>
+                        <li class="operate" @click="showSendMail">
+                            <i class="fa fa-envelope"></i>
+                            发送短信
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -261,6 +265,33 @@
         <Contract :dictionary="dictionary"></Contract>
         <!--编辑-->
         <EditRepair :isAdd="true" :contractId="currentContractId" :isCollect="false" @close="closeRepair"></EditRepair>
+        <!--发短信-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="sendMail">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">发送短信</h4>
+                    </div>
+                    <div class="modal-body clearFix">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">业务员离职时间</label>
+                            <div class="col-sm-10">
+                                <DatePicker :dateConfigure="dateConfigure1" :currentDate="leaveTime"
+                                            :idName="'leaveTime'"
+                                            @sendDate="getLeaveDate"></DatePicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button data-dismiss="modal" class="btn btn-primary btn-md">取消</button>
+                        <button class="btn btn-danger btn-md" @click="sureSendEmail">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -284,6 +315,10 @@
                 end_time: '',
                 dateConfigure: [{
                     range: true, // 是否选择范围
+                    needHour: false // 是否需要选择小时
+                }],
+                dateConfigure1:[{
+                    range: false, // 是否选择范围
                     needHour: false // 是否需要选择小时
                 }],
                 currentDate: [],
@@ -330,7 +365,8 @@
                 allId: [],
                 keepStatus: false,
 
-                currentContractId : ''
+                currentContractId : '',
+                leaveTime : '',             // 离职时间
             }
         },
         watch: {
@@ -660,6 +696,34 @@
             closeRepair(){
                 this.currentContractId='';
                 this.contractSeleted = [];
+            },
+
+            showSendMail(){
+                this.leaveTime = '';
+                $('#sendMail').modal('show')
+            },
+            getLeaveDate(val){
+                this.leaveTime = val;
+            },
+//            发送短信
+            sureSendEmail(){
+                /*console.log(this.contractSeleted)
+                console.log(this.leaveTime)*/
+                if (this.leaveTime==''){
+                    this.info.error = '请选择业务员离职时间';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                    return;
+                }
+                this.$http.get('core/collect/sendSms',{
+                    params : {
+                        type : 'rent',
+                        time : this.leaveTime,
+                        id : this.contractSeleted
+                    }
+                }).then((res)=>{
+                    console.log(res.data)
+                })
             }
         }
     }
