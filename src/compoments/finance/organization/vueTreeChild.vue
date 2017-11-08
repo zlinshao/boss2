@@ -20,9 +20,11 @@
                                 <a @click="insertDeparment($event)">新建下级部门</a>
                             </li>
                             <li>
+                                <a @click="transferDepartment($event)">调迁部门</a>
+                            </li>
+                            <li>
                                 <a @click="deleteDepartment($event)">删除部门</a>
                             </li>
-
                         </ul>
                     </div>
                 </div>
@@ -193,6 +195,9 @@
             },
 //            删除部门
             deleteDepartment(e){
+                this.model.contentHtml = e.target.text;
+            },
+            transferDepartment(e){
                 this.model.contentHtml = e.target.text;
             },
         },

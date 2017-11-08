@@ -37,12 +37,17 @@
                 <AchievementCreate :msg="msg" :scope_time="scope_time"></AchievementCreate>
             </div>
         </div>
+        <!--编辑部门-->
         <editDpm :department_name="department_name" :department_id="department_id" @editDdp="changeDpm"></editDpm>
 
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
+        <!--新建下级部门-->
         <AddDpm :department_name="department_name" :parentDpartmentId='parentDpartmentId'
                 :msg="msg" @success='changeDpm'></AddDpm>
+
+        <!--调迁部门-->
+        <TransferDpm @TransferDepartment="transferCommit" :msg="msg"></TransferDpm>
 
         <Status :state='info'></Status>
     </div>
@@ -56,8 +61,9 @@
     import DatePicker from '../../common/datePicker.vue'
     import AddDpm from  './addDubordinateDpm.vue'
     import AchievementCreate from  './achievementCreate.vue'
+    import TransferDpm from  './transferDpm.vue'
     export default {
-        components: {vueZtree, editDpm, Confirm, AddDpm, DatePicker, AchievementCreate, Status},
+        components: {vueZtree, editDpm, Confirm, AddDpm, DatePicker, AchievementCreate, Status, TransferDpm},
         data () {
             return {
                 departmentList: [],         //部门数据
@@ -184,6 +190,10 @@
                         this.parentDpartmentId = val.id;
                         $('#myModalAddDpm').modal('show');
                         break;
+                    case '调迁部门' :
+                        this.parentDpartmentId = val.id;
+                        $('#myModalTransferDpm').modal('show');
+                        break;
                     case '删除部门' :
                         this.confirmMsg = {msg: '您确定删除此部门吗'};
                         $('#confirm').modal('show');
@@ -203,6 +213,22 @@
                     }
                 })
             },
+
+//            调迁部门
+            transferCommit(val){
+                this.$http.post('achv/department/relocate/' + this.department_id, {
+                    parent_id: val,
+                }).then((res) => {
+                    if (res.data.code === '70000') {
+                        this.getDepartementList();
+                        this.successMsg(res.data.msg);
+                        $('#myModalTransferDpm').modal('hide');
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+
             // 右击事件
             rightClick() {
                 console.log("rightClick");
