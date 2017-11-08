@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="提交人"
+                            <input type="text" class="form-control" placeholder="提交人/地址/手机号"
                                    @keydown.enter.prevent="search(1)" v-model="params.keyword">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -108,7 +108,7 @@
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="9" class="text-center text-muted">
+                            <td colspan="11" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
