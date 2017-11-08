@@ -159,7 +159,11 @@
                             —
                         </span>
                     </td>
-                    <td class="text-center">{{LandlordDict.shared_house[item.is_shared]}}</td>
+                    <td class="text-center">{{LandlordDict.shared_house[item.is_shared]}}<br>
+                        <span v-if="item.is_shared == 1">
+                            (&nbsp;{{LandlordDict.shared_part[item.shared_part]}}&nbsp;)
+                        </span>
+                    </td>
                     <td class="text-center">{{LandlordDict.rent_type[item.rent_type]}}</td>
                     <td class="text-center">{{item.deal_date}}</td>
                     <td class="text-center">

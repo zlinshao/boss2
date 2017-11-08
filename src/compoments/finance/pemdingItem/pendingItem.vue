@@ -91,7 +91,13 @@
                             </td>
                             <td>{{dictionary.item_type[item.item_type]}}</td>
                             <td>{{item.staff_name}}</td>
-                            <td>{{item.detailed_address}}</td>
+                            <td>
+                                {{item.detailed_address}}<br>
+                                <span style="line-height: 9px;"
+                                     v-if="item.identity == 2 && item.is_shared == 1">
+                                    (&nbsp;{{dictionary.shared_part[item.shared_part]}}&nbsp;)
+                                </span>
+                            </td>
                             <td>{{item.customer_name}}</td>
                             <td>{{item.start_date}}</td>
                             <td>{{item.end_date}}</td>

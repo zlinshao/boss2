@@ -119,7 +119,15 @@
                             </td>
                             <td>{{item.id}}</td>
                             <td>{{item.update_time}}</td>
-                            <td>{{item.customer == undefined ? '' : item.customer.address}}</td>
+                            <td>
+                                {{item.customer == undefined ? '' : item.customer.address}}<br>
+                                <span v-if="item.customer != null">
+                                     <span style="line-height: 9px;"
+                                           v-if="item.identity == 2 && item.customer.is_shared == 1">
+                                         (&nbsp;{{dict.shared_part[item.customer.shared_part]}}&nbsp;)
+                                     </span>
+                                </span>
+                            </td>
                             <td>{{item.subject}}</td>
                             <td>{{dict.er_type[item.cate]}}</td>
                             <td>{{item.account_name}}</td>

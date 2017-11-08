@@ -218,7 +218,13 @@
                                 <span style="line-height: 9px;" v-if="item.identity === 1"
                                       class="btn btn-danger btn-xs">F</span>
                                 <span style="line-height: 9px;" v-if="item.identity === 2"
-                                      class="btn btn-danger btn-xs">Z</span>
+                                      class="btn btn-danger btn-xs">Z</span><br>
+                                <span v-if="item.customer != null">
+                                     <span style="line-height: 9px;"
+                                           v-if="item.identity == 2 && item.customer.is_shared == 1">
+                                         (&nbsp;{{dict.shared_part[item.customer.shared_part]}}&nbsp;)
+                                     </span>
+                                </span>
                             </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>{{item.amount_receivable}}</td>
@@ -294,7 +300,13 @@
                                 <span v-if="item.identity === 1" class="btn btn-danger btn-xs"
                                       style="line-height: 9px;">F</span>
                                 <span v-if="item.identity === 2" class="btn btn-danger btn-xs"
-                                      style="line-height: 9px;">Z</span>
+                                      style="line-height: 9px;">Z</span><br>
+                                <span v-if="item.customer != null">
+                                     <span style="line-height: 9px;"
+                                           v-if="item.identity == 2 && item.customer.is_shared == 1">
+                                         (&nbsp;{{dict.shared_part[item.customer.shared_part]}}&nbsp;)
+                                     </span>
+                                </span>
                             </td>
                             <td>{{dict.account_subject[item.subject_id]}}</td>
                             <td>{{item.amount_payable}}</td>
