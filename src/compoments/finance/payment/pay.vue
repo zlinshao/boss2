@@ -213,6 +213,12 @@
                                       class="btn btn-danger btn-xs">F</span>
                                 <span style="line-height: 9px;" v-if="item.identity == 2"
                                       class="btn btn-danger btn-xs">Z</span>
+                                <span v-if="item.customer != null">
+                                     <span style="line-height: 9px;"
+                                           v-if="item.identity == 2 && item.customer.is_shared == 1">
+                                         (&nbsp;{{dict.shared_part[item.customer.shared_part]}}&nbsp;)
+                                     </span>
+                                </span>
                             </td>
                             <td>
                                 <span @click="subject_show(1, item.id)" v-if="sub_isActive != item.id"

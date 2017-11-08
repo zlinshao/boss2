@@ -206,6 +206,9 @@
                     <td class="text-center">
                         {{item.address}}&nbsp;
                         <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
+                        <span style="line-height: 9px;" v-if="item.is_shared == 1">
+                            (&nbsp;{{LandlordDict.shared_part[item.shared_part]}}&nbsp;)
+                        </span>
                     </td>
                     <td class="text-center">{{item.customer_name}}</td>
                     <td class="text-center">{{item.months}}</td>
