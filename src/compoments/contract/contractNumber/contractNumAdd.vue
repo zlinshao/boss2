@@ -25,17 +25,17 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group" v-if="new_status == 3">
+                                    <div class="form-group" v-if="new_status == 3">
                                         <label class="col-sm-2 control-label">合同类型</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="contract_type" @change="area='01'">
                                                 <option value="1">公司合同</option>
                                                 <option value="2">中介合同</option>
-                                                &lt;!&ndash;<option :value="value" v-for="(key,value) in dict.area">{{key}}</option>&ndash;&gt;
+                                                <!--<option :value="value" v-for="(key,value) in dict.area">{{key}}</option>-->
                                             </select>
                                         </div>
-                                    </div>-->
-                                    <div class="form-group" v-show="new_status!=3">
+                                    </div>
+                                    <div class="form-group" v-show="contract_type!=2">
                                         <label class="col-sm-2 control-label">城市</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="area" @change="getStatic">
@@ -825,7 +825,7 @@
                     // 上缴
                     data.contract_way = this.contract_type;
                     if (this.contract_type==1){
-//                        data.area = this.area;
+                        data.area = this.area;
                     }
                     data.paid_time = this.receiver_time;
                     data.paid_id = this.receiver_id;
