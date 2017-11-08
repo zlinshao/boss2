@@ -134,7 +134,7 @@
                             <i class="fa fa-briefcase"></i>
                             创建维修单
                         </li>
-                        <li class="operate" @click="showSendMail">
+                        <li class="operate" @click="showSendMail" v-if="simulate.indexOf('Rent/sendSms')>-1||isSuper">
                             <i class="fa fa-envelope"></i>
                             发送短信
                         </li>
@@ -722,7 +722,20 @@
                         id : this.contractSeleted
                     }
                 }).then((res)=>{
-                    console.log(res.data)
+//                    console.log(res.data)
+                    if (res.data.code==70018){
+                        // success
+                        this.contractSeleted = [];
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        $('#sendMail').modal('hide')
+                    } else {
+                        // fail
+                        this.info.error = res.data.msg;
+                        //显示失败弹窗 ***
+                        this.info.state_error = true;
+                    }
                 })
             }
         }

@@ -155,7 +155,9 @@
                                     <div class="text-primary" v-if="type==1">领取人：</div>
                                     <div class="text-primary" v-if="type==2">报备人：</div>
                                     <div class="text-primary" v-if="type==3">上缴人：</div>
-                                    <div>{{public.receiver_name}}</div>
+                                    <div v-if="type==1">{{public.receiver_name}}</div>
+                                    <div v-if="type==2">{{public.reporter_name}}</div>
+                                    <div v-if="type==3">{{public.paid_name}}</div>
                                 </div>
                                 <div>
                                     <div class="text-primary">所属部门：</div>
