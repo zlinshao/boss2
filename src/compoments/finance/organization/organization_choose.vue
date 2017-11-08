@@ -70,7 +70,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <div class=" box-body scoll" style="max-height: 304px">
+                                    <div class=" box-body scoll" style="max-height: 262px">
                                         <ul class="organizeList">
                                             <!--<li style="border-bottom: 1px dotted #CCCCCC">-->
                                             <!--<div>-->
