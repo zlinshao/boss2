@@ -3603,6 +3603,10 @@ table.sliders tr td {
     background: url(../img/checkbox/check-on.png) no-repeat;
 }
 
+.has-js label.c_dis {
+    background: url(../img/checkbox/disabled-checkbox.png) no-repeat;
+}
+
 .has-js label.r_on {
     background: url(../img/checkbox/radio-on.png) no-repeat;
 }

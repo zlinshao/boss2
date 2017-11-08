@@ -340,6 +340,9 @@
             // 全选
             chooseAll(ev){
                 let evInput = ev.target.getElementsByTagName('input')[0];
+                if (evInput.disabled){
+                    return
+                }
                 evInput.checked = !evInput.checked;
                 this.pitch.splice(0, this.pitch.length);
                 if (evInput.checked) {
@@ -351,6 +354,9 @@
             // 选择
             changeIndex(ev,id,isTop){
                 let evInput = ev.target.getElementsByTagName('input')[0];
+                if (evInput.disabled){
+                    return
+                }
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.pitch.push(id);
