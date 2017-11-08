@@ -26,6 +26,15 @@
                                     <option value="5">资料齐全</option>
                                 </select>
                             </div>
+                            <div class="input-group">
+                                <select class="form-control">
+                                    <option value="">编号状态</option>
+                                    <option value="1">全部</option>
+                                    <option value="2">未收回</option>
+                                    <option value="3">未审核</option>
+                                    <option value="5">未录入</option>
+                                </select>
+                            </div>
                         </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
@@ -40,7 +49,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="合同编号/领取人/房屋地址"
+                            <input type="text" class="form-control" placeholder="编号/领取人/地址"
                                    @keydown.enter.prevent="search(1)" v-model="params.keywords">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -77,6 +86,24 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
+                        <!--<li>
+                            <h5>
+                                <a @click="payControl('收回')">收回</a>
+                                <a @click="payControl('取消收回')">取消收回</a>
+                            </h5>
+                        </li>
+                        <li>
+                            <h5>
+                                <a @click="payControl('审核')">审核</a>
+                                <a @click="payControl('取消审核')">取消审核</a>
+                            </h5>
+                        </li>
+                        <li>
+                            <h5>
+                                <a @click="payControl('录入')">录入</a>
+                                <a @click="payControl('取消录入')">取消录入</a>
+                            </h5>
+                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -135,8 +162,8 @@
                                 <td>{{item.receiver_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
-                                <td>{{item.rest_sf_number}}</td>
-                                <td>{{item.rest_zf_number}}</td>
+                                <td :class="{'colorRed':parseInt(item.rest_sf_number)>=20}">{{item.rest_sf_number}}</td>
+                                <td :class="{'colorRed':parseInt(item.rest_zf_number)>=20}">{{item.rest_zf_number}}</td>
                                 <td>{{item.receiver_name}}</td>
                                 <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
@@ -186,8 +213,8 @@
                                 <td>{{item.actual_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
-                                <td>{{item.rest_sf_number}}</td>
-                                <td>{{item.rest_zf_number}}</td>
+                                <td :class="{'colorRed':parseInt(item.rest_sf_number)>=20}">{{item.rest_sf_number}}</td>
+                                <td :class="{'colorRed':parseInt(item.rest_zf_number)>=20}">{{item.rest_zf_number}}</td>
                                 <td>{{item.reporter_name}}</td>
                                 <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
@@ -236,8 +263,8 @@
                                 <td>{{item.paid_time}}</td>
                                 <td>{{item.sf_numbers}}</td>
                                 <td>{{item.zf_numbers}}</td>
-                                <td>{{item.rest_sf_number}}</td>
-                                <td>{{item.rest_zf_number}}</td>
+                                <td :class="{'colorRed':parseInt(item.rest_sf_number)>=20}">{{item.rest_sf_number}}</td>
+                                <td :class="{'colorRed':parseInt(item.rest_zf_number)>=20}">{{item.rest_zf_number}}</td>
                                 <td>{{item.paid_name}}</td>
                                 <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
@@ -304,7 +331,7 @@
 
         <!--显示备注-->
         <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="showRemark"
-             aria-labelledby="mySmallModalLabel" data-backdrop="static">
+             aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -342,6 +369,77 @@
                     <div class="modal-footer text-right">
                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
                         <a :href="leadingOut" class="btn btn-success btn-md" @click="downLoadTable">下载</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--收回，审核，录入-->
+        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="payFlag"
+             aria-labelledby="mySmallModalLabel" data-backdrop="static">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">{{payControlName}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body has-js">
+                            <form class="form-horizontal tasi-form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">收房合同</label>
+                                    <div class="col-sm-10">
+                                        <div class="col-sm-6">
+                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
+                                                <input type="checkbox">
+                                                LJSF010000006
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
+                                                <input type="checkbox">
+                                                LJSF010000006
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
+                                                <input type="checkbox">
+                                                LJSF010000006
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">租房合同</label>
+                                    <div class="col-sm-10">
+                                        <div class="col-sm-6">
+                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
+                                                <input type="checkbox">
+                                                LJSF010000006
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
+                                                <input type="checkbox">
+                                                LJSF010000006
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
+                                                <input type="checkbox">
+                                                LJSF010000006
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
                     </div>
                 </div>
             </div>
@@ -406,7 +504,10 @@
 
                 addRemark : '',             // 添加备注
                 remark : '',                // 显示备注
-                leadingOut : ''             // 导出
+                leadingOut : '',            // 导出
+
+                payControlName : '',        // 上缴操作模态框标题
+
             }
         },
         mounted (){
@@ -631,6 +732,28 @@
             },
             downLoadTable(){
                 $('#leading_out').modal('hide');
+            },
+
+
+//            上缴操作
+            payControl(name){
+                this.payControlName = name;
+                switch (name){
+                    case '收回':
+                        break;
+                    case '取消收回':
+                        break;
+                    case '审核':
+                        break;
+                    case '取消审核':
+                        break;
+                    case '录入':
+                        break;
+                    case '取消录入':
+                        break;
+
+                }
+                $('#payFlag').modal('show')
             }
         }
     }
@@ -650,5 +773,8 @@
     }
     textarea{
         max-width: 100%;
+    }
+    .colorRed{
+        color: red;
     }
 </style>
