@@ -51,6 +51,11 @@
                                     <i class=" fa fa-heart"></i>收藏
                                 </a>
                             </li>
+                            <li @click="phone_remind(1)" v-if="simulate.indexOf('Sms/smsList')>-1||isSuper">
+                                <a href="#">
+                                    <i class=" fa fa-heart"></i>短信提醒
+                                </a>
+                            </li>
                         </ul>
                     </aside>
                     <aside class="lg-side">
@@ -354,7 +359,7 @@
                                    v-if="isMessage&&(simulate.indexOf('Favourite/index')>-1||isSuper)">
                                 <thead class="text-center">
                                 <tr>
-                                    <th class="text-center">收藏时间时间</th>
+                                    <th class="text-center">收藏时间</th>
                                     <th class="text-center">相关对象</th>
                                     <th class="text-center">类别</th>
                                     <th class="text-center">内容</th>
@@ -383,6 +388,39 @@
                                     </td>
                                 </tr>
                                 <tr v-show="Messages_s">
+                                    <td colspan="5" class="text-center text-muted">
+                                        <h4>暂无数据....</h4>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!--收藏-->
+                            <table class="table table-striped table-advance table-hover"
+                                   v-if="isPhone">
+                                <thead class="text-center">
+                                <tr>
+                                    <th class="text-center">短信生成时间</th>
+                                    <th class="text-center">发送人</th>
+                                    <th class="text-center">接收人手机</th>
+                                    <th class="text-center">类型</th>
+                                    <th class="text-center">结果</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="unread text-center" v-for="key in phones">
+                                    <td>{{key.create_time}}</td>
+                                    <td>{{key.real_name}}</td>
+                                    <td>{{key.receive_id}}</td>
+                                    <td>{{dict.message.type[key.type]}}</td>
+                                    <td>
+                                        <span v-show="key.result != 1"
+                                              class="text-primary">{{dict.message.result[key.result]}}</span>
+                                        <span v-show="key.result == 1" @click="repeatSms(key.id)"
+                                              class="btn btn-danger btn-sm">{{dict.message.result[key.result]}}</span>
+                                    </td>
+                                </tr>
+                                <tr v-show="ShowPhone">
                                     <td colspan="5" class="text-center text-muted">
                                         <h4>暂无数据....</h4>
                                     </td>
@@ -454,6 +492,8 @@
                 news1: [],                  //个人发件箱
                 news2: [],                  //部门发件箱
                 Messages: [],               //收藏
+                phones: [],                 //短信提醒
+                dict: {},
 
                 isSystem: true,             //系统公告
                 isSystem_s: false,          //系统公告暂无数据
@@ -469,6 +509,8 @@
                 New1: false,                //个人发件箱暂无数据
                 isNew2: false,              //部门发件箱
                 New2: false,                //部门发件箱暂无数据
+                isPhone: false,             //短信提醒
+                ShowPhone: false,           //短信提醒暂无数据
                 configure: [],              //人资
                 time_status: true,
                 params: {
@@ -515,7 +557,7 @@
                 this.new2(1);
             } else if (fav) {
                 this.Message(1);
-            }else{
+            } else {
                 // 没有查看收藏权限
                 this.isMessage = false;
                 this.message = '';
@@ -553,6 +595,9 @@
                 if (val === 'secre_mess') {
                     this.Secretary(1);
                 }
+//                if (val === 'is_phone') {
+//                    this.phone_remind(1);
+//                }
             }
         },
         methods: {
@@ -616,13 +661,16 @@
                     this.new2(val);
                 }
 
+                if (this.isPhone === true) {
+                    this.phone_remind(val);
+                }
+
                 if (this.isMessage === true) {
                     if (this.Messages.length === 1) {
                         this.Message(val - 1);
                     } else {
                         this.Message(val);
                     }
-
                 }
             },
             addAnnouncement(){
@@ -659,6 +707,7 @@
                         this.paging = res.data.data.pages;
                         this.isSystem_s = false;
                     } else {
+                        this.systems = [];
                         this.isSystem_s = true;
                     }
                 });
@@ -670,6 +719,7 @@
                 this.isMessage = false;
                 this.isNew1 = false;
                 this.isNew2 = false;
+                this.isPhone = false;
                 this.message = '系统公告';
                 this.font = 'fa-volume-up';
             },
@@ -681,15 +731,13 @@
 
                     this.$http.post('message/approval/index/pages/' + val).then((res) => {
                         if (res.data.code === '100070') {
-                            console.log(res.data.data);
                             this.Examines = res.data.data.list;
                             this.paging = res.data.data.pages;
                             this.Examines_s = false;
                         } else {
+                            this.Examines = [];
                             this.Examines_s = true;
-                            this.paging = '';
                         }
-
                     });
                     this.beforePage = val;
                     this.isSystem = false;
@@ -699,6 +747,7 @@
                     this.isMessage = false;
                     this.isNew1 = false;
                     this.isNew2 = false;
+                    this.isPhone = false;
                     this.message = '审批提醒';
                     this.font = 'fa-user';
 //
@@ -713,10 +762,9 @@
                         this.paging = res.data.data.pages;
                         this.Substitutes_s = false;
                     } else {
+                        this.Substitutes = [];
                         this.Substitutes_s = true;
-                        this.paging = '';
                     }
-
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -726,6 +774,7 @@
                 this.isMessage = false;
                 this.isNew1 = false;
                 this.isNew2 = false;
+                this.isPhone = false;
                 this.message = '待办提醒';
                 this.font = 'fa-bell';
             },
@@ -738,10 +787,9 @@
                         this.paging = res.data.data.pages;
                         this.Secretarys_s = false;
                     } else {
+                        this.Secretarys = [];
                         this.Secretarys_s = true;
-                        this.paging = '';
                     }
-
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -751,6 +799,7 @@
                 this.isMessage = false;
                 this.isNew1 = false;
                 this.isNew2 = false;
+                this.isPhone = false;
                 this.message = 'BOSS小秘书';
                 this.font = 'fa-github';
             },
@@ -767,7 +816,6 @@
                     } else {
                         this.news1 = [];
                         this.New1 = true;
-                        this.paging = '';
                     }
                 });
                 this.beforePage = val;
@@ -778,6 +826,7 @@
                 this.isMessage = false;
                 this.isNew1 = true;
                 this.isNew2 = false;
+                this.isPhone = false;
                 this.message = '个人发件箱';
                 this.font = 'fa-male';
             },
@@ -820,7 +869,6 @@
                     } else {
                         this.news2 = [];
                         this.New2 = true;
-                        this.paging = '';
                     }
                 });
                 this.beforePage = val;
@@ -831,6 +879,7 @@
                 this.isMessage = false;
                 this.isNew1 = false;
                 this.isNew2 = true;
+                this.isPhone = false;
                 this.message = '部门发件箱';
                 this.font = 'fa-users';
             },
@@ -845,9 +894,7 @@
                     } else {
                         this.Messages_s = true;
                         this.Messages = [];
-                        this.paging = '';
                     }
-
                 });
                 this.beforePage = val;
                 this.isSystem = false;
@@ -857,8 +904,51 @@
                 this.isMessage = true;
                 this.isNew1 = false;
                 this.isNew2 = false;
+                this.isPhone = false;
                 this.message = '收藏';
                 this.font = 'fa-heart';
+            },
+//            短信提醒
+            phone_remind(val){
+                this.$http.get('message/message/dict').then((res) => {
+                    this.dict = res.data;
+
+                    this.paging = '';
+                    this.$http.get('message/sms/smsList').then((res) => {
+                        if (res.data.code === '20000') {
+                            this.phones = res.data.data.list;
+                            this.paging = res.data.data.pages;
+                            this.ShowPhone = false;
+                        } else {
+                            this.ShowPhone = true;
+                            this.phones = [];
+                        }
+                    });
+                    this.beforePage = val;
+                    this.isSystem = false;
+                    this.isExamine = false;
+                    this.isSubstitute = false;
+                    this.isSecretary = false;
+                    this.isMessage = false;
+                    this.isNew1 = false;
+                    this.isNew2 = false;
+                    this.isPhone = true;
+                    this.message = '短信提醒';
+                    this.font = 'fa-heart';
+                });
+            },
+//            重新发送
+            repeatSms (val){
+                if (this.simulate.indexOf('Sms/smsList') > -1 || this.isSuper) {
+                    this.$http.get('message/sms/repeatSms?id=' + val).then((res) => {
+                        if (res.data.code === '20010') {
+                            this.successMsg(res.data.msg);
+                            this.phone_remind(this.beforePage);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                }
             },
             isCollect(val){
                 this.$http.post('message/message/favourite', {
@@ -874,7 +964,17 @@
                         this.system_page(this.beforePage);
                     }
                 });
-            }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>
