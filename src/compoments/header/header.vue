@@ -464,6 +464,19 @@
                                     <span>应收款项</span>
                                 </router-link>
                             </li>
+                            <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                                <a href="javascript:;">
+                                    <span>租期将近</span>
+                                </a>
+                                <ul class="sub">
+                                    <li>
+                                        <router-link to="/tenancyAlmostCollect">收房</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/tenancyAlmostRent">租房</router-link>
+                                    </li>
+                                </ul>
+                            </li>
                             <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
                                 <router-link to="/payCllentAll">应收/应付总汇</router-link>
                             </li>
