@@ -7,7 +7,7 @@
                         <button type="button" class="close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">编辑小区{{params.floor}}</h4>
+                        <h4 class="modal-title">编辑小区</h4>
                     </div>
                     <div class="modal-body">
                         <div class="panel-body">
@@ -465,7 +465,6 @@
             },
 
             confirmAdd(){   //确认提交
-                console.log(this.params);
                 if(this.complete_ok === 'ok'){
                     this.$http.put('core/house/houseUpdate/id/' + this.villageId,this.params).then((res) =>{
                         if(res.data.code === '10030'){

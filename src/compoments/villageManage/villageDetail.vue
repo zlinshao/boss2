@@ -81,8 +81,10 @@
                             <h4>周边信息</h4>
                         </div>
                         <div class="map">
-                            <div id="mapContainer" style="width: 800px;height: 400px;"></div>
-                            <div class="ambitusDetail">
+                            <div id="mapContainer" style="width: 800px;height: 400px;">
+                                <h4 v-if="location.length==0">暂无地图信息...</h4>
+                            </div>
+                            <div class="ambitusDetail" v-if="location.length>0">
                                 <div class="ambitusDetail_top" @click="changeActive($event)">
                                     <a class="active">交通</a>
                                     <a>学校</a>
@@ -134,10 +136,13 @@
                 this.$http.get('core/house/houseRead/id/' + this.villageId).then((res) => {
                     this.villageDetail = res.data.data;
 //                    this.cityCode = res.data.data.code;
-                    this.location.push(res.data.data.longitude);
-                    this.location.push(res.data.data.latitude);
+                    if(res.data.data.longitude!==null && res.data.data.latitude!== null){
+                        this.location = [];
+                        this.location.push(res.data.data.longitude);
+                        this.location.push(res.data.data.latitude);
 
-                    this.initMap();
+                        this.initMap();
+                    }
                 })
             },
             showLargePic(name,index){
@@ -152,7 +157,9 @@
                 if(e.target.nodeName === 'A'){
                     $(e.target).css('background','#fff').siblings().css('background','#ddd');
                     this.ambient = e.target.text;
-                    this.initMap();
+                    if(this.ambient !== '' && this.location.length>0){
+                        this.initMap();
+                    }
                 }
             },
             initMap(){
@@ -193,7 +200,6 @@
             },
             successEdit(){
                 this.getVillageDetail();
-                this.initMap();
             },
         }
     }

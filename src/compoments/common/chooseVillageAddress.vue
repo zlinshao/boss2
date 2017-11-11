@@ -143,7 +143,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" v-model="keywords" placeholder="请输入关键字进行搜索"  @keyup="enterSearch">
+                                    <input type="text" v-model="keywords" placeholder="请输入关键字进行搜索"  @keyup.enter="enterSearch">
                                 </td>
                                 <td class="column2">
                                     <input type="text" readonly id="lnglat" v-model="coordinate">
@@ -384,8 +384,6 @@
                     });
                     //关键字查询
                     placeSearch.search(_this.keywords, function(status, result) {
-                        console.log(status)
-                        console.log(result)
                     });
                 });
             },
