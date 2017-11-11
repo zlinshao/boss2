@@ -40,8 +40,8 @@ import  Memorandum from  './compoments/contract/searchMemorandum.vue'           
 
 import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";        //收房合同
 import RentingContractTransfer from "./compoments/contract/rentingContractTransfer.vue";        //租房合同
-import ContractNum from "./compoments/contract/contractNumber/contractNum.vue";        // 编号记录
-import ContractNumDetail from "./compoments/contract/contractNumber/contractNumDetail.vue";        // 编号记录详情
+import ContractNum from "./compoments/contract/contractNumber/contractNum.vue";                 // 编号记录
+import ContractNumDetail from "./compoments/contract/contractNumber/contractNumDetail.vue";     // 编号记录详情
 
 
 import  Comparecontract from  './compoments/contract/Compare.vue'
@@ -66,6 +66,8 @@ import Jurisdiction from './compoments/finance/jurisdiction.vue'                
 import CollectPayment from './compoments/finance/payment/collect.vue'                           // 应收款项
 import PayPayment from './compoments/finance/payment/pay.vue'                                   // 应付款项
 import PayCllentAll from './compoments/finance/payment/PayCollectAll.vue'                       // 财务应收/应付总汇
+import TenancyAlmostCollect from './compoments/finance/tenancyAlmost/tenancyAlmostCollect.vue'  // 租期将近 / 收
+import TenancyAlmostRent from './compoments/finance/tenancyAlmost/tenancyAlmostRent.vue'        // 租期将近 / 租
 import IncomeFlow from './compoments/finance/incomeFlow.vue'                                    // 收支流水
 import PayPaymentDetail from './compoments/finance/payment/payDetail.vue'                       // 收支流水
 import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue'               // 收支流水
@@ -74,8 +76,8 @@ import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'  
 import GeneralOperation from './compoments/finance/generalOperation.vue'                        // 总账操作
 import Personal from './compoments/salary/personal.vue'                                             // 个人工资
 import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
-import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                 // 周期表
-import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                                 // 周期表详情
+import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                  // 周期表
+import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                            // 周期表详情
 
 
 
@@ -100,7 +102,7 @@ import lockScreen from './compoments/lock_screen/lock_screen.vue'               
 import UserDetail from './compoments/user/userDetail.vue'                                       //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'                              //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
-// import ClientManage from './compoments/finance/clientManage/clientManageList.vue'               //财务客户管理
+// import ClientManage from './compoments/finance/clientManage/clientManageList.vue'            //财务客户管理
 
 
 
@@ -327,6 +329,16 @@ export default[
         path: '/payCllentAll',
         name: 'payCllentAll',                       //财务应收/应付总汇
         component: PayCllentAll
+    },
+    {
+        path: '/tenancyAlmostCollect',
+        name: 'tenancyAlmostCollect',                       // 租期将近/ 收
+        component: TenancyAlmostCollect
+    },
+    {
+        path: '/tenancyAlmostRent',
+        name: 'tenancyAlmostRent',                       // 租期将近/ 租
+        component: TenancyAlmostRent
     },
     {
         path: '/newRenter',
