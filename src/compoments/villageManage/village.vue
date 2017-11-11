@@ -137,6 +137,7 @@
                     }else {
                         this.houseList = [];
                         this.isShow = true;
+                        this.pages = '';
                     }
                 })
             },
