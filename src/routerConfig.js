@@ -147,6 +147,8 @@ import ProblemDetail from './compoments/customerService/problem/problemDetail.vu
 import HydropowerGasList from './compoments/customerService/hydropowerGas/hydropowerGasList.vue'                                // 水电燃物业、公摊费申报申报
 import HydropowerGasDetail from './compoments/customerService/hydropowerGas/hydropowerGasDetail.vue'                                // 水电燃物业、公摊费申报申报详情
 
+import Village from './compoments/villageManage/village.vue'                        //小区管理列表
+import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
 export default[
     {
         path: '/',                  //重定向主页
@@ -768,4 +770,14 @@ export default[
         name: 'HydropowerGasDetail',
         component: HydropowerGasDetail
     },
+    {
+        path: '/village',
+        name: 'Village',
+        component: Village
+    },
+    {
+        path: '/villageDetail',
+        name: 'VillageDetail',
+        component: VillageDetail
+    }
 ]

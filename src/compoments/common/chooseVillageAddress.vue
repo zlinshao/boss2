@@ -73,7 +73,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"
+             style="z-index: 1082;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -83,7 +84,7 @@
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">小区名称：<sup class="required"></sup></label>
+                                <label class="col-sm-2 control-label">小区名称：</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" v-model="searchInfo" style="margin-bottom: 0">
                                     <a style="margin-top: 5px;display: inline-block;">
@@ -91,6 +92,20 @@
                                         1.有小区名——仙居雅苑，禁填xx路xx号<br>
                                         2.无小区名——水西门大街87号
                                     </a>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">小区地址：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="village_address" style="margin-bottom: 0">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">小区坐标：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="location" @click="selectLocation" readonly>
                                 </div>
                             </div>
                         </form>
@@ -102,91 +117,56 @@
                 </div>
             </div>
         </div>
+        <!--坐标选取-->
+    <div class="modal fade" id="location" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static" style="z-index: 1083;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" @click="closeModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">选取坐标</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="mapContainer"  style="width: 570px;height: 400px;"></div>
+                    <div id="panel"></div>
+                    <div id="myPageTop">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>按关键字搜索：</label>
+                                </td>
+                                <td class="column2">
+                                    <label>左击获取经纬度：</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" v-model="keywords" placeholder="请输入关键字进行搜索"  @keyup="enterSearch">
+                                </td>
+                                <td class="column2">
+                                    <input type="text" readonly id="lnglat" v-model="coordinate">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" @click="closeModal">取消</button>
+                    <button type="button" class="btn btn-primary" @click="confirmLocation">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
         <!--提示信息-->
         <Status :state='info'></Status>
     </div>
 
 </template>
-<style scoped>
-    .input-group{
-        margin-bottom: 5px;
-    }
-    .title{
-        color: white;
-        padding: 12px 24px;
-        background-color: #2A3542;
-    }
-    .title h3{
-        margin: 0;
-    }
-    .title i{
-        font-size: 16px;
-        float: right;
-    }
-    .chooseBody{
-        overflow-y: auto;
-        padding: 12px 20px;
-        height: 350px;
-    }
-    .table tbody tr{
-        cursor: pointer;
-    }
-    .chooseBtn{
-        text-align: right;
-        padding: 12px 24px;
-        background-color: #F5F5F5;
-        border-top: 1px solid #ddd;
-    }
-    .text{
-        width: 10%;
-    }
-    .noData{
-        /*position: relative;*/
-        display: inline-block;
-        margin: 8px 0;
-    }
-    .noData .contact{
-        color: black;
-        position: absolute;
-        top: 25px;
-        left: 0;
-        z-index: 10;
-        background: white;
-        padding: 3px 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        line-height: 25px;
-        width: 150%;
-    }
 
-    .contact:before {
-        position: absolute;
-        top: -7px;
-        left: 9px;
-        display: inline-block;
-        border-right: 7px solid transparent;
-        border-bottom: 7px solid rgba(0, 0, 0, 0.2);
-        border-left: 7px solid transparent;
-        /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
-        content: '';
-    }
-
-    .contact:after {
-        position: absolute;
-        top: -6px;
-        left: 10px;
-        display: inline-block;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid #fff;
-        border-left: 6px solid transparent;
-        content: '';
-    }
-    #myModal1{
-        z-index: 1200;
-    }
-
-</style>
 <script>
     import Status from './status.vue';
 
@@ -198,9 +178,12 @@
             return {
                 isShow : false,
                 showContact : false,
-
+                village_address : '',
                 searchInfo : '',
-                chooseCity : '',
+                coordinate : '',
+                location:'',
+                keywords : '',
+                chooseCity : '南京市',
                 villages : [],
                 villageId : '',
                 village : {
@@ -357,15 +340,149 @@
                 $('#addAddress').modal('show');
             },
             cancelAdd(){
+                this.village_address = '';
+                this.searchInfo = '';
+                this.location = '';
                 $('#addAddress').modal('hide');
                 $('#myModal1').modal('show');
             },
             saveAdd(){
                 this.$emit('getChildData',{
                     villageName : this.searchInfo,
+                    address : this.village_address,
+                    location :this.location
                 });
                 $('#addAddress').modal('hide');
-            }
+            },
+
+
+            selectLocation(){
+                $('#location').modal('show');
+                this.initMap();
+            },
+            enterSearch(){
+                this.initMap();
+            },
+            initMap(){
+                let _this =this;
+                let map = new AMap.Map("mapContainer", {
+                    resizeEnable: true
+                });
+                //为地图注册click事件获取鼠标点击出的经纬度坐标
+                let clickEventListener = map.on('click', function(e) {
+                    document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
+                    _this.coordinate = e.lnglat.getLng() + ',' + e.lnglat.getLat();
+                });
+
+                AMap.service(["AMap.PlaceSearch"], function() {
+                    let placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                        pageSize: 5,
+                        pageIndex: 1,
+                        city: "", //城市
+                        map: map//,
+                        //panel: "panel"
+                    });
+                    //关键字查询
+                    placeSearch.search(_this.keywords, function(status, result) {
+                        console.log(status)
+                        console.log(result)
+                    });
+                });
+            },
+
+            closeModal(){
+                this.keywords = '';
+                this.coordinate = '';
+                $('#location').modal('hide');
+            },
+            confirmLocation(){
+                this.location = this.coordinate;
+                this.closeModal();
+            },
         }
     }
 </script>
+
+<style scoped>
+    .input-group{
+        margin-bottom: 5px;
+    }
+    .title{
+        color: white;
+        padding: 12px 24px;
+        background-color: #2A3542;
+    }
+    .title h3{
+        margin: 0;
+    }
+    .title i{
+        font-size: 16px;
+        float: right;
+    }
+    .chooseBody{
+        overflow-y: auto;
+        padding: 12px 20px;
+        height: 350px;
+    }
+    .table tbody tr{
+        cursor: pointer;
+    }
+    .chooseBtn{
+        text-align: right;
+        padding: 12px 24px;
+        background-color: #F5F5F5;
+        border-top: 1px solid #ddd;
+    }
+    .text{
+        width: 10%;
+    }
+    .noData{
+        /*position: relative;*/
+        display: inline-block;
+        margin: 8px 0;
+    }
+    .noData .contact{
+        color: black;
+        position: absolute;
+        top: 25px;
+        left: 0;
+        z-index: 10;
+        background: white;
+        padding: 3px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        line-height: 25px;
+        width: 150%;
+    }
+
+    .contact:before {
+        position: absolute;
+        top: -7px;
+        left: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+        border-left: 7px solid transparent;
+        /*border-bottom-color: rgba(0, 0, 0, 0.2);*/
+        content: '';
+    }
+
+    .contact:after {
+        position: absolute;
+        top: -6px;
+        left: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #fff;
+        border-left: 6px solid transparent;
+        content: '';
+    }
+    #myModal1{
+        z-index: 1200;
+    }
+
+    #myPageTop{
+        margin-right: 5px;
+    }
+
+</style>
