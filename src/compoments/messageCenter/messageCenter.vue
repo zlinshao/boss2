@@ -914,7 +914,7 @@
                     this.dict = res.data;
 
                     this.paging = '';
-                    this.$http.get('message/sms/smsList').then((res) => {
+                    this.$http.get('message/sms/smsList?pages=' + val).then((res) => {
                         if (res.data.code === '20000') {
                             this.phones = res.data.data.list;
                             this.paging = res.data.data.pages;
