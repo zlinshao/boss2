@@ -702,7 +702,12 @@
                     <!--<span>小区管理</span>-->
                     <!--</router-link>-->
                     <!--</li>-->
-
+                    <li class="sub-menu" v-show="simulate.indexOf('Log/log')>-1||isSuper">
+                        <router-link to="/village">
+                            <i class="fa fa-dashboard"></i>
+                            <span>小区管理</span>
+                        </router-link>
+                    </li>
                     <li class="sub-menu" v-show="simulate.indexOf('Log/log')>-1||isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-pencil-square-o"></i>
