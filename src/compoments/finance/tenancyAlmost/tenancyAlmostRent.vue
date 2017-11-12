@@ -13,6 +13,14 @@
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
+                        <div class="input-group">
+                            <label class="sr-only" for="search_info">搜索</label>
+                            <input type="text" class="form-control" id="search_info" placeholder="客户/手机号/房屋地址"
+                                   v-model="params.search" @keydown.enter.prevent="search(1)">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -26,17 +34,27 @@
                         <tr>
                             <th class="text-center width100">到期日期</th>
                             <th class="text-center width80">客户姓名</th>
+                            <th class="text-center width80">房屋地址</th>
+                            <th class="text-center width80">手机号</th>
+                            <th class="text-center" style="min-width: 360px;">详细信息</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in myData" class="text-center">
                             <td>{{item.due_date}}</td>
                             <td>
+                                <span v-if="item.customer != null">{{item.customer.customer_name}}</span>
+                            </td>
+                            <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
                             </td>
+                            <td>
+                                <span v-if="item.customer != null">{{item.customer.contact}}</span>
+                            </td>
+                            <td>{{item.description}}</td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="2" class="text-center text-muted">
+                            <td colspan="4" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -70,6 +88,7 @@
                 params: {
                     page: 1,
                     range: '',
+                    search: '',
                 },
                 dateConfigure: [
                     {
