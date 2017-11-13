@@ -26,7 +26,12 @@
                                     <option value="5">资料齐全</option>
                                 </select>
                             </div>
-
+                            <div class="input-group">
+                                <select class="form-control" v-model="params.contract_status" @change="search(1)">
+                                    <option value="">编号状态</option>
+                                    <option :value="value" v-for="(key,value) in dict.contract_status">{{key}}</option>
+                                </select>
+                            </div>
                         </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
@@ -78,7 +83,24 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
-
+                        <li v-if="params.type == 3">
+                            <h5>
+                                <a @click="payControl('收回')">收回</a>
+                                <a @click="payControl('取消收回')">取消收回</a>
+                            </h5>
+                        </li>
+                        <li v-if="params.type == 3">
+                            <h5>
+                                <a @click="payControl('审核')">审核</a>
+                                <a @click="payControl('取消审核')">取消审核</a>
+                            </h5>
+                        </li>
+                        <li v-if="params.type == 3">
+                            <h5>
+                                <a @click="payControl('录入')">录入</a>
+                                <a @click="payControl('取消录入')">取消录入</a>
+                            </h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -732,90 +754,109 @@
                 this.choosePaySf = [];
                 this.choosePayZf = [];
 //                console.log(this.pitch[0])
+                let url = '';
+                let data = {
+                    request_time : this.pitch[0],
+                    type : 3
+                };
                 switch (name){
                     case '收回':
-                        this.$http.post('code/contract_number_record/getBack',{
-                            request_time : this.pitch[0],
-                            get_back : 0,
-                            type : 3
-                        }).then((res)=>{
-//                            console.log(res.data);
-                            if (res.data.code==30070){
-                                // success
-                                this.payCtrlSf = res.data.data.sf_contract_number
-                                this.payCtrlZf = res.data.data.zf_contract_number
-                                this.showPayFlagModal()
-                            } else {
-                                // fail
-                                this.showError(res.data.msg)
-                            }
-                        });
+                        url = 'code/contract_number_record/getBack';
+                        data.get_back = 0;
                         break;
                     case '取消收回':
-                        this.$http.post('code/contract_number_record/getBack',{
-                            request_time : this.pitch[0],
-                            get_back : 1,
-                            type : 3
-                        }).then((res)=>{
-                            console.log(res.data);
-                            if (res.data.code==30070){
-                                // success
-                                this.payCtrlSf = res.data.data.sf_contract_number
-                                this.payCtrlZf = res.data.data.zf_contract_number
-                                this.showPayFlagModal()
-                            } else {
-                                // fail
-                                this.showError(res.data.msg)
-                            }
-                        });
+                        url = 'code/contract_number_record/getBack';
+                        data.get_back = 1;
                         break;
                     case '审核':
+                        url = 'code/contract_number_record/verifyContract';
+                        data.verify = 0;
                         break;
                     case '取消审核':
+                        url = 'code/contract_number_record/verifyContract';
+                        data.verify = 1;
                         break;
                     case '录入':
+                        url = 'code/contract_number_record/enteringContract';
+                        data.entering = 0;
                         break;
                     case '取消录入':
+                        url = 'code/contract_number_record/enteringContract';
+                        data.entering = 1;
 
                 }
-                /*if (this.payCtrlSf.length>0||this.payCtrlZf.length>0){
-                    $('#payFlag').modal('show')
+                this.$http.post(url,data).then((res)=>{
+                    this.showStatus(1,res.data);
+                });
+            },
+            /*showPayFlagModal(){
+                $('#payFlag').modal('show')
+            },*/
+            showStatus(num,res){
+                if (res.code==30070){
+                    // success
+                    if (num==1){
+                        this.payCtrlSf = res.data.sf_contract_number
+                        this.payCtrlZf = res.data.zf_contract_number
+//                        this.showPayFlagModal()
+                        $('#payFlag').modal('show');
+                    } else {
+                        this.info.success = res.msg;
+                        //关闭失败弹窗 ***
+                        this.info.state_error = false;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        $('#payFlag').modal('hide');
+                        this.pitch = []
+                    }
                 } else {
-                    this.info.error = '';
+                    // fail
+                    this.info.error = res.msg;
                     //显示失败弹窗 ***
                     this.info.state_error = true;
-                }*/
-
+                }
             },
-            showPayFlagModal(){
-                $('#payFlag').modal('show')
-            },
-            showError(msg){
+            /*showError(msg){
                 this.info.error = msg;
                 //显示失败弹窗 ***
                 this.info.state_error = true;
             },
+            showSuccess(msg){
+                this.info.success = msg;
+                //关闭失败弹窗 ***
+                this.info.state_error = false;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },*/
             surePayControl(){
-                console.log(this.choosePaySf.concat(this.choosePayZf))
+//                console.log(this.choosePaySf.concat(this.choosePayZf))
 //                console.log(this.choosePayZf)
+                let url = '';
                 switch (this.payControlName){
                     case '收回':
-                        this.$http.post('code/contract_number_record/doBack',{
-                            contract_number : this.choosePaySf.concat(this.choosePayZf)
-                        }).then((res)=>{
-                            console.log(res.data)
-                        })
+                        url = 'code/contract_number_record/doBack';
                         break;
                     case '取消收回':
+                        url = 'code/contract_number_record/cancelBack';
                         break;
                     case '审核':
+                        url = 'code/contract_number_record/doVerify';
                         break;
                     case '取消审核':
+                        url = 'code/contract_number_record/cancelVerify';
                         break;
                     case '录入':
+                        url = 'code/contract_number_record/doEntering';
                         break;
                     case '取消录入':
+                        url = 'code/contract_number_record/cancelEntering';
                 }
+                this.$http.post(url,{
+                    contract_number : this.choosePaySf.concat(this.choosePayZf)
+                }).then((res)=>{
+//                            console.log(res.data)
+                    this.showStatus(2,res.data);
+                })
 //                $('#payFlag').modal('hide');
 //                this.pitch = []
             }
