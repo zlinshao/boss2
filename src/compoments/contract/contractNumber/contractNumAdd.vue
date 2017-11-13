@@ -91,7 +91,8 @@
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-2 control-label">本次领取合同编号记录(收)<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="collect_num_start" minlength="7" maxlength="7" @blur="getCollectEnd" @keyup="collect_num_start = collect_num_start.replace(/[^\d]/g,'');">
+                                                <input type="text" class="form-control" v-model="collect_num_start" minlength="7" maxlength="7" @blur="getCollectEnd"
+                                                       @keyup="collect_num_start = collect_num_start.replace(/[^\d]/g,'');">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px;">
                                                 到
@@ -112,7 +113,7 @@
                                             <div class="col-sm-6 padd0" v-for="(item,index) in extra_sf_num">
                                                 <label class="col-xs-12 col-sm-4 control-label">合同编号</label>
                                                 <div class="col-xs-5 col-sm-8">
-                                                    <input type="text" class="form-control" v-model="extra_ljsf[index]" minlength="13" maxlength="13">
+                                                    <input type="text" class="form-control" v-model="extra_ljsf[index]" minlength="7" maxlength="7">
                                                 </div>
                                             </div>
                                         </div>
@@ -153,7 +154,7 @@
                                             <div class="col-sm-6 padd0" v-for="(item,index) in extra_zf_num">
                                                 <label class="col-xs-12 col-sm-4 control-label">合同编号</label>
                                                 <div class="col-xs-5 col-sm-8">
-                                                    <input type="text" class="form-control" v-model="extra_ljzf[index]" minlength="13" maxlength="13">
+                                                    <input type="text" class="form-control" v-model="extra_ljzf[index]" minlength="7" maxlength="7">
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +165,7 @@
                                             <div class="col-sm-6 padd0" v-for="(item,index) in scrap_ljsf">
                                                 <label class="col-xs-12 col-sm-4 control-label">合同编号记录(收)</label>
                                                 <div class="col-xs-5 col-sm-8">
-                                                    <input type="text" class="form-control" v-model="scrap_ljsf[index]" minlength="13" maxlength="13">
+                                                    <input type="text" class="form-control" v-model="scrap_ljsf[index]" minlength="7" maxlength="7">
                                                 </div>
                                             </div>
                                         </div>
@@ -196,7 +197,7 @@
                                             <div class="col-sm-6 padd0" v-for="(item,index) in scrap_ljzf">
                                                 <label class="col-xs-12 col-sm-4 control-label">合同编号记录(租)</label>
                                                 <div class="col-xs-5 col-sm-8">
-                                                    <input type="text" class="form-control" v-model="scrap_ljzf[index]" minlength="13" maxlength="13">
+                                                    <input type="text" class="form-control" v-model="scrap_ljzf[index]" minlength="7" maxlength="7">
                                                 </div>
                                             </div>
                                         </div>
@@ -206,7 +207,8 @@
                                         <div class="form-group" v-for="(item, index) in collect_turn_num">
                                             <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="collect_turn_num[index].contract_number" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
+                                                <input type="text" class="form-control" v-model="collect_turn_num[index].contract_number"
+                                                       :minlength="contract_type==2?0:7" :maxlength="contract_type==2?40:7">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px; padding: 0;">
                                                 地址
@@ -264,7 +266,8 @@
                                         <div class="form-group" v-for="(item,index) in rent_turn_num">
                                             <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                             <div class="col-xs-5 col-sm-4">
-                                                <input type="text" class="form-control" v-model="rent_turn_num[index].contract_number" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
+                                                <input type="text" class="form-control" v-model="rent_turn_num[index].contract_number"
+                                                       :minlength="contract_type==2?0:7" :maxlength="contract_type==2?40:7">
                                             </div>
                                             <div class="col-xs-2 text-center" style="line-height: 30px; padding: 0;">
                                                 地址

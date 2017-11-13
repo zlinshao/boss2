@@ -86,7 +86,8 @@
                                                 </div>
                                                 <div v-for="(item,index) in sf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="sf_contract_add[index]" :minlength="contract_type==0?13:0" :maxlength="contract_type==0?13:40">
+                                                        <input type="text" class="form-control" v-model="sf_contract_add[index]" minlength="7" maxlength="7"
+                                                               @keyup="sf_contract_add[index]=sf_contract_add[index].replace(/[^\d]/g,'')">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(1,index)"></i>
@@ -155,7 +156,9 @@
                                                 <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                                 <div class="col-sm-9 padd0 icon">
                                                     <div class="col-xs-5 col-sm-5">
-                                                        <input type="text" class="form-control" v-model="pay_sf_contract_add[index].contract_number" minlength="13" maxlength="13">
+                                                        <input type="text" class="form-control" v-model="pay_sf_contract_add[index].contract_number"
+                                                               :minlength="(contract_type==1&&type==3)?0:7" :maxlength="(contract_type==1&&type==3)?40:7"
+                                                               @keyup="pay_sf_contract_add[index].contract_number=pay_sf_contract_add[index].contract_number.replace(/[^\d]/g,'')">
                                                     </div>
                                                     <div class="col-xs-1 text-center padd0" style="line-height: 30px;">
                                                         地址
@@ -237,7 +240,9 @@
                                                 </div>
                                                 <div v-for="(item,index) in zf_contract_add">
                                                     <div class="col-sm-10 padd0">
-                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]" :minlength="contract_type==0?13:0" :maxlength="contract_type==0?13:40">
+                                                        <input type="text" class="form-control" v-model="zf_contract_add[index]"
+                                                               minlength="7" maxlength="7"
+                                                               @keyup="zf_contract_add[index]=zf_contract_add[index].replace(/[^\d]/g,'')">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <i class="fa fa-minus-circle" @click="minusNew(2,index)"></i>
@@ -293,7 +298,9 @@
                                                 <label class="col-xs-12 col-sm-2 control-label">合同编号<sup class="required">*</sup></label>
                                                 <div class="col-sm-9 padd0 icon">
                                                     <div class="col-xs-5 col-sm-5">
-                                                        <input type="text" class="form-control" v-model="pay_zf_contract_add[index].contract_number" :minlength="contract_type==1?13:0" :maxlength="contract_type==1?13:40">
+                                                        <input type="text" class="form-control" v-model="pay_zf_contract_add[index].contract_number"
+                                                               :minlength="(contract_type==1&&type==3)?0:7" :maxlength="(contract_type==1&&type==3)?40:7"
+                                                               @keyup="pay_zf_contract_add[index].contract_number=pay_zf_contract_add[index].contract_number.replace(/[^\d]/g,'')">
                                                     </div>
                                                     <div class="col-xs-1 text-center padd0" style="line-height: 30px;">
                                                         地址
