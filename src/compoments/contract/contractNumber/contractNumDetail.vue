@@ -85,7 +85,6 @@
                                     <div class="text-primary" v-if="type==2">本次作废合同编号(收)：</div>
                                     <div class="text-primary" v-if="type==3">本次上缴合同编号(收)：</div>
                                     <div v-if="type==1">
-                                        <!--<span v-for="item in msg.sf">{{item.contract_number}}&emsp;</span>-->
                                         <span v-for="item in sf_contract_now">{{item}}&emsp;</span>
                                     </div>
                                     <div v-if="type==2">
