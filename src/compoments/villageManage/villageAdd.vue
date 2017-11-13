@@ -18,7 +18,7 @@
                                     <div class="col-sm-4">
                                         <select class="form-control" v-model="params.province" @change="getCity">
                                             <option value="">省</option>
-                                            <option :value="value.province_name"  v-for="(value,key) in province">
+                                            <option :value="value.province_id"  v-for="(value,key) in province">
                                                 {{value.province_name}}
                                             </option>
                                         </select>
@@ -26,7 +26,7 @@
                                     <div class="col-sm-4" v-if="params.province != ''">
                                         <select class="form-control" v-model="params.city" @change="getArea">
                                             <option value="">市</option>
-                                            <option :value="value.city_name" v-for="(value,key) in city">
+                                            <option :value="value.city_id" v-for="(value,key) in city">
                                                 {{value.city_name}}
                                             </option>
                                         </select>
@@ -37,7 +37,7 @@
                                     <div class="col-sm-4" v-if="params.city != ''">
                                         <select class="form-control" v-model="params.area" @change="getRegion">
                                             <option value="">区/县</option>
-                                            <option :value="value.area_name" v-for="(value,key) in area">
+                                            <option :value="value.area_id" v-for="(value,key) in area">
                                                 {{value.area_name}}
                                             </option>
                                         </select>
@@ -45,7 +45,7 @@
                                     <div class="col-sm-4" v-if="params.area != ''">
                                         <select class="form-control" v-model="params.region">
                                             <option value="">区域</option>
-                                            <option :value="value.region_name" v-for="(value,key) in region">
+                                            <option :value="value.id" v-for="(value,key) in region">
                                                 {{value.region_name}}
                                             </option>
                                         </select>
@@ -284,13 +284,7 @@
                 })
             },
             getCity(){
-                let provinceId;
-                this.province.forEach( (val) => {
-                    if(val.province_name === this.params.province){
-                        provinceId = val.province_id;
-                    }
-                });
-                this.$http.get('core/villa/city/city_parent/' + provinceId).then((res) => {
+                this.$http.get('core/villa/city/city_parent/' + this.params.province).then((res) => {
                     this.city = res.data.data;
                     this.params.city = '';
                     this.params.area = '';
@@ -298,26 +292,14 @@
                 })
             },
             getArea(){
-                let city;
-                this.city.forEach( (val) => {
-                    if(val.city_name === this.params.city){
-                        city = val.city_id;
-                    }
-                });
-                this.$http.get('core/villa/area/area_parent/' + city).then((res) => {
+                this.$http.get('core/villa/area/area_parent/' + this.params.city).then((res) => {
                     this.area = res.data.data;
                     this.params.area = '';
                     this.params.region = '';
                 })
             },
             getRegion(){
-                let area;
-                this.area.forEach( (val) => {
-                    if(val.area_name === this.params.area){
-                        area = val.area_id;
-                    }
-                });
-                this.$http.get('core/villa/region/region_parent/' + area).then((res) => {
+                this.$http.get('core/villa/region/region_parent/' + this.params.area).then((res) => {
                     this.region = res.data.data;
                     this.params.region = '';
                 })
