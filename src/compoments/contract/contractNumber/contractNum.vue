@@ -26,15 +26,16 @@
                                     <option value="5">资料齐全</option>
                                 </select>
                             </div>
-                            <!--<div class="input-group">
-                                <select class="form-control">
+                            <div class="input-group">
+                                <select class="form-control" v-model="params.contract_status" @change="search(1)">
                                     <option value="">编号状态</option>
-                                    <option value="1">全部</option>
+                                    <!--<option value="1">全部</option>
                                     <option value="2">未收回</option>
                                     <option value="3">未审核</option>
-                                    <option value="5">未录入</option>
+                                    <option value="5">未录入</option>-->
+                                    <option :value="value" v-for="(key,value) in dict.contract_status">{{key}}</option>
                                 </select>
-                            </div>-->
+                            </div>
                         </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
@@ -86,24 +87,24 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
-                        <li>
+                        <!--<li v-if="params.type == 3">
                             <h5>
                                 <a @click="payControl('收回')">收回</a>
                                 <a @click="payControl('取消收回')">取消收回</a>
                             </h5>
                         </li>
-                        <li>
+                        <li v-if="params.type == 3">
                             <h5>
                                 <a @click="payControl('审核')">审核</a>
                                 <a @click="payControl('取消审核')">取消审核</a>
                             </h5>
                         </li>
-                        <li>
+                        <li v-if="params.type == 3">
                             <h5>
                                 <a @click="payControl('录入')">录入</a>
                                 <a @click="payControl('取消录入')">取消录入</a>
                             </h5>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -388,48 +389,26 @@
                     <div class="modal-body">
                         <div class="panel-body has-js">
                             <form class="form-horizontal tasi-form">
-                                <div class="form-group">
+                                <div class="form-group" v-if="payCtrlSf.length>0">
                                     <label class="col-sm-2 control-label">收房合同</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-6">
-                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
-                                                <input type="checkbox">
-                                                LJSF010000006
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
-                                                <input type="checkbox">
-                                                LJSF010000006
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
-                                                <input type="checkbox">
-                                                LJSF010000006
+                                        <div class="col-sm-6" v-for="item in payCtrlSf">
+                                            <label :class="{'label_check':true,'c_on':choosePaySf.indexOf(item)>-1,'c_off':choosePaySf.indexOf(item)==-1}"
+                                                    @click.prevent="payCtrl($event,1,item)">
+                                                <input type="checkbox" :checked="choosePaySf.indexOf(item)>-1">
+                                                {{item}}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" v-if="payCtrlZf.length>0">
                                     <label class="col-sm-2 control-label">租房合同</label>
                                     <div class="col-sm-10">
-                                        <div class="col-sm-6">
-                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
-                                                <input type="checkbox">
-                                                LJSF010000006
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
-                                                <input type="checkbox">
-                                                LJSF010000006
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label :class="{'label_check':true,'c_on':false,'c_off':true}">
-                                                <input type="checkbox">
-                                                LJSF010000006
+                                        <div class="col-sm-6" v-for="item in payCtrlZf">
+                                            <label :class="{'label_check':true,'c_on':choosePayZf.indexOf(item)>-1,'c_off':choosePayZf.indexOf(item)==-1}"
+                                                   @click.prevent="payCtrl($event,2,item)">
+                                                <input type="checkbox" :checked="choosePayZf.indexOf(item)>-1">
+                                                {{item}}
                                             </label>
                                         </div>
                                     </div>
@@ -439,7 +418,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+                        <button type="button" class="btn btn-primary" @click="surePayControl">确认</button>
                     </div>
                 </div>
             </div>
@@ -489,7 +468,8 @@
                     department_id: '',             //筛选
                     start : '',
                     end : '',
-                    keywords : ''
+                    keywords : '',
+                    contract_status : ''
                 },
                 info: {
                     //成功状态 ***
@@ -507,6 +487,11 @@
                 leadingOut : '',            // 导出
 
                 payControlName : '',        // 上缴操作模态框标题
+                payCtrlSf : [],
+                payCtrlZf : [],
+
+                choosePaySf : [],
+                choosePayZf : [],
 
             }
         },
@@ -515,7 +500,9 @@
             let page = this.$route.query.page;
             let select = this.$route.query.select;
 
-//            this.$http.get('code/Staff_Square/dict').then((res)=>{
+            this.$http.get('code/Contract_Number_Record/dict').then((res)=>{
+//                console.log(res.data)
+                this.dict = res.data;
                 if (page!=undefined){
                     this.page = page;
                     this.beforePage = page;
@@ -530,7 +517,7 @@
                 } else {
                     this.search(1);
                 }
-//            })
+            })
 
 //            this.contract_list(1);
         },
@@ -735,11 +722,115 @@
             },
 
 
+            payCtrl(ev,num,number){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked){
+                    switch (parseInt(num)){
+                        case 1 :
+                            this.choosePaySf.push(number)
+                            break;
+                        case 2 :
+                            this.choosePayZf.push(number)
+                    }
+                }else {
+                    switch (parseInt(num)){
+                        case 1 :
+                            let index1 = this.choosePaySf.indexOf(number);
+                            if (index1 > -1) {
+                                this.choosePaySf.splice(index1, 1);
+                            }
+                            break;
+                        case 2 :
+                            let index2 = this.choosePayZf.indexOf(number);
+                            if (index2 > -1) {
+                                this.choosePayZf.splice(index2, 1);
+                            }
+                    }
+                }
+
+            },
 //            上缴操作
             payControl(name){
                 this.payControlName = name;
+                this.payCtrlSf = [];
+                this.payCtrlZf = [];
+                this.choosePaySf = [];
+                this.choosePayZf = [];
+//                console.log(this.pitch[0])
                 switch (name){
                     case '收回':
+                        this.$http.post('code/contract_number_record/getBack',{
+                            request_time : this.pitch[0],
+                            get_back : 0,
+                            type : 3
+                        }).then((res)=>{
+//                            console.log(res.data);
+                            if (res.data.code==30070){
+                                // success
+                                this.payCtrlSf = res.data.data.sf_contract_number
+                                this.payCtrlZf = res.data.data.zf_contract_number
+                                this.showPayFlagModal()
+                            } else {
+                                // fail
+                                this.showError(res.data.msg)
+                            }
+                        });
+                        break;
+                    case '取消收回':
+                        this.$http.post('code/contract_number_record/getBack',{
+                            request_time : this.pitch[0],
+                            get_back : 1,
+                            type : 3
+                        }).then((res)=>{
+                            console.log(res.data);
+                            if (res.data.code==30070){
+                                // success
+                                this.payCtrlSf = res.data.data.sf_contract_number
+                                this.payCtrlZf = res.data.data.zf_contract_number
+                                this.showPayFlagModal()
+                            } else {
+                                // fail
+                                this.showError(res.data.msg)
+                            }
+                        });
+                        break;
+                    case '审核':
+                        break;
+                    case '取消审核':
+                        break;
+                    case '录入':
+                        break;
+                    case '取消录入':
+
+                }
+                /*if (this.payCtrlSf.length>0||this.payCtrlZf.length>0){
+                    $('#payFlag').modal('show')
+                } else {
+                    this.info.error = '';
+                    //显示失败弹窗 ***
+                    this.info.state_error = true;
+                }*/
+
+            },
+            showPayFlagModal(){
+                $('#payFlag').modal('show')
+            },
+            showError(msg){
+                this.info.error = msg;
+                //显示失败弹窗 ***
+                this.info.state_error = true;
+            },
+            surePayControl(){
+                console.log(this.choosePaySf.concat(this.choosePayZf))
+//                console.log(this.choosePayZf)
+                switch (this.payControlName){
+                    case '收回':
+                        this.$http.post('code/contract_number_record/doBack',{
+                            contract_number : this.choosePaySf.concat(this.choosePayZf)
+                        }).then((res)=>{
+                            console.log(res.data)
+                        })
                         break;
                     case '取消收回':
                         break;
@@ -750,10 +841,9 @@
                     case '录入':
                         break;
                     case '取消录入':
-                        break;
-
                 }
-                $('#payFlag').modal('show')
+//                $('#payFlag').modal('hide');
+//                this.pitch = []
             }
         }
     }

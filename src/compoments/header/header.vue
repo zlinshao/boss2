@@ -1120,8 +1120,9 @@
 //            });
             this.isPc = this.IsPC();
             this.new_infos();
+            let _this = this;
             setInterval(function () {
-                $.ajax({
+                /*$.ajax({
                     type: 'POST',
                     xhrFields: {
                         withCredentials: true
@@ -1130,6 +1131,10 @@
                     success: (data) => {
                         this.new_info = data.data;
                     }
+                })*/
+                _this.$http.post('message/message/self_mess').then((res)=>{
+//                    console.log(res.data)
+                    this.new_info = res.data.data;
                 })
             }.bind(this), 60000);
         },

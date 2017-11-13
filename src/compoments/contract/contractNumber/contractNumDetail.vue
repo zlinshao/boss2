@@ -16,6 +16,20 @@
                     <span v-if="type==1">领取合同</span>
                     <span v-if="type==2">作废合同</span>
                     <span v-if="type==3">上缴合同</span>
+                    <span class="payFlag" v-if="type==3">
+                        <span>
+                            <i class="flag">收</i>
+                            已收回
+                        </span>
+                        <span>
+                            <i class="flag">审</i>
+                            已审核
+                        </span>
+                        <span>
+                            <i class="flag">录</i>
+                            已录入
+                        </span>
+                    </span>
                 </div>
             </div>
         </section>
@@ -91,7 +105,13 @@
                                                 item.idcard_copy==0&&item.house_property==0">无</span>-->
                                                 <span v-if="item.receipt==0&&item.delivery_receitp==0&&
                                                 item.house_key==0">无</span>
-                                                )</p>
+                                                )
+                                                <span v-if="type==3">
+                                                    <i class="flag">收</i>
+                                                    <i class="flag">审</i>
+                                                    <i class="flag">录</i>
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -330,5 +350,21 @@
         padding: 0 5px;
         color: #ccc;
         content: "";
+    }
+
+    .panel.head .payFlag span{
+        display: inline-block;
+        /*padding: 0 3px;*/
+        font-size: 14px;
+        font-weight: normal;
+    }
+    i.flag{
+        display: inline-block;
+        padding: 2px 3px;
+        border: 1px solid #FF9933;
+        color: #FF9933;
+        border-radius: 3px;
+        font-style: normal;
+        margin-right: 3px;
     }
 </style>
