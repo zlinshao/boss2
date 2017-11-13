@@ -82,9 +82,9 @@
                         </div>
                         <div class="map">
                             <div id="mapContainer" style="width: 800px;height: 400px;">
-                                <h4 v-if="location.length==0">暂无地图信息...</h4>
+                                <h4 v-if="location.length==0||location[0]===''">暂无地图信息...</h4>
                             </div>
-                            <div class="ambitusDetail" v-if="location.length>0">
+                            <div class="ambitusDetail" v-if="location.length>0&&location[0]!==''">
                                 <div class="ambitusDetail_top" @click="changeActive($event)">
                                     <a class="active">交通</a>
                                     <a>学校</a>
@@ -157,7 +157,7 @@
                 if(e.target.nodeName === 'A'){
                     $(e.target).css('background','#fff').siblings().css('background','#ddd');
                     this.ambient = e.target.text;
-                    if(this.ambient !== '' && this.location.length>0){
+                    if(this.ambient !== ''  ){
                         this.initMap();
                     }
                 }

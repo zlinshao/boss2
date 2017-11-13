@@ -129,7 +129,7 @@
                     <h4 class="modal-title">选取坐标</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="mapContainer"  style="width: 570px;height: 400px;"></div>
+                    <div id="mapContainer1"  style="width: 570px;height: 400px;"></div>
                     <div id="panel"></div>
                     <div id="myPageTop">
                         <table>
@@ -365,7 +365,7 @@
             },
             initMap(){
                 let _this =this;
-                let map = new AMap.Map("mapContainer", {
+                let map = new AMap.Map("mapContainer1", {
                     resizeEnable: true
                 });
                 //为地图注册click事件获取鼠标点击出的经纬度坐标
