@@ -28,7 +28,7 @@
                                     <div class="form-group" v-if="new_status == 3">
                                         <label class="col-sm-2 control-label">合同类型</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" v-model="contract_type" @change="area='01'">
+                                            <select class="form-control" v-model="contract_type" @change="area=''">
                                                 <option value="1">公司合同</option>
                                                 <option value="2">中介合同</option>
                                                 <!--<option :value="value" v-for="(key,value) in dict.area">{{key}}</option>-->
@@ -39,6 +39,7 @@
                                         <label class="col-sm-2 control-label">城市</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" v-model="area" @change="getStatic">
+                                                <option value="">--请选择--</option>
                                                 <option :value="value" v-for="(key,value) in dict.area">{{key}}</option>
                                             </select>
                                         </div>
@@ -366,7 +367,7 @@
                 collect_turn_num: [],
                 rent_turn_num: [],
                 new_status: 1,
-                area  : '01',
+                area  : '',
                 collect_pitch: [],
                 rent_pitch: [],
                 contract_type : 1,              // 合同类型
@@ -681,7 +682,7 @@
 
                 this.collect_turn_num = [];
                 this.rent_turn_num = [];
-                this.area = '01';
+                this.area = '';
                 this.collect_pitch = [];
                 this.rent_pitch = [];
                 this.receiver_time = '';              //领取时间
