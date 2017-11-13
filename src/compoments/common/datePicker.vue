@@ -140,9 +140,9 @@
         methods: {
             remindData (){
                 $('#' + this.idName).datetimepicker({
-                    minView: this.hour?'day':'month',                     //选择日期后，不会再跳转去选择时分秒
+                    minView: this.hour?'hour':'month',                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
-                    format: this.hour?'yyyy-mm-dd hh:00':'yyyy-mm-dd',
+                    format: this.hour?'yyyy-mm-dd hh:ii':'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
