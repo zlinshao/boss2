@@ -16,7 +16,7 @@
                     <span v-if="type==1">领取合同</span>
                     <span v-if="type==2">作废合同</span>
                     <span v-if="type==3">上缴合同</span>
-                    <span class="payFlag" v-if="type==3">
+                    <!--<span class="payFlag" v-if="type==3">
                         <span>
                             <i class="flag">收</i>
                             已收回
@@ -29,7 +29,7 @@
                             <i class="flag">录</i>
                             已录入
                         </span>
-                    </span>
+                    </span>-->
                 </div>
             </div>
         </section>
@@ -106,11 +106,11 @@
                                                 <span v-if="item.receipt==0&&item.delivery_receitp==0&&
                                                 item.house_key==0">无</span>
                                                 )
-                                                <span v-if="type==3">
+                                                <!--<span v-if="type==3">
                                                     <i class="flag">收</i>
                                                     <i class="flag">审</i>
                                                     <i class="flag">录</i>
-                                                </span>
+                                                </span>-->
                                             </p>
                                         </div>
                                     </div>

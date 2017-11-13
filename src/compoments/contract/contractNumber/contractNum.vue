@@ -87,7 +87,7 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
-                        <!--<li v-if="params.type == 3">
+                        <li v-if="params.type == 3">
                             <h5>
                                 <a @click="payControl('收回')">收回</a>
                                 <a @click="payControl('取消收回')">取消收回</a>
@@ -104,7 +104,7 @@
                                 <a @click="payControl('录入')">录入</a>
                                 <a @click="payControl('取消录入')">取消录入</a>
                             </h5>
-                        </li>-->
+                        </li>
                     </ul>
                 </div>
             </div>
