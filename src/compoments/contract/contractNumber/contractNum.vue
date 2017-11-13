@@ -816,18 +816,6 @@
                     this.info.state_error = true;
                 }
             },
-            /*showError(msg){
-                this.info.error = msg;
-                //显示失败弹窗 ***
-                this.info.state_error = true;
-            },
-            showSuccess(msg){
-                this.info.success = msg;
-                //关闭失败弹窗 ***
-                this.info.state_error = false;
-                //显示成功弹窗 ***
-                this.info.state_success = true;
-            },*/
             surePayControl(){
 //                console.log(this.choosePaySf.concat(this.choosePayZf))
 //                console.log(this.choosePayZf)
