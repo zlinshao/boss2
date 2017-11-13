@@ -17,7 +17,7 @@
                     <h4>
                         <i class="fa fa-home"></i>&nbsp;小区信息
 
-                        <a class="pull-right" @click="editVillage">
+                        <a class="pull-right" @click="editVillage" v-show="simulate.indexOf('House/houseUpdate')>-1||isSuper">
                             <i class="fa fa-edit"></i>
                         </a>
                     </h4>
@@ -113,6 +113,7 @@
     import VillageEdit from './villageEdit.vue'
     export default{
         components : {PicModal,VillageEdit},
+        props:['simulate', 'isSuper'],
         data(){
             return {
                 villageId : '',

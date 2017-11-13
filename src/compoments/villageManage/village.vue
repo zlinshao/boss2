@@ -35,7 +35,7 @@
                         </button>
                     </div>
 
-                    <div class="pull-right">
+                    <div class="pull-right" v-show="simulate.indexOf('House/houseSave')>-1||isSuper">
                         <button class="btn btn-primary" @click="addVillage">
                             <i class="fa fa-plus-square"></i>&nbsp;添加小区
                         </button>
@@ -45,12 +45,12 @@
                 <div class="remind" v-if="selectId >0">
                     <ul>
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li @click="deleteVillage">
+                        <li @click="deleteVillage" v-show="simulate.indexOf('House/houseDelete')>-1||isSuper">
                             <h5>
                                 <a><i class="fa fa-times-circle-o"></i> 删除</a>
                             </h5>
                         </li>
-                        <li @click="editVillage">
+                        <li @click="editVillage" v-show="simulate.indexOf('House/houseUpdate')>-1||isSuper">
                             <h5>
                                 <a><i class="fa fa-edit"></i> 编辑</a>
                             </h5>
@@ -74,7 +74,7 @@
                             <th class="text-center">房屋类型</th>
                             <th class="text-center">建造年限</th>
                             <th class="text-center">房屋栋数</th>
-                            <th class="text-center">详情</th>
+                            <th class="text-center" v-show="simulate.indexOf('House/houseRead')>-1||isSuper">详情</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,7 +91,7 @@
                             <td>{{dictionary.house_type[item.house_type]}}</td>
                             <td>{{item.built_year}}</td>
                             <td>{{item.total_buildings}}</td>
-                            <td>
+                            <td  v-show="simulate.indexOf('House/houseRead')>-1||isSuper">
                                 <router-link :to="{path:'/villageDetail',query: {villageId: item.id , params :params}}">
                                    详情
                                 </router-link>
@@ -125,6 +125,7 @@
     import Loading from '../loading/Loading.vue'
     export default{
         components : {Page,VillageAdd,Status,Confirm,VillageEdit,Loading},
+        props:['simulate', 'isSuper'],
         data(){
             return{
                 now : '',
