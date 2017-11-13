@@ -26,16 +26,7 @@
                                     <option value="5">资料齐全</option>
                                 </select>
                             </div>
-                            <!--<div class="input-group">
-                                <select class="form-control" v-model="params.contract_status" @change="search(1)">
-                                    <option value="">编号状态</option>
-                                    &lt;!&ndash;<option value="1">全部</option>
-                                    <option value="2">未收回</option>
-                                    <option value="3">未审核</option>
-                                    <option value="5">未录入</option>&ndash;&gt;
-                                    <option :value="value" v-for="(key,value) in dict.contract_status">{{key}}</option>
-                                </select>
-                            </div>-->
+
                         </a>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门"
@@ -87,24 +78,7 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
-                        <!--<li v-if="params.type == 3">
-                            <h5>
-                                <a @click="payControl('收回')">收回</a>
-                                <a @click="payControl('取消收回')">取消收回</a>
-                            </h5>
-                        </li>
-                        <li v-if="params.type == 3">
-                            <h5>
-                                <a @click="payControl('审核')">审核</a>
-                                <a @click="payControl('取消审核')">取消审核</a>
-                            </h5>
-                        </li>
-                        <li v-if="params.type == 3">
-                            <h5>
-                                <a @click="payControl('录入')">录入</a>
-                                <a @click="payControl('取消录入')">取消录入</a>
-                            </h5>
-                        </li>-->
+
                     </ul>
                 </div>
             </div>
