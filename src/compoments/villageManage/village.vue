@@ -112,6 +112,7 @@
         <Status :state='info'></Status>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <VillageEdit :startEdit ='startEdit' :villageId="selectId" @closeModal="reloading" @success="successEdit"></VillageEdit>
+        <Loading v-if='Waiting'></Loading>
     </div>
 </template>
 
@@ -121,8 +122,9 @@
     import Status from '../common/status.vue';
     import Confirm from '../common/confirm.vue'
     import VillageEdit from './villageEdit.vue'
+    import Loading from '../loading/Loading.vue'
     export default{
-        components : {Page,VillageAdd,Status,Confirm,VillageEdit},
+        components : {Page,VillageAdd,Status,Confirm,VillageEdit,Loading},
         data(){
             return{
                 now : '',
@@ -151,6 +153,7 @@
                 },
                 confirmMsg:[],
                 startEdit : false,
+                Waiting:true,
             }
         },
         mounted(){
@@ -177,6 +180,7 @@
                         this.houseList = res.data.data.list;
                         this.pages = res.data.data.pages;
                         this.isShow = false;
+                        this.Waiting = false;
 
                         this.allId = [];
                         for (let j = 0; j < this.houseList.length; j++) {
@@ -186,6 +190,7 @@
                         this.houseList = [];
                         this.isShow = true;
                         this.pages = '';
+                        this.Waiting = false;
                     }
                 })
             },

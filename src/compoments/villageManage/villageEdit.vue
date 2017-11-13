@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="row has-js">
-                                    <label class="col-sm-2 control-label">门派详情</label>
+                                    <label class="col-sm-2 control-label">门牌详情</label>
                                     <div class="col-sm-10">
                                         <label class="col-sm-2 control-label">区/组</label>
                                         <label class="col-sm-2 label_check" v-for="item in type"
