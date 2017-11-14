@@ -126,19 +126,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="row has-js">
-                                    <label class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-10">
-                                        <label class="col-sm-2 control-label">楼层</label>
-                                        <label class="col-sm-2 label_check" v-for="item in type"
-                                               @click.prevent="pitch(item,$event,'unit')"
-                                               :class="{'c_on':params.unit.indexOf(item.value) > -1,
-                                               'c_off':params.unit.indexOf(item.value) == -1}">
-                                            <input type="checkbox" :value="item.value">
-                                            {{item.name}}
-                                        </label>
-                                    </div>
-                                </div>
+
                                 <div class="row has-js">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
@@ -147,6 +135,19 @@
                                                @click.prevent="pitch(item,$event,'floor')"
                                                :class="{'c_on':params.floor.indexOf(item.value) > -1,
                                                'c_off':params.floor.indexOf(item.value) == -1}">
+                                            <input type="checkbox" :value="item.value">
+                                            {{item.name}}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row has-js">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <label class="col-sm-2 control-label">楼层</label>
+                                        <label class="col-sm-2 label_check" v-for="item in type"
+                                               @click.prevent="pitch(item,$event,'unit')"
+                                               :class="{'c_on':params.unit.indexOf(item.value) > -1,
+                                               'c_off':params.unit.indexOf(item.value) == -1}">
                                             <input type="checkbox" :value="item.value">
                                             {{item.name}}
                                         </label>
