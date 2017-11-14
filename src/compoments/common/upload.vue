@@ -42,7 +42,7 @@
 
                 console.log(this.idPhotos.cus_idPhoto)
                 if(this.idPhotos.type === 'property'){
-                    this.is_property = 3000;
+                    this.is_property = 4000;
                 }else {
                     this.is_property = 1000;
                 }
