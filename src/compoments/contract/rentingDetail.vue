@@ -672,6 +672,13 @@
                                         </span>
                                     </div>
                                     <div class="infoList clearFix">
+                                        <span class="col-lg-1">凭证截图</span>
+                                        <span class="col-lg-11">
+                                             <img :src="img.small" @click="showLargePic('payment_pic',index)"
+                                                  v-for="(img,index) in item.album.payment_pic">
+                                        </span>
+                                    </div>
+                                    <div class="infoList clearFix">
                                         <span class="col-lg-1">水费照片</span>
                                         <span class="col-lg-11">
                                             <img :src="img.small" @click="showLargePic('water_card_pic',index)"
