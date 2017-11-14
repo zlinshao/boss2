@@ -144,7 +144,7 @@
             resizeWidth: 1000,
             resizeHeight: null,
             resizeMimeType: null,
-            resizeQuality: 0.7,
+            resizeQuality: 0.8,
             resizeMethod: 'contain',
             filesizeBase: 1000,
             maxFiles: null,
@@ -269,8 +269,7 @@
                         let image = new Image();
                         image.onload=function(){
                             let width = image.width;
-                            alert(_this.options.resizeWidth)
-                            alert(width)
+
                             if(width <_this.options.resizeWidth){//如果图片的宽度小于1000 则使用原宽度
                                 _this.options.resizeWidth = width;
                                 // console.log(_this.options.resizeWidth)
