@@ -22,6 +22,7 @@
         data () {
             return {
                 pics: [],
+                is_property : 1000,
             };
         },
         updated (){
@@ -38,6 +39,11 @@
             },
             uploadPic (res){
                 this.pics = this.idPhotos.cus_idPhoto;
+                if(this.idPhotos.type === 'property'){
+                    this.is_property = null;
+                }else {
+                    this.is_property = 1000;
+                }
                 let _this = this;
                 let myDropzone = new Dropzone('#' + res, {
                     url: globalConfig.pic_address,
@@ -46,6 +52,7 @@
                     dictCancelUpload: "正在上传",
                     maxFiles: 60,       //一次性上传的文件数量上限
                     maxFilesize: 20,    //MB
+                    resizeWidth: _this.is_property,
                     acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp",
                     dictResponseError: "当前网络连接不稳定请稍后再试",
                     dictMaxFilesExceeded: "您最多只能上传60个文件！",

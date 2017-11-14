@@ -306,6 +306,7 @@
                 propertyPic:{
                     cus_idPhotos : {},    //修改图片ID
                     cus_idPhoto : [],     //证件照片
+                    type:'property',
                 },
                 complete_ok : 'ok',
                 //新增房屋字段
