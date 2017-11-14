@@ -278,4 +278,7 @@
         margin-right: 0;
         margin-left: 0;
     }
+    .flexBox{
+        margin-left: -15px;
+    }
 </style>
