@@ -28,16 +28,23 @@
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
-
                         <div class="input-group">
-                            <SelectSubject @choose="houseSubject" :current="params.subject_id"
-                                           :msg="'科目搜索'"></SelectSubject>
+                            <SelectSubject @choose="houseSubject" v-show="params.subject_id != -3"
+                                           :current="params.subject_id" :msg="'科目搜索'"></SelectSubject>
+                            <input v-show="params.subject_id == -3" type="text" class="form-control"
+                                   style="margin-bottom: 0;" placeholder="科目搜索" disabled>
                             <span class="input-group-btn">
                                 <button class="btn btn-warning" id="Subject" type="button"
                                         @click="search_empty()">清空</button>
                             </span>
                         </div>
-
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 8px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.subject_id == -3,'c_off':params.subject_id != -3}"
+                                   @click.prevent="houseIndex($event)">
+                                <input type="checkbox" :value="params.subject_id" :checked="params.subject_id == -3">房屋到期
+                            </label>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="签收人/房屋地址/价格" v-model="params.search"
                                    @keydown.enter.prevent="search(1)">
@@ -175,7 +182,8 @@
                             </a>
                             <ul role="menu" class="dropdown-menu" v-if="todayMature.length > 0">
                                 <li v-for="item in todayMature" style="padding: 0;">
-                                    <router-link :to="{path:'/collectPaymentDetail',query: { collectId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1 }}">
+                                    <router-link
+                                            :to="{path:'/collectPaymentDetail',query: { collectId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1 }}">
                                         {{item.address}}
                                     </router-link>
                                 </li>
@@ -598,10 +606,10 @@
                 }
             );
             this.$http.get('account/due/rent/today').then((res) => {
-                if(res.data.code === '70000'){
+                if (res.data.code === '70000') {
                     this.todayMature = res.data.data.data;
                     this.todayMatureCount = res.data.data.count;
-                }else{
+                } else {
                     this.todayMature = [];
                 }
             })
@@ -634,9 +642,11 @@
                 this.search(1);
             },
 //            清空科目
-            search_empty (val){
-                this.params.subject_id = '';
-                this.search(1);
+            search_empty (){
+                if(this.params.subject_id !== -3){
+                    this.params.subject_id = '';
+                    this.search(1);
+                }
             },
 //            科目搜索
             houseSubject(val){
@@ -870,7 +880,18 @@
                     }
                 }
             },
-
+//            房屋到期
+            houseIndex(ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.params.subject_id = -3;
+                    this.search(1);
+                } else {
+                    this.params.subject_id = '';
+                    this.search(1);
+                }
+            },
             operation(id, index){
                 this.title = '修改应付';
                 this.isAdd = false;
@@ -1162,6 +1183,6 @@
     }
 
     .bigRed {
-        background-color: #50FFF0;
+        background-color: #FCD1F2;
     }
 </style>

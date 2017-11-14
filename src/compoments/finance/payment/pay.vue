@@ -30,14 +30,22 @@
                         </div>
 
                         <div class="input-group">
-                            <SelectSubject @choose="houseSubject" :current="params.subject_id"
-                                           :msg="'科目搜索'"></SelectSubject>
+                            <SelectSubject v-show="params.subject_id != -3" @choose="houseSubject"
+                                           :current="params.subject_id" :msg="'科目搜索'"></SelectSubject>
+                            <input v-show="params.subject_id == -3" type="text" class="form-control"
+                                   style="margin-bottom: 0;" placeholder="科目搜索" disabled>
                             <span class="input-group-btn">
                                 <button class="btn btn-warning" id="Subject" type="button"
                                         @click="search_empty()">清空</button>
                             </span>
                         </div>
-
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 8px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.subject_id == -3,'c_off':params.subject_id != -3}"
+                                   @click.prevent="houseIndex($event)">
+                                <input type="checkbox" :value="params.subject_id" :checked="params.subject_id == -3">房屋到期
+                            </label>
+                        </div>
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="签收人/房屋地址/价格"
@@ -177,7 +185,8 @@
                             </a>
                             <ul role="menu" class="dropdown-menu" v-if="todayMature.length > 0">
                                 <li v-for="item in todayMature" style="padding: 0;">
-                                    <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1 }}">
+                                    <router-link
+                                            :to="{path:'/payPaymentDetail',query: {payId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1 }}">
                                         {{item.address}}
                                     </router-link>
                                 </li>
@@ -644,8 +653,10 @@
             },
 //            清空科目
             search_empty (){
-                this.params.subject_id = '';
-                this.search(1);
+                if(this.params.subject_id !== -3){
+                    this.params.subject_id = '';
+                    this.search(1);
+                }
             },
 //            科目搜索
             houseSubject(val){
@@ -663,6 +674,18 @@
 //            选择科目
             subject_revise (val){
                 this.rev.subject_id = val;
+            },
+//            房屋到期
+            houseIndex(ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.params.subject_id = -3;
+                    this.search(1);
+                } else {
+                    this.params.subject_id = '';
+                    this.search(1);
+                }
             },
 //            确定修改列表科目
             subject_hide (id){
@@ -882,7 +905,18 @@
                 this.payable = '';                        //应付金额
                 this.remarks = '';                        //备注
             },
-
+//            房屋到期
+            houseIndex(ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.params.subject_id = -3;
+                    this.search(1);
+                } else {
+                    this.params.subject_id = '';
+                    this.search(1);
+                }
+            },
             // 全选
             chooseAll(ev){
                 this.pitch.splice(0, this.pitch.length);
@@ -1168,6 +1202,6 @@
     }
 
     .bigRed {
-        background-color: #50FFF0;
+        background-color: #FCD1F2;
     }
 </style>
