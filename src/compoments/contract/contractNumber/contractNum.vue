@@ -69,14 +69,8 @@
                 <div class="col-lg-12 remind" v-show="pitch.length === 1">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <!--<li>
+                        <li>
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
-                        </li>-->
-                        <li style="display: none">
-                            <h5>
-                                <a><i class="fa fa-star"></i>&nbsp;标记</a>
-                                <!--<a><i class="fa fa-star"></i>&nbsp;取消标记</a>-->
-                            </h5>
                         </li>
                         <li>
                             <h5 data-toggle="modal" data-target="#addRemark">
@@ -630,12 +624,12 @@
 
 //            确认删除
             getConfirm (){
-                this.$http.post('code/Contract_Number_Record/delete',{
+                this.$http.post('code/Contract_Number_Record/doDelete',{
                     type : this.params.type,
                     request_time : this.confirmMsg.request_time
                 }).then((res)=>{
-//                    console.log(res.data);
-                    if (res.data.code==30031){
+                    console.log(res.data);
+                    if (res.data.code==30010){
                         // 成功
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
