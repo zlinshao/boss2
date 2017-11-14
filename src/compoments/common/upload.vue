@@ -39,8 +39,10 @@
             },
             uploadPic (res){
                 this.pics = this.idPhotos.cus_idPhoto;
+
+                console.log(this.idPhotos.cus_idPhoto)
                 if(this.idPhotos.type === 'property'){
-                    this.is_property = null;
+                    this.is_property = 3000;
                 }else {
                     this.is_property = 1000;
                 }
