@@ -150,21 +150,40 @@
         </div>
         <div class="panel tips">
             <ul class="clearFix">
-                <li class="col-md-3">
+                <li class="col-md-2">
                     应付金额(元) <br>
                     <span class="red">{{tips.payable_sum}}</span>
                 </li>
-                <li class="col-md-3">
+                <li class="col-md-2">
                     实付金额(元) <br>
                     <span class="red">{{tips.paid_sum}}</span>
                 </li>
-                <li class="col-md-3">
+                <li class="col-md-2">
                     剩余款项(元) <br>
                     <span class="yellow">{{tips.balance_sum}}</span>
                 </li>
                 <li class="col-md-3" @click="playback" style="cursor: pointer;">
                     <span style="float: left; font-size: 60px;" class="text-danger fa fa-trash-o"></span>
                     <span style="float: left; font-size: 30px;margin: 14px 0 0 10px;">回收站</span>
+                </li>
+                <li class="col-md-3">
+                    <div style="float: left;margin-top: 10px;">
+                        <div class="btn-group pull-right">
+                            <a data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-home" style="font-size: 48px;"></i>
+                                <span style="display: inline-block;vertical-align: top;margin-top: 10px;font-size: 24px;">
+                                    今日到期({{todayMatureCount}})
+                                </span>
+                            </a>
+                            <ul role="menu" class="dropdown-menu" v-if="todayMature.length > 0">
+                                <li v-for="item in todayMature" style="padding: 0;">
+                                    <router-link :to="{path:'/payPaymentDetail',query: {payId: item.id, page:beforePage, myParams:params, selected:selected, cus: 1 }}">
+                                        {{item.address}}
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -197,7 +216,7 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in myData"
-                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1}">
+                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1,'bigRed':item.subject_id == -3}">
                             <td v-if="recycle_bin">
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                         'c_off':pitch.indexOf(item.id) == -1}"
@@ -555,6 +574,8 @@
                         needHour: false,
                     }
                 ],
+                todayMature: [],            //今日到期房屋
+                todayMatureCount: '',
             }
         },
 
@@ -584,6 +605,14 @@
                     this.filter(this.beforePage);
                 } else {
                     this.payFlowList();
+                }
+            });
+            this.$http.get('account/due/collect/today').then((res) => {
+                if (res.data.code === '70000') {
+                    this.todayMature = res.data.data.data;
+                    this.todayMatureCount = res.data.data.count;
+                } else {
+                    this.todayMature = [];
                 }
             });
         },
@@ -1136,5 +1165,9 @@
 
     tbody > tr.reds {
         background-color: #FFCECE;
+    }
+
+    .bigRed {
+        background-color: #50FFF0;
     }
 </style>

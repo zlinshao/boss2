@@ -124,7 +124,7 @@
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
                                            v-if="item.identity == 2 && item.customer.is_shared == 1">
-                                         (&nbsp;{{dict.shared_part[item.customer.shared_part]}}&nbsp;)
+                                         (&nbsp;{{dict.shzared_part[item.customer.shared_part]}}&nbsp;)
                                      </span>
                                 </span>
                             </td>
