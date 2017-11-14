@@ -423,14 +423,16 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">请上缴以下合同</h4>
+                        <h4 class="modal-title">提示</h4>
                     </div>
                     <div class="modal-body">
                         <div class="panel-body">
-                            <div class="form-group clearFix">
-                                <div class="col-sm-6" v-for="item in remainContract.contract_num" style="padding-bottom: 6px">
+                            <div class="form-group clearFix remainContract" style="font-size: 15px">
+                                <!--<div class="col-sm-6" v-for="item in remainContract.contract_num" style="padding-bottom: 6px">
                                     <div>{{item}}</div>
-                                </div>
+                                </div>-->
+                                {{remainContract_time}}领取的合同尚有{{remainContract.count}}份未收回，合同编号为
+                                (<span v-for="item in remainContract.contract_num">&emsp;{{item}}</span>)
                             </div>
 
                             <!--<div v-for="(item,index) in remark" style="padding: 5px;border-bottom: 1px solid #ddd">
@@ -515,6 +517,7 @@
                 choosePayZf : [],
 
                 remainContract : {},         // 剩余未上交合同
+                remainContract_time : ''
 
             }
         },
@@ -683,6 +686,7 @@
             successAdd(data){
                 if (data.length!=0){
                     this.remainContract = data;
+                    this.remainContract_time = data.time[0];
                     if (data.contract_num.length>0){
                         $('#showPrompt').modal('show');
                     }
@@ -905,5 +909,8 @@
     }
     .form-horizontal .control-label {
         padding-top: 1px;
+    }
+    .remainContract span+span{
+        content: ',';
     }
 </style>
