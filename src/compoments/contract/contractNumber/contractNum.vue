@@ -69,7 +69,7 @@
                 <div class="col-lg-12 remind" v-show="pitch.length === 1">
                     <ul class="clearFix">
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li>
+                        <li v-if="simulate.indexOf('ContractNumberRecord/doDelete')>-1||isSuper">
                             <h5><a @click="delete_num"><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
                         </li>
                         <li>
@@ -458,6 +458,7 @@
     import AddModal from './contractNumAdd.vue'
 
     export default{
+        props:['simulate','isSuper'],
         components: {Page, Status, DatePicker, STAFF, Confirm, AddModal},
         data(){
             return {
