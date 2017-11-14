@@ -681,12 +681,11 @@
 
             // 新增成功
             successAdd(data){
-                if (data.length==0){
-                    return
-                }
-                this.remainContract = data;
-                if (data.contract_num.length>0){
-                    $('#showPrompt').modal('show');
+                if (data.length!=0){
+                    this.remainContract = data;
+                    if (data.contract_num.length>0){
+                        $('#showPrompt').modal('show');
+                    }
                 }
                 this.contract_list(1);
             },
