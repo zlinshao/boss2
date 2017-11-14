@@ -28,7 +28,6 @@
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
-
                         <div class="input-group">
                             <SelectSubject @choose="houseSubject" v-show="params.subject_id != -3"
                                            :current="params.subject_id" :msg="'科目搜索'"></SelectSubject>
@@ -887,10 +886,11 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.params.subject_id = -3;
+                    this.search(1);
                 } else {
                     this.params.subject_id = '';
+                    this.search(1);
                 }
-                this.search(1);
             },
             operation(id, index){
                 this.title = '修改应付';
