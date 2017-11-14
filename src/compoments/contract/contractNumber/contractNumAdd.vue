@@ -588,7 +588,7 @@
                 this.$http.post('code/Contract_Number_Record/getRemainContractById',{
                     id : this.receiver_id
                 }).then((res)=>{
-                    console.log(res.data);
+//                    console.log(res.data);
                     if (res.data.code==30010){
                         // 成功
                         this.collect_surplus = res.data.data.num.sy_sf_numbers;
@@ -847,7 +847,7 @@
                     data.paid_pic = this.photos.cus_idPhoto;
                 }
 
-                console.log(data.area)
+//                console.log(data.area)
                 if (data.area!=undefined&&data.area==''){
                     this.info.error = '请选择城市';
                     //显示失败弹窗 ***
@@ -860,7 +860,7 @@
 
                 this.$http.post('code/Contract_Number_Record/add', data).then((res) => {
 //                    console.log(res.data);
-                    if (res.data.code==30012){
+                    if (res.data.code==30010){
                         // 成功
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -869,7 +869,7 @@
                         this.info.state_success = true;
                         this.close_empty();
                         $('#contractNumAdd').modal('hide');
-                        this.$emit('success');
+                        this.$emit('success',res.data.data);
                     } else {
                         // 失败
                         this.info.error = res.data.msg;

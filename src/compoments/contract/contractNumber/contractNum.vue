@@ -419,6 +419,37 @@
                 </div>
             </div>
         </div>
+
+        <!--提示上缴-->
+        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="showPrompt"
+             aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">请上缴以下合同</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body">
+                            <div class="form-group clearFix">
+                                <div class="col-sm-6" v-for="item in remainContract.contract_num" style="padding-bottom: 6px">
+                                    <div>{{item}}</div>
+                                </div>
+                            </div>
+
+                            <!--<div v-for="(item,index) in remark" style="padding: 5px;border-bottom: 1px solid #ddd">
+                                {{index+1}}.&emsp;{{item.remark_time}}&emsp;&emsp;{{item.other_remark}}@{{item.remark_name}}
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -488,6 +519,8 @@
 
                 choosePaySf : [],
                 choosePayZf : [],
+
+                remainContract : {},         // 剩余未上交合同
 
             }
         },
@@ -653,7 +686,14 @@
             },
 
             // 新增成功
-            successAdd(){
+            successAdd(data){
+                if (data.length==0){
+                    return
+                }
+                this.remainContract = data;
+                if (data.contract_num.length>0){
+                    $('#showPrompt').modal('show');
+                }
                 this.contract_list(1);
             },
 
@@ -869,5 +909,8 @@
     }
     .colorRed{
         color: red;
+    }
+    .form-horizontal .control-label {
+        padding-top: 1px;
     }
 </style>
