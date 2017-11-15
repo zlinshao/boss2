@@ -77,19 +77,19 @@
                                 <a><i class="fa fa-book"></i> 添加备注</a>
                             </h5>
                         </li>
-                        <li v-if="params.type == 3">
+                        <li v-if="params.type == 3&&(simulate.indexOf('ContractNumberRecord/doBack')>-1||isSuper)">
                             <h5>
                                 <a @click="payControl('收回')">收回</a>
                                 <a @click="payControl('取消收回')">取消收回</a>
                             </h5>
                         </li>
-                        <li v-if="params.type == 3">
+                        <li v-if="params.type == 3&&(simulate.indexOf('ContractNumberRecord/doVerify')>-1||isSuper)">
                             <h5>
                                 <a @click="payControl('审核')">审核</a>
                                 <a @click="payControl('取消审核')">取消审核</a>
                             </h5>
                         </li>
-                        <li v-if="params.type == 3">
+                        <li v-if="params.type == 3&&(simulate.indexOf('ContractNumberRecord/doEntering')>-1||isSuper)">
                             <h5>
                                 <a @click="payControl('录入')">录入</a>
                                 <a @click="payControl('取消录入')">取消录入</a>
