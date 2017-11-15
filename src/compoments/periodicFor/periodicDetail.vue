@@ -52,7 +52,7 @@
                             <div class="modal-dialog ">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">
+                                        <button type="button" class="close" @click="leading_close">
                                             <span>&times;</span>
                                         </button>
                                         <h4 class="modal-title">提示信息</h4>
@@ -60,12 +60,16 @@
                                     <div class="modal-body">
                                         <h5>
                                             <input @click="remindData" type="text" placeholder="选择日期"
-                                                    class="form-control" id="form_datetime" readonly style="margin-bottom: 0;">
+                                                   class="form-control" id="form_datetime" readonly :value="export_date"
+                                                   style="margin-bottom: 0;">
                                         </h5>
                                     </div>
                                     <div class="modal-footer text-right">
                                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
-                                        <a :href="leadingOut" class="btn btn-success btn-md" data-dismiss="modal">下载</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md" v-show="export_date != ''"
+                                           @click="leading_close">下载</a>
+                                        <a class="btn btn-success btn-md" v-show="export_date == ''"
+                                           @click="leading_close">下载</a>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +141,7 @@
                                         <td>{{item.prices[0]}}</td>
                                         <td>{{item.total_price}}</td>
                                         <td>{{item.vacancy}}</td>
-                                        <td>2000</td>
+                                        <td>{{item.medi_cost}}</td>
                                         <td>{{item.achv_real}}</td>
                                         <td @mouseenter="enter_overflow(item.id)"
                                             @mouseleave="enter_overflow('')" style="cursor: pointer;">
@@ -202,6 +206,7 @@
         <!--编辑-->
         <PeriodicEdit @confiscate="personalList" :msg="revise_info"></PeriodicEdit>
 
+        <Status :state='info'></Status>
     </div>
 </template>
 
@@ -209,16 +214,16 @@
     import DatePicker from '../common/datePicker.vue'
     import SelectHouse from '../common/selectPayHouse.vue'
     import PeriodicEdit from './periodicEdit.vue'
-    import PeriodicRevise from './periodicRevise.vue'       //充公
-    import PeriodicInfo from './periodic_info.vue'          //充公详情
+    import PeriodicRevise from './periodicRevise.vue'                               //充公
+    import PeriodicInfo from './periodic_info.vue'                                  //充公详情
     import Page from '../common/page.vue'
     import Organization from  '../finance/organization/organization_choose.vue'     //部门搜索
     import Confirm from '../common/confirm.vue'
+    import Status from '../common/status.vue'
     export default {
-        components: {DatePicker, Organization, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit},
+        components: {DatePicker, Organization, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit, Status},
         data (){
             return {
-                leadingOut: '',                 //导出
                 isActive: '',
                 simple_status: '',              //选择充公状态
                 revise_info: {},                //编辑
@@ -253,7 +258,19 @@
                 paging: '',                     //总页数
                 lookRem: '',                    //备注内容
                 addRemark: '',
+                leadingOut: '',                 //导出
                 oneAsk: '',
+                export_date: '',                //导出日期
+                info: {                  //提示信息
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
             }
         },
         mounted (){
@@ -272,17 +289,18 @@
         methods: {
 //            导出
             leading_out (){
-                this.$http.get('',{
-                    params: this.params
-                }).then((res) => {
-                    if(true){
-                        this.leadingOut = res.data.data;
-                        $('#leading_out').modal({
-                            backdrop: 'static',         //空白处模态框不消失
-                        });
-                        console.log('导出');
-                    }
-                })
+                this.remindData();
+                this.export_date = '';
+                $('#leading_out').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+            leading_close (){
+                if (this.export_date === '') {
+                    this.errorMsg('请选择月份');
+                } else {
+                    $('#leading_out').modal('hide');
+                }
             },
 //            导出月份
             remindData (){
@@ -298,8 +316,12 @@
                     pickerPosition: 'bottom-right',
                 }).on('changeDate', function (ev) {
                     if (this.oneAsk === true) {
-                        this.msg.time = ev.target.value;
-                        this.getDepartementList();
+                        this.export_date = ev.target.value;
+                        this.$http.get('salary/commission/export?month=' + this.export_date).then((res) => {
+                            if (res.data.code === '70010') {
+                                this.leadingOut = res.data.data;
+                            }
+                        });
                         this.oneAsk = false;
                     }
                 }.bind(this));
@@ -442,6 +464,16 @@
                         this.pitch.splice(index, 1);
                     }
                 }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }

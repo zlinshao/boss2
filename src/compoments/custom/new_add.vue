@@ -88,9 +88,12 @@
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="cus_phone"
-                                               @blur="reg_phone(cus_phone)" maxlength="11" :class="{'error': phone_status}"
+                                               @blur="reg_phone(cus_phone)" maxlength="11"
+                                               :class="{'error': phone_status}"
                                                placeholder="请输入手机号" style="margin-bottom: 0;">
+                                        <span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
                                     </div>
+
                                 </div>
                                 <!--进度-->
                                 <div class="form-group">
@@ -423,9 +426,11 @@
                 let reg = /^1[3|4|5|7|8][0-9]{9}$/;
                 let flag = reg.test(this.cus_phone);
                 if (flag === false) {
-                    this.cus_phone = '';
-                    this.phone_status = true;
-                } else {
+                    this.phone_status = !flag;
+                } else if (flag === true) {
+                    this.phone_status = !flag;
+                }
+                if (this.cus_phone === '') {
                     this.phone_status = false;
                 }
             },
@@ -469,18 +474,9 @@
                     if (res.data.code === '70060') {
                         $('#customModel').modal('hide');        //成功关闭模态框
                         this.cus_cancel();
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 });
             },
@@ -491,10 +487,12 @@
             },
 //            删除图片
             revise_cancel (){
+                this.phone_status = false;
                 $('.rem_div').remove();
                 this.cus_cancel();
             },
             remove_s (){
+                this.phone_status = false;
                 $('.rem_div').remove();
                 this.$emit('cancel');
             },
@@ -532,64 +530,53 @@
             },
 //            修改/新增 调用
             succeed (val){
-                this.$http.post('core/customer/' + val, {
-                    id: this.cus_id,
-                    identity: this.cus_status,                  //业主/租客
-                    name: this.cus_name,                        //客户姓名
-                    gender: this.cus_gender,                    //性别
-                    follow: this.cus_progress,                  //进度
-                    nationality: this.cus_nationality,          //国籍
-                    mobile: this.cus_phone,                     //手机号
-                    customer_status: this.cus_status_quo,       //客户状态
-                    customer_will: this.cus_intention,          //客户意向
-                    source: this.cus_source,                    //客户来源
+                if (this.phone_status === false) {
+                    this.$http.post('core/customer/' + val, {
+                        id: this.cus_id,
+                        identity: this.cus_status,                  //业主/租客
+                        name: this.cus_name,                        //客户姓名
+                        gender: this.cus_gender,                    //性别
+                        follow: this.cus_progress,                  //进度
+                        nationality: this.cus_nationality,          //国籍
+                        mobile: this.cus_phone,                     //手机号
+                        customer_status: this.cus_status_quo,       //客户状态
+                        customer_will: this.cus_intention,          //客户意向
+                        source: this.cus_source,                    //客户来源
 
-                    person_medium: this.cus_intermediate,       //个人/中介
-                    medium_name: this.cus_intermediate_name,    //中介名称
-                    medium_mobile: this.cus_intermediate_phone, //中介电话
+                        person_medium: this.cus_intermediate,       //个人/中介
+                        medium_name: this.cus_intermediate_name,    //中介名称
+                        medium_mobile: this.cus_intermediate_phone, //中介电话
 
-                    amap_id: this.village,                      //高德ID
-                    id_type: this.cus_credentials_state,        //证件类型
-                    id_num: this.cus_idNumber,                  //证件号
-                    id_pic: this.photos.cus_idPhoto,            //证件照片
-                    marriage_status: this.cus_marriage,         //婚姻状况
-                    qq: this.cus_qq,                            //QQ
-                    e_mail: this.cus_email,                     //email
-                    character: this.cus_nature,                 //性格
-                    remarks: this.cus_remarks,                  //备注
-                }).then((res) => {
-                    if (res.data.code === '70010') {
-                        this.cus_cancel();
-                        $('#customModel').modal('hide');        //成功关闭模态框
-                        $('.rem_div').remove();
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        amap_id: this.village,                      //高德ID
+                        id_type: this.cus_credentials_state,        //证件类型
+                        id_num: this.cus_idNumber,                  //证件号
+                        id_pic: this.photos.cus_idPhoto,            //证件照片
+                        marriage_status: this.cus_marriage,         //婚姻状况
+                        qq: this.cus_qq,                            //QQ
+                        e_mail: this.cus_email,                     //email
+                        character: this.cus_nature,                 //性格
+                        remarks: this.cus_remarks,                  //备注
+                    }).then((res) => {
+                        if (res.data.code === '70010') {
+                            this.cus_cancel();
+                            $('#customModel').modal('hide');        //成功关闭模态框
+                            $('.rem_div').remove();
+                            this.successMsg(res.data.msg);
 
-                        this.$emit('cus_list');       // 更新客户列表
+                            this.$emit('cus_list');       // 更新客户列表
 
-                    } else if (res.data.code === '70090') {
-                        this.cus_exist = res.data.msg;
-                        this.exist_id = res.data.data;
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-                    else {
-                        //关闭成功信息(可选)
-                        this.info.state_success = false;
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-                });
+                        } else if (res.data.code === '70090') {
+                            this.cus_exist = res.data.msg;
+                            this.exist_id = res.data.data;
+                            this.successMsg(res.data.msg);
+                        }
+                        else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else {
+                    this.errorMsg('手机格式不正确');
+                }
             },
 //            中介/个人
             intermediary (e){
@@ -609,7 +596,17 @@
 //            备注
             cus_remarks_c (val){
                 this.cus_remarks = val.target.value;
-            }
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>
