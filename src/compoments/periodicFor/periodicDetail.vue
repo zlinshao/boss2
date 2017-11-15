@@ -44,6 +44,32 @@
                         <div class="form-group">
                             <a class="btn btn-success" type="button" @click="resetting">重置</a>
                         </div>
+                        <div class="form-group">
+                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                        </div>
+
+                        <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">提示信息</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>
+                                            <input @click="remindData" type="text" placeholder="选择日期"
+                                                    class="form-control" id="form_datetime" readonly style="margin-bottom: 0;">
+                                        </h5>
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md" data-dismiss="modal">下载</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
@@ -159,7 +185,7 @@
         </div>
 
         <!--分页-->
-        <Page @pag="search" :pg="paging" :beforePage="beforePage"></Page>
+        <Page @pag="search" :pg="paging" :beforePage="params.page"></Page>
 
         <!--人资筛选-->
         <Organization :configure="configure" @Staff="selectDateSend" :msg="msg"></Organization>
@@ -192,6 +218,7 @@
         components: {DatePicker, Organization, Page, SelectHouse, PeriodicRevise, PeriodicInfo, PeriodicEdit},
         data (){
             return {
+                leadingOut: '',                 //导出
                 isActive: '',
                 simple_status: '',              //选择充公状态
                 revise_info: {},                //编辑
@@ -224,9 +251,9 @@
                     page: 1,
                 },
                 paging: '',                     //总页数
-                beforePage: 1,                  //当前页
                 lookRem: '',                    //备注内容
                 addRemark: '',
+                oneAsk: '',
             }
         },
         mounted (){
@@ -239,15 +266,51 @@
             }
             this.params.search = this.$route.query.sear.staff_name;
             this.personalList(1);
+            this.remindData();
         },
 
         methods: {
+//            导出
+            leading_out (){
+                this.$http.get('',{
+                    params: this.params
+                }).then((res) => {
+                    if(true){
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                        console.log('导出');
+                    }
+                })
+            },
+//            导出月份
+            remindData (){
+                this.oneAsk = true;
+                $('#form_datetime').datetimepicker({
+                    format: 'yyyy-mm',
+                    startView: 3,
+                    minView: 3,
+                    language: 'zh-CN',
+                    todayBtn: 1,
+                    autoclose: 1,
+                    clearBtn: true,                     //清除按钮
+                    pickerPosition: 'bottom-right',
+                }).on('changeDate', function (ev) {
+                    if (this.oneAsk === true) {
+                        this.msg.time = ev.target.value;
+                        this.getDepartementList();
+                        this.oneAsk = false;
+                    }
+                }.bind(this));
+            },
 //            重置
             resetting (){
                 this.params.typical = '';
                 this.params.department_id = '';
                 this.selected = '';
                 this.params.generate_date = '';
+                this.currentDate = [];
 //                this.params.house_id = '';
                 this.params.search = '';
                 this.params.page = 1;
@@ -290,7 +353,6 @@
                 this.$http.get('salary/Commission/dict').then((res) => {
                     this.dict = res.data;
 
-                    this.beforePage = val;
                     this.params.page = val;
                     this.paging = '';
                     this.pitch = [];

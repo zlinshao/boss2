@@ -44,9 +44,9 @@
                             </span>
                         </div>
 
-                        <div class="form-group">
-                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
-                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<a class="btn btn-success" type="button" @click="leading_out">导出</a>-->
+                        <!--</div>-->
 
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
                             <div class="modal-dialog ">
@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="modal-footer text-right">
                                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
-                                        <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md" data-dismiss="modal">下载</a>
                                     </div>
                                 </div>
                             </div>
@@ -230,9 +230,7 @@
                     }
                 })
             },
-            close_ (){
-                $('#leading_out').modal('hide');
-            },
+
             enter_payable (val){
                 this.isActive = val;
             },

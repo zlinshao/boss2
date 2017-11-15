@@ -50,7 +50,9 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">客户手机号</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="cus_phone" maxlength="11">
+                                            <input type="text" class="form-control" v-model="cus_phone"
+                                                   @blur="reg_phone(cus_phone)" maxlength="11" :class="{'error': phone_status}"
+                                                   placeholder="请输入手机号" style="margin-bottom: 0;">
                                         </div>
                                     </div>
 
@@ -300,6 +302,7 @@
 
                 cus_name: '',                           //客户
                 cus_phone: '',                          //客户联系方式
+                phone_status: '',                       //手机号验证
 
                 house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
@@ -432,6 +435,17 @@
         },
 
         methods: {
+//            手机正则
+            reg_phone (){
+                let reg = /^1[3|4|5|7|8][0-9]{9}$/;
+                let flag = reg.test(this.cus_phone);
+                if (flag === false) {
+                    this.cus_phone = '';
+                    this.phone_status = true;
+                } else {
+                    this.phone_status = false;
+                }
+            },
 //            房款科目
             houseSubject(val){
                 this.subject_id.rental = val;
@@ -726,4 +740,7 @@
         margin-left: 0;
     }
 
+    .error {
+        border-color: #E4393C;
+    }
 </style>

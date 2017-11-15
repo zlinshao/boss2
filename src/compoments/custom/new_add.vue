@@ -88,7 +88,7 @@
                                             class="text-danger">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="cus_phone"
-                                               @keyup="cus_phone = cus_phone.replace(/[^\d]/g,'');" maxlength="11"
+                                               @blur="reg_phone(cus_phone)" maxlength="11" :class="{'error': phone_status}"
                                                placeholder="请输入手机号" style="margin-bottom: 0;">
                                     </div>
                                 </div>
@@ -251,7 +251,9 @@
                         <div class="modal-footer">
                             <div class="form-group">
                                 <div class="col-xs-12" style="padding: 0;margin-bottom: 10px;">
-                                    <a class="text-danger" v-if="cus_exist !== ''&&simulate.indexOf('Customer/doShare')>-1||isSuper" @click="proving(exist_id)"><i
+                                    <a class="text-danger"
+                                       v-if="cus_exist !== ''&&simulate.indexOf('Customer/doShare')>-1||isSuper"
+                                       @click="proving(exist_id)"><i
                                             class="fa fa-delete"></i>{{cus_exist}}</a>
                                 </div>
                             </div>
@@ -295,7 +297,7 @@
     import Country from '../common/country.vue'             //国家
     export default {
         components: {upLoad, ChooseAddress, Status, Country},
-        props: ['msg', 'revise', 'selects','simulate','isSuper'],
+        props: ['msg', 'revise', 'selects', 'simulate', 'isSuper'],
         data (){
             return {
                 exist_id: '',                       //客户已存在ID
@@ -313,6 +315,7 @@
                 cus_nationality: '',                //国家ID
                 cus_nationality_name: '',           //国家
                 cus_phone: '',                      //手机号
+                phone_status: '',                   //手机号验证
                 cus_status_quo: '1',                //客户状态
                 cus_intention: '1',                 //客户意向
                 cus_source: '1',                    //客户来源
@@ -357,7 +360,7 @@
             msg(val) {
                 if (val === 'new') {
                     this.btn_state = true;                    //新增
-                    this.cus_cancel ();
+                    this.cus_cancel();
                 }
                 if (val === 'rev') {
                     this.btn_state = false;                    //修改
@@ -372,9 +375,9 @@
                 this.cus_progress = val.follow;                                         //进度
                 if (val.nationality) {
                     this.cus_nationality = val.nationality;                             //国籍ID
-                    for(let key in this.all_count){
-                        if(this.all_count[key].id === val.nationality)
-                        this.cus_nationality_name = this.all_count[key].zh_name;        //国籍
+                    for (let key in this.all_count) {
+                        if (this.all_count[key].id === val.nationality)
+                            this.cus_nationality_name = this.all_count[key].zh_name;        //国籍
                     }
                 }
                 this.cus_phone = val.mobile;                                            //手机号
@@ -415,6 +418,17 @@
         },
 
         methods: {
+//            手机正则
+            reg_phone (){
+                let reg = /^1[3|4|5|7|8][0-9]{9}$/;
+                let flag = reg.test(this.cus_phone);
+                if (flag === false) {
+                    this.cus_phone = '';
+                    this.phone_status = true;
+                } else {
+                    this.phone_status = false;
+                }
+            },
 //            清除
             cus_cancel (){
                 this.photos.cus_idPhotos = {};            //修改图片ID
@@ -623,5 +637,9 @@
 
     .street select {
         margin-bottom: 10px;
+    }
+
+    .error {
+        border-color: #E4393C;
     }
 </style>

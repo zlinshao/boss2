@@ -235,7 +235,8 @@
 
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>
+                            <!--@click="look_detail(item.id)" -->
+                            <td style="cursor: pointer;">
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
                                 <span style="line-height: 9px;" v-if="item.identity == 1"
                                       class="btn btn-danger btn-xs">F</span>
@@ -462,6 +463,9 @@
 
         <!--编辑付款时间-->
         <ModifyTime @save="modifyTime"></ModifyTime>
+
+        <!--查看详情-->
+        <DetailInfo :msg="detail_info" :dict="dict" :detail="detail"></DetailInfo>
     </div>
 </template>
 
@@ -478,6 +482,7 @@
     import Confirm from '../../common/confirm.vue'
     import ShouldPay from './paymentShouldPay.vue'
     import ModifyTime from './modifyPayTime.vue'
+    import DetailInfo from './detail_info.vue'
 
     export default{
         components: {
@@ -491,11 +496,14 @@
             ShouldPay,
             SelectSubject,
             Confirm,
-            ModifyTime
+            ModifyTime,
+            DetailInfo
         },
 
         data(){
             return {
+                detail_info: [],                //详情信息
+                detail: '',                //详情信息
                 rev: {subject_id: ''},         //列表编辑科目
                 sub_isActive: '',
                 leadingOut: '',             //导出
@@ -626,6 +634,19 @@
             });
         },
         methods: {
+//            查看详情
+            look_detail (val){
+                this.detail_info = [];
+                this.$http.get('account/payable/' + val).then((res) => {
+                    if (res.data.code === '18400') {
+                        this.detail_info.push(res.data.data);
+                        this.detail = 'pay';
+                        $('#detail_info').modal({backdrop: 'static',});
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                });
+            },
 //            导出
             leading_out (){
                 this.$http.get('account/payable/export', {
