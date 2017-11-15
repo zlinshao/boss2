@@ -204,7 +204,7 @@
         <SelectHouse @House="getHouse" :house_status="'1'"></SelectHouse>
 
         <!--编辑-->
-        <PeriodicEdit @confiscate="personalList" :msg="revise_info"></PeriodicEdit>
+        <PeriodicEdit @confiscate="revise_staff" :msg="revise_info"></PeriodicEdit>
 
         <Status :state='info'></Status>
     </div>
@@ -369,7 +369,9 @@
             search (val){
                 this.personalList(val);
             },
-
+            revise_staff (){
+                this.personalList(this.params.page);
+            },
 //            列表
             personalList (val){
                 this.$http.get('salary/Commission/dict').then((res) => {

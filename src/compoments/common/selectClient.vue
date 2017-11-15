@@ -246,11 +246,9 @@
             newAddClient(){
                 this.isNewAdd = true;
             },
-
             clientAdd (){
                  if (!this.isNewAdd) {
                     this.clientSureAdd();
-                    return;
                 } else if (this.phone_status) {
                     this.info.error = '手机格式不正确';
                     this.info.state_error = true;
@@ -263,11 +261,8 @@
                         salesman: this.salesman,                    //签约人ID
                     }).then((res) => {
                         if (res.data.code === '70010') {
+                            this.closeModal();
                             this.cus_status = '';
-                            this.cus_gender = '';
-                            this.cus_name = '';
-                            this.cus_phone = '';
-                            this.phone_status = false;
                             this.selectClients = res.data.data;
                             this.clientSureAdd();
                             //成功信息 ***
@@ -284,6 +279,9 @@
                 }
             },
             closeModal(){
+                this.cus_gender = '';
+                this.cus_name = '';
+                this.cus_phone = '';
                 this.phone_status = false;
                 this.isNewAdd = false;
             }
