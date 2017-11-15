@@ -248,7 +248,13 @@
             },
 
             clientAdd (){
-                if (this.isNewAdd === true && this.phone_status === false) {
+                 if (!this.isNewAdd) {
+                    this.clientSureAdd();
+                    return;
+                } else if (this.phone_status) {
+                    this.info.error = '手机格式不正确';
+                    this.info.state_error = true;
+                }else {
                     this.$http.post('core/customer/saveCustomer', {
                         identity: this.cus_status,                  //业主/租客
                         name: this.cus_name,                        //客户姓名
@@ -275,11 +281,6 @@
                             this.info.state_error = true;
                         }
                     });
-                } else if (this.isNewAdd === false) {
-                    this.clientSureAdd();
-                } else if (this.phone_status === true) {
-                    this.info.error = '手机格式不正确';
-                    this.info.state_error = true;
                 }
             },
             closeModal(){
