@@ -17,7 +17,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">签约人<sup class="required">*</sup></label>
                                         <div class="col-sm-10">
-                                            <input type="text" :value="msg.staff_name" class="form-control" disabled>
+                                            <input type="text" class="form-control" placeholder="选择负责人"
+                                                   v-model="msg.staff_name" @click='select' readonly>
                                         </div>
                                     </div>
 
@@ -137,13 +138,16 @@
         </div>
 
         <Status :state="info"></Status>
+
+        <Department :configure="configure" @Staff="selectDateSend"></Department>
     </div>
 </template>
 
 <script>
     import Status from '../common/status.vue';
+    import Department from '../common/oraganization.vue'
     export default{
-        components: {Status},
+        components: {Status,Department},
         props: ['msg'],
         data(){
             return {
@@ -159,6 +163,7 @@
                 achv_real: '',                  //实际业绩
                 achv_overflow: '',              //溢出业绩
                 remark: '',                     //备注
+                configure: {},
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -192,6 +197,17 @@
             });
         },
         methods: {
+//            选择签约人
+            select(){
+                $('.selectCustom:eq(0)').modal({backdrop: 'static',});
+                this.configure = {type: 'staff', length: 1};
+            },
+            selectDateSend (val){
+                if (val.staff.length > 0) {
+                    this.msg.staff_name = val.staff[0].name;
+                    this.msg.staff_id = val.staff[0].id;
+                }
+            },
 //            修改
             revise_edit (){
                 this.$http.put('achv/commission/' + this.msg.id, {
@@ -204,11 +220,12 @@
                     medi_cost: this.medi_cost,
                     achv_real: this.achv_real,
                     achv_overflow: this.achv_overflow,
-                    remark: this.remark
+                    remark: this.remark,
+                    staff_id: this.msg.staff_id,
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#periodicEdit').modal('hide');          //成功关闭模态框
-                        this.$emit('confiscate',1);
+                        this.$emit('confiscate');
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
                         this.info.state_error = false;
