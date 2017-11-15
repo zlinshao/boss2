@@ -51,8 +51,10 @@
                                         <label class="col-sm-2 control-label">客户手机号</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="cus_phone"
-                                                   @blur="reg_phone(cus_phone)" maxlength="11" :class="{'error': phone_status}"
+                                                   @blur="reg_phone(cus_phone)" maxlength="11"
+                                                   :class="{'error': phone_status}"
                                                    placeholder="请输入手机号" style="margin-bottom: 0;">
+                                            <span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
                                         </div>
                                     </div>
 
@@ -440,9 +442,11 @@
                 let reg = /^1[3|4|5|7|8][0-9]{9}$/;
                 let flag = reg.test(this.cus_phone);
                 if (flag === false) {
-                    this.cus_phone = '';
-                    this.phone_status = true;
-                } else {
+                    this.phone_status = !flag;
+                } else if (flag === true) {
+                    this.phone_status = !flag;
+                }
+                if (this.cus_phone === '') {
                     this.phone_status = false;
                 }
             },
@@ -476,6 +480,7 @@
             },
 //            清空
             closeModal(){
+                this.phone_status = false;                  //手机验证
                 this.renter_id = '';
                 $('#newClientAdd').modal('hide');
                 this.price.splice(0, this.price.length);    //月单价
@@ -606,83 +611,91 @@
 
 //              新增
             save(num, address){
+                if (this.phone_status === false) {
 //                保存为草稿
-                this.$http.post(address, {
-                    id: this.renter_id,
-                    staff_id: this.staffId,                     //签约人
-                    department_id: this.branch_id,              //所属部门
-                    leader_id: this.person_id,                  //负责人
-                    customer_name: this.cus_name,               //客户
-                    contact: this.cus_phone,                    //客户联系方式
-                    house_id: this.house_id,                    //房屋
-                    months: this.months,                        //收房月数
-                    prices: this.price,                         //收房月单价
-                    pay_types: this.pay_type,                   //付款类型
-                    deposit: this.deposit,                      //押金
-                    deal_date: this.pendingContract,            //待签约日期
-                    first_pay_date: this.firstRemittance,       //第一次打房租日期
-                    second_pay_date: this.second_pay_date,       //第二次打房租日期
-                    remark: this.remarks,                       //备注
-                    account_type: this.payment,                 //客户付款方式
-                    account_owner: this.account_owner,          //收款人姓名
-                    account_subbank: this.account_subbank,      //支行
-                    account_bank: this.bank,                    //开户行
-                    account_num: this.account,                  //账户
-                    subject_id: this.subject_id,
-                }).then((res) => {
-                    if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate') {
-                        this.closeModal();
-                        $('#newClientAdd').modal('hide');
-                        this.$emit('success_', 1);
-                        this.successMsg(res.data.msg);
-                    } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate') {
-                        this.closeModal();
-                        this.$emit('success_', 1);
-                        $('#clientAdd1').modal('hide');
-                        $('#newClientAdd').modal('hide');
-                        this.successMsg(res.data.msg);
-                    } else if (res.data.code === '90030') {
-                        this.renter_id = res.data.data;
-                        this.errorMsg(res.data.msg);
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                });
+                    this.$http.post(address, {
+                        id: this.renter_id,
+                        staff_id: this.staffId,                     //签约人
+                        department_id: this.branch_id,              //所属部门
+                        leader_id: this.person_id,                  //负责人
+                        customer_name: this.cus_name,               //客户
+                        contact: this.cus_phone,                    //客户联系方式
+                        house_id: this.house_id,                    //房屋
+                        months: this.months,                        //收房月数
+                        prices: this.price,                         //收房月单价
+                        pay_types: this.pay_type,                   //付款类型
+                        deposit: this.deposit,                      //押金
+                        deal_date: this.pendingContract,            //待签约日期
+                        first_pay_date: this.firstRemittance,       //第一次打房租日期
+                        second_pay_date: this.second_pay_date,       //第二次打房租日期
+                        remark: this.remarks,                       //备注
+                        account_type: this.payment,                 //客户付款方式
+                        account_owner: this.account_owner,          //收款人姓名
+                        account_subbank: this.account_subbank,      //支行
+                        account_bank: this.bank,                    //开户行
+                        account_num: this.account,                  //账户
+                        subject_id: this.subject_id,
+                    }).then((res) => {
+                        if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/collect/generate') {
+                            this.closeModal();
+                            $('#newClientAdd').modal('hide');
+                            this.$emit('success_', 1);
+                            this.successMsg(res.data.msg);
+                        } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/collect/generate') {
+                            this.closeModal();
+                            this.$emit('success_', 1);
+                            $('#clientAdd1').modal('hide');
+                            $('#newClientAdd').modal('hide');
+                            this.successMsg(res.data.msg);
+                        } else if (res.data.code === '90030') {
+                            this.renter_id = res.data.data;
+                            this.errorMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else {
+                    this.errorMsg('手机格式不正确');
+                }
             },
 //            修改
             revise(){
-                this.$http.put('finance/customer/collect/' + this.cus_id, {
-                    staff_id: this.staffId,                     //签约人
-                    department_id: this.branch_id,              //所属部门
-                    leader_id: this.person_id,                  //负责人
-                    customer_name: this.cus_name,               //客户
-                    contact: this.cus_phone,                    //客户联系方式
-                    house_id: this.house_id,                    //房屋
-                    months: this.months,                        //收房月数
-                    prices: this.price,                         //收房月单价
-                    pay_types: this.pay_type,                   //付款类型
-                    deposit: this.deposit,                      //押金
-                    deal_date: this.pendingContract,            //待签约日期
-                    first_pay_date: this.firstRemittance,       //第一次打房租日期
-                    second_pay_date: this.second_pay_date,      //第二次打房租日期
-                    remark: this.remarks,                       //备注
-                    account_type: this.payment,                 //客户付款方式
-                    account_owner: this.account_owner,          //收款人姓名
-                    account_subbank: this.account_subbank,      //支行
-                    account_bank: this.bank,                    //开户行
-                    account_num: this.account,                  //账户
-                    subject_id: this.subject_id,
-                }).then((res) => {
-                    if (res.data.code === '90000') {
-                        this.$emit('success_', 1);
-                        this.closeModal();
-                        $('#newClientAdd').modal('hide');
-                        this.successMsg(res.data.msg);
-                    }
-                    else {
-                        this.errorMsg(res.data.msg);
-                    }
-                });
+                if (this.phone_status === false) {
+                    this.$http.put('finance/customer/collect/' + this.cus_id, {
+                        staff_id: this.staffId,                     //签约人
+                        department_id: this.branch_id,              //所属部门
+                        leader_id: this.person_id,                  //负责人
+                        customer_name: this.cus_name,               //客户
+                        contact: this.cus_phone,                    //客户联系方式
+                        house_id: this.house_id,                    //房屋
+                        months: this.months,                        //收房月数
+                        prices: this.price,                         //收房月单价
+                        pay_types: this.pay_type,                   //付款类型
+                        deposit: this.deposit,                      //押金
+                        deal_date: this.pendingContract,            //待签约日期
+                        first_pay_date: this.firstRemittance,       //第一次打房租日期
+                        second_pay_date: this.second_pay_date,      //第二次打房租日期
+                        remark: this.remarks,                       //备注
+                        account_type: this.payment,                 //客户付款方式
+                        account_owner: this.account_owner,          //收款人姓名
+                        account_subbank: this.account_subbank,      //支行
+                        account_bank: this.bank,                    //开户行
+                        account_num: this.account,                  //账户
+                        subject_id: this.subject_id,
+                    }).then((res) => {
+                        if (res.data.code === '90000') {
+                            this.$emit('success_', 1);
+                            this.closeModal();
+                            $('#newClientAdd').modal('hide');
+                            this.successMsg(res.data.msg);
+                        }
+                        else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else {
+                    this.errorMsg('手机号格式不正确');
+                }
             },
             getDate(val){
                 this.pendingContract = val;

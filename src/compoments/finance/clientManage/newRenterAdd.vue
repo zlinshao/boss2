@@ -51,8 +51,10 @@
                                         <label class="col-sm-2 control-label">客户手机号</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" v-model="cus_phone"
-                                                   @blur="reg_phone(cus_phone)" maxlength="11" :class="{'error': phone_status}"
+                                                   @blur="reg_phone(cus_phone)" maxlength="11"
+                                                   :class="{'error': phone_status}"
                                                    placeholder="请输入手机号" style="margin-bottom: 0;">
+                                            <span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
                                         </div>
                                     </div>
 
@@ -713,9 +715,11 @@
                 let reg = /^1[3|4|5|7|8][0-9]{9}$/;
                 let flag = reg.test(this.cus_phone);
                 if (flag === false) {
-                    this.cus_phone = '';
-                    this.phone_status = true;
-                } else {
+                    this.phone_status = !flag;
+                } else if (flag === true) {
+                    this.phone_status = !flag;
+                }
+                if (this.cus_phone === '') {
                     this.phone_status = false;
                 }
             },
@@ -815,6 +819,7 @@
             },
 //            清空
             closeModal(){
+                this.phone_status = false;                  //手机验证
                 $('#newRenterAdd').modal('hide');
                 this.price.splice(0, this.price.length);    //月单价
                 this.renter_id = '';
@@ -939,104 +944,112 @@
             //                    backdrop: 'static',         //空白处模态框不消失
             //                });
             //            },
-            //              新增
+//              新增
             save(num, address){
+                if (this.phone_status === false) {
 //                保存为草稿
-                this.$http.post(address, {
-                    id: this.renter_id,
-                    staff_id: this.staffId,                     //签约人
-                    contact: this.cus_phone,                    //客户联系方式
-                    department_id: this.branch_id,              //所属部门
-                    leader_id: this.person_id,                  //负责人
-                    house_id: this.house_id,                    //房屋
-                    customer_name: this.cus_name,               //客户
-                    is_shared: this.shared_house,              //房屋类型
-                    shared_part: this.shared_part,              //房间类型
-                    rent_type: this.rent_type,                  //房间状态
-                    months: this.months,                        //收房月数
-                    prices: this.price,                         //收房月单价
-                    bet: this.bet,                              //押
-                    pay: this.pay_type,                         //付
-                    received_amount: this.received_amount,      //已收
-                    water_fee: this.water_fee,                  // 水费
-                    elec_fee: this.elec_fee,                    // 电费
-                    gas_fee: this.gas_fee,                      // 燃气费
-                    property_fee: this.property_fee,            // 物业费
-                    manage_fee: this.manage_fee,                // 管理费
-                    net_fee: this.net_fee,                      // 网络费
-                    deal_date: this.pendingContract,            //待签约日期
-                    complete_date: this.complete_date,          //尾款日期
-                    remark: this.remarks,                       //备注
-                    account_type: this.payment,                 //客户付款方式
-                    account_owner: this.account_owner,          //收款人姓名
-                    account_subbank: this.account_subbank,      //支行
-                    account_bank: this.bank,                    //开户行
-                    account_num: this.account,                  //账户
-                    subject_id: this.subject_id,
-                }).then((res) => {
-                    if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/rent/generate') {
-                        $('#newRenterAdd').modal('hide');
-                        this.$emit('success_', 1);
-                        this.closeModal();
-                        this.successMsg(res.data.msg);
-                    } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/rent/generate') {
-                        this.$emit('success_', 1);
-                        this.closeModal();
-                        $('#clientAdd1').modal('hide');
-                        $('#newRenterAdd').modal('hide');
-                        this.successMsg(res.data.msg);
-                    } else if (res.data.code === '90030') {
-                        this.renter_id = res.data.data;
-                        this.errorMsg(res.data.msg);
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                });
+                    this.$http.post(address, {
+                        id: this.renter_id,
+                        staff_id: this.staffId,                     //签约人
+                        contact: this.cus_phone,                    //客户联系方式
+                        department_id: this.branch_id,              //所属部门
+                        leader_id: this.person_id,                  //负责人
+                        house_id: this.house_id,                    //房屋
+                        customer_name: this.cus_name,               //客户
+                        is_shared: this.shared_house,              //房屋类型
+                        shared_part: this.shared_part,              //房间类型
+                        rent_type: this.rent_type,                  //房间状态
+                        months: this.months,                        //收房月数
+                        prices: this.price,                         //收房月单价
+                        bet: this.bet,                              //押
+                        pay: this.pay_type,                         //付
+                        received_amount: this.received_amount,      //已收
+                        water_fee: this.water_fee,                  // 水费
+                        elec_fee: this.elec_fee,                    // 电费
+                        gas_fee: this.gas_fee,                      // 燃气费
+                        property_fee: this.property_fee,            // 物业费
+                        manage_fee: this.manage_fee,                // 管理费
+                        net_fee: this.net_fee,                      // 网络费
+                        deal_date: this.pendingContract,            //待签约日期
+                        complete_date: this.complete_date,          //尾款日期
+                        remark: this.remarks,                       //备注
+                        account_type: this.payment,                 //客户付款方式
+                        account_owner: this.account_owner,          //收款人姓名
+                        account_subbank: this.account_subbank,      //支行
+                        account_bank: this.bank,                    //开户行
+                        account_num: this.account,                  //账户
+                        subject_id: this.subject_id,
+                    }).then((res) => {
+                        if ((res.data.code === '90000' || res.data.code === '90010') && address !== 'finance/customer/rent/generate') {
+                            $('#newRenterAdd').modal('hide');
+                            this.$emit('success_', 1);
+                            this.closeModal();
+                            this.successMsg(res.data.msg);
+                        } else if ((res.data.code === '90000' || res.data.code === '90010') && address === 'finance/customer/rent/generate') {
+                            this.$emit('success_', 1);
+                            this.closeModal();
+                            $('#clientAdd1').modal('hide');
+                            $('#newRenterAdd').modal('hide');
+                            this.successMsg(res.data.msg);
+                        } else if (res.data.code === '90030') {
+                            this.renter_id = res.data.data;
+                            this.errorMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else {
+                    this.errorMsg('手机号格式不正确');
+                }
             }
             ,
-            //            修改
+//            修改
             revise(){
-                this.$http.put('finance/customer/rent/' + this.cus_id, {
-                    staff_id: this.staffId,                     //签约人
-                    contact: this.cus_phone,                    //客户联系方式
-                    department_id: this.branch_id,              //所属部门
-                    leader_id: this.person_id,                  //负责人
-                    house_id: this.house_id,                    //房屋
-                    customer_name: this.cus_name,               //客户
-                    is_shared: this.shared_house,               //房屋类型
-                    shared_part: this.shared_part,              //房间类型
-                    rent_type: this.rent_type,                  //房间状态
-                    months: this.months,                        //收房月数
-                    prices: this.price,                         //收房月单价
-                    bet: this.bet,                              //押
-                    pay: this.pay_type,                         //付
-                    received_amount: this.received_amount,      //已收
-                    water_fee: this.water_fee,                  // 水费
-                    elec_fee: this.elec_fee,                    // 电费
-                    gas_fee: this.gas_fee,                      // 燃气费
-                    property_fee: this.property_fee,            // 物业费
-                    manage_fee: this.manage_fee,                // 管理费
-                    net_fee: this.net_fee,                      // 网络费
-                    deal_date: this.pendingContract,            //待签约日期
-                    complete_date: this.complete_date,          //尾款日期
-                    remark: this.remarks,                       //备注
-                    account_type: this.payment,                 //客户付款方式
-                    account_owner: this.account_owner,          //收款人姓名
-                    account_subbank: this.account_subbank,      //支行
-                    account_bank: this.bank,                    //开户行
-                    account_num: this.account,                  //账户
-                    subject_id: this.subject_id,
-                }).then((res) => {
-                    if (res.data.code === '90000') {
-                        this.$emit('success_', 1);
-                        this.closeModal();
-                        $('#newRenterAdd').modal('hide');
-                        this.successMsg(res.data.msg);
-                    }
-                    else {
-                        this.errorMsg(res.data.msg);
-                    }
-                });
+                if (this.phone_status === false) {
+                    this.$http.put('finance/customer/rent/' + this.cus_id, {
+                        staff_id: this.staffId,                     //签约人
+                        contact: this.cus_phone,                    //客户联系方式
+                        department_id: this.branch_id,              //所属部门
+                        leader_id: this.person_id,                  //负责人
+                        house_id: this.house_id,                    //房屋
+                        customer_name: this.cus_name,               //客户
+                        is_shared: this.shared_house,               //房屋类型
+                        shared_part: this.shared_part,              //房间类型
+                        rent_type: this.rent_type,                  //房间状态
+                        months: this.months,                        //收房月数
+                        prices: this.price,                         //收房月单价
+                        bet: this.bet,                              //押
+                        pay: this.pay_type,                         //付
+                        received_amount: this.received_amount,      //已收
+                        water_fee: this.water_fee,                  // 水费
+                        elec_fee: this.elec_fee,                    // 电费
+                        gas_fee: this.gas_fee,                      // 燃气费
+                        property_fee: this.property_fee,            // 物业费
+                        manage_fee: this.manage_fee,                // 管理费
+                        net_fee: this.net_fee,                      // 网络费
+                        deal_date: this.pendingContract,            //待签约日期
+                        complete_date: this.complete_date,          //尾款日期
+                        remark: this.remarks,                       //备注
+                        account_type: this.payment,                 //客户付款方式
+                        account_owner: this.account_owner,          //收款人姓名
+                        account_subbank: this.account_subbank,      //支行
+                        account_bank: this.bank,                    //开户行
+                        account_num: this.account,                  //账户
+                        subject_id: this.subject_id,
+                    }).then((res) => {
+                        if (res.data.code === '90000') {
+                            this.$emit('success_', 1);
+                            this.closeModal();
+                            $('#newRenterAdd').modal('hide');
+                            this.successMsg(res.data.msg);
+                        }
+                        else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else {
+                    this.errorMsg('手机格式不正确');
+                }
             },
             getDate(val){
                 this.complete_date = val;
