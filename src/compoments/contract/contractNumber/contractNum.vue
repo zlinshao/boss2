@@ -432,7 +432,7 @@
                                     <div>{{item}}</div>
                                 </div>-->
                                 {{remainContract_time}}领取的合同尚有{{remainContract.count}}份未收回，合同编号为
-                                (<span v-for="item in remainContract.contract_num">&emsp;{{item}}</span>)
+                                (<span v-for="item in remainContract.sum">&emsp;{{item}}</span>)
                             </div>
 
                             <!--<div v-for="(item,index) in remark" style="padding: 5px;border-bottom: 1px solid #ddd">
