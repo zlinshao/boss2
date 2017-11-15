@@ -226,7 +226,8 @@
                                 </label>
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>
+                            <!--@click="look_detail(item.id)" -->
+                            <td style="cursor: pointer;">
                                 {{item.customer == undefined ? '' : item.customer.address}}
                                 <span style="line-height: 9px;" v-if="item.identity == 1"
                                       class="btn btn-danger btn-xs">F</span>
@@ -441,6 +442,9 @@
 
         <!--编辑付款时间-->
         <ModifyTime @save="modifyTime"></ModifyTime>
+
+        <!--查看详情-->
+        <DetailInfo :msg="detail_info" :dict="dict" :detail="detail"></DetailInfo>
     </div>
 </template>
 
@@ -457,6 +461,7 @@
     import Confirm from '../../common/confirm.vue'
     import ModifyTime from './modifyPayTime.vue'
     import SelectHouse from '../../common/selectPayHouse.vue'
+    import DetailInfo from './detail_info.vue'
 
     export default{
         components: {
@@ -471,11 +476,14 @@
             SelectSubject,
             SelectHouse,
             Confirm,
-            ModifyTime
+            ModifyTime,
+            DetailInfo
         },
 
         data(){
             return {
+                detail_info: [],               //详情信息
+                detail: '',                     //详情信息
                 rev: {subject_id: ''},         //列表编辑科目
                 sub_isActive: '',
                 leadingOut: '',             //导出
@@ -616,6 +624,19 @@
         },
 
         methods: {
+//            查看详情
+            look_detail (val){
+                this.detail_info = [];
+                this.$http.get('account/receivable/' + val).then((res) => {
+                    if (res.data.code === '18500') {
+                        this.detail_info.push(res.data.data);
+                        this.detail = 'collect';
+                        $('#detail_info').modal({backdrop: 'static',});
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                });
+            },
 //            导出
             leading_out (){
                 this.$http.get('account/receivable/export', {
@@ -643,7 +664,7 @@
             },
 //            清空科目
             search_empty (){
-                if(this.params.subject_id !== -3){
+                if (this.params.subject_id !== -3) {
                     this.params.subject_id = '';
                     this.search(1);
                 }
