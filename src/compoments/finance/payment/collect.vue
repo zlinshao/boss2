@@ -226,8 +226,7 @@
                                 </label>
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <!--@click="look_detail(item.id)" -->
-                            <td style="cursor: pointer;">
+                            <td style="cursor: pointer;" @click="look_detail(item.id)">
                                 {{item.customer == undefined ? '' : item.customer.address}}
                                 <span style="line-height: 9px;" v-if="item.identity == 1"
                                       class="btn btn-danger btn-xs">F</span>

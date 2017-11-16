@@ -40,7 +40,6 @@
             uploadPic (res){
                 this.pics = this.idPhotos.cus_idPhoto;
 
-                console.log(this.idPhotos.cus_idPhoto)
                 if(this.idPhotos.type === 'property'){
                     this.is_property = 4000;
                 }else {

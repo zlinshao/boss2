@@ -37,7 +37,7 @@
                                     <td>尊称</td>
                                     <td>国籍</td>
                                     <td>手机号</td>
-                                    <td>房屋地址</td>
+                                    <td>证件号</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,7 +56,7 @@
                                     </td>
                                     <td>{{item.mobile}}</td>
                                     <td>
-                                        <span v-if="item.amap_id !== null || undefined">{{item.amap_id.villageAddress}}</span>
+                                        {{item.id_num}}
                                     </td>
                                 </tr>
                                 <tr v-if="isShow">
