@@ -304,7 +304,7 @@
 
                 cus_name: '',                           //客户
                 cus_phone: '',                          //客户联系方式
-                phone_status: '',                       //手机号验证
+                phone_status: false,                       //手机号验证
 
                 house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
