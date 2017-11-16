@@ -95,7 +95,7 @@
                                         class="text-danger">*</span></label>
                                 <div class="col-lg-10">
                                     <input type="text" v-model="cus_name" class="form-control"
-                                           placeholder="起输入客户姓名" style="margin-bottom: 0;">
+                                           placeholder="客户名/手机号/身份证" style="margin-bottom: 0;">
                                 </div>
                             </div>
                             <!--尊称-->
@@ -203,7 +203,7 @@
             },
             search(){
                 if (this.keywords !== '') {
-                    this.$http.get('core/core_common/customerList/person_medium/' + this.media_person + '/keywords/' + this.keywords).then((res) => {
+                    this.$http.get('core/core_common/customerList?person_medium=' + this.media_person + '&keywords=' + this.keywords).then((res) => {
                         if (res.data.code === '20010') {
                             this.customerList = res.data.data;
                             this.isShow = false;
