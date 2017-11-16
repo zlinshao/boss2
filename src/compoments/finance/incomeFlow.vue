@@ -44,9 +44,9 @@
                             </span>
                         </div>
 
-                        <!--<div class="form-group">-->
-                            <!--<a class="btn btn-success" type="button" @click="leading_out">导出</a>-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                        </div>
 
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
                             <div class="modal-dialog ">
