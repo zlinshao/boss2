@@ -200,7 +200,7 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in receivable"
-                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1}">
+                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1,'bigRed':item.subject_id == -3}">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                 'c_off':pitch.indexOf(item.id) == -1}"
@@ -281,7 +281,7 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in payable"
-                            :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1}">
+                            :class="{'pendable': item.pendable === 2,'reds': item.aproach === 1,'bigRed':item.subject_id == -3}">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                 'c_off':pitch.indexOf(item.id) == -1}"
@@ -738,5 +738,9 @@
 
     .redjd {
         background-color: #e4393c;
+    }
+
+    .bigRed {
+        background-color: #FCD1F2;
     }
 </style>
