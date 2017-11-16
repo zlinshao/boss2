@@ -69,7 +69,7 @@
                              style="padding: 0;margin-right: 20px;">
                             <div class="input-group">
                                 <input type="text" class="form-control" v-model="sea_info" @keyup.enter="search_pool(1)"
-                                       placeholder="客户名/手机号">
+                                       placeholder="客户名/手机号/身份证号">
                                 <span class="input-group-btn">
                             <button class="btn btn-success" type="button" @click="search_pool(1)">搜索</button>
                         </span>

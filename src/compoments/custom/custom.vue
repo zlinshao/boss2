@@ -68,7 +68,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" v-model="return_sea.sea_info"
                                        @keyup.enter="sea_cus(1)"
-                                       placeholder="客户名/手机号">
+                                       placeholder="客户名/手机号/身份证号">
                                 <span class="input-group-btn">
                                     <button class="btn btn-success" @click="sea_cus(1)" type="button">搜索</button>
                                 </span>

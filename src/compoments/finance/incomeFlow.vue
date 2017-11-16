@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="modal-footer text-right">
                                         <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
-                                        <a :href="leadingOut" class="btn btn-success btn-md" data-dismiss="modal">下载</a>
+                                        <a :href="leadingOut" class="btn btn-success btn-md" @click="leading_down">下载</a>
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +230,9 @@
                     }
                 })
             },
-
+            leading_down (){
+                $('#leading_out').modal('hide');
+            },
             enter_payable (val){
                 this.isActive = val;
             },
