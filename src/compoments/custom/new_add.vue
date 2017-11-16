@@ -323,7 +323,7 @@
                 cus_nationality: '',                //国家ID
                 cus_nationality_name: '',           //国家
                 cus_phone: '',                      //手机号
-                phone_status: '',                   //手机号验证
+                phone_status: false,                   //手机号验证
                 cus_status_quo: '1',                //客户状态
                 cus_intention: '1',                 //客户意向
                 cus_source: '1',                    //客户来源
