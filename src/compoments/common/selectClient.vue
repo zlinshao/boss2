@@ -31,17 +31,17 @@
                         <div class="table table-responsive roll">
                             <table class="table table-striped table-advance table-hover">
                                 <thead>
-                                <tr class="lightGray">
+                                <tr class="lightGray text-center">
                                     <td></td>
-                                    <td>客户名称</td>
-                                    <td>尊称</td>
-                                    <td>国籍</td>
-                                    <td>手机号</td>
-                                    <td>证件号</td>
+                                    <td class="width80">客户名称</td>
+                                    <td class="width50">尊称</td>
+                                    <td class="width50">国籍</td>
+                                    <td class="width80">手机号</td>
+                                    <td class="width130">房屋地址</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in customerList" @click="selectClient($event,item)">
+                                <tr class="text-center" v-for="item in customerList" @click="selectClient($event,item)">
                                     <td>
                                         <input type="radio" name="radio">
                                     </td>
@@ -55,8 +55,11 @@
 
                                     </td>
                                     <td>{{item.mobile}}</td>
+                                    <!--<td>-->
+                                        <!--{{item.id_num}}-->
+                                    <!--</td>-->
                                     <td>
-                                        {{item.id_num}}
+                                        <span v-if="item.amap_id !== null || undefined">{{item.amap_id.villageAddress}}</span>
                                     </td>
                                 </tr>
                                 <tr v-if="isShow">
@@ -95,7 +98,7 @@
                                         class="text-danger">*</span></label>
                                 <div class="col-lg-10">
                                     <input type="text" v-model="cus_name" class="form-control"
-                                           placeholder="客户名/手机号/身份证" style="margin-bottom: 0;">
+                                           placeholder="客户名" style="margin-bottom: 0;">
                                 </div>
                             </div>
                             <!--尊称-->
@@ -203,7 +206,7 @@
             },
             search(){
                 if (this.keywords !== '') {
-                    this.$http.get('core/core_common/customerList?person_medium=' + this.media_person + '&keywords=' + this.keywords).then((res) => {
+                    this.$http.get('core/core_common/customerList/person_medium/' + this.media_person + '/keywords/' + this.keywords).then((res) => {
                         if (res.data.code === '20010') {
                             this.customerList = res.data.data;
                             this.isShow = false;
