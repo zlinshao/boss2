@@ -91,7 +91,9 @@
                                                @blur="reg_phone(cus_phone)" maxlength="11"
                                                :class="{'error': phone_status}"
                                                placeholder="请输入手机号" style="margin-bottom: 0;">
-                                        <span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
+                                        <div>
+                                            &nbsp;<span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -201,8 +203,11 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">证件号</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" v-model="cus_idNumber"
-                                               placeholder="请输入证件号">
+                                        <input type="text" class="form-control" v-model="cus_idNumber" :class="{'error': cus_idNumber_status}"
+                                               placeholder="请输入证件号" @keyup="reg_number" style="margin-bottom: 0">
+                                        <div>
+                                            &nbsp;<span v-show="cus_idNumber_status" style="color: #E4393C">禁止输入中文</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -354,6 +359,7 @@
                     //失败信息 ***
                     error: ''
                 },
+                cus_idNumber_status: false,         //证件号正则
             }
         },
         watch: {
@@ -432,6 +438,18 @@
                 }
                 if (this.cus_phone === '') {
                     this.phone_status = false;
+                }
+            },
+//            证件号正则
+            reg_number (){
+                let reg = /[\u4E00-\u9FA5]/i;
+                let flag = reg.test(this.cus_idNumber);
+                if (flag === false) {
+                    this.cus_idNumber_status = flag;
+                } else if (flag === true) {
+                    this.cus_idNumber_status = flag;
+                } else if (this.cus_idNumber === '') {
+                    this.cus_idNumber_status = true;
                 }
             },
 //            清除

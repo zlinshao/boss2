@@ -55,7 +55,7 @@
                                                 <span v-if="item.customer != null">{{item.customer.months}}</span>
                                             </td>
                                             <td>
-                                                <span>{{dict.staff_id[item.staff_id]}}{{detail}}</span>
+                                                <span>{{dict.staff_id[item.staff_id]}}</span>
                                             </td>
                                         </tr>
                                         </tbody>
