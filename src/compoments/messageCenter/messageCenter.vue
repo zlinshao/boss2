@@ -414,10 +414,14 @@
                                     <td>{{key.receive_id}}</td>
                                     <td>{{dict.message.type[key.type]}}</td>
                                     <td>
-                                        <span v-show="key.result != 1"
+                                        <span v-show="key.result == 2"
                                               class="text-primary">{{dict.message.result[key.result]}}</span>
-                                        <span v-show="key.result == 1" @click="repeatSms(key.id)"
-                                              class="btn btn-danger btn-sm">{{dict.message.result[key.result]}}</span>
+                                        <span v-show="key.result != 2" @click="repeatSms(key.id)"
+                                              class="btn btn-danger btn-sm">
+                                            <!--{{dict.message.result[key.result]}}-->
+                                            失败
+                                        </span>
+                                        <!--{{key.result==2?'成功':'失败'}}-->
                                     </td>
                                 </tr>
                                 <tr v-show="ShowPhone">
