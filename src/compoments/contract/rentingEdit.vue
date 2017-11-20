@@ -153,7 +153,7 @@
                                             </div>
                                             <div class="col-sm-3 padding_0">
                                                 <label class="control-label">
-                                                    <input type="checkbox" disabled :checked="change_payType"
+                                                    <input type="checkbox" :checked="change_payType"
                                                            @click="changePayType($event)">付款方式变化
                                                 </label>
                                             </div>
