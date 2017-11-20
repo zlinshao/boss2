@@ -216,7 +216,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">电费卡号</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" v-model="houseEdit.elec_card_num" placeholder="燃气卡号">
+                                            <input type="text" class="form-control" v-model="houseEdit.elec_card_num" placeholder="电费卡号">
                                         </div>
                                     </div>
                                     <div class="form-group">
