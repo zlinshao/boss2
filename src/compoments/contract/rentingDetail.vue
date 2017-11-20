@@ -320,7 +320,7 @@
                                                 <div>
                                                     <span>收据编号：</span>
                                                     <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
-                                                        <span v-for="pay in item.checkin_rent_id.payment">{{item.receipt_number}}</span>
+                                                        <span>{{item.checkin_rent_id.receipt_number}}</span>
                                                     </span>
 
                                                 </div>
