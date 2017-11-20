@@ -152,16 +152,15 @@
                                         </div>
                                         <div class="col-sm-3 padding_0">
                                             <label class="control-label">
-                                                <input type="checkbox" disabled :checked="change_payType"
-                                                       @click="changePayType($event)">付款方式变化
+                                                <input type="checkbox" :checked="change_payType"
+                                                       @click="changePayType($event)">付款方式变化{{more_type}}
                                             </label>
                                         </div>
                                     </div>
 
                                     <!--付款方式变化-->
                                     <div class="form-group" v-for="(item,index) in more_type">
-                                        <label class="col-sm-2 control-label">第{{index + 1}}年<sup
-                                               >*</sup></label>
+                                        <label class="col-sm-2 control-label">第{{index + 1}}年<sup>*</sup></label>
                                         <div class="col-sm-7" style="padding-right: 0">
                                             <div class="col-sm-6 padding_0">
                                                 <label class="col-sm-2 control-label padding_0">押</label>
@@ -1051,7 +1050,7 @@
                         return;
                     }
                     this.change_payType = true;
-                    let months = this.contractAdd.months ;
+                    let months = Math.ceil(this.contractAdd.months/12);
                     for (let i = 0; i < months; i++) {
                         this.more_type.push('');
                     }

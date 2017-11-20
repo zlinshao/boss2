@@ -261,7 +261,7 @@
                                                 </span>
                                             </div>
                                             <div class="infoList">
-                                                <span>合同开始日期：1</span>
+                                                <span>合同开始日期：</span>
                                                 <span>{{item.start_date}}</span>
                                             </div>
                                             <div class="infoList">
