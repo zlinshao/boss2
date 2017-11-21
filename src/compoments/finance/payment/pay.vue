@@ -131,7 +131,7 @@
                         <h4 class="modal-title">{{address_remark}}</h4>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body roll" style="max-height: 500px;overflow: auto;">
                         <div class="row has-js">
                             <div class="col-lg-12">
                                 <section class="panel table table-responsive roll" style="margin-bottom: 0;">
@@ -157,7 +157,6 @@
                                             <td colspan="3" style="font-size: 16px;">暂无备注...</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" v-if="remarks_status == 2"></td>
                                             <td colspan="3" v-if="remarks_status == 1">
                                                 <div class="form-group">
                                                     <div class="col-lg-12">
@@ -202,6 +201,9 @@
                     <!--<button class="btn btn-primary" type="button" @click="addRem">确定</button>-->
                     <!--</div>-->
                     <div class="modal-footer">
+                        <button class="btn btn-primary btn-sm pull-left" @click="remark_show"
+                                v-if="remarks_status == 2">新增备注
+                        </button>
                         <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
                     </div>
                 </div>

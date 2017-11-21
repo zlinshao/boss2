@@ -126,7 +126,7 @@
                         <h4 class="modal-title">{{address_remark}}</h4>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body roll" style="max-height: 500px;overflow: auto;">
                         <div class="row has-js">
                             <div class="col-lg-12">
                                 <section class="panel table table-responsive roll" style="margin-bottom: 0;">
@@ -152,7 +152,6 @@
                                             <td colspan="3" style="font-size: 16px;">暂无备注...</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" v-if="remarks_status == 2"></td>
                                             <td colspan="3" v-if="remarks_status == 1">
                                                 <div class="form-group">
                                                     <div class="col-lg-12">
@@ -169,10 +168,6 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            <td class="text-center" v-if="remarks_status == 2">
-                                                <button class="btn btn-primary btn-sm" @click="remark_show">新增备注
-                                                </button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -197,6 +192,9 @@
                     <!--<button class="btn btn-primary" type="button" @click="addRem">确定</button>-->
                     <!--</div>-->
                     <div class="modal-footer">
+                        <button class="btn btn-primary btn-sm pull-left" @click="remark_show"
+                                v-if="remarks_status == 2">新增备注
+                        </button>
                         <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
                     </div>
                 </div>
@@ -323,7 +321,8 @@
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
-                            <td class="more_info" @click="look_tag(item.tags, item.customer.address,item.id)" style="cursor: pointer;">
+                            <td class="more_info" @click="look_tag(item.tags, item.customer.address,item.id)"
+                                style="cursor: pointer;">
                                 <span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">
                                     <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
                                     {{key.content}}
