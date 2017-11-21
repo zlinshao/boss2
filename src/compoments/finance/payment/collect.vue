@@ -139,18 +139,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="text-center" v-for="item in look_remark">
-                                            <!--v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"-->
-                                            <td>{{item.create_time}}</td>
-                                            <td>{{item.content}}</td>
-                                            <td>{{item.name}}</td>
-                                            <!--<td v-show="remark_isActive == item.id">-->
-                                            <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
-                                            <!--</td>-->
-                                        </tr>
-                                        <tr v-show="look_remark.length == 0" class="text-center">
-                                            <td colspan="3" style="font-size: 16px;">暂无备注...</td>
-                                        </tr>
                                         <tr>
                                             <td colspan="3" v-if="remarks_status == 1">
                                                 <div class="form-group">
@@ -169,6 +157,18 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr class="text-center" v-for="item in look_remark">
+                                            <!--v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"-->
+                                            <td>{{item.create_time}}</td>
+                                            <td>{{item.content}}</td>
+                                            <td>{{item.name}}</td>
+                                            <!--<td v-show="remark_isActive == item.id">-->
+                                            <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+                                            <!--</td>-->
+                                        </tr>
+                                        <tr v-show="look_remark.length == 0" class="text-center">
+                                            <td colspan="3" style="font-size: 16px;">暂无备注...</td>
                                         </tr>
                                         </tbody>
                                     </table>
