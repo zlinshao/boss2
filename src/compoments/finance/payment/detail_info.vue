@@ -30,7 +30,7 @@
                                         <tbody>
                                         <tr class="text-center" v-for="item in msg">
                                             <td>
-                                                <span v-if="item.customer != null">{{item.customer.name}}</span>
+                                                <span >{{item.info.customer}}</span>
                                             </td>
                                             <td>
                                                 <span v-if="item.customer != null">{{item.customer.contact}}</span>
@@ -39,8 +39,9 @@
                                                 <span v-if="item.customer != null">{{item.customer.months}}</span>
                                             </td>
                                             <td>
-                                                <span v-if="item.customer != null && detail == 'collect'">押{{item.customer.bet}}付{{item.customer.pay[0]}}</span>
-                                                <span v-if="item.customer != null && detail == 'pay'">{{dict.pay_type[item.customer.pay_types[0]]}}</span>
+                                                <!--<span v-if="item.customer != null && detail == 'collect'">押{{item.customer.bet}}付{{item.customer.pay[0]}}</span>-->
+                                                <!--<span v-if="item.customer != null && detail == 'pay'">{{dict.pay_type[item.customer.pay_types[0]]}}</span>-->
+                                                <span>{{item.info.description}}</span>
                                             </td>
                                             <td>
                                                 <span v-if="item.customer != null">{{item.customer.prices[0]}}</span>
@@ -51,12 +52,9 @@
                                             <td v-if="item.customer != null && detail == 'pay'">
                                                 <span>{{item.customer.second_pay_date}}</span>
                                             </td>
-                                            <td>
-                                                <span v-if="item.customer != null">{{item.customer.months}}</span>
-                                            </td>
-                                            <td>
-                                                <span>{{dict.staff_id[item.staff_id]}}</span>
-                                            </td>
+                                            <td>{{item.info.months}}</td>
+                                            <!--<td>{{dict.staff_id[item.staff_id]}}</td> -->
+                                            <td>{{item.info.staff}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
