@@ -10,7 +10,8 @@
                 <li v-show="pg != page && pg != 0" @click="page++ && go_to(page++)"><a>下一页</a></li>
                 <li v-show="pg != page" @click="go_to(pg)"><a>尾页</a></li>
                 <li><a>共&nbsp;(&nbsp;{{pg}}&nbsp;)&nbsp;页</a></li>
-                <li><input type="text" class="skip" v-model="skip" @keyup.enter="skip_go_to()"></li>
+                <li><input type="text" class="skip" v-model="skip" @keyup.enter="skip_go_to()"
+                           @keyup="skip = skip.replace(/[^\d]/g,'');"></li>
                 <li @click="skip_go_to()"><a>GO</a></li>
             </ul>
         </nav>
