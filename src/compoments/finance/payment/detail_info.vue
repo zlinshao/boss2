@@ -7,7 +7,7 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
-                        <h4 class="modal-title" v-for="item in msg">{{item.customer.address}}</h4>
+                        <h4 class="modal-title" v-for="item in msg" v-if="item.customer != null">{{item.customer.address}}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row has-js">
