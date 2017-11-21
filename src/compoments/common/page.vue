@@ -73,7 +73,8 @@
                         this.skip = '';
                     } else {
                         if (this.page !== this.skip) {
-                            this.page = this.skip;
+                            this.page = parseInt(this.skip);
+                            this.skip = parseInt(this.skip);
                             this.$emit('pag', this.page);
                         }
                     }

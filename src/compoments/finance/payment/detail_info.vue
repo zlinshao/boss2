@@ -18,19 +18,21 @@
                                         <tr>
                                             <th class="text-center width80">客户姓名</th>
                                             <th class="text-center width100">手机号</th>
-                                            <th class="text-center width80">租房月数</th>
-                                            <th class="text-center width80">付款方式</th>
+                                            <th class="text-center width80" v-if="detail == 'collect'">租房月数</th>
+                                            <th class="text-center width80" v-if="detail == 'pay'">收房月数</th>
+                                            <th class="text-center width150">付款方式</th>
                                             <th class="text-center width80">月单价</th>
                                             <th class="text-center width120" v-if="detail == 'pay'">第一次付款时间</th>
                                             <th class="text-center width120" v-if="detail == 'pay'">第二次付款时间</th>
                                             <th class="text-center width100">合同时间周期</th>
                                             <th class="text-center width80">开单人</th>
+                                            <th class="text-center width80">部门</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr class="text-center" v-for="item in msg">
                                             <td>
-                                                <span >{{item.info.customer}}</span>
+                                                <span>{{item.info.customer}}</span>
                                             </td>
                                             <td>
                                                 <span v-if="item.customer != null">{{item.customer.contact}}</span>
@@ -55,6 +57,11 @@
                                             <td>{{item.info.months}}</td>
                                             <!--<td>{{dict.staff_id[item.staff_id]}}</td> -->
                                             <td>{{item.info.staff}}</td>
+                                            <td>
+                                                <span v-if="item.customer != null">
+                                                    {{dict.department_id[item.customer.department_id]}}
+                                                </span>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
