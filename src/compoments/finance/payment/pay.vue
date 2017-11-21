@@ -111,11 +111,11 @@
                         <!--<a><i class="fa fa-pencil"></i> 修改付款时间</a>-->
                         <!--</h5>-->
                         <!--</li>-->
-                        <li v-show="pitch.length == 1">
-                            <h5 @click="remark_show">
-                                <a><i class="fa fa-book"></i>&nbsp;新增备注</a>
-                            </h5>
-                        </li>
+                        <!--<li v-show="pitch.length == 1">-->
+                        <!--<h5 @click="remark_show">-->
+                        <!--<a><i class="fa fa-book"></i>&nbsp;新增备注</a>-->
+                        <!--</h5>-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -128,30 +128,81 @@
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" v-if="remarks_status == 1">新增备注</h4>
-                        <h4 class="modal-title" v-if="remarks_status == 2">查看备注</h4>
+                        <h4 class="modal-title">{{address_remark}}</h4>
                     </div>
 
-                    <div class="modal-body" v-if="remarks_status == 1">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <textarea class="form-control" v-model="addRemark"></textarea>
-                                </div>
+                    <div class="modal-body">
+                        <div class="row has-js">
+                            <div class="col-lg-12">
+                                <section class="panel table table-responsive roll" style="margin-bottom: 0;">
+                                    <table class="table table-advance table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center width100">备注时间</th>
+                                            <th class="text-center">备注内容</th>
+                                            <th class="text-center width80">备注人</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="text-center" v-for="item in look_remark">
+                                            <!--v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"-->
+                                            <td>{{item.create_time}}</td>
+                                            <td>{{item.content}}</td>
+                                            <td>{{item.name}}</td>
+                                            <!--<td v-show="remark_isActive == item.id">-->
+                                            <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+                                            <!--</td>-->
+                                        </tr>
+                                        <tr v-show="look_remark.length == 0" class="text-center">
+                                            <td colspan="3" style="font-size: 16px;">暂无备注...</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" v-if="remarks_status == 2"></td>
+                                            <td colspan="3" v-if="remarks_status == 1">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <textarea class="form-control" v-model="addRemark"></textarea>
+                                                    </div>
+                                                    <div class="col-lg-12" style="margin-top: 10px;">
+                                                        <button class="btn btn-primary btn-sm pull-right"
+                                                                style="margin-left: 8px;"
+                                                                v-if="remarks_status == 1" @click="addRem">确定
+                                                        </button>
+                                                        <button class="btn btn-default btn-sm pull-right"
+                                                                @click="remark_hide"
+                                                                v-if="remarks_status == 1">取消
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center" v-if="remarks_status == 2">
+                                                <button class="btn btn-primary btn-sm" @click="remark_show">新增备注
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
-                    <div class="modal-body" v-if="remarks_status == 2">
-                        {{look_remark}}
-                    </div>
+                    <!--<div class="modal-body" v-if="remarks_status == 1">-->
+                    <!--<form class="form-horizontal" role="form">-->
+                    <!--<div class="form-group">-->
+                    <!--<div class="col-lg-12">-->
+                    <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</form>-->
+                    <!--</div>-->
 
-                    <div class="modal-footer" v-if="remarks_status == 1">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                        <button class="btn btn-success" type="button" @click="addRem"> 确定</button>
-                    </div>
-                    <div class="modal-footer" v-if="remarks_status == 2">
-                        <button data-dismiss="modal" class="btn btn-success" type="button">确定</button>
+                    <!--<div class="modal-footer" v-if="remarks_status == 1">-->
+                    <!--<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>-->
+                    <!--<button class="btn btn-primary" type="button" @click="addRem">确定</button>-->
+                    <!--</div>-->
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
                     </div>
                 </div>
             </div>
@@ -215,10 +266,8 @@
                             <th class="text-center width110" :class="{red: !recycle_bin}">实付金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
-                            <th class="text-center phone" :class="{red: !recycle_bin}" style="min-width: 360px;">详细信息
-                            </th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">状态</th>
-                            <th class="text-center width80" :class="{red: !recycle_bin}">备注</th>
+                            <th class="text-center width150" :class="{red: !recycle_bin}">备注</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
 
                         </tr>
@@ -235,7 +284,7 @@
 
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td style="cursor: pointer;" @click="look_detail(item.id)" >
+                            <td style="cursor: pointer;" @click="look_detail(item.id)">
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
                                 <span style="line-height: 9px;" v-if="item.identity == 1"
                                       class="btn btn-danger btn-xs">F</span>
@@ -278,16 +327,16 @@
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
                             <td>
-                                {{item.description}}
-                            </td>
-                            <td>
                                 <label :class="{'label':true,'status':true,'yellow':item.status==1,'red':item.status==2,'green':item.status==3,'jingdong':item.status==4}">
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
-                            <td>
-                                <span v-if="item.tag == ''"></span>
-                                <span @click="look_tag(item.tag)" v-if="item.tag != ''" class="fa fa-book"></span>
+                            <td class="more_info" @click="look_tag(item.tags, item.customer.address,item.id)"
+                                style="cursor: pointer;">
+                                <span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">
+                                    <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
+                                    {{key.content}}
+                                </span>
                             </td>
                             <td v-if="recycle_bin">
                                 <router-link
@@ -514,6 +563,8 @@
                 pitch: [],                  //选中id
                 status: [],                // 选中状态
                 look_remark: '',              //备注内容
+                address_remark: '',
+                remark_id: '',                  //备注id
                 remarks_status: '',          //新增/查看
                 addRemark: '',               //新增备注
                 accountType: '',                    //账户类型
@@ -673,7 +724,7 @@
             },
 //            清空科目
             search_empty (){
-                if(this.params.subject_id !== -3){
+                if (this.params.subject_id !== -3) {
                     this.params.subject_id = '';
                     this.search(1);
                 }
@@ -857,33 +908,43 @@
             remark_show (){
                 this.remarks_status = 1;
                 this.addRemark = '';
-                $('#addRemarks').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
+//                $('#addRemarks').modal({
+//                    backdrop: 'static',         //空白处模态框不消失
+//                });
+            },
+//            取消备注
+            remark_hide (){
+                this.remarks_status = 2;
             },
 //            新增备注
             addRem (){
-                this.$http.post('account/payable/tag/' + this.pitch, {
-                    content: this.addRemark,
-                }).then((res) => {
-                    if (res.data.code === '18410') {
-                        this.pitch = [];
-                        $('#addRemarks').modal('hide');
-                        this.search(this.beforePage);
-                        this.successMsg(res.data.msg);
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                })
+                if (this.addRemark !== '') {
+                    this.$http.post('account/payable/tag_v2/' + this.remark_id, {
+                        content: this.addRemark,
+                    }).then((res) => {
+                        if (res.data.code === '18410') {
+                            this.look_remark.unshift(res.data.data);
+                            this.remark_hide();
+                            this.successMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                } else {
+                    this.errorMsg('备注内容不能为空');
+                }
             },
 //            查看备注
-            look_tag (val){
+            look_tag (val, addr, id){
                 this.look_remark = val;
+                this.address_remark = addr;
+                this.remark_id = id;
                 this.remarks_status = 2;
                 $('#addRemarks').modal({
                     backdrop: 'static',         //空白处模态框不消失
                 });
             },
+
 //            新增入账模态框
             addPay (){
                 $('#addPay').modal({
@@ -1219,6 +1280,14 @@
 
     tbody > tr.reds {
         background-color: #FFCECE;
+    }
+
+    .more_info {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 300px;
+        cursor: pointer
     }
 
     .bigRed {
