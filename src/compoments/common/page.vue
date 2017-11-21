@@ -71,8 +71,10 @@
                     if (this.skip > this.pg || this.skip < 1) {
                         this.skip = '';
                     } else {
-                        this.page = this.skip;
-                        this.$emit('pag', this.page);
+                        if (this.page !== this.skip) {
+                            this.page = this.skip;
+                            this.$emit('pag', this.page);
+                        }
                     }
                 }
             }
