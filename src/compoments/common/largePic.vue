@@ -8,9 +8,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>-->
                     <div class="modal-content transPic">
-                        <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" id="close" data-dismiss="modal" @click="closeModal" aria-hidden="true">×</button>
                         <div class="modal-body" id="pic">
-                            <div class="imgContainer">
+                            <div class="imgContainer" @mousewheel.prevent="zoomPic($event,index)">
                                 <img id="img" v-if="index!=0" :src="src[index].raw" @mousemove.prevent="">
                                 <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
                             </div>
@@ -63,9 +63,11 @@
             $('.largePic').on('shown.bs.modal', function (e) {
 
                 let div = this.firstChild.firstChild;
-//                console.log(div)
+                console.log(div)
                 div.onmousedown = function (ev) {
+
                      let oevent = ev || event;
+
                      let distanceX = oevent.clientX - div.offsetLeft;
                      let distanceY = oevent.clientY - div.offsetTop;
 
@@ -79,6 +81,13 @@
                          document.onmouseup = null;
                      };
                  }
+            });
+
+            $('.largePic').on('hidden.bs.modal', function (e) {
+                let modal_content = document.getElementsByClassName('modal-content');
+                for(let i=0; i<modal_content.length; i++){
+                    modal_content[i].style.width = '900px';
+                }
             })
         },
 
@@ -102,6 +111,8 @@
         },
         methods : {
             closeModal(){
+
+
                 let _this = this;
                 $('.largePic').on('hidden.bs.modal', function (e) {
                     _this.rotateBack();
@@ -241,6 +252,21 @@
                     close.css('left','auto');
                 }
             },
+
+
+            zoomPic(e,index){
+                let width =e.target.clientWidth;
+                if(e.deltaY < 0 && width<1800){
+//                    e.target.style.width = width*1.1 + 'px';
+
+                    e.target.parentElement.parentElement.parentElement.style.width = width*1.1 + 30 + 'px';
+                }else if(e.deltaY > 0 && width>450){
+//                    e.target.style.width = width/1.1 + 'px';
+
+                    e.target.parentElement.parentElement.parentElement.style.width = width/1.1 + 30 + 'px';
+                }
+
+            },
         }
     }
 </script>
@@ -318,5 +344,7 @@
     .close:hover{
         color: #999;
     }
-
+    .imgContainer img{
+        cursor: move;
+    }
 </style>

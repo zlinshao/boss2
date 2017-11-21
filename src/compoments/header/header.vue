@@ -319,6 +319,19 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
+                    <!--<li class="sub-menu"-->
+                        <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-user"></i>-->
+                            <!--<span>客户管理(新)</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
+                                <!--<router-link to='/client'>客户</router-link>-->
+                            <!--</li>-->
+
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
                         <a href="javascript:;">
