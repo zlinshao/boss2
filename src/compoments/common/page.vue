@@ -67,7 +67,9 @@
                 this.$emit('pag', this.page);
             },
             skip_go_to (){
-                if (this.skip !== '') {
+                let reg = /[^\d]/;
+                let flag = reg.test(this.skip);
+                if (this.skip !== '' || flag) {
                     if (this.skip > this.pg || this.skip < 1) {
                         this.skip = '';
                     } else {
