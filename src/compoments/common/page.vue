@@ -10,8 +10,7 @@
                 <li v-show="pg != page && pg != 0" @click="page++ && go_to(page++)"><a>下一页</a></li>
                 <li v-show="pg != page" @click="go_to(pg)"><a>尾页</a></li>
                 <li><a>共&nbsp;(&nbsp;{{pg}}&nbsp;)&nbsp;页</a></li>
-                <li><input type="text" class="skip" v-model="skip" @keyup.enter="skip_go_to()"
-                           @keyup="skip = skip.replace(/[^\d]/g,'');"></li>
+                <li><input type="number" class="skip" v-model="skip" @keyup.enter="skip_go_to()"></li>
                 <li @click="skip_go_to()"><a>GO</a></li>
             </ul>
         </nav>
@@ -67,9 +66,9 @@
                 this.$emit('pag', this.page);
             },
             skip_go_to (){
-                let reg = /[^\d]/;
-                let flag = reg.test(this.skip);
-                if (this.skip !== '' || flag) {
+//                let reg = /[^\d]/;
+//                let flag = reg.test(this.skip);
+                if (this.skip !== '') {
                     if (this.skip > this.pg || this.skip < 1) {
                         this.skip = '';
                     } else {
@@ -129,7 +128,7 @@
     .skip {
         vertical-align: top;
         margin-top: -18px;
-        width: 50px;
+        width: 66px;
         height: 32px;
         border: 1px solid #ddd;
         padding: 6px;
