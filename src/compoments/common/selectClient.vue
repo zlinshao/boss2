@@ -201,7 +201,7 @@
             custom(){
                 this.$http.post('index/country/index').then((res) => {
                     this.nationalityList=res.data.data;
-                })
+                });
                 this.$http.get('core/customer/dict').then((res) => {
                     this.person_medium=res.data.person_medium;
                 });

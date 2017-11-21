@@ -147,6 +147,10 @@ import HydropowerGasDetail from './compoments/customerService/hydropowerGas/hydr
 
 import Village from './compoments/villageManage/village.vue'                        //小区管理列表
 import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
+
+
+//重构客户模块
+import Client from './compoments/client/clientList.vue'
 export default[
     {
         path: '/',                  //重定向主页
@@ -767,5 +771,10 @@ export default[
         path: '/villageDetail',
         name: 'VillageDetail',
         component: VillageDetail
+    },
+    {
+        path:'/client',
+        name : 'Client',
+        component:Client
     }
 ]
