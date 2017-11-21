@@ -10,6 +10,8 @@
                 <li v-show="pg != page && pg != 0" @click="page++ && go_to(page++)"><a>下一页</a></li>
                 <li v-show="pg != page" @click="go_to(pg)"><a>尾页</a></li>
                 <li><a>共&nbsp;(&nbsp;{{pg}}&nbsp;)&nbsp;页</a></li>
+                <li><input type="text" class="skip" v-model="this.skip"></li>
+                <li @click="go_to(this.skip)"><a>GO</a></li>
             </ul>
         </nav>
     </div>
@@ -24,8 +26,9 @@
         props: ['pg', 'beforePage'],
         data (){
             return {
+                skip: '',
                 page: 1,               //分页
-                showItem: 5,            //显示条数
+                showItem: 5,           //显示条数
             }
         },
         watch: {
@@ -57,6 +60,9 @@
         },
         methods: {
             go_to(index) {
+                if(this.skip !== ''){
+                    this.page = this.skip;
+                }
                 if (index === this.page) return;
                 this.page = index;
                 //这里可以发送ajax请求
@@ -106,5 +112,14 @@
     .pagination li.active a {
         background: #0E90D2;
         color: #fff;
+    }
+
+    .skip {
+        vertical-align: top;
+        margin-top: -18px;
+        width: 50px;
+        height: 32px;
+        border: 1px solid #ddd;
+        padding: 6px;
     }
 </style>
