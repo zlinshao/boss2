@@ -75,7 +75,12 @@
                                         <label class="col-sm-3 control-label col-lg-2">合同编号<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
                                             <input type="text" class="form-control" v-model="contractAdd.contract_num"
-                                                   placeholder="合同编号">
+                                                 @blur="test"  placeholder="合同编号">
+                                            <div style="margin-top: -18px;margin-bottom: 18px"  v-if="!contract_num_right">
+                                                    <span style="color: #E4393C;">
+                                                        合同编号格式不正确
+                                                    </span>&nbsp;
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -769,6 +774,7 @@
                         needHour: false,
                     }
                 ],
+                contract_num_right : true
             }
         },
         watch: {
@@ -792,6 +798,15 @@
             },
         },
         methods: {
+            test(){
+                this.contractAdd.contract_num = this.contractAdd.contract_num.toUpperCase();
+                let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
+                if(this.contractAdd.contract_num!==''){
+                    this.contract_num_right = reg.test(this.contractAdd.contract_num);
+                }else {
+                    this.contract_num_right = true;
+                }
+            },
             selectDpm(){ //选择部门
                 $('.selectCustom:eq(1)').modal('show');
                 this.configure = {type: 'staff', length: 1};

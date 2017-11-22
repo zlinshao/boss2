@@ -84,7 +84,7 @@
             });
 
             $('.largePic').on('hidden.bs.modal', function (e) {
-                let modal_content = document.getElementsByClassName('modal-content');
+                let modal_content = document.getElementsByClassName('transPic');
                 for(let i=0; i<modal_content.length; i++){
                     modal_content[i].style.width = '900px';
                 }

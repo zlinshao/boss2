@@ -9,66 +9,82 @@
         <section class="panel">
             <div class="panel-body has-js">
                 <!--没有选中-->
-                <div v-if="true">
+                <div v-if="pickedId.length===0">
                     <div>
                         <div class="pro-sort">
                             <label>
-                                <select class="form-control">
-                                    <option value="">客户状态</option>
-                                    <option v-for=""></option>
+                                <select class="form-control" v-model="params.customer_status" @change="search">
+                                    <option value="" selected="selected">客户状态</option>
+                                    <option v-for="(value, key) in dictionary.customer_status" :value="key">
+                                        {{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
                         <div class="pro-sort">
                             <label>
-                                <select class="form-control">
-                                    <option value="">客户意向</option>
-                                    <option v-for=""></option>
+                                <select class="form-control" v-model="params.customer_will" @change="search">
+                                    <option value="" selected="selected">客户意向</option>
+                                    <option v-for="(value, key) in dictionary.customer_will" :value="key">
+                                        {{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
                         <div class="pro-sort">
                             <label>
-                                <select class="form-control">
-                                    <option value="">客户身份</option>
-                                    <option v-for=""></option>
+                                <select class="form-control" v-model="params.identity" @change="search">
+                                    <option value="" selected="selected">客户身份</option>
+                                    <option v-for="(value, key) in dictionary.identity" :value="key">
+                                        {{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
                         <div class="pro-sort">
                             <label>
-                                <select class="form-control">
-                                    <option value="">客户来源</option>
-                                    <option v-for=""></option>
+                                <select class="form-control" v-model="params.source" @change="search">
+                                    <option value="" selected="selected">客户来源</option>
+                                    <option v-for="(value, key) in dictionary.source" :value="key">
+                                        {{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
                         <div class="pro-sort">
                             <label>
-                                <select class="form-control">
-                                    <option value="">个人/中介</option>
-                                    <option v-for=""></option>
+                                <select class="form-control" v-model="params.person_medium" @change="search">
+                                    <option value="" selected="selected">个人/中介</option>
+                                    <option v-for="(value,key) in dictionary.person_medium" :value="key">
+                                        {{value}}
+                                    </option>
                                 </select>
                             </label>
                         </div>
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
                              style="padding: 0;margin-right: 20px;">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="客户名/手机号">
+                                <input type="text"  v-model="params.keywords" class="form-control"
+                                      @keyup="search" placeholder="客户名/手机号/身份证/负责人">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button">搜索</button>
+                                    <button class="btn btn-success" @click="search">搜索</button>
                                 </span>
                             </div>
                         </div>
-                        <div class="pro-sort" style="height: 39px;">
-                            <label style="margin-top: 8px;padding-left: 25px;"
-                                   :class="{'label_check':true}">
-                                <input type="checkbox" class="pull-left">三天内未成交
+                        <div class="pro-sort">
+                            <label style="margin-top: 8px;" class="label_check"
+                                   :class="{'c_on':params.unsettled,'c_off':!params.unsettled}">
+                                <input type="checkbox" class="pull-left" @click.prevent="isSettled($event)">三天内未成交
                             </label>
                         </div>
-
                         <div class="pro-sort">
-                            <button class="btn btn-warning" type="button">重置</button>
+                            <label style="margin-top: 8px;" class="label_check"
+                                   :class="{'c_on':params.all,'c_off':!params.all}">
+                                <input type="checkbox" class="pull-left" @click.prevent="isAll">查看所有
+                            </label>
+                        </div>
+                        <div class="pro-sort">
+                            <button class="btn btn-primary" @click="reset">重置</button>
                         </div>
                         <div class="pull-right">
                             <a class="btn btn-primary">
@@ -79,34 +95,40 @@
                 </div>
 
                 <!--被选中-->
-                <div v-if="true" class="col-lg-12 remind">
+                <div v-if="pickedId.length>0" class="col-lg-12 remind">
                     <ul>
                         <li>
-                            <h5><a>已选中&nbsp;&nbsp;项</a></h5>
+                            <h5><a>已选中&nbsp;{{pickedId.length}}&nbsp;项</a></h5>
                         </li>
-                        <li>
-                            <h5><a ><i class="fa fa-edit"></i>&nbsp;增加沟通日志</a></h5>
+                        <li v-if="pickedId.length<2">
+                            <h5  @click="add_state('daily')">
+                                <a ><i class="fa fa-edit"></i>&nbsp;增加沟通日志</a>
+                            </h5>
                         </li>
+                        <!--<li v-if="pickedId.length<2">-->
+                            <!--<h5 >-->
+                                <!--<a><i class="fa fa-edit"></i> 提醒</a>-->
+                            <!--</h5>-->
+                        <!--</li>-->
                         <li>
-                            <h5><a ><i class="fa fa-edit"></i> 提醒</a></h5>
+                            <h5 @click="add_state('pool')">
+                                <a><i class="fa fa-users"></i>&nbsp;放入客户池</a>
+                            </h5>
                         </li>
-                        <li>
-                            <h5><a><i class="fa fa-users"></i>&nbsp;放入客户池</a></h5>
-                        </li>
-                        <li>
+                        <li v-if="pickedId.length<2">
                             <h5>
                                 <a><i class="fa fa-pencil"></i>&nbsp;编辑</a>
                             </h5>
                         </li>
-                        <li>
-                            <h5>
+                        <li v-if="pickedId.length<2">
+                            <h5 v-if="top == null"  @click="stick('core/core_common/stick')">
                                 <a><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
                             </h5>
-                            <h5>
-                                <!--<a><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a>-->
+                            <h5 v-if="top != null"  @click="stick('core/core_common/unstick')">
+                                <a><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a>
                             </h5>
                         </li>
-                        <li>
+                        <li v-if="pickedId.length<2">
                             <h5>
                                 <a><i class="fa fa-times-circle"></i>&nbsp;删除</a>
                             </h5>
@@ -132,6 +154,7 @@
                                 <th class="text-center width90">来源</th>
                                 <th class="text-center width80">客户状态</th>
                                 <th class="text-center width80">客户身份</th>
+                                <th class="text-center width80">身份证</th>
                                 <th class="text-center width80">个人/中介</th>
                                 <th class="text-center width80">负责人</th>
                                 <th class="text-center width50">置顶</th>
@@ -139,14 +162,51 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                               <td >
-                                   <a href="tel:400-888-6633">拨打电话</a>
+                            <tr v-for="item in clientList">
+                               <!--<td >-->
+                                   <!--<a href="tel:400-888-6633">拨打电话</a>-->
 
-                                       <a href="sms:19956321564">发送短信</a>
-                               </td>
+                                       <!--<a href="sms:19956321564">发送短信</a>-->
+                               <!--</td>-->
+                                <td class="text-center">
+                                    <label :class="{'c_on':pickedId.indexOf(item.id) > -1,'c_off':pickedId.indexOf(item.id)==-1}"
+                                           class="label_check" @click.prevent="pick(item,$event)">
+                                        <input type="checkbox" class="pull-left" :checked="pickedId.indexOf(item.id) > -1">
+                                    </label>
+                                </td>
+                                <td class="text-center">{{item.name}}</td>
+                                <td class="text-center">{{dictionary.gender[item.gender]}}</td>
+                                <td class="text-center">{{item.mobile}}</td>
+                                <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
+                                <td class="text-center">
+                                    <a data-v-2f43a2b3="" href="#">
+                                        <div class="progress progress-striped active">
+                                            <div aria-valuemax="100" aria-valuemin="0"
+                                                 aria-valuenow="45" role="progressbar" class="progress-bar"
+                                                 :style="{ width: item.follow + '%'}">
+                                                <span class="sr-only">{{item.follow}}%</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="text-center">{{dictionary.source[item.source]}}</td>
+                                <td class="text-center">{{dictionary.customer_status[item.customer_status]}}</td>
+                                <td class="text-center">{{item.identity}}</td>
+                                <td class="text-center">{{item.id_num}}</td>
+                                <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
+                                <td class="text-center">{{item.manager_name}}</td>
+                                <td class="text-center">
+                                    <a v-if="item.top != null">
+                                        <i class="fa fa-thumb-tack"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <router-link :to="{path:'/details'}">
+                                        详情
+                                    </router-link>
+                                </td>
                             </tr>
-                            <tr v-if="false">
+                            <tr v-if="isShow">
                                 <td colspan="14" class="text-center text-muted">
                                     <h4>暂无数据....</h4>
                                 </td>
@@ -156,12 +216,154 @@
                 </section>
             </div>
         </div>
-
+        <!--分页-->
+        <Page @pag="getPage" :pg="pages" :beforePage="params.page"></Page>
+        <Status :state="info"></Status>
+        <!--加载-->
+        <Loading v-if="isWaiting"></Loading>
+        <!--增加日志/增加提醒/放入客户池-->
+        <remindDaily @pitches="operateSuccess" :state="bool" :msg="pickedId"></remindDaily>
     </div>
 </template>
 
 <script>
+    import Page from '.././common/page.vue'                             //分页
+    import Status from '../common/status.vue'                           //提示信息
+    import Loading from '../loading/Loading.vue'                        //Loading
+    import remindDaily from './remindDaily.vue'                         //修改客户
+    export default{
+        components:{Page,Status,Loading,remindDaily},
+        data(){
+            return{
+                params: {
+                    page: 1,              //当前页数
+                    unsettled: false,                   //三天内未成交
+                    keywords: '',               //客户名/手机号搜索
+                    customer_status: '',             //客户状态
+                    customer_will: '',          //客户意向
+                    identity: '',                 //客户身份
+                    source: '',             //客户来源
+                    person_medium: '',       //个人/中介
+                    all :false,                //查看所有
+                },
+                pages:'',                   // 总页数
+                clientList:[],
+                isWaiting : true,           // loading
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
+                dictionary : [],
+                bool:'',    //  
+                pickedId :[],
+                isShow : true,
+                top:'',
+            }
+        },
+        created(){
+            this.getDictionary();
+        },
+        methods:{
+            getDictionary(){
+                this.$http.get('core/customer/dict').then((res) => {
+                    this.dictionary = res.data;
+                    this.getClientList();
+                });
+            },
+            getClientList(){
+                this.$http.get('core/customer/customerList',{
+                    params:this.params
+                }).then((res) => {
+                    this.isWaiting = false;
+                    if(res.data.code === '70030'){
+                        this.clientList = res.data.data.list;
+                        this.pages = res.data.data.pages;
+                        this.isShow = false;
+                    }else {
+                        this.clientList = [];
+                        this.pages = '';
+                        this.isShow = true;
+                    }
+                })
+            },
 
+            //获取当前页码
+            getPage(val){
+                this.params.page = val;
+                this.getClientList();
+            },
+            search(){
+                this.params.page = 1;
+                this.getClientList();
+            },
+            isSettled(e){    //三天内未成交
+                this.params.unsettled = !this.params.unsettled;
+                this.getClientList();
+            },
+            isAll(){
+                this.params.all = !this.params.all;
+                this.getClientList();
+            },
+            reset(){    //重置
+                this.params = {
+                    page: 1,              //当前页数
+                    unsettled: false,                   //三天内未成交
+                    keywords: '',               //客户名/手机号搜索
+                    customer_status: '',             //客户状态
+                    customer_will: '',          //客户意向
+                    identity: '',                 //客户身份
+                    source: '',             //客户来源
+                    person_medium: '',       //个人/中介
+                    all : false,
+                };
+                this.getClientList();
+
+            },
+            pick(item,e){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if(evInput.checked){
+                    this.pickedId.push(item.id);
+                    this.top = item.top;
+                }else {
+                    this.pickedId = this.pickedId.filter(function (x) {
+                        return x !== item.id
+                    })
+                }
+            },
+
+            //增加日志/放入客户池
+            add_state (val){
+                this.bool = val;
+                $('#remindDaily').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+            operateSuccess(val){
+                this.pickedId = [];
+                this.getClientList();
+            },
+            stick (val){
+                this.$http.post(val, {
+                    table_id: this.pickedId[0],
+                    category: 'customer',
+                }).then((res) => {
+                    //成功信息 ***
+                    this.info.success = res.data.msg;
+                    //显示成功弹窗 ***
+                    this.info.state_success = true;
+                    this.pickedId = [];
+                    this.getClientList();
+                });
+            },
+        }
+    }
 </script>
 
 
@@ -188,5 +390,9 @@
 
     .pro-sort select.form-control {
         padding: 6px 8px;
+    }
+    .progress.progress-striped.active {
+        margin-bottom: 0;
+        height: 10px;
     }
 </style>
