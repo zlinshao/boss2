@@ -332,6 +332,7 @@
 
                         <!--</ul>-->
                     <!--</li>-->
+
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
                         <a href="javascript:;">
