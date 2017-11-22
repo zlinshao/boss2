@@ -345,35 +345,37 @@
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
-                                                <span v-if="(item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4)">收款人姓名：</span>
+                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined"
+                                                 v-show="item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4">
+                                                <span>收款人姓名：</span>
                                                 <span>
                                                     {{item.checkin_rent_id.medi_account_owner}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
-                                                <span v-show="(item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4)">开户行：</span>
+                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined"
+                                                 v-show="item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4">
+                                                <span>开户行：</span>
                                                 <span>
-                                                    {{dictionary.bank[item.checkin_rent_id.medi_account_bank]}}
+                                                   {{dictionary.bank[item.checkin_rent_id.medi_account_bank]}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
-                                                <span v-if="(item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4)">支行：</span>
+                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined"
+                                                 v-show="item.checkin_rent_id.medi_account_type == 1 || item.checkin_rent_id.medi_account_type == 4">
+                                                <span>支行：</span>
                                                 <span>
-                                                    {{item.checkin_rent_id.medi_account_subbank}}
+                                                   {{item.checkin_rent_id.medi_account_subbank}}
                                                 </span>
                                             </div>
                                             <div class="infoList"
-                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
-                                                <span v-if="item.checkin_rent_id.medi_account_type == 2">支付宝姓名：</span>
+                                                 v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined && item.checkin_rent_id.medi_account_type == 2">
+                                                <span>支付宝姓名：</span>
                                                 <span>
-                                                    {{item.checkin_rent_id.medi_account_owner}}
+                                                     {{item.checkin_rent_id.medi_account_owner}}
                                                 </span>
                                             </div>
-                                            <div class="infoList"
-                                                 v-show="">
+                                            <div class="infoList">
                                                 <span>账号：</span>
                                                 <span v-if="item.checkin_rent_id !== null && item.checkin_rent_id !== undefined">
                                                     {{item.checkin_rent_id.medi_account_num}}
