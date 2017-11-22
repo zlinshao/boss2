@@ -63,6 +63,7 @@
                                 <input type="checkbox" class="pull-left">三天内未成交
                             </label>
                         </div>
+
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
                              style="padding: 0;margin-right: 20px;">
                             <div class="input-group">
@@ -402,7 +403,7 @@
                         this.wait = 2;
                     } else {
 //                列表
-                        this.$http.post('core/customer/customerList').then((res) => {
+                        this.$http.get('core/customer/customerList').then((res) => {
                             this.wait = 2;
                             if (res.data.code === '70030') {
                                 this.custom_list = res.data.data.list;
@@ -436,7 +437,7 @@
                     this.return_sea.sea_info = '';
                 }
                 this.return_sea.beforePage = val;
-                this.$http.post('core/customer/customerList/page/' + val, {
+                this.$http.get('core/customer/customerList/page/' + val, {
                     customer_status: this.return_sea.sea_status,
                     customer_will: this.return_sea.sea_intention,
                     identity: this.return_sea.sea_id,

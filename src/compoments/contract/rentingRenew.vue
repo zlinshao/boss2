@@ -83,7 +83,13 @@
                                     <div class="row">
                                         <label class="col-sm-3 control-label col-lg-2" >合同编号<sup>*</sup></label>
                                         <div class="col-sm-9 col-lg-10">
-                                            <input type="text" class="form-control" v-model="contractRenew.contract_num" placeholder="合同编号">
+                                            <input type="text" class="form-control" v-model="contractRenew.contract_num" 
+                                                  @blur="test" placeholder="合同编号">
+                                            <div style="margin-top: -18px;margin-bottom: 18px"  v-if="!contract_num_right">
+                                                    <span style="color: #E4393C;">
+                                                        合同编号格式不正确
+                                                    </span>&nbsp;
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -746,6 +752,7 @@
                         needHour : false,
                     }
                 ],
+                contract_num_right:true
             }
         },
         watch : {
@@ -760,6 +767,15 @@
             },
         },
         methods : {
+            test(){
+                this.contractRenew.contract_num = this.contractRenew.contract_num.toUpperCase();
+                let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
+                if(this.contractRenew.contract_num!==''){
+                    this.contract_num_right = reg.test(this.contractRenew.contract_num);
+                }else {
+                    this.contract_num_right = true;
+                }
+            },
             changeOperateType(){
                 this.contractRenew.relative_customer_id = [];
                 this.contract_Pic.cus_idPhotos = [];

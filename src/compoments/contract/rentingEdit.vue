@@ -75,8 +75,13 @@
                                         <div class="row">
                                             <label class="col-sm-3 control-label col-lg-2">合同编号<sup>*</sup></label>
                                             <div class="col-sm-9 col-lg-10">
-                                                <input type="text" class="form-control"
+                                                <input type="text" class="form-control" @blur="test"
                                                        v-model="contractEdit.contract_num" placeholder="合同编号">
+                                                <div style="margin-top: -18px;margin-bottom: 18px"  v-if="!contract_num_right">
+                                                    <span style="color: #E4393C;">
+                                                        合同编号格式不正确
+                                                    </span>&nbsp;
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -783,6 +788,7 @@
                     ],
                     deal_time: '',
                     received_type: 1,
+                    contract_num_right:true
 
                 },
                 staff: '',
@@ -855,6 +861,7 @@
                         needHour: false,
                     }
                 ],
+                contract_num_right:true
             }
         },
         mounted(){
@@ -873,6 +880,15 @@
             }
         },
         methods: {
+            test(){
+                this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
+                let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
+                if(this.contractEdit.contract_num!==''){
+                    this.contract_num_right = reg.test(this.contractEdit.contract_num);
+                }else {
+                    this.contract_num_right = true;
+                }
+            },
             gitContractInfo(){
                 if (this.myContractEitId !== '') {
                     this.$http.get('core/rent/readcontract/id/' + this.myContractEitId).then((res) => {
