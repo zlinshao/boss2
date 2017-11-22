@@ -89,7 +89,7 @@
                     </form>
                 </div>
 
-                <div v-show="pitch.length>0" class="col-lg-12 remind">
+                <div v-show="pitch.length > 0" class="col-lg-12 remind">
                     <ul>
                         <li><h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5></li>
                         <!--<li>
@@ -101,7 +101,7 @@
                         <li v-show="pitch.length == 1 && rollbacks !== null">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
-                        <li v-show="pitch.length == 1">
+                        <li>
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
 
@@ -250,7 +250,13 @@
                     <table class="table table-advance table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center" v-if="recycle_bin"></th>
+                            <th class="text-center" v-if="recycle_bin">
+                                <label :class="{'label_check':true,'c_on':pitch.length == 12,'c_off':pitch.length != 12}"
+                                       style="margin: 0;" @click.prevent="chooseAll($event)">
+                                    <input type="checkbox" class="pull-left"
+                                           :checked="pitch.length == 12">
+                                </label>
+                            </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <th class="text-center width120" :class="{red: !recycle_bin}">收入科目</th>
@@ -942,11 +948,12 @@
 
                 $('#addCollect').modal('hide');
             },
-
-            // 全选
+//             全选
             chooseAll(ev){
-                this.pitch.splice(0, this.pitch.length);
-                if (ev.target.checked) {
+                this.pitch = [];
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
                     for (let i = 0; i < this.myData.length; i++) {
                         this.pitch.push(this.myData[i].id);
                     }
@@ -956,7 +963,6 @@
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.rollbacks = index;
-                this.pitch = [];
                 this.status = [];
                 if (evInput.checked) {
                     this.pitch.push(id);

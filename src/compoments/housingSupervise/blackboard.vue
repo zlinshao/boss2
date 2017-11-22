@@ -66,7 +66,7 @@
                 <tr>
                     <td style="border-bottom: 2px solid #dddddd;">
                         <label :class="{'label_check':true,'c_on':pitch.length == 12,'c_off':pitch.length != 12}"
-                               @click.prevent="all_id($event)">
+                               style="margin: 0;" @click.prevent="all_id($event)">
                             <input type="checkbox" class="pull-left"
                                    :checked="pitch.length == 12">
                         </label>

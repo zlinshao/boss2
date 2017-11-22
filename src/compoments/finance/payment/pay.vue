@@ -103,7 +103,7 @@
                         <li v-show="pitch.length == 1 && rollbacks != null">
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
-                        <li v-show="pitch.length == 1">
+                        <li>
                             <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
                         </li>
                         <!--<li>-->
@@ -254,8 +254,11 @@
                         <thead>
                         <tr>
                             <th class="text-center" v-if="recycle_bin">
-                                <!--<input type="checkbox" :checked="myData.length!=0&&pitch.length==myData.length"-->
-                                <!--@click="chooseAll($event)">-->
+                                <label :class="{'label_check':true,'c_on':pitch.length == 12,'c_off':pitch.length != 12}"
+                                       style="margin: 0;" @click.prevent="chooseAll($event)">
+                                    <input type="checkbox" class="pull-left"
+                                           :checked="pitch.length == 12">
+                                </label>
                             </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">付款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
@@ -996,15 +999,6 @@
                     this.search(1);
                 }
             },
-            // 全选
-            chooseAll(ev){
-                this.pitch.splice(0, this.pitch.length);
-                if (ev.target.checked) {
-                    for (let i = 0; i < this.myData.length; i++) {
-                        this.pitch.push(this.myData[i].id);
-                    }
-                }
-            },
 //            应付入账
             payables (){
                 $('#payFor').modal({
@@ -1014,6 +1008,17 @@
                     this.details_info = [];
                     this.details_info.push(res.data.data);
                 });
+            },
+//             全选
+            chooseAll(ev){
+                this.pitch = [];
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    for (let i = 0; i < this.myData.length; i++) {
+                        this.pitch.push(this.myData[i].id);
+                    }
+                }
             },
 //            列表多选框
             changeIndex(ev, id, status, index){
