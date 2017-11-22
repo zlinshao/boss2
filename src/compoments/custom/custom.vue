@@ -394,7 +394,7 @@
                 }
                 this.return_sea.beforePage = val;
 //                字典
-                this.$http.get('core/customer/dict').then((res) => {
+                this.$http.post('core/customer/dict').then((res) => {
                     this.select_list = res.data;
                     if (this.sea_status === 1) {
                         this.sea_status = 2;
@@ -403,7 +403,7 @@
                         this.wait = 2;
                     } else {
 //                列表
-                        this.$http.get('core/customer/customerList').then((res) => {
+                        this.$http.post('core/customer/customerList').then((res) => {
                             this.wait = 2;
                             if (res.data.code === '70030') {
                                 this.custom_list = res.data.data.list;
