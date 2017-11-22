@@ -74,7 +74,7 @@
                         </li>
                         <li>
                             <h5 data-toggle="modal" data-target="#addRemark">
-                                <a><i class="fa fa-book"></i> 添加备注</a>
+                                <a><i class="fa fa-book"></i>&nbsp;添加备注</a>
                             </h5>
                         </li>
                         <li v-if="params.type == 3&&(simulate.indexOf('ContractNumberRecord/doBack')>-1||isSuper)">
@@ -93,6 +93,11 @@
                             <h5>
                                 <a @click="payControl('录入')">录入</a>
                                 <a @click="payControl('取消录入')">取消录入</a>
+                            </h5>
+                        </li>
+                        <li v-if="params.type == 1">
+                            <h5>
+                                <a @click='distribution'><i class="fa fa-sitemap"></i>&nbsp;分配</a>
                             </h5>
                         </li>
                     </ul>
@@ -124,7 +129,7 @@
                 <div class="tab-content tasi-tab has-js">
 
                     <!--领取-->
-                    <div class="tab-pane" id="receive" :class="{'active': params.type === 1}">
+                    <div class="tab-pane" id="receive" :class="{'active': params.type == 1}">
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
@@ -145,7 +150,7 @@
                                 <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.request_time) > -1,
                                             'c_off':pitch.indexOf(item.request_time)==-1}"
-                                           @click.prevent="checked_id(item.request_time, $event,item.id)">
+                                           @click.prevent="checked_id(item.request_time,$event,item.id,item.receiver_id)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.request_time) > -1">
                                     </label>
@@ -158,14 +163,16 @@
                                 <td>{{item.receiver_name}}</td>
                                 <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
-                                    <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
+                                    <a v-show="item.other_remark!=null&&item.other_remark!=''"
+                                       @click="showRemark(item.other_remark)">
                                         <i class="fa fa-book"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
                                     query:{request_time:item.request_time,type:item.type,page:beforePage,myParams:params,select:selected}}"
-                                    >详情</router-link>
+                                    >详情
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
@@ -175,7 +182,7 @@
                         </table>
                     </div>
                     <!--作废-->
-                    <div class="tab-pane" id="void" :class="{'active': params.type === 2}">
+                    <div class="tab-pane" id="void" :class="{'active': params.type == 2}">
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
@@ -209,13 +216,16 @@
                                 <td>{{item.reporter_name}}</td>
                                 <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
-                                    <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
+                                    <a v-show="item.other_remark!=null&&item.other_remark!=''"
+                                       @click="showRemark(item.other_remark)">
                                         <i class="fa fa-book"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
-                                    query:{request_time:item.scrap_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                    query:{request_time:item.scrap_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">
+                                        详情
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
@@ -225,7 +235,7 @@
                         </table>
                     </div>
                     <!--上缴-->
-                    <div class="tab-pane" id="turnOver" :class="{'active': params.type === 3}">
+                    <div class="tab-pane" id="turnOver" :class="{'active': params.type == 3}">
                         <table class="table table-advance table-hover">
                             <thead>
                             <tr>
@@ -246,7 +256,7 @@
                                 <td>
                                     <label :class="{'label_check':true,'c_on':pitch.indexOf(item.paid_request_time) > -1,
                                             'c_off':pitch.indexOf(item.paid_request_time)==-1}"
-                                           @click.prevent="checked_id(item.paid_request_time, $event,item.id)">
+                                           @click.prevent="checked_id(item.paid_request_time,$event,item.id)">
                                         <input type="checkbox" class="pull-left"
                                                :checked="pitch.indexOf(item.paid_request_time) > -1">
                                     </label>
@@ -259,13 +269,16 @@
                                 <td>{{item.paid_name}}</td>
                                 <td><span v-if="item.department_id!=null">{{item.department_id.name}}</span></td>
                                 <td>
-                                    <a v-show="item.other_remark!=null&&item.other_remark!=''" @click="showRemark(item.other_remark)">
+                                    <a v-show="item.other_remark!=null&&item.other_remark!=''"
+                                       @click="showRemark(item.other_remark)">
                                         <i class="fa fa-book"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <router-link :to="{path : '/contractNumDetail',
-                                    query:{request_time:item.paid_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">详情</router-link>
+                                    query:{request_time:item.paid_request_time,type:item.type,page:beforePage,myParams:params,select:selected}}">
+                                        详情
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr class="text-center" v-show="isShow">
@@ -278,16 +291,6 @@
 
             </div>
         </section>
-
-        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
-
-        <Status :state='info'></Status>
-
-        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
-
-        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
-
-        <AddModal :msg="params.type" @success="successAdd"></AddModal>
 
         <!--备注-->
         <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="addRemark"
@@ -334,7 +337,7 @@
                     <div class="modal-body">
                         <div class="panel-body">
                             <div v-for="(item,index) in remark" style="padding: 5px;border-bottom: 1px solid #ddd">
-                                {{index+1}}.&emsp;{{item.remark_time}}&emsp;&emsp;{{item.other_remark}}@{{item.remark_name}}
+                                {{index + 1}}.&emsp;{{item.remark_time}}&emsp;&emsp;{{item.other_remark}}@{{item.remark_name}}
                             </div>
                         </div>
                     </div>
@@ -384,7 +387,7 @@
                                     <div class="col-sm-10">
                                         <div class="col-sm-6" v-for="item in payCtrlSf">
                                             <label :class="{'label_check':true,'c_on':choosePaySf.indexOf(item)>-1,'c_off':choosePaySf.indexOf(item)==-1}"
-                                                    @click.prevent="payCtrl($event,1,item)">
+                                                   @click.prevent="payCtrl($event,1,item)">
                                                 <input type="checkbox" :checked="choosePaySf.indexOf(item)>-1">
                                                 {{item}}
                                             </label>
@@ -446,6 +449,19 @@
                 </div>
             </div>
         </div>
+
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
+
+        <Status :state='info'></Status>
+
+        <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+
+        <STAFF :configure="configure" @Staff="distributionSend"></STAFF>
+
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+
+        <AddModal :msg="params.type" @success="successAdd"></AddModal>
+
     </div>
 </template>
 
@@ -458,19 +474,19 @@
     import AddModal from './contractNumAdd.vue'
 
     export default{
-        props:['simulate','isSuper'],
+        props: ['simulate', 'isSuper'],
         components: {Page, Status, DatePicker, STAFF, Confirm, AddModal},
         data(){
             return {
-                dict : {},
-
-                operId : '',
+                dict: {},
+                receiver_id: '',                   //离职人ID
+                operId: '',
                 pitch: [],
                 beforePage: 1,                      //当前页
                 paging: 1,                        //总页数
 
-                myData : [],
-                isShow : false,
+                myData: [],
+                isShow: false,
 
                 confirmMsg: {                       //删除
                     id: '',
@@ -486,14 +502,14 @@
                 configure: {},                      //组织架构
                 selected: [],                       //部门名称
                 params: {
-                    style : '',                  // 收租房
-                    condition : 4,              // 缺少字段
+                    style: '',                  // 收租房
+                    condition: 4,              // 缺少字段
                     type: 1,
                     department_id: '',             //筛选
-                    start : '',
-                    end : '',
-                    keywords : '',
-                    contract_status : ''
+                    start: '',
+                    end: '',
+                    keywords: '',
+                    contract_status: ''
                 },
                 info: {
                     //成功状态 ***
@@ -506,19 +522,19 @@
                     error: ''
                 },
 
-                addRemark : '',             // 添加备注
-                remark : '',                // 显示备注
-                leadingOut : '',            // 导出
+                addRemark: '',             // 添加备注
+                remark: '',                // 显示备注
+                leadingOut: '',            // 导出
 
-                payControlName : '',        // 上缴操作模态框标题
-                payCtrlSf : [],
-                payCtrlZf : [],
+                payControlName: '',        // 上缴操作模态框标题
+                payCtrlSf: [],
+                payCtrlZf: [],
 
-                choosePaySf : [],
-                choosePayZf : [],
+                choosePaySf: [],
+                choosePayZf: [],
 
-                remainContract : {},         // 剩余未上交合同
-                remainContract_time : ''
+                remainContract: {},         // 剩余未上交合同
+                remainContract_time: ''
 
             }
         },
@@ -527,16 +543,16 @@
             let page = this.$route.query.page;
             let select = this.$route.query.select;
 
-            this.$http.get('code/Contract_Number_Record/dict').then((res)=>{
+            this.$http.get('code/Contract_Number_Record/dict').then((res) => {
 //                console.log(res.data)
                 this.dict = res.data;
-                if (page!=undefined){
+                if (page != undefined) {
                     this.page = page;
                     this.beforePage = page;
-                    if (params!=undefined&&typeof params!='string'){
+                    if (params != undefined && typeof params != 'string') {
                         this.params = params;
-                        if (params.start!=''&&params.end!=''){
-                            this.currentDate = [params.start,params.end];
+                        if (params.start != '' && params.end != '') {
+                            this.currentDate = [params.start, params.end];
                         }
                     }
                     this.selected = select;
@@ -559,7 +575,7 @@
                 this.params.page = page;
                 this.$http.post('code/Contract_Number_Record/index', this.params).then((res) => {
 //                    console.log(res.data);
-                    if (res.data.code==30010){
+                    if (res.data.code == 30010) {
                         // 成功
                         this.paging = res.data.data.pages;
 //                        console.log(this.paging)
@@ -588,6 +604,25 @@
                 this.currentDate = [];
                 this.contract_list(1);
             },
+//            分配模态框
+            distribution(){
+                this.configure = {type: 'staff', length: 1};
+                $('.selectCustom:eq(1)').modal('show');
+            },
+//            分配
+            distributionSend (val){
+                if (val.staff.length !== 0) {
+                    this.$http.post('code/contract_number_record/contractTransition', {
+                        leave: this.receiver_id,
+                        receive: val.staff[0].id,
+                    }).then((res) => {
+                        if (res.data.code === '30010') {
+                            this.search(this.beforePage);
+                            this.pitch = [];
+                        }
+                    })
+                }
+            },
 //            部门搜索模态框
             select(){
                 this.configure = {type: 'department', length: 1};
@@ -595,16 +630,18 @@
             },
 //            部门搜索
             selectDateSend(val){
-                this.selected = val.department[0].name;
-                this.params.department_id = val.department[0].id;
+                if (val.department.length !== 0) {
+                    this.selected = val.department[0].name;
+                    this.params.department_id = val.department[0].id;
+                }
                 /*for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
-                }*/
+                 this.selected.push(val.department[i].name);
+                 this.params.department_id.push(val.department[i].id)
+                 }*/
                 /*for (let j = 0; j < val.staff.length; j++) {
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
-                }*/
+                 this.selected.push(val.staff[j].name);
+                 this.params.staff_id.push(val.staff[j].id)
+                 }*/
                 this.search(1);
             },
 //            清空部门搜索
@@ -613,7 +650,7 @@
                     return;
                 }
                 this.params.department_id = [];
-                this.params.staff_id = [];
+//                this.params.staff_id = [];
                 this.selected = [];
                 this.search(1);
             },
@@ -628,12 +665,12 @@
 
 //            确认删除
             getConfirm (){
-                this.$http.post('code/Contract_Number_Record/doDelete',{
-                    type : this.params.type,
-                    request_time : this.confirmMsg.request_time
-                }).then((res)=>{
+                this.$http.post('code/Contract_Number_Record/doDelete', {
+                    type: this.params.type,
+                    request_time: this.confirmMsg.request_time
+                }).then((res) => {
                     console.log(res.data);
-                    if (res.data.code==30010){
+                    if (res.data.code == 30010) {
                         // 成功
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -655,7 +692,7 @@
 //            时间搜索
             getDate(val){
 //                console.log(val)
-                if (val!=''){
+                if (val != '') {
                     this.params.start = val.split('to')[0];
                     this.params.end = val.split('to')[1];
                 } else {
@@ -667,28 +704,30 @@
             },
 
 //            选中
-            checked_id (rul, ev,id){
+            checked_id (rul, ev, id, staff){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
                 if (evInput.checked) {
                     this.pitch.push(rul);
                     this.operId = id;
+                    this.receiver_id = staff;
                 } else {
                     let index = this.pitch.indexOf(rul);
                     if (index > -1) {
                         this.pitch.splice(index, 1);
                     }
                     this.operId = '';
+                    this.receiver_id = '';
                 }
             },
 
             // 新增成功
             successAdd(data){
-                if (data.length!=0){
+                if (data.length != 0) {
                     this.remainContract = data;
                     this.remainContract_time = data.time[0];
-                    if (data.contract_num.length>0){
+                    if (data.contract_num.length > 0) {
                         $('#showPrompt').modal('show');
                     }
                 }
@@ -703,18 +742,18 @@
 //            新增备注
             remarkAdd(){
 //                console.log(this.pitch[0])
-                if (this.addRemark.length==''){
+                if (this.addRemark.length == '') {
                     this.info.error = '请填写备注信息';
                     //显示失败弹窗 ***
                     this.info.state_error = true;
                     return;
                 }
-                this.$http.post('/code/Contract_Number_Record/addRemark',{
-                    id : this.operId,
-                    remark : this.addRemark
-                }).then((res)=>{
+                this.$http.post('/code/Contract_Number_Record/addRemark', {
+                    id: this.operId,
+                    remark: this.addRemark
+                }).then((res) => {
 //                    console.log(res.data);
-                    if (res.data.code==30099){
+                    if (res.data.code == 30099) {
                         // success
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -756,19 +795,19 @@
             },
 
 
-            payCtrl(ev,num,number){
+            payCtrl(ev, num, number){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
-                if (evInput.checked){
-                    switch (parseInt(num)){
+                if (evInput.checked) {
+                    switch (parseInt(num)) {
                         case 1 :
                             this.choosePaySf.push(number)
                             break;
                         case 2 :
                             this.choosePayZf.push(number)
                     }
-                }else {
-                    switch (parseInt(num)){
+                } else {
+                    switch (parseInt(num)) {
                         case 1 :
                             let index1 = this.choosePaySf.indexOf(number);
                             if (index1 > -1) {
@@ -794,10 +833,10 @@
 //                console.log(this.pitch[0])
                 let url = '';
                 let data = {
-                    request_time : this.pitch[0],
-                    type : 3
+                    request_time: this.pitch[0],
+                    type: 3
                 };
-                switch (name){
+                switch (name) {
                     case '收回':
                         url = 'code/contract_number_record/getBack';
                         data.get_back = 0;
@@ -823,17 +862,17 @@
                         data.entering = 1;
 
                 }
-                this.$http.post(url,data).then((res)=>{
-                    this.showStatus(1,res.data);
+                this.$http.post(url, data).then((res) => {
+                    this.showStatus(1, res.data);
                 });
             },
             /*showPayFlagModal(){
-                $('#payFlag').modal('show')
-            },*/
-            showStatus(num,res){
-                if (res.code==30070){
+             $('#payFlag').modal('show')
+             },*/
+            showStatus(num, res){
+                if (res.code == 30070) {
                     // success
-                    if (num==1){
+                    if (num == 1) {
                         this.payCtrlSf = res.data.sf_contract_number
                         this.payCtrlZf = res.data.zf_contract_number
 //                        this.showPayFlagModal()
@@ -858,7 +897,7 @@
 //                console.log(this.choosePaySf.concat(this.choosePayZf))
 //                console.log(this.choosePayZf)
                 let url = '';
-                switch (this.payControlName){
+                switch (this.payControlName) {
                     case '收回':
                         url = 'code/contract_number_record/doBack';
                         break;
@@ -877,11 +916,11 @@
                     case '取消录入':
                         url = 'code/contract_number_record/cancelEntering';
                 }
-                this.$http.post(url,{
-                    contract_number : this.choosePaySf.concat(this.choosePayZf)
-                }).then((res)=>{
+                this.$http.post(url, {
+                    contract_number: this.choosePaySf.concat(this.choosePayZf)
+                }).then((res) => {
 //                            console.log(res.data)
-                    this.showStatus(2,res.data);
+                    this.showStatus(2, res.data);
                 })
 //                $('#payFlag').modal('hide');
 //                this.pitch = []
@@ -890,28 +929,35 @@
     }
 </script>
 <style scoped>
-    section.panel.has-js{
+    section.panel.has-js {
         /*background-color: transparent;*/
     }
-    section.panel.has-js table{
+
+    section.panel.has-js table {
         /*background-color: white;*/
     }
-    .remind ul{
+
+    .remind ul {
         margin-bottom: 0;
     }
+
     .table {
         margin-bottom: 0;
     }
-    textarea{
+
+    textarea {
         max-width: 100%;
     }
-    .colorRed{
+
+    .colorRed {
         color: red;
     }
+
     .form-horizontal .control-label {
         padding-top: 1px;
     }
-    .remainContract span+span{
+
+    .remainContract span + span {
         content: ',';
     }
 </style>

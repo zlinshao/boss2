@@ -575,7 +575,7 @@
 //            组织架构
             select(){
                 this.configure = {type: 'staff', length: 1};
-                $('.selectCustom:eq(1)').modal('show');
+                $('.selectCustom:eq(2)').modal('show');
             },
 //            领取人
             selectDateSend(val){
