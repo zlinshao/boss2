@@ -74,13 +74,21 @@
 
                                         <div class="row">
                                             <label class="col-sm-3 control-label col-lg-2">合同编号<sup>*</sup></label>
-                                            <div class="col-sm-9 col-lg-10">
-                                                <input type="text" class="form-control" @blur="test"
-                                                       v-model="contractEdit.contract_num" placeholder="合同编号">
-                                                <div style="margin-top: -18px;margin-bottom: 18px"  v-if="!contract_num_right">
-                                                    <span style="color: #E4393C;">
-                                                        合同编号格式不正确
-                                                    </span>&nbsp;
+                                            <div class="col-sm-9 col-lg-10 has-js">
+                                                <div class="col-sm-6" style="padding-left : 0">
+                                                    <input type="text" class="form-control" @blur="test" :class="{'error': !contract_num_right}"
+                                                           v-model="contractEdit.contract_num" placeholder="合同编号">
+                                                </div>
+
+                                                <label class="label_check col-sm-6" @click.prevent="isChecked($event)"
+                                                       :class="{'c_on':isMedia,'c_off':isMedia}">
+                                                    <input type="checkbox" v-model="isMedia">是否中介合同
+                                                </label>
+                                                <div class="col-xs-12" style="margin-top: -18px;margin-bottom: 18px;padding-left : 0"
+                                                     v-if="!contract_num_right">
+                                                <span style="color: #E4393C;">
+                                                    合同编号格式不正确
+                                                </span>&nbsp;
                                                 </div>
                                             </div>
                                         </div>
@@ -861,7 +869,8 @@
                         needHour: false,
                     }
                 ],
-                contract_num_right:true
+                contract_num_right:true,
+                isMedia : false
             }
         },
         mounted(){
@@ -881,13 +890,16 @@
         },
         methods: {
             test(){
-                this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
-                let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
-                if(this.contractEdit.contract_num!==''){
-                    this.contract_num_right = reg.test(this.contractEdit.contract_num);
-                }else {
-                    this.contract_num_right = true;
+                if(!this.isMedia){
+                    this.contractEdit.contract_num = this.contractEdit.contract_num.toUpperCase();
+                    let reg = /^LJZF0[1|2|3][0-9]{7}$/i;
+                    if(this.contractEdit.contract_num!==''){
+                        this.contract_num_right = reg.test(this.contractEdit.contract_num);
+                    }else {
+                        this.contract_num_right = true;
+                    }
                 }
+
             },
             gitContractInfo(){
                 if (this.myContractEitId !== '') {
@@ -1197,23 +1209,30 @@
 
                 this.$http.defaults.withCredentials = true;
                 if (this.complete_ok === 'ok') {
-                    this.$http.get('api/picture/poll').then((res) => {
-                        this.$http.post('core/rent/updatecontract', this.contractEdit).then((res) => {
-                            if (res.data.code === "80010") {
-                                this.$emit('EditStatus', 'success');
-                                this.closeEdit();
-                                this.info.success = res.data.msg;
-                                //显示成功弹窗 ***
-                                this.info.state_success = true;
+                    if(this.contract_num_right){
+                        this.$http.get('api/picture/poll').then((res) => {
+                            this.$http.post('core/rent/updatecontract', this.contractEdit).then((res) => {
+                                if (res.data.code === "80010") {
+                                    this.$emit('EditStatus', 'success');
+                                    this.closeEdit();
+                                    this.info.success = res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_success = true;
 
-                            } else {
-                                this.info.error = res.data.msg;
-                                //显示成功弹窗 ***
-                                this.info.state_error = true;
-                            }
+                                } else {
+                                    this.info.error = res.data.msg;
+                                    //显示成功弹窗 ***
+                                    this.info.state_error = true;
+                                }
 
-                        })
-                    });
+                            })
+                        });
+                    }else {
+                        this.info.error = '合同编号格式不正确';
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+
 
                 } else {
                     this.info.error = '图片正在上传';
@@ -1313,6 +1332,14 @@
             },
             getDate2(val){
                 this.contractEdit.complete_date = val;
+            },
+            isChecked(e){
+                this.isMedia = !this.isMedia;
+                if(this.isMedia){
+                    this.contract_num_right = true;
+                }else if(!this.isMedia){
+                    this.test();
+                }
             }
         }
     }
@@ -1380,5 +1407,11 @@
 
     .col-sm-2.icon i:hover {
         color: #999;
+    }
+    .has-js .label_check {
+        margin-top: 8px;
+    }
+    .error {
+        border-color: #E4393C;
     }
 </style>

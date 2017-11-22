@@ -87,7 +87,7 @@
                             <button class="btn btn-primary" @click="reset">重置</button>
                         </div>
                         <div class="pull-right">
-                            <a class="btn btn-primary">
+                            <a class="btn btn-primary" @click="addClient">
                                 <i class="fa fa-plus-square"></i>&nbsp;增加客户
                             </a>
                         </div>
@@ -223,6 +223,7 @@
         <Loading v-if="isWaiting"></Loading>
         <!--增加日志/增加提醒/放入客户池-->
         <remindDaily @pitches="operateSuccess" :state="bool" :msg="pickedId"></remindDaily>
+        <ClientAdd></ClientAdd>
     </div>
 </template>
 
@@ -231,8 +232,10 @@
     import Status from '../common/status.vue'                           //提示信息
     import Loading from '../loading/Loading.vue'                        //Loading
     import remindDaily from './remindDaily.vue'                         //修改客户
+    import ClientAdd from './clientAdd.vue'
+
     export default{
-        components:{Page,Status,Loading,remindDaily},
+        components:{Page,Status,Loading,remindDaily,ClientAdd},
         data(){
             return{
                 params: {
@@ -361,6 +364,10 @@
                     this.pickedId = [];
                     this.getClientList();
                 });
+            },
+            addClient(){
+                $('.rem_div').remove();
+                $('#clientAdd').modal('show');
             },
         }
     }

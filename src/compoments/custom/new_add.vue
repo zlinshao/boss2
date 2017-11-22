@@ -95,7 +95,6 @@
                                             &nbsp;<span v-show="phone_status" style="color: #E4393C">手机格号式不正确</span>
                                         </div>
                                     </div>
-
                                 </div>
                                 <!--进度-->
                                 <div class="form-group">
@@ -342,7 +341,7 @@
                     cus_idPhotos: {},                   //修改图片ID
                     cus_idPhoto: [],                    //证件照片
                 },
-                complete_ok: 'ok',                        //图片上传完成
+                complete_ok: 'ok',                      //图片上传完成
 
                 cus_marriage: '1',                  //婚姻状况
                 cus_qq: '',                         //qq号
