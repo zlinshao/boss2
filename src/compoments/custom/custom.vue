@@ -63,7 +63,6 @@
                                 <input type="checkbox" class="pull-left">三天内未成交
                             </label>
                         </div>
-
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
                              style="padding: 0;margin-right: 20px;">
                             <div class="input-group">
@@ -394,7 +393,7 @@
                 }
                 this.return_sea.beforePage = val;
 //                字典
-                this.$http.post('core/customer/dict').then((res) => {
+                this.$http.get('core/customer/dict').then((res) => {
                     this.select_list = res.data;
                     if (this.sea_status === 1) {
                         this.sea_status = 2;
@@ -437,7 +436,7 @@
                     this.return_sea.sea_info = '';
                 }
                 this.return_sea.beforePage = val;
-                this.$http.get('core/customer/customerList/page/' + val, {
+                this.$http.post('core/customer/customerList/page/' + val, {
                     customer_status: this.return_sea.sea_status,
                     customer_will: this.return_sea.sea_intention,
                     identity: this.return_sea.sea_id,
