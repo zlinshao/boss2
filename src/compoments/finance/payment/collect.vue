@@ -263,7 +263,7 @@
                             <th class="text-center width120" :class="{red: !recycle_bin}">应收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">实收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
-                            <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
+                            <th class="text-center width120" :class="{red: !recycle_bin}">补齐时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">状态</th>
                             <th class="text-center" :class="{red: !recycle_bin}">备注</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
@@ -321,7 +321,22 @@
                             </td>
                             <td>{{item.amount_received}}</td>
                             <td>{{item.balance}}</td>
-                            <td>{{item.complete_date}}</td>
+                            <td>
+                                 <span v-if="item.status == 3 || item.status == 4">
+                                    {{item.complete_date}}
+                                </span>
+                                <span @click="date_show(1,item.complete_date,item.id)"
+                                      v-if="dateStatus != item.id && (item.status == 1 || item.status == 2)"
+                                      style="cursor: pointer;">
+                                    {{item.complete_date}}
+                                </span>
+                                <span v-if="dateStatus == item.id">
+                                   <DatePicker :dateConfigure="polishingDate" :currentDate="[polishing]" :idName="'polishingDate'"
+                                               @sendDate="pay_date"></DatePicker>
+                                    <a class="btn btn-default btn-sm" @click='date_show(2)'>取消</a>
+                                    <a class="btn btn-success btn-sm" @click="date_save(item.id)">保存</a>
+                                </span>
+                            </td>
                             <td>
                                 <label :class="{'label':true,'status':true,'yellow':item.status==1,'red':item.status==2,'green':item.status==3,'jingdong':item.status==4}">
                                     {{dict.account_should_status[item.status]}}
@@ -638,6 +653,14 @@
                 ],
                 todayMature: [],
                 todayMatureCount: '',
+                polishingDate: [
+                    {
+                        range: false,
+                        needHour: false,
+                    }
+                ],
+                polishing: '',              //修改日期
+                dateStatus: '',             //修改日期状态
             }
         },
         updated (){
@@ -781,6 +804,36 @@
                         this.errorMsg(res.data.msg);
                     }
                 })
+            },
+//            编辑补齐时间
+            date_show (val, m, id){
+                if (val === 1) {
+                    this.polishing = m;
+                    this.dateStatus = id;
+                } else if (val === 2) {
+                    this.polishing = '';
+                    this.dateStatus = '';
+                }
+            },
+//            编辑补齐时间
+            date_save (id){
+                this.$http.post('account/receivable/scheduler_c/' + id, {
+//                this.$http.post('account/receivable/scheduler/' + id, {
+                    pay_date: this.polishing
+                }).then((res) => {
+                    if (res.data.code === '18510') {
+                        this.search(this.beforePage);
+                        this.polishing = '';
+                        this.dateStatus = '';
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+//            补齐时间
+            pay_date (val){
+                this.polishing = val;
             },
 //            清空
             clear_info (){
