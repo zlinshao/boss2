@@ -36,6 +36,7 @@
         watch: {
             current(val){
                 this.Superior_name = '';
+//                this.curSuperior_id = 0;
                 if (val !== '') {
                     this.Superior_name = this.dict.account_subject[val];
                 }
@@ -93,6 +94,9 @@
                 this.showChooseSubject = false;
                 this.subjectData = [];
                 this.$emit('choose', this.curSuperior_id);
+//                if (this.curSuperior_id !== 0) {
+//                    this.$emit('choose', this.curSuperior_id);
+//                }
             },
             reset(){
 //                this.curSuperior_id = 0;

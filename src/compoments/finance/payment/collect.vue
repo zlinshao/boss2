@@ -331,7 +331,8 @@
                                     {{item.complete_date}}
                                 </span>
                                 <span v-if="dateStatus == item.id">
-                                   <DatePicker :dateConfigure="polishingDate" :currentDate="[polishing]" :idName="'polishingDate'"
+                                   <DatePicker :dateConfigure="polishingDate" :currentDate="[polishing]"
+                                               :idName="'polishingDate'"
                                                @sendDate="pay_date"></DatePicker>
                                     <a class="btn btn-default btn-sm" @click='date_show(2)'>取消</a>
                                     <a class="btn btn-success btn-sm" @click="date_save(item.id)">保存</a>
@@ -793,17 +794,21 @@
             },
 //            保存金额编辑
             able_save (id){
-                this.$http.post('account/receivable/edit/' + id, {
-                    amount: this.amount
-                }).then((res) => {
-                    if (res.data.code === '18510') {
-                        this.search(this.beforePage);
-                        this.amount = '';
-                        this.successMsg(res.data.msg);
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                })
+                if (this.amount !== '') {
+                    this.$http.post('account/receivable/edit/' + id, {
+                        amount: this.amount
+                    }).then((res) => {
+                        if (res.data.code === '18510') {
+                            this.search(this.beforePage);
+                            this.amount = '';
+                            this.successMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                } else {
+                    this.errorMsg('请填写正确的金额');
+                }
             },
 //            编辑补齐时间
             date_show (val, m, id){
@@ -817,19 +822,23 @@
             },
 //            编辑补齐时间
             date_save (id){
-                this.$http.post('account/receivable/scheduler_c/' + id, {
+                if (this.polishing !== '') {
+                    this.$http.post('account/receivable/scheduler_c/' + id, {
 //                this.$http.post('account/receivable/scheduler/' + id, {
-                    pay_date: this.polishing
-                }).then((res) => {
-                    if (res.data.code === '18510') {
-                        this.search(this.beforePage);
-                        this.polishing = '';
-                        this.dateStatus = '';
-                        this.successMsg(res.data.msg);
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                })
+                        pay_date: this.polishing
+                    }).then((res) => {
+                        if (res.data.code === '18510') {
+                            this.search(this.beforePage);
+                            this.polishing = '';
+                            this.dateStatus = '';
+                            this.successMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                } else {
+                    this.errorMsg('请选择时间');
+                }
             },
 //            补齐时间
             pay_date (val){
