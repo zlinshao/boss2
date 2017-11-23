@@ -285,11 +285,11 @@
 
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td style="cursor: pointer;" @click="look_detail(item.id)">
+                            <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
-                                <span style="line-height: 9px;" v-if="item.identity == 1"
+                                <span style="line-height: 9px;" v-if="item.identity == 1" @click="look_detail(item.id)"
                                       class="btn btn-danger btn-xs">F</span>
-                                <span style="line-height: 9px;" v-if="item.identity == 2"
+                                <span style="line-height: 9px;" v-if="item.identity == 2" @click="look_detail(item.id)"
                                       class="btn btn-danger btn-xs">Z</span>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
@@ -491,8 +491,7 @@
                     </div>
                     <div class="modal-body">
                         <h5 v-for="(key,index) in rollbacks">
-                            <label
-                                    :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
+                            <label :class="{'label_check':true,'c_on':rollback_id.indexOf(index) > -1,
                                     'c_off':rollback_id.indexOf(index) == -1}"
                                     @click.prevent="change_index($event,index)">
                                 <input type="checkbox" :checked="rollback_id.indexOf(index) > -1"
