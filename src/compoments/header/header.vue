@@ -320,17 +320,17 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
                     <!--<li class="sub-menu"-->
-                        <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
-                        <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-user"></i>-->
-                            <!--<span>客户管理(新)</span>-->
-                        <!--</a>-->
-                        <!--<ul class="sub">-->
-                            <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
-                                <!--<router-link to='/client'>客户</router-link>-->
-                            <!--</li>-->
+                    <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
+                    <!--<a href="javascript:;">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--<span>客户管理(新)</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                    <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
+                    <!--<router-link to='/client'>客户</router-link>-->
+                    <!--</li>-->
 
-                        <!--</ul>-->
+                    <!--</ul>-->
                     <!--</li>-->
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
@@ -423,7 +423,7 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
                     <li class="sub-menu"
-                        v-show="simulate.indexOf('revenue/index') > -1||simulate.indexOf('Revenue/Customer') > -1||isSuper">
+                        v-show="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -437,7 +437,7 @@
                             <!--</router-link>-->
                             <!--</li>-->
                             <li class="sub-menu"
-                                v-show="simulate.indexOf('Revenue/Customer') > -1 && simulate.indexOf('Revenue/Customer') > -1||isSuper">
+                                v-show="simulate.indexOf('Revenue/Customer') > -1||isSuper">
                                 <a href="javascript:;">
                                     <span>客户管理</span>
                                 </a>
@@ -456,28 +456,28 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Account/manage') > -1||isSuper">
                                 <router-link to="/account">
                                     <span>账户管理</span>
                                 </router-link>
                             </li>
 
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Account/subject') > -1||isSuper">
                                 <router-link to="/subject">
                                     <span>科目管理</span>
                                 </router-link>
                             </li>
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Account/payable') > -1||isSuper">
                                 <router-link to="/payPayment">
                                     <span>应付款项</span>
                                 </router-link>
                             </li>
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Account/receivable') > -1||isSuper">
                                 <router-link to="/collectPayment">
                                     <span>应收款项</span>
                                 </router-link>
                             </li>
-                            <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li class="sub-menu" v-show="simulate.indexOf('Account/due') > -1||isSuper">
                                 <a href="javascript:;">
                                     <span>租期将近</span>
                                 </a>
@@ -490,10 +490,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Revenue/account_xable') > -1||isSuper">
                                 <router-link to="/payCllentAll">应收/应付总汇</router-link>
                             </li>
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Account/running') > -1||isSuper">
                                 <router-link to="/incomeFlow">
                                     <span>收支流水</span>
                                 </router-link>
@@ -503,12 +503,12 @@
                             <!--<span>转账操作记录</span>-->
                             <!--</router-link>-->
                             <!--</li>-->
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Account/pending') > -1||isSuper">
                                 <router-link to="/pendingItem">
                                     <span>待处理项</span>
                                 </router-link>
                             </li>
-                            <li v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                            <li v-show="simulate.indexOf('Customer/candidate') > -1||isSuper">
                                 <router-link to="/organization">
                                     <span>业绩生成</span>
                                 </router-link>
@@ -575,18 +575,19 @@
                     <!--</ul>-->
                     <!--</li>-->
 
-                    <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('Department/next') > -1||simulate.indexOf('Salary/view') > -1||isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-bar-chart-o"></i>
                             <span>业绩管理</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li v-if="simulate.indexOf('Salary/view') > -1||isSuper">
                                 <router-link to="/personal">
                                     <span>个人工资</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('Department/next') > -1||isSuper">
                                 <router-link to="/periodicFor">
                                     <span>周期表</span>
                                 </router-link>
@@ -840,7 +841,8 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu" v-show="simulate.indexOf('Approvals/approval_list')>-1||simulate.indexOf('Record/listRepair')>-1|isSuper">
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('Approvals/approval_list')>-1||simulate.indexOf('Record/listRepair')>-1|isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-briefcase"></i>
                             <span>客服中心</span>
