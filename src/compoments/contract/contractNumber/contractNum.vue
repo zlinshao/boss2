@@ -619,6 +619,9 @@
                         if (res.data.code === '30010') {
                             this.search(this.beforePage);
                             this.pitch = [];
+                            this.successMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
                         }
                     })
                 }
@@ -671,20 +674,12 @@
                 }).then((res) => {
                     console.log(res.data);
                     if (res.data.code == 30010) {
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                         this.confirmMsg.request_time = '';
                         this.pitch = [];
                         this.contract_list(1);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -754,21 +749,13 @@
                 }).then((res) => {
 //                    console.log(res.data);
                     if (res.data.code == 30099) {
-                        // success
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                         this.closeAddRemark();
                         this.contract_list(this.beforePage);
                         this.operId = '';
                         this.pitch = []
                     } else {
-                        // fail
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -873,24 +860,17 @@
                 if (res.code == 30070) {
                     // success
                     if (num == 1) {
-                        this.payCtrlSf = res.data.sf_contract_number
-                        this.payCtrlZf = res.data.zf_contract_number
+                        this.payCtrlSf = res.data.sf_contract_number;
+                        this.payCtrlZf = res.data.zf_contract_number;
 //                        this.showPayFlagModal()
                         $('#payFlag').modal('show');
                     } else {
-                        this.info.success = res.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.msg);
                         $('#payFlag').modal('hide');
                         this.pitch = []
                     }
                 } else {
-                    // fail
-                    this.info.error = res.msg;
-                    //显示失败弹窗 ***
-                    this.info.state_error = true;
+                    this.errorMsg(res.msg);
                 }
             },
             surePayControl(){
@@ -924,7 +904,19 @@
                 })
 //                $('#payFlag').modal('hide');
 //                this.pitch = []
-            }
+            },
+            successMsg(msg){
+                //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){
+                //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>
