@@ -95,7 +95,7 @@
                                 <a @click="payControl('取消录入')">取消录入</a>
                             </h5>
                         </li>
-                        <li v-if="params.type == 1">
+                        <li v-if="params.type == 1&&(simulate.indexOf('ContractNumberRecord/contractTransition')>-1||isSuper)">
                             <h5>
                                 <a @click='distribution'><i class="fa fa-sitemap"></i>&nbsp;分配</a>
                             </h5>
