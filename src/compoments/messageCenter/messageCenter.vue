@@ -59,7 +59,7 @@
                         </ul>
                     </aside>
                     <aside class="lg-side">
-                        <div class="inbox-head" style="padding: 18px;">
+                        <div class="inbox-head">
                             <h3 style="font-size: 20px;padding-top: 10px;margin-bottom: 12px;">
                                 <i :class="[fa,font]"></i>&nbsp;&nbsp;{{message}}
                             </h3>
@@ -84,7 +84,7 @@
                             </form>
                             <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper"
                                  class="pull-right col-xs-12 col-md-4 col-lg-2"
-                                 style="margin-top: 4px;">
+                                 style="margin-top: 4px;padding: 0;margin-left: 10px">
                                 <div class="form-group pull-right" style="margin-bottom: 0;">
                                     <input title="请点击选择" type="text" class="form-control" readonly
                                            style="margin-bottom: 0;"
@@ -93,11 +93,14 @@
                             </div>
                             <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper"
                                  class="pull-right col-xs-12 col-md-4"
-                                 style="margin-top: 4px;">
-                                <div class="form-group">
+                                 style="margin-top: 4px;padding: 0;">
+                                <div class="form-group pull-right">
                                     <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                                 @sendDate="getDate"></DatePicker>
                                 </div>
+                            </div>
+                            <div class="pull-right balance" v-if="isPhone" style="margin-top: 15px;">
+                                预计剩余&nbsp;(&nbsp;{{balance}}&nbsp;)&nbsp;条
                             </div>
                         </div>
                         <div class="inbox-body panel table table-responsive roll">
@@ -515,6 +518,7 @@
                 New2: false,                //部门发件箱暂无数据
                 isPhone: false,             //短信提醒
                 ShowPhone: false,           //短信提醒暂无数据
+                balance: '',                //剩余短息条数
                 configure: [],              //人资
                 time_status: true,
                 params: {
@@ -539,34 +543,7 @@
             }
         },
         mounted (){
-            let sys = this.simulate.indexOf('System/index') > -1 || this.isSuper;                       // 系统公告
-            let approval = this.simulate.indexOf('Approval/index') > -1 || this.isSuper;                // 审批
-            let remind = this.simulate.indexOf('Remind/index') > -1 || this.isSuper;                    // 待办提醒
-            let boss = this.simulate.indexOf('Secretary/index') > -1 || this.isSuper;                   // boss小秘书
-            let self = this.simulate.indexOf('Msessage/self_message') > -1 || this.isSuper;             // 个人发件箱
-            let depart = this.simulate.indexOf('Message/department_message') > -1 || this.isSuper;      // 部门发件箱
-            let fav = this.simulate.indexOf('Favourite/index') > -1 || this.isSuper;                    // 收藏
-
-            if (sys) {
-                this.System(1);
-            } else if (approval) {
-                this.Examine(1);
-            } else if (remind) {
-                this.Substitute(1);
-            } else if (boss) {
-                this.Secretary(1);
-            } else if (self) {
-                this.new1(1);
-            } else if (depart) {
-                this.new2(1);
-            } else if (fav) {
-                this.Message(1);
-            } else {
-                // 没有查看收藏权限
-                this.isMessage = false;
-                this.message = '';
-                this.font = '';
-            }
+            this.power_info(this.simulate);
         },
         computed: {
             act () {
@@ -574,6 +551,9 @@
             }
         },
         watch: {
+            simulate (val){
+                this.power_info(val);
+            },
             'params.start_time': {
                 deep: true,
                 handler(val, oldVal){
@@ -605,6 +585,35 @@
             }
         },
         methods: {
+            power_info (val){
+                let sys = val.indexOf('System/index') > -1 || this.isSuper;                       // 系统公告
+                let approval = val.indexOf('Approval/index') > -1 || this.isSuper;                // 审批
+                let remind = val.indexOf('Remind/index') > -1 || this.isSuper;                    // 待办提醒
+                let boss = val.indexOf('Secretary/index') > -1 || this.isSuper;                   // boss小秘书
+                let self = val.indexOf('Msessage/self_message') > -1 || this.isSuper;             // 个人发件箱
+                let depart = val.indexOf('Message/department_message') > -1 || this.isSuper;      // 部门发件箱
+                let fav = val.indexOf('Favourite/index') > -1 || this.isSuper;                    // 收藏
+                if (sys) {
+                    this.System(1);
+                } else if (approval) {
+                    this.Examine(1);
+                } else if (remind) {
+                    this.Substitute(1);
+                } else if (boss) {
+                    this.Secretary(1);
+                } else if (self) {
+                    this.new1(1);
+                } else if (depart) {
+                    this.new2(1);
+                } else if (fav) {
+                    this.Message(1);
+                } else {
+                    // 没有查看收藏权限
+                    this.isMessage = false;
+                    this.message = '';
+                    this.font = '';
+                }
+            },
 //            详细内容
             more_content (val){
                 this.isActive = val;
@@ -923,6 +932,9 @@
                             this.phones = res.data.data.list;
                             this.paging = res.data.data.pages;
                             this.ShowPhone = false;
+                            this.$http.get('message/sms/getBalance').then((res) => {
+                                this.balance = res.data.data;
+                            })
                         } else {
                             this.ShowPhone = true;
                             this.phones = [];
@@ -984,6 +996,9 @@
 </script>
 
 <style scoped>
+    .inbox-head {
+        padding: 18px;
+    }
 
     @media screen and (max-width: 767px) {
         .table.table-responsive > .table > tbody > tr > td.phone {
