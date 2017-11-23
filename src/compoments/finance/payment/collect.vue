@@ -279,11 +279,11 @@
                                 </label>
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td style="cursor: pointer;" @click="look_detail(item.id)">
+                            <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
-                                <span style="line-height: 9px;" v-if="item.identity == 1"
+                                <span style="line-height: 9px;" v-if="item.identity == 1" @click="look_detail(item.id)"
                                       class="btn btn-danger btn-xs">F</span>
-                                <span style="line-height: 9px;" v-if="item.identity == 2"
+                                <span style="line-height: 9px;" v-if="item.identity == 2" @click="look_detail(item.id)"
                                       class="btn btn-danger btn-xs">Z</span><br>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
