@@ -75,7 +75,7 @@
                     <th class="text-center width130">房型</th>
                     <th class="text-center width80">参考租金</th>
                     <th class="text-center width100">房屋状态</th>
-                    <th class="text-center width120">房租状态</th>
+                    <!--<th class="text-center width120">房租状态</th>-->
                     <th class="text-center width80">开单人</th>
                     <th class="text-center width100">所属部门</th>
                 </tr>
@@ -113,12 +113,12 @@
                         <span v-if="item.status == 2">未出租</span>
                         <span v-if="item.status == 3">已结束</span>
                     </td>
-                    <td>
-                        <span v-for="(key,index) in item.liquidation" v-show="index < 1">
-                            {{key.amount_received}}/{{key.amount_receivable - key.amount_received}}<br>
-                            (第{{key.proof}}期/共{{item.liquidation.length}}期)
-                        </span>
-                    </td>
+                    <!--<td>-->
+                        <!--<span v-for="(key,index) in item.liquidation" v-show="index < 1">-->
+                            <!--{{key.amount_received}}/{{key.amount_receivable - key.amount_received}}<br>-->
+                            <!--(第{{key.proof}}期/共{{item.liquidation.length}}期)-->
+                        <!--</span>-->
+                    <!--</td>-->
                     <td>{{item.real_name}}</td>
                     <td>{{item.department}}</td>
                 </tr>
