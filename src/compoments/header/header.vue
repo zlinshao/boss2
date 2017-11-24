@@ -423,7 +423,7 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
                     <li class="sub-menu"
-                        v-show="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper">
+                        v-show="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||simulate.indexOf('Account/due') > -1||isSuper">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
