@@ -227,10 +227,10 @@
         <Loading v-if="isWaiting"></Loading>
         <!--增加日志/增加提醒/放入客户池-->
         <remindDaily @pitches="operateSuccess" :state="bool" :msg="pickedId"></remindDaily>
-        <ClientAdd></ClientAdd>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <AddRemind :remindId="pickedId" @cus_seccess="successRemind"></AddRemind>
         <ClientEdit :editId="pickedId[0]" :startEdit="startEdit" :allCountry="allCountry" @close="closeModal" @success="success"></ClientEdit>
+        <ClientAdd></ClientAdd>
     </div>
 </template>
 

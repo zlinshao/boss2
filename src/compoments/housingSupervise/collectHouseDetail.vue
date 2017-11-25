@@ -10,6 +10,11 @@
                     <i class="fa fa-angle-double-left"></i>返回上一步
                 </router-link>
             </li>
+            <li v-if="flag==='client'" class="pull-right">
+                <a @click="returnBack">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </a>
+            </li>
         </ol>
         <!--头部-->
         <section class="panel">
@@ -382,12 +387,14 @@
                 srcs: {},
                 params : [],
                 departmentName : '',
+                flag:'',
             }
         },
         mounted (){
             this.houseId = this.$route.query.CollectId;
             this.params = this.$route.query.params;
             this.departmentName = this.$route.query.departmentName;
+            this.flag = this.$route.query.flag;
             this.getDictionary();
         },
         methods: {
@@ -426,7 +433,10 @@
                 $('.rem_div').remove();
                 $('#houseEdit').modal({backdrop: 'static',});
                 $('#houseEdit').modal('show');
-            }
+            },
+            returnBack(){
+                window.history.back();  //返回上一页
+            },
         },
 
     }

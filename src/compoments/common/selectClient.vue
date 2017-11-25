@@ -37,7 +37,7 @@
                                     <td class="width50">尊称</td>
                                     <td class="width50">国籍</td>
                                     <td class="width80">手机号</td>
-                                    <td class="width130">房屋地址</td>
+                                    <td class="width130">证件号</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,13 +54,17 @@
                                         </span>
 
                                     </td>
-                                    <td>{{item.mobile}}</td>
-                                    <!--<td>-->
-                                        <!--{{item.id_num}}-->
-                                    <!--</td>-->
                                     <td>
-                                        <span v-if="item.amap_id !== null || undefined">{{item.amap_id.villageAddress}}</span>
+                                        <span v-for="mobile in item.mobile">
+                                            {{mobile}}
+                                        </span>
                                     </td>
+                                    <td>
+                                        {{item.id_num}}
+                                    </td>
+                                    <!--<td>-->
+                                        <!--<span v-if="item.amap_id !== null && item.amap_id !==undefined">{{item.amap_id.villageAddress}}</span>-->
+                                    <!--</td>-->
                                 </tr>
                                 <tr v-if="isShow">
                                     <td colspan="10" class="text-center text-muted">

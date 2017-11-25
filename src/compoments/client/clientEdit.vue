@@ -432,14 +432,14 @@
                 this.params.mobile.pop();
             },
             selectCountry(){
-                $('.countryMadal:eq(1)').modal('show')
+                $('.countryMadal:eq(0)').modal('show')
             },
             getCountry(val){
                 this.params.nationality = val.id;
                 this.nationality_name = val.zh_name;
             },
             chooseAddress(){
-                $('.addressModal:eq(1)').modal('show')
+                $('.addressModal:eq(0)').modal('show')
             },
             getData(val){
                 this.params.amap_id = val;

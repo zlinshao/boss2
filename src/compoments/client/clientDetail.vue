@@ -435,7 +435,8 @@
                                                 <tbody>
                                                     <tr v-for="item in houseRelated">
                                                         <td class="text-center">
-                                                            <router-link :to="{path:'/collectDetail',query:{CollectId: item.id}}">
+                                                            <router-link :to="{path:'/collectDetail',
+                                                            query:{CollectId: item.id,flag:'client'}}">
                                                                 {{item.detailed_address}}
                                                             </router-link>
                                                         </td>
@@ -476,6 +477,7 @@
         <Loading v-if="isWaiting"></Loading>
         <AddRemind :remindId="clientId" @cus_seccess="successRemind"></AddRemind>
         <ClientEdit :editId="clientId" :startEdit="startEdit" :allCountry="allCountry" @close="closeModal" @success="success"></ClientEdit>
+        <Status :state='info'></Status>
     </div>
 </template>
 
@@ -485,8 +487,10 @@
     import Loading from '../loading/Loading.vue'                //Loading
     import AddRemind from './addRemind.vue'
     import ClientEdit from './clientEdit.vue'
+    import Status from '../common/status.vue'
+
     export default{
-        components:{PicModal,Loading,ClientEdit,AddRemind},
+        components:{PicModal,Loading,ClientEdit,AddRemind,Status},
         props:['simulate','isSuper'],
         data(){
             return{
@@ -509,6 +513,16 @@
                 largePic: [],               //点击放大图片
                 isWaiting : true,
                 startEdit : false,
+                info: {
+                    //成功状态 ***
+                    state_success: false,
+                    //失败状态 ***
+                    state_error: false,
+                    //成功信息 ***
+                    success: '',
+                    //失败信息 ***
+                    error: ''
+                },
 
             }
         },
@@ -575,6 +589,9 @@
                     if(res.data.code === '70090'){
                         this.cancel();
                         this.getRecord();
+                    }else {
+                        this.info.error = res.data.msg;
+                        this.info.state_error = true;
                     }
                 })
             },
@@ -628,7 +645,7 @@
             },
             successRemind(){
                 this.pickedId = [];
-                this.getClientList();
+                this.getClientDetail();
             },
         }
     }
