@@ -162,12 +162,19 @@
                                 <span class="text-primary">证件号：</span>
                                 <span>{{clientDetail.id_num}}</span>
                             </div>
-                            <div>
+                            <div v-if="typeof clientDetail.albums !== 'number'">
                                 <span class="text-primary">证件照片：</span>
-                                <a v-for="(item,index) in clientDetail.album.id_pic"
+                                <a v-for="(item,index) in clientDetail.albums.id_pic"
                                    style="margin: 10px 10px 0 0;display: inline-block;"
-                                   @click="showLargePic(index,clientDetail.album.id_pic)">
+                                   @click="showLargePic(index,clientDetail.albums.id_pic)">
                                     <img :src="item.small" style="width: 40px">
+                                </a>
+                            </div>
+                            <div v-if="typeof clientDetail.albums === 'number'">
+                                <span class="text-primary">证件照片：</span>
+                                <a v-for="item in clientDetail.albums"
+                                   style="margin: 10px 10px 0 0;display: inline-block;">
+                                    <img :src="item.small" style="width: 80px;height:80px;border: 1px solid #aaaaaa">
                                 </a>
                             </div>
                         </div>
