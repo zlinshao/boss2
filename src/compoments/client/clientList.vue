@@ -105,18 +105,18 @@
                                 <a ><i class="fa fa-edit"></i>&nbsp;增加沟通日志</a>
                             </h5>
                         </li>
-                        <!--<li v-if="pickedId.length<2">-->
-                            <!--<h5 >-->
-                                <!--<a><i class="fa fa-edit"></i> 提醒</a>-->
-                            <!--</h5>-->
-                        <!--</li>-->
-                        <li>
+                        <li v-if="pickedId.length<2">
+                            <h5 @click="addRemind">
+                                <a><i class="fa fa-bell-o"></i> 提醒</a>
+                            </h5>
+                        </li>
+                        <li v-if="simulate.indexOf('Customer/putInPool')>-1||isSuper">
                             <h5 @click="add_state('pool')">
                                 <a><i class="fa fa-users"></i>&nbsp;放入客户池</a>
                             </h5>
                         </li>
-                        <li v-if="pickedId.length<2">
-                            <h5>
+                        <li v-if="pickedId.length<2 && simulate.indexOf('Customer/updateCustomer')>-1||isSuper">
+                            <h5 @click="editClient">
                                 <a><i class="fa fa-pencil"></i>&nbsp;编辑</a>
                             </h5>
                         </li>
@@ -128,8 +128,8 @@
                                 <a><i class="fa fa-times-circle-o"></i>&nbsp;取消置顶</a>
                             </h5>
                         </li>
-                        <li v-if="pickedId.length<2">
-                            <h5>
+                        <li v-if="pickedId.length<2&&simulate.indexOf('Customer/deleteCustomer')>-1||isSuper">
+                            <h5 @click="deleteVillage">
                                 <a><i class="fa fa-times-circle"></i>&nbsp;删除</a>
                             </h5>
                         </li>
@@ -158,7 +158,7 @@
                                 <th class="text-center width80">个人/中介</th>
                                 <th class="text-center width80">负责人</th>
                                 <th class="text-center width50">置顶</th>
-                                <th class="text-center width50">详情</th>
+                                <th class="text-center width50" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -176,7 +176,7 @@
                                 </td>
                                 <td class="text-center">{{item.name}}</td>
                                 <td class="text-center">{{dictionary.gender[item.gender]}}</td>
-                                <td class="text-center">{{item.mobile}}</td>
+                                <td class="text-center">{{item.mobiles}}</td>
                                 <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
                                 <td class="text-center">
                                     <a data-v-2f43a2b3="" href="#">
@@ -200,8 +200,8 @@
                                         <i class="fa fa-thumb-tack"></i>
                                     </a>
                                 </td>
-                                <td class="text-center">
-                                    <router-link :to="{path:'/details'}">
+                                <td class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">
+                                    <router-link :to="{path:'/clientDetail',query:{clientId : item.id,from:'client',searchInfo :params}}">
                                         详情
                                     </router-link>
                                 </td>
@@ -224,6 +224,9 @@
         <!--增加日志/增加提醒/放入客户池-->
         <remindDaily @pitches="operateSuccess" :state="bool" :msg="pickedId"></remindDaily>
         <ClientAdd></ClientAdd>
+        <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
+        <AddRemind :remindId="pickedId" @cus_seccess="successRemind"></AddRemind>
+        <ClientEdit :editId="pickedId[0]" :startEdit="startEdit" :allCountry="allCountry" @close="closeModal" @success="success"></ClientEdit>
     </div>
 </template>
 
@@ -233,9 +236,13 @@
     import Loading from '../loading/Loading.vue'                        //Loading
     import remindDaily from './remindDaily.vue'                         //修改客户
     import ClientAdd from './clientAdd.vue'
+    import Confirm from '../common/confirm.vue'
+    import AddRemind from './addRemind.vue'
+    import ClientEdit from './clientEdit.vue'
 
     export default{
-        components:{Page,Status,Loading,remindDaily,ClientAdd},
+        components:{Page,Status,Loading,remindDaily,ClientAdd,Confirm,ClientEdit,AddRemind},
+        props:['simulate','isSuper'],
         data(){
             return{
                 params: {
@@ -265,8 +272,11 @@
                 dictionary : [],
                 bool:'',    //  
                 pickedId :[],
-                isShow : true,
+                isShow : false,
                 top:'',
+                confirmMsg:[],
+                startEdit : false,
+                allCountry : [],
             }
         },
         created(){
@@ -274,8 +284,15 @@
         },
         methods:{
             getDictionary(){
+                this.$http.post('index/country/index').then((res) => {
+                    this.allCountry = res.data.data;
+                });
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary = res.data;
+                    //接收返回上一级参数
+                    if (this.$route.query.searchInfo !== undefined && this.$route.query.searchInfo.keywords !== undefined){
+                        this.params = this.$route.query.searchInfo;
+                    }
                     this.getClientList();
                 });
             },
@@ -368,6 +385,47 @@
             addClient(){
                 $('.rem_div').remove();
                 $('#clientAdd').modal('show');
+            },
+            deleteVillage(){
+                this.confirmMsg = {msg: '您确定删除吗'};
+                $('#confirm').modal('show');
+            },
+            //确定删除
+            getConfirm(){
+                this.$http.get('core/customer/deleteCustomer/id/'+this.pickedId[0]).then((res) => {
+                    if(res.data.code === '700105'){
+                        this.info.success = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_success = true;
+                        this.pickedId = [];
+                        this.search();
+                    }else {
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
+                    }
+                });
+            },
+            //编辑客户
+            editClient(){
+                this.startEdit = true;
+                $('.rem_div').remove();
+                $('#clientEdit').modal('show');
+            },
+            closeModal(){
+                this.startEdit = false;
+            },
+            success(){
+                this.pickedId = [];
+                this.getClientList();
+            },
+            //添加提醒
+            addRemind(){
+                $('#addRemind1').modal('show');
+            },
+            successRemind(){
+                this.pickedId = [];
+                this.getClientList();
             },
         }
     }

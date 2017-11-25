@@ -143,7 +143,9 @@
                             </td>
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
-                            <td class="text-center">{{list.mobile}}</td>
+                            <td class="text-center">
+                                <span v-for="item in list.mobile">{{item}}&nbsp;</span>
+                            </td>
                             <td class="text-center">{{select_list.customer_will[list.customer_will]}}</td>
                             <td class="text-center">
                                 <a data-v-2f43a2b3="" href="#">
@@ -163,7 +165,7 @@
                             <td class="text-center">{{list.belong}}</td>
                             <td class="text-center">{{list.staff_id}}</td>
                             <td class="text-center">
-                                <router-link :to="{path:'/details',query: {nameId: list.id, cus: 2, sear: return_sea}}">
+                                <router-link :to="{path:'/clientDetail',query: {clientId: list.id,from:'clientPool',searchInfo :return_sea}}">
                                     详情
                                 </router-link>
                             </td>
@@ -192,9 +194,9 @@
 
 <script>
     import Page from '../common/page.vue'
-//    import New_add from './new_add.vue'
+    //    import New_add from './new_add.vue'
     import Status from '../common/status.vue';                  //提示信息
-//    import remindDaily from './remindDaily.vue'
+    //    import remindDaily from './remindDaily.vue'
     import Distribution from '../common/distribution.vue'       //分配
     export default {
         components: {Status, Page, Distribution},
@@ -278,7 +280,10 @@
                     this.select_list = res.data;
                     if (this.sea_status === 1) {
                         this.sea_status = 2;
-                        this.return_sea = this.$route.query.sear;
+                        //接收返回上一级参数
+
+                        this.return_sea = this.$route.query.searchInfo;
+
                         this.search_pool(val);
                         this.wait = 2;
                     } else {
