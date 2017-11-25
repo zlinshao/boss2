@@ -202,9 +202,9 @@
                                 <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
                                 <td class="text-center">{{item.manager_name}}</td>
                                 <td class="text-center">
-                                    <a v-if="item.top != null">
+                                    <span v-if="item.top != null">
                                         <i class="fa fa-thumb-tack"></i>
-                                    </a>
+                                    </span>
                                 </td>
                                 <td class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">
                                     <router-link :to="{path:'/clientDetail',query:{clientId : item.id,from:'client',searchInfo :params}}">
