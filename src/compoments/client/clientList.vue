@@ -178,8 +178,10 @@
                                 <td class="text-center">{{dictionary.gender[item.gender]}}</td>
                                 <td class="text-center">
                                     {{item.mobiles}}
-                                    <a :href="'tel:'+item.mobiles">电话</a>
-                                    <a :href="'sms:'+item.mobiles">短信</a>
+                                    <span v-if="item.mobiles.indexOf('*')<0">
+                                        <a :href="'tel:'+item.mobiles">电话</a>
+                                        <a :href="'sms:'+item.mobiles">短信</a>
+                                    </span>
                                 </td>
                                 <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
                                 <td class="text-center">
@@ -230,7 +232,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <AddRemind :remindId="pickedId" @cus_seccess="successRemind"></AddRemind>
         <ClientEdit :editId="pickedId[0]" :startEdit="startEdit" :allCountry="allCountry" @close="closeModal" @success="success"></ClientEdit>
-        <ClientAdd></ClientAdd>
+        <ClientAdd @click="successAdd"></ClientAdd>
     </div>
 </template>
 
@@ -430,6 +432,9 @@
             successRemind(){
                 this.pickedId = [];
                 this.getClientList();
+            },
+            successAdd(){
+                this.search();
             },
         }
     }
