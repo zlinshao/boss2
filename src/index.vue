@@ -13,10 +13,10 @@
                          ||simulate.indexOf('Favourite/index')>-1||isSuper">
                     <div class="panel-body">
                         <a class="btn">快捷入口：</a>
-                        <router-link class="btn btn-link" to="/custom"
+                        <router-link class="btn btn-link" to="/client"
                                      v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">客户
                         </router-link>  <!--客户-->
-                        <router-link class="btn btn-link" to="/customerPool"
+                        <router-link class="btn btn-link" to="/clientPool"
                                      v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">客户池
                         </router-link>  <!--客户池-->
                         <router-link class="btn btn-link" to="/OkCollect"
