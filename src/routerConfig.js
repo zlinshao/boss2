@@ -23,9 +23,9 @@ import Drumstick from './compoments/achievement/salemanSalary/drumstick.vue'    
 import AFACollect from './compoments/achievement/agencyFeeAplicarion/AFACollect.vue'            // 收房中介费
 import AFARenting from './compoments/achievement/agencyFeeAplicarion/AFARenting.vue'            // 租房中介费
 
-// import Custom from "./compoments/custom/custom.vue";                                            //客户
-// import Details from "./compoments/custom/custom_more.vue";                                      //客户详情
-// import CustomerPool from "./compoments/custom/custom_pool.vue";                                 //客户池
+import Custom from "./compoments/custom/custom.vue";                                            //客户
+import Details from "./compoments/custom/custom_more.vue";                                      //客户详情
+import CustomerPool from "./compoments/custom/custom_pool.vue";                                 //客户池
 import LeadingOut from "./compoments/leadingOut/cus_leadingOut.vue";                            //客户导出
 import OkCollect from "./compoments/housingSupervise/collectHouse.vue";                         //已收房源
 import CollectDetail from "./compoments/housingSupervise/collectHouseDetail.vue";               //已收房源更多
@@ -251,16 +251,16 @@ export default[
         name: 'WARenting',
         component: WARenting
     },
-    // {
-    //     path: '/custom',                            //客户
-    //     name: 'custom',
-    //     component: Custom
-    // },
-    // {
-    //     path: '/customerPool',                      //客户池
-    //     name: 'customerPool',
-    //     component: CustomerPool
-    // },
+    {
+        path: '/custom',                            //客户
+        name: 'custom',
+        component: Custom
+    },
+    {
+        path: '/customerPool',                      //客户池
+        name: 'customerPool',
+        component: CustomerPool
+    },
     {
         path: '/OkCollect',                         //公司房源
         name: 'OkCollect',
@@ -276,11 +276,11 @@ export default[
         name: 'blackboard',
         component: Blackboard
     },
-    // {
-    //     path: '/details',                           //客户详情
-    //     name: 'details',
-    //     component: Details
-    // },
+    {
+        path: '/details',                           //客户详情
+        name: 'details',
+        component: Details
+    },
     {
         path: '/collectDetail',                     //公司房源详情
         name: 'collectDetail',
