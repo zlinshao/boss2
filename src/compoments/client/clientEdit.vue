@@ -2,7 +2,7 @@
     <div>
 
         <!--客户 新增/编辑-->
-        <div class="modal fade full-width-modal-right clientAdd" id="clientAdd" tabindex="-1" role="dialog"
+        <div class="modal fade full-width-modal-right clientEdit" id="clientEdit" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content-wrap">
@@ -10,7 +10,7 @@
                         <!--新增客户-->
                         <div class="modal-header">
                             <button type="button" class="close" @click="closeModal">×</button>
-                            <h4 class="modal-title">新增客户</h4>
+                            <h4 class="modal-title">编辑客户</h4>
                         </div>
 
                         <!--新增/编辑-->
@@ -23,7 +23,8 @@
                                                @click.prevent="selectIdentity(item,$event)"
                                                :class="{'c_on':params.identity.indexOf(item.value) > -1,
                                                'c_off':params.identity.indexOf(item.value) == -1}">
-                                            <input type="checkbox" :value="item.value" class="pull-left">
+                                            <input type="checkbox" :value="item.value" class="pull-left"
+                                                   :checked="params.identity.indexOf(item.value) > -1">
                                             {{item.name}}
                                         </label>
                                     </div>
@@ -59,7 +60,7 @@
                                     <div class="col-sm-8">
                                         <div v-for="key in amount">
                                             <input type="text" class="form-control" v-model="params.mobile[key-1]"
-                                                  @blur="reg_phone(params.mobile[key-1],key)"
+                                                   @blur="reg_phone(params.mobile[key-1],key)"
                                                    placeholder="请输入手机号" style="margin-bottom: 18px">
                                             <div style="margin-top: -18px" v-show="!phone_status[key]">
                                                 <span style="color: #E4393C;">手机格号式不正确</span>
@@ -144,7 +145,7 @@
                                     </div>
                                 </div>
                                 <!--中介-->
-                                <div v-if="params.person_medium === '2'">
+                                <div v-if="params.person_medium == '2'">
                                     <div class="form-group">
                                         <label class="col-lg-2 col-sm-2 control-label">中介名称</label>
                                         <div class="col-sm-10">
@@ -203,7 +204,7 @@
                                     <label class="col-sm-2 control-label">证件照片</label>
                                     <div class="col-sm-10">
                                         <up-load @photo="idNumber" @delete="idNumber_delete" @complete="complete"
-                                                 :result="'photos'" :idPhotos="photos"></up-load>
+                                                 :result="'idPhotos'" :idPhotos="idPhotos"></up-load>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -269,6 +270,7 @@
     import Status from '../common/status.vue'                           //提示信息
     export default{
         components:{Country,ChooseAddress,upLoad,Status},
+        props:['startEdit','editId','allCountry'],
         data(){
             return{
                 params:{
@@ -278,7 +280,7 @@
                     gender: '',                         //性别
                     follow: '',                         //进度
                     nationality: '',                    //国籍
-                    mobile: [],                         //手机号
+                    mobile: '',                         //手机号
                     customer_status: '',                //客户状态
                     customer_will: '',                  //客户意向
                     source: '',                         //客户来源
@@ -297,16 +299,9 @@
                     character: '',                      //性格
                     remarks: '',                        //备注
                 },
-                phone_status:{
-                    '1':true,
-                    '2':true,
-                    '3':true,
-                    '4':true,
-                    '5':true,
-                },
                 cus_idNumber_status :false,
                 dictionary:[],                          //字典
-                photos: {
+                idPhotos: {
                     cus_idPhotos: {},                   //修改图片ID
                     cus_idPhoto: [],                    //证件照片
                 },
@@ -317,6 +312,8 @@
                     {value : 3,name:'代理人'},
                 ],
                 nationality_name:'',                    //  国籍名字
+                clientInfo: [],                         //编辑详情
+                amount : 1,
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -327,18 +324,76 @@
                     //失败信息 ***
                     error: ''
                 },
-                amount : 1,
+                phone_status:{
+                    '1':true,
+                    '2':true,
+                    '3':true,
+                    '4':true,
+                    '5':true,
+                },
             }
         },
         created(){
             this.getDictionary();
         },
+        watch:{
+            startEdit(val){
+                if(val){
+                    this.getClientInfo();
+                }
+            }
+        },
         methods:{
             getDictionary(){
-                this.photos.cus_idPhotos = {};
+                this.idPhotos.cus_idPhotos = {};
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary = res.data;
                 });
+            },
+            getClientInfo(){
+                this.$http.get('core/customer/readCustomers/id/' + this.editId).then((res) => {
+                    if(res.data.code === '70020'){
+                        this.clientInfo = res.data.data;
+                        this.params.id = this.clientInfo.id;
+                        this.params.identity = this.clientInfo.identitys;                       //业主/租客
+                        console.log(typeof this.params.identity);
+                        this.params.name = this.clientInfo.name;                           //客户姓名
+                        this.params.gender = this.clientInfo.gender;                         //性别
+                        this.params.follow = this.clientInfo.follow;                         //进度
+                        this.params.nationality = this.clientInfo.nationality;                    //国籍
+                        this.allCountry.forEach((val) => {
+                            if(val.id === this.params.nationality){
+                                this.nationality_name = val.zh_name;
+                            }
+                        });
+                        if(this.clientInfo.amap_id!==null){
+                            this.params.amap_id = this.clientInfo.amap_id;
+                        }
+                        this.amount = this.clientInfo.mobile.length;
+                        this.params.mobile = this.clientInfo.mobile;                         //手机号
+                        this.params.customer_status = this.clientInfo.customer_status;                //客户状态
+                        this.params.customer_will = this.clientInfo.customer_will;                  //客户意向
+                        this.params.source = this.clientInfo.source;                          //客户来源
+                        this.params.person_medium = this.clientInfo.person_medium;                   //个人/中介
+                        this.params.medium_name = this.clientInfo.medium_name;                     //中介名称
+                        this.params.medium_mobile = this.clientInfo.medium_mobile;                   //中介电话
+                        this.params.id_type = this.clientInfo.id_type;                         //证件类型
+                        this.params.id_num = this.clientInfo.id_num;                          //证件号
+
+                        this.params.marriage_status = this.clientInfo.marriage_status;                 //婚姻状况
+                        this.params.qq = this.clientInfo.qq;                              //QQ
+                        this.params.e_mail = this.clientInfo.e_mail;                           //email
+                        this.params.character = this.clientInfo.character;                       //性格
+                        this.params.remarks = this.clientInfo.remarks;                         //备注
+
+
+                        this.idPhotos.cus_idPhotos = this.clientInfo.album.id_pic;                    //修改图片ID
+                        for (let key in this.clientInfo.album.id_pic) {
+                            this.idPhotos.cus_idPhoto.push(key);
+                            this.params.id_pic.push(key);
+                        }
+                    }
+                })
             },
             // 手机正则
             reg_phone (val,index){
@@ -360,15 +415,31 @@
                 }
                 
             },
+            add(){
+                if(this.params.mobile.length<this.amount){
+                    this.info.error = '请先填写已有输入框';
+                    this.info.state_error = true;
+                }else if(this.amount>4){
+                    this.info.error = '最多只可以录入五个号码';
+                    this.info.state_error = true;
+                }else {
+                    this.amount++;
+                    this.params.mobile.push('');
+                }
+            },
+            reduce(){
+                this.amount > 1? this.amount-- : this.amount;
+                this.params.mobile.pop();
+            },
             selectCountry(){
-                $('.countryMadal:eq(0)').modal('show')
+                $('.countryMadal:eq(1)').modal('show')
             },
             getCountry(val){
                 this.params.nationality = val.id;
                 this.nationality_name = val.zh_name;
             },
             chooseAddress(){
-                $('.addressModal:eq(0)').modal('show')
+                $('.addressModal:eq(1)').modal('show')
             },
             getData(val){
                 this.params.amap_id = val;
@@ -392,6 +463,7 @@
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
+                    console.log(this.params.identity)
                     this.params.identity.push(item.value);
                 } else {
                     this.params.identity = this.params.identity.filter(function (x) {
@@ -400,7 +472,7 @@
                 }
             },
             confirmAdd(){
-                this.$http.post('core/customer/saveCustomer',this.params).then((res) => {
+                this.$http.put('core/customer/updateCustomer',this.params).then((res) => {
                     if(res.data.code === '70010'){
                         this.closeModal();
                         this.$emit('success');
@@ -413,24 +485,9 @@
                     }
                 })
             },
-            add(){
-                if(this.params.mobile.length<this.amount){
-                    this.info.error = '请先填写已有输入框';
-                    this.info.state_error = true;
-                }else if(this.amount>4){
-                    this.info.error = '最多只可以录入五个号码';
-                    this.info.state_error = true;
-                }else {
-                    this.amount++;
-                    this.params.mobile.push('');
-                }
-            },
-            reduce(){
-                this.amount > 1? this.amount-- : this.amount;
-                this.params.mobile.pop();
-            },
             closeModal(){   //关闭模态框
-                $('#clientAdd').modal('hide');
+                this.$emit('close');
+                $('#clientEdit').modal('hide');
                 this.params = {
                     id: '',
                     identity: [],                       //业主/租客
@@ -438,7 +495,7 @@
                     gender: '',                         //性别
                     follow: '',                         //进度
                     nationality: '',                    //国籍
-                    mobile: [],                         //手机号
+                    mobile: '',                         //手机号
                     customer_status: '',                //客户状态
                     customer_will: '',                  //客户意向
                     source: '',                         //客户来源
@@ -457,7 +514,7 @@
                     character: '',                      //性格
                     remarks: '',                        //备注
                 };
-                this.photos = {
+                this.idPhotos = {
                     cus_idPhotos: {},                   //修改图片ID
                     cus_idPhoto: [],                    //证件照片
                 };
@@ -498,7 +555,6 @@
     input, select{
         margin-bottom: 0;
     }
-
     .flexBox i{
         line-height: 34px;
         font-size: 20px;

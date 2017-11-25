@@ -155,6 +155,8 @@ import VillageDetail from './compoments/villageManage/villageDetail.vue'        
 
 //重构客户模块
 import Client from './compoments/client/clientList.vue'
+import ClientDetail from './compoments/client/clientDetail.vue'
+import ClientPool from './compoments/client/clientPool.vue'
 export default[
     {
         path: '/',                  //重定向主页
@@ -796,9 +798,20 @@ export default[
         name: 'VillageDetail',
         component: VillageDetail
     },
-    {
+    {   //新版 客户管理
         path:'/client',
         name : 'Client',
         component:Client
+    },
+    {
+        path:'/clientDetail',
+        name:'ClientDetail',
+        component:ClientDetail
+    },
+    {
+        path:'/clientPool',
+        name:'ClientPool',
+        component:ClientPool
     }
+
 ]

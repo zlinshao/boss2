@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade countryMadal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -102,7 +102,7 @@
             conservation (){
                 if (JSON.stringify(this.nations) != "{}") {
                     this.$emit('nation', this.nations);
-                    $('#myModal').modal('hide');
+                    $('.countryMadal').modal('hide');
                     this.counts = '';
                     this.nations = {};
                     this.isIndex = '';

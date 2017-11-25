@@ -67,7 +67,7 @@
                                 <div class="row" >
                                     <label class="col-sm-2 control-label">小区别名</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" v-for="key in amount" v-model="params.village_alias[key-1]">
+                                        <input class="form-control" v-for="key in amount" v-model="params.village_alias[key-1]">
                                     </div>
                                     <div class="col-sm-2 flexBox">
                                         <i class="fa fa-plus-circle" @click="add()"></i>
