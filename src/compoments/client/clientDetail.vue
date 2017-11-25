@@ -198,7 +198,7 @@
         <!--内容区-->
         <div class="row">
             <!--合同信息-->
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <section class="panel roll" style="height: 500px;overflow: auto;">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
@@ -221,36 +221,36 @@
                             <div id="collect" class="tab-pane active">
                                 <div v-if="collect_rent.collect !== undefined">
                                     <div v-if="collect_rent.collect.length >0">
-                                        <table class="table contract_info" v-if="collect_rent.collect.length>0" v-for="item in collect_rent.collect">
-                                            <tbody>
-                                            <tr>
-                                                <td><a><i class="fa fa-bookmark"></i></a></td>
-                                                <td colspan="2" style="min-width: 200px;">
-                                                    {{item.start_date}}&nbsp;至&nbsp;{{item.end_date}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a><i class="fa fa-bookmark-o"></i></a>
-                                                </td>
-                                                <td>收房合同</td>
-                                                <td>
-                                                    <router-link class="text-primary" to="">
-                                                        {{item.contract_num}}
-                                                    </router-link>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>房屋地址</td>
-                                                <td>{{item.detailed_address}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>负责人</td>
-                                                <td>{{item.leader_name}}</td>
-                                            </tr>
-                                            <tr>
+                                        <table class="table contract_info">
+                                            <tbody  v-for="item in collect_rent.collect">
+                                                <tr>
+                                                    <td><a><i class="fa fa-bookmark"></i></a></td>
+                                                    <td colspan="2" style="min-width: 200px;">
+                                                        {{item.start_date}}&nbsp;至&nbsp;{{item.end_date}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <a><i class="fa fa-bookmark-o"></i></a>
+                                                    </td>
+                                                    <td>收房合同</td>
+                                                    <td>
+                                                        <router-link class="text-primary" to="">
+                                                            {{item.contract_num}}
+                                                        </router-link>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>房屋地址</td>
+                                                    <td>{{item.detailed_address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>负责人</td>
+                                                    <td>{{item.leader_name}}</td>
+                                                </tr>
+                                                <tr>
                                                 <td></td>
                                                 <td>合同时间</td>
                                                 <td class="paddingTop">
@@ -341,7 +341,7 @@
                 </section>
             </div>
             <!--沟通日志/房屋信息-->
-            <div class="col-md-9">
+            <div class="col-lg-9">
                 <section class="panel" style="height: 500px;overflow: auto;">
                     <header class="panel-heading tab-bg-dark-navy-blue ">
                         <ul class="nav nav-tabs">
@@ -733,8 +733,8 @@
     .dropdown-menu li{
         text-align: center;
     }
-    .table tbody > tr > td{
-        padding: 8px;
+    .table tbody  tr  td{
+        padding: 8px 0 8px 0;
         line-height: 12px;
     }
 </style>
