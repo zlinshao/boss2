@@ -81,8 +81,8 @@
                         <div class="col-md-7">
                             <div>
                                 <span class="text-primary">客户身份：</span>
-                                <span v-if="dictionary.customer_status!==undefined">
-                                    {{dictionary.customer_status[clientDetail.customer_status]}}
+                                <span>
+                                    {{clientDetail.identity}}
                                 </span>
                             </div>
                             <div>
