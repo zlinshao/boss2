@@ -176,7 +176,11 @@
                                 </td>
                                 <td class="text-center">{{item.name}}</td>
                                 <td class="text-center">{{dictionary.gender[item.gender]}}</td>
-                                <td class="text-center">{{item.mobiles}}</td>
+                                <td class="text-center">
+                                    {{item.mobiles}}
+                                    <a :href="'tel:'+item.mobiles">电话</a>
+                                    <a :href="'sms'+item.mobiles">短信</a>
+                                </td>
                                 <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
                                 <td class="text-center">
                                     <a data-v-2f43a2b3="" href="#">
