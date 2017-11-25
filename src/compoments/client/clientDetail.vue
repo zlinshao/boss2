@@ -269,11 +269,11 @@
                                         </table>
                                     </div>
                                     <div v-if="collect_rent.collect.length <1">
-                                        <h5>暂无租房合同信息...</h5>
+                                        <h5>暂无收房合同信息...</h5>
                                     </div>
                                 </div>
                                 <div v-if="collect_rent.collect===undefined">
-                                    <h5>暂无租房合同信息...</h5>
+                                    <h5>暂无收房合同信息...</h5>
                                 </div>
                             </div>
                             <!--租房合同-->
@@ -292,7 +292,7 @@
                                                 <td>
                                                     <a><i class="fa fa-bookmark-o"></i></a>
                                                 </td>
-                                                <td>收房合同</td>
+                                                <td>租房合同</td>
                                                 <td>
                                                     <router-link class="text-primary" to="">
                                                         {{item.contract_num}}
@@ -733,8 +733,11 @@
     .dropdown-menu li{
         text-align: center;
     }
+    .table tbody  tr{
+        padding-right: 20px ;
+    }
     .table tbody  tr  td{
-        padding: 8px 0 8px 0;
+        padding: 8px 20px 8px 0;
         line-height: 12px;
     }
 </style>
