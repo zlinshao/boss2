@@ -26,13 +26,17 @@
                 <header>
                     <h4>
                         <i class="fa fa-user"></i>&nbsp;客户信息
+                        <span style="color: #e8403f;font-size: 14px" v-if="clientDetail.status === 1">
+                            部分内容您无权查看(无权修改)
+                        </span>
                         <!--编辑-->
                         <div class="btn-group pull-right">
                             <a data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-cog"></i>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li @click="editClient" v-show="simulate.indexOf('Customer/updateCustomer')>-1||isSuper">
+                                <li @click="editClient"
+                                    v-show="simulate.indexOf('Customer/updateCustomer')>-1">
                                     <a>编辑</a>
                                 </li>
                                 <!--<li @click="sharing">-->
@@ -162,7 +166,7 @@
                                 <span class="text-primary">证件号：</span>
                                 <span>{{clientDetail.id_num}}</span>
                             </div>
-                            <div v-if="typeof clientDetail.albums !== 'number'">
+                            <div v-if="clientDetail.status !== 1">
                                 <span class="text-primary">证件照片：</span>
                                 <a v-for="(item,index) in clientDetail.albums.id_pic"
                                    style="margin: 10px 10px 0 0;display: inline-block;"
@@ -170,11 +174,11 @@
                                     <img :src="item.small" style="width: 40px">
                                 </a>
                             </div>
-                            <div v-if="typeof clientDetail.albums === 'number'">
+                            <div v-if="clientDetail.status === 1">
                                 <span class="text-primary">证件照片：</span>
                                 <a v-for="item in clientDetail.albums"
                                    style="margin: 10px 10px 0 0;display: inline-block;">
-                                    <img :src="item.small" style="width: 80px;height:80px;border: 1px solid #aaaaaa">
+                                    <img src="../../assets/img/id_pic.jpg" style="width: 40px;height:40px">
                                 </a>
                             </div>
                         </div>
