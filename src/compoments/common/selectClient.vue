@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <select class="form-control" v-model="media_person">
-                                    <option value="">客户名称</option>
+                                    <option value="0">客户名称</option>
                                     <option :value="key" v-model="clientName" v-for="(value,key) in person_medium">{{value}}</option>
                                 </select>
                             </div>
@@ -55,9 +55,7 @@
 
                                     </td>
                                     <td>
-                                        <span v-for="mobile in item.mobile">
-                                            {{mobile}}
-                                        </span>
+                                        {{item.mobiles}}
                                     </td>
                                     <td>
                                         {{item.id_num}}

@@ -179,7 +179,7 @@
                                 <td class="text-center">
                                     {{item.mobiles}}
                                     <a :href="'tel:'+item.mobiles">电话</a>
-                                    <a :href="'sms'+item.mobiles">短信</a>
+                                    <a :href="'sms:'+item.mobiles">短信</a>
                                 </td>
                                 <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
                                 <td class="text-center">
