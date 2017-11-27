@@ -512,7 +512,7 @@
 
                 cus_name: '',                           //客户
                 cus_phone: '',                          //客户联系方式
-                phone_status: false,                       //手机号验证
+                phone_status: false,                    //手机号验证
 
                 house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
@@ -620,7 +620,8 @@
         mounted (){
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.remindData();
-                this.dict = res.data
+                this.dict = res.data;
+                this.subject_id.rental = 7;
             });
             this.pay_type.push(this.one_type);
         },
@@ -857,7 +858,7 @@
                 this.manage_fee = '';                       //管理费
                 this.net_fee = '';                          //网络费
 
-                this.subject_id.rental = '';                //房租款项
+                this.subject_id.rental = 7;                //房租款项
 //                this.rental_status = true;                  //房租款项
 //                this.subject_id.deposit = '';               //科目款项
 //                this.deposit_status = true;                 //科目款项

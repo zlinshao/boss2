@@ -68,7 +68,10 @@
                             </h5>
                         </li>
                         <li v-show="pitch.length == 1">
-                            <h5 @click="remark_show('', 1)">
+                            <!--<h5 @click="remark_show('', 1)">-->
+                            <!--<a><i class="fa fa-book"></i>&nbsp;新增备注</a>-->
+                            <!--</h5>-->
+                            <h5 @click="look_tag('', 1)">
                                 <a><i class="fa fa-book"></i>&nbsp;新增备注</a>
                             </h5>
                         </li>
@@ -133,6 +136,91 @@
         </div>
 
         <!--增加/查看 备注-->
+        <!--<div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
+        <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+
+        <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+        <!--<h4 class="modal-title">{{address_remark}}</h4>-->
+        <!--</div>-->
+
+        <!--<div class="modal-body roll" style="max-height: 500px;overflow: auto;">-->
+        <!--<div class="row has-js">-->
+        <!--<div class="col-lg-12">-->
+        <!--<section class="panel table table-responsive roll" style="margin-bottom: 0;">-->
+        <!--<table class="table table-advance table-hover">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th class="text-center width100">备注时间</th>-->
+        <!--<th class="text-center">备注内容</th>-->
+        <!--<th class="text-center width80">备注人</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr>-->
+        <!--<td colspan="3" v-if="remarks_status == 1">-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-lg-12">-->
+        <!--<textarea class="form-control" v-model="addRemark"></textarea>-->
+        <!--</div>-->
+        <!--<div class="col-lg-12" style="margin-top: 10px;">-->
+        <!--<button class="btn btn-primary btn-sm pull-right"-->
+        <!--style="margin-left: 8px;"-->
+        <!--v-if="remarks_status == 1" @click="addRem">确定-->
+        <!--</button>-->
+        <!--<button class="btn btn-default btn-sm pull-right"-->
+        <!--@click="remark_hide"-->
+        <!--v-if="remarks_status == 1">取消-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--<tr class="text-center" v-for="item in look_remark">-->
+        <!--&lt;!&ndash;v-show="remark_isActive != item.id" @click="revise_remark(item.id, item.content)"&ndash;&gt;-->
+        <!--<td>{{item.create_time}}</td>-->
+        <!--<td>{{item.content}}</td>-->
+        <!--<td>{{item.name}}</td>-->
+        <!--&lt;!&ndash;<td v-show="remark_isActive == item.id">&ndash;&gt;-->
+        <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
+        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+        <!--</tr>-->
+        <!--<tr v-show="look_remark.length == 0" class="text-center">-->
+        <!--<td colspan="3" style="font-size: 16px;">暂无备注...</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--</section>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash;<div class="modal-body" v-if="remarks_status == 1">&ndash;&gt;-->
+        <!--&lt;!&ndash;<form class="form-horizontal" role="form">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col-lg-12">&ndash;&gt;-->
+        <!--&lt;!&ndash;<textarea class="form-control" v-model="addRemark"></textarea>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</form>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<div class="modal-footer" v-if="remarks_status == 1">&ndash;&gt;-->
+        <!--&lt;!&ndash;<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="btn btn-primary" type="button" @click="addRem">确定</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-primary btn-sm pull-left" @click="remark_show"-->
+        <!--v-if="remarks_status == 2">新增备注-->
+        <!--</button>-->
+        <!--<button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
         <div class="modal fade " id="addRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -140,43 +228,32 @@
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" v-if="remarks_status == 1">新增备注</h4>
-                        <h4 class="modal-title" v-if="remarks_status == 2">查看备注</h4>
+                        <h4 class="modal-title">备注</h4>
                     </div>
 
-                    <div class="modal-body" v-if="remarks_status == 1">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group" style="margin-bottom: 16px;">
+                    <div class="modal-body" style="margin-bottom: 16px;">
+                        <form class="form-horizontal" role="form" v-if="remarks_status == 1">
+                            <div class="form-group">
                                 <div class="col-lg-12">
                                     <textarea class="form-control" v-model="addRemark"></textarea>
                                 </div>
                             </div>
                         </form>
+
+                        <div v-if="remarks_status == 2">
+                            {{addRemark}}
+                        </div>
                     </div>
 
-                    <div class="modal-body" v-if="remarks_status == 2">
-                        {{addRemark}}
-                    </div>
-
-                    <div class="modal-footer" v-if="remarks_status == 1">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-
-                        <!--房东备注-->
-                        <button v-if="status_top == 'collect'" class="btn btn-success"
-                                type="button" @click="addRem('account/receivable/tag/')">确定
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        <button class="btn btn-primary" v-if="remarks_status == 1" type="button" @click="addRem">确定
                         </button>
-
-                        <!--租客备注-->
-                        <button v-if="status_top == 'pay'" class="btn btn-success"
-                                type="button" @click="addRem('account/payable/tag/')">确定
-                        </button>
-                    </div>
-                    <div class="modal-footer" v-if="remarks_status == 2">
-                        <button data-dismiss="modal" class="btn btn-success" type="button">确定</button>
                     </div>
                 </div>
             </div>
         </div>
+
         <!--表格-->
         <div class="row has-js">
             <div class="col-lg-12">
@@ -192,8 +269,8 @@
                             <th class="text-center width100">实收金额</th>
                             <th class="text-center width100">剩余款项</th>
                             <th class="text-center width100">补齐时间</th>
-                            <th class="text-center phone" style="min-width: 360px;">详细信息</th>
                             <th class="text-center width80">状态</th>
+                            <th class="text-center width150">明细详情</th>
                             <th class="text-center width50">备注</th>
                             <th class="text-center width50">详情</th>
                         </tr>
@@ -209,15 +286,19 @@
                                            item.id,
                                            item.status,
                                            item.running_account_record,
-                                           'collect')">
+                                           'collect',
+                                           'account/receivable/tag/')">
                                     <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
                             </td>
                             <td>{{item.pay_date}}</td>
-                            <td>{{item.customer == null ? '' : item.customer.address}}
+                            <td>
+                                {{item.customer == null ? '' : item.customer.address}}
                                 <span style="line-height: 9px;" v-if="item.identity === 1"
+                                      @click="look_detail(item.id, 'pay')"
                                       class="btn btn-danger btn-xs">F</span>
                                 <span style="line-height: 9px;" v-if="item.identity === 2"
+                                      @click="look_detail(item.id, 'collect')"
                                       class="btn btn-danger btn-xs">Z</span><br>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
@@ -231,7 +312,6 @@
                             <td>{{item.amount_received}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
-                            <td>{{item.description}}</td>
                             <td>
                                 <label class="label" :class="{'yellow':item.status == 1,
                                 'red':item.status == 2,'green':item.status == 3,'redjd':item.status == 4}">
@@ -239,9 +319,19 @@
                                 </label>
                             </td>
                             <td>
-                                <span v-if="item.tag === ''"></span>
-                                <span v-if="item.tag !== ''" @click="remark_show(item.tag, 2)"
-                                      class="fa fa-book"></span>
+                                {{item.description}}
+                            </td>
+                            <!--<td @click="look_tag(item.tags, item.customer.address,item.id,'account/receivable/tag_v2/')"-->
+                            <!--style="cursor: pointer;">-->
+                            <!--<span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">-->
+                            <!--<span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>-->
+                            <!--{{key.content}}-->
+                            <!--</span>-->
+                            <!--</td>-->
+                            <td>
+                                <span v-if="item.tag != ''" @click="look_tag(item.tag,2)">
+                                    <i class="fa fa-book"></i>
+                                </span>
                             </td>
                             <td>
                                 <router-link
@@ -273,9 +363,9 @@
                             <th class="text-center width110">实付金额</th>
                             <th class="text-center width100">剩余款项</th>
                             <th class="text-center width100">补齐时间</th>
-                            <th class="text-center phone" style="min-width: 360px;">详细信息</th>
                             <th class="text-center width80">状态</th>
-                            <th class="text-center width80">备注</th>
+                            <th class="text-center width150">明细详情</th>
+                            <th class="text-center width50">备注</th>
                             <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
@@ -290,7 +380,8 @@
                                        item.id,
                                        item.status,
                                        item.running_account_record,
-                                       'pay')">
+                                       'pay',
+                                       'account/payable/tag/')">
                                     <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
                             </td>
@@ -298,8 +389,10 @@
                             <td>
                                 {{item.customer == null ? '' : item.customer.address}}
                                 <span v-if="item.identity === 1" class="btn btn-danger btn-xs"
+                                      @click="look_detail(item.id, 'pay')"
                                       style="line-height: 9px;">F</span>
                                 <span v-if="item.identity === 2" class="btn btn-danger btn-xs"
+                                      @click="look_detail(item.id, 'collect')"
                                       style="line-height: 9px;">Z</span><br>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
@@ -313,17 +406,24 @@
                             <td>{{item.amount_paid}}</td>
                             <td>{{item.balance}}</td>
                             <td>{{item.complete_date}}</td>
-                            <td>{{item.description}}</td>
                             <td>
                                 <label class="label" :class="{'yellow':item.status == 1,
                                 'red':item.status == 2,'green':item.status == 3,'redjd':item.status == 4}">
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
+                            <td>{{item.description}}</td>
+                            <!--<td @click="look_tag(item.tags, item.customer.address,item.id,'account/payable/tag_v2/')"-->
+                            <!--style="cursor: pointer;">-->
+                            <!--<span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">-->
+                            <!--<span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>-->
+                            <!--{{key.content}}-->
+                            <!--</span>-->
+                            <!--</td>-->
                             <td>
-                                <span v-if="item.tag === ''"></span>
-                                <span v-if="item.tag !== ''" @click="remark_show(item.tag, 2)"
-                                      class="fa fa-book"></span>
+                                <span v-if="item.tag != ''" @click="look_tag(item.tag,2)">
+                                    <i class="fa fa-book"></i>
+                                </span>
                             </td>
                             <td>
                                 <router-link
@@ -362,6 +462,9 @@
 
         <!--房屋地址搜索组件-->
         <SelectHouse @House="getHouse" :house_status="'1'"></SelectHouse>
+
+        <!--查看详情-->
+        <DetailInfo :msg="detail_info" :dict="dict" :detail="detail"></DetailInfo>
     </div>
 </template>
 
@@ -375,8 +478,20 @@
     import SelectHouse from '../../common/selectPayHouse.vue'
     import SelectSubject from '../../common/selectSubject.vue'  //科目搜索
     import Page from  '../../common/page.vue'
+    import DetailInfo from './detail_info.vue'
     export default{
-        components: {Status, Confirm, ShouldCollect, ShouldPay, STAFF, SelectHouse, SelectSubject, DatePicker, Page},
+        components: {
+            Status,
+            Confirm,
+            ShouldCollect,
+            ShouldPay,
+            STAFF,
+            SelectHouse,
+            SelectSubject,
+            DatePicker,
+            Page,
+            DetailInfo
+        },
         data(){
             return {
                 paging1: '',                    //应 收 总页数
@@ -387,8 +502,6 @@
                 pitch: [],                      //选中id
                 status: [],                     //选中状态
                 beforePage: 1,                  //当前页数
-                addRemark: '',                  //新增/查看 备注内容
-                remarks_status: '',             //备注状态
                 status_top: '',                 //头部收/付显示
                 collect_isShow: false,          //应 收 无数据
                 pay_isShow: false,              //应 付 无数据
@@ -396,6 +509,16 @@
                 details_info: [],               //应 付
                 rollback_id: [],                //回滚ID
                 rollbacks: {},                  //回滚
+                detail_info: [],                //详情信息
+                detail: '',                     //地址
+
+                look_remark: [],                //备注内容
+                address_remark: '',
+                remark_id: '',                  //备注id
+                remarks_status: '',             //新增/查看
+                addRemark: '',                  //新增备注
+                url_remark: '',                 //收租请求地址
+
                 confirmMsg: {
                     id: '',                     //删除
                     msg: '',
@@ -412,7 +535,7 @@
                 currentDate: [],                //日期组件参数
                 params: {
                     receivable_page: 1,         //应收分页
-                    payable_page: 1,           //应付分页
+                    payable_page: 1,            //应付分页
                     department_id: [],
                     staff_id: [],
                     status: '',
@@ -442,6 +565,96 @@
             }
         },
         methods: {
+//            查看详情
+            look_detail (val, del){
+                this.detail_info = [];
+                if (del === 'pay') {
+                    this.$http.get('account/payable/' + val).then((res) => {
+                        if (res.data.code === '18400') {
+                            this.detail_info.push(res.data.data);
+                            this.detail = del;
+                            $('#detail_info').modal({backdrop: 'static',});
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else if (del === 'collect') {
+                    this.$http.get('account/receivable/' + val).then((res) => {
+                        if (res.data.code === '18500') {
+                            this.detail_info.push(res.data.data);
+                            this.detail = del;
+                            $('#detail_info').modal({backdrop: 'static',});
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                }
+            },
+
+//            新增备注
+            remark_show (){
+                this.remarks_status = 1;
+                this.addRemark = '';
+            },
+//            取消备注
+//            remark_hide (){
+//                this.remarks_status = 2;
+//            },
+////            新增备注
+//            addRem (){
+//                if (this.addRemark !== '') {
+//                    this.$http.post(this.url_remark + this.remark_id, {
+//                        content: this.addRemark,
+//                    }).then((res) => {
+//                        if (res.data.code === '18510' || res.data.code === '18410') {
+//                            this.look_remark.unshift(res.data.data);
+//                            this.remark_hide();
+//                            this.successMsg(res.data.msg);
+//                        } else {
+//                            this.errorMsg(res.data.msg);
+//                        }
+//                    })
+//                } else {
+//                    this.errorMsg('备注内容不能为空');
+//                }
+//            },
+////            查看备注
+//            look_tag (val, addr, id, url){
+//                this.look_remark = val;
+//                this.address_remark = addr;
+//                this.url_remark = url;
+//                this.remark_id = id;
+//                this.remarks_status = 2;
+//                $('#addRemarks').modal({
+//                    backdrop: 'static',         //空白处模态框不消失
+//                });
+//            },
+//            查看备注
+            look_tag (rem, val){
+                this.remarks_status = val;
+                this.addRemark = rem;
+                $('#addRemarks').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+//            新增备注
+            addRem (){
+                if (this.addRemark !== '') {
+                    this.$http.post(this.url_remark + this.remark_id, {
+                        content: this.addRemark,
+                    }).then((res) => {
+                        if (res.data.code === '18510' || res.data.code === '18410') {
+                            this.search(this.beforePage);
+                            $('#addRemarks').modal('hide');
+                            this.successMsg(res.data.msg);
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                } else {
+                    this.errorMsg('备注内容不能为空');
+                }
+            },
 //            搜索
             search (){
                 this.params.receivable_page = 1;
@@ -489,12 +702,7 @@
                                 this.pay_isShow = true;
                             }
                         } else {
-                            // 失败
-                            this.info.error = res.data.msg;
-                            //显示失败弹窗 ***
-                            this.info.state_error = true;
-                            //一秒自动关闭失败信息弹窗 ***
-                            this.info.state_error = false;
+                            this.errorMsg(res.data.msg);
                         }
                     })
                 })
@@ -550,10 +758,13 @@
                 this.search(1);
             },
 //            input多选
-            changeIndex(ev, id, status, index, str){
+//            changeIndex(ev, id, status, index, str){
+            changeIndex(ev, id, status, index, str, url){
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.rollbacks = index;
+                this.remark_id = id;
+                this.url_remark = url;
                 this.pitch = [];
                 this.status = [];
                 this.status_top = str;
@@ -570,14 +781,6 @@
                         this.status.splice(index1, 1);
                     }
                 }
-            },
-//            新增备注
-            remark_show (val, num){
-                this.remarks_status = num;
-                this.addRemark = val;
-                $('#addRemarks').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
             },
 
 //            应收入账
@@ -600,29 +803,7 @@
                     });
                 });
             },
-//            新增备注
-            addRem (addr){
-                this.$http.post(addr + this.pitch, {
-                    content: this.addRemark,
-                }).then((res) => {
-                    if (res.data.code === '18510' || res.data.code === '18410') {
-                        this.pitch = [];
-                        $('#addRemarks').modal('hide');
-                        this.search(this.beforePage);
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                    }
-                })
-            },
+
 //            回滚显示
             Rollback_show(){
                 this.rollback_id = [];
@@ -652,17 +833,9 @@
                         $('#Rollback').modal('hide');
                         this.search(this.beforePage);
                         this.pitch = [];
-                        //成功信息 ***
-                        this.info.success = res.data.msg;
-                        //关闭失败弹窗 ***
-                        this.info.state_error = false;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
+                        this.successMsg(res.data.msg);
                     } else {
-                        //失败信息 ***
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
+                        this.errorMsg(res.data.msg);
                     }
                 })
             },
@@ -684,22 +857,22 @@
                 this.$http.post(this.confirmMsg.addr + this.pitch).then((res) => {
                     if (res.data.code === '18510' || res.data.code === '18410') {
                         this.pitch = [];
-                        // 成功
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_success = false;
+                        this.successMsg(res.data.msg);
                         this.search(this.beforePage);
                     } else {
-                        // 失败
-                        this.info.error = res.data.msg;
-                        //显示失败弹窗 ***
-                        this.info.state_error = true;
-                        //一秒自动关闭失败信息弹窗 ***
-                        this.info.state_error = false;
+                        this.errorMsg(res.data.msg);
                     }
                 })
+            },
+            successMsg(msg){    //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){      //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
             },
         }
     }
