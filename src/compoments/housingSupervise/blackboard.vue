@@ -131,7 +131,7 @@
                     </td>
                     <td>
                         <span v-if="item.collect_end_remain != null">
-                            {{item.collect_start_date}}(收)
+                            {{item.collect_end_date}}(收)
                             <span v-if="item.collect_end_remain != null && item.pay_date_remain != null">/</span>
                         </span>
                         <span v-if="item.pay_date_remain != null">
