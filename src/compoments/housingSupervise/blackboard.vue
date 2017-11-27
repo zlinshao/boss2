@@ -75,7 +75,9 @@
                     <th class="text-center width130">房型</th>
                     <th class="text-center width80">参考租金</th>
                     <th class="text-center width100">房屋状态</th>
-                    <th class="text-center width120">房租状态</th>
+                    <th class="text-center width120">房租状态<br><span style="color: #AAA">(已收/未收)</span></th>
+                    <th class="text-center width100">收租时间</th>
+                    <th class="text-center width120">即将交接日期</th>
                     <th class="text-center width80">开单人</th>
                     <th class="text-center width100">所属部门</th>
                 </tr>
@@ -114,9 +116,34 @@
                         <span v-if="item.status == 3">已结束</span>
                     </td>
                     <td>
-                        <span v-for="(key,index) in item.liquidation" v-show="index < 1">
-                            {{key.amount_received}}/{{key.amount_receivable - key.amount_received}}<br>
-                            (第{{key.proof}}期/共{{item.liquidation.length}}期)
+                        <span v-if="item.status == 1 && item.current_rank != undefined">
+                            {{item.liquidation[item.current_rank].amount_received}}/{{item.liquidation[item.current_rank].balance}}<br>
+                            (第{{item.liquidation[item.current_rank].proof}}期/共{{Object.keys(item.liquidation).length}}期)
+                        </span>
+                    </td>
+                    <td>
+                        <span v-if="item.status == 1 && item.current_rank != undefined">
+                            {{item.liquidation[item.current_rank].pay_date}}
+                        </span><br>
+                        <span v-if="item.pay_date_remain != null && item.status == 1">
+                            倒计时(&nbsp;{{item.pay_date_remain}}&nbsp;)天
+                        </span>
+                    </td>
+                    <td>
+                        <span v-if="item.collect_end_remain != null">
+                            {{item.collect_start_date}}(收)
+                            <span v-if="item.collect_end_remain != null && item.pay_date_remain != null">/</span>
+                        </span>
+                        <span v-if="item.pay_date_remain != null">
+                            {{item.rent_end_date}}(租)
+                            <span v-if="item.collect_end_remain != null && item.pay_date_remain != null">/</span>
+                        </span>
+                        <br>
+                        <span v-if="item.collect_end_remain != null">
+                            倒计时(&nbsp;{{item.collect_end_remain}}&nbsp;)天
+                        </span>
+                        <span v-if="item.pay_date_remain != null">
+                            倒计时(&nbsp;{{item.pay_date_remain}}&nbsp;)天
                         </span>
                     </td>
                     <td>{{item.real_name}}</td>

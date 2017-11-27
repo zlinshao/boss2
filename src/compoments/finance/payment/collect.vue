@@ -257,15 +257,17 @@
                                            :checked="pitch.length == 12">
                                 </label>
                             </th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">合同时间周期</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <th class="text-center width120" :class="{red: !recycle_bin}">收入科目</th>
                             <th class="text-center width120" :class="{red: !recycle_bin}">应收金额</th>
-                            <th class="text-center width100" :class="{red: !recycle_bin}">实收金额</th>
+                            <th class="text-center width110" :class="{red: !recycle_bin}">实收金额</th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
-                            <th class="text-center width120" :class="{red: !recycle_bin}">补齐时间</th>
-                            <th class="text-center width80" :class="{red: !recycle_bin}">状态</th>
-                            <th class="text-center" :class="{red: !recycle_bin}">备注</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
+                            <th class="text-center width50" :class="{red: !recycle_bin}">状态</th>
+                            <th class="text-center width150" :class="{red: !recycle_bin}">明细详情</th>
+                            <th class="text-center width150" :class="{red: !recycle_bin}">备注</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
                         </tr>
                         </thead>
@@ -278,12 +280,15 @@
                                     <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
                             </td>
+                            <td>{{item.info.months}}</td>
                             <td>{{item.pay_date}}</td>
                             <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
-                                <span style="line-height: 9px;" v-if="item.identity == 1" @click="look_detail(item.id)"
+                                <span style="line-height: 9px;" v-if="item.identity == 1"
+                                      @click="look_detail(item.id, 'pay')"
                                       class="btn btn-danger btn-xs">F</span>
-                                <span style="line-height: 9px;" v-if="item.identity == 2" @click="look_detail(item.id)"
+                                <span style="line-height: 9px;" v-if="item.identity == 2"
+                                      @click="look_detail(item.id, 'collect')"
                                       class="btn btn-danger btn-xs">Z</span><br>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
@@ -343,7 +348,8 @@
                                     {{dict.account_should_status[item.status]}}
                                 </label>
                             </td>
-                            <td class="more_info" @click="look_tag(item.tags, item.customer.address,item.id)"
+                            <td>{{item.description}}</td>
+                            <td @click="look_tag(item.tags, item.customer.address,item.id)"
                                 style="cursor: pointer;">
                                 <span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">
                                     <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
@@ -707,17 +713,29 @@
 
         methods: {
 //            查看详情
-            look_detail (val){
+            look_detail (val, del){
                 this.detail_info = [];
-                this.$http.get('account/receivable/' + val).then((res) => {
-                    if (res.data.code === '18500') {
-                        this.detail_info.push(res.data.data);
-                        this.detail = 'collect';
-                        $('#detail_info').modal({backdrop: 'static',});
-                    } else {
-                        this.errorMsg(res.data.msg);
-                    }
-                });
+                if (del === 'collect') {
+                    this.$http.get('account/receivable/' + val).then((res) => {
+                        if (res.data.code === '18500') {
+                            this.detail_info.push(res.data.data);
+                            this.detail = del;
+                            $('#detail_info').modal({backdrop: 'static',});
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else if (del === 'pay') {
+                    this.$http.get('account/payable/' + val).then((res) => {
+                        if (res.data.code === '18400') {
+                            this.detail_info.push(res.data.data);
+                            this.detail = del;
+                            $('#detail_info').modal({backdrop: 'static',});
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                }
             },
 //            导出
             leading_out (){

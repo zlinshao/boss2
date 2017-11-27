@@ -358,7 +358,9 @@
         mounted (){
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.remindData();
-                this.dict = res.data
+                this.dict = res.data;
+                this.subject_id.rental = 3;
+                this.subject_id.deposit = 2;
             });
             this.pay_type.push(this.one_type);
         },
@@ -506,9 +508,9 @@
                 this.firstRemittance = '';                  //第一次打款日期
                 this.second_pay_date = '';                  //第二次打款日期
                 this.remarks = '';                          //备注
-                this.subject_id.rental = '';                //房租款项
+                this.subject_id.rental = 3;                //房租款项
 //                this.rental_status = true;                  //房租款项
-                this.subject_id.deposit = '';               //科目款项
+                this.subject_id.deposit = 2;               //科目款项
 //                this.deposit_status = true;                   //科目款项
 
 //                收款方式

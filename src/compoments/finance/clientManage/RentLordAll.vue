@@ -73,6 +73,7 @@
                     <th class="text-center width100">生成时间</th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">客户姓名</th>
+                    <th class="text-center width100">手机号</th>
                     <th class="text-center width80">收房月数</th>
                     <th class="text-center width100">付款方式</th>
                     <th class="text-center width100">月单价</th>
@@ -85,7 +86,7 @@
                     <th class="text-center width50">详情</th>
                 </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody>
                 <tr class="text-center" v-for="item in LandlordList"
                     :class="{'selected': pitch.indexOf(item.id) > -1 && landRenter === 'landlord','freeze': item.freeze === 1}">
                     <td>
@@ -100,14 +101,15 @@
                         <span v-if="item.freeze === 1" @click="recover(item.id, 1)"
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
-                    <td class="text-center">{{item.create_time}}</td>
-                    <td class="text-center">
+                    <td>{{item.create_time}}</td>
+                    <td>
                         {{item.address}}&nbsp;
                         <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
                     </td>
-                    <td class="text-center">{{item.customer_name}}</td>
-                    <td class="text-center">{{item.months}}</td>
-                    <td class="text-center">
+                    <td>{{item.contact}}</td>
+                    <td>{{item.customer_name}}</td>
+                    <td>{{item.months}}</td>
+                    <td>
                         <span v-if="item.pay_types.length !== 0">
                             {{LandlordDict.pay_type[item.pay_types[0]]}}
                         </span>
@@ -118,7 +120,7 @@
                             —
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <span v-if="item.prices.length !== 0">
                             {{item.prices[0]}}
                         </span>
@@ -129,18 +131,18 @@
                             —
                         </span>
                     </td>
-                    <td class="text-center">{{item.deal_date}}</td>
-                    <td class="text-center">{{item.first_pay_date}}</td>
-                    <td class="text-center">{{LandlordDict.payment[item.account_type]}}</td>
-                    <td class="text-center">
+                    <td>{{item.deal_date}}</td>
+                    <td>{{item.first_pay_date}}</td>
+                    <td>{{LandlordDict.payment[item.account_type]}}</td>
+                    <td>
                         <span v-if="item.account_num !== ''">{{item.account_num}}</span>
                         <span v-if="item.account_num === ''">—</span>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <span v-if="item.staff != null">{{item.staff.real_name}}</span>
                         <span v-if="item.staff == null">—</span>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <label class="label label-default" v-if="item.status === 1">
                             {{LandlordDict.customer_status[item.status]}}
                         </label>
@@ -151,7 +153,7 @@
                             {{LandlordDict.customer_status[item.status]}}
                         </label>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <router-link
                                 :to="{path:'/newLandlordDetail',query: {nameId: item.id, sea: params, cus: 2,freeze: item.freeze}}">
                             详情
@@ -176,6 +178,7 @@
                     <th class="text-center width100">生成时间</th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">客户姓名</th>
+                    <th class="text-center width100">手机号</th>
                     <th class="text-center width80">租房月数</th>
                     <th class="text-center" style="min-width: 110px;">付款方式</th>
                     <th class="text-center" style="min-width: 90px;">月单价</th>
@@ -187,7 +190,7 @@
                     <th class="text-center" style="min-width: 50px;">详情</th>
                 </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody>
                 <tr class="text-center" v-for="item in RenterList"
                     :class="{'selected': pitch.indexOf(item.id) > -1 && landRenter === 'renter','freeze': item.freeze === 1}">
                     <td>
@@ -202,17 +205,18 @@
                         <span v-if="item.freeze === 1" @click="recover(item.id, 2)"
                               class="fa fa-rotate-left" style="cursor:pointer;margin-right: 8px;"></span>
                     </td>
-                    <td class="text-center">{{item.create_time}}</td>
-                    <td class="text-center">
+                    <td>{{item.create_time}}</td>
+                    <td>
                         {{item.address}}&nbsp;
                         <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
                         <span style="line-height: 9px;" v-if="item.is_shared == 1">
                             (&nbsp;{{LandlordDict.shared_part[item.shared_part]}}&nbsp;)
                         </span>
                     </td>
-                    <td class="text-center">{{item.customer_name}}</td>
-                    <td class="text-center">{{item.months}}</td>
-                    <td class="text-center">
+                    <td>{{item.contact}}</td>
+                    <td>{{item.customer_name}}</td>
+                    <td>{{item.months}}</td>
+                    <td>
                         押{{item.bet}}付
                         <span v-if="item.pay.length !== 0">
                             {{item.pay[0]}}
@@ -224,7 +228,7 @@
                             —
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <span v-if="item.prices.length !== 0">
                             {{item.prices[0]}}
                         </span>
@@ -235,14 +239,14 @@
                             —
                         </span>
                     </td>
-                    <td class="text-center">{{LandlordDict.shared_house[item.is_shared]}}</td>
-                    <td class="text-center">{{LandlordDict.rent_type[item.rent_type]}}</td>
-                    <td class="text-center">{{item.deal_date}}</td>
-                    <td class="text-center">
+                    <td>{{LandlordDict.shared_house[item.is_shared]}}</td>
+                    <td>{{LandlordDict.rent_type[item.rent_type]}}</td>
+                    <td>{{item.deal_date}}</td>
+                    <td>
                         <span v-if="item.staff != null">{{item.staff.real_name}}</span>
                         <span v-if="item.staff == null">—</span>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <label class="label label-default" v-if="item.status === 1">
                             {{LandlordDict.customer_status[item.status]}}
                         </label>
@@ -253,7 +257,7 @@
                             {{LandlordDict.customer_status[item.status]}}
                         </label>
                     </td>
-                    <td class="text-center">
+                    <td>
                         <router-link :to="{path:'/newRenterDetail',query: {nameId: item.id, sea: params, cus: 2}}">
                             详情
                         </router-link>
