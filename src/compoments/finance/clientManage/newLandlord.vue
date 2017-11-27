@@ -137,8 +137,8 @@
                         {{item.address}}&nbsp;
                         <span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
                     </td>
-                    <td>{{item.contact}}</td>
                     <td>{{item.customer_name}}</td>
+                    <td>{{item.contact}}</td>
                     <td>{{item.months}}</td>
                     <td>
                         <span v-if="item.pay_types.length !== 0">
