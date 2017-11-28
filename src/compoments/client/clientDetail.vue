@@ -89,7 +89,7 @@
                                 <span style="vertical-align: top;" class="text-primary">跟进进度：</span>
                                 <a href="#">
                                     <div class="progress1 progress progress-striped active">
-                                        <div aria-valuemax="100" aria-valuemin="0"
+                                        <div aria-valuemax="100" aria-valuemin="0" :title="clientDetail.follow+'%'"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
                                              :style="{ width: clientDetail.follow + '%'}">
                                             <span class="sr-only">{{clientDetail.follow}}%</span>
@@ -231,13 +231,11 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <a><i class="fa fa-bookmark-o"></i></a>
+                                                        <a></a>
                                                     </td>
                                                     <td>收房合同</td>
                                                     <td>
-                                                        <router-link class="text-primary" to="">
-                                                            {{item.contract_num}}
-                                                        </router-link>
+                                                        {{item.contract_num}}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -256,7 +254,7 @@
                                                 <td class="paddingTop">
                                                     <a data-v-2f43a2b3="" href="#">
                                                         <div class="progress progress-striped active">
-                                                            <div aria-valuemax="100" aria-valuemin="0"
+                                                            <div aria-valuemax="100" aria-valuemin="0" :title="Math.round(item.status*100)+'%'"
                                                                  aria-valuenow="45" role="progressbar" class="progress-bar"
                                                                  :style="{ width: Math.round(item.status*100) + '%'}">
                                                                 <span class="sr-only">Math.round(item.status*100)% Complete</span>
@@ -290,13 +288,11 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a><i class="fa fa-bookmark-o"></i></a>
+                                                    <a></a>
                                                 </td>
                                                 <td>租房合同</td>
                                                 <td>
-                                                    <router-link class="text-primary" to="">
-                                                        {{item.contract_num}}
-                                                    </router-link>
+                                                    {{item.contract_num}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -315,7 +311,7 @@
                                                 <td class="paddingTop">
                                                     <a data-v-2f43a2b3="" href="#">
                                                         <div class="progress progress-striped active">
-                                                            <div aria-valuemax="100" aria-valuemin="0"
+                                                            <div aria-valuemax="100" aria-valuemin="0" :title="Math.round(item.status*100)+'%'"
                                                                  aria-valuenow="45" role="progressbar" class="progress-bar"
                                                                  :style="{ width: Math.round(item.status*100) + '%'}">
                                                                 <span class="sr-only">Math.round(item.status*100)% Complete</span>
