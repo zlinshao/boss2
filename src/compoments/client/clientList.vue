@@ -61,11 +61,25 @@
                                 </select>
                             </label>
                         </div>
+
                         <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
-                             style="padding: 0;margin-right: 20px;">
+                             style="padding: 0;margin-right: 20px;margin-left: 20px">
                             <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" style="background: #fff;color: #666"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{searchType}} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" @click="selectType($event)">
+                                        <!--<li><a>全部</a></li>-->
+                                        <li><a>客户名</a></li>
+                                        <li><a>负责人</a></li>
+                                        <li><a>手机号</a></li>
+                                        <li><a>证件号</a></li>
+                                    </ul>
+                                </div><!-- /btn-group -->
                                 <input type="text"  v-model="params.keywords" class="form-control"
-                                      @keyup="search" placeholder="客户名/手机号/身份证/负责人">
+                                      @keyup="search" placeholder="请选择搜索类型">
                                 <span class="input-group-btn">
                                     <button class="btn btn-success" @click="search">搜索</button>
                                 </span>
@@ -263,6 +277,7 @@
                     source: '',             //客户来源
                     person_medium: '',       //个人/中介
                     all :false,                //查看所有
+                    type :'',                   //搜索类型
                 },
                 pages:'',                   // 总页数
                 clientList:[],
@@ -285,6 +300,7 @@
                 confirmMsg:[],
                 startEdit : false,
                 allCountry : [],
+                searchType : '请选择',
             }
         },
         created(){
@@ -317,6 +333,9 @@
                         this.clientList = [];
                         this.pages = '';
                         this.isShow = true;
+                        this.info.error = res.data.msg;
+                        //显示成功弹窗 ***
+                        this.info.state_error = true;
                     }
                 })
             },
@@ -438,6 +457,23 @@
             successAdd(){
                 this.search();
             },
+            selectType(e){
+                this.searchType = e.target.text;
+                switch (e.target.text){
+                    case  '客户名' :
+                        this.params.type = 'name';
+                        break;
+                    case  '负责人' :
+                        this.params.type = 'manager_id';
+                        break;
+                    case  '手机号' :
+                        this.params.type = 'mobile';
+                        break;
+                    case  '证件号' :
+                        this.params.type = 'id_num';
+                        break;
+                }
+            },
         }
     }
 </script>
@@ -470,5 +506,10 @@
     .progress.progress-striped.active {
         margin-bottom: 0;
         height: 10px;
+    }
+
+    .dropdown-menu {
+        min-width: 84px;
+        margin: 0;
     }
 </style>
