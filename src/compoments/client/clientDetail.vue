@@ -72,7 +72,6 @@
                             <div>
                                 <span class="text-primary">手机号：</span>
                                 <span>{{clientDetail.mobiles}}</span>
-                                <a>修改</a>
                             </div>
                             <div>
                                 <span class="text-primary">负责人：</span>
@@ -177,7 +176,7 @@
                             </div>
                             <div v-if="clientDetail.status === 1">
                                 <span class="text-primary">证件照片：</span>
-                                <a v-for="item in clientDetail.albums"
+                                <a v-if="clientDetail!==[]" v-for="item in clientDetail.albums"
                                    style="margin: 10px 10px 0 0;display: inline-block;">
                                     <img src="../../assets/img/id_pic.jpg" style="width: 40px;height:40px">
                                 </a>
@@ -283,8 +282,8 @@
                             <div id="rent" class="tab-pane">
                                 <div v-if="collect_rent.rent!==undefined">
                                     <div v-if="collect_rent.rent.length >0">
-                                        <table class="table contract_info" v-if="collect_rent.rent.length>0" v-for="item in collect_rent.rent">
-                                            <tbody>
+                                        <table class="table contract_info">
+                                            <tbody v-for="item in collect_rent.rent">
                                             <tr>
                                                 <td><a><i class="fa fa-bookmark"></i></a></td>
                                                 <td colspan="2" style="min-width: 200px;">
