@@ -216,7 +216,7 @@
                             <td class="text-center">
                                 <a data-v-2f43a2b3="" href="#">
                                     <div class="progress progress-striped active">
-                                        <div aria-valuemax="100" aria-valuemin="0"
+                                        <div aria-valuemax="100" aria-valuemin="0" :title="item.follow+'%'"
                                              aria-valuenow="45" role="progressbar" class="progress-bar"
                                              :style="{ width: item.follow + '%'}">
                                             <span class="sr-only">{{item.follow}}%</span>
