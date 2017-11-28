@@ -248,7 +248,7 @@
                                                 <tr>
                                                     <td></td>
                                                     <td>负责人</td>
-                                                    <td>{{item.leader_name}}</td>
+                                                    <td>{{item.staff_name}}</td>
                                                 </tr>
                                                 <tr>
                                                 <td></td>
@@ -307,7 +307,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td>负责人</td>
-                                                <td>{{item.leader_name}}</td>
+                                                <td>{{item.staff_name}}</td>
                                             </tr>
                                             <tr>
                                                 <td></td>
