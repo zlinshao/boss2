@@ -356,7 +356,6 @@
                         this.clientInfo = res.data.data;
                         this.params.id = this.clientInfo.id;
                         this.params.identity = this.clientInfo.identitys;                       //业主/租客
-                        console.log(typeof this.params.identity);
                         this.params.name = this.clientInfo.name;                           //客户姓名
                         this.params.gender = this.clientInfo.gender;                         //性别
                         this.params.follow = this.clientInfo.follow;                         //进度
@@ -392,6 +391,9 @@
                             this.idPhotos.cus_idPhoto.push(key);
                             this.params.id_pic.push(key);
                         }
+                    }else {
+                        this.info.error = res.data.msg;
+                        this.info.state_error = true;
                     }
                 })
             },
@@ -463,7 +465,6 @@
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
-                    console.log(this.params.identity)
                     this.params.identity.push(item.value);
                 } else {
                     this.params.identity = this.params.identity.filter(function (x) {

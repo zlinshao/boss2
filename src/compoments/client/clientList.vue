@@ -10,7 +10,7 @@
             <div class="panel-body has-js">
                 <!--没有选中-->
                 <div v-if="pickedId.length===0">
-                    <div>
+                    <div v-if="flag">
                         <div class="pro-sort">
                             <label>
                                 <select class="form-control" v-model="params.customer_status" @change="search">
@@ -62,8 +62,8 @@
                             </label>
                         </div>
 
-                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2"
-                             style="padding: 0;margin-right: 20px;margin-left: 20px">
+                        <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-3"
+                             style="padding: 0;margin-right: 20px;">
                             <div class="input-group">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-primary dropdown-toggle" style="background: #fff;color: #666"
@@ -79,7 +79,7 @@
                                     </ul>
                                 </div><!-- /btn-group -->
                                 <input type="text"  v-model="params.keywords" class="form-control"
-                                       @keyup="search" placeholder="请选择搜索类型">
+                                       @keydown.enter.prevent="search" placeholder="请选择搜索类型">
                                 <span class="input-group-btn">
                                     <button class="btn btn-success" @click="search">搜索</button>
                                 </span>
@@ -105,6 +105,19 @@
                                 <i class="fa fa-plus-square"></i>&nbsp;增加客户
                             </a>
                         </div>
+                    </div>
+
+                    <div class="pull-right" v-if="!flag && isMobile">
+                        <a class="btn btn-success" @click="showFlag"
+                           style="background-color: transparent;color: #797979;border: 0;padding: 0;margin: 0;">
+                            <a style="border-bottom: 1px solid #667FA0;">点击显示筛选条件</a>
+                        </a>
+                    </div>
+                    <div v-if="flag && isMobile">
+                        <a class="btn btn-success col-xs-12" @click="showFlag"
+                           style="background-color: transparent;color: #797979;border: 0;padding:8px 0 0 0;margin: 0;">
+                            <a class="pull-right" style="border-bottom: 1px solid #667FA0;">点击隐藏筛选条件</a>
+                        </a>
                     </div>
                 </div>
 
@@ -248,7 +261,7 @@
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <AddRemind :remindId="pickedId" @cus_seccess="successRemind"></AddRemind>
         <ClientEdit :editId="pickedId[0]" :startEdit="startEdit" :allCountry="allCountry" @close="closeModal" @success="success"></ClientEdit>
-        <ClientAdd @click="successAdd"></ClientAdd>
+        <ClientAdd @success="successAdd"></ClientAdd>
     </div>
 </template>
 
@@ -301,12 +314,28 @@
                 startEdit : false,
                 allCountry : [],
                 searchType : '请选择',
+                isMobile : false,
+                flag : true
             }
         },
         created(){
             this.getDictionary();
+            this.IsPC();
         },
         methods:{
+            showFlag (){
+                this.flag = !this.flag;
+            },
+            IsPC(){
+                let pageWidth = window.innerWidth;
+                if(pageWidth < 768){
+                    this.isMobile = true;
+                    this.flag = false;
+                }else {
+                    this.isMobile = false;
+                    this.flag = true;
+                }
+            },
             getDictionary(){
                 this.$http.post('index/country/index').then((res) => {
                     this.allCountry = res.data.data;
