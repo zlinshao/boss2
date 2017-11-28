@@ -79,7 +79,7 @@
                                     </ul>
                                 </div><!-- /btn-group -->
                                 <input type="text"  v-model="params.keywords" class="form-control"
-                                      @keyup="search" placeholder="请选择搜索类型">
+                                       @keyup="search" placeholder="请选择搜索类型">
                                 <span class="input-group-btn">
                                     <button class="btn btn-success" @click="search">搜索</button>
                                 </span>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="pro-sort">
                             <label style="margin-top: 8px;" class="label_check"
-                                   :class="{'c_on':params.all,'c_off':!params.all}">
+                                   :class="{'c_on':params.all === 2,'c_off':params.all===1}">
                                 <input type="checkbox" class="pull-left" @click.prevent="isAll">查看所有
                             </label>
                         </div>
@@ -158,81 +158,81 @@
                 <section class="panel table-responsive roll">
                     <table class="table table-striped table-advance table-hover">
                         <thead>
-                            <tr>
-                                <th class="text-center"></th>
-                                <th class="text-center">录入时间</th>
-                                <th class="text-center">客户名称</th>
-                                <th class="text-center">尊称</th>
-                                <th class="text-center">手机号</th>
-                                <th class="text-center">客户意向</th>
-                                <th class="text-center">跟进进度</th>
-                                <th class="text-center">来源</th>
-                                <th class="text-center">客户状态</th>
-                                <th class="text-center">客户身份</th>
-                                <th class="text-center">身份证</th>
-                                <th class="text-center">个人/中介</th>
-                                <th class="text-center">负责人</th>
-                                <th class="text-center">置顶</th>
-                                <th class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">录入时间</th>
+                            <th class="text-center">客户名称</th>
+                            <th class="text-center">尊称</th>
+                            <th class="text-center">手机号</th>
+                            <th class="text-center">客户意向</th>
+                            <th class="text-center">跟进进度</th>
+                            <th class="text-center">来源</th>
+                            <th class="text-center">客户状态</th>
+                            <th class="text-center">客户身份</th>
+                            <th class="text-center">身份证</th>
+                            <th class="text-center">个人/中介</th>
+                            <th class="text-center">负责人</th>
+                            <th class="text-center">置顶</th>
+                            <th class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in clientList">
-                               <!--<td >-->
-                                   <!--<a href="tel:400-888-6633">拨打电话</a>-->
+                        <tr v-for="item in clientList">
+                            <!--<td >-->
+                            <!--<a href="tel:400-888-6633">拨打电话</a>-->
 
-                                       <!--<a href="sms:19956321564">发送短信</a>-->
-                               <!--</td>-->
-                                <td class="text-center">
-                                    <label :class="{'c_on':pickedId.indexOf(item.id) > -1,'c_off':pickedId.indexOf(item.id)==-1}"
-                                           class="label_check" @click.prevent="pick(item,$event)">
-                                        <input type="checkbox" class="pull-left" :checked="pickedId.indexOf(item.id) > -1">
-                                    </label>
-                                </td>
-                                <td class="text-center">{{item.create_time}}</td>
-                                <td class="text-center">{{item.name}}</td>
-                                <td class="text-center">{{dictionary.gender[item.gender]}}</td>
-                                <td class="text-center">
-                                    {{item.mobiles}}
-                                    <span v-if="item.mobiles.indexOf('*')<0">
+                            <!--<a href="sms:19956321564">发送短信</a>-->
+                            <!--</td>-->
+                            <td class="text-center">
+                                <label :class="{'c_on':pickedId.indexOf(item.id) > -1,'c_off':pickedId.indexOf(item.id)==-1}"
+                                       class="label_check" @click.prevent="pick(item,$event)">
+                                    <input type="checkbox" class="pull-left" :checked="pickedId.indexOf(item.id) > -1">
+                                </label>
+                            </td>
+                            <td class="text-center">{{item.create_time}}</td>
+                            <td class="text-center">{{item.name}}</td>
+                            <td class="text-center">{{dictionary.gender[item.gender]}}</td>
+                            <td class="text-center">
+                                {{item.mobiles}}
+                                <span v-if="item.mobiles.indexOf('*')<0">
                                         <a :href="'tel:'+item.mobiles">电话</a>
                                         <a :href="'sms:'+item.mobiles">短信</a>
                                     </span>
-                                </td>
-                                <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
-                                <td class="text-center">
-                                    <a data-v-2f43a2b3="" href="#">
-                                        <div class="progress progress-striped active">
-                                            <div aria-valuemax="100" aria-valuemin="0"
-                                                 aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                 :style="{ width: item.follow + '%'}">
-                                                <span class="sr-only">{{item.follow}}%</span>
-                                            </div>
+                            </td>
+                            <td class="text-center">{{dictionary.customer_will[item.customer_will]}}</td>
+                            <td class="text-center">
+                                <a data-v-2f43a2b3="" href="#">
+                                    <div class="progress progress-striped active">
+                                        <div aria-valuemax="100" aria-valuemin="0"
+                                             aria-valuenow="45" role="progressbar" class="progress-bar"
+                                             :style="{ width: item.follow + '%'}">
+                                            <span class="sr-only">{{item.follow}}%</span>
                                         </div>
-                                    </a>
-                                </td>
-                                <td class="text-center">{{dictionary.source[item.source]}}</td>
-                                <td class="text-center">{{dictionary.customer_status[item.customer_status]}}</td>
-                                <td class="text-center">{{item.identity}}</td>
-                                <td class="text-center">{{item.id_num}}</td>
-                                <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
-                                <td class="text-center">{{item.manager_name}}</td>
-                                <td class="text-center">
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="text-center">{{dictionary.source[item.source]}}</td>
+                            <td class="text-center">{{dictionary.customer_status[item.customer_status]}}</td>
+                            <td class="text-center">{{item.identity}}</td>
+                            <td class="text-center">{{item.id_num}}</td>
+                            <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
+                            <td class="text-center">{{item.manager_name}}</td>
+                            <td class="text-center">
                                     <span v-if="item.top != null">
                                         <i class="fa fa-thumb-tack"></i>
                                     </span>
-                                </td>
-                                <td class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">
-                                    <router-link :to="{path:'/clientDetail',query:{clientId : item.id,from:'client',searchInfo :params}}">
-                                        详情
-                                    </router-link>
-                                </td>
-                            </tr>
-                            <tr v-if="isShow">
-                                <td colspan="16" class="text-center text-muted">
-                                    <h4>暂无数据....</h4>
-                                </td>
-                            </tr>
+                            </td>
+                            <td class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">
+                                <router-link :to="{path:'/clientDetail',query:{clientId : item.id,from:'client',searchInfo :params}}">
+                                    详情
+                                </router-link>
+                            </td>
+                        </tr>
+                        <tr v-if="isShow">
+                            <td colspan="16" class="text-center text-muted">
+                                <h4>暂无数据....</h4>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </section>
@@ -276,7 +276,7 @@
                     identity: '',                 //客户身份
                     source: '',             //客户来源
                     person_medium: '',       //个人/中介
-                    all :false,                //查看所有
+                    all :1,                  //查看所有
                     type :'',                   //搜索类型
                 },
                 pages:'',                   // 总页数
@@ -293,7 +293,7 @@
                     error: ''
                 },
                 dictionary : [],
-                bool:'',    //  
+                bool:'',    //
                 pickedId :[],
                 isShow : false,
                 top:'',
@@ -354,7 +354,7 @@
                 this.getClientList();
             },
             isAll(){
-                this.params.all = !this.params.all;
+                this.params.all = this.params.all === 1? 2:1;
                 this.getClientList();
             },
             reset(){    //重置
@@ -367,8 +367,10 @@
                     identity: '',                 //客户身份
                     source: '',             //客户来源
                     person_medium: '',       //个人/中介
-                    all : false,
+                    all : 1,
+                    type : ''
                 };
+                this.searchType = '请选择';
                 this.getClientList();
 
             },

@@ -336,21 +336,21 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu"
-                        v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
-                        <a href="javascript:;">
-                            <i class="fa fa-user"></i>
-                            <span>客户管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">
-                                <router-link to='/custom'>客户</router-link>
-                            </li>
-                            <li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">
-                                <router-link to='/customerPool'>客户池</router-link>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="sub-menu"-->
+                        <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-user"></i>-->
+                            <!--<span>客户管理</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
+                                <!--<router-link to='/custom'>客户</router-link>-->
+                            <!--</li>-->
+                            <!--<li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">-->
+                                <!--<router-link to='/customerPool'>客户池</router-link>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <!--<li class="sub-menu"-->
                         <!--v-show="(simulate.indexOf('Villa/receivedVillaList')>-1||simulate.indexOf('Villa/villaList')>-1)||isSuper">-->
                         <!--<a href="javascript:;">-->
