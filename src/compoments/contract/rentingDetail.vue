@@ -491,7 +491,7 @@
                                                 </div>
                                                 <div class="infoList">
                                                     <span>手机号码：</span>
-                                                    <span>{{relative.mobile}}</span>
+                                                    <span v-for="mobile in relative.mobile">{{mobile}}&nbsp;</span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
