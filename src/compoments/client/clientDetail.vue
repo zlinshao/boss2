@@ -253,15 +253,19 @@
                                                 <td></td>
                                                 <td>合同时间</td>
                                                 <td class="paddingTop">
-                                                    <a data-v-2f43a2b3="" href="#">
+                                                    <a data-v-2f43a2b3="" v-if="item.status<1">
                                                         <div class="progress progress-striped active">
                                                             <div aria-valuemax="100" aria-valuemin="0" :title="Math.round(item.status*100)+'%'"
                                                                  aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                                 :style="{ width: Math.round(item.status*100) + '%'}">
+                                                                 :style="{ width: Math.round(item.status*100) + '%'}"
+                                                                 :class="{'progress-bar-danger' : item.day<30}">
                                                                 <span class="sr-only">Math.round(item.status*100)% Complete</span>
                                                             </div>
                                                         </div>
                                                     </a>
+                                                    <span v-if="item.status === 1">
+                                                        已结束
+                                                    </span>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -310,15 +314,19 @@
                                                 <td></td>
                                                 <td>合同时间</td>
                                                 <td class="paddingTop">
-                                                    <a data-v-2f43a2b3="" href="#">
+                                                    <a data-v-2f43a2b3="" v-if="item.status<1">
                                                         <div class="progress progress-striped active">
                                                             <div aria-valuemax="100" aria-valuemin="0" :title="Math.round(item.status*100)+'%'"
                                                                  aria-valuenow="45" role="progressbar" class="progress-bar"
-                                                                 :style="{ width: Math.round(item.status*100) + '%'}">
+                                                                 :style="{ width: Math.round(item.status*100) + '%'}"
+                                                                 :class="{'progress-bar-danger' : item.day<30}">
                                                                 <span class="sr-only">Math.round(item.status*100)% Complete</span>
                                                             </div>
                                                         </div>
                                                     </a>
+                                                    <span v-if="item.status === 1">
+                                                        已结束
+                                                    </span>
                                                 </td>
                                             </tr>
                                             </tbody>

@@ -401,18 +401,26 @@
                 }
             },
             confirmAdd(){
-                this.$http.post('core/customer/saveCustomer',this.params).then((res) => {
-                    if(res.data.code === '70010'){
-                        this.closeModal();
-                        this.$emit('success');
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else {
-                        this.info.error = res.data.msg;
-                        this.info.state_error = true;
-                    }
-                })
+                if(!this.cus_idNumber_status){
+                    this.info.error = '身份证件号格式不正确';
+                    this.info.state_error = true;
+                }else if(!Object.keys(this.phone_status).every((x) => {return this.phone_status[x]})){
+                    this.info.error = '手机号格式不正确';
+                    this.info.state_error = true;
+                }else {
+                    this.$http.post('core/customer/saveCustomer', this.params).then((res) => {
+                        if (res.data.code === '70010') {
+                            this.closeModal();
+                            this.$emit('success');
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        } else {
+                            this.info.error = res.data.msg;
+                            this.info.state_error = true;
+                        }
+                    })
+                }
             },
             add(){
                 if(this.params.mobile.length<this.amount){
