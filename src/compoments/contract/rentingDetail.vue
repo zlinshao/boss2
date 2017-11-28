@@ -448,7 +448,7 @@
                                             </div>
                                             <div class="infoList">
                                                 <span>手机号码<sup>*</sup>：</span>
-                                                <span>{{item.customer_id.mobile}}</span>
+                                                <span>{{item.mobile}}</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
