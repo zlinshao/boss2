@@ -72,6 +72,7 @@
                             <div>
                                 <span class="text-primary">手机号：</span>
                                 <span>{{clientDetail.mobiles}}</span>
+                                <a>修改</a>
                             </div>
                             <div>
                                 <span class="text-primary">负责人：</span>

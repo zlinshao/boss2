@@ -443,7 +443,7 @@
                                             <div class="infoList">
                                                 <span>国籍<sup>*</sup>：</span>
                                                 <span>
-                                                    {{dictionary.nationality[item.customer_id.nationality]}}
+                                                    {{country}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
@@ -915,6 +915,8 @@
                 departmentName: '',
                 type: '',
                 contractRenewList: [],
+                allCountry :[],         //所有国家
+                country : '',           //国家
             }
         },
         mounted(){
@@ -927,6 +929,9 @@
 
         methods: {
             getDictionary(){
+                this.$http.post('index/country/index').then((res) => {
+                    this.allCountry = res.data.data;
+                });
                 this.$http.get('core/customer/dict').then((res) => {
                     this.dictionary = res.data;
                     this.passDictionary = res.data.passed;
@@ -944,6 +949,13 @@
                         this.contract_pass = res.data.data.passed;
                         this.contract_status = res.data.data.status;
                         this.waiting = false;
+
+                        this.allCountry.forEach((val) => {
+                            if(val.id === res.data.data.customer_id.nationality){
+                                this.country = val.zh_name;
+                            }
+                        })
+
                     } else {
                         this.contractList = [];
                         this.waiting = false;
