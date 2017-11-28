@@ -23,7 +23,8 @@
                                                @click.prevent="selectIdentity(item,$event)"
                                                :class="{'c_on':params.identity.indexOf(item.value) > -1,
                                                'c_off':params.identity.indexOf(item.value) == -1}">
-                                            <input type="checkbox" :value="item.value" class="pull-left">
+                                            <input type="checkbox" :value="item.value" class="pull-left"
+                                                   :checked="params.identity.indexOf(item.value) > -1">
                                             {{item.name}}
                                         </label>
                                     </div>
