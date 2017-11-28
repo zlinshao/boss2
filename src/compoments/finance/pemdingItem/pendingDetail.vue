@@ -51,6 +51,7 @@
                                 </div>
                                 <div><span class="text-primary">合同开始时间：</span><span>{{item.start_date}}</span></div>
                                 <div><span class="text-primary">合同结束时间：</span><span>{{item.end_date}}</span></div>
+                                <div><span class="text-primary">备注：</span><span>{{item.remark}}</span></div>
                                 <!--<div>-->
                                     <!--<span class="text-primary">付款方式：</span>-->
                                     <!--<span>{{myDictionary.pay_type[item.pay_type]}}</span>-->
