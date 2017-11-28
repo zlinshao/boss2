@@ -413,7 +413,7 @@
                 if (this.params.id_num !== '') {
                     this.cus_idNumber_status = reg.test(this.params.id_num);
                 }else {
-                    this.cus_idNumber_status = false;
+                    this.cus_idNumber_status = true;
                 }
                 
             },
