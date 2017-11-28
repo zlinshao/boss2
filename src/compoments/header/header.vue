@@ -319,22 +319,22 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-                    <!--<li class="sub-menu"-->
-                        <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
-                        <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-user"></i>-->
-                            <!--<span>客户管理</span>-->
-                        <!--</a>-->
-                        <!--<ul class="sub">-->
-                            <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
-                                <!--<router-link to='/client'>客户</router-link>-->
-                            <!--</li>-->
-                            <!--<li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">-->
-                                <!--<router-link to='/clientPool'>客户池</router-link>-->
-                            <!--</li>-->
+                    <li class="sub-menu"
+                        v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
+                        <a href="javascript:;">
+                            <i class="fa fa-user"></i>
+                            <span>客户管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">
+                                <router-link to='/client'>客户</router-link>
+                            </li>
+                            <li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">
+                                <router-link to='/clientPool'>客户池</router-link>
+                            </li>
 
-                        <!--</ul>-->
-                    <!--</li>-->
+                        </ul>
+                    </li>
 
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
@@ -351,24 +351,24 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sub-menu"
-                        v-show="(simulate.indexOf('Villa/receivedVillaList')>-1||simulate.indexOf('Villa/villaList')>-1)||isSuper">
-                        <a href="javascript:;">
-                            <i class="fa fa-home"></i>
-                            <span>房源管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li v-show="simulate.indexOf('Villa/receivedVillaList')>-1||isSuper">
-                                <router-link to='/okCollect'>公司房源</router-link>
-                            </li>
-                            <li v-show="simulate.indexOf('Villa/villaList')>-1||isSuper">
-                                <router-link to='/noCollect'>待收房源</router-link>
-                            </li>
-                            <li>
-                                <router-link to='/blackboard'>小黑板</router-link>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="sub-menu"-->
+                        <!--v-show="(simulate.indexOf('Villa/receivedVillaList')>-1||simulate.indexOf('Villa/villaList')>-1)||isSuper">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-home"></i>-->
+                            <!--<span>房源管理</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li v-show="simulate.indexOf('Villa/receivedVillaList')>-1||isSuper">-->
+                                <!--<router-link to='/okCollect'>公司房源</router-link>-->
+                            <!--</li>-->
+                            <!--<li v-show="simulate.indexOf('Villa/villaList')>-1||isSuper">-->
+                                <!--<router-link to='/noCollect'>待收房源</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to='/blackboard'>小黑板</router-link>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li class="sub-menu"
                         v-show="simulate.indexOf('Collect/contractList')>-1||simulate.indexOf('Rent/contractList')>-1
                         ||simulate.indexOf('Collect/Rent/MoveOrder')>-1

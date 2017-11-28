@@ -11,23 +11,39 @@
                         <h4 class="modal-title">选择客户</h4>
                     </div>
                     <div class="modal-body inbox-body panel" v-if="!isNewAdd">
-                        <div class="row">
-                            <div class="col-lg-4">
+                        <div class="pro-sort">
+                            <label>
                                 <select class="form-control" v-model="media_person">
                                     <option value="0">客户名称</option>
                                     <option :value="key" v-model="clientName" v-for="(value,key) in person_medium">{{value}}</option>
                                 </select>
-                            </div>
-                            <div class="iconic-input right col-lg-4">
-                                <i class="fa fa-search"></i>
-                                <input type="text" class="form-control" placeholder="请输入客户名" v-model="keywords"
+                            </label>
+                        </div>
+                        <div class="pro-sort col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" style="background: #fff;color: #666"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{searchType}} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" @click="selectType($event)">
+                                        <!--<li><a>全部</a></li>-->
+                                        <li><a>客户名</a></li>
+                                        <li><a>负责人</a></li>
+                                        <li><a>手机号</a></li>
+                                        <li><a>证件号</a></li>
+                                    </ul>
+                                </div><!-- /btn-group -->
+                                <!--<i class="fa fa-search"></i>-->
+                                <input type="text" class="form-control" placeholder="请输入搜索内容" v-model="keywords"
                                        @keydown.enter.prevent="search">
                             </div>
-                            <div class="col-lg-4">
-                                <a class="btn btn-success" @click="search">搜索</a>
-                                <a class="btn btn-success" @click="newAddClient">新增</a>
-                            </div>
                         </div>
+
+                        <a class="btn btn-success" @click="search">搜索</a>
+                        <a class="btn btn-success" @click="newAddClient">新增</a>
+
+
                         <div class="table table-responsive roll">
                             <table class="table table-striped table-advance table-hover">
                                 <thead>
@@ -179,6 +195,8 @@
                 cus_phone: '',
                 phone_status: '',                   //手机号验证
                 salesman: '',
+                searchType : '请选择',
+                type:'',
             }
         },
         mounted(){
@@ -208,7 +226,8 @@
             },
             search(){
                 if (this.keywords !== '') {
-                    this.$http.get('core/core_common/customerList/person_medium/' + this.media_person + '/keywords/' + this.keywords).then((res) => {
+                    this.$http.get('core/core_common/customerList/person_medium/' + this.media_person + '/keywords/' +
+                        this.keywords+'/type/'+this.type).then((res) => {
                         if (res.data.code === '20010') {
                             this.customerList = res.data.data;
                             this.isShow = false;
@@ -289,7 +308,26 @@
                 this.cus_phone = '';
                 this.phone_status = false;
                 this.isNewAdd = false;
-            }
+            },
+
+
+            selectType(e){
+                this.searchType = e.target.text;
+                switch (e.target.text){
+                    case  '客户名' :
+                        this.type = 'name';
+                        break;
+                    case  '负责人' :
+                        this.type = 'manager_id';
+                        break;
+                    case  '手机号' :
+                        this.type = 'mobile';
+                        break;
+                    case  '证件号' :
+                        this.type = 'id_num';
+                        break;
+                }
+            },
         }
     }
 </script>
@@ -328,5 +366,18 @@
 
     .error {
         border-color: #E4393C;
+    }
+
+    .pro-sort {
+        padding-right: 6px;
+        height: 39px;
+    }
+
+    .pro-sort select.form-control {
+        padding: 6px 8px;
+    }
+    .dropdown-menu {
+        min-width: 84px;
+        margin: 0;
     }
 </style>
