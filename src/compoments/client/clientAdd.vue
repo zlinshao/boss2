@@ -193,10 +193,10 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">证件号</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="params.id_num" :class="{'error': !cus_idNumber_status}"
+                                        <input type="text" class="form-control" v-model="params.id_num" :class="{'error': cus_idNumber_status}"
                                                placeholder="请输入证件号" @blur="reg_number" style="margin-bottom: 0">
                                         <div>
-                                            &nbsp;<span v-show="!cus_idNumber_status" style="color: #E4393C">证件号格式不正确</span>
+                                            &nbsp;<span v-show="cus_idNumber_status" style="color: #E4393C">证件号格式不正确</span>
                                         </div>
                                     </div>
                                 </div>
@@ -305,7 +305,7 @@
                     '4':true,
                     '5':true,
                 },
-                cus_idNumber_status :true,
+                cus_idNumber_status :false,
                 dictionary:[],                          //字典
                 photos: {
                     cus_idPhotos: {},                   //修改图片ID
@@ -401,7 +401,7 @@
                 }
             },
             confirmAdd(){
-                if(!this.cus_idNumber_status){
+                if(this.cus_idNumber_status){
                     this.info.error = '身份证件号格式不正确';
                     this.info.state_error = true;
                 }else if(!Object.keys(this.phone_status).every((x) => {return this.phone_status[x]})){
