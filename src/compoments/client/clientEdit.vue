@@ -193,10 +193,10 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">证件号</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="params.id_num" :class="{'error': cus_idNumber_status}"
+                                        <input type="text" class="form-control" v-model="params.id_num" :class="{'error': !cus_idNumber_status}"
                                                placeholder="请输入证件号" @blur="reg_number" style="margin-bottom: 0">
                                         <div>
-                                            &nbsp;<span v-show="cus_idNumber_status" style="color: #E4393C">证件号格式不正确</span>
+                                            &nbsp;<span v-show="!cus_idNumber_status" style="color: #E4393C">证件号格式不正确</span>
                                         </div>
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@
                     character: '',                      //性格
                     remarks: '',                        //备注
                 },
-                cus_idNumber_status :false,
+                cus_idNumber_status :true,
                 dictionary:[],                          //字典
                 idPhotos: {
                     cus_idPhotos: {},                   //修改图片ID
@@ -473,18 +473,26 @@
                 }
             },
             confirmAdd(){
-                this.$http.put('core/customer/updateCustomer',this.params).then((res) => {
-                    if(res.data.code === '70010'){
-                        this.closeModal();
-                        this.$emit('success');
-                        this.info.success = res.data.msg;
-                        //显示成功弹窗 ***
-                        this.info.state_success = true;
-                    }else {
-                        this.info.error = res.data.msg;
-                        this.info.state_error = true;
-                    }
-                })
+                if(!this.cus_idNumber_status){
+                    this.info.error = '身份证件号格式不正确';
+                    this.info.state_error = true;
+                }else if(!Object.keys(this.phone_status).every((x) => {return this.phone_status[x]})){
+                    this.info.error = '手机号格式不正确';
+                    this.info.state_error = true;
+                }else {
+                    this.$http.put('core/customer/updateCustomer',this.params).then((res) => {
+                        if(res.data.code === '70010'){
+                            this.closeModal();
+                            this.$emit('success');
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }else {
+                            this.info.error = res.data.msg;
+                            this.info.state_error = true;
+                        }
+                    })
+                }
             },
             closeModal(){   //关闭模态框
                 this.$emit('close');

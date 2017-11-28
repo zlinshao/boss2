@@ -185,6 +185,7 @@
                             <th class="text-center">身份证</th>
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">负责人</th>
+                            <th class="text-center">所属部门</th>
                             <th class="text-center">置顶</th>
                             <th class="text-center" v-if="simulate.indexOf('Customer/readCustomer')>-1||isSuper">详情</th>
                         </tr>
@@ -230,6 +231,7 @@
                             <td class="text-center">{{item.id_num}}</td>
                             <td class="text-center">{{dictionary.person_medium[item.person_medium]}}</td>
                             <td class="text-center">{{item.manager_name}}</td>
+                            <td class="text-center">{{item.department}}</td>
                             <td class="text-center">
                                     <span v-if="item.top != null">
                                         <i class="fa fa-thumb-tack"></i>
