@@ -280,7 +280,7 @@
                     gender: '',                         //性别
                     follow: '',                         //进度
                     nationality: '',                    //国籍
-                    mobile: '',                         //手机号
+                    mobile: [],                         //手机号
                     customer_status: '',                //客户状态
                     customer_will: '',                  //客户意向
                     source: '',                         //客户来源
