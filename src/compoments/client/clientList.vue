@@ -182,7 +182,7 @@
                             <th class="text-center">来源</th>
                             <th class="text-center">客户状态</th>
                             <th class="text-center">客户身份</th>
-                            <th class="text-center">身份证</th>
+                            <th class="text-center">证件号</th>
                             <th class="text-center">个人/中介</th>
                             <th class="text-center">负责人</th>
                             <th class="text-center">所属部门</th>
