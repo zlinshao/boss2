@@ -216,7 +216,7 @@
                     </header>
                     <!--合同信息-->
                     <div class="panel-body roll" >
-                        <div class="tab-content">
+                        <div class="tab-content" id="contractList">
                             <!--收房合同-->
                             <div id="collect" class="tab-pane active">
                                 <div v-if="collect_rent.collect !== undefined">
@@ -437,7 +437,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in houseRelated">
+                                                    <tr class="houseList" v-for="item in houseRelated">
                                                         <td class="text-center">
                                                             <router-link :to="{path:'/collectDetail',
                                                             query:{CollectId: item.id,flag:'client'}}">
@@ -737,10 +737,10 @@
     .dropdown-menu li{
         text-align: center;
     }
-    .table tbody  tr{
+    #contractList .table tbody  tr{
         padding-right: 20px ;
     }
-    .table tbody  tr  td{
+    #contractList .table tbody  tr  td{
         padding: 8px 20px 8px 0;
         line-height: 12px;
     }
