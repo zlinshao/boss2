@@ -86,7 +86,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">进度</label>
                                     <div class="col-sm-10 sliders">
                                         <select class="form-control" v-model="params.follow">
-                                            <option value="">进度</option>
                                             <option value="0">0%</option>
                                             <option value="25">25%</option>
                                             <option value="50">50%</option>
@@ -101,7 +100,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户状态</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.customer_status">
-                                            <option value="">客户状态</option>
                                             <option v-for="(val,key) in dictionary.customer_status" :value="key">
                                                 {{val}}
                                             </option>
@@ -113,7 +111,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户意向</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.customer_will">
-                                            <option value="">客户意向</option>
                                             <option v-for="(val,key) in dictionary.customer_will" :value="key">
                                                 {{val}}
                                             </option>
@@ -125,7 +122,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户来源</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.source">
-                                            <option value="">客户来源</option>
                                             <option v-for="(val,key) in dictionary.source" :value="key">
                                                 {{val}}
                                             </option>
@@ -137,7 +133,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">个人/中介</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.person_medium">
-                                            <option value="">个人/中介</option>
                                             <option v-for="(val,key) in dictionary.person_medium" :value="key">
                                                 {{val}}
                                             </option>
@@ -184,7 +179,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">证件类型</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.id_type">
-                                            <option value="">证件类型</option>
                                             <option v-for="(val,key) in dictionary.credentials" :value="key">{{val}}
                                             </option>
                                         </select>
@@ -211,7 +205,6 @@
                                     <label class="col-lg-2 col-sm-2 control-label">婚姻状况</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.marriage_status">
-                                            <option value="">婚姻状况</option>
                                             <option v-for="(val,key) in dictionary.marriage_status" :value="key">{{val}}
                                             </option>
                                         </select>
@@ -278,22 +271,22 @@
                     identity: [],                       //业主/租客
                     name: '',                           //客户姓名
                     gender: '',                         //性别
-                    follow: '',                         //进度
+                    follow: 0,                          //进度
                     nationality: '',                    //国籍
                     mobile: [],                         //手机号
-                    customer_status: '',                //客户状态
-                    customer_will: '',                  //客户意向
-                    source: '',                         //客户来源
-                    person_medium: '',                  //个人/中介
+                    customer_status: 1,                 //客户状态
+                    customer_will: 1,                   //客户意向
+                    source: 1,                          //客户来源
+                    person_medium: 1,                   //个人/中介
                     medium_name: '',                    //中介名称
                     medium_mobile: '',                  //中介电话
                     amap_id: {                          //高德ID
 
                     },
-                    id_type: '',                        //证件类型
+                    id_type: 1,                         //证件类型
                     id_num: '',                         //证件号
                     id_pic: [],                         //证件照片
-                    marriage_status: '',                //婚姻状况
+                    marriage_status: 1,                 //婚姻状况
                     qq: '',                             //QQ
                     e_mail: '',                         //email
                     character: '',                      //性格
@@ -502,22 +495,22 @@
                     identity: [],                       //业主/租客
                     name: '',                           //客户姓名
                     gender: '',                         //性别
-                    follow: '',                         //进度
+                    follow: 0,                          //进度
                     nationality: '',                    //国籍
-                    mobile: '',                         //手机号
-                    customer_status: '',                //客户状态
-                    customer_will: '',                  //客户意向
-                    source: '',                         //客户来源
-                    person_medium: '',                  //个人/中介
+                    mobile: [],                         //手机号
+                    customer_status: 1,                 //客户状态
+                    customer_will: 1,                   //客户意向
+                    source: 1,                          //客户来源
+                    person_medium: 1,                   //个人/中介
                     medium_name: '',                    //中介名称
                     medium_mobile: '',                  //中介电话
                     amap_id: {                          //高德ID
 
                     },
-                    id_type: '',                        //证件类型
+                    id_type: 1,                         //证件类型
                     id_num: '',                         //证件号
                     id_pic: [],                         //证件照片
-                    marriage_status: '',                //婚姻状况
+                    marriage_status: 1,                 //婚姻状况
                     qq: '',                             //QQ
                     e_mail: '',                         //email
                     character: '',                      //性格
