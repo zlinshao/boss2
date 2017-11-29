@@ -260,7 +260,7 @@
                                            :checked="pitch.length == 12">
                                 </label>
                             </th>
-                            <th class="text-center width100" :class="{red: !recycle_bin}">合同时间周期</th>
+                            <!--<th class="text-center width100" :class="{red: !recycle_bin}">合同时间周期</th>-->
                             <th class="text-center width100" :class="{red: !recycle_bin}">付款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <th class="text-center width120" :class="{red: !recycle_bin}">支出科目</th>
@@ -271,6 +271,7 @@
                             <th class="text-center width50" :class="{red: !recycle_bin}">状态</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">明细详情</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">备注</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">手机号</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
 
                         </tr>
@@ -286,7 +287,7 @@
                                 </label>
 
                             </td>
-                            <td>{{item.info.months}}</td>
+                            <!--<td>{{item.info.months}}</td>-->
                             <td>{{item.pay_date}}</td>
                             <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
@@ -360,6 +361,9 @@
                                     <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
                                     {{key.content}}
                                 </span>
+                            </td>
+                            <td>
+                                <span v-if="item.customer != null">{{item.customer.contact}}</span>
                             </td>
                             <td v-if="recycle_bin">
                                 <router-link

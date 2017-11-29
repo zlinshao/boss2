@@ -99,8 +99,20 @@
                                                 @sendDate="getDate"></DatePicker>
                                 </div>
                             </div>
-                            <div class="pull-right balance" v-if="isPhone" style="margin-top: 15px;">
+
+                            <div class="pull-right balance" v-if="isPhone" style="margin-top: 15px;margin-left: 10px;">
                                 预计剩余&nbsp;(&nbsp;{{balance}}&nbsp;)&nbsp;条
+                            </div>
+
+                            <div v-if="isPhone" class="input-group pull-right col-xs-12 col-md-4 col-lg-3"
+                                 style="margin-top: 6px">
+                                <label class="sr-only" for="search_info">搜索</label>
+                                <input type="text" v-model="searchPhone" @keydown.enter.prevent="phone_remind(1)"
+                                       class="form-control" id="search_info" placeholder="手机号">
+                                <span class="input-group-btn">
+                                <button class="btn btn-success" id="search" type="button"
+                                        @click="phone_remind(1)">搜索</button>
+                            </span>
                             </div>
                         </div>
                         <div class="inbox-body panel table table-responsive roll">
@@ -519,6 +531,7 @@
                 isPhone: false,             //短信提醒
                 ShowPhone: false,           //短信提醒暂无数据
                 balance: '',                //剩余短息条数
+                searchPhone: '',            //手机搜索
                 configure: [],              //人资
                 time_status: true,
                 params: {
@@ -927,7 +940,7 @@
                     this.dict = res.data;
 
                     this.paging = '';
-                    this.$http.get('message/sms/smsList?pages=' + val).then((res) => {
+                    this.$http.get('message/sms/smsList?pages=' + val + '&keywords=' + this.searchPhone).then((res) => {
                         if (res.data.code === '20000') {
                             this.phones = res.data.data.list;
                             this.paging = res.data.data.pages;

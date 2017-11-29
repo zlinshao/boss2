@@ -102,7 +102,10 @@
                             <h5 @click="Rollback_show"><a><i class="fa  fa-undo"></i>&nbsp;回滚</a></h5>
                         </li>
                         <li>
-                            <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i> 删除</a></h5>
+                            <h5 @click="dele"><a><i class="fa fa-times-circle-o"></i>&nbsp;删除</a></h5>
+                        </li>
+                        <li>
+                            <h5 @click="sendMessage"><a><i class="fa fa-envelope-o"></i>&nbsp;发送短信</a></h5>
                         </li>
 
                         <!--<li v-show="pitch.length == 1">-->
@@ -257,7 +260,7 @@
                                            :checked="pitch.length == 12">
                                 </label>
                             </th>
-                            <th class="text-center width100" :class="{red: !recycle_bin}">合同时间周期</th>
+                            <!--<th class="text-center width100" :class="{red: !recycle_bin}">合同时间周期</th>-->
                             <th class="text-center width100" :class="{red: !recycle_bin}">收款时间</th>
                             <th class="text-center width80" :class="{red: !recycle_bin}">客户姓名</th>
                             <th class="text-center width120" :class="{red: !recycle_bin}">收入科目</th>
@@ -268,6 +271,7 @@
                             <th class="text-center width50" :class="{red: !recycle_bin}">状态</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">明细详情</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">备注</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}">手机号</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}" v-if="recycle_bin">详情</th>
                         </tr>
                         </thead>
@@ -280,7 +284,7 @@
                                     <input type="checkbox" :value="item.id" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
                             </td>
-                            <td>{{item.info.months}}</td>
+                            <!--<td>{{item.info.months}}</td>-->
                             <td>{{item.pay_date}}</td>
                             <td>
                                 <span v-if="item.customer != null">{{item.customer.address}}</span>
@@ -355,6 +359,9 @@
                                     <span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>
                                     {{key.content}}
                                 </span>
+                            </td>
+                            <td>
+                                <span v-if="item.customer != null">{{item.customer.contact}}</span>
                             </td>
                             <td v-if="recycle_bin">
                                 <router-link
@@ -521,6 +528,8 @@
 
         <!--查看详情-->
         <DetailInfo :msg="detail_info" :dict="dict" :detail="detail"></DetailInfo>
+
+        <SendMessage :message="pitch" :page="beforePage" @send="search"></SendMessage>
     </div>
 </template>
 
@@ -538,6 +547,7 @@
     import ModifyTime from './modifyPayTime.vue'
     import SelectHouse from '../../common/selectPayHouse.vue'
     import DetailInfo from './detail_info.vue'
+    import SendMessage from './sendMessage.vue'
 
     export default{
         components: {
@@ -553,7 +563,8 @@
             SelectHouse,
             Confirm,
             ModifyTime,
-            DetailInfo
+            DetailInfo,
+            SendMessage
         },
 
         data(){
@@ -712,6 +723,12 @@
         },
 
         methods: {
+//            发送短信
+            sendMessage (){
+                $('#sendMessage').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
 //            查看详情
             look_detail (val, del){
                 this.detail_info = [];

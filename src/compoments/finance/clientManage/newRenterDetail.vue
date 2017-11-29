@@ -27,7 +27,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <li>
-                                    <button class="btn btn-white btn-block" @click="reviseLand">
+                                    <button class="btn btn-white btn-block" @click="reviseLand('rev')">
                                         编辑
                                     </button>
                                 </li>
@@ -350,7 +350,7 @@
         components: {Confirm, Status, NewRenterAdd},
         data(){
             return {
-                freeze: 0,
+                freeze: '',
                 cus: '',
                 seaLand: {},                   //返回上一页
                 confirmMsg: '',                //删除信息
@@ -377,7 +377,6 @@
             this.myLandlordId = this.$route.query.nameId;
             this.seaLand = this.$route.query.sea;
             this.cus = this.$route.query.cus;
-            this.freeze = this.$route.query.freeze;
             this.getDictionary();
         },
         methods: {
@@ -394,32 +393,36 @@
                 }
             },
 //            修改
-            reviseLand (){
-                $('#newRenterAdd').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
+            reviseLand (val){
                 this.$http.get('finance/customer/rent/' + this.myLandlordId).then((res) => {
-                    if (res.data.code === '90010') {
+                    if (res.data.code === '90010' && val === 'rev') {
+                        $('#newRenterAdd').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
                         this.myLandlord = res.data.data;
+                    } else if (res.data.code === '90010' && val === 'info') {
+                        this.myLandlordList = [];
+                        this.myLandlordList.push(res.data.data);
+                        this.freeze = res.data.data.freeze;
                     }
                 })
             },
             getDictionary(){
                 this.$http.get('revenue/customer/dict').then((res) => {
                     this.dictionary = res.data;
-                    this.getClientDetail();
+                    this.reviseLand('info');
                 })
             },
 //            详情
-            getClientDetail(){
-                this.$http.get('finance/customer/rent/' + this.myLandlordId).then((res) => {
-                    this.myLandlordList = [];
-                    if (res.data.code === '90010') {
-                        this.myLandlordList.push(res.data.data);
-
-                    }
-                })
-            },
+//            getClientDetail(){
+//                this.$http.get('finance/customer/rent/' + this.myLandlordId).then((res) => {
+//                    this.myLandlordList = [];
+//                    if (res.data.code === '90010') {
+//                        this.myLandlordList.push(res.data.data);
+//
+//                    }
+//                })
+//            },
 //            删除
             deleteClient(){
                 this.confirmMsg = {msg: '您确定删除吗'};
