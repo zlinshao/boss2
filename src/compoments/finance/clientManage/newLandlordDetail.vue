@@ -37,7 +37,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <li>
-                                    <button class="btn btn-white btn-block" @click="reviseLand">
+                                    <button class="btn btn-white btn-block" @click="reviseLand('rev')">
                                         编辑
                                     </button>
                                 </li>
@@ -348,8 +348,7 @@
             this.myLandlordId = this.$route.query.nameId;
             this.seaLand = this.$route.query.sea;
             this.cus = this.$route.query.cus;
-            this.freeze = this.$route.query.freeze;
-            this.getDictionary();
+            this.getDictionary('info');
         },
         methods: {
 //            变化
@@ -366,30 +365,24 @@
                 }
             },
 //            修改
-            reviseLand (){
-                $('#newClientAdd').modal({
-                    backdrop: 'static',         //空白处模态框不消失
-                });
+            reviseLand (val){
                 this.$http.get('finance/customer/collect/' + this.myLandlordId).then((res) => {
-                    if (res.data.code === '90010') {
+                    if (res.data.code === '90010' && val === 'rev') {
+                        $('#newClientAdd').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
                         this.myLandlord = res.data.data;
+                    } else if (res.data.code === '90010' && val === 'info') {
+                        this.myLandlordList = [];
+                        this.myLandlordList.push(res.data.data);
+                        this.freeze = res.data.data.freeze;
                     }
                 })
             },
-            getDictionary(){
+            getDictionary(val){
                 this.$http.get('revenue/customer/dict').then((res) => {
                     this.dictionary = res.data;
-                    this.getClientDetail();
-                })
-            },
-//            详情
-            getClientDetail(){
-                this.$http.get('finance/customer/collect/' + this.myLandlordId).then((res) => {
-                    this.myLandlordList = [];
-                    if (res.data.code === '90010') {
-                        this.myLandlordList.push(res.data.data);
-
-                    }
+                    this.reviseLand('info');
                 })
             },
 //            删除
