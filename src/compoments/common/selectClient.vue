@@ -91,22 +91,18 @@
 
                     </div>
 
-                    <div class="modal-body roll" v-if="isNewAdd">
+                    <div class="modal-body roll has-js" v-if="isNewAdd">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">身份</label>
-                                <div class="col-lg-10 status1">
-                                    <label>
-                                        <input type="radio" name="status" value="1"
-                                               class="pull-left" v-model="cus_status">业主
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="status" value="2"
-                                               class="pull-left" v-model="cus_status">租客
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="status" value="3"
-                                               class="pull-left" v-model="cus_status">业主(代理人)
+                                <div class="col-sm-10 status1">
+                                    <label class="label_check" v-for="item in identity"
+                                           @click.prevent="selectIdentity(item,$event)"
+                                           :class="{'c_on':cus_status.indexOf(item.value) > -1,
+                                               'c_off':cus_status.indexOf(item.value) == -1}">
+                                        <input type="checkbox" :value="item.value" class="pull-left"
+                                               :checked="cus_status.indexOf(item.value) > -1">
+                                        {{item.name}}
                                     </label>
                                 </div>
                             </div>
@@ -189,7 +185,7 @@
                 },
                 isNewAdd: false,
 
-                cus_status: '',
+                cus_status: [],
                 cus_gender: '',
                 cus_name: '',
                 cus_phone: '',
@@ -197,15 +193,20 @@
                 salesman: '',
                 searchType : '请选择',
                 type:'',
+                identity:[
+                    {value : 1,name:'业主'},
+                    {value : 2,name:'租客'},
+                    {value : 3,name:'代理人'},
+                ],
             }
         },
         mounted(){
             this.custom();
         },
         watch: {
-            collectRent(val){
-                this.cus_status = val;
-            },
+//            collectRent(val){
+//                this.cus_status = val;
+//            },
             staffId(val){
                 this.salesman = val;
             },
@@ -326,6 +327,19 @@
                     case  '证件号' :
                         this.type = 'id_num';
                         break;
+                }
+            },
+            
+            //选择客户身份
+            selectIdentity(item,e){
+                let evInput = e.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.cus_status.push(item.value);
+                } else {
+                    this.cus_status = this.cus_status.filter(function (x) {
+                        return x !== item.value;
+                    })
                 }
             },
         }
