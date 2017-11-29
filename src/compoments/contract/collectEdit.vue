@@ -394,7 +394,7 @@
         <SelectClient :collectRent="collectRent" @clientAdd="receiveClient"> </SelectClient>
         <Status :state='info'></Status>
 
-        <SelectHouse @House="getHouse"></SelectHouse>
+        <SelectHouse @House="getHouse" :isNewAddHouse="isNewAddHouse"></SelectHouse>
     </div>
 </template>
 <script>
@@ -416,6 +416,7 @@
         },
         data(){
             return {
+                isNewAddHouse : '',     //房屋是否可以新增
                 simulate: [],
                 isSuper: [],
                 collectRent : '',
@@ -1035,10 +1036,11 @@
                 this.contractEdit.price = data;
             },
             selectHouse(){
+                this.isNewAddHouse = 1;
                 $('.selectHouse:eq(0)').modal('show');
             },
             getHouse(data){
-                console.log(data)
+                this.isNewAddHouse = '';
                 this.contractEdit.villa_id = data.id;
                 this.house_name = data.address;
             },
