@@ -79,9 +79,9 @@
                                     </ul>
                                 </div><!-- /btn-group -->
                                 <input type="text"  v-model="params.keywords" class="form-control"
-                                       @keydown.enter.prevent="search" placeholder="请选择搜索类型">
+                                       @keydown.enter.prevent="keySearch" placeholder="请选择搜索类型">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" @click="search">搜索</button>
+                                    <button class="btn btn-success" @click="keySearch">搜索</button>
                                 </span>
                             </div>
                         </div>
@@ -375,6 +375,16 @@
             getPage(val){
                 this.params.page = val;
                 this.getClientList();
+            },
+            //关键字搜索
+            keySearch(){
+                if(this.params.type === '' && this.params.keywords !== ''){
+                    this.info.error = '请选择搜索项';
+                    //显示成功弹窗 ***
+                    this.info.state_error = true;
+                }else {
+                    this.search();
+                }
             },
             search(){
                 this.params.page = 1;
