@@ -100,7 +100,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户状态</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.customer_status">
-                                            <option v-for="(val,key) in dictionary.customer_status" :value="key">
+                                            <option v-for="(val,key) in dictionary.customer_status" :value="key"  v-if="key!=3">
                                                 {{val}}
                                             </option>
                                         </select>
@@ -122,7 +122,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户来源</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.source">
-                                            <option v-for="(val,key) in dictionary.source" :value="key" v-if="key!=3">
+                                            <option v-for="(val,key) in dictionary.source" :value="key">
                                                 {{val}}
                                             </option>
                                         </select>
