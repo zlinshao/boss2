@@ -744,4 +744,8 @@
         padding: 8px 20px 8px 0;
         line-height: 12px;
     }
+
+    #house th, #house td {
+        width: 25%;
+    }
 </style>
