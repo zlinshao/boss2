@@ -144,7 +144,7 @@
                             <td class="text-center">{{list.name}}</td>
                             <td class="text-center">{{select_list.gender[list.gender]}}</td>
                             <td class="text-center">
-                                <span v-for="item in list.mobile">{{item}}&nbsp;</span>
+                                {{list.mobiles}}
                             </td>
                             <td class="text-center">{{select_list.customer_will[list.customer_will]}}</td>
                             <td class="text-center">
@@ -160,10 +160,10 @@
                             </td>
                             <td class="text-center">{{select_list.source[list.source]}}</td>
                             <td class="text-center">{{select_list.customer_status[list.customer_status]}}</td>
-                            <td class="text-center">{{select_list.identity[list.identity]}}</td>
+                            <td class="text-center">{{list.identity}}</td>
                             <td class="text-center">{{select_list.person_medium[list.person_medium]}}</td>
                             <td class="text-center">{{list.belong}}</td>
-                            <td class="text-center">{{list.staff_id}}</td>
+                            <td class="text-center">{{list.manager_name}}</td>
                             <td class="text-center">
                                 <router-link :to="{path:'/clientDetail',query: {clientId: list.id,from:'clientPool',searchInfo :return_sea}}">
                                     详情
