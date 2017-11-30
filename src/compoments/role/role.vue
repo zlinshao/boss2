@@ -26,7 +26,7 @@
                             <h4 v-if="status1" class="modal-title">角色新增</h4>
                             <h4 v-if="status2" class="modal-title">角色修改</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body roll">
                             <form role="form">
                                 <div class="form-group">
                                     <label for="title1">描述</label>
@@ -380,7 +380,8 @@
         width: 17px;
         height: 17px;
     }
-    .modal-content{
+    .modal-body{
+        height: 86%;
         overflow: auto;
     }
     .check {
