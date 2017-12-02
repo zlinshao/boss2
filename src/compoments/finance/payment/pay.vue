@@ -506,7 +506,7 @@
                                     'c_off':rollback_id.indexOf(index) == -1}"
                                    @click.prevent="change_index($event,index)">
                                 <input type="checkbox" :checked="rollback_id.indexOf(index) > -1"
-                                       class="rollbacks"><span>{{key}}</span>
+                                       class="rollbacks">{{key}}
                             </label>
                         </h5>
                     </div>

@@ -33,15 +33,20 @@
                         <i class="fa fa-user"></i> &nbsp;客户信息
                         <div class="btn-group pull-right">
                             <a class="fa fa-gear dropdown-toggle" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false" v-if="freeze !== 1 && freeze !== '1'">
+                               aria-haspopup="true" aria-expanded="false">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <li>
+                                    <button class="btn btn-white btn-block" @click="reviseDate()">
+                                        付款时间编辑
+                                    </button>
+                                </li>
+                                <li v-if="freeze !== 1 && freeze !== '1'">
                                     <button class="btn btn-white btn-block" @click="reviseLand('rev')">
                                         编辑
                                     </button>
                                 </li>
-                                <li>
+                                <li v-if="freeze !== 1 && freeze !== '1'">
                                     <button class="btn btn-white btn-block" @click="deleteClient">
                                         删除
                                     </button>
@@ -53,7 +58,8 @@
                 <div class="panel-body table-responsive client_info">
                     <div class="row" v-for="item in myLandlordList">
                         <div class="col-sm-4 col-xs-12">
-                            <h5>基本信息&nbsp;<span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span></h5>
+                            <h5>基本信息&nbsp;<span v-if="item.liquidation === 1" class="fa fa-jpy text-warning"></span>
+                            </h5>
                             <div>
                                 <div>
                                     <span class="text-primary">客户姓名：</span>
@@ -305,11 +311,17 @@
 
             </div>
         </section>
+        <!--删除-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
 
+        <!--状态-->
         <Status :state='info'></Status>
 
+        <!--详情编辑-->
         <NewClientAdd :list="myLandlord" @success_="getDictionary"></NewClientAdd>
+
+        <!--编辑时间-->
+        <EditDate :date="landlordDate" @reviseDate="getDictionary"></EditDate>
     </div>
 </template>
 
@@ -317,8 +329,9 @@
     import Status from '../../common/status.vue'
     import Confirm from '../../common/confirm.vue'
     import NewClientAdd from  './newLandlordAdd.vue'
+    import EditDate from  './editDate.vue'
     export default{
-        components: {Confirm, Status, NewClientAdd},
+        components: {Confirm, Status, NewClientAdd, EditDate},
         data(){
             return {
                 freeze: '',
@@ -329,7 +342,7 @@
                 dictionary: {},                //字典
                 myLandlordList: [],            //详情信息
                 myLandlord: {},                //详情修改
-
+                landlordDate: [],              //编辑付款时间
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -351,6 +364,12 @@
             this.getDictionary('info');
         },
         methods: {
+//            付款时间编辑
+            reviseDate (){
+                $('#editDate').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
 //            变化
             changes (val){
                 if (val === 1) {
@@ -375,11 +394,12 @@
                     } else if (res.data.code === '90010' && val === 'info') {
                         this.myLandlordList = [];
                         this.myLandlordList.push(res.data.data);
+                        this.landlordDate = res.data.data.pay_date;
                         this.freeze = res.data.data.freeze;
                     }
                 })
             },
-            getDictionary(val){
+            getDictionary(){
                 this.$http.get('revenue/customer/dict').then((res) => {
                     this.dictionary = res.data;
                     this.reviseLand('info');
@@ -392,7 +412,7 @@
             },
 //            删除回调
             getConfirm(){
-                let ids = [];   
+                let ids = [];
                 ids.push(this.myLandlordId);
                 this.$http.post('finance/customer/collect/delete', {
                     ids: ids
