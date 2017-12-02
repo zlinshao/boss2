@@ -486,7 +486,7 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
-                        <h4 class="modal-title">提示信息</h4>
+                        <h4 class="modal-title">提示信息{{rollback_id}}</h4>
                     </div>
                     <div class="modal-body">
                         <h5 v-for="(key,index) in rollbacks">
@@ -494,7 +494,8 @@
                                     'c_off':rollback_id.indexOf(index) == -1}"
                                    @click.prevent="change_index($event,index)">
                                 <input type="checkbox"
-                                       :checked="rollback_id.indexOf(index) > -1" class="rollbacks"><span>{{key}}</span>
+                                       :checked="rollback_id.indexOf(index) > -1" class="rollbacks">
+                                {{key}}
                             </label>
                         </h5>
                     </div>
