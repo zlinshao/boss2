@@ -489,6 +489,13 @@
             closeModal(){   //关闭模态框
                 this.$emit('close');
                 $('#clientEdit').modal('hide');
+                this.phone_status = {
+                    '1': true,
+                    '2': true,
+                    '3': true,
+                    '4': true,
+                    '5': true,
+                };
                 this.params = {
                     id: '',
                     identity: [],                       //业主/租客

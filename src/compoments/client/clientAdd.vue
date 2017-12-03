@@ -35,7 +35,8 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户姓名&nbsp;<span
                                             class="text-danger">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="text" v-model="params.name" class="form-control" placeholder="请输入客户姓名">
+                                        <input type="text" v-model="params.name" class="form-control"
+                                               placeholder="请输入客户姓名">
                                     </div>
                                 </div>
                                 <!--尊称-->
@@ -60,7 +61,7 @@
                                     <div class="col-sm-8">
                                         <div v-for="key in amount">
                                             <input type="text" class="form-control" v-model="params.mobile[key-1]"
-                                                  @blur="reg_phone(params.mobile[key-1],key)" maxlength="11"
+                                                   @blur="reg_phone(params.mobile[key-1],key)" maxlength="11"
                                                    placeholder="请输入手机号" style="margin-bottom: 18px">
                                             <div style="margin-top: -18px" v-show="!phone_status[key]">
                                                 <span style="color: #E4393C;">手机格号式不正确</span>
@@ -100,7 +101,8 @@
                                     <label class="col-lg-2 col-sm-2 control-label">客户状态</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" v-model="params.customer_status">
-                                            <option v-for="(val,key) in dictionary.customer_status" :value="key" v-if="key!=3">
+                                            <option v-for="(val,key) in dictionary.customer_status" :value="key"
+                                                    v-if="key!=3">
                                                 {{val}}
                                             </option>
                                         </select>
@@ -163,13 +165,14 @@
                                     <label class="col-sm-2 control-label">小区名称</label>
                                     <div class="col-sm-10">
                                         <input title="请点击选择" type="text" class="form-control" readonly
-                                             v-model="params.amap_id.villageName" @click="chooseAddress">
+                                               v-model="params.amap_id.villageName" @click="chooseAddress">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">地址</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="params.amap_id.villageAddress" disabled>
+                                        <input type="text" class="form-control" v-model="params.amap_id.villageAddress"
+                                               disabled>
                                     </div>
                                 </div>
 
@@ -188,10 +191,12 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">证件号</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" v-model="params.id_num" :class="{'error': cus_idNumber_status}"
+                                        <input type="text" class="form-control" v-model="params.id_num"
+                                               :class="{'error': cus_idNumber_status}"
                                                placeholder="请输入证件号" @blur="reg_number" style="margin-bottom: 0">
                                         <div>
-                                            &nbsp;<span v-show="cus_idNumber_status" style="color: #E4393C">证件号格式不正确</span>
+                                            &nbsp;<span v-show="cus_idNumber_status"
+                                                        style="color: #E4393C">证件号格式不正确</span>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +225,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">邮箱</label>
                                     <div class="col-sm-10">
-                                        <input type="email" v-model="params.e_mail" placeholder="邮箱" class="form-control">
+                                        <input type="email" v-model="params.e_mail" placeholder="邮箱"
+                                               class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -263,10 +269,10 @@
     import upLoad from '../common/upload.vue'               //图片上传
     import Status from '../common/status.vue'                           //提示信息
     export default{
-        components:{Country,ChooseAddress,upLoad,Status},
+        components: {Country, ChooseAddress, upLoad, Status},
         data(){
-            return{
-                params:{
+            return {
+                params: {
                     id: '',
                     identity: [],                       //业主/租客
                     name: '',                           //客户姓名
@@ -292,26 +298,26 @@
                     character: '',                      //性格
                     remarks: '',                        //备注
                 },
-                phone_status:{
-                    '1':true,
-                    '2':true,
-                    '3':true,
-                    '4':true,
-                    '5':true,
+                phone_status: {
+                    '1': true,
+                    '2': true,
+                    '3': true,
+                    '4': true,
+                    '5': true,
                 },
-                cus_idNumber_status :false,
-                dictionary:[],                          //字典
+                cus_idNumber_status: false,
+                dictionary: [],                          //字典
                 photos: {
                     cus_idPhotos: {},                   //修改图片ID
                     cus_idPhoto: [],                    //证件照片
                 },
-                complete_ok :'ok',
-                identity:[
-                    {value : 1,name:'业主'},
-                    {value : 2,name:'租客'},
-                    {value : 3,name:'代理人'},
+                complete_ok: 'ok',
+                identity: [
+                    {value: 1, name: '业主'},
+                    {value: 2, name: '租客'},
+                    {value: 3, name: '代理人'},
                 ],
-                nationality_name:'',                    //  国籍名字
+                nationality_name: '',                    //  国籍名字
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -322,13 +328,13 @@
                     //失败信息 ***
                     error: ''
                 },
-                amount : 1,
+                amount: 1,
             }
         },
         created(){
             this.getDictionary();
         },
-        methods:{
+        methods: {
             getDictionary(){
                 this.photos.cus_idPhotos = {};
                 this.$http.get('core/customer/dict').then((res) => {
@@ -336,12 +342,12 @@
                 });
             },
             // 手机正则
-            reg_phone (val,index){
+            reg_phone (val, index){
                 let reg = /^1[3|4|5|7|8|9][0-9]{9}$/;
                 let isCorrect = reg.test(val);
                 if (val !== undefined && val !== '') {
-                    isCorrect ? this.phone_status[index]=true : this.phone_status[index]=false;
-                }else {
+                    isCorrect ? this.phone_status[index] = true : this.phone_status[index] = false;
+                } else {
                     this.phone_status[index] = true
                 }
             },
@@ -350,10 +356,10 @@
                 let reg = /[\u4E00-\u9FA5]/i;
                 if (this.params.id_num !== '') {
                     this.cus_idNumber_status = reg.test(this.params.id_num);
-                }else {
+                } else {
                     this.cus_idNumber_status = false;
                 }
-                
+
             },
             selectCountry(){
                 $('.countryMadal:eq(1)').modal('show')
@@ -383,7 +389,7 @@
                     this.params.id_pic.splice(index, 1);
                 }
             },
-            selectIdentity(item,e){
+            selectIdentity(item, e){
                 let evInput = e.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -395,13 +401,15 @@
                 }
             },
             confirmAdd(){
-                if(this.cus_idNumber_status){
+                if (this.cus_idNumber_status) {
                     this.info.error = '身份证件号格式不正确';
                     this.info.state_error = true;
-                }else if(!Object.keys(this.phone_status).every((x) => {return this.phone_status[x]})){
+                } else if (!Object.keys(this.phone_status).every((x) => {
+                        return this.phone_status[x]
+                    })) {
                     this.info.error = '手机号格式不正确';
                     this.info.state_error = true;
-                }else {
+                } else {
                     this.$http.post('core/customer/saveCustomer', this.params).then((res) => {
                         if (res.data.code === '70010') {
                             this.closeModal();
@@ -417,23 +425,30 @@
                 }
             },
             add(){
-                if(this.params.mobile.length<this.amount){
+                if (this.params.mobile.length < this.amount) {
                     this.info.error = '请先填写已有输入框';
                     this.info.state_error = true;
-                }else if(this.amount>4){
+                } else if (this.amount > 4) {
                     this.info.error = '最多只可以录入五个号码';
                     this.info.state_error = true;
-                }else {
+                } else {
                     this.amount++;
                     this.params.mobile.push('');
                 }
             },
             reduce(){
-                this.amount > 1? this.amount-- : this.amount;
+                this.amount > 1 ? this.amount-- : this.amount;
                 this.params.mobile.pop();
             },
             closeModal(){   //关闭模态框
                 $('#clientAdd').modal('hide');
+                this.phone_status = {
+                    '1': true,
+                    '2': true,
+                    '3': true,
+                    '4': true,
+                    '5': true,
+                };
                 this.params = {
                     id: '',
                     identity: [],                       //业主/租客
@@ -448,9 +463,7 @@
                     person_medium: 1,                   //个人/中介
                     medium_name: '',                    //中介名称
                     medium_mobile: '',                  //中介电话
-                    amap_id: {                          //高德ID
-
-                    },
+                    amap_id: {},                        //高德ID
                     id_type: 1,                         //证件类型
                     id_num: '',                         //证件号
                     id_pic: [],                         //证件照片
@@ -498,20 +511,23 @@
     .error {
         border-color: #E4393C;
     }
-    input, select{
+
+    input, select {
         margin-bottom: 0;
     }
 
-    .flexBox i{
+    .flexBox i {
         line-height: 34px;
         font-size: 20px;
         color: #ddd;
         cursor: pointer;
     }
-    .flexBox i+i{
+
+    .flexBox i + i {
         margin-left: 5px;
     }
-    .flexBox i:hover{
+
+    .flexBox i:hover {
         color: #999;
     }
 </style>
