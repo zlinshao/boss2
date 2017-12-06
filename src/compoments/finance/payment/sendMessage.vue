@@ -72,7 +72,7 @@
                 ],
                 statusInfo: '短信发送',
                 currentDate: [],
-                messageDate: '',
+//                messageDate: '',
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -90,15 +90,15 @@
                 this.messageStatus = val;
                 if (val === 6) {
                     this.statusInfo = '催缴短信';
-                    this.messageDate = '';
+//                    this.messageDate = '';
                 } else if (val === 7) {
                     this.statusInfo = '到期短信';
-                    this.messageDate = '';
+//                    this.messageDate = '';
                 } else if (val === 8) {
                     this.statusInfo = '逾期短信';
                 } else {
                     this.statusInfo = '短信发送';
-                    this.messageDate = '';
+//                    this.messageDate = '';
                 }
             },
 //            确认发送
@@ -119,12 +119,12 @@
                     })
                 }
             },
-            getDate (val){
-                this.messageDate = val;
-            },
+//            getDate (val){
+//                this.messageDate = val;
+//            },
             close_ (){
                 $('#sendMessage').modal('hide');
-                this.messageDate = '';
+//                this.messageDate = '';
                 this.messageStatus = '';
                 this.statusInfo = '短信发送';
             },

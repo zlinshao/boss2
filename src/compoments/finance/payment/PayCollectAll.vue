@@ -295,7 +295,7 @@
                             <td>
                                 {{item.customer == null ? '' : item.customer.address}}
                                 <span style="line-height: 9px;" v-if="item.identity === 1"
-                                      @click="look_detail(item.id, 'pay')"
+                                      @click="look_detail(item.id, 'collect')"
                                       class="btn btn-danger btn-xs">F</span>
                                 <span style="line-height: 9px;" v-if="item.identity === 2"
                                       @click="look_detail(item.id, 'collect')"
@@ -392,7 +392,7 @@
                                       @click="look_detail(item.id, 'pay')"
                                       style="line-height: 9px;">F</span>
                                 <span v-if="item.identity === 2" class="btn btn-danger btn-xs"
-                                      @click="look_detail(item.id, 'collect')"
+                                      @click="look_detail(item.id, 'pay')"
                                       style="line-height: 9px;">Z</span><br>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
