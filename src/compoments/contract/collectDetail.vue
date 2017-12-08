@@ -381,35 +381,43 @@
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>业主姓名<sup>*</sup>：</span>
-                                                <span>{{item.customer_id.name}}</span>
+                                                <span v-if="item.customer_id!== undefined && item.customer_id!== null">
+                                                    {{item.customer_id.name}}
+                                                </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>尊称<sup>*</sup>：</span>
-                                                <span>{{dictionary.gender[item.customer_id.gender]}}</span>
+                                                <span v-if="item.customer_id!== undefined && item.customer_id!== null">
+                                                    {{dictionary.gender[item.customer_id.gender]}}
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>国籍<sup>*</sup>：</span>
-                                                <span>
+                                                <span v-if="item.customer_id!== undefined && item.customer_id!== null">
                                                     {{country}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>手机号码<sup>*</sup>：</span>
-                                                <span>{{item.mobile}}</span>
+                                                <span v-if="item.customer_id!== undefined && item.customer_id!== null">
+                                                    {{item.mobile}}
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="infoList">
                                                 <span>证件类型<sup>*</sup>：</span>
-                                                <span>
+                                                <span v-if="item.customer_id!== undefined && item.customer_id!== null">
                                                     {{dictionary.credentials[item.customer_id.id_type]}}
                                                 </span>
                                             </div>
                                             <div class="infoList">
                                                 <span>身份证号<sup>*</sup>：</span>
-                                                <span>{{item.customer_id.id_num}}</span>
+                                                <span v-if="item.customer_id!== undefined && item.customer_id!== null">
+                                                    {{item.customer_id.id_num}}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -433,9 +441,9 @@
                                             <div class="col-lg-4">
                                                 <div class="infoList">
                                                     <span>国籍：</span>
-                                                    <span>
-                                                    {{dictionary.nationality[relative.nationality]}}
-                                                </span>
+                                                    <span v-if="relative.nationalit!==null">
+                                                        {{dictionary.nationality[relative.nationality]}}
+                                                    </span>
                                                 </div>
                                                 <div class="infoList">
                                                     <span>手机号码：</span>
