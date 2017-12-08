@@ -20,25 +20,22 @@
                         <!--催缴短信-->
                         <div v-if="messageStatus == 6">
                             <span class="vertical">
-                                【乐伽公寓】尊敬的***先生/女士：您租住的****小区，需提前缴纳下一期房租，打款账户为收据上的汇款账号请您于*****时间前缴清房租。如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢
+                                【乐伽公寓】尊敬的***先生/女士：您租住的****小区，下一期房租需要缴纳，请xxx前及时缴纳，打款账户为收据上方的汇款账号。如不缴纳会有滞纳金的产生，收到此短信七天后如还未缴纳房租将视您为违约，我们将按照合同收回房屋！请您合理安排好缴款时间，及时缴款！如已缴纳，请忽略此条短信，再次感谢您的配合！如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。
                             </span>
                         </div>
                         <!--到期短信-->
                         <div v-if="messageStatus == 7">
                             <span class="vertical">
-                                【乐伽公寓】尊敬的***先生/女士：您租住的****小区，房租于***日到期，如续签 ......。，如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。
+                                【乐伽公寓】尊敬的***先生/女士：您租住的****小区，房租于***日到期，如续签/退租，请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。
                             </span>
                         </div>
                         <!--逾期短信-->
                         <div v-if="messageStatus == 8">
-                            <span class="vertical">【乐伽公寓】尊敬的***先生/女士：您租住的****小区，下一期房租已逾期，收到本此短信后将于</span>
-                            <div style="display: inline-block;">
-                                <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
-                                            :idName="'message'" @sendDate="getDate"></DatePicker>
-                            </div>
-                            <span class="vertical">
-                                后对房租进行清退，请做好时间安排，如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。
-                            </span>
+                            <span class="vertical">【乐伽公寓】尊敬的***先生/女士：您租住的****小区，需要在XXX前缴纳下一期房租，您已经逾期XX天，请今天及时缴纳，如不缴纳，我们将按照合同处理，收回房屋！请您合理安排好缴款时间，及时缴款！如已缴纳，请忽略此条短信，感谢您的配合！如需咨询（如有疑问），请致电乐伽客户服务热线400-892-6606，或添加公众号“乐伽公寓”，谢谢。</span>
+                            <!--<div style="display: inline-block;">-->
+                            <!--<DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"-->
+                            <!--:idName="'message'" @sendDate="getDate"></DatePicker>-->
+                            <!--</div>-->
                         </div>
                     </div>
 
@@ -75,7 +72,7 @@
                 ],
                 statusInfo: '短信发送',
                 currentDate: [],
-                messageDate: '',
+//                messageDate: '',
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -93,15 +90,15 @@
                 this.messageStatus = val;
                 if (val === 6) {
                     this.statusInfo = '催缴短信';
-                    this.messageDate = '';
+//                    this.messageDate = '';
                 } else if (val === 7) {
                     this.statusInfo = '到期短信';
-                    this.messageDate = '';
+//                    this.messageDate = '';
                 } else if (val === 8) {
                     this.statusInfo = '逾期短信';
                 } else {
                     this.statusInfo = '短信发送';
-                    this.messageDate = '';
+//                    this.messageDate = '';
                 }
             },
 //            确认发送
@@ -110,7 +107,7 @@
                     this.$http.post('account/receivable/notify', {
                         type: this.messageStatus,
                         ids: this.message,
-                        due_date: this.messageDate,
+//                        due_date: this.messageDate,
                     }).then((res) => {
                         if (res.data.code === '18510') {
                             this.$emit('send', this.page);
@@ -122,12 +119,12 @@
                     })
                 }
             },
-            getDate (val){
-                this.messageDate = val;
-            },
+//            getDate (val){
+//                this.messageDate = val;
+//            },
             close_ (){
                 $('#sendMessage').modal('hide');
-                this.messageDate = '';
+//                this.messageDate = '';
                 this.messageStatus = '';
                 this.statusInfo = '短信发送';
             },
@@ -153,7 +150,7 @@
     }
 
     .vertical {
-        vertical-align: top;
+        /*vertical-align: top;*/
         line-height: 39px;
     }
 

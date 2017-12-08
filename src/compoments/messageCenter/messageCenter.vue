@@ -75,14 +75,14 @@
 
                             <!--部门发件箱-->
                             <form class="pull-right position" action="#"
-                                  v-if="simulate.indexOf('Message/department_message')>-1||isSuper">
+                                  v-if="simulate.indexOf('Message/department_message')>-1">
                                 <div class="input-append pull-right" v-if="isNew2">
                                     <button type="button" class="btn btn-primary" @click="resetting"
                                             style="background-color: #00A6B2;margin: 4px 0 0 15px;">重置
                                     </button>
                                 </div>
                             </form>
-                            <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper"
+                            <div v-if="isNew2 && simulate.indexOf('Message/department_message')>-1"
                                  class="pull-right col-xs-12 col-md-4 col-lg-2"
                                  style="margin-top: 4px;padding: 0;margin-left: 10px">
                                 <div class="form-group pull-right" style="margin-bottom: 0;">
@@ -91,7 +91,7 @@
                                            v-model="params.staff" @click="selectStaff" placeholder='选择收件人'>
                                 </div>
                             </div>
-                            <div v-if="isNew2&&simulate.indexOf('Message/department_message')>-1||isSuper"
+                            <div v-if="isNew2 && simulate.indexOf('Message/department_message')>-1"
                                  class="pull-right col-xs-12 col-md-4"
                                  style="margin-top: 4px;padding: 0;">
                                 <div class="form-group pull-right">

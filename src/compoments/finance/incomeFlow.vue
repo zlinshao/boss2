@@ -124,7 +124,7 @@
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
                                            v-if="item.identity == 2 && item.customer.is_shared == 1">
-                                         (&nbsp;{{dict.shzared_part[item.customer.shared_part]}}&nbsp;)
+                                         (&nbsp;{{dict.shared_part[item.customer.shared_part]}}&nbsp;)
                                      </span>
                                 </span>
                             </td>
@@ -173,7 +173,6 @@
 
     export default{
         components: {Page, DatePicker, SelectSubject},
-
         data(){
             return {
                 isActive: '',
@@ -212,7 +211,7 @@
         mounted () {
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.dict = res.data;
-                    this.payFlowList();
+                    this.filter(1);
                 }
             );
         },
@@ -243,7 +242,7 @@
             },
             payFlowList(){
                 this.$http.get('account/running').then((res) => {
-                    if (res.data.code == 18700) {
+                    if (res.data.code === '18700') {
                         this.myData = res.data.data.data;
                         this.paging = res.data.data.pages;
                         this.setTips(res.data.data, true);
@@ -273,7 +272,7 @@
                 this.$http.get('account/running?page=' + val, {
                     params: this.params
                 }).then((res) => {
-                        if (res.data.code == 18700) {
+                        if (res.data.code === '18700') {
                             // 成功
                             this.paging = res.data.data.pages;
                             this.myData = res.data.data.data;

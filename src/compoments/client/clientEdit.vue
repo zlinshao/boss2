@@ -60,12 +60,11 @@
                                     <div class="col-sm-8">
                                         <div v-for="key in amount">
                                             <input type="text" class="form-control" v-model="params.mobile[key-1]"
-                                                   @blur="reg_phone(params.mobile[key-1],key)"
+                                                   @blur="reg_phone(params.mobile[key-1],key)" maxlength="11"
                                                    placeholder="请输入手机号" style="margin-bottom: 18px">
                                             <div style="margin-top: -18px" v-show="!phone_status[key]">
                                                 <span style="color: #E4393C;">手机格号式不正确</span>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="col-sm-2 flexBox">
@@ -392,7 +391,7 @@
             },
             // 手机正则
             reg_phone (val,index){
-                let reg = /^1[3|4|5|7|8][0-9]{9}$/;
+                let reg = /^1[3|4|5|7|8|9][0-9]{9}$/;
                 let isCorrect = reg.test(val);
                 if (val !== undefined && val !== '') {
                     isCorrect ? this.phone_status[index]=true : this.phone_status[index]=false;
@@ -490,6 +489,13 @@
             closeModal(){   //关闭模态框
                 this.$emit('close');
                 $('#clientEdit').modal('hide');
+                this.phone_status = {
+                    '1': true,
+                    '2': true,
+                    '3': true,
+                    '4': true,
+                    '5': true,
+                };
                 this.params = {
                     id: '',
                     identity: [],                       //业主/租客

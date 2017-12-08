@@ -295,7 +295,7 @@
                                       @click="look_detail(item.id, 'pay')"
                                       class="btn btn-danger btn-xs">F</span>
                                 <span style="line-height: 9px;" v-if="item.identity == 2"
-                                      @click="look_detail(item.id, 'collect')"
+                                      @click="look_detail(item.id, 'pay')"
                                       class="btn btn-danger btn-xs">Z</span>
                                 <span v-if="item.customer != null">
                                      <span style="line-height: 9px;"
@@ -506,7 +506,7 @@
                                     'c_off':rollback_id.indexOf(index) == -1}"
                                    @click.prevent="change_index($event,index)">
                                 <input type="checkbox" :checked="rollback_id.indexOf(index) > -1"
-                                       class="rollbacks"><span>{{key}}</span>
+                                       class="rollbacks">{{key}}
                             </label>
                         </h5>
                     </div>
@@ -722,27 +722,15 @@
 //            查看详情
             look_detail (val, del){
                 this.detail_info = [];
-                if (del === 'pay') {
-                    this.$http.get('account/payable/' + val).then((res) => {
-                        if (res.data.code === '18400') {
-                            this.detail_info.push(res.data.data);
-                            this.detail = del;
-                            $('#detail_info').modal({backdrop: 'static',});
-                        } else {
-                            this.errorMsg(res.data.msg);
-                        }
-                    });
-                } else if (del === 'collect') {
-                    this.$http.get('account/receivable/' + val).then((res) => {
-                        if (res.data.code === '18500') {
-                            this.detail_info.push(res.data.data);
-                            this.detail = del;
-                            $('#detail_info').modal({backdrop: 'static',});
-                        } else {
-                            this.errorMsg(res.data.msg);
-                        }
-                    });
-                }
+                this.$http.get('account/payable/' + val).then((res) => {
+                    if (res.data.code === '18400') {
+                        this.detail_info.push(res.data.data);
+                        this.detail = del;
+                        $('#detail_info').modal({backdrop: 'static',});
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                });
             },
 //            导出
             leading_out (){
