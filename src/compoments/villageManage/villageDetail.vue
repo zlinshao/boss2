@@ -49,7 +49,7 @@
 
                             </div>
 
-                            <div class="col-md-5 col-md-offset-2">
+                            <div class="col-md-5">
                                 <div class="item">
                                     <span class="col-md-4">栋数：</span>
                                     <span class="col-md-8">{{villageDetail.total_buildings}}</span>
@@ -63,6 +63,10 @@
                                     <span class="col-md-8">{{villageDetail.property_fee}}</span>
                                 </div>
                                 <div class="item">
+                                    <span class="col-md-4">地铁线路：</span>
+                                    <span class="col-md-8">{{villageDetail.subway_road}}</span>
+                                </div>
+                                <div class="item">
                                     <span class="col-md-4">照片：</span>
                                     <span class="col-md-8" v-if="villageDetail.album!==undefined">
                                         <a v-for="(img,index) in villageDetail.album.house_pic">
@@ -74,7 +78,28 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div class="panel-body table-responsive client_info">
+                        <div class="title">
+                            <h4>小区简介</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="item">
+                                    <span class="col-md-4">周边配套：</span>
+                                    <span class="col-md-8">{{villageDetail.peripheral_info}}</span>
+                                </div>
+                            </div>
 
+                            <div class="col-md-5">
+                                <div class="item">
+                                    <span class="col-md-4">小区简介：</span>
+                                    <span class="col-md-8" style="word-break:break-all">{{villageDetail.content}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <div class="panel-body table-responsive client_info">
                         <div class="title">
@@ -187,7 +212,7 @@
 
                     let centerPoint = _this.location; //中心点坐标
 
-                    placeSearch.searchNearBy('', centerPoint, 200, function(status, result) {});
+                    placeSearch.searchNearBy('', centerPoint, 500, function(status, result) {});
 
                 });
             },
@@ -273,5 +298,8 @@
     }
     .amap_lib_placeSearch{
         border: none;
+    }
+    .client_info span{
+        word-break: break-all;
     }
 </style>

@@ -7,7 +7,7 @@
                         <button type="button" class="close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">新增小区</h4>
+                        <h4 class="modal-title">新增小区{{params.peripheral_info}}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="panel-body">
@@ -186,6 +186,19 @@
                                                  :result="'housePic'" :idPhotos="housePic"></UpLoad>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">周边配套</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" v-model="params.peripheral_info"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">小区简介</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" v-model="params.content"></textarea>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -248,6 +261,9 @@
                     longitude : '',          //经度
                     latitude : '',           //纬度
                     code :'',                //城市code码
+                    peripheral_info : '',    //周边信息
+                    content : '',            //小区简介
+
                 },
                 dictionary : [],
                 now : '',
@@ -398,26 +414,28 @@
             closeModal(){
                 this.params = {
                     province : '',           //省
-                        city : '',               //市
-                        area :'',                //区、县
-                        region :'',              //热门区域
-                        address : '',            //小区地址
-                        village_name : '',       //小区名字
-                        village_alias : [],      //小区别名
-                        built_year : '',         //建筑年代
-                        house_type : '',         //房屋类型
-                        total_buildings : '',    //总栋数
-                        property_fee : '',       //物业费
-                        district_group : [],     //区/组
-                        seat_block : [],         //座/幢
-                        unit : [],               //单元
-                        floor : [],              //楼层
-                        number_rooms : [],       //房间数
-                        suffix : [],             //后缀
-                        house_pic : [],          //小区照片
-                        longitude : '',          //经度
-                        latitude : '',           //纬度
-                        code :'',                //城市code码
+                    city : '',               //市
+                    area :'',                //区、县
+                    region :'',              //热门区域
+                    address : '',            //小区地址
+                    village_name : '',       //小区名字
+                    village_alias : [],      //小区别名
+                    built_year : '',         //建筑年代
+                    house_type : '',         //房屋类型
+                    total_buildings : '',    //总栋数
+                    property_fee : '',       //物业费
+                    district_group : [],     //区/组
+                    seat_block : [],         //座/幢
+                    unit : [],               //单元
+                    floor : [],              //楼层
+                    number_rooms : [],       //房间数
+                    suffix : [],             //后缀
+                    house_pic : [],          //小区照片
+                    longitude : '',          //经度
+                    latitude : '',           //纬度
+                    code :'',                //城市code码
+                    peripheral_info : '',    //周边信息
+                    content : '',            //小区简介
                 };
                 this.housePic = {
                     cus_idPhotos : {},          //修改图片ID

@@ -98,7 +98,7 @@ import CheckIn from './compoments/checkIn/checkIn.vue'                          
 // import ReportedOther from './compoments/reported/other/reportedOther.vue'                       //其余款项报备
 // import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'                   //其余款项报备
 
-import lockScreen from './compoments/lock_screen/lock_screen.vue'                               //锁屏
+// import lockScreen from './compoments/lock_screen/lock_screen.vue'                               //锁屏
 import UserDetail from './compoments/user/userDetail.vue'                                       //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'                              //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
@@ -507,11 +507,11 @@ export default[
         component: MessageCenter
     },
 
-    {
-        path: '/lockScreen',
-        name: 'lock_screen',
-        component: lockScreen
-    },
+    // {
+    //     path: '/lockScreen',
+    //     name: 'lock_screen',
+    //     component: lockScreen
+    // },
     {
         path: '/checkIn',
         name: 'CheckIn',

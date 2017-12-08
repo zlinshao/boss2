@@ -186,6 +186,19 @@
                                                  :result="'housePic'" :idPhotos="housePic"></UpLoad>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">周边配套</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" v-model="params.peripheral_info"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">小区简介</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" v-model="params.content"></textarea>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -249,6 +262,8 @@
                     longitude : '',          //经度
                     latitude : '',           //纬度
                     code :'',                //城市code码
+                    peripheral_info : '',    //周边信息
+                    content : '',            //小区简介
                 },
                 dictionary : [],
                 now : '',
@@ -318,6 +333,8 @@
                     this.params.floor = data.floor;              //楼层
                     this.params.number_rooms = data.number_rooms;       //房间数
                     this.params.suffix = data.suffix;            //后缀
+                    this.params.peripheral_info = data.peripheral_info;            //后缀
+                    this.params.content = data.content;            //后缀
 //                    this.params.house_pic = data.album.house_pic          //小区照片
                     this.params.longitude = data.longitude;
                     this.params.latitude = data.latitude;
@@ -454,26 +471,28 @@
                 this.$emit('closeModal');
                 this.params = {
                     province : '',           //省
-                        city : '',               //市
-                        area :'',                //区、县
-                        region :'',              //热门区域
-                        address : '',            //小区地址
-                        village_name : '',       //小区名字
-                        village_alias : [],      //小区别名
-                        built_year : '',         //建筑年代
-                        house_type : '',         //房屋类型
-                        total_buildings : '',    //总栋数
-                        property_fee : '',       //物业费
-                        district_group : [],     //区/组
-                        seat_block : [],         //座/幢
-                        unit : [],               //单元
-                        floor : [],              //楼层
-                        number_rooms : [],       //房间数
-                        suffix : [],             //后缀
-                        house_pic : [],          //小区照片
-                        longitude : '',          //经度
-                        latitude : '',           //纬度
-                        code :'',                //城市code码
+                    city : '',               //市
+                    area :'',                //区、县
+                    region :'',              //热门区域
+                    address : '',            //小区地址
+                    village_name : '',       //小区名字
+                    village_alias : [],      //小区别名
+                    built_year : '',         //建筑年代
+                    house_type : '',         //房屋类型
+                    total_buildings : '',    //总栋数
+                    property_fee : '',       //物业费
+                    district_group : [],     //区/组
+                    seat_block : [],         //座/幢
+                    unit : [],               //单元
+                    floor : [],              //楼层
+                    number_rooms : [],       //房间数
+                    suffix : [],             //后缀
+                    house_pic : [],          //小区照片
+                    longitude : '',          //经度
+                    latitude : '',           //纬度
+                    code :'',                //城市code码
+                    peripheral_info : '',    //周边信息
+                    content : '',            //小区简介
                 };
                 this.housePic = {
                     cus_idPhotos : {},          //修改图片ID
