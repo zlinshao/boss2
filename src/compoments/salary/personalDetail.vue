@@ -172,19 +172,19 @@
                                 <header class="pull-left">
                                     <h4>过往未发工资明细</h4>
                                 </header>
-                                <div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">
-                                    <input type="text" class="form-control" placeholder="房屋地址">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button">搜索</button>
-                                    </span>
-                                </div>
-                                <div class="form-group pull-right">
-                                    <select class="form-control">
-                                        <option value="candidate">收租状态</option>
-                                        <option value="unrelated">收房</option>
-                                        <option value="unrelated">租房</option>
-                                    </select>
-                                </div>
+                                <!--<div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">-->
+                                    <!--<input type="text" class="form-control" placeholder="房屋地址">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn btn-success" type="button">搜索</button>-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                                <!--<div class="form-group pull-right">-->
+                                    <!--<select class="form-control">-->
+                                        <!--<option value="candidate">收租状态</option>-->
+                                        <!--<option value="unrelated">收房</option>-->
+                                        <!--<option value="unrelated">租房</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
                             </form>
 
                             <!--过往未发工资明细-->
@@ -233,29 +233,29 @@
                                     <td>{{item.percentage_remain}}</td>
 
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
-                                        v-show="key.category == 2">
+                                        :class="{'deduct_marks': key.status == 1}"
+                                        v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
-                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 2}">
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
                                          <span v-for="key in item.simple_cells"
-                                               :class="{'deduct_marks': key.status == 2}"
+                                               :class="{'deduct_marks': key.status == 1}"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
                                     <td v-else>
@@ -279,19 +279,19 @@
                                 <header class="pull-left">
                                     <h4>本月工资明细</h4>
                                 </header>
-                                <div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">
-                                    <input type="text" class="form-control" placeholder="房屋地址">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button">搜索</button>
-                                    </span>
-                                </div>
-                                <div class="form-group pull-right">
-                                    <select class="form-control">
-                                        <option value="candidate">收租状态</option>
-                                        <option value="unrelated">收房</option>
-                                        <option value="unrelated">租房</option>
-                                    </select>
-                                </div>
+                                <!--<div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">-->
+                                    <!--<input type="text" class="form-control" placeholder="房屋地址">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn btn-success" type="button">搜索</button>-->
+                                    <!--</span>-->
+                                <!--</div>-->
+                                <!--<div class="form-group pull-right">-->
+                                    <!--<select class="form-control">-->
+                                        <!--<option value="candidate">收租状态</option>-->
+                                        <!--<option value="unrelated">收房</option>-->
+                                        <!--<option value="unrelated">租房</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
                             </form>
 
                             <!--本月工资明细-->
@@ -339,27 +339,27 @@
                                     <td>{{item.percentage_remain}}</td>
 
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 2}"
+                                        :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
-                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 2}">
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
                                          <span v-for="key in item.simple_cells"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
@@ -517,7 +517,7 @@
             already_salary (){
                 this.cell_pitch = [];
                 for (let i = 0; i < this.simple_cells.length; i++) {
-                    if (this.simple_cells[i].status === 1) {
+                    if (this.simple_cells[i].status === 2) {
                         this.cell_pitch.push(this.simple_cells[i].id);
                     }
                 }
@@ -582,6 +582,7 @@
                     if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');
                         this.personal(this.personal_id, this.tabs);
+                        this.pitch = [];
                         this.successMsg(res.data.msg);
                     } else {
                         this.errorMsg(res.data.msg);
