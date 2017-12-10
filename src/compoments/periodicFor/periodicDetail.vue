@@ -47,7 +47,20 @@
                         <div class="form-group">
                             <a class="btn btn-success" type="button" @click="leading_out">导出</a>
                         </div>
-
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.only_zero == 1,'c_off':params.only_zero != 1}"
+                                   @click.prevent="zero($event)">
+                                <input type="checkbox" :value="params.only_zero" :checked="params.only_zero == 1">双方业绩为零
+                            </label>
+                        </div>
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.only_confiscation == 1,'c_off':params.only_confiscation != 1}"
+                                   @click.prevent="confiscation($event)">
+                                <input type="checkbox" :value="params.only_confiscation" :checked="params.only_confiscation == 1">已充公
+                            </label>
+                        </div>
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
                             <div class="modal-dialog ">
                                 <div class="modal-content">
@@ -254,6 +267,8 @@
                     house_id: '',
                     search: '',
                     page: 1,
+                    only_zero: 2,              //只显示双方业绩0
+                    only_confiscation: 2,      //已充公业绩
                 },
                 paging: '',                     //总页数
                 lookRem: '',                    //备注内容
@@ -287,6 +302,28 @@
         },
 
         methods: {
+            zero (ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.params.only_zero = 1;
+                    this.search(1);
+                } else {
+                    this.params.only_zero = 2;
+                    this.search(1);
+                }
+            },
+            confiscation (ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.params.only_confiscation = 1;
+                    this.search(1);
+                } else {
+                    this.params.only_confiscation = 2;
+                    this.search(1);
+                }
+            },
 //            导出
             leading_out (){
                 this.remindData();
