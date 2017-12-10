@@ -20,7 +20,7 @@
                         <li v-if="tabs != 1">
                             <h5><a @click="detailRevise">编辑</a></h5>
                         </li>
-                        <li>
+                        <li v-if="tabs != 1">
                             <h5><a @click="already_salary">已发款项</a></h5>
                         </li>
                     </ul>
@@ -169,23 +169,24 @@
                         <div id="Insightful" class="tab-pane table has-js table-responsive roll"
                              :class="{'active': tabs == 2}">
                             <form class="form-inline clearFix" role="form" style="border-bottom: 1px solid #dddddd;">
-                                <div class="form-group">
+                                <header class="pull-left">
+                                    <h4>过往未发工资明细</h4>
+                                </header>
+                                <div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">
+                                    <input type="text" class="form-control" placeholder="房屋地址">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">搜索</button>
+                                    </span>
+                                </div>
+                                <div class="form-group pull-right">
                                     <select class="form-control">
                                         <option value="candidate">收租状态</option>
                                         <option value="unrelated">收房</option>
                                         <option value="unrelated">租房</option>
                                     </select>
                                 </div>
-                                <div class="input-group" style="margin-bottom: 18px;">
-                                    <input type="text" class="form-control" placeholder="房屋地址">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button">搜索</button>
-                                    </span>
-                                </div>
                             </form>
-                            <header class="col-xs-12">
-                                <h4>过往未发工资明细</h4>
-                            </header>
+
                             <!--过往未发工资明细-->
                             <table class="table table-advance table-hover">
                                 <thead class="text-center">
@@ -273,9 +274,26 @@
                             </table>
                         </div>
                         <div id="sto_sent" class="tab-pane table table-responsive roll" :class="{'active': tabs == 3}">
-                            <header class="col-xs-12">
-                                <h4>本月工资明细</h4>
-                            </header>
+
+                            <form class="form-inline clearFix" role="form" style="border-bottom: 1px solid #dddddd;">
+                                <header class="pull-left">
+                                    <h4>本月工资明细</h4>
+                                </header>
+                                <div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">
+                                    <input type="text" class="form-control" placeholder="房屋地址">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">搜索</button>
+                                    </span>
+                                </div>
+                                <div class="form-group pull-right">
+                                    <select class="form-control">
+                                        <option value="candidate">收租状态</option>
+                                        <option value="unrelated">收房</option>
+                                        <option value="unrelated">租房</option>
+                                    </select>
+                                </div>
+                            </form>
+
                             <!--本月工资明细-->
                             <table class="table table-advance table-hover has-js">
                                 <thead class="text-center">
