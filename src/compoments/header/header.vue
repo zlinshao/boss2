@@ -579,18 +579,20 @@
                     <!--</ul>-->
                     <!--</li>-->
 
-                    <li class="sub-menu" v-show="simulate.indexOf('revenue/index') > -1||isSuper">
+
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('Department/next') > -1||simulate.indexOf('Salary/view') > -1||isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-bar-chart-o"></i>
                             <span>业绩管理</span>
                         </a>
                         <ul class="sub">
-                            <li>
+                            <li v-if="simulate.indexOf('Salary/view') > -1||isSuper">
                                 <router-link to="/personal">
                                     <span>个人工资</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <li v-show="simulate.indexOf('Department/next') > -1||isSuper">
                                 <router-link to="/periodicFor">
                                     <span>周期表</span>
                                 </router-link>
