@@ -108,7 +108,9 @@
                                     <td>{{dict.package[item.package]}}</td>
                                     <td>{{item.amount_due}}</td>
                                     <td>{{item.amount_actual}}</td>
-                                    <td>{{dict.salary_status[item.status]}}</td>
+                                    <td>
+                                        {{dict.salary_status[item.status]}}
+                                    </td>
                                     <td>
                                         <i class="fa fa-book" @click="lookRemark(item.remark)"
                                            v-if="item.remark != ''"></i>
@@ -166,6 +168,21 @@
                         </div>
                         <div id="Insightful" class="tab-pane table has-js table-responsive roll"
                              :class="{'active': tabs == 2}">
+                            <form class="form-inline clearFix" role="form" style="border-bottom: 1px solid #dddddd;">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="candidate">收租状态</option>
+                                        <option value="unrelated">收房</option>
+                                        <option value="unrelated">租房</option>
+                                    </select>
+                                </div>
+                                <div class="input-group" style="margin-bottom: 18px;">
+                                    <input type="text" class="form-control" placeholder="房屋地址">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">搜索</button>
+                                    </span>
+                                </div>
+                            </form>
                             <header class="col-xs-12">
                                 <h4>过往未发工资明细</h4>
                             </header>
@@ -215,29 +232,29 @@
                                     <td>{{item.percentage_remain}}</td>
 
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
-                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 2}">
                                          <span v-for="key in item.simple_cells"
-                                               :class="{'deduct_marks': key.status == 1}"
+                                               :class="{'deduct_marks': key.status == 2}"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
                                     <td v-else>
@@ -304,27 +321,27 @@
                                     <td>{{item.percentage_remain}}</td>
 
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
-                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 2}">
                                          <span v-for="key in item.simple_cells"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
@@ -361,7 +378,7 @@
                         <h4 class="modal-title" style="border: 0;">提示信息</h4>
                     </div>
                     <div class="modal-body has-js clearfix">
-                        <div v-for="item in simple_cells" v-if="item.status == 2" class="pull-left"
+                        <div v-for="item in simple_cells" class="pull-left"
                              style="margin-right: 15px;">
                             <label :class="{'label_check':true,'c_on':cell_pitch.indexOf(item.id) > -1,
                                     'c_off':cell_pitch.indexOf(item.id)==-1}"
@@ -370,7 +387,6 @@
                                        :checked="cell_pitch.indexOf(item.id) > -1">{{dict.cell_category[item.category]}}
                             </label>
                         </div>
-
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
@@ -482,6 +498,11 @@
 //            已发工资
             already_salary (){
                 this.cell_pitch = [];
+                for (let i = 0; i < this.simple_cells.length; i++) {
+                    if (this.simple_cells[i].status === 1) {
+                        this.cell_pitch.push(this.simple_cells[i].id);
+                    }
+                }
                 $('#already_salary').modal({backdrop: 'static',});
             },
 //            编辑工资条

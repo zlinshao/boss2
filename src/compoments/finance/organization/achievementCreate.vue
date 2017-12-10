@@ -32,11 +32,19 @@
                                 <button class="btn btn-success" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.unmarked == 1,'c_off':params.unmarked != 1}"
+                                   @click.prevent="mismatching($event)">
+                                <input type="checkbox" :value="params.unmarked" :checked="params.unmarked == 1">标记不匹配
+                            </label>
+                        </div>
                         <!--<div class="input-group pull-right">-->
-                            <!--<router-link :to="{path: '/flatShare', query: {id: 1}}" class="btn btn-warning">合租房</router-link>-->
-                            <!--<router-link :to="{path: '/noPerformance', query: {id: 1}}" class="btn btn-warning"-->
-                                         <!--style="margin-left: 10px;">未生成业绩-->
-                            <!--</router-link>-->
+                        <!--<router-link :to="{path: '/flatShare', query: {id: 1}}" class="btn btn-warning">合租房</router-link>-->
+                        <!--<router-link :to="{path: '/noPerformance', query: {id: 1}}" class="btn btn-warning"-->
+                        <!--style="margin-left: 10px;">未生成业绩-->
+                        <!--</router-link>-->
                         <!--</div>-->
                     </form>
                 </div>
@@ -67,13 +75,14 @@
             <table class="table table-advance table-hover">
                 <thead class="text-center">
                 <tr>
-                    <th></th>
+                    <th class="width80"></th>
                     <th class="text-center width100">生成日期</th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">收租状态</th>
                     <th class="text-center width80">收房月数</th>
                     <th class="text-center width80">付款方式</th>
                     <th class="text-center width80">月单价</th>
+                    <th class="text-center width80">已收金额</th>
                     <th class="text-center width80">签约人</th>
                     <th class="text-center width100">部门</th>
                     <th class="text-center width100">负责人</th>
@@ -105,20 +114,35 @@
                         <label v-if="(item.identity != 1 || 2) && item.generate_time != null">
                             <i class="fa fa-check-circle" style="font-size: 22px; color: #0EC641;"></i>
                         </label>
-
+                        <div class="handle" v-if="item.freeze == 1">待</div>
                     </td>
                     <td>{{item.create_time}}</td>
                     <td>
                         {{item.address}}
                         <span v-if="item.related == 2" class="fa fa-home text-danger" style="cursor: pointer"
                               @click="selectHouse(item.id)"></span>
+                        <span style="line-height: 9px;" v-if="item.identity == 1"
+                              class="btn btn-danger btn-xs" @click="look_detail(item.id, 'land')">F</span>
+                        <span style="line-height: 9px;" v-if="item.identity == 2"
+                              class="btn btn-danger btn-xs" @click="look_detail(item.id, 'renter')">Z</span>
                     </td>
                     <td>{{dict.typical[item.typical]}}</td>
                     <td>{{item.months}}</td>
                     <td>{{item.pay_types}}</td>
                     <td>{{item.prices}}</td>
+                    <td>
+                        <span v-if="item.received != null">
+                            {{item.received}}
+                        </span>
+                        <span v-else="">
+                            /
+                        </span>
+                    </td>
                     <td>{{item.real_name}}</td>
-                    <td>{{item.salary_department_name}}</td>
+                    <td><i class="fa fa-chain-broken text-danger"
+                           v-show="item.collect_unmarked == 1"></i>&nbsp;
+                        {{item.salary_department_name}}
+                    </td>
                     <td>{{item.salary_leader_name}}</td>
                 </tr>
                 <tr v-if="isShow">
@@ -177,6 +201,9 @@
         <NewRenterAdd :list="myRentlordList" @success_="house_search" :house="house_status"></NewRenterAdd>
 
         <Status :state='info'></Status>
+
+        <!--查看详情-->
+        <DetailInfo :msg="detail_info" :dict="detailInfo" :detail="detail"></DetailInfo>
     </div>
 </template>
 
@@ -189,11 +216,25 @@
     import Confirm from '../../common/confirm.vue'
     import NewClientAdd from  '../../finance/clientManage/newLandlordAdd.vue'               //房东
     import NewRenterAdd from  '../../finance/clientManage/newRenterAdd.vue'                 //租客
+    import DetailInfo from '../../finance/payment/detail_info.vue'
     export default{
         props: ['msg', 'scope_time'],
-        components: {Organization, Page, Status, Department, DatePicker, NewClientAdd, NewRenterAdd, Confirm},
+        components: {
+            Organization,
+            Page,
+            Status,
+            Department,
+            DatePicker,
+            NewClientAdd,
+            NewRenterAdd,
+            Confirm,
+            DetailInfo
+        },
         data(){
             return {
+                detail_info: [],
+                detail: '',
+                detailInfo: {},
                 house_status: '',               //房屋新增不显示
                 unrelated_num: '',
                 url_address: 'candidate',         //关联/未关联筛选
@@ -206,6 +247,7 @@
                 col_pitch: [],
                 ren_pitch: [],
                 params: {
+                    unmarked: '',
                     search: '',                     //关键字
                     salary_department_id: '',       //部门ID
                     range: '',                      //时间筛选
@@ -241,6 +283,9 @@
 
         mounted(){
             this.create_ach(1);
+            this.$http.get('revenue/glee_collect/dict').then((res) => {
+                this.detailInfo = res.data;
+            });
         },
         watch: {
             scope_time (val){
@@ -252,6 +297,44 @@
             },
         },
         methods: {
+//            查看收租详情
+            look_detail (val, del){
+                this.detail_info = [];
+                if (del === 'land') {
+                    this.$http.get('finance/customer/collect/' + val).then((res) => {
+                        if (res.data.code === '90010') {
+                            this.detail_info.push(res.data.data);
+                            this.detail = del;
+                            $('#detail_info').modal({backdrop: 'static',});
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                } else if (del === 'renter') {
+                    this.$http.get('finance/customer/rent/' + val).then((res) => {
+                        if (res.data.code === '90010') {
+                            this.detail_info.push(res.data.data);
+                            this.detail = del;
+                            $('#detail_info').modal({backdrop: 'static',});
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    });
+                }
+
+            },
+//            标记不匹配
+            mismatching (ev){
+                let evInput = ev.target.getElementsByTagName('input')[0];
+                evInput.checked = !evInput.checked;
+                if (evInput.checked) {
+                    this.params.unmarked = 1;
+                    this.search(1);
+                } else {
+                    this.params.unmarked = '';
+                    this.search(1);
+                }
+            },
 //            搜索
             search(val){
                 this.create_ach(val);
@@ -512,5 +595,12 @@
     .red {
         color: #e4393c;
         background: #CCCCCC;
+    }
+
+    .handle {
+        float: right;
+        padding: 4px 6px;
+        background: #bbb;
+        border-radius: 50%;
     }
 </style>
