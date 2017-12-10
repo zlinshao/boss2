@@ -14,6 +14,7 @@
                         <li @click="selectDay(0)">清空</li>
                         <li @click="selectDay(1)" :class="{'active' : isActive==1}">今天</li>
                         <li @click="selectDay(2)" :class="{'active' : isActive==2}">昨天</li>
+                        <li @click="selectDay(12)" :class="{'active' : isActive==12}">明天</li>
                         <li @click="selectDay(3)" :class="{'active' : isActive==3}">最近7天</li>
                         <li @click="selectDay(4)" :class="{'active' : isActive==4}">最近30天</li>
                         <li @click="selectDay(5)" :class="{'active' : isActive==5}">上月</li>
@@ -48,7 +49,8 @@
         <div v-else="range">
             <!--<div class="input-group">-->
             <!--<label>-->
-            <input @click="remindData" type="text" name="addtime" :placeholder="placeholder == undefined?'选择时间':placeholder" v-model="date"
+            <input @click="remindData" type="text" name="addtime"
+                   :placeholder="placeholder == undefined?'选择时间':placeholder" v-model="date"
                    :id="idName"
                    class="form-control" readonly style="margin-bottom: ">
             <!--</label>-->
@@ -62,7 +64,7 @@
 <script>
     import Status from '../common/status.vue'
     export default{
-        props: ['dateConfigure', 'currentDate','idName','placeholder','rangeId'],
+        props: ['dateConfigure', 'currentDate', 'idName', 'placeholder', 'rangeId'],
         data(){
             return {
                 dateId: '',
@@ -123,13 +125,13 @@
         mounted (){
             this.remindData();
             let _this = this;
-            $('body').bind('click',function (e) {
+            $('body').bind('click', function (e) {
                 let mobileTime = $('.mobileTime');
 //                console.log(_this.showPicker)
-                for (let i = 0 ; i<mobileTime.length ; i++){
-                    if (_this.showPicker){
+                for (let i = 0; i < mobileTime.length; i++) {
+                    if (_this.showPicker) {
                         let input = $(mobileTime[i]).prev()[0];
-                        if (!(e.target==mobileTime[i] || mobileTime[i].contains(e.target) || e.target==input)){
+                        if (!(e.target == mobileTime[i] || mobileTime[i].contains(e.target) || e.target == input)) {
                             _this.showPicker = false;
                         }
                     }
@@ -140,9 +142,9 @@
         methods: {
             remindData (){
                 $('#' + this.idName).datetimepicker({
-                    minView: this.hour?'hour':'month',                     //选择日期后，不会再跳转去选择时分秒
+                    minView: this.hour ? 'hour' : 'month',                     //选择日期后，不会再跳转去选择时分秒
                     language: 'zh-CN',
-                    format: this.hour?'yyyy-mm-dd hh:ii':'yyyy-mm-dd',
+                    format: this.hour ? 'yyyy-mm-dd hh:ii' : 'yyyy-mm-dd',
                     todayBtn: 1,
                     autoclose: 1,
                     clearBtn: true,                     //清除按钮
@@ -155,19 +157,19 @@
                 }.bind(this));
 
                 /*$('.' + this.dateId).datetimepicker({
-                    minView: "hour",                     //选择日期后，再跳转去选择时分秒
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd hh:00',
-                    todayBtn: 1,
-                    autoclose: 1,
-                    clearBtn: true,                     //清除按钮
-//                    endDate: new Date(),
-                    pickerPosition: this.dateConfigure[0].position
-                }).on('changeDate', function (ev) {
-                    this.date = ev.target.value;
-                    this.$emit('sendDate', ev.target.value);
-//                    console.log(this.startDataTime);
-                }.bind(this));*/
+                 minView: "hour",                     //选择日期后，再跳转去选择时分秒
+                 language: 'zh-CN',
+                 format: 'yyyy-mm-dd hh:00',
+                 todayBtn: 1,
+                 autoclose: 1,
+                 clearBtn: true,                     //清除按钮
+                 //                    endDate: new Date(),
+                 pickerPosition: this.dateConfigure[0].position
+                 }).on('changeDate', function (ev) {
+                 this.date = ev.target.value;
+                 this.$emit('sendDate', ev.target.value);
+                 //                    console.log(this.startDataTime);
+                 }.bind(this));*/
             },
             datePicker(){
                 let _this = this;
@@ -183,19 +185,20 @@
                         '清空': [null, null],
                         //'最近1小时': [moment().subtract('hours',1), moment()],
                         '今天': [moment().startOf('day'), moment()],
+                        '明天': [moment(), moment().add('day', 1)],
                         '昨天': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
                         '最近7天': [moment().subtract('days', 6), moment()],
                         '最近30天': [moment().subtract('days', 29), moment()],
-                        '上月': [moment().subtract('days', this.lastMonthDays + this.monthDates), moment().subtract('days', this.monthDates+1)],
+                        '上月': [moment().subtract('days', this.lastMonthDays + this.monthDates), moment().subtract('days', this.monthDates + 1)],
                         '本月': [moment().subtract('days', this.monthDates), moment()],
                         '上季度': [moment().subtract('days', this.lastQuarterlyDays + this.quarterlyDates), moment().subtract('days', this.quarterlyDates + 1)],
                         '本季度': [moment().subtract('days', this.quarterlyDates), moment()],
                         '上一年': [moment().subtract('days', this.lastYearDays + this.yearDates), moment().subtract('days', this.yearDates + 1)],
                         '本年': [moment().subtract('days', this.yearDates), moment()],
-                        '未来一个月': [moment(),moment().add('months', 1)],
-                        '未来一年': [moment(),moment().add('years', 1)],
-                        '前后十年': [moment().add('years', -10),moment().add('years', 10)],
-                        '未来一百年': [moment(),moment().add('years', 100)],
+                        '未来一个月': [moment(), moment().add('months', 1)],
+                        '未来一年': [moment(), moment().add('years', 1)],
+                        '前后十年': [moment().add('years', -10), moment().add('years', 10)],
+                        '未来一百年': [moment(), moment().add('years', 100)],
                     },
                     locale: {
                         applyLabel: '确定',
@@ -272,6 +275,12 @@
                             from = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD');
                             to = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD');
 //                            date = moment().subtract('days', 1).startOf('day').format('YYYY-MM-DD') + "至" + moment().subtract('days', 1).endOf('day').format('YYYY-MM-DD');
+                        } else if (num == 12) {
+                            // 明天
+//                     console.log(moment().startOf('day').format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
+                            from = moment().startOf('day').format('YYYY-MM-DD');
+                            to = moment().format('YYYY-MM-DD');
+//                            date = moment().startOf('day').format('YYYY-MM-DD') + "至" + moment().format('YYYY-MM-DD');
                         } else if (num == 3) {
                             // 近7天
 //                        console.log(moment().subtract('days', 6).format('YYYY-MM-DD')+"to"+moment().format('YYYY-MM-DD'));
@@ -406,12 +415,12 @@
 
 //                let thisQuarterlyStart = moment([year,])
 
-                let thisDay = moment([year, month-1, day]);
+                let thisDay = moment([year, month - 1, day]);
 //                console.log(thisDay.format('YYYY-MM-DD'));
 
                 let lastMonth = moment([year, month - 2, 1]);
 //                console.log('lastMonth========'+lastMonth.format('YYYY-MM-DD'));
-                let thisMonth = moment([year, month-1, 1]);
+                let thisMonth = moment([year, month - 1, 1]);
 //                console.log('thisMonth========'+thisMonth.format('YYYY-MM-DD'));
 
                 let lastYear = moment([year - 1, 0, 1]);
@@ -445,7 +454,7 @@
 
                 if (this.currentDate != undefined) {
 //                    console.log(this.currentDate.length)
-                    if (this.currentDate.length==0){
+                    if (this.currentDate.length == 0) {
                         this.date = '';
                         this.dateRange = '';
                         this.mobilePickerDate = '';
