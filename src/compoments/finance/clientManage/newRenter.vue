@@ -341,6 +341,7 @@
             },
 //            搜索
             search(val){
+                this.pitch = [];
                 this.getLandlordList(val);
             },
 //              时间搜索
