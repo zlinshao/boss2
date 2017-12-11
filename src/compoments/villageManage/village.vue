@@ -20,6 +20,38 @@
                         </select>
                     </div>
 
+                    <div class="pro-sort">
+                        <select class="form-control" v-model="params.province" @change="getCity">
+                            <option value="">省</option>
+                            <option :value="value.province_id"  v-for="(value,key) in province">
+                                {{value.province_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="pro-sort" v-if="params.province != ''">
+                        <select class="form-control" v-model="params.city" @change="getArea">
+                            <option value="">市</option>
+                            <option :value="value.city_id" v-for="(value,key) in city">
+                                {{value.city_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="pro-sort" v-if="params.city != ''">
+                        <select class="form-control" v-model="params.area" @change="getRegion">
+                            <option value="">区/县</option>
+                            <option :value="value.area_id" v-for="(value,key) in area">
+                                {{value.area_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="pro-sort" v-if="params.area != ''">
+                        <select class="form-control" v-model="params.region" @change="getVillageList">
+                            <option value="">区域</option>
+                            <option :value="value.id" v-for="(value,key) in region">
+                                {{value.region_name}}
+                            </option>
+                        </select>
+                    </div>
                     <div class="pro-sort col-xs-12 col-sm-5 col-md-4 col-lg-2" style="padding-left: 0">
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="params.keywords"
@@ -132,11 +164,20 @@
                 pages : '',
                 villageId: '',
                 isShow : false,
+
+                province : [],
+                city : [],
+                area :[],
+                region :[],
                 params : {
                     pages : 1,
                     house_type : '',
                     built_year :'',
                     keywords : '',
+                    province : '',           //省
+                    city : '',               //市
+                    area :'',                //区、县
+                    region :'',              //热门区域
                 },
                 dictionary:[],
                 houseList : [],
@@ -158,9 +199,46 @@
             }
         },
         mounted(){
+            this.getProvince();
             this.getHouseType();
         },
         methods:{
+
+            getProvince(){
+                this.$http.get('core/villa/province').then((res) => {
+                    this.province = res.data.data;
+                    this.proposer_id = '';
+                    this.params.city = '';
+                    this.params.area = '';
+                    this.params.region = '';
+                })
+            },
+            getCity(){
+                this.getVillageList();
+                this.$http.get('core/villa/city/city_parent/' + this.params.province).then((res) => {
+                    this.city = res.data.data;
+                    this.params.city = '';
+                    this.params.area = '';
+                    this.params.region = '';
+                })
+            },
+            getArea(){
+                this.getVillageList();
+                this.$http.get('core/villa/area/area_parent/' + this.params.city).then((res) => {
+                    this.area = res.data.data;
+                    this.params.area = '';
+                    this.params.region = '';
+                })
+            },
+            getRegion(){
+                this.getVillageList();
+                this.$http.get('core/villa/region/region_parent/' + this.params.area).then((res) => {
+                    this.region = res.data.data;
+                    this.params.region = '';
+                })
+            },
+
+
             getHouseType(){
                 this.now = new Date().getFullYear();
                 this.$http.get('core/house/dict').then((res) => {
