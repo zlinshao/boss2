@@ -148,6 +148,8 @@ import ProblemList from './compoments/customerService/problem/problemList.vue'  
 import ProblemDetail from './compoments/customerService/problem/problemDetail.vue'                                // 房屋问题申报详情
 import HydropowerGasList from './compoments/customerService/hydropowerGas/hydropowerGasList.vue'                                // 水电燃物业、公摊费申报申报
 import HydropowerGasDetail from './compoments/customerService/hydropowerGas/hydropowerGasDetail.vue'                                // 水电燃物业、公摊费申报申报详情
+import HydroepowerWebList from './compoments/customerService/HydroelectricWeb/HydroepowerWebList.vue'                       //水电燃报销官网
+import HydroepowerWebDetail from './compoments/customerService/HydroelectricWeb/HydroepowerWebDetail.vue'                       //水电燃报销官网
 
 import Village from './compoments/villageManage/village.vue'                        //小区管理列表
 import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
@@ -787,6 +789,16 @@ export default[
         path: '/hydropowerGasDetail',
         name: 'HydropowerGasDetail',
         component: HydropowerGasDetail
+    },
+    {       //水电燃物业官网
+        path: '/hydroepowerWebList',
+        name: 'HydroepowerWebList',
+        component: HydroepowerWebList
+    },
+    {       //水电燃物官网
+        path: '/hydroepowerWebDetail',
+        name: 'HydroepowerWebDetail',
+        component: HydroepowerWebDetail
     },
     {
         path: '/village',
