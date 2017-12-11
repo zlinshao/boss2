@@ -138,7 +138,7 @@
                         <div class="row has-js">
                             <div class="col-lg-12">
                                 <section class="panel table table-responsive roll" style="margin-bottom: 0;">
-                                    <table class="table table-advance">
+                                    <table class="table table-advance table-hover">
                                         <thead>
                                         <tr>
                                             <th class="text-center width100">备注时间</th>
@@ -253,7 +253,7 @@
         <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
-                    <table class="table table-advance table-hover">
+                    <table class="table table-advance">
                         <thead>
                         <tr>
                             <th class="text-center" v-if="recycle_bin">
