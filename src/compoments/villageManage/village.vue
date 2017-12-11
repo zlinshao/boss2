@@ -214,12 +214,12 @@
                 })
             },
             getCity(){
-                this.getVillageList();
                 this.$http.get('core/villa/city/city_parent/' + this.params.province).then((res) => {
                     this.city = res.data.data;
                     this.params.city = '';
                     this.params.area = '';
                     this.params.region = '';
+                    this.getVillageList();
                 })
             },
             getArea(){
@@ -228,13 +228,14 @@
                     this.area = res.data.data;
                     this.params.area = '';
                     this.params.region = '';
+                    this.getVillageList();
                 })
             },
             getRegion(){
-                this.getVillageList();
                 this.$http.get('core/villa/region/region_parent/' + this.params.area).then((res) => {
                     this.region = res.data.data;
                     this.params.region = '';
+                    this.getVillageList();
                 })
             },
 
