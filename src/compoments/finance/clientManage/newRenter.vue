@@ -88,7 +88,7 @@
             </div>
         </section>
         <section class="panel table table-responsive roll has-js">
-            <table class="table table-advance table-hover">
+            <table class="table table-advance">
                 <thead class="text-center">
                 <tr>
                     <th></th>
@@ -378,6 +378,7 @@
                                 }
                             });
                         } else {
+                            this.paging = '';
                             this.LandlordList = [];
                             this.isShow = true;
                         }

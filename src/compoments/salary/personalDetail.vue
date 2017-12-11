@@ -168,22 +168,22 @@
                         </div>
                         <div id="Insightful" class="tab-pane table has-js table-responsive roll"
                              :class="{'active': tabs == 2}">
-                            <form class="form-inline clearFix" role="form" style="border-bottom: 1px solid #dddddd;">
+                            <form class="form-inline clearFix" role="form">
                                 <header class="pull-left">
                                     <h4>过往未发工资明细</h4>
                                 </header>
                                 <!--<div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">-->
-                                    <!--<input type="text" class="form-control" placeholder="房屋地址">-->
-                                    <!--<span class="input-group-btn">-->
-                                        <!--<button class="btn btn-success" type="button">搜索</button>-->
-                                    <!--</span>-->
+                                <!--<input type="text" class="form-control" placeholder="房屋地址">-->
+                                <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-success" type="button">搜索</button>-->
+                                <!--</span>-->
                                 <!--</div>-->
                                 <!--<div class="form-group pull-right">-->
-                                    <!--<select class="form-control">-->
-                                        <!--<option value="candidate">收租状态</option>-->
-                                        <!--<option value="unrelated">收房</option>-->
-                                        <!--<option value="unrelated">租房</option>-->
-                                    <!--</select>-->
+                                <!--<select class="form-control">-->
+                                <!--<option value="candidate">收租状态</option>-->
+                                <!--<option value="unrelated">收房</option>-->
+                                <!--<option value="unrelated">租房</option>-->
+                                <!--</select>-->
                                 <!--</div>-->
                             </form>
 
@@ -199,6 +199,8 @@
                                     <th class="text-center width80">价格差奖励</th>
                                     <th class="text-center width80">收房付款方式奖励</th>
                                     <th class="text-center width80">收房年限奖励</th>
+                                    <th class="text-center width80">空置期扣款</th>
+                                    <th class="text-center width80">年限(涨价)扣款</th>
                                     <th class="text-center width80">业绩提成</th>
                                     <th class="text-center width80">未发比例</th>
                                     <th class="text-center width50">合同</th>
@@ -229,6 +231,10 @@
                                     <td>{{item.bonus_price}}</td>
                                     <td>{{item.bonus_pay_type}}</td>
                                     <td>{{item.bonus_year}}</td>
+
+                                    <td>{{item.achv}}1</td>
+                                    <td>{{item.achv}}1</td>
+
                                     <td>{{item.achv}}</td>
                                     <td>{{item.percentage_remain}}</td>
 
@@ -266,7 +272,7 @@
                                     <td><i class="fa fa-book" @click="lookRemark" v-if="item.remark != ''"></i></td>
                                 </tr>
                                 <tr v-show="isShow2">
-                                    <td colspan="19" class="text-center text-muted">
+                                    <td colspan="21" class="text-center text-muted">
                                         <h4 style="border: 0;">暂无数据....</h4>
                                     </td>
                                 </tr>
@@ -275,22 +281,22 @@
                         </div>
                         <div id="sto_sent" class="tab-pane table table-responsive roll" :class="{'active': tabs == 3}">
 
-                            <form class="form-inline clearFix" role="form" style="border-bottom: 1px solid #dddddd;">
+                            <form class="form-inline clearFix" role="form">
                                 <header class="pull-left">
                                     <h4>本月工资明细</h4>
                                 </header>
                                 <!--<div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">-->
-                                    <!--<input type="text" class="form-control" placeholder="房屋地址">-->
-                                    <!--<span class="input-group-btn">-->
-                                        <!--<button class="btn btn-success" type="button">搜索</button>-->
-                                    <!--</span>-->
+                                <!--<input type="text" class="form-control" placeholder="房屋地址">-->
+                                <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-success" type="button">搜索</button>-->
+                                <!--</span>-->
                                 <!--</div>-->
                                 <!--<div class="form-group pull-right">-->
-                                    <!--<select class="form-control">-->
-                                        <!--<option value="candidate">收租状态</option>-->
-                                        <!--<option value="unrelated">收房</option>-->
-                                        <!--<option value="unrelated">租房</option>-->
-                                    <!--</select>-->
+                                <!--<select class="form-control">-->
+                                <!--<option value="candidate">收租状态</option>-->
+                                <!--<option value="unrelated">收房</option>-->
+                                <!--<option value="unrelated">租房</option>-->
+                                <!--</select>-->
                                 <!--</div>-->
                             </form>
 
@@ -306,6 +312,8 @@
                                     <th class="text-center width80">价格差奖励</th>
                                     <th class="text-center width80">收房付款方式奖励</th>
                                     <th class="text-center width80">收房年限奖励</th>
+                                    <th class="text-center width80">空置期扣款</th>
+                                    <th class="text-center width80">年限(涨价)扣款</th>
                                     <th class="text-center width80">业绩提成</th>
                                     <th class="text-center width80">未发比例</th>
                                     <th class="text-center width50">合同</th>
@@ -335,6 +343,10 @@
                                     <td>{{item.bonus_price}}</td>
                                     <td>{{item.bonus_pay_type}}</td>
                                     <td>{{item.bonus_year}}</td>
+
+                                    <td>{{item.achv}}11</td>
+                                    <td>{{item.achv}}11</td>
+
                                     <td>{{item.achv}}</td>
                                     <td>{{item.percentage_remain}}</td>
 
@@ -366,7 +378,19 @@
                                     <td v-else>
                                         <span>/</span>
                                     </td>
-                                    <td>{{item.medi_cost}}</td>
+                                    <td>
+                                        <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
+                                              style="cursor: pointer;">
+                                            {{item.medi_cost}}
+                                        </span>
+                                        <span v-if="isActive == item.id"
+                                              style="display: inline-block;min-width: 100px;">
+                                            <input type="text" class="form-control" v-model="costStatus"
+                                                   style="margin-bottom: 5px;">
+                                            <a class="btn btn-default btn-sm" @click.stop="cost_show('','')">取消</a>
+                                            <a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>
+                                        </span>
+                                    </td>
                                     <td>{{item.total_price}}</td>
                                     <td>
                                         <i class="fa fa-book" @click="lookRemark(item.remark)"
@@ -374,7 +398,7 @@
                                     </td>
                                 </tr>
                                 <tr v-show="isShow3">
-                                    <td colspan="19" class="text-center text-muted">
+                                    <td colspan="21" class="text-center text-muted">
                                         <h4 style="border: 0;">暂无数据....</h4>
                                     </td>
                                 </tr>
@@ -436,6 +460,8 @@
         components: {salaryRemark, personalRevise, DetailRevise, Status},
         data (){
             return {
+                costStatus: '',         //中介费状态
+                isActive: '',
                 tabs: 1,
                 pitch: [],
                 cell_pitch: [],
@@ -467,6 +493,17 @@
             this.personal(this.$route.query.nameId, 1);
         },
         methods: {
+//            中介费修改
+            cost_show (id, val){
+                this.isActive = id;
+                this.costStatus = val;
+
+            },
+            cost_save (){
+                this.$http.get('salary/Commission/dict').then((res) => {
+
+                });
+            },
             search (){
                 this.pitch = [];
                 this.personal(this.personal_id, this.tabs);
