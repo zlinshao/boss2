@@ -292,6 +292,10 @@
                     house_type : '',
                     built_year :'',
                     keywords : '',
+                    province : '',           //省
+                    city : '',               //市
+                    area :'',                //区、县
+                    region :'',              //热门区域
                 };
                 this.getVillageList();
             },
