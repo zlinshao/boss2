@@ -305,7 +305,7 @@
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <!--分页-->
-        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
+        <Page :pg="paging" @pag="zero_search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -428,6 +428,7 @@
                 this.$http.post('account/manage/zero/' + this.operId).then((res) => {
                     if (res.data.code === '18610') {
                         this.accountList();
+                        this.operId = 0;
                         $('#zero').modal('hide');
                         this.info.success = res.data.msg;
                         //关闭失败弹窗 ***
@@ -475,7 +476,6 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.operId = id;
-//                    console.log(this.operId);
                 } else {
                     this.operId = 0;
                 }
@@ -497,7 +497,9 @@
                     }
                 })
             },
-
+            zero_search (){
+                this.filter(this.beforePage);
+            },
             search(val){
 //                console.log(this.params);
 //                this.params['page'] = 1;
