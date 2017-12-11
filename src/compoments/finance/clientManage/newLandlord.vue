@@ -348,7 +348,7 @@
             getDate(data){
                 this.params.range = data;
                 this.search(1);
-            },
+            },  
             getLandlordList(val){
                 this.params.beforePage = val;
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
