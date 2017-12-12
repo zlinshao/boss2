@@ -75,9 +75,10 @@
                                     <td class="width80">底薪</td>
                                     <td class="width80">业绩提成</td>
                                     <td class="width80">收房奖励</td>
-                                    <td class="width80">收房未发金额</td>
                                     <td class="width80">租房奖励</td>
-                                    <td class="width80">租房未发金额</td>
+                                    <td class="width80">本月未发金额</td>
+                                    <td class="width80">认责</td>
+                                    <td class="width80">中介费</td>
                                     <td class="width80">行政扣款</td>
                                     <td class="width80">社保扣款</td>
                                     <td class="width80">财务扣款</td>
@@ -95,8 +96,9 @@
                                     <td>{{item.base}}</td>
                                     <td>{{item.commission}}</td>
                                     <td>{{item.bonus_collect}}</td>
-                                    <td>{{item.collect_remain}}</td>
                                     <td>{{item.bonus_rent}}</td>
+                                    <td>{{item.rent_remain}}</td>
+                                    <td>{{item.punish}}</td>
                                     <td>{{item.rent_remain}}</td>
                                     <td>{{item.amount_admin_deduction}}</td>
                                     <td>{{item.amount_soc_secu_deduction}}</td>
@@ -199,19 +201,18 @@
                                     <th class="text-center width80">价格差奖励</th>
                                     <th class="text-center width80">收房付款方式奖励</th>
                                     <th class="text-center width80">收房年限奖励</th>
-                                    <th class="text-center width80">空置期扣款</th>
-                                    <th class="text-center width80">年限(涨价)扣款</th>
                                     <th class="text-center width80">业绩提成</th>
-                                    <th class="text-center width80">未发比例</th>
                                     <th class="text-center width50">合同</th>
                                     <th class="text-center width50">资料</th>
                                     <th class="text-center width50">交接</th>
                                     <th class="text-center width50">客诉</th>
                                     <th class="text-center width50">尾款</th>
+                                    <th class="text-center width80">未发比例</th>
+                                    <th class="text-center width80">年限(涨价)扣款</th>
+                                    <th class="text-center width80">空置期扣款</th>
                                     <th class="text-center width80">中介费</th>
                                     <th class="text-center width50">共计</th>
                                     <th class="text-center width50">备注</th>
-                                    <th class="text-center width50">编辑</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -231,13 +232,7 @@
                                     <td>{{item.bonus_price}}</td>
                                     <td>{{item.bonus_pay_type}}</td>
                                     <td>{{item.bonus_year}}</td>
-
-                                    <td>{{item.achv}}1</td>
-                                    <td>{{item.achv}}1</td>
-
                                     <td>{{item.achv}}</td>
-                                    <td>{{item.percentage_remain}}</td>
-
                                     <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 1">
@@ -245,7 +240,7 @@
                                     </td>
                                     <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
-                                        v-show="key.category == 1">
+                                        v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
@@ -261,15 +256,32 @@
                                     <td v-if="item.simple_cells.length == 5"
                                         :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
                                          <span v-for="key in item.simple_cells"
-                                               :class="{'deduct_marks': key.status == 1}"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
                                     <td v-else>
                                         <span>/</span>
                                     </td>
-                                    <td>{{item.medi_cost}}</td>
+                                    <td>{{item.percentage_remain}}</td>
+                                    <td>{{item.punish_year}}</td>
+                                    <td>{{item.bonus_vacancy}}</td>
+                                    <td>
+                                        <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
+                                              style="cursor: pointer;">
+                                            {{item.medi_cost}}
+                                        </span>
+                                        <span v-if="isActive == item.id"
+                                              style="display: inline-block;min-width: 100px;">
+                                            <input type="text" class="form-control" v-model="costStatus"
+                                                   style="margin-bottom: 5px;">
+                                            <a class="btn btn-default btn-sm" @click.stop="cost_show('','')">取消</a>
+                                            <a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>
+                                        </span>
+                                    </td>
                                     <td>{{item.total_price}}</td>
-                                    <td><i class="fa fa-book" @click="lookRemark" v-if="item.remark != ''"></i></td>
+                                    <td>
+                                        <i class="fa fa-book" @click="lookRemark(item.remark)"
+                                           v-if="item.remark != ''"></i>
+                                    </td>
                                 </tr>
                                 <tr v-show="isShow2">
                                     <td colspan="21" class="text-center text-muted">
@@ -312,15 +324,15 @@
                                     <th class="text-center width80">价格差奖励</th>
                                     <th class="text-center width80">收房付款方式奖励</th>
                                     <th class="text-center width80">收房年限奖励</th>
-                                    <th class="text-center width80">空置期扣款</th>
-                                    <th class="text-center width80">年限(涨价)扣款</th>
                                     <th class="text-center width80">业绩提成</th>
-                                    <th class="text-center width80">未发比例</th>
                                     <th class="text-center width50">合同</th>
                                     <th class="text-center width50">资料</th>
                                     <th class="text-center width50">交接</th>
                                     <th class="text-center width50">客诉</th>
                                     <th class="text-center width50">尾款</th>
+                                    <th class="text-center width80">未发比例</th>
+                                    <th class="text-center width80">年限(涨价)扣款</th>
+                                    <th class="text-center width80">空置期扣款</th>
                                     <th class="text-center width80">中介费</th>
                                     <th class="text-center width50">共计</th>
                                     <th class="text-center width50">备注</th>
@@ -343,13 +355,7 @@
                                     <td>{{item.bonus_price}}</td>
                                     <td>{{item.bonus_pay_type}}</td>
                                     <td>{{item.bonus_year}}</td>
-
-                                    <td>{{item.achv}}11</td>
-                                    <td>{{item.achv}}11</td>
-
                                     <td>{{item.achv}}</td>
-                                    <td>{{item.percentage_remain}}</td>
-
                                     <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 1}"
                                         v-show="key.category == 1">
@@ -378,6 +384,9 @@
                                     <td v-else>
                                         <span>/</span>
                                     </td>
+                                    <td>{{item.percentage_remain}}</td>
+                                    <td>{{item.punish_year}}</td>
+                                    <td>{{item.bonus_vacancy}}</td>
                                     <td>
                                         <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
                                               style="cursor: pointer;">
@@ -686,5 +695,9 @@
 
     .deduct_marks {
         background-color: #DDDDDD;
+    }
+
+    div.table.table-responsive table tr td:first-child {
+        width: 0;
     }
 </style>
