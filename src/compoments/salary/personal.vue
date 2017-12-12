@@ -9,21 +9,27 @@
 
                 <div v-if="pitch.length == 0">
                     <form class="form-inline clearFix" role="form">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="点击选择部门"
-                                   v-model="selected" @click='select' readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
-                            </span>
-                        </div>
+                        <!--<div class="input-group">-->
+                        <!--<input type="text" class="form-control" placeholder="点击选择部门"-->
+                        <!--v-model="selected" @click='select' readonly>-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-warning" type="button" @click="clearSelect">清空</button>-->
+                        <!--</span>-->
+                        <!--</div>-->
 
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
-
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="params.staff_name"
+                            <select class="form-control" @change="search(1)" v-model="params.cate">
+                                <option value="">全部</option>
+                                <option value="1">收</option>
+                                <option value="2">租</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="业务员姓名/地址" v-model="params.staff_name"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
@@ -61,9 +67,10 @@
                     <td class="width80">底薪</td>
                     <td class="width80">业绩提成</td>
                     <td class="width80">收房奖励</td>
-                    <td class="width80">收房未发金额</td>
                     <td class="width80">租房奖励</td>
-                    <td class="width80">租房未发金额</td>
+                    <td class="width80">本月未发金额</td>
+                    <td class="width80">认责</td>
+                    <td class="width80">中介费</td>
                     <td class="width80">行政扣款</td>
                     <td class="width80">社保扣款</td>
                     <td class="width80">财务扣款</td>
@@ -82,9 +89,10 @@
                     <td>{{item.base}}</td>
                     <td>{{item.commission}}</td>
                     <td>{{item.bonus_collect}}</td>
-                    <td>{{item.collect_remain}}</td>
                     <td>{{item.bonus_rent}}</td>
-                    <td>{{item.rent_remain}}</td>
+                    <td>{{item.punish}}11</td>
+                    <td>{{item.rent_remain}}11</td>
+                    <td>{{item.rent_remain}}11</td>
                     <td>{{item.amount_admin_deduction}}</td>
                     <td>{{item.amount_soc_secu_deduction}}</td>
                     <td>{{item.amount_finance_deduction}}</td>
@@ -155,6 +163,7 @@
                 selected: '',                   //部门搜索
                 currentDate: [],                //日期组件参数
                 params: {
+                    cate: '',
                     department_id: '',
                     range: '',
                     staff_name: '',
@@ -165,29 +174,29 @@
             }
         },
         mounted (){
-            this.personalList(1);
+            this.$http.get('salary/Commission/dict').then((res) => {
+                this.dict = res.data;
+                this.personalList(1);
+            });
         },
         methods: {
 //            列表
             personalList (val){
-                this.$http.get('salary/Commission/dict').then((res) => {
-                    this.dict = res.data;
-                    this.params.page = val;
-                    this.pitch = [];
-                    this.$http.get('salary/view', {
-                        params: this.params
-                    }).then((res) => {
-                        if (res.data.code === '70010') {
-                            this.salary = res.data.data.data;
-                            this.paging = res.data.data.pages;
-                            this.isShow = false;
-                        } else {
-                            this.paging = '';
-                            this.salary = [];
-                            this.isShow = true;
-                        }
-                    })
-                });
+                this.params.page = val;
+                this.pitch = [];
+                this.$http.get('salary/view', {
+                    params: this.params
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.salary = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.paging = '';
+                        this.salary = [];
+                        this.isShow = true;
+                    }
+                })
             },
 
 //            搜索
@@ -274,6 +283,10 @@
     .form-group, .input-group {
         margin-bottom: 0;
         height: 39px;
+    }
+
+    .width80 {
+        min-width: 76px;
     }
 
 </style>

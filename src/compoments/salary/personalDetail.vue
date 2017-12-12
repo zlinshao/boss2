@@ -97,9 +97,9 @@
                                     <td>{{item.commission}}</td>
                                     <td>{{item.bonus_collect}}</td>
                                     <td>{{item.bonus_rent}}</td>
-                                    <td>{{item.rent_remain}}</td>
-                                    <td>{{item.punish}}</td>
-                                    <td>{{item.rent_remain}}</td>
+                                    <td>{{item.punish}}11</td>
+                                    <td>{{item.rent_remain}}11</td>
+                                    <td>{{item.rent_remain}}11</td>
                                     <td>{{item.amount_admin_deduction}}</td>
                                     <td>{{item.amount_soc_secu_deduction}}</td>
                                     <td>{{item.amount_finance_deduction}}</td>
