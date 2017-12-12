@@ -900,11 +900,11 @@
                                             <span>水电燃物业公摊费申报</span>
                                         </router-link>
                                     </li>
-                                    <li>
-                                        <router-link to="/hydroepowerWebList">
-                                            <span>水电燃报销（官网）</span>
-                                        </router-link>
-                                    </li>
+                                    <!--<li>-->
+                                        <!--<router-link to="/hydroepowerWebList">-->
+                                            <!--<span>水电燃报销（官网）</span>-->
+                                        <!--</router-link>-->
+                                    <!--</li>-->
                                 </ul>
                             </li>
                             <li v-show="simulate.indexOf('Record/listRepair')>-1||isSuper">
