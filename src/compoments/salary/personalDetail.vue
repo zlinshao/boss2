@@ -97,9 +97,9 @@
                                     <td>{{item.commission}}</td>
                                     <td>{{item.bonus_collect}}</td>
                                     <td>{{item.bonus_rent}}</td>
-                                    <td>{{item.punish}}11</td>
-                                    <td>{{item.rent_remain}}11</td>
-                                    <td>{{item.rent_remain}}11</td>
+                                    <td>{{item.amount_remain}}</td>
+                                    <td>{{item.punish}}</td>
+                                    <td>{{item.medi_cost}}</td>
                                     <td>{{item.amount_admin_deduction}}</td>
                                     <td>{{item.amount_soc_secu_deduction}}</td>
                                     <td>{{item.amount_finance_deduction}}</td>
@@ -369,27 +369,27 @@
                                     <td>{{item.bonus_year}}</td>
                                     <td>{{item.achv}}</td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 1">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 2">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 3">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-for="key in item.simple_cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.status == 2}"
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
                                     <td v-if="item.simple_cells.length == 5"
-                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
+                                        :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 2}">
                                          <span v-for="key in item.simple_cells"
                                                v-show="key.category == 5">{{key.amount_actual}}</span>
                                     </td>
@@ -486,6 +486,7 @@
                 tabs: 1,
                 pitch: [],
                 cell_pitch: [],
+                cell_pitch_off: [],
                 dict: {},
                 simple_cells: [],
                 isShow2: false,
@@ -510,8 +511,11 @@
             }
         },
         mounted (){
-            this.personal_id = this.$route.query.nameId;
-            this.personal(this.$route.query.nameId, 1);
+            this.$http.get('salary/Commission/dict').then((res) => {
+                this.dict = res.data;
+                this.personal_id = this.$route.query.nameId;
+                this.personal(this.$route.query.nameId, 1);
+            });
         },
         methods: {
 //            中介费修改
@@ -536,47 +540,49 @@
             },
 //            详情
             personal (val, tab){
-                this.$http.get('salary/Commission/dict').then((res) => {
-                    this.dict = res.data;
-                    this.salaryBar = [];
-                    this.salaryDetail = [];
-                    this.tabs = tab;
-                    if (tab === 1) {
-                        this.$http.get('salary/view/' + val).then((res) => {
-                            this.salaryBar.push(res.data.data);
-                            this.salaryBar_object = res.data.data;
-                            this.salary_time = res.data.data.target_month.substring(0, 7);
-                        })
-                    }
-                    if (tab === 2) {
-                        this.$http.get('salary/view/history/' + val).then((res) => {
-                            if (res.data.code === '70000') {
-                                this.salaryDetail = res.data.data;
-                                this.isShow2 = false;
-                            } else {
-                                this.isShow2 = true;
-                            }
-                        })
-                    }
-                    if (tab === 3) {
-                        this.$http.get('salary/view/detail/' + val).then((res) => {
-                            if (res.data.code === '70000') {
-                                this.salaryDetail = res.data.data;
-                                this.isShow3 = false;
-                            } else {
-                                this.isShow3 = true;
-                            }
-                        })
-                    }
-                });
+                this.salaryBar = [];
+                this.salaryDetail = [];
+                this.tabs = tab;
+                if (tab === 1) {
+                    this.$http.get('salary/view/' + val).then((res) => {
+                        this.salaryBar.push(res.data.data);
+                        this.salaryBar_object = res.data.data;
+                        this.salary_time = res.data.data.target_month.substring(0, 7);
+                    })
+                }
+                if (tab === 2) {
+                    this.$http.get('salary/view/history/' + val).then((res) => {
+                        if (res.data.code === '70000') {
+                            this.salaryDetail = res.data.data;
+                            this.isShow2 = false;
+                        } else {
+                            this.isShow2 = true;
+                        }
+                    })
+                }
+                if (tab === 3) {
+                    this.$http.get('salary/view/detail/' + val).then((res) => {
+                        if (res.data.code === '70000') {
+                            this.salaryDetail = res.data.data;
+                            this.isShow3 = false;
+                        } else {
+                            this.isShow3 = true;
+                        }
+                    })
+                }
+
 
             },
 //            已发工资
             already_salary (){
                 this.cell_pitch = [];
+                this.cell_pitch = [];
+                this.cell_pitch_off = [];
                 for (let i = 0; i < this.simple_cells.length; i++) {
-                    if (this.simple_cells[i].status === 2) {
+                    if (this.simple_cells[i].status === 1) {
                         this.cell_pitch.push(this.simple_cells[i].id);
+                    } else if (this.simple_cells[i].status === 2) {
+                        this.cell_pitch_off.push(this.simple_cells[i].id);
                     }
                 }
                 $('#already_salary').modal({backdrop: 'static',});
@@ -624,18 +630,24 @@
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
+                    let index = this.cell_pitch_off.indexOf(rul);
+                    if (index > -1) {
+                        this.cell_pitch_off.splice(index, 1);
+                    }
                     this.cell_pitch.push(rul);
                 } else {
                     let index = this.cell_pitch.indexOf(rul);
                     if (index > -1) {
                         this.cell_pitch.splice(index, 1);
                     }
+                    this.cell_pitch_off.push(rul);
                 }
             },
 //            确定已发
             cell_ok (){
-                this.$http.post('achv/cell/settle/' + this.pitch, {
-                    ids: this.cell_pitch
+                this.$http.post('achv/cell/change/' + this.pitch, {
+                    on: this.cell_pitch,
+                    off: this.cell_pitch_off,
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');
