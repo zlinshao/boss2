@@ -321,7 +321,9 @@
             salaryBar (val){
                 this.salaryBar_id = val.id;
                 this.staff_name = val.staff_name;                           //签约人
-                this.department_name = val.department.name;                 //部门名称
+                if(val.department !== null){
+                    this.department_name = val.department.name;                 //部门名称
+                }
                 this.set_meal = val.package;                                //套餐类型
                 this.base_pay = val.base;                                   //底薪
                 this.achievement_up = val.commission;                       //业绩提成
