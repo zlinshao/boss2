@@ -694,7 +694,7 @@
     }
 
     .deduct_marks {
-        background-color: #DDDDDD;
+        background-color: #c3c3c3;
     }
 
     div.table.table-responsive table tr td:first-child {
