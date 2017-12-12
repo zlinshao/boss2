@@ -253,6 +253,18 @@
                                         v-show="key.category == 4">
                                         <span>{{key.amount_actual}}</span>
                                     </td>
+                                    <td v-if="item.simple_cells.length == 0">
+                                        /
+                                    </td>
+                                    <td v-if="item.simple_cells.length == 0">
+                                        /
+                                    </td>
+                                    <td v-if="item.simple_cells.length == 0">
+                                        /
+                                    </td>
+                                    <td v-if="item.simple_cells.length == 0">
+                                        /
+                                    </td>
                                     <td v-if="item.simple_cells.length == 5"
                                         :class="{'deduct_marks':item.simple_cells.length == 5 && item.simple_cells[4].status == 1}">
                                          <span v-for="key in item.simple_cells"
