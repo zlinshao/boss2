@@ -275,7 +275,7 @@
                                     </td>
                                     <td>{{item.percentage_remain}}</td>
                                     <td>{{item.punish_year}}</td>
-                                    <td>{{item.bonus_vacancy}}</td>
+                                    <td>{{item.punish_vacancy}}</td>
                                     <td>
                                         <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
                                               style="cursor: pointer;">
@@ -398,7 +398,7 @@
                                     </td>
                                     <td>{{item.percentage_remain}}</td>
                                     <td>{{item.punish_year}}</td>
-                                    <td>{{item.bonus_vacancy}}</td>
+                                    <td>{{item.punish_vacancy}}</td>
                                     <td>
                                         <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
                                               style="cursor: pointer;">
