@@ -63,7 +63,7 @@
                                    :checked="pitch.indexOf(item.id) > -1">
                         </label>
                     </td>
-                    <td class="width80" rowspan="2">{{item.staff_name}}</td>
+                    <td class="width80">{{item.target_month.slice(0, 7)}}</td>
                     <td class="width80">底薪</td>
                     <td class="width80">业绩提成</td>
                     <td class="width80">收房奖励</td>
@@ -86,6 +86,7 @@
                     <td class="width50">详情</td>
                 </tr>
                 <tr class="text-center">
+                    <td>{{item.staff_name}}<br>{{item.commission_count}}单</td>
                     <td>{{item.base}}</td>
                     <td>{{item.commission}}</td>
                     <td>{{item.bonus_collect}}</td>
@@ -103,7 +104,11 @@
                     <td>{{dict.package[item.package]}}</td>
                     <td>{{item.amount_due}}</td>
                     <td>{{item.amount_actual}}</td>
-                    <td>{{dict.salary_status[item.status]}}</td>
+                    <td @click="toggle(item.status, item.id)" style="cursor: pointer;">
+                        <!--{{dict.salary_status[item.status]}}-->
+                        <span v-if="item.status == 1">已发放</span>
+                        <span v-if="item.status == 2">未发放</span>
+                    </td>
                     <td>
                         <i class="fa fa-book" @click="lookRemark(item.remark)" v-if="item.remark != ''"></i>
                     </td>
@@ -180,6 +185,16 @@
             });
         },
         methods: {
+//            已发未发
+            toggle (val, id){
+                this.$http.post('salary/view/toggle/' + id, {
+                    status: 3 - val,
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.search(this.params.page);
+                    }
+                })
+            },
 //            列表
             personalList (val){
                 this.params.page = val;
