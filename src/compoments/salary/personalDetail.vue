@@ -41,9 +41,9 @@
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;工资条</a>
                         </li>
                         <!--<li @click="tab_personal(personal_id, 2)" :class="{'active': tabs == 2}">-->
-                            <!--<a data-toggle="tab" href="#Insightful" aria-expanded="false">-->
-                                <!--过往未发工资明细-->
-                            <!--</a>-->
+                        <!--<a data-toggle="tab" href="#Insightful" aria-expanded="false">-->
+                        <!--过往未发工资明细-->
+                        <!--</a>-->
                         <!--</li>-->
                         <li @click="tab_personal(personal_id, 3)" :class="{'active': tabs == 3}">
                             <a data-toggle="tab" href="#sto_sent" aria-expanded="false">
@@ -406,7 +406,8 @@
                                         </span>
                                         <span v-if="isActive == item.id"
                                               style="display: inline-block;min-width: 160px;position: relative;">
-                                            <input type="text" class="form-control" v-model="costStatus" @keyup="fruit"
+                                            <input type="text" class="form-control" v-model="costStatus"
+                                                   @keyup="fruit"
                                                    style="margin-bottom: 5px;">&nbsp;<span
                                                 style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>
                                             <a class="btn btn-default btn-sm" @click.stop="cost_show('')">取消</a>
@@ -521,7 +522,15 @@
         },
         methods: {
             fruit (){
-                this.cost_fruit = this.costStatus * 0.7;
+                let reg = /^[0-9]*$/;
+                let flag = reg.test(this.costStatus);
+                if (flag === false) {
+                    this.costStatus = '';
+                    this.cost_fruit = '';
+                } else if (flag === true) {
+                    this.cost_fruit = Math.floor(this.costStatus * 0.7 * 100) / 100;
+                }
+
             },
 //            中介费修改
             cost_show (id){
