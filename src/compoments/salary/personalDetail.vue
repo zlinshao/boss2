@@ -85,7 +85,7 @@
                                     <td class="width80">住宿扣款</td>
                                     <td class="width80">购车扣款</td>
                                     <td class="width80">其他扣款</td>
-                                    <td class="width100">过往未发工资</td>
+                                    <!--<td class="width100">过往未发工资</td>-->
                                     <td class="width80">套餐类型</td>
                                     <td class="width80">应发工资</td>
                                     <td class="width80">实发工资</td>
@@ -106,7 +106,7 @@
                                     <td>{{item.amount_accomm_deduction}}</td>
                                     <td>{{item.amount_car_deduction}}</td>
                                     <td>{{item.amount_other_deduction}}</td>
-                                    <td>{{item.history_rc}}</td>
+                                    <!--<td>{{item.history_rc}}</td>-->
                                     <td>{{dict.package[item.package]}}</td>
                                     <td>{{item.amount_due}}</td>
                                     <td>{{item.amount_actual}}</td>
