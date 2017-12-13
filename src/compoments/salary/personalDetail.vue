@@ -40,11 +40,11 @@
                             <a data-toggle="tab" href="#salary_bill" aria-expanded="true">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;工资条</a>
                         </li>
-                        <li @click="tab_personal(personal_id, 2)" :class="{'active': tabs == 2}">
-                            <a data-toggle="tab" href="#Insightful" aria-expanded="false">
-                                过往未发工资明细
-                            </a>
-                        </li>
+                        <!--<li @click="tab_personal(personal_id, 2)" :class="{'active': tabs == 2}">-->
+                            <!--<a data-toggle="tab" href="#Insightful" aria-expanded="false">-->
+                                <!--过往未发工资明细-->
+                            <!--</a>-->
+                        <!--</li>-->
                         <li @click="tab_personal(personal_id, 3)" :class="{'active': tabs == 3}">
                             <a data-toggle="tab" href="#sto_sent" aria-expanded="false">
                                 本月工资明细
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                         <div id="Insightful" class="tab-pane table has-js table-responsive roll"
-                             :class="{'active': tabs == 2}">
+                             :class="{'active': tabs == 2}" v-if="false">
                             <form class="form-inline clearFix" role="form">
                                 <header class="pull-left">
                                     <h4>过往未发工资明细</h4>
