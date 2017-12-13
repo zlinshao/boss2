@@ -88,28 +88,39 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">业绩提成</label>
                                     <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="achievement_up" class="form-control" placeholder=""
-                                               readonly>
+                                        <input type="text" v-model="achievement_up" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">年限(涨价)扣款</label>
+                                    <div class="col-lg-10 iconic-input right">
+                                        <input type="text" v-model="punish_year" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-sm-2 control-label">空置期扣款</label>
+                                    <div class="col-lg-10 iconic-input right">
+                                        <input type="text" v-model="punish_vacancy" class="form-control" placeholder="">
                                     </div>
                                 </div>
 
                                 <!--未发比例-->
-                                <div class="form-group">
-                                    <label class="col-lg-2 col-sm-2 control-label">未发比例</label>
-                                    <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="not_send_scale" class="form-control" placeholder=""
-                                               readonly>
-                                    </div>
-                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-lg-2 col-sm-2 control-label">未发比例</label>-->
+                                    <!--<div class="col-lg-10 iconic-input right">-->
+                                        <!--<input type="text" v-model="not_send_scale" class="form-control" placeholder=""-->
+                                               <!--readonly>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
-                                <div class="form-group" v-for="key in cells">
-                                    <label class="col-lg-2 col-sm-2 control-label">{{dict.cell_category[key.category]}}</label>
-                                    <div class="col-lg-10 iconic-input right">
-                                        <input type="text" v-model="key.amount_actual" class="form-control"
-                                               :disabled="key.status == 1"
-                                               placeholder="">
-                                    </div>
-                                </div>
+                                <!--<div class="form-group" v-for="key in cells">-->
+                                    <!--<label class="col-lg-2 col-sm-2 control-label">{{dict.cell_category[key.category]}}</label>-->
+                                    <!--<div class="col-lg-10 iconic-input right">-->
+                                        <!--<input type="text" v-model="key.amount_actual" class="form-control"-->
+                                               <!--:disabled="key.status == 1"-->
+                                               <!--placeholder="">-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <!--中介费-->
                                 <div class="form-group">
@@ -152,6 +163,8 @@
         props: ['msg', 'dicts'],
         data (){
             return {
+                punish_year: '',                    //年限(涨价)扣款
+                punish_vacancy: '',                 //空置期扣款
                 dict: {},
                 col_rent_status: [],                //收租状态
                 months: '',                         //月份
@@ -193,6 +206,8 @@
                 this.connect = '';                        //交接
                 this.complaints = '';                     //客诉
                 this.final_payment = '';                  //尾款
+                this.punish_year = val.punish_year;         //年限(涨价)扣款
+                this.punish_vacancy = val.punish_vacancy;    //空置期扣款
                 this.brokerage_fee = val.medi_cost;                  //中介费
                 this.in_all = val.amount_actual;                     //共计
                 this.remarks = val.remark;                        //备注
@@ -218,8 +233,10 @@
                     bonus_year: this.year_period,            //收房年限奖励
                     bonus_price: this.price_gap,              //价格差奖励
                     achv: this.achievement_up,                  //业绩提成
-                    percentage_remain: this.not_send_scale,         //未发比例
-                    cells: cell,                            //合同、资料、交接、客诉、尾款
+                    punish_year: this.punish_year,                  //业绩提成
+                    punish_vacancy: this.punish_vacancy,                  //业绩提成
+//                    percentage_remain: this.not_send_scale,         //未发比例
+//                    cells: cell,                            //合同、资料、交接、客诉、尾款
                     medi_cost: this.brokerage_fee,          //中介费
                     amount_actual: this.in_all,                 //共计
                     remark: this.remarks,                //备注

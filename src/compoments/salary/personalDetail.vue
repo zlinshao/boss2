@@ -406,7 +406,7 @@
                                         </span>
                                         <span v-if="isActive == item.id"
                                               style="display: inline-block;min-width: 160px;position: relative;">
-                                            <input type="text" class="form-control" v-model="costStatus"
+                                            <input type="number" class="form-control" v-model="costStatus"
                                                    @keyup="fruit"
                                                    style="margin-bottom: 5px;">&nbsp;<span
                                                 style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>
@@ -522,15 +522,7 @@
         },
         methods: {
             fruit (){
-                let reg = /^[0-9]*$/;
-                let flag = reg.test(this.costStatus);
-                if (flag === false) {
-                    this.costStatus = '';
-                    this.cost_fruit = '';
-                } else if (flag === true) {
-                    this.cost_fruit = Math.floor(this.costStatus * 0.7 * 100) / 100;
-                }
-
+                this.cost_fruit = Math.floor(this.costStatus * 0.7 * 100) / 100;
             },
 //            中介费修改
             cost_show (id){
@@ -746,4 +738,9 @@
     div.table.table-responsive table tr td:first-child {
         width: 0;
     }
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+    }
+
 </style>
