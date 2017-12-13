@@ -400,15 +400,16 @@
                                     <td>{{item.punish_year}}</td>
                                     <td>{{item.punish_vacancy}}</td>
                                     <td>
-                                        <span @click="cost_show(item.id, item.medi_cost)" v-if="isActive != item.id"
+                                        <span @click="cost_show(item.id)" v-if="isActive != item.id"
                                               style="cursor: pointer;">
                                             {{item.medi_cost}}
                                         </span>
                                         <span v-if="isActive == item.id"
-                                              style="display: inline-block;min-width: 100px;">
-                                            <input type="text" class="form-control" v-model="costStatus"
-                                                   style="margin-bottom: 5px;">
-                                            <a class="btn btn-default btn-sm" @click.stop="cost_show('','')">取消</a>
+                                              style="display: inline-block;min-width: 160px;position: relative;">
+                                            <input type="text" class="form-control" v-model="costStatus" @keyup="fruit"
+                                                   style="margin-bottom: 5px;">&nbsp;<span
+                                                style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>
+                                            <a class="btn btn-default btn-sm" @click.stop="cost_show('')">取消</a>
                                             <a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>
                                         </span>
                                     </td>
@@ -481,7 +482,8 @@
         components: {salaryRemark, personalRevise, DetailRevise, Status},
         data (){
             return {
-                costStatus: '',         //中介费状态
+                costStatus: '',         //中介费
+                cost_fruit: '',
                 isActive: '',
                 tabs: 1,
                 pitch: [],
@@ -518,15 +520,26 @@
             });
         },
         methods: {
+            fruit (){
+                this.cost_fruit = this.costStatus * 0.7;
+            },
 //            中介费修改
-            cost_show (id, val){
+            cost_show (id){
                 this.isActive = id;
-                this.costStatus = val;
+                this.costStatus = 0.00;
 
             },
             cost_save (){
-                this.$http.get('salary/Commission/dict').then((res) => {
-
+                this.$http.post('achv/commission/medicost/' + this.isActive, {
+                    amount: this.costStatus,
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.cost_show('');
+                        this.successMsg(res.data.msg);
+                        this.personal(this.personal_id, this.tabs);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
                 });
             },
             search (){
