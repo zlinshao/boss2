@@ -107,7 +107,7 @@
                                     <td>{{item.amount_car_deduction}}</td>
                                     <td>{{item.amount_other_deduction}}</td>
                                     <!--<td>{{item.history_rc}}</td>-->
-                                    <td>{{dict.package[item.package]}}</td>
+                                    <td>{{dict.package[item.package] }}</td>
                                     <td>{{item.amount_due}}</td>
                                     <td>{{item.amount_actual}}</td>
                                     <td>
@@ -309,19 +309,24 @@
                                 <header class="pull-left">
                                     <h4>本月工资明细</h4>
                                 </header>
-                                <!--<div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">-->
-                                <!--<input type="text" class="form-control" placeholder="房屋地址">-->
-                                <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-success" type="button">搜索</button>-->
-                                <!--</span>-->
-                                <!--</div>-->
-                                <!--<div class="form-group pull-right">-->
-                                <!--<select class="form-control">-->
-                                <!--<option value="candidate">收租状态</option>-->
-                                <!--<option value="unrelated">收房</option>-->
-                                <!--<option value="unrelated">租房</option>-->
-                                <!--</select>-->
-                                <!--</div>-->
+                                <div class="input-group pull-right" style="margin-bottom: 18px; margin-left: 18px">
+                                    <input type="text" class="form-control" placeholder="房屋地址" v-model="params.search"
+                                           @keydown.enter.prevent="personal(personal_id, 3)">
+                                    <span class="input-group-btn">
+                                <button class="btn btn-success" type="button"
+                                        @click="personal(personal_id, 3)">搜索</button>
+                                </span>
+                                </div>
+                                <div class="form-group pull-right" style="margin-left: 18px">
+                                    <select class="form-control" v-model="params.cate"
+                                            @change="personal(personal_id, 3)">
+                                        <option value="">收租状态</option>
+                                        <option v-for="(key,index) in dict.typical" :value="index">{{key}}</option>
+                                    </select>
+                                </div>
+                                <div class="pull-right" style="line-height: 36px;">
+                                    本月提点为：{{commission_factor}}
+                                </div>
                             </form>
 
                             <!--本月工资明细-->
@@ -483,6 +488,12 @@
         components: {salaryRemark, personalRevise, DetailRevise, Status},
         data (){
             return {
+                params: {
+                    cate: '',
+                    search: '',
+                },
+                commission_factor: '',  //提点
+                typical: [],
                 costStatus: '',         //中介费
                 cost_fruit: '',
                 isActive: '',
@@ -515,7 +526,9 @@
         },
         mounted (){
             this.$http.get('salary/Commission/dict').then((res) => {
+                this.typical = [];
                 this.dict = res.data;
+                this.typical.push(res.data.typical);
                 this.personal_id = this.$route.query.nameId;
                 this.personal(this.$route.query.nameId, 1);
             });
@@ -575,9 +588,12 @@
                     })
                 }
                 if (tab === 3) {
-                    this.$http.get('salary/view/detail/' + val).then((res) => {
-                        if (res.data.code === '70000') {
+                    this.$http.get('salary/view/detail/' + val, {
+                        params: this.params,
+                    }).then((res) => {
+                        if (res.data.code === '70000' && res.data.data.length !== 0) {
                             this.salaryDetail = res.data.data;
+                            this.commission_factor = res.data.data[0].commission_factor;
                             this.isShow3 = false;
                         } else {
                             this.isShow3 = true;
