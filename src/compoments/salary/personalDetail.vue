@@ -111,8 +111,10 @@
                                     <td>{{dict.package[item.package] }}</td>
                                     <td>{{item.amount_due}}</td>
                                     <td>{{item.amount_actual}}</td>
-                                    <td>
-                                        {{dict.salary_status[item.status]}}
+                                    <td @click="toggle(item.status, item.id)" style="cursor: pointer;">
+                                        <!--{{dict.salary_status[item.status]}}-->
+                                        <span v-if="item.status == 1">已发放</span>
+                                        <span v-if="item.status == 2">未发放</span>
                                     </td>
                                     <td>
                                         <i class="fa fa-book" @click="lookRemark(item.remark)"
@@ -535,6 +537,16 @@
             });
         },
         methods: {
+//            已发未发
+            toggle (val, id){
+                this.$http.post('salary/view/toggle/' + id, {
+                    status: 3 - val,
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.search(this.params.page);
+                    }
+                })
+            },
             fruit (){
                 this.cost_fruit = Math.floor(this.costStatus * 0.7 * 100) / 100;
             },
