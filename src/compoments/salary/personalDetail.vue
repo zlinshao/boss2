@@ -71,7 +71,7 @@
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
                                     </td>
-                                    <td class="width80" rowspan="2">{{item.staff_name}}</td>
+                                    <td class="width80">{{item.target_month.slice(0,7)}}</td>
                                     <td class="width80">底薪</td>
                                     <td class="width80">业绩提成</td>
                                     <td class="width80">收房奖励</td>
@@ -93,6 +93,7 @@
                                     <td class="width50">备注</td>
                                 </tr>
                                 <tr class="text-center">
+                                    <td>{{item.staff_name}}<br>{{item.commission_count}}单</td>
                                     <td>{{item.base}}</td>
                                     <td>{{item.commission}}</td>
                                     <td>{{item.bonus_collect}}</td>
