@@ -68,7 +68,7 @@
                       :department_id="department_id" @success = 'addHighSuccess'></PositionHigh>
 
         <Authority :authorityId = 'position_id' :simulate="simulate" :isSuper="isSuper" @success="authoritySuccess"></Authority>
-
+        <SortDeparment :department_name="department_name" :department_id="department_id" @sortDdp="sortSuccess"></SortDeparment>
     </div>
 </template>
 
@@ -86,6 +86,7 @@
     import PositionHigh from './positionHigh.vue'
 
     import OrganizePic from './organizePic.vue'
+    import SortDeparment from './sortDeparment.vue'
     export default {
         props:['simulate','isSuper'],
         components: {
@@ -100,7 +101,8 @@
             PositionAdd,
             PositionHigh,
             Authority,
-            OrganizePic
+            OrganizePic,
+            SortDeparment
         },
         data () {
             return {
@@ -190,6 +192,11 @@
                     case '调迁部门' :
                         this.department_id = val.id;
                         $('#myModalTransferDpm').modal('show');
+                        break;
+                    case '部门排序' :
+                        this.department_id = val.id;
+                        $('#myModalSortDpm').modal('show');
+                        break;
                 }
 
             },
@@ -260,7 +267,10 @@
                 //显示成功弹窗 ***
                 this.info.state_error = true;
             },
-
+            //排序成功
+            sortSuccess(){
+                this.getDepartementList();
+            },
             transferCommit(val){
                 this.$http.post('manager/department/department_move', {
                     parent_id: val,
