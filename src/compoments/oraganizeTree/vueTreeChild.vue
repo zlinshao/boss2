@@ -40,6 +40,10 @@
 							<li v-if="simulate.indexOf('Department/department_move')>-1||isSuper">
 								<a @click="transferDepartment($event)">调迁部门</a>
 							</li>
+
+							<li>
+								<a @click="sortDepartment($event)">部门排序</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -244,6 +248,7 @@
 //            stopDepartment(e){this.model.contentHtml = e.target.text;},
             deleteDepartment(e){this.model.contentHtml = e.target.text;},
             transferDepartment(e){this.model.contentHtml = e.target.text;},
+            sortDepartment(e){this.model.contentHtml = e.target.text;}
     },
 }
 </script>
