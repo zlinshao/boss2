@@ -32,7 +32,7 @@
                             </span>
                         </div>
                         <div class="input-group">
-                            <a :href="address_url + 'export/salary/indexV2?generate_date='+ this.params.generate_date + '&staff_name=' + this.params.staff_name + '&department_id=' +this.params.department_id"
+                            <a :href="address_url + 'export/salary/searchByStaff?generate_date='+ this.params.generate_date + '&staff_name=' + this.params.staff_name + '&department_id=' +this.params.department_id"
                                class="btn btn-success">导出</a>
                         </div>
                         <div class="pull-right" style="margin-left: 10px;">
