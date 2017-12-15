@@ -31,6 +31,10 @@
                                         @click="search(remark_term.tabs, 1)">搜索</button>
                             </span>
                         </div>
+                        <div class="input-group">
+                            <a :href="address_url + 'export/salary/indexV2?generate_date='+ this.params.generate_date + '&staff_name=' + this.params.staff_name + '&department_id=' +this.params.department_id"
+                               class="btn btn-success">导出</a>
+                        </div>
                         <div class="pull-right" style="margin-left: 10px;">
                             <a class="btn btn-success" @click="time_choose">生成工资</a>
                         </div>
@@ -307,6 +311,7 @@
         components: {DatePicker, Organization, lookRemark, Page},
         data (){
             return {
+                address_url: globalConfig.server,
                 generating: '',                     //月份选择
                 pitch: [],                          //选中ID
                 remark_info: [],                    //备注信息

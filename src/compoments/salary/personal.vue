@@ -35,6 +35,10 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+                        <div class="input-group">
+                            <a :href="address_url + 'export/salary/indexV2?cate='+ this.params.cate + '&range=' + this.params.range + '&search=' +this.params.search"
+                               class="btn btn-success">导出</a>
+                        </div>
                     </form>
                 </div>
 
@@ -153,6 +157,7 @@
         components: {DatePicker, STAFF, personalRevise, salaryRemark, Page},
         data (){
             return {
+                address_url: globalConfig.server,
                 pitch: [],                  //选中ID
                 dict: {},                   //字典
                 salaryBar: {},              //编辑详情
