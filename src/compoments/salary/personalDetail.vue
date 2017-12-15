@@ -113,8 +113,8 @@
                                     <td>{{item.amount_actual}}</td>
                                     <td @click="toggle(item.status, item.id)" style="cursor: pointer;">
                                         <!--{{dict.salary_status[item.status]}}-->
-                                        <span v-if="item.status == 1">已发放</span>
-                                        <span v-if="item.status == 2">未发放</span>
+                                        <span v-if="item.status == 1" class="btn btn-success btn-sm">已发放</span>
+                                        <span v-if="item.status == 2" class="btn btn-warning btn-sm">未发放</span>
                                     </td>
                                     <td>
                                         <i class="fa fa-book" @click="lookRemark(item.remark)"
