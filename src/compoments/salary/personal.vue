@@ -37,11 +37,32 @@
                         </div>
                         <div class="input-group">
                             <a :href="address_url + 'export/salary/indexV2?cate='+ this.params.cate + '&range=' + this.params.range + '&search=' +this.params.search"
-                               class="btn btn-success">导出</a>
+                               class="btn btn-success">导出工资条</a>
+                        </div>
+                        <div class="input-group">
+                            <a class="btn btn-success" @click="leading_out">导出详情</a>
                         </div>
                     </form>
                 </div>
-
+                <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                                <h4 class="modal-title">提示信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h5>生成 成功！</h5>
+                            </div>
+                            <div class="modal-footer text-right">
+                                <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                                <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--选中-->
                 <div class="col-lg-12 remind" v-if="pitch.length > 0">
                     <ul>
@@ -158,6 +179,7 @@
         data (){
             return {
                 address_url: globalConfig.server,
+                leadingOut: '',
                 pitch: [],                  //选中ID
                 dict: {},                   //字典
                 salaryBar: {},              //编辑详情
@@ -190,6 +212,22 @@
             });
         },
         methods: {
+//            导出详情
+            leading_out (){
+                this.$http.get('/salary/salary/export', {
+                    params: this.params
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                    }
+                })
+            },
+            close_ (){
+                $('#leading_out').modal('hide');
+            },
 //            已发未发
             toggle (val, id){
                 this.$http.post('salary/view/toggle/' + id, {
