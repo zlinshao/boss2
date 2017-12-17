@@ -267,7 +267,10 @@
                             <th class="text-center width120" :class="{red: !recycle_bin}">收入科目</th>
                             <th class="text-center width120" :class="{red: !recycle_bin}">应收金额</th>
                             <th class="text-center width110" :class="{red: !recycle_bin}">实收金额</th>
-                            <th class="text-center width100" :class="{red: !recycle_bin}">剩余款项</th>
+                            <th class="text-center width100" :class="{red: !recycle_bin}" style="cursor: pointer;"
+                                @click="surplus">
+                                剩余款项
+                            </th>
                             <th class="text-center width100" :class="{red: !recycle_bin}">补齐时间</th>
                             <th class="text-center width50" :class="{red: !recycle_bin}">状态</th>
                             <th class="text-center width150" :class="{red: !recycle_bin}">明细详情</th>
@@ -508,6 +511,40 @@
             </div>
         </div>
 
+        <!--剩余款项-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="surplus">
+            <div class="modal-dialog">
+                <div class="modal-content modal-sm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">剩余款项</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="text-center" @click='surplusVal(1)'>小于等于100</h5>
+                        <h5 class="text-center" @click='surplusVal(2)'>101~1000</h5>
+                        <h5 class="text-center" @click='surplusVal(3)'>大于等于1001</h5>
+                        <div class="clearFix form-group" style="margin-bottom: 0;margin-top: 16px;">
+                            <div class="col-xs-5">
+                                <input class="form-control" type="number" v-model="starPrice">
+                            </div>
+                            <div class="col-xs-2" style="margin-top: 6px;">
+                                ~
+                            </div>
+                            <div class="col-xs-5">
+                                <input class="form-control" type="number" v-model="endPrice">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                        <a class="btn btn-primary btn-md" @click="surplusVal(4)">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
@@ -571,7 +608,8 @@
 
         data(){
             return {
-
+                starPrice: '',
+                endPrice: '',
                 remark_isActive: '',            //备注修改
                 detail_info: [],               //详情信息
                 detail: '',                     //详情信息
@@ -622,6 +660,7 @@
 
                 selected: [],
                 params: {
+                    price: [],
                     department_id: [],
                     staff_id: [],
                     status: '',
@@ -725,6 +764,29 @@
         },
 
         methods: {
+//            剩余款项
+            surplus (){
+                $('#surplus').modal({
+                    backdrop: 'static',         //空白处模态框不消失
+                });
+            },
+            surplusVal (val){
+                if (val === 1) {
+                    this.params.price = ['', 100];
+                }
+                if (val === 2) {
+                    this.params.price = [101, 1000];
+                }
+                if (val === 3) {
+                    this.params.price = [1001, ''];
+                }
+                if (val === 4) {
+                    this.params.price = [this.starPrice, this.endPrice];
+                }
+                this.search(this.beforePage);
+                $('#surplus').modal('hide');
+            },
+
 //            发送短信
             sendMessage (){
                 $('#sendMessage').modal({
@@ -743,7 +805,6 @@
                         this.errorMsg(res.data.msg);
                     }
                 });
-
             },
 //            导出
             leading_out (){
@@ -1378,5 +1439,30 @@
 
     .bigRed {
         background-color: #FCD1F2;
+    }
+
+    @media (min-width: 768px) {
+        .modal-dialog {
+            width: 300px;
+        }
+    }
+
+    #surplus h5 {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 16px 0;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    #surplus h5:hover {
+        color: #78CD51;
+    }
+
+    #surplus input {
+        margin-bottom: 0;
+    }
+
+    #surplus .col-xs-5 {
+        padding: 0;
     }
 </style>
