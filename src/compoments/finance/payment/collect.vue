@@ -1442,7 +1442,7 @@
     }
 
     @media (min-width: 768px) {
-        .modal-dialog {
+        #surplus .modal-dialog {
             width: 300px;
         }
     }
