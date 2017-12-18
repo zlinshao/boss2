@@ -305,7 +305,7 @@
         <!--Confirm-->
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <!--分页-->
-        <Page :pg="paging" @pag="zero_search" :beforePage="beforePage"></Page>
+        <Page :pg="paging" @pag="search" :beforePage="beforePage"></Page>
 
         <!--提示信息-->
         <Status :state='info'></Status>
@@ -501,7 +501,6 @@
                 this.filter(this.beforePage);
             },
             search(val){
-//                console.log(this.params);
 //                this.params['page'] = 1;
                 this.filter(val);
             },
