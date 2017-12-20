@@ -2,7 +2,7 @@
     <div>
         <div class="modal fade full-width-modal-right" id="editDate" tabindex="-1" aria-hidden="true"
              data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog ">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
@@ -10,7 +10,7 @@
                         </button>
                         <h4 class="modal-title">付款时间编辑</h4>
                     </div>
-                    <div class="modal-body clearfix">
+                    <div class="modal-body clearfix" style="padding-bottom: 300px;">
                         <div v-for="item in date" class="col-xs-12">
                             <h5 class="pull-left" v-show="isActive != item.id">
                                 {{item.pay_date}}
@@ -31,10 +31,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer text-right">
+                    <!--<div class="modal-footer text-right" style="position: fixed;bottom: 0;right: 0;width: 100%;background: #fff;">-->
                         <!--<button data-dismiss="modal" class="btn btn-default btn-md">取消</button>-->
-                        <button data-dismiss="modal" class="btn btn-primary btn-md">关闭</button>
-                    </div>
+                        <!--<button data-dismiss="modal" class="btn btn-primary btn-md">关闭</button>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
