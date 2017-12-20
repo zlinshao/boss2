@@ -149,8 +149,9 @@ import ProblemDetail from './compoments/customerService/problem/problemDetail.vu
 import HydropowerGasList from './compoments/customerService/hydropowerGas/hydropowerGasList.vue'                                // 水电燃物业、公摊费申报申报
 import HydropowerGasDetail from './compoments/customerService/hydropowerGas/hydropowerGasDetail.vue'                                // 水电燃物业、公摊费申报申报详情
 
-import Village from './compoments/villageManage/village.vue'                        //小区管理列表
+import Village from './compoments/villageManage/village.vue'                                    //小区管理列表
 import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
+import Statistics from './compoments/statistics/statistics.vue'                                 //统计
 
 
 //重构客户模块
@@ -166,7 +167,13 @@ export default[
         path: '/index',             //主页
         name: 'index',
         component: Index
-    }, {
+    },
+    {
+        path: '/statistics',             //主页
+        name: 'statistics',
+        component: Statistics
+    },
+    {
         path: '/organization',             //业绩生成
         name: 'organization',
         component: Organization
