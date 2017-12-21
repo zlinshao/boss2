@@ -298,7 +298,8 @@
                             </a>
                         </td>
                         <td>
-                            <router-link :to="{path:'/oldRentDetail',query: {ContractId: item.zid}}">
+                            <router-link :to="{path:'/oldRentDetail',
+                            query: {ContractId: item.zid,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">
                                 详情
                             </router-link>
                         </td>

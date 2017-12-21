@@ -39,7 +39,7 @@
                                     <div class="text-primary">客户姓名：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='姓名'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='姓名'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -49,7 +49,7 @@
                                     <div class="text-primary">联系电话：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='电话'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='电话'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -59,7 +59,7 @@
                                     <div class="text-primary">客户身份：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='客户身份'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='客户身份'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -69,7 +69,7 @@
                                     <div class="text-primary">房屋地址：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='房屋地址'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='房屋地址'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -79,7 +79,7 @@
                                     <div class="text-primary">合同编号：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='合同编号'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='合同编号'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -89,7 +89,7 @@
                                     <div class="text-primary">报销类别：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='报销类别'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='报销类别'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -110,7 +110,7 @@
                                     <div class="text-primary">开户行：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='开户行'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='开户行'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -120,7 +120,7 @@
                                     <div class="text-primary">收款人姓名：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='收款人姓名'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='收款人姓名'">
                                                 {{a.value}}
                                             </span>
                                         </span>
@@ -130,7 +130,7 @@
                                     <div class="text-primary">银行卡账号：</div>
                                     <div>
                                         <span v-for="list in msg.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                            <span v-for="a in list.value[0]" v-if="a.label=='银行卡账号'">
+                                            <span v-for="a in list.value[0].rowValue" v-if="a.label=='银行卡账号'">
                                                 {{a.value}}
                                             </span>
                                         </span>

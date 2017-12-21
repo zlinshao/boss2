@@ -250,7 +250,7 @@
                         </td>-->
                         <td v-if="simulate.indexOf('Collect/readContract')>-1||isSuper">
                             <router-link :to="{path:'/contractDetail',
-                            query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName }}">
+                            query: {ContractId: item.id,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">
                                 详情
                             </router-link>
                         </td>
@@ -308,7 +308,8 @@
                             </a>
                         </td>
                         <td>
-                            <router-link :to="{path:'/oldContractDetail',query: {ContractId: item.fid}}">
+                            <router-link :to="{path:'/oldContractDetail',
+                            query: {ContractId: item.fid,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">
                                 详情
                             </router-link>
                         </td>
@@ -483,6 +484,13 @@
                         this.keepStatus = false;
                     }
                     this.searchContract();
+                    if(this.contractSearchInfo.keywords){
+                        this.searchOldContract();
+                    }else {
+                        this.oldList = [];
+                        this.oldPages = '';
+                        this.isOldShow = true
+                    }
                 });
             },
             search(){
