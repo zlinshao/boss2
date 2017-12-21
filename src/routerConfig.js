@@ -155,6 +155,8 @@ import Village from './compoments/villageManage/village.vue'                    
 import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
 import Statistics from './compoments/statistics/statistics.vue'                                 //统计
 
+import OldContractDetail from './compoments/contract/collecOldDetail.vue'                   //老系统详情
+import OldRentDetail from './compoments/contract/rentOldDetail.vue'
 
 //重构客户模块
 import Client from './compoments/client/clientList.vue'
@@ -831,6 +833,16 @@ export default[
         path:'/clientPool',
         name:'ClientPool',
         component:ClientPool
+    },
+    {
+        path:'/oldContractDetail',
+        name:'OldContractDetail',
+        component:OldContractDetail
+    },
+    {
+        path:'/oldRentDetail',
+        name:'OldRentDetail',
+        component:OldRentDetail
     }
 
 ]
