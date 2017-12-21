@@ -101,7 +101,7 @@
                             </td>
                             <td>
                                 <span v-for="list in item.form_component_values.form_component_value_vo" v-if="list.name=='报销明细'">
-                                    <span v-for="msg in list.value[0]" v-if="msg.label=='报销类别'">
+                                    <span v-for="msg in list.value[0].rowValue" v-if="msg.label=='报销类别'">
                                         {{msg.value}}
                                     </span>
                                 </span>
