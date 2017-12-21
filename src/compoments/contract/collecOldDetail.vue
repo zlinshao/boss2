@@ -6,6 +6,13 @@
                          tag="li" style="cursor: pointer" class="bread">收房合同
             </router-link>
             <li class="active">老系统收房合同详情</li>
+
+
+            <li class="pull-right" v-show="typeof (myParams) === 'object'">
+                <router-link :to="{path:'/collectContract',query: {Params:myParams,departmentName:departmentName}}">
+                    <i class="fa fa-angle-double-left"></i>返回上一步
+                </router-link>
+            </li>
         </ol>
 
         <div class="title clearFix">
@@ -198,10 +205,16 @@
                     //失败信息 ***
                     error: ''
                 },
+
+                myParams: [],
+                departmentName: '',
+                type: '',
             }
         },
         mounted(){
             this.contractId = this.$route.query.ContractId;
+            this.myParams = this.$route.query.params;
+            this.departmentName = this.$route.query.departmentName;
             this.getContractDetail();
         },
         methods:{
@@ -283,5 +296,10 @@
     h4{
         padding: 10px 0 0 10px;
         font-size: 22px;
+    }
+    .breadcrumb > li:last-child:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "";
     }
 </style>
