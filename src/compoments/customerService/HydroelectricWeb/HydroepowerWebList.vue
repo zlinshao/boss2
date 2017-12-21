@@ -206,7 +206,7 @@
 //            获取列表
             getList(val){
                 this.params.page = val;
-                this.params.code = 'PROC-3KYJ33FV-VCPQQ8P9OQAP615GFIGN3-99YX5WAJ-3';
+                this.params.code = 'PROC-3KYJ23FV-5IRQIFPYNNCI4Y6I6CCM1-PNW77ZAJ-3';
                 this.$http.get('core/approvals/approval_list',{
                     params : this.params
                 }).then((res)=>{
