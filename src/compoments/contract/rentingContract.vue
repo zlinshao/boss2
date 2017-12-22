@@ -266,55 +266,55 @@
         <!--编辑-->
         <EditRepair :isAdd="true" :contractId="currentContractId" :isCollect="false" @close="closeRepair"></EditRepair>
 
-        <!--<h4 style="margin-top: 50px">老系统数据</h4>-->
-        <!--&lt;!&ndash;表格&ndash;&gt;-->
-        <!--<div>-->
-            <!--<section class="panel table table-responsive roll">-->
-                <!--<table class="table table-striped table-advance table-hover">-->
-                    <!--<thead class="text-center">-->
-                    <!--<tr>-->
-                        <!--<th class="text-center">合同编号</th>-->
-                        <!--<th class="text-center">房东姓名</th>-->
-                        <!--<th class="text-center">房东电话</th>-->
-                        <!--<th class="text-center">地址</th>-->
-                        <!--<th class="text-center">开单人</th>-->
-                        <!--<th class="text-center">标记</th>-->
-                        <!--<th class="text-center">详情</th>-->
-                    <!--</tr>-->
-                    <!--</thead>-->
-                    <!--<tbody class="text-center">-->
-                    <!--<tr class="text-center" v-for="item in oldList">-->
-                        <!--<td>{{item.contract_num}}</td>-->
-                        <!--<td>{{item.name}}</td>-->
-                        <!--<td>{{item.phone}}</td>-->
-                        <!--<td>{{item.address}}</td>-->
-                        <!--<td>{{item.admin_name}}</td>-->
-                        <!--<td>-->
-                            <!--<a v-if="item.repetition_mark == 0" href="javascript:;" @click="sign(item.zid,1)" title="标记">-->
-                                <!--<i class="fa fa-star-o"></i>-->
-                            <!--</a>-->
-                            <!--<a v-if="item.repetition_mark == 1" href="javascript:;" @click="sign(item.zid,0)" title="取消标记">-->
-                                <!--<i class="fa fa-star"></i>-->
-                            <!--</a>-->
-                        <!--</td>-->
-                        <!--<td>-->
-                            <!--<router-link :to="{path:'/oldRentDetail',-->
-                            <!--query: {ContractId: item.zid,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">-->
-                                <!--详情-->
-                            <!--</router-link>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr v-if="isOldShow">-->
-                        <!--<td colspan="7" class="text-center text-muted">-->
-                            <!--<h4>暂无数据....</h4>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
-            <!--</section>-->
-        <!--</div>-->
+        <h4 style="margin-top: 50px">老系统数据</h4>
+        <!--表格-->
+        <div>
+            <section class="panel table table-responsive roll">
+                <table class="table table-striped table-advance table-hover">
+                    <thead class="text-center">
+                    <tr>
+                        <th class="text-center">合同编号</th>
+                        <th class="text-center">房东姓名</th>
+                        <th class="text-center">房东电话</th>
+                        <th class="text-center">地址</th>
+                        <th class="text-center">开单人</th>
+                        <th class="text-center">标记</th>
+                        <th class="text-center">详情</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <tr class="text-center" v-for="item in oldList">
+                        <td>{{item.contract_num}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.admin_name}}</td>
+                        <td>
+                            <a v-if="item.repetition_mark == 0" href="javascript:;" @click="sign(item.zid,1)" title="标记">
+                                <i class="fa fa-star-o"></i>
+                            </a>
+                            <a v-if="item.repetition_mark == 1" href="javascript:;" @click="sign(item.zid,0)" title="取消标记">
+                                <i class="fa fa-star"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <router-link :to="{path:'/oldRentDetail',
+                            query: {ContractId: item.zid,flag:'detail',params:contractSearchInfo,departmentName:departmentName}}">
+                                详情
+                            </router-link>
+                        </td>
+                    </tr>
+                    <tr v-if="isOldShow">
+                        <td colspan="7" class="text-center text-muted">
+                            <h4>暂无数据....</h4>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
 
-        <!--<Page :pg="oldPages" @pag="getOldPage" :beforePage="oldPage"></Page>-->
+        <Page :pg="oldPages" @pag="getOldPage" :beforePage="oldPage"></Page>
 
 
 
