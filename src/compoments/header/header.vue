@@ -320,12 +320,12 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
 
-                    <!--<li>-->
-                        <!--<router-link to='/statistics'>-->
-                            <!--<i class="fa fa-bar-chart-o"></i>-->
-                            <!--<span>统计</span>-->
-                        <!--</router-link>-->
-                    <!--</li>-->
+                    <li>
+                        <router-link to='/statistics'>
+                            <i class="fa fa-bar-chart-o"></i>
+                            <span>统计</span>
+                        </router-link>
+                    </li>
 
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">
