@@ -317,8 +317,6 @@
         <Page :pg="oldPages" @pag="getOldPage" :beforePage="oldPage"></Page>
 
 
-
-
         <!--发短信-->
         <div role="dialog" class="modal fade bs-example-modal-sm" id="sendMail">
             <div class="modal-dialog ">

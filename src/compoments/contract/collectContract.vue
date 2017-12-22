@@ -276,8 +276,6 @@
         <EditRepair :isAdd="true" :contractId="currentContractId" :isCollect="true" @close="closeRepair"></EditRepair>
 
 
-
-
         <h4 style="margin-top: 50px">老系统数据</h4>
         <!--表格-->
         <div>
