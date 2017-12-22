@@ -817,9 +817,6 @@
                             this.oldList = [];
                             this.oldPages = '';
                             this.isOldShow = true;
-                            this.info.error = res.data.msg;
-                            //显示成功弹窗 ***
-                            this.info.state_error = true;
                         }
                     })
                 }else {
