@@ -276,9 +276,9 @@
         <EditRepair :isAdd="true" :contractId="currentContractId" :isCollect="true" @close="closeRepair"></EditRepair>
 
 
-        <h4 style="margin-top: 50px">老系统数据</h4>
+        <h4 style="margin-top: 50px" v-show="simulate.indexOf('OldCollect/searchFuserIndex') > -1||isSuper">老系统数据</h4>
         <!--表格-->
-        <div>
+        <div v-show="simulate.indexOf('OldCollect/searchFuserIndex') > -1||isSuper">
             <section class="panel table table-responsive roll">
                 <table class="table table-striped table-advance table-hover">
                     <thead class="text-center">
@@ -323,8 +323,10 @@
                 </table>
             </section>
         </div>
+        <div v-show="simulate.indexOf('OldCollect/searchFuserIndex') > -1||isSuper">
+            <Page :pg="oldPages" @pag="getOldPage" :beforePage="oldPage"></Page>
+        </div>
 
-        <Page :pg="oldPages" @pag="getOldPage" :beforePage="oldPage"></Page>
 
         <!--发短信-->
         <div role="dialog" class="modal fade bs-example-modal-sm" id="sendMail">

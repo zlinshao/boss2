@@ -230,7 +230,7 @@
             this.$http.get('ip')
                 .then(
                     (res) => {
-//                        console.log(res.data);
+                        console.log(res.data);
                         this.ip = res.data;
                         this.getCurrentCity();
                     }

@@ -230,9 +230,6 @@
                 for(let i = 0;i<a.length;i++){
                     a[i].checked = false
                 }
-//                this.index = Math.floor(Math.random()*this.keyArr.length);
-//                let addr="//restapi.amap.com/v3/assistant/inputtips?key="+this.keyArr[this.index]+"&datatype=poi&types=120300";
-//                console.log(addr);
                 this.$http.defaults.withCredentials = false;
                 this.$http.defaults.headers = {};
                 this.$http.get(addr+'&keywords='+this.searchInfo+'&city='+this.chooseCity)
