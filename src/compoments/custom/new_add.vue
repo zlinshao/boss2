@@ -580,7 +580,7 @@
                             $('.rem_div').remove();
                             this.successMsg(res.data.msg);
 
-                            this.$emit('cus_list');       // 更新客户列表
+                            this.$emit('cus_list');                 // 更新客户列表
 
                         } else if (res.data.code === '70090') {
                             this.cus_exist = res.data.msg;

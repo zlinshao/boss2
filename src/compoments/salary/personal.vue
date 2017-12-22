@@ -9,29 +9,60 @@
 
                 <div v-if="pitch.length == 0">
                     <form class="form-inline clearFix" role="form">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="点击选择部门"
-                                   v-model="selected" @click='select' readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-warning" type="button" @click="clearSelect">清空</button>
-                            </span>
-                        </div>
+                        <!--<div class="input-group">-->
+                        <!--<input type="text" class="form-control" placeholder="点击选择部门"-->
+                        <!--v-model="selected" @click='select' readonly>-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-warning" type="button" @click="clearSelect">清空</button>-->
+                        <!--</span>-->
+                        <!--</div>-->
 
                         <div class="padd">
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                         @sendDate="getDate"></DatePicker>
                         </div>
-
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="业务员姓名" v-model="params.staff_name"
+                            <select class="form-control" @change="search(1)" v-model="params.cate">
+                                <option value="">全部</option>
+                                <option value="1">收</option>
+                                <option value="2">租</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="姓名/地址" v-model="params.search"
                                    @keydown.enter.prevent="search(1)">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+                        <div class="input-group">
+                            <a :href="address_url + 'export/salary/indexV2?cate='+ this.params.cate + '&range=' + this.params.range + '&search=' +this.params.search"
+                               class="btn btn-success">导出工资条</a>
+                        </div>
+                        <div class="input-group">
+                            <a class="btn btn-success" @click="leading_out">导出详情</a>
+                        </div>
                     </form>
                 </div>
-
+                <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                                <h4 class="modal-title">提示信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h5>生成 成功！</h5>
+                            </div>
+                            <div class="modal-footer text-right">
+                                <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                                <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--选中-->
                 <div class="col-lg-12 remind" v-if="pitch.length > 0">
                     <ul>
@@ -57,20 +88,21 @@
                                    :checked="pitch.indexOf(item.id) > -1">
                         </label>
                     </td>
-                    <td class="width80" rowspan="2">{{item.staff_name}}</td>
+                    <td class="width80">{{item.target_month.slice(0, 7)}}</td>
                     <td class="width80">底薪</td>
                     <td class="width80">业绩提成</td>
                     <td class="width80">收房奖励</td>
-                    <td class="width80">收房未发金额</td>
                     <td class="width80">租房奖励</td>
-                    <td class="width80">租房未发金额</td>
+                    <td class="width80">本月未发金额</td>
+                    <td class="width80">认责</td>
+                    <td class="width80">中介费</td>
                     <td class="width80">行政扣款</td>
                     <td class="width80">社保扣款</td>
                     <td class="width80">财务扣款</td>
                     <td class="width80">住宿扣款</td>
                     <td class="width80">购车扣款</td>
                     <td class="width80">其他扣款</td>
-                    <td class="width100">过往未发工资</td>
+                    <!--<td class="width100">过往未发工资</td>-->
                     <td class="width80">套餐类型</td>
                     <td class="width80">应发工资</td>
                     <td class="width80">实发工资</td>
@@ -79,23 +111,29 @@
                     <td class="width50">详情</td>
                 </tr>
                 <tr class="text-center">
+                    <td>{{item.staff_name}}<br>{{item.commission_count}}单</td>
                     <td>{{item.base}}</td>
                     <td>{{item.commission}}</td>
                     <td>{{item.bonus_collect}}</td>
-                    <td>{{item.collect_remain}}</td>
                     <td>{{item.bonus_rent}}</td>
-                    <td>{{item.rent_remain}}</td>
+                    <td>{{item.amount_remain}}</td>
+                    <td>{{item.punish}}</td>
+                    <td>{{item.medi_cost}}</td>
                     <td>{{item.amount_admin_deduction}}</td>
                     <td>{{item.amount_soc_secu_deduction}}</td>
                     <td>{{item.amount_finance_deduction}}</td>
                     <td>{{item.amount_accomm_deduction}}</td>
                     <td>{{item.amount_car_deduction}}</td>
                     <td>{{item.amount_other_deduction}}</td>
-                    <td>{{item.history_rc}}</td>
+                    <!--<td>{{item.history_rc}}</td>-->
                     <td>{{dict.package[item.package]}}</td>
                     <td>{{item.amount_due}}</td>
                     <td>{{item.amount_actual}}</td>
-                    <td>{{dict.salary_status[item.status]}}</td>
+                    <td @click="toggle(item.status, item.id)" style="cursor: pointer;">
+                        <!--{{dict.salary_status[item.status]}}-->
+                        <span v-if="item.status == 1" class="btn btn-success btn-sm">已发放</span>
+                        <span v-if="item.status == 2" class="btn btn-warning btn-sm">未发放</span>
+                    </td>
                     <td>
                         <i class="fa fa-book" @click="lookRemark(item.remark)" v-if="item.remark != ''"></i>
                     </td>
@@ -140,6 +178,8 @@
         components: {DatePicker, STAFF, personalRevise, salaryRemark, Page},
         data (){
             return {
+                address_url: globalConfig.server,
+                leadingOut: '',
                 pitch: [],                  //选中ID
                 dict: {},                   //字典
                 salaryBar: {},              //编辑详情
@@ -155,9 +195,10 @@
                 selected: '',                   //部门搜索
                 currentDate: [],                //日期组件参数
                 params: {
-                    department_id: '',
+                    cate: '',
+//                    department_id: '',
                     range: '',
-                    staff_name: '',
+                    search: '',
                     page: 1,
                 },
                 paging: '',                     //总页数
@@ -165,29 +206,55 @@
             }
         },
         mounted (){
-            this.personalList(1);
+            this.$http.get('salary/Commission/dict').then((res) => {
+                this.dict = res.data;
+                this.personalList(1);
+            });
         },
         methods: {
+//            导出详情
+            leading_out (){
+                this.$http.get('/salary/salary/export', {
+                    params: this.params
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                    }
+                })
+            },
+            close_ (){
+                $('#leading_out').modal('hide');
+            },
+//            已发未发
+            toggle (val, id){
+                this.$http.post('salary/view/toggle/' + id, {
+                    status: 3 - val,
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.search(this.params.page);
+                    }
+                })
+            },
 //            列表
             personalList (val){
-                this.$http.get('salary/Commission/dict').then((res) => {
-                    this.dict = res.data;
-                    this.params.page = val;
-                    this.pitch = [];
-                    this.$http.get('salary/view', {
-                        params: this.params
-                    }).then((res) => {
-                        if (res.data.code === '70010') {
-                            this.salary = res.data.data.data;
-                            this.paging = res.data.data.pages;
-                            this.isShow = false;
-                        } else {
-                            this.paging = '';
-                            this.salary = [];
-                            this.isShow = true;
-                        }
-                    })
-                });
+                this.params.page = val;
+                this.pitch = [];
+                this.$http.get('salary/view', {
+                    params: this.params
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.salary = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                    } else {
+                        this.paging = '';
+                        this.salary = [];
+                        this.isShow = true;
+                    }
+                })
             },
 
 //            搜索
@@ -274,6 +341,10 @@
     .form-group, .input-group {
         margin-bottom: 0;
         height: 39px;
+    }
+
+    .width80 {
+        min-width: 76px;
     }
 
 </style>

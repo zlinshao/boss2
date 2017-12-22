@@ -118,7 +118,7 @@
                                 <i class="fa fa-circle"></i>
                             </td>
                             <td>{{item.id}}</td>
-                            <td>{{item.update_time}}</td>
+                            <td>{{item.create_time}}</td>
                             <td>
                                 {{item.customer == undefined ? '' : item.customer.address}}<br>
                                 <span v-if="item.customer != null">

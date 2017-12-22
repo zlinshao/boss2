@@ -89,7 +89,7 @@
             </div>
         </section>
         <section class="panel table table-responsive roll has-js">
-            <table class="table table-advance table-hover">
+            <table class="table table-advance">
                 <thead class="text-center">
                 <tr>
                     <th></th>
@@ -348,12 +348,11 @@
             getDate(data){
                 this.params.range = data;
                 this.search(1);
-            },
+            },  
             getLandlordList(val){
                 this.params.beforePage = val;
                 this.$http.get('revenue/glee_collect/dict').then((res) => {
                     this.LandlordDict = res.data;
-                    this.paging = '';
                     this.tab_status = [];
                     this.$http.get('finance/customer/collect?page=' + val, {
                         params: this.params
@@ -378,6 +377,7 @@
                                 }
                             });
                         } else {
+                            this.paging = '';
                             this.LandlordList = [];
                             this.isShow = true;
                         }

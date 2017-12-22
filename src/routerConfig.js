@@ -151,8 +151,9 @@ import HydropowerGasDetail from './compoments/customerService/hydropowerGas/hydr
 import HydroepowerWebList from './compoments/customerService/HydroelectricWeb/HydroepowerWebList.vue'                       //水电燃报销官网
 import HydroepowerWebDetail from './compoments/customerService/HydroelectricWeb/HydroepowerWebDetail.vue'                       //水电燃报销官网
 
-import Village from './compoments/villageManage/village.vue'                        //小区管理列表
+import Village from './compoments/villageManage/village.vue'                                    //小区管理列表
 import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
+import Statistics from './compoments/statistics/statistics.vue'                                 //统计
 
 import OldContractDetail from './compoments/contract/collecOldDetail.vue'                   //老系统详情
 import OldRentDetail from './compoments/contract/rentOldDetail.vue'
@@ -170,7 +171,13 @@ export default[
         path: '/index',             //主页
         name: 'index',
         component: Index
-    }, {
+    },
+    {
+        path: '/statistics',             //主页
+        name: 'statistics',
+        component: Statistics
+    },
+    {
         path: '/organization',             //业绩生成
         name: 'organization',
         component: Organization

@@ -54,6 +54,7 @@
                                 <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
                             </span>
                         </div>
+
                         <div class="form-group" style="height: 39px;">
                             <a class="btn btn-success" type="button" @click="selectHouse">选择地址搜索</a>
                         </div>
@@ -61,9 +62,11 @@
                         <div class="form-group" style="height: 39px;">
                             <a class="btn btn-success" type="button" @click="leading_out">导出</a>
                         </div>
-
+                        <div class="form-group" style="height: 39px;">
+                            <a class="btn btn-success" type="button" @click="search(beforePage)">刷新</a>
+                        </div>
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
-                            <div class="modal-dialog ">
+                            <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">
@@ -250,7 +253,7 @@
         <div class="row has-js">
             <div class="col-lg-12">
                 <section class="panel table table-responsive roll">
-                    <table class="table table-advance table-hover">
+                    <table class="table table-advance">
                         <thead>
                         <tr>
                             <th class="text-center" v-if="recycle_bin">

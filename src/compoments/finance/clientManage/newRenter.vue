@@ -88,7 +88,7 @@
             </div>
         </section>
         <section class="panel table table-responsive roll has-js">
-            <table class="table table-advance table-hover">
+            <table class="table table-advance">
                 <thead class="text-center">
                 <tr>
                     <th></th>
@@ -341,6 +341,7 @@
             },
 //            搜索
             search(val){
+                this.pitch = [];
                 this.getLandlordList(val);
             },
 //              时间搜索
@@ -377,6 +378,7 @@
                                 }
                             });
                         } else {
+                            this.paging = '';
                             this.LandlordList = [];
                             this.isShow = true;
                         }

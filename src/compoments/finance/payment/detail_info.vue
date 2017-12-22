@@ -7,7 +7,8 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
-                        <h4 class="modal-title" v-for="item in msg" v-if="item.customer != null">{{item.customer.address}}</h4>
+                        <h4 class="modal-title" v-for="item in msg" v-if="item.customer != null && (detail == 'pay' || detail == 'collect')">{{item.customer.address}}</h4>
+                        <h4 class="modal-title" v-for="item in msg" v-if="detail == 'land' || detail == 'renter'">{{item.address}}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row has-js">
@@ -18,19 +19,19 @@
                                         <tr>
                                             <th class="text-center width80">客户姓名</th>
                                             <th class="text-center width100">手机号</th>
-                                            <th class="text-center width80" v-if="detail == 'collect'">租房月数</th>
-                                            <th class="text-center width80" v-if="detail == 'pay'">收房月数</th>
+                                            <th class="text-center width80" v-if="detail == 'collect'|| detail == 'renter'">租房月数</th>
+                                            <th class="text-center width80" v-if="detail == 'pay'|| detail == 'land'">收房月数</th>
                                             <th class="text-center width150">付款方式</th>
                                             <th class="text-center width80">月单价</th>
-                                            <th class="text-center width120" v-if="detail == 'pay'">第一次付款时间</th>
-                                            <th class="text-center width120" v-if="detail == 'pay'">第二次付款时间</th>
+                                            <th class="text-center width120" v-if="detail == 'pay' || detail == 'land'">第一次付款时间</th>
+                                            <th class="text-center width120" v-if="detail == 'pay' || detail == 'land'">第二次付款时间</th>
                                             <th class="text-center width100">合同时间周期</th>
                                             <th class="text-center width80">开单人</th>
                                             <th class="text-center width80">部门</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="text-center" v-for="item in msg">
+                                        <tr class="text-center" v-for="item in msg" v-if="detail == 'pay' || detail == 'collect'">
                                             <td>
                                                 <span>{{item.info.customer}}</span>
                                             </td>
@@ -62,6 +63,35 @@
                                                     {{dict.department_id[item.customer.department_id]}}
                                                 </span>
                                             </td>
+                                        </tr>
+                                        <tr class="text-center" v-for="item in msg" v-if="detail == 'land' || detail == 'renter'">
+                                            <td>{{item.customer_name}}</td>
+                                            <td>{{item.contact}}</td>
+                                            <td>{{item.months}}</td>
+                                            <td v-if="detail == 'land'">
+                                                <span v-if="item.pay_types.length !== 0">
+                                                    {{dict.pay_type[item.pay_types[0]]}}
+                                                </span>
+                                                <span v-if="item.pay_types.length === 0">
+                                                    —
+                                                </span>
+                                            </td>
+                                            <td v-if="detail == 'renter'">
+                                                押{{item.bet}}付{{item.pay[0]}}
+                                            </td>
+                                            <td>
+                                                 <span v-if="item.prices.length !== 0">
+                                                     {{item.prices[0]}}
+                                                 </span>
+                                                 <span v-if="item.prices.length === 0">
+                                                     —
+                                                 </span>
+                                            </td>
+                                            <td  v-if="detail == 'land'">{{item.first_pay_date}}</td>
+                                            <td  v-if="detail == 'land'">{{item.second_pay_date}}</td>
+                                            <td>{{item.deal_date}}</td>
+                                            <td>{{item.leader.real_name}}</td>
+                                            <td>{{dict.department_id[item.department_id]}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
