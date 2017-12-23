@@ -7,7 +7,7 @@
                         <button type="button" class="close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">新增小区{{params.peripheral_info}}</h4>
+                        <h4 class="modal-title">新增小区</h4>
                     </div>
                     <div class="modal-body">
                         <div class="panel-body">
@@ -51,19 +51,19 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <label class="col-sm-2 control-label">小区地址</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="params.address">
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <label class="col-sm-2 control-label">小区名称</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" readonly v-model="params.village_name" @click="chooseAddress">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <label class="col-sm-2 control-label">小区地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" disabled v-model="params.address">
+                                    </div>
+                                </div>
+
                                 <div class="row" >
                                     <label class="col-sm-2 control-label">小区别名</label>
                                     <div class="col-sm-8">
@@ -79,6 +79,7 @@
                                     <div class="col-sm-4">
                                         <select class="form-control" v-model="params.built_year">
                                             <option value="">建造年限</option>
+                                            <option value="未知">未知年限</option>
                                             <option v-for="item in now" v-if="item>=1949" :value="item">{{item}}</option>
                                         </select>
                                     </div>
