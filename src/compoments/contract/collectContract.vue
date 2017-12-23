@@ -18,6 +18,14 @@
                                 </select>
                             </label>
                         </div>
+                        <div class="pro-sort" v-if="simulate.indexOf('Collect/contractList_all')>-1||isSuper">
+                            <label>
+                                <select class="form-control" @change="search" v-model="contractSearchInfo.reviewed">
+                                    <option value="">回访情况</option>
+                                    <option v-for="(value,key) in dictionary.reviewed" :value="key">{{value}}</option>
+                                </select>
+                            </label>
+                        </div>
                         <div class="pro-sort padd">
                             <!--<label>-->
                             <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
@@ -398,6 +406,7 @@
                     newest: false,
                     //快到期合同
                     become_due: false,
+                    reviewed : '',
                 },
                 dictionary: [],
                 info: {
