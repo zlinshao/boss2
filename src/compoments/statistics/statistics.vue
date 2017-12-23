@@ -31,7 +31,7 @@
         </div>
 
         <div class="main" v-if="simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
-            <iframe src="https://insight.udesk.cn/site/shared-dashboard/36?token=171220213328gaVzjhDN" id="myiframe"
+            <iframe :src="addr" id="myiframe"
                     scrolling="yes" frameborder="0"></iframe>
         </div>
 
@@ -43,6 +43,7 @@
         props: ['simulate', 'isSuper'],
         data (){
             return {
+                addr: '',
                 myChart: [],                                //pushHTML
                 source: [],
                 rate1: [],                                  //客户来源
@@ -245,6 +246,15 @@
                         this.rate8 = [];
                     }
                     this.customerChats();
+                });
+
+//                客服
+                this.$http.get('statistics/customer_center/call_quality').then((res) => {
+                    if (res.data.code === '10000') {
+                        this.addr = res.data.data.data;
+                    } else {
+                        this.addr = '';
+                    }
                 });
             },
 
