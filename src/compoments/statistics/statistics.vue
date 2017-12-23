@@ -157,7 +157,7 @@
                     }
                 });
 
-//                平均租房价格/平均客单价/溢价房数量
+//                平均租房价格/平均收房价格/溢价房数量
                 this.$http.get('statistics/market/rent_price_avg').then((res) => {
                     if (res.data.code === '20050') {
                         this.rent_price_avg = res.data.data.rent_price_avg;
@@ -349,7 +349,7 @@
             yearAvg (){
                 let option = {
                     title: {
-                        text: '平均年限'
+                        text: '平均(年限/空置期)/空置率'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -441,11 +441,11 @@
                 this.myChart[1].setOption(option);
             },
 
-//            平均租房价格/平均客单价/溢价房数量
+//            平均租房价格/平均收房价格/溢价房数量
             rentPrice (){
                 let option = {
                     title: {
-                        text: '平均租房价格'
+                        text: '平均价格/溢价房数量'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -465,7 +465,7 @@
                         }
                     },
                     legend: {
-                        data: ['平均租房价格', '平均客单价', '溢价房数量'],
+                        data: ['平均租房价格', '平均收房价格', '溢价房数量'],
                     },
                     xAxis: [
                         {
@@ -493,7 +493,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: ['平均租房价格', '平均客单价'],
+                            name: ['平均租房价格', '平均收房价格'],
                             min: 0,
 //                            max: 100,
                             interval: 500,
@@ -521,7 +521,7 @@
                             data: this.rent_price_avg
                         },
                         {
-                            name: '平均客单价',
+                            name: '平均收房价格',
                             type: 'bar',
                             data: this.collect_price_avg
                         },
