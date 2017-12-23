@@ -321,7 +321,10 @@
 
                     this.params.address = data.address;            //小区地址
                     this.params.village_name = data.village_name;       //小区名字
-                    this.params.village_alias = data.village_alias.split(',');      //小区别名
+                    if(data.village_alias!==null && data.village_alias!==undefined){
+                        this.params.village_alias = data.village_alias.split(',');      //小区别名
+                    }
+
                     this.amount = this.params.village_alias.length;
                     this.params.built_year = data.built_year;         //建筑年代
                     this.params.house_type = data.house_type;         //房屋类型
