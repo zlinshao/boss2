@@ -10,9 +10,17 @@
                     <form class="form-inline clearFix" role="form">
                         <div class="input-group">
                             <select class="form-control" v-model="params.status" @change="search(1)">
-                                <option value="">全部</option>
+                                <option value="">房屋状态</option>
                                 <option :value="value" v-for="(key,value) in dict.villa_status">{{key}}
                                 </option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <select class="form-control" v-model="params.claimed" @change="search(1)">
+                                <option value="">认领状态</option>
+                                <option value="1">已认领</option>
+                                <option value="2">未认领</option>
                             </select>
                         </div>
 
@@ -56,6 +64,20 @@
                                 </a>
                             </h5>
                         </li>
+                        <li v-if="simulate.indexOf('House/claim') > -1 || isSuper">
+                            <h5>
+                                <a @click="claim('/finance/house/claim')">
+                                    <i class="fa fa-sitemap"></i>&nbsp;认领
+                                </a>
+                            </h5>
+                        </li>
+                        <li v-if="simulate.indexOf('House/claim') > -1 || isSuper">
+                            <h5>
+                                <a @click="claim('/finance/house/reclaim')">
+                                    <i class="fa fa-sitemap"></i>&nbsp;放弃认领
+                                </a>
+                            </h5>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -75,11 +97,13 @@
                     <th class="text-center width130">房型</th>
                     <th class="text-center width80">参考租金</th>
                     <th class="text-center width100">房屋状态</th>
+                    <th class="text-center width80">空置时间</th>
                     <th class="text-center width120">房租状态<br><span style="color: #AAA">(已收/未收)</span></th>
                     <th class="text-center width100">收租时间</th>
                     <th class="text-center width120">即将交接日期</th>
                     <th class="text-center width80">开单人</th>
                     <th class="text-center width100">所属部门</th>
+                    <th class="text-center width80">认领状态</th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
@@ -116,6 +140,10 @@
                         <span v-if="item.status == 3">已结束</span>
                     </td>
                     <td>
+                        <span v-if="item.vacancy !== '/'">{{item.vacancy}}天</span>
+                        <span v-else="">{{item.vacancy}}</span>
+                    </td>
+                    <td>
                         <span v-if="item.status == 1 && item.current_rank != undefined">
                             {{item.liquidation[item.current_rank].amount_received}}/{{item.liquidation[item.current_rank].balance}}<br>
                             (第{{item.liquidation[item.current_rank].proof}}期/共{{Object.keys(item.liquidation).length}}期)
@@ -148,6 +176,10 @@
                     </td>
                     <td>{{item.real_name}}</td>
                     <td>{{item.department}}</td>
+                    <td>
+                        <span class="label label-default" v-if="item.claimed == 2">未认领</span>
+                        <span class="label label-success" v-if="item.claimed == 1">已认领</span>
+                    </td>
                 </tr>
                 <tr v-if="isShow">
                     <td colspan="14" class="text-center text-muted">
@@ -175,6 +207,7 @@
     import Department from '../common/oraganization.vue'
     import Page from  '../common/page.vue'
     export default{
+        props: ['simulate','isSuper'],
         components: {Department, Page, Status,},
         data(){
             return {
@@ -191,6 +224,7 @@
                     status: '',
                     department_id: '',              //部门ID
                     keyword: '',                    //关键字
+                    claimed: '',                    //认领
                 },
                 selected: '',                       //部门名称
                 configure: [],                      //部门
@@ -220,6 +254,20 @@
             })
         },
         methods: {
+//            认领/放弃认领
+            claim (addr){
+                this.$http.post(addr, {
+                    ids: this.pitch,
+                }).then((res) => {
+                    if(res.data.code === '90010'){
+                        this.pitch = [];
+                        this.search(this.params.page);
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
 //            全选
             all_id (ev){
                 this.pitch = [];

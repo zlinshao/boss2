@@ -31,6 +31,10 @@
                             </span>
                         </div>
 
+                        <div class="form-group"  v-if="simulate.indexOf('CustomerCollect/export') > -1 || isSuper">
+                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                        </div>
+
                         <div class="input-group">
                             <span style="padding: 0 6px;">
                                 <i style="padding-right: 6px" class="fa fa-circle text-danger"></i>手机
@@ -200,6 +204,26 @@
             </table>
         </section>
 
+        <!--导出-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>生成 成功！</h5>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a data-dismiss="modal" class="btn btn-default btn-md">取消</a>
+                        <a :href="leadingOut" class="btn btn-success btn-md" @click="close_">下载</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--NEW新增客户-->
         <NewClientAdd :list="myLandlordList" @success_="search"></NewClientAdd>
 
@@ -223,9 +247,11 @@
     import Confirm from '../../common/confirm.vue'
     import DatePicker from '../../common/datePicker.vue'
     export default{
+        props: ['simulate','isSuper'],
         components: {Department, Page, Status, NewClientAdd, Confirm, DatePicker},
         data(){
             return {
+                leadingOut: '',
                 rent_address: [],                   //标记地址
                 rent_name: [],                      //标记客户姓名
                 rent_phone: [],                     //标记手机
@@ -275,6 +301,22 @@
             }
         },
         methods: {
+//            导出
+            leading_out (){
+                this.$http.get('/finance/customer/collect/export', {
+                    params: this.params
+                }).then((res) => {
+                    if (res.data.code === '18510') {
+                        this.leadingOut = res.data.data;
+                        $('#leading_out').modal({
+                            backdrop: 'static',         //空白处模态框不消失
+                        });
+                    }
+                })
+            },
+            close_ (){
+                $('#leading_out').modal('hide');
+            },
 //            取消重名标记
             cancel_rename (){
                 this.$http.post('finance/customer/collect/duplication/suppress', {
