@@ -209,29 +209,34 @@
                         this.times = res.data.data.times;
                         this.customer_source_count = res.data.data.customer_source_count;
                         let rates = res.data.data.customer_source_rate;
-                        for (let key in rates[0]) {
-                            this.rate1.push(rates[0][key]);
-                        }
-                        for (let key in rates[1]) {
-                            this.rate2.push(rates[1][key]);
-                        }
-                        for (let key in rates[2]) {
-                            this.rate3.push(rates[2][key]);
-                        }
-                        for (let key in rates[3]) {
-                            this.rate4.push(rates[4][key]);
-                        }
-                        for (let key in rates[5]) {
-                            this.rate5.push(rates[5][key]);
-                        }
-                        for (let key in rates[6]) {
-                            this.rate6.push(rates[6][key]);
-                        }
-                        for (let key in rates[7]) {
-                            this.rate7.push(rates[7][key]);
-                        }
-                        for (let key in rates[8]) {
-                            this.rate8.push(rates[8][key]);
+                        for (let key in rates) {
+                            let rate = rates[key];
+                            for (let i in rate) {
+                                if (i === '1') {
+                                    this.rate1.push(rate[i]);
+                                }
+                                if (i === '2') {
+                                    this.rate2.push(rate[i]);
+                                }
+                                if (i === '3') {
+                                    this.rate3.push(rate[i]);
+                                }
+                                if (i === '4') {
+                                    this.rate4.push(rate[i]);
+                                }
+                                if (i === '5') {
+                                    this.rate5.push(rate[i]);
+                                }
+                                if (i === '6') {
+                                    this.rate6.push(rate[i]);
+                                }
+                                if (i === '7') {
+                                    this.rate7.push(rate[i]);
+                                }
+                                if (i === '8') {
+                                    this.rate8.push(rate[i]);
+                                }
+                            }
                         }
                     } else {
                         this.customer_source_count = [];
@@ -766,8 +771,8 @@
                             type: 'value',
                             name: this.source,
                             min: 0,
-                            max: 10,
-                            interval: 2,
+//                            max: 10,
+                            interval: 10,
                             axisLabel: {
                                 formatter: '{value} %'
                             }
@@ -783,41 +788,49 @@
                         {
                             name: this.source[1],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate1
                         },
                         {
                             name: this.source[2],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate2
                         },
                         {
                             name: this.source[3],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate3
                         },
                         {
                             name: this.source[4],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate4
                         },
                         {
                             name: this.source[5],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate5
                         },
                         {
                             name: this.source[6],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate6
                         },
                         {
                             name: this.source[7],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate7
                         },
                         {
                             name: this.source[8],
                             type: 'line',
+                            yAxisIndex: 1,
                             data: this.rate8
                         },
                     ]
@@ -848,7 +861,7 @@
 
     .main {
         width: 100%;
-        height: 1200px;
+        height: 1700px;
     }
 
     .main iframe {
