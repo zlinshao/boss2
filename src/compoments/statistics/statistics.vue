@@ -133,6 +133,7 @@
 //                平均年限/平均空置期/空置率
                 this.$http.get('statistics/market/year_avg').then((res) => {
                     if (res.data.code === '20020') {
+                        this.times = res.data.data.times;
                         this.year_avg = res.data.data.year_avg;
 //                        平均空置期
                         this.$http.get('statistics/market/deal_date').then((res) => {
@@ -160,6 +161,7 @@
                 this.$http.get('statistics/market/rent_price_avg').then((res) => {
                     if (res.data.code === '20050') {
                         this.rent_price_avg = res.data.data.rent_price_avg;
+                        this.times = res.data.data.times;
 //                        平均客单价
                         this.$http.get('statistics/market/collect_price_avg').then((res) => {
                             if (res.data.code === '20070') {
@@ -186,6 +188,7 @@
                 this.$http.get('statistics/market/achievement').then((res) => {
                     if (res.data.code === '20010') {
                         this.achievement = res.data.data.achievement;
+                        this.times = res.data.data.times;
                         this.achiev();
                     }
                 });
@@ -194,6 +197,7 @@
                 this.$http.get('statistics/market/rent_day_avg').then((res) => {
                     if (res.data.code === '20080') {
                         this.rent_months_avg = res.data.data.rent_months_avg;
+                        this.times = res.data.data.times;
                         this.rent_day();
                     }
                 });
@@ -242,7 +246,6 @@
                     }
                     this.customerChats();
                 });
-
             },
 
 //            人事入职离职
