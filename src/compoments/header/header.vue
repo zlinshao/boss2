@@ -319,8 +319,7 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-
-                    <li>
+                    <li  v-show="simulate.indexOf('Statistics/manager') > -1 || simulate.indexOf('Statistics/market') > -1 || simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
                         <router-link to='/statistics'>
                             <i class="fa fa-bar-chart-o"></i>
                             <span>统计</span>
