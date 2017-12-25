@@ -284,6 +284,9 @@
                     <!--<input type="text" class="form-control search" placeholder="">-->
                     <!--</li>-->
                     <!-- user login dropdown start-->
+                    <li v-if="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper">
+                        <button class="btn btn-success" @click="gainRevenue" style="margin-top: 5px;margin-right: 20px;">查看账本</button>
+                    </li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" :src="Card" style="width: 30px;height: 30px;border-radius:50% ">
@@ -319,7 +322,7 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-                    <li  v-show="simulate.indexOf('Statistics/manager') > -1 || simulate.indexOf('Statistics/market') > -1 || simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
+                    <li v-show="simulate.indexOf('Statistics/manager') > -1 || simulate.indexOf('Statistics/market') > -1 || simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
                         <router-link to='/statistics'>
                             <i class="fa fa-bar-chart-o"></i>
                             <span>统计</span>
@@ -344,19 +347,19 @@
                     </li>
 
                     <!--<li class="sub-menu"-->
-                        <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
-                        <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-user"></i>-->
-                            <!--<span>客户管理</span>-->
-                        <!--</a>-->
-                        <!--<ul class="sub">-->
-                            <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
-                                <!--<router-link to='/custom'>客户</router-link>-->
-                            <!--</li>-->
-                            <!--<li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">-->
-                                <!--<router-link to='/customerPool'>客户池</router-link>-->
-                            <!--</li>-->
-                        <!--</ul>-->
+                    <!--v-show="(simulate.indexOf('Customer/customerList')>-1||simulate.indexOf('CustomerPool/customerPool')>-1)||isSuper">-->
+                    <!--<a href="javascript:;">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--<span>客户管理</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                    <!--<li v-show="simulate.indexOf('Customer/customerList')>-1||isSuper">-->
+                    <!--<router-link to='/custom'>客户</router-link>-->
+                    <!--</li>-->
+                    <!--<li v-show="simulate.indexOf('CustomerPool/customerPool')>-1||isSuper">-->
+                    <!--<router-link to='/customerPool'>客户池</router-link>-->
+                    <!--</li>-->
+                    <!--</ul>-->
                     <!--</li>-->
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Villa/receivedVillaList')>-1||simulate.indexOf('Villa/villaList')>-1)||isSuper">
@@ -434,7 +437,7 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
                     <li class="sub-menu"
-                        v-show="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper">
+                        v-show="(simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper) && revenues">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -523,6 +526,11 @@
                                 <router-link to="/organization">
                                     <span>业绩生成</span>
                                 </router-link>
+                            </li>
+                            <li @click="dropOut">
+                                <a>
+                                    <span>退出</span>
+                                </a>
                             </li>
                             <!--<li class="sub-menu">
                                <a href="javascript:;">
@@ -853,7 +861,8 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu" v-show="simulate.indexOf('Approvals/approval_list')>-1||simulate.indexOf('Record/listRepair')>-1|isSuper">
+                    <li class="sub-menu"
+                        v-show="simulate.indexOf('Approvals/approval_list')>-1||simulate.indexOf('Record/listRepair')>-1|isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-briefcase"></i>
                             <span>客服中心</span>
@@ -1074,6 +1083,29 @@
             </ul>
         </div>
 
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="Revenue">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">验证码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="identifyingCode" placeholder="请输入验证码">
+                            <!--@keyup.enter.prevent=""-->
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                        <button class="btn btn-primary btn-md" @click="revenue">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div role="dialog" class="modal fade bs-example-modal-sm" id="lock_screen">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1125,6 +1157,8 @@
         props: ['Name', 'Card', 'simulate', 'isSuper'],
         data(){
             return {
+                revenues: false,
+                identifyingCode: '',        //验证码
 //                account_book: '',           //账本
                 remind_info: [],            //查看提醒
                 isActive: 0,
@@ -1176,8 +1210,51 @@
                     }
                 })
             }.bind(this), 60000);
+            this.$http.get('/account/subject').then((res) => {
+                if (res.data.code === '18300') {
+                    this.revenues = true;
+                }
+            })
         },
         methods: {
+//            财务二级密码
+            gainRevenue (){
+                if(!this.revenues){
+                    this.$http.get('/account/subject').then((res) => {
+                        if (res.data.code === '80000') {
+                            $('#Revenue').modal({backdrop: 'static',});
+                            this.successMsg(res.data.msg);
+                            this.revenues = true
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                }
+            },
+//            输入二级密码
+            revenue (){
+                this.$http.post('/revenue/check', {
+                    code: this.identifyingCode
+                }).then((res) => {
+                    if (res.data.code === '80010') {
+                        $('#Revenue').modal('hide');
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+//            退出
+            dropOut (){
+                this.$http.post('/revenue/quit').then((res) => {
+                    if (res.data.code === '80010') {
+                        this.successMsg(res.data.msg);
+                        this.revenues = false;
+                        this.$router.replace({ path: '/'});
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
 //            新消息提醒
             new_infos (){
                 this.$http.post('message/message/self_mess').then((res) => {
@@ -1365,7 +1442,19 @@
                     }
                 }
                 return flag;
-            }
+            },
+            successMsg(msg){
+                //成功提示信息
+                this.info.success = msg;
+                //显示成功弹窗 ***
+                this.info.state_success = true;
+            },
+            errorMsg(msg){
+                //失败提示信息
+                this.info.error = msg;
+                //显示成功弹窗 ***
+                this.info.state_error = true;
+            },
         }
     }
 </script>

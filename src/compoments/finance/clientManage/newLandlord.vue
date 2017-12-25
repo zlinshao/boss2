@@ -306,7 +306,7 @@
                 this.$http.get('/finance/customer/collect/export', {
                     params: this.params
                 }).then((res) => {
-                    if (res.data.code === '18510') {
+                    if (res.data.code === '90010') {
                         this.leadingOut = res.data.data;
                         $('#leading_out').modal({
                             backdrop: 'static',         //空白处模态框不消失
