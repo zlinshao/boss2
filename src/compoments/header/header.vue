@@ -1224,7 +1224,7 @@
                         if (res.data.code === '80000') {
                             $('#revenueHeader').modal({backdrop: 'static',});
                             this.successMsg(res.data.msg);
-                            this.revenues = true
+                            this.identifyingCode = '';
                         } else {
                             this.errorMsg(res.data.msg);
                         }
@@ -1237,6 +1237,7 @@
                     code: this.identifyingCode
                 }).then((res) => {
                     if (res.data.code === '80010') {
+                        this.revenues = true;
                         $('#revenueHeader').modal('hide');
                     } else {
                         this.errorMsg(res.data.msg);
