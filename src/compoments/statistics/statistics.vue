@@ -20,7 +20,7 @@
             <div id="achievement" style="height: 400px;"></div>
         </div>
 
-        <!--平均租出时间-->
+        <!--平均出租时间-->
         <div class="static" v-if="simulate.indexOf('Statistics/market') > -1 || isSuper">
             <div id="rent_day_avg" style="height: 400px;"></div>
         </div>
@@ -194,7 +194,7 @@
                     }
                 });
 
-//                平均租出时间
+//                平均出租时间
                 this.$http.get('statistics/market/rent_day_avg').then((res) => {
                     if (res.data.code === '20080') {
                         this.rent_months_avg = res.data.data.rent_months_avg;
@@ -629,11 +629,11 @@
                 this.myChart[3].setOption(option);
             },
 
-//            平均租出时间
+//            平均出租时间
             rent_day (){
                 let option = {
                     title: {
-                        text: '平均租出时间'
+                        text: '平均出租时间'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -653,7 +653,7 @@
                         }
                     },
                     legend: {
-                        data: ['平均租出时间'],
+                        data: ['平均出租时间'],
                     },
                     xAxis: [
                         {
@@ -681,7 +681,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '平均租出时间',
+                            name: '平均出租时间',
                             min: 0,
 //                            max: 100,
                             interval: 5,
@@ -693,7 +693,7 @@
                     ],
                     series: [
                         {
-                            name: '平均租出时间',
+                            name: '平均出租时间',
                             type: 'bar',
                             barWidth: 36,
                             data: this.rent_months_avg
