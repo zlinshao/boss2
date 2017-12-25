@@ -285,7 +285,9 @@
                     <!--</li>-->
                     <!-- user login dropdown start-->
                     <li v-if="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||simulate.indexOf('Account/due') > -1||isSuper">
-                        <button class="btn btn-success" @click="gainRevenue" style="margin-top: 5px;margin-right: 20px;">查看账本</button>
+                        <button class="btn btn-success" @click="gainRevenue"
+                                style="margin-top: 5px;margin-right: 20px;">查看账本
+                        </button>
                     </li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -1087,20 +1089,38 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
                         <h4 class="modal-title">验证码</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="identifyingCode" placeholder="请输入验证码">
-                            <!--@keyup.enter.prevent=""-->
+                            <input type="text" @keyup.enter.prevent="revenue" class="form-control"
+                                   v-model="identifyingCode" placeholder="请输入验证码">
                         </div>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
                         <button class="btn btn-primary btn-md" @click="revenue">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="withdraw">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            确定要退出吗?
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary btn-md" @click="withdraw">确认</button>
                     </div>
                 </div>
             </div>
@@ -1219,14 +1239,14 @@
         methods: {
 //            财务二级密码
             gainRevenue (){
-                if(!this.revenues){
+                if (!this.revenues) {
                     this.$http.get('/account/subject').then((res) => {
                         if (res.data.code === '80000') {
                             $('#revenueHeader').modal({backdrop: 'static',});
                             this.successMsg(res.data.msg);
                             this.identifyingCode = '';
                         } else {
-                            this.errorMsg(res.data.msg);
+                            this.errorMsg(res.data.msg.split('"')[3]);
                         }
                     })
                 }
@@ -1246,11 +1266,15 @@
             },
 //            退出
             dropOut (){
+                $('#withdraw').modal({backdrop: 'static',});
+            },
+            withdraw (){
                 this.$http.post('/revenue/quit').then((res) => {
                     if (res.data.code === '80010') {
                         this.successMsg(res.data.msg);
                         this.revenues = false;
-                        this.$router.replace({ path: '/'});
+                        this.$router.replace({path: '/'});
+                        $('#withdraw').modal('hide');
                     } else {
                         this.errorMsg(res.data.msg);
                     }
