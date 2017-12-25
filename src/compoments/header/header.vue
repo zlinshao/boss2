@@ -1222,7 +1222,7 @@
                 if(!this.revenues){
                     this.$http.get('/account/subject').then((res) => {
                         if (res.data.code === '80000') {
-                            $('#hhhhhhh').modal({backdrop: 'static',});
+                            $('#revenueHeader').modal({backdrop: 'static',});
                             this.successMsg(res.data.msg);
                             this.revenues = true
                         } else {
