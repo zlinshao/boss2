@@ -284,7 +284,7 @@
                     <!--<input type="text" class="form-control search" placeholder="">-->
                     <!--</li>-->
                     <!-- user login dropdown start-->
-                    <li v-if="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper">
+                    <li v-if="simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||simulate.indexOf('Account/due') > -1||isSuper">
                         <button class="btn btn-success" @click="gainRevenue" style="margin-top: 5px;margin-right: 20px;">查看账本</button>
                     </li>
                     <li class="dropdown">
@@ -437,7 +437,7 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
                     <li class="sub-menu"
-                        v-show="(simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||isSuper) && revenues">
+                        v-show="(simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||simulate.indexOf('Account/due') > -1||isSuper) && revenues">
                         <!--<li class="sub-menu">-->
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
@@ -1083,7 +1083,7 @@
             </ul>
         </div>
 
-        <div role="dialog" class="modal fade bs-example-modal-sm" id="Revenue">
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="revenueHeader">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1210,8 +1210,8 @@
                     }
                 })
             }.bind(this), 60000);
-            this.$http.get('/account/subject').then((res) => {
-                if (res.data.code === '18300') {
+            this.$http.get('/revenue/detect').then((res) => {
+                if (res.data.code === '80010') {
                     this.revenues = true;
                 }
             })
@@ -1222,7 +1222,7 @@
                 if(!this.revenues){
                     this.$http.get('/account/subject').then((res) => {
                         if (res.data.code === '80000') {
-                            $('#Revenue').modal({backdrop: 'static',});
+                            $('#hhhhhhh').modal({backdrop: 'static',});
                             this.successMsg(res.data.msg);
                             this.revenues = true
                         } else {
@@ -1237,7 +1237,7 @@
                     code: this.identifyingCode
                 }).then((res) => {
                     if (res.data.code === '80010') {
-                        $('#Revenue').modal('hide');
+                        $('#revenueHeader').modal('hide');
                     } else {
                         this.errorMsg(res.data.msg);
                     }
