@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="item">
                                     <span class="col-md-4">小区类型：</span>
-                                    <span class="col-md-8">{{villageDetail.house_type}}</span>
+                                    <span class="col-md-8">{{dictionary.house_type[villageDetail.house_type]}}</span>
                                 </div>
                                 <div class="item">
                                     <span class="col-md-4">物业费：</span>
@@ -149,15 +149,24 @@
 //                cityCode :'',
                 location:[],
                 startEdit : false,
+                dictionary : [],
             }
         },
         mounted(){
             this.villageId = this.$route.query.villageId;
             this.params = this.$route.query.params;
-            this.getVillageDetail();
+            this.getHouseType();
 
         },
         methods: {
+            getHouseType(){
+                this.$http.get('core/house/dict').then((res) => {
+                    this.dictionary = res.data;
+
+                    this.getVillageDetail();
+                })
+            },
+
             getVillageDetail(){
                 this.$http.get('core/house/houseRead/id/' + this.villageId).then((res) => {
                     this.villageDetail = res.data.data;
