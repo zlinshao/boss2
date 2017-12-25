@@ -93,11 +93,11 @@
                                 <div class="row">
                                     <label class="col-sm-2 control-label">总栋数</label>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control" v-model="params.total_buildings">
+                                        <input class="form-control" v-model="params.total_buildings">
                                     </div>
                                     <label class="col-sm-2 control-label">物业费</label>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control" v-model="params.property_fee">
+                                        <input class="form-control" v-model="params.property_fee">
                                     </div>
                                 </div>
                                 <div class="row has-js">
