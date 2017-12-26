@@ -104,8 +104,6 @@
                             <a class="pull-right" style="border-bottom: 1px solid #667FA0;">点击隐藏筛选条件</a>
                         </a>
                     </div>
-
-
                 </div>
                 <!--选中-->
                 <div class="panel-body" v-if="contractSeleted.length > 0" style="padding: 0;">
