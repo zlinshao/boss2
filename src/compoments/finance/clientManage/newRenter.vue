@@ -52,7 +52,7 @@
 
                         <div class="pro-sort pull-right">
                             <button class="btn btn-success" type="button" @click="newAddRenter">
-                                <i class="fa fa-plus-square"></i>新增客户
+                                <i class="fa fa-plus-square"></i>&nbsp;新增客户
                             </button>
                         </div>
                     </form>

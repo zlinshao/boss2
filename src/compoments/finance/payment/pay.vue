@@ -281,7 +281,7 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" v-for="item in myData"
-                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1,'bigRed':item.subject_id == -3}">
+                            :class="{'pendable': item.pendable == 2,'reds': item.aproach == 1,'bigRed':item.subject_id == -3,'selected':pitch.indexOf(item.id) > -1}">
                             <td v-if="recycle_bin">
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                         'c_off':pitch.indexOf(item.id) == -1}"
@@ -1098,7 +1098,6 @@
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.rollbacks = index;
-                this.pitch = [];
                 this.status = [];
                 if (evInput.checked) {
                     this.pitch.push(id);
@@ -1368,5 +1367,9 @@
 
     .bigRed {
         background-color: #FCD1F2;
+    }
+
+    .selected {
+        background: #FFFF6F !important;
     }
 </style>
