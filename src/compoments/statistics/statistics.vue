@@ -43,7 +43,7 @@
             <div id="year_svg" style="height: 400px;"></div>
         </div>
 
-        <!--客户来源-->{{rate1}}
+        <!--客户来源-->
         <div class="static customerChat" v-if="simulate.indexOf('Statistics/market') > -1 || isSuper">
             <div id="customerChat" style="height: 400px;"></div>
         </div>
@@ -226,7 +226,6 @@
 //                客户来源
                 this.$http.get('statistics/market/customer?type=' + val).then((res) => {
                     this.customer_source_count = [];
-                    this.source = [];
                     this.rate1 = [];
                     this.rate2 = [];
                     this.rate3 = [];
