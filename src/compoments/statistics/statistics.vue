@@ -43,12 +43,10 @@
             <div id="year_svg" style="height: 400px;"></div>
         </div>
 
-        <!--客户来源-->
+        <!--客户来源-->{{rate1}}
         <div class="static customerChat" v-if="simulate.indexOf('Statistics/market') > -1 || isSuper">
             <div id="customerChat" style="height: 400px;"></div>
         </div>
-
-
 
         <div class="main" v-if="simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
             <iframe :src="addr" id="myiframe"
@@ -133,87 +131,81 @@
                 this.check(this.types);
             },
             check (val){
+                this.times = [];
 //                入职人数/离职率
                 this.$http.get('statistics/manager/dismiss?type=' + val).then((res) => {
+                    this.dismiss_rate = [];
+                    this.dismiss_count = [];
                     if (res.data.code === '10000') {
                         this.times = res.data.data.times;
                         this.dismiss_rate = res.data.data.dismiss_rate;
                         this.dismiss_count = res.data.data.dismiss_count;
 //                        入职人数
                         this.$http.get('statistics/manager/enroll?type=' + val).then((res) => {
+                            this.enroll_rate = [];
                             if (res.data.code === '10000') {
                                 this.times = res.data.data.times;
                                 this.enroll_rate = res.data.data.enroll_rate;
                                 this.resourceChat();
-                            } else {
-                                this.enroll_rate = [];
                             }
                         });
-                    } else {
-                        this.dismiss_rate = [];
-                        this.dismiss_count = [];
                     }
                 });
 
 //                平均收房年限
                 this.$http.get('statistics/market/year_avg?type=' + val).then((res) => {
+                    this.year_avg = [];
                     if (res.data.code === '20020') {
                         this.times = res.data.data.times;
                         this.year_avg = res.data.data.year_avg;
                         this.yearSvg();
-                    } else {
-                        this.year_avg = [];
                     }
                 });
 
 //                平均空置期/空置率
                 this.$http.get('statistics/market/deal_date?type=' + val).then((res) => {
+                    this.deal_date = [];
                     if (res.data.code === '20030') {
                         this.times = res.data.data.times;
                         this.deal_date = res.data.data.deal_date;
 //                                空置率
                         this.$http.get('statistics/market/vacancy_rate?type=' + val).then((res) => {
+                            this.vacancy_rate = [];
                             if (res.data.code === '20040') {
                                 this.vacancy_rate = res.data.data.vacancy_rate;
                                 this.yearAvg();
-                            } else {
-                                this.vacancy_rate = [];
                             }
                         });
-                    } else {
-                        this.deal_date = [];
                     }
                 });
 
 //                平均租房价格/平均收房价格/溢价房数量
                 this.$http.get('statistics/market/rent_price_avg?type=' + val).then((res) => {
+                    this.rent_price_avg = [];
                     if (res.data.code === '20050') {
                         this.rent_price_avg = res.data.data.rent_price_avg;
                         this.times = res.data.data.times;
 //                        平均客单价
                         this.$http.get('statistics/market/collect_price_avg?type=' + val).then((res) => {
+                            this.collect_price_avg = [];
                             if (res.data.code === '20070') {
                                 this.collect_price_avg = res.data.data.collect_price_avg;
 //                                溢价房数量
                                 this.$http.get('statistics/market/number_premium_rooms?type=' + val).then((res) => {
+                                    this.number_premium_rooms = [];
                                     if (res.data.code === '20060') {
                                         this.number_premium_rooms = res.data.data.number_premium_rooms;
                                         this.rentPrice();
-                                    } else {
-                                        this.number_premium_rooms = [];
                                     }
                                 });
-                            } else {
-                                this.collect_price_avg = [];
                             }
                         });
-                    } else {
-                        this.rent_price_avg = [];
                     }
                 });
 
 //                业绩
                 this.$http.get('statistics/market/achievement?type=' + val).then((res) => {
+                    this.achievement = [];
                     if (res.data.code === '20010') {
                         this.achievement = res.data.data.achievement;
                         this.times = res.data.data.times;
@@ -223,6 +215,7 @@
 
 //                平均出租时间
                 this.$http.get('statistics/market/rent_day_avg?type=' + val).then((res) => {
+                    this.rent_months_avg = [];
                     if (res.data.code === '20080') {
                         this.rent_months_avg = res.data.data.rent_months_avg;
                         this.times = res.data.data.times;
@@ -232,6 +225,16 @@
 
 //                客户来源
                 this.$http.get('statistics/market/customer?type=' + val).then((res) => {
+                    this.customer_source_count = [];
+                    this.source = [];
+                    this.rate1 = [];
+                    this.rate2 = [];
+                    this.rate3 = [];
+                    this.rate4 = [];
+                    this.rate5 = [];
+                    this.rate6 = [];
+                    this.rate7 = [];
+                    this.rate8 = [];
                     if (res.data.code === '20000') {
                         this.times = res.data.data.times;
                         this.customer_source_count = res.data.data.customer_source_count;
@@ -265,17 +268,6 @@
                                 }
                             }
                         }
-                    } else {
-                        this.customer_source_count = [];
-                        this.source = [];
-                        this.rate1 = [];
-                        this.rate2 = [];
-                        this.rate3 = [];
-                        this.rate4 = [];
-                        this.rate5 = [];
-                        this.rate6 = [];
-                        this.rate7 = [];
-                        this.rate8 = [];
                     }
                     this.customerChats();
                 });
