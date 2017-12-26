@@ -115,6 +115,12 @@
                                             <input type="text" class="form-control" v-model="deposits">
                                         </div>
                                     </div>
+                                    <div class="form-group col-sm-12" style="padding: 0;">
+                                        <label class="col-sm-2 control-label">中介费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="agencyFree">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">待签约日期</label>
                                         <div class="col-sm-10">
@@ -304,7 +310,7 @@
 
                 cus_name: '',                           //客户
                 cus_phone: '',                          //客户联系方式
-                phone_status: false,                       //手机号验证
+                phone_status: false,                    //手机号验证
 
                 house_id: '',                           //房屋ID
                 house_name: '',                         //房屋地址
@@ -313,6 +319,7 @@
                 price: [],                              //价格
                 one_type: 1,                            //付款方式
                 deposits: '',                           //押金
+                agencyFree: '',                         //中介费
                 pay_typeChange: false,                  //付款方式不固定
                 pay_type: [],                           //付款方式不固定显示选择
                 more_type: [],                          //付款年份个数
