@@ -67,6 +67,8 @@
                         <!--<input type="radio" name="sort" @click="isNewest(1)">最新发布-->
                         <!--</label>-->
                         <!--</div>-->
+
+
                         <div class="pull-right" style="margin: 8px">
                             <!--<button class="btn btn-primary" @click="collectAdd"
                                     :disabled="simulate.indexOf('core/group') == -1 &&
@@ -83,6 +85,13 @@
                             <router-link :to="{path:'/Memorandum',query: {flag: 'collect'}}" class="btn btn-primary">
                                 &nbsp;查看备忘录
                             </router-link>
+                        </div>
+
+                        <div class="pull-right" style="margin: 8px">
+                            <button class="btn btn-primary" @click="exportData"
+                                    v-show="simulate.indexOf('Collect/contractList_export') > -1||isSuper">
+                                导出
+                            </button>
                         </div>
                     </div>
 
@@ -768,6 +777,15 @@
                             this.info.state_error = true;
                         }
                     })
+                }else if(this.msgFlag === 'export'){
+                    this.$http.post('core/collect/contractlist/export/'+1, this.contractSearchInfo).then((res) => {
+                        if(res.data.code === '70020'){
+                            window.location.href=res.data.data
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }
+                    })
                 }
             },
             distribution(){
@@ -873,6 +891,13 @@
                         this.info.state_error = true;
                     }
                 })
+            },
+
+            //导出
+            exportData(){
+                this.confirmMsg = {msg: '您确定导出吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'export';
             }
         }
     }

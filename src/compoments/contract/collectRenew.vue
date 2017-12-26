@@ -586,15 +586,15 @@
         },
         methods : {
             test(){
-//                if(!this.isMedia){
-//                    this.contractRenew.contract_num = this.contractRenew.contract_num.toUpperCase();
-//                    let reg = /^LJSF0[1|2|3][0-9]{7}$/i;
-//                    if(this.contractRenew.contract_num!==''){
-//                        this.contract_num_right = reg.test(this.contractRenew.contract_num);
-//                    }else {
-//                        this.contract_num_right = true;
-//                    }
-//                }
+                if(!this.isMedia){
+                    this.contractRenew.contract_num = this.contractRenew.contract_num.toUpperCase();
+                    let reg = /^LJSF0[1|2|3][0-9]{7}$/i;
+                    if(this.contractRenew.contract_num!==''){
+                        this.contract_num_right = reg.test(this.contractRenew.contract_num);
+                    }else {
+                        this.contract_num_right = true;
+                    }
+                }
 
             },
             getContractRenewList(){
