@@ -1057,6 +1057,8 @@
                 this.isMedia = !this.isMedia;
                 if(this.isMedia){
                     this.contract_num_right = true;
+                }else if(!this.isMedia){
+                    this.test();
                 }
             }
         }
