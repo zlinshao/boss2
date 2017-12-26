@@ -84,6 +84,12 @@
                                 &nbsp;查看备忘录
                             </router-link>
                         </div>
+                        <div class="pull-right" style="margin: 8px">
+                            <button class="btn btn-primary" @click="exportData"
+                                    v-show="simulate.indexOf('Rent/contractList_export') > -1||isSuper">
+                                导出
+                            </button>
+                        </div>
                     </div>
 
                     <div class="pull-right" v-if="!flag && flag1 === false">
@@ -98,6 +104,8 @@
                             <a class="pull-right" style="border-bottom: 1px solid #667FA0;">点击隐藏筛选条件</a>
                         </a>
                     </div>
+
+
                 </div>
                 <!--选中-->
                 <div class="panel-body" v-if="contractSeleted.length > 0" style="padding: 0;">
@@ -509,7 +517,7 @@
                 }
             },
             searchContract(){
-                this.$http.post('core/rent/contractlist ', this.contractSearchInfo).then((res) => {
+                this.$http.post('core/rent/contractlist', this.contractSearchInfo).then((res) => {
                     if (res.data.code === '80010') {
                         this.contractSearchList = res.data.data.list;
                         this.pages = res.data.data.pages;
@@ -750,6 +758,15 @@
                             this.info.state_error = true;
                         }
                     })
+                }else if(this.msgFlag === 'export'){
+                    this.$http.post('core/rent/contractlist/export/'+1, this.contractSearchInfo).then((res) => {
+                        if(res.data.code === '80020'){
+                            window.location.href=res.data.data
+                            this.info.success = res.data.msg;
+                            //显示成功弹窗 ***
+                            this.info.state_success = true;
+                        }
+                    })
                 }
             },
             distribution(){
@@ -852,6 +869,12 @@
                         this.info.state_error = true;
                     }
                 })
+            },
+            //导出
+            exportData(){
+                this.confirmMsg = {msg: '您确定导出吗'};
+                $('#confirm').modal('show');
+                this.msgFlag = 'export';
             }
         }
     }
