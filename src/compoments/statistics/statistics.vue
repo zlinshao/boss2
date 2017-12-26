@@ -1,11 +1,24 @@
 <template>
     <div>
+        <section class="panel">
+            <div class="panel-body">
+                <form class="form-inline clearFix" role="form">
+                    <div class="input-group">
+                        <select class="form-control" @change="search" v-model="types">
+                            <option value="week">最近八周</option>
+                            <option value="day">最近八天</option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+        </section>
         <!--人事入职离职率-->
         <div class="static" v-if="simulate.indexOf('Statistics/manager') > -1 || isSuper">
             <div id="resourceChat" style="height: 400px;"></div>
         </div>
 
-        <!--平均年限-->
+        <!--平均空置期/空置率-->
         <div class="static" v-if="simulate.indexOf('Statistics/market') > -1 || isSuper">
             <div id="yearAvg" style="height: 400px;"></div>
         </div>
@@ -25,10 +38,17 @@
             <div id="rent_day_avg" style="height: 400px;"></div>
         </div>
 
+        <!--平均收房年限-->
+        <div class="static" v-if="simulate.indexOf('Statistics/market') > -1 || isSuper">
+            <div id="year_svg" style="height: 400px;"></div>
+        </div>
+
         <!--客户来源-->
         <div class="static customerChat" v-if="simulate.indexOf('Statistics/market') > -1 || isSuper">
             <div id="customerChat" style="height: 400px;"></div>
         </div>
+
+
 
         <div class="main" v-if="simulate.indexOf('Statistics/customer_center') > -1 || isSuper">
             <iframe :src="addr" id="myiframe"
@@ -44,6 +64,7 @@
         data (){
             return {
                 addr: '',
+                types: 'week',
                 myChart: [],                                //pushHTML
                 source: [],
                 rate1: [],                                  //客户来源
@@ -86,7 +107,7 @@
                     this.screenWidth = window.screenWidth;
                 })();
             };
-            this.check();
+            this.check('week');
         },
         watch: {
             screenWidth (val) {
@@ -108,15 +129,18 @@
             }
         },
         methods: {
-            check (){
+            search (){
+                this.check(this.types);
+            },
+            check (val){
 //                入职人数/离职率
-                this.$http.get('statistics/manager/dismiss').then((res) => {
+                this.$http.get('statistics/manager/dismiss?type=' + val).then((res) => {
                     if (res.data.code === '10000') {
                         this.times = res.data.data.times;
                         this.dismiss_rate = res.data.data.dismiss_rate;
                         this.dismiss_count = res.data.data.dismiss_count;
 //                        入职人数
-                        this.$http.get('statistics/manager/enroll').then((res) => {
+                        this.$http.get('statistics/manager/enroll?type=' + val).then((res) => {
                             if (res.data.code === '10000') {
                                 this.times = res.data.data.times;
                                 this.enroll_rate = res.data.data.enroll_rate;
@@ -131,44 +155,47 @@
                     }
                 });
 
-//                平均年限/平均空置期/空置率
-                this.$http.get('statistics/market/year_avg').then((res) => {
+//                平均收房年限
+                this.$http.get('statistics/market/year_avg?type=' + val).then((res) => {
                     if (res.data.code === '20020') {
                         this.times = res.data.data.times;
                         this.year_avg = res.data.data.year_avg;
-//                        平均空置期
-                        this.$http.get('statistics/market/deal_date').then((res) => {
-                            if (res.data.code === '20030') {
-                                this.deal_date = res.data.data.deal_date;
-//                                空置率
-                                this.$http.get('statistics/market/vacancy_rate').then((res) => {
-                                    if (res.data.code === '20040') {
-                                        this.vacancy_rate = res.data.data.vacancy_rate;
-                                        this.yearAvg();
-                                    } else {
-                                        this.vacancy_rate = [];
-                                    }
-                                });
-                            } else {
-                                this.deal_date = [];
-                            }
-                        });
+                        this.yearSvg();
                     } else {
                         this.year_avg = [];
                     }
                 });
 
+//                平均空置期/空置率
+                this.$http.get('statistics/market/deal_date?type=' + val).then((res) => {
+                    if (res.data.code === '20030') {
+                        this.times = res.data.data.times;
+                        this.deal_date = res.data.data.deal_date;
+//                                空置率
+                        this.$http.get('statistics/market/vacancy_rate?type=' + val).then((res) => {
+                            if (res.data.code === '20040') {
+                                this.vacancy_rate = res.data.data.vacancy_rate;
+                                this.yearAvg();
+                            } else {
+                                this.vacancy_rate = [];
+                            }
+                        });
+                    } else {
+                        this.deal_date = [];
+                    }
+                });
+
 //                平均租房价格/平均收房价格/溢价房数量
-                this.$http.get('statistics/market/rent_price_avg').then((res) => {
+                this.$http.get('statistics/market/rent_price_avg?type=' + val).then((res) => {
                     if (res.data.code === '20050') {
                         this.rent_price_avg = res.data.data.rent_price_avg;
                         this.times = res.data.data.times;
 //                        平均客单价
-                        this.$http.get('statistics/market/collect_price_avg').then((res) => {
+                        this.$http.get('statistics/market/collect_price_avg?type=' + val).then((res) => {
                             if (res.data.code === '20070') {
                                 this.collect_price_avg = res.data.data.collect_price_avg;
 //                                溢价房数量
-                                this.$http.get('statistics/market/number_premium_rooms').then((res) => {
+                                this.$http.get('statistics/market/number_premium_rooms?type=' + val).then((res) => {
                                     if (res.data.code === '20060') {
                                         this.number_premium_rooms = res.data.data.number_premium_rooms;
                                         this.rentPrice();
@@ -186,7 +213,7 @@
                 });
 
 //                业绩
-                this.$http.get('statistics/market/achievement').then((res) => {
+                this.$http.get('statistics/market/achievement?type=' + val).then((res) => {
                     if (res.data.code === '20010') {
                         this.achievement = res.data.data.achievement;
                         this.times = res.data.data.times;
@@ -195,7 +222,7 @@
                 });
 
 //                平均出租时间
-                this.$http.get('statistics/market/rent_day_avg').then((res) => {
+                this.$http.get('statistics/market/rent_day_avg?type=' + val).then((res) => {
                     if (res.data.code === '20080') {
                         this.rent_months_avg = res.data.data.rent_months_avg;
                         this.times = res.data.data.times;
@@ -204,7 +231,7 @@
                 });
 
 //                客户来源
-                this.$http.get('statistics/market/customer').then((res) => {
+                this.$http.get('statistics/market/customer?type=' + val).then((res) => {
                     if (res.data.code === '20000') {
                         this.times = res.data.data.times;
                         this.customer_source_count = res.data.data.customer_source_count;
@@ -360,11 +387,11 @@
                 this.myChart[0].setOption(option);
             },
 
-//            平均年限/平均空置期/空置率
+//            平均空置期/空置率
             yearAvg (){
                 let option = {
                     title: {
-                        text: '平均(年限/空置期)/空置率'
+                        text: '平均空置期/空置率'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -384,7 +411,7 @@
                         }
                     },
                     legend: {
-                        data: ['平均年限(年)', '平均空置期(天)', '空置率']
+                        data: ['平均空置期', '空置率']
                     },
                     xAxis: [
                         {
@@ -413,7 +440,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: ['平均年限(年)', '平均空置期(天)'],
+                            name: ['平均空置期'],
                             min: 0,
 //                            max: 100,
                             interval: 10,
@@ -434,13 +461,9 @@
                     ],
                     series: [
                         {
-                            name: '平均年限(年)',
+                            name: '平均空置期',
                             type: 'bar',
-                            data: this.year_avg,
-                        },
-                        {
-                            name: '平均空置期(天)',
-                            type: 'bar',
+                            barWidth: 36,
                             data: this.deal_date,
                         },
                         {
@@ -705,6 +728,82 @@
                 this.myChart[4].setOption(option);
             },
 
+//            平均收房年限
+            yearSvg (){
+                let option = {
+                    title: {
+                        text: '平均收房年限'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            crossStyle: {
+                                color: '#999',
+                            }
+                        }
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {
+                        data: ['平均收房年限'],
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisLabel: {
+                                interval: 0,
+                                rotate: 36,
+                                margin: 10,
+                                textStyle: {
+                                    color: "#222"
+                                }
+                            },
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            data: this.times
+                        },
+                    ],
+                    grid: { // 控制图的大小，调整下面这些值就可以，
+//                        x: 40,
+//                        y: 80,
+//                        x2: 100,
+                        y2: 100// /y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
+                    },
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '平均收房年限',
+                            min: 0,
+//                            max: 100,
+                            interval: 1,
+                            axisLabel: {
+                                formatter: '{value} 年'
+                            },
+
+                        },
+                    ],
+                    series: [
+                        {
+                            name: '平均收房年限',
+                            type: 'bar',
+                            barWidth: 36,
+                            data: this.year_avg
+                        },
+                    ]
+                };
+                this.myChart[5] = this.$echarts.init(document.getElementById('year_svg'));
+                //使用制定的配置项和数据显示图表
+                this.myChart[5].setOption(option);
+            },
+
 //            客户来源
             customerChats (){
                 let option = {
@@ -835,9 +934,9 @@
                         },
                     ]
                 };
-                this.myChart[5] = this.$echarts.init(document.getElementById('customerChat'));
+                this.myChart[6] = this.$echarts.init(document.getElementById('customerChat'));
                 //使用制定的配置项和数据显示图表
-                this.myChart[5].setOption(option);
+                this.myChart[6].setOption(option);
             },
         }
     }
