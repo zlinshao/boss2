@@ -710,6 +710,7 @@
                     received_type: 1,
                     received_amount: '',
                     staff_id: '',
+                    intermediary : 1,
                 },
                 dateConfigureVac: [{range: false, needHour: false,}],
                 dateConfigureComplete: [{range: false, needHour: false,}],
@@ -805,6 +806,13 @@
                 this.paymentPic.cus_idPhotos = [];
 
             },
+            isMedia(val){
+                if(val){
+                    this.contractAdd.intermediary = 2
+                } else {
+                    this.contractAdd.intermediary = 1
+                }
+            }
         },
         methods: {
             test(){
@@ -1062,6 +1070,7 @@
                 this.contractAdd.net_fee = 50;
                 this.contractAdd.water_fee = '';
                 this.contractAdd.gas_fee = '';
+                this.contractAdd.intermediary = 1;
 
                 this.contractAdd.relative_customer_id = [];
                 this.contractPic.cus_idPhoto = [];
