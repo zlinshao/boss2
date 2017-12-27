@@ -56,7 +56,11 @@
                                 </div>
                                 <div class="item">
                                     <span class="col-md-4">小区类型：</span>
-                                    <span class="col-md-8">{{dictionary.house_type[villageDetail.house_type]}}</span>
+                                    <span class="col-md-8">
+                                        <span v-if="villageDetail.house_type !== undefined">
+                                            {{dictionary.house_type[villageDetail.house_type]}}
+                                        </span>
+                                    </span>
                                 </div>
                                 <div class="item">
                                     <span class="col-md-4">物业费：</span>
@@ -252,7 +256,7 @@
     .item span{
         font-size: 14px;
         /*display: inline-block;*/
-        padding: 15px 0 5px 10px;
+        padding: 15px 0 5px 0;
         /*border-bottom: 1px solid #aaaaaa;*/
         min-height: 41px;
     }

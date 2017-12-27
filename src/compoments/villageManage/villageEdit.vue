@@ -325,7 +325,10 @@
                         this.params.village_alias = data.village_alias.split(',');      //小区别名
                     }
 
-                    this.amount = this.params.village_alias.length;
+                    if(this.params.village_alias.length > 0){
+                        this.amount = this.params.village_alias.length;
+                    }
+
                     this.params.built_year = data.built_year;         //建筑年代
                     this.params.house_type = data.house_type;         //房屋类型
                     this.params.total_buildings = data.total_buildings;    //总栋数
@@ -396,7 +399,6 @@
             },
             reduce(){
                 this.amount > 1? this.amount-- : this.amount;
-                console.log(this.params.village_alias)
                 this.params.village_alias.pop();
             },
             chooseAddress(){
