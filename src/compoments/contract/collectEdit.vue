@@ -510,6 +510,7 @@
                     medi_account_subbank : '',   // 支行
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
+                    intermediary : '',
                 },
                 staff:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -601,6 +602,13 @@
                     this.contractEdit.pay_type.push(this.one_type);
                 }
             },
+            isMedia(val){
+                if(val){
+                    this.contractEdit.intermediary = 2
+                } else {
+                    this.contractEdit.intermediary = 1
+                }
+            }
         },
         mounted (){
             this.login_status()
@@ -690,7 +698,14 @@
 
                         this.contractEdit.pay_date = contractList.pay_date;
                         this.contractEdit.remarks = contractList.remarks;
+
+                        this.contractEdit.intermediary = contractList.intermediary;
+
+                        this.isMedia = this.contractEdit.intermediary == 2? true : false;
+
                         this.staff = contractList.staff;
+
+
 
                         if(!Array.isArray(contractList.ablum)){
                             this.bankPic.cus_idPhotos = contractList.album.bank_pic;                    //修改图片ID

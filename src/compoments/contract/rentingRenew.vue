@@ -689,6 +689,7 @@
                     received_type: 1,
                     received_amount: '',
                     staff_id :'',
+                    intermediary : 1,
                 },
                 dateConfigureVac: [{range:false,needHour:false, }],
                 dateConfigureComplete: [{range:false,needHour:false, }],
@@ -774,6 +775,13 @@
                     this.changeOperateType();
                 }
             },
+            isMedia(val){
+                if(val){
+                    this.contractRenew.intermediary = 2
+                } else {
+                    this.contractRenew.intermediary = 1
+                }
+            }
         },
         methods : {
             test(){
@@ -1082,6 +1090,8 @@
                 this.contractRenew.net_fee = 50;
                 this.contractRenew.water_fee = '';
                 this.contractRenew.gas_fee = '';
+
+                this.contractRenew.intermediary = 1
 
                 this.more  = 1;
                 this.relative_customer = [];

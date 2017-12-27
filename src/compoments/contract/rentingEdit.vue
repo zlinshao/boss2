@@ -758,6 +758,8 @@
                     water_fee: '',     // 水费
                     gas_fee: '',       // 燃气费
 
+                    intermediary  : 1,
+
                     received_amount: '',
                     cost_deposit: '',
                     payments: [
@@ -886,6 +888,13 @@
             isEditRent(val){
                 this.myIsEditRent = val;
                 if (this.myIsEditRent) this.gitContractInfo();
+            },
+            isMedia(val){
+                if(val){
+                    this.contractEdit.intermediary = 2
+                } else {
+                    this.contractEdit.intermediary = 1
+                }
             }
         },
         methods: {
@@ -953,6 +962,10 @@
                         this.contractEdit.start_date = contractList.start_date;     //合同开始时间
                         this.contractEdit.end_date = contractList.end_date;         //合同结束时间
                         this.contractEdit.complete_date = contractList.complete_date[0];    //
+
+                        this.contractEdit.intermediary = contractList.intermediary;
+
+                        this.isMedia = this.contractEdit.intermediary == 2? true : false;
 
                         this.contractEdit.remarks = contractList.remarks;
 

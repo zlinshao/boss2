@@ -491,6 +491,7 @@
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
                     staff_id : '',
+                    intermediary : 1,
                 },
                 staff_name:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -583,6 +584,13 @@
                     this.contractRenew.pay_type.push(this.one_type);
                 }
             },
+            isMedia(val){
+                if(val){
+                    this.contractRenew.intermediary = 2
+                } else {
+                    this.contractRenew.intermediary = 1
+                }
+            }
         },
         methods : {
             test(){
@@ -843,6 +851,7 @@
                 this.contractRenew.medi_account_owner = '';
                 this.contractRenew.medi_account_bank = 1;
                 this.contractRenew.medi_account_subbank = '';
+                this.contractRenew.intermediary = 1;
 
                 this.more  = 1;
                 this.relative_customer = [];

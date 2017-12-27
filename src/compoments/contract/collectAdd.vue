@@ -489,6 +489,7 @@
                     medi_alipay_owner : '',      // 支付宝姓名
                     medi_account_num  :'',
                     staff : '',
+                    intermediary : 1,
                 },
                 staff_name:'',
                 dateConfigureVac: [{range:false,needHour:false, }],
@@ -581,6 +582,13 @@
                     this.contractAdd.pay_type.push(this.one_type);
                 }
             },
+            isMedia(val){
+                if(val){
+                    this.contractAdd.intermediary = 2
+                } else {
+                    this.contractAdd.intermediary = 1
+                }
+            }
         },
         methods : {
             test(){
@@ -818,7 +826,7 @@
                 this.contractAdd.medi_account_owner = '';
                 this.contractAdd.medi_account_bank = 1;
                 this.contractAdd.medi_account_subbank = '';
-
+                this.contractAdd.intermediary = 1;
 
                 this.bankPic.cus_idPhoto = [];
                 this.contractAdd.bank_pic = [];
@@ -840,7 +848,8 @@
                 this.more  = 1;
                 this.relative_customer = [];
                 this.contractAdd.relative_customer_id = [];
-                this.staff_name = ''
+                this.staff_name = '';
+
             },
 
             changePayType(ev){
