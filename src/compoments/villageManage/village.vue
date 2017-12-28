@@ -140,10 +140,11 @@
         </div>
 
         <Page :pg="pages" @pag="getPage" :beforePage="params.pages"></Page>
-        <VillageAdd @success="successAdd"></VillageAdd>
         <Status :state='info'></Status>
         <Confirm :msg="confirmMsg" @yes="getConfirm"></Confirm>
         <VillageEdit :startEdit ='startEdit' :villageId="selectId" @closeModal="reloading" @success="successEdit"></VillageEdit>
+
+        <VillageAdd @success="successAdd"></VillageAdd>
         <Loading v-if='Waiting'></Loading>
     </div>
 </template>
