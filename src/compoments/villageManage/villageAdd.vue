@@ -342,7 +342,7 @@
                 this.params.village_alias.pop();
             },
             chooseAddress(){
-                $('#myModal1').modal('show');
+                $('.VillageModal:eq(1)').modal('show');
             },
             getAddress(val){
                 if(val !== undefined){

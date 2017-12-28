@@ -1,6 +1,6 @@
 <template>
 <div>
-        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="z-index: 1081;">
+        <div class="modal fade VillageModal" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="z-index: 1081;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -301,7 +301,7 @@
                     console.log(this.village)
                     this.$emit('getChildData' , this.village);
                     this.clearInfo();
-                    $('#myModal1').modal('hide');
+                    $('.VillageModal').modal('hide');
                 }
 
             },
@@ -334,7 +334,7 @@
 
             // 新增
             addNew(){
-                $('#myModal1').modal('hide');
+                $('.VillageModal').modal('hide');
                 $('#addAddress').modal('show');
             },
             cancelAdd(){
@@ -342,7 +342,7 @@
                 this.searchInfo = '';
                 this.location = '';
                 $('#addAddress').modal('hide');
-                $('#myModal1').modal('show');
+                $('.VillageModal').modal('show');
             },
             saveAdd(){
                 this.$emit('getChildData',{
