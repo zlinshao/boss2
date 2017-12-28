@@ -298,6 +298,7 @@
                             this.village.address = this.villages[i].address;
                         }
                     }
+                    console.log(this.village)
                     this.$emit('getChildData' , this.village);
                     this.clearInfo();
                     $('#myModal1').modal('hide');
