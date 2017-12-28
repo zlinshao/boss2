@@ -410,8 +410,8 @@
                     this.params.address = val.address;
                     let arr=[];
                     arr = val.location.split(',');
-                    this.params.longitude = Math.round(arr[0]*100)/100;
-                    this.params.latitude = Math.round(arr[1]*100)/100;
+                    this.params.longitude = arr[0];
+                    this.params.latitude =arr[1];
                 }
             },
             pitch(item,ev,type){
