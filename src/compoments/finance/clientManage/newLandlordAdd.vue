@@ -116,9 +116,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-sm-12" style="padding: 0;">
+                                        <label class="col-sm-2 control-label">保修期</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="guarantee">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12" style="padding: 0;">
                                         <label class="col-sm-2 control-label">中介费</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="agencyFree">
+                                            <input type="text" class="form-control" v-model="medi_cost">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -319,7 +325,8 @@
                 price: [],                              //价格
                 one_type: 1,                            //付款方式
                 deposits: '',                           //押金
-                agencyFree: '',                         //中介费
+                medi_cost: '',                         //中介费
+                guarantee: '',                          //保修期
                 pay_typeChange: false,                  //付款方式不固定
                 pay_type: [],                           //付款方式不固定显示选择
                 more_type: [],                          //付款年份个数
@@ -411,6 +418,8 @@
                     this.months = val.months;                                           //年限
 //                    this.one_type = 1;                                                  //付款方式
                     this.deposits = val.deposit;                                         //押金
+                    this.medi_cost = val.medi_cost;                                     //中介费
+                    this.guarantee = val.guarantee;                                     //保修期
 
                     this.one_type = String(val.pay_types);                                      //付款方式
                     if (val.pay_types.length > 1) {
@@ -507,6 +516,8 @@
                 this.months = '';                           //年限
                 this.one_type = 1;                          //付款方式
                 this.deposits = '';                          //押金
+                this.medi_cost = '';                          //中介费
+                this.guarantee = '';                          //保修期
                 this.pay_typeChange = false;                //付款方式不固定
                 this.pay_type = ['1'];                      //不固定显示选择
                 this.more_type = [];                        //付款年份个数
@@ -634,6 +645,8 @@
                         prices: this.price,                         //收房月单价
                         pay_types: this.pay_type,                   //付款类型
                         deposit: this.deposits,                      //押金
+                        medi_cost: this.medi_cost,                  //中介费
+                        guarantee: this.guarantee,                  //保修期
                         deal_date: this.pendingContract,            //待签约日期
                         first_pay_date: this.firstRemittance,       //第一次打房租日期
                         second_pay_date: this.second_pay_date,       //第二次打房租日期
@@ -681,6 +694,8 @@
                         prices: this.price,                         //收房月单价
                         pay_types: this.pay_type,                   //付款类型
                         deposit: this.deposits,                      //押金
+                        medi_cost: this.medi_cost,                  //中介费
+                        guarantee: this.guarantee,                  //保修期
                         deal_date: this.pendingContract,            //待签约日期
                         first_pay_date: this.firstRemittance,       //第一次打房租日期
                         second_pay_date: this.second_pay_date,      //第二次打房租日期
