@@ -167,6 +167,12 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group col-sm-12" style="padding: 0;">
+                                        <label class="col-sm-2 control-label">中介费</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" v-model="medi_cost">
+                                        </div>
+                                    </div>
                                     <!--<div class="form-group">-->
                                     <!--<label class="col-sm-2 control-label">已收类型<sup class="required">*</sup></label>-->
                                     <!--<div class="col-sm-10">-->
@@ -525,6 +531,7 @@
                 pay: [],                                //付
                 price: [],                              //价格
                 received_amount: '',                    //已收
+                medi_cost: '',                         //中介费
                 one_type: '',                           //付
 //                received_type: 1,                     //已收类型
 //                received_amount: 1,                   //已收金额
@@ -687,6 +694,7 @@
                     this.pendingContract = val.deal_date;                   //待签约日期
                     this.complete_date = val.complete_date;                 //待签约日期
                     this.received_amount = val.received_amount;             //已收
+                    this.medi_cost = val.medi_cost;                    //中介费
                     this.remarks = val.remark;                              //备注
 
                     this.water_fee = val.water_fee;                      //水费
@@ -842,6 +850,7 @@
                 this.bet = 1;                               //付款方式
                 this.one_type = '';                         //付款方式
                 this.received_amount = '';                  //已收
+                this.medi_cost = '';                       //中介费
 //                this.deposit = '';                        //押金
                 this.pay_typeChange = false;                //付款方式不固定
 //                this.pay_type = [];                         //不固定显示选择
@@ -965,6 +974,7 @@
                         bet: this.bet,                              //押
                         pay: this.pay_type,                         //付
                         received_amount: this.received_amount,      //已收
+                        medi_cost: this.medi_cost,                 //中介费
                         water_fee: this.water_fee,                  // 水费
                         elec_fee: this.elec_fee,                    // 电费
                         gas_fee: this.gas_fee,                      // 燃气费
@@ -1022,6 +1032,7 @@
                         bet: this.bet,                              //押
                         pay: this.pay_type,                         //付
                         received_amount: this.received_amount,      //已收
+                        medi_cost:this.medi_cost,                  //中介费
                         water_fee: this.water_fee,                  // 水费
                         elec_fee: this.elec_fee,                    // 电费
                         gas_fee: this.gas_fee,                      // 燃气费
