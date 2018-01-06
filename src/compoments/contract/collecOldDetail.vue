@@ -63,11 +63,11 @@
                     </div>
                     <div class="infoList">
                         <span>付款年限：</span>
-                        <span>{{detailInfo.pay_year}}</span>
+                        <span>{{detailInfo.pay_way}}年</span>
                     </div>
                     <div class="infoList">
                         <span>付款方式：</span>
-                        <span>{{detailInfo.pay_way}}年付</span>
+                        <span>{{detailInfo.pay_year}}月付</span>
                     </div>
                     <div class="infoList">
                         <span>价钱：</span>
