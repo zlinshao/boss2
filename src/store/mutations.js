@@ -1,11 +1,13 @@
 import {
     SHOWLOADING,
-    HIDELOADING
+    HIDELOADING,
+    HIDE
 } from './types'
 import getters from './getters'
 
 const state={
-	loading:false
+	loading:false,
+    isHide:false,
 };
 
 const mutations={
@@ -16,6 +18,9 @@ const mutations={
     [HIDELOADING](state){
         state.loading=false;
     },
+    [HIDE](state){
+        state.isHide = true;
+    }
 };
 export default{
     state,

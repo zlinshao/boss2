@@ -54,7 +54,7 @@
                     maxFiles: 60,       //一次性上传的文件数量上限
                     maxFilesize: 20,    //MB
                     resizeWidth: _this.is_property,
-                    acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp",
+                    acceptedFiles: ".jpg,.jpeg,.gif,.png,.bmp,.doc,.docx,.xls,.xlsx,.pdf",
                     dictResponseError: "当前网络连接不稳定请稍后再试",
                     dictMaxFilesExceeded: "您最多只能上传60个文件！",
                     dictFileTooBig: "文件过大上传文件最大支持.",

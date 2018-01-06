@@ -172,7 +172,7 @@
             dictCancelUpload: "Cancel upload",
             // dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
             dictCancelUploadConfirmation: "确定取消上传?",
-            dictRemoveFile: "删除图片",
+            dictRemoveFile: "删除文件",
             dictRemoveFileConfirmation: null,
             dictMaxFilesExceeded: "You can not upload any more files.",
             dictFileSizeUnits: {

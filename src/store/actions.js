@@ -6,5 +6,8 @@ export default{
     },
     hideLoading:({commit})=>{
         commit(types.HIDELOADING)
+    },
+    hide:({commit})=>{
+        commit(types.HIDE)
     }
 }

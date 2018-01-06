@@ -377,6 +377,8 @@
                             </li>
                         </ul>
                     </li>
+
+
                     <li class="sub-menu"
                         v-show="simulate.indexOf('Collect/contractList')>-1||simulate.indexOf('Rent/contractList')>-1
                         ||simulate.indexOf('Collect/Rent/MoveOrder')>-1
@@ -736,6 +738,19 @@
                             <!--</li>-->
                         </ul>
                     </li>
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-edit"></i>
+                            <span>会议记要</span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <router-link to='/meetingList'>会议列表</router-link>
+                            </li>
+                        </ul>
+                    </li>
+
                     <!--<li :class="{'active': isActive == 13}" @click='pitch_on(13)'>-->
                     <!--<router-link to="/village">-->
                     <!--<i class="fa fa-dashboard"></i>-->
@@ -1182,6 +1197,39 @@
                     }
                 })
             }.bind(this), 60000);
+        },
+        computed:{
+            hideState(){
+                return this.$route.path;
+            }
+        },
+        mounted(){
+            if(this.hideState === '/meeting'){
+                document.getElementById('sidebar').style.margin = '0 0 0 -210px';
+                document.getElementById('main-content').style.margin = '0'
+                $('.header').hide();
+                $('.wrapper').css('margin-top','0')
+            }else {
+                document.getElementById('sidebar').style.margin = '0';
+                document.getElementById('main-content').style.margin = '0 0 0 210px'
+                $('.header').show();
+                $('.wrapper').css('margin-top','60px')
+            }
+        },
+        watch:{
+            hideState(val){
+                if(this.hideState === '/meeting'){
+                    document.getElementById('sidebar').style.margin = '0 0 0 -210px';
+                    document.getElementById('main-content').style.margin = '0'
+                    $('.header').hide();
+                    $('.wrapper').css('margin-top','0')
+                }else {
+                    document.getElementById('sidebar').style.margin = '0';
+                    document.getElementById('main-content').style.margin = '0 0 0 210px'
+                    $('.header').show();
+                    $('.wrapper').css('margin-top','60px')
+                }
+            }
         },
         methods: {
 //            新消息提醒

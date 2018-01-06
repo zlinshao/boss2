@@ -432,7 +432,6 @@
                 proxyPic : {
                     cus_idPhotos : {},    //委托书图片ID
                     cus_idPhoto : [],     //围殴托书照片
-
                 },
                 handoverPic : {
                     cus_idPhotos : {},    //交接单图片ID
