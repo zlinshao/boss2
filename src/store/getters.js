@@ -4,5 +4,8 @@
 export default {
     loading: (state)=>{
         return state.loading;
+    },
+    isHide: (state)=>{
+        return state.isHide;
     }
 }

@@ -95,7 +95,8 @@
                                         <label class="col-sm-2 control-label col-lg-2" >毕业时间</label>
                                         <div class="col-md-4">
                                             <DatePicker :dateConfigure="dateConfigure" :idName="'graduation_time'"
-                                                        :currentDate="[graduation_time]"                                                                                                                :placeholder="'毕业时间'"@sendDate="getGraduateDate"></DatePicker>
+                                                        :currentDate="[graduation_time]"                                                                                                                                :placeholder="'毕业时间'"@sendDate="getGraduateDate">
+                                            </DatePicker>
                                         </div>
                                         <label class="col-sm-2 control-label col-lg-2" >转正时间</label>
                                         <div class="col-md-4">

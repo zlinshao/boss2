@@ -158,6 +158,11 @@ import Statistics from './compoments/statistics/statistics.vue'                 
 import OldContractDetail from './compoments/contract/collecOldDetail.vue'                   //老系统详情
 import OldRentDetail from './compoments/contract/rentOldDetail.vue'
 
+import MeetingList from './compoments/meetingManage/meetingList.vue'
+import MeetingDetail from './compoments/meetingManage/meetingDetail.vue'
+import Meeting from './compoments/meetingManage/meeting.vue'
+
+
 //重构客户模块
 import Client from './compoments/client/clientList.vue'
 import ClientDetail from './compoments/client/clientDetail.vue'
@@ -843,6 +848,21 @@ export default[
         path:'/oldRentDetail',
         name:'OldRentDetail',
         component:OldRentDetail
+    },
+    {
+        path:'/meetingList',
+        name:'MeetingList',
+        component:MeetingList
+    },
+    {
+        path:'/meetingDetail',
+        name:'MeetingDetail',
+        component:MeetingDetail
+    },
+    {
+        path:'/meeting',
+        name:'Meeting',
+        component:Meeting
     }
 
 ]
