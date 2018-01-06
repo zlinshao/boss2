@@ -39,7 +39,7 @@
                     </div>
                     <div class="infoList">
                         <span>身份证：</span>
-                        <span>{{detailInfo.idnum}}</span>
+                        <span>{{detailInfo.idcardnum}}</span>
                     </div>
                     <div class="infoList">
                         <span>房东账号：</span>
@@ -218,7 +218,7 @@
         },
         methods:{
             getContractDetail(){
-                this.$http.get('old/collect/' + this.contractId).then((res) =>{
+                this.$http.get('old/rent/' + this.contractId).then((res) =>{
                     if(res.data.code === '80010'){
                         this.detailInfo = res.data.data;
                         for(let i in this.detailInfo){
