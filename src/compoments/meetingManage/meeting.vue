@@ -331,7 +331,7 @@
                 signList: [],
                 signInfoArray: [],
                 signInfo: {},
-                signInfoLength : 0,
+                signInfoLength : '',
                 changeCount: false,
                 start_time: '',
                 interval: null,
@@ -364,7 +364,7 @@
                     setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    }, 100000);
+                    }, 2000);
                     setInterval(() => {
                         this.countDown();
                     }, 300000);
@@ -374,26 +374,20 @@
             searchAttendance(){
                 this.$http.get('oa/conference/sign/id/' + this.$route.query.meetingId).then((res) => {
                     if (res.data.code === '50080') {
-                        this.signInfoArray = res.data.data;
-                        let signLength = res.data.data.length;
+                        this.signInfo = {};
+                        this.signInfo = res.data.data[0];
+                        $('.visiting_card').css('right', '10px');
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                $('.visiting_card').css('right', '-430px');
+                                resolve('clear');
+                            }, 4000)
+                        }).then((data) => {
 
-                        if(this.signInfoLength<signLength){
-                            this.signInfo = res.data.data[signLength.length-1];
-                            this.signInfoLength =signLength;
-                            $('.visiting_card').css('right', '10px');
-                            new Promise((resolve, reject) => {
-                                setTimeout(() => {
-                                    $('.visiting_card').css('right', '-430px');
-                                    resolve('clear');
-                                }, 4000)
-                            }).then((data) => {
-
-                            });
-                        }
+                        });
                     } else {
 
                     }
-
                 })
             },
             getMeetingDetail(){
