@@ -748,7 +748,7 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu">
+                    <li class="sub-menu"  v-show="simulate.indexOf('Conference/conferenceList') > -1||isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-edit"></i>
                             <span>会议记要</span>

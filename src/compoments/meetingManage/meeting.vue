@@ -364,7 +364,7 @@
                     setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    }, 2000);
+                    }, 1000);
                     setInterval(() => {
                         this.countDown();
                     }, 300000);
@@ -376,6 +376,7 @@
                     if (res.data.code === '50080') {
                         this.signInfo = {};
                         this.signInfo = res.data.data[0];
+                        console.log(1)
                         $('.visiting_card').css('right', '10px');
                         new Promise((resolve, reject) => {
                             setTimeout(() => {

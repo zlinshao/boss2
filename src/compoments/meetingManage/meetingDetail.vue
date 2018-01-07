@@ -15,7 +15,7 @@
                 <header>
                     <h4>
                         <i class="fa fa-home"></i>&nbsp;{{detailInfo.title}}
-                        <a class="pull-right" @click="editMeeting">
+                        <a class="pull-right" @click="editMeeting"  v-show="simulate.indexOf('Conference/conferenceUpdate') > -1||isSuper">
                             <i class="fa fa-edit"></i>
                         </a>
                     </h4>
@@ -113,6 +113,7 @@
     import Edit from './meetingEdit.vue'
     export default{
         components:{Edit},
+        props: [ 'simulate', 'isSuper'],
         data(){
             return{
                 dictionary:[],

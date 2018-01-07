@@ -71,9 +71,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 control-label">会议纪要 <span class="star">*</span>：</label>
+                                    <label class="col-md-2 control-label">会议记录人 <span class="star">*</span>：</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" readonly placeholder="会议纪要"
+                                        <input type="text" class="form-control" readonly placeholder="会议记录人"
                                                @click="selectStaff('recorder')" v-model="recorder_name">
                                     </div>
                                 </div>

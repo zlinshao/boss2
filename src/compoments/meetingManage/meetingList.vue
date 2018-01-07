@@ -31,7 +31,7 @@
                         </span>
                     </div>
 
-                    <div class="input-group pull-right" @click="addMeeting">
+                    <div v-show="simulate.indexOf('Conference/conferenceSave') > -1||isSuper" class="input-group pull-right" @click="addMeeting">
                         <button class="btn btn-primary">新建会议</button>
                     </div>
                 </div>
@@ -39,17 +39,17 @@
                 <div class="remind" v-if="selectId >0">
                     <ul style="margin-bottom: 0">
                         <li><h5><a>已选中&nbsp;1&nbsp;项</a></h5></li>
-                        <li @click="deleteMeeting">
+                        <li @click="deleteMeeting" v-show="simulate.indexOf('Conference/conferenceDelete') > -1||isSuper">
                             <h5>
                                 <a><i class="fa fa-times-circle-o"></i> 删除</a>
                             </h5>
                         </li>
-                        <li @click="upload">
+                        <li @click="upload" v-show="simulate.indexOf('Conference/conferenceRecordSave') > -1||isSuper">
                             <h5>
                                 <a><i class="fa fa-cloud-upload"></i> 上传会议记录</a>
                             </h5>
                         </li>
-                        <li @click="reUpload">
+                        <li @click="reUpload" v-show="simulate.indexOf('Conference/conferenceSave') > -1||isSuper">
                             <h5>
                                 <a><i class="fa fa-retweet"></i> 重新发布</a>
                             </h5>
@@ -74,7 +74,7 @@
                         <th class="text-center">主持人</th>
                         <th class="text-center">会议状态</th>
                         <th class="text-center">会议记录</th>
-                        <th class="text-center">详情</th>
+                        <th class="text-center" v-show="simulate.indexOf('Conference/conferenceRead') > -1||isSuper">详情</th>
                         <th class="text-center">二维码展示页</th>
                     </tr>
                     </thead>
@@ -105,7 +105,7 @@
                             <a v-if="item.albums" :href="item.albums" class="fa fa-cloud-download"></a>
                             <span v-if="!item.albums">暂无</span>
                         </td>
-                        <td>
+                        <td v-show="simulate.indexOf('Conference/conferenceRead') > -1||isSuper">
                             <router-link :to="{path:'/meetingDetail',query:{meetingId : item.id,params:params}}">
                                 详情
                             </router-link>
@@ -147,6 +147,7 @@
     import MeetingUpload from './meetingUpLoad.vue'
     export default{
         components: {Page, Staff, Status, AddMeeting, DatePicker, Confirm, MeetingUpload},
+        props: [ 'simulate', 'isSuper'],
         data(){
             return {
                 pages: 1,     //总页数

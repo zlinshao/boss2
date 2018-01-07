@@ -72,9 +72,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 control-label">会议纪要 <span class="star">*</span>：</label>
+                                    <label class="col-md-2 control-label">会议记录人 <span class="star">*</span>：</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" readonly placeholder="会议纪要"
+                                        <input type="text" class="form-control" readonly placeholder="会议记录人"
                                                @click="selectStaff('recorder')" v-model="recorder_name">
                                     </div>
                                 </div>
@@ -266,6 +266,8 @@
                         this.params.attendee.push(attendeeItem);
                         attendeeItem = {};
                     }
+
+                    console.log(this.params.attendee)
                     this.params.status = status;
                     this.$http.post('oa/conference/conferencesave',this.params).then((res) => {
                         if(res.data.code === '50010'){
