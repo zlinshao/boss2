@@ -261,7 +261,7 @@
                 <div class="attendance third" v-if="signList.length>2">
                     <div class="attendance_header">
                         <div>
-                            <img v-if="signList[1].staff_avatar" :src="signList[1].staff_avatar">
+                            <img v-if="signList[1].staff_avatar" :src="signList[2].staff_avatar">
                             <img v-else="" src="../../assets/img/head.png">
                             <div class="shadow "></div>
                         </div>
@@ -363,7 +363,7 @@
                     this.countDown();
                     setInterval(() => {
                         this.getMeetingDetail();
-                        this.searchAttendance();
+//                        this.searchAttendance();
                     }, 1000);
                     setInterval(() => {
                         this.countDown();
