@@ -59,7 +59,7 @@
                                     <span class="col-md-8">{{detailInfo.compere_name}}</span>
                                 </div>
                                 <div class="item">
-                                    <span class="col-md-4">会议纪要：</span>
+                                    <span class="col-md-4">会议记录人：</span>
                                     <span class="col-md-8">{{detailInfo.recorder_name}}</span>
                                 </div>
                                 <div class="item">
