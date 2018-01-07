@@ -14,7 +14,7 @@
             <div class="panel-body">
                 <header>
                     <h4>
-                        <i class="fa fa-home"></i>&nbsp;会议详情
+                        <i class="fa fa-home"></i>&nbsp;{{detailInfo.title}}
                         <a class="pull-right" @click="editMeeting">
                             <i class="fa fa-edit"></i>
                         </a>
@@ -37,12 +37,6 @@
                                     <span class="col-md-4">会议类型：</span>
                                     <span class="col-md-8" v-if="detailInfo.type!==undefined">
                                         {{dictionary.type[detailInfo.type]}}
-                                    </span>
-                                </div>
-                                <div class="item">
-                                    <span class="col-md-4">消息内容：</span>
-                                    <span class="col-md-8" v-if="detailInfo.type!==undefined">
-                                        {{detailInfo.content}}
                                     </span>
                                 </div>
                                 <div class="item">

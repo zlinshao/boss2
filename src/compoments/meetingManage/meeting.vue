@@ -1,16 +1,63 @@
 <template>
     <div>
+        <div class="modal fade" id="meetingAdd" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <h3 style="font-weight: bold;text-align: center;margin-top: 40px;margin-bottom: 15px">
+                            {{detailInfo.title}}
+                        </h3>
+                        <h5 style="text-align: center;color: #0ea1d8;">请扫描签到</h5>
+                        <div class="erWeiMa">
+                            <div style="width: 240px; height:240px;background: #efefef;padding:10px">
+                                <img style="width: 220px;height: 220px" :src="detailInfo.qrcode_pic_url">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="mainContent row" style="margin: 0">
+            <!--名片-->
+            <div class='visiting_card'>
+                <div class="card_top"></div>
+                <div class="card_head">
+                    <img v-if="signInfo.staff_avatar" :src="signInfo.staff_avatar">
+                    <img v-else="" src="../../assets/img/head.png">
+                </div>
+                <div class="staff_info">
+                    <span style="color: #84bfc6">{{signInfo.staff_name}}</span> · <span
+                        style="color: #fd8b9e">{{signInfo.staff_position}}</span>
+                </div>
+
+                <div class="attendance_info">
+                    <div class="department">
+                        <div>{{signInfo.staff_department}}</div>
+                        <p>{{signInfo.staff_position}}</p>
+                    </div>
+                    <div class="seat">
+                        <div>{{signInfo.seat_number}}</div>
+                        <p>座位号</p>
+                    </div>
+                    <div class="time">
+                        <div>{{signInfo.qrcode_time}}</div>
+                        <p>签到时间</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="content_right col-lg-9">
                 <!--nav-->
                 <div class="nav">
                     <div class="row">
                         <div class="col-lg-2">
                             <!--<router-link :to="{path:'/meetingList'}">-->
-                                    <!--<i style="margin: 5px" class="fa fa-angle-double-left"></i>返回-->
+                            <!--<i style="margin: 5px" class="fa fa-angle-double-left"></i>返回-->
                             <!--</router-link>-->
                         </div>
-                        <div class="col-lg-5" style="padding-left: 40px">
+                        <div class="col-lg-5" style="padding-left: 50px">
                             <h4 style="margin-top: 30px;font-weight: 600">企业文化</h4>
                             <div class="slogan">
                                 <div class="border_1"></div>
@@ -35,7 +82,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-2"></div>
-                        <div class="col-lg-5" style="padding-left: 40px">
+                        <div class="col-lg-5" style="padding-left: 50px">
                             <h4 style="margin-top: 30px;font-weight: 600">企业使命</h4>
                             <div class="slogan">
                                 <div class="border_1"></div>
@@ -45,7 +92,7 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
                             <h4 style="margin-top: 30px;font-weight: 600">企业愿景</h4>
                             <div class="slogan">
                                 <div class="border_1"></div>
@@ -59,23 +106,29 @@
                 </div>
                 <!--主体-->
                 <div class="content_right_middle">
-                    <div class="two-dimension_code">
+                    <div class="two-dimension_code" v-if="unActual_num">
                         <div style="padding: 10px">
-                            <img style="width: 230px;height: 230px" :src="detailInfo.qrcode_pic_url    " alt="">
+                            <img style="width: 230px;height: 230px" :src="detailInfo.qrcode_pic_url" alt="">
                         </div>
                     </div>
                     <div class="content_right_middle_right">
-                        <h4 style="padding: 0 10px;font-size: 24px">
+                        <h4 style="padding: 0 15px;font-size: 24px">
                             <span style="margin-right: 10px">{{detailInfo.start_time}}</span>
-                            <span>周例会</span>
-                            <span class="pull-right">
+                            <span>{{detailInfo.title}}</span>
+                            <span class="pull-right" v-if="!isStart">
                                 <span>倒计时</span>
                                 <span style="color: #fc647d;">
-                                    <span v-if="hour<10">0</span>{{hour}}:<span v-if="minute<10">0</span>{{minute}}:<span v-if="second<10">0</span>{{second}}
+                                    <span v-if="hour<10">0</span>{{hour}}:<span
+                                        v-if="minute<10">0</span>{{minute}}:<span v-if="second<10">0</span>{{second}}
+                                </span>
+                            </span>
+                            <span class="pull-right" v-if="isStart">
+                                <span style="color: #fc647d;">
+                                    会议开始
                                 </span>
                             </span>
                         </h4>
-                        <p style="padding: 0 10px;font-size: 12px">乐伽商业管理有限公司</p>
+                        <p style="padding: 0 15px;font-size: 12px">乐伽商业管理有限公司</p>
 
                         <div class="meetingDetail">
                             <div>
@@ -106,11 +159,12 @@
                             </div>
                         </div>
                         <div class="lead">
-                            <p style="padding:0 10px;font-size: 14px;color: #999">与会领导</p>
+                            <p style="padding:0 15px;font-size: 14px;color: #999">与会领导</p>
                             <div class="lead_item" v-for="item in detailInfo.attendee" v-if="item.is_leader == 1">
                                 <div>
                                     <div class="lead_item_head">
-                                        <img :src="item.staff_avatar" :class="item.qrcode_time?'':'gray'">
+                                        <img v-if="item.staff_avatar" :src="item.staff_avatar" :class="item.qrcode_time?'':'gray'">
+                                        <img v-else="" src="../../assets/img/head.png" :class="item.qrcode_time?'':'gray'">
                                     </div>
                                     <div class="lead_item_name">
                                         <h5 style="color: #333">{{item.staff_name}}</h5>
@@ -130,40 +184,17 @@
                             </div>
                         </div>
                     </div>
-                    <!--名片-->
-                    <div class='visiting_card'>
-                        <div class="card_top"></div>
-                        <div class="card_head">
-                            <img src="../../assets/img/c01946c4e98342ed.jpg">
-                        </div>
-                        <div class="staff_info">
-                            <span style="color: #84bfc6">{{signInfo.staff_name}}</span> · <span style="color: #fd8b9e">{{signInfo.staff_position}}</span>
-                        </div>
 
-                        <div class="attendance_info">
-                            <div class="department">
-                                <div>{{signInfo.staff_department}}</div>
-                                <p>{{signInfo.staff_position}}</p>
-                            </div>
-                            <div class="seat">
-                                <div>{{signInfo.seat_number}}</div>
-                                <p>座位号</p>
-                            </div>
-                            <div class="time">
-                                <div>{{signInfo.qrcode_time}}</div>
-                                <p>签到时间</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="unAttendance">
-                    <h4 style="margin-top: 50px;font-weight: 600" @click="countDown">未签到人员</h4>
+                    <h4 style="margin-top: 50px;font-weight: 600">未签到人员</h4>
                     <div style="border: 1px solid #eee"></div>
                     <div class="unAttendance_item_group scroll_bar">
                         <div class="unAttendance_item" v-for="item in detailInfo.attendee" v-if="!item.qrcode_time">
                             <div class="unAttendance_header">
-                                <img :src="item.staff_avatar" class="gray">
+                                <img v-if="item.staff_avatar" :src="item.staff_avatar" class="gray">
+                                <img v-else="" src="../../assets/img/head.png" class="gray">
                             </div>
                             <div class="attendance_content">
                                 <h5 style="margin-bottom: 13px;margin-top: 7px;font-weight: bold;color: #333">
@@ -184,7 +215,8 @@
                 <div class="attendance first" v-if="signList.length>0">
                     <div class="attendance_header">
                         <div>
-                            <img :src="signList[0].staff_avatar">
+                            <img v-if="signList[0].staff_avatar" :src="signList[0].staff_avatar">
+                            <img v-else="" src="../../assets/img/head.png">
                             <div class="shadow"></div>
                         </div>
 
@@ -206,13 +238,15 @@
                 <div class="attendance second" v-if="signList.length>1">
                     <div class="attendance_header">
                         <div>
-                            <img :src="signList[1].staff_avatar" alt="">
+                            <img v-if="signList[1].staff_avatar" :src="signList[1].staff_avatar">
+                            <img v-else="" src="../../assets/img/head.png">
                             <div class="shadow"></div>
                         </div>
                     </div>
                     <div class="attendance_content">
                         <h5 style="margin-bottom: 15px;margin-top: 5px;font-weight: bold;color: #333">
-                            <span>{{signList[1].staff_name}}</span> <span style="color: #fc647d;margin-left: 10px">2</span>
+                            <span>{{signList[1].staff_name}}</span> <span
+                                style="color: #fc647d;margin-left: 10px">2</span>
                             <span class="pull-right" style="color: #fc647d">{{signList[1].qrcode_time}}</span>
                         </h5>
                         <div>
@@ -227,13 +261,15 @@
                 <div class="attendance third" v-if="signList.length>2">
                     <div class="attendance_header">
                         <div>
-                            <img :src="signList[2].staff_avatar" alt="">
+                            <img v-if="signList[1].staff_avatar" :src="signList[1].staff_avatar">
+                            <img v-else="" src="../../assets/img/head.png">
                             <div class="shadow "></div>
                         </div>
                     </div>
                     <div class="attendance_content">
                         <h5 style="margin-bottom: 15px;margin-top: 5px;font-weight: bold;color: #333">
-                            <span>{{signList[2].staff_name}}</span> <span style="color: #48a6b1;margin-left: 10px">3</span>
+                            <span>{{signList[2].staff_name}}</span> <span
+                                style="color: #48a6b1;margin-left: 10px">3</span>
                             <span class="pull-right" style="color: #48a6b1">{{signList[2].qrcode_time}}</span>
                         </h5>
                         <div>
@@ -247,11 +283,14 @@
                 </div>
                 <h4 style="margin-top: 20px;font-weight: 600">已签到人员</h4>
                 <h5 style="text-align: center" v-if="!actual_num">暂无数据...</h5>
-                <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%" v-if="actual_num">
-                    <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
+                <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
+                     v-if="actual_num">
+                    <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
+                         v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
                         <div class="attendance_header">
                             <div>
-                                <img :src="item.staff_avatar">
+                                <img v-if="item.staff_avatar" :src="item.staff_avatar">
+                                <img v-else="" src="../../assets/img/head.png">
                             </div>
                         </div>
                         <div class="attendance_content">
@@ -283,46 +322,66 @@
                 hour: 0,
                 minute: 0,
                 second: 0,
-                detailInfo:{},
-                dictionary:[],
-                isShow :false,
-                count : '00:00:00',
-                actual_num:'',
-                unActual_num:'',
-                signList : [],
-                signInfo:{},
+                detailInfo: {},
+                dictionary: [],
+                isShow: false,
+                count: '',
+                actual_num: '',
+                unActual_num: '',
+                signList: [],
+                signInfo: {},
+                changeCount: false,
+                start_time: '',
+                interval: null,
+                isStart:false,
+                starCount:false,
             }
         },
         mounted(){
             this.getDictionary();
-            this.countDown();
         },
-        watch: {},
+        watch: {
+            start_time(val, oldValue){
+                this.countDown();
+            },
+            starCount(val){
+                if(val){
+                    $('#meetingAdd').modal('show');
+                }
+            }
+        },
         methods: {
             getDictionary(){
                 this.$http.get('oa/conference/dict').then((res) => {
                     this.dictionary = res.data.conference;
                     this.getMeetingDetail();
-                    setInterval(()=>{
+                    this.searchAttendance();
+                    this.countDown();
+                    setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    },1000);
+                    }, 10000);
+                    setInterval(() => {
+                        this.countDown();
+                    }, 300000);
+
                 })
             },
             searchAttendance(){
-                this.$http.get('oa/conference/sign/id/'+this.$route.query.meetingId).then((res) => {
-                    if(res.data.code === '50080'){
+                this.$http.get('oa/conference/sign/id/' + this.$route.query.meetingId).then((res) => {
+                    if (res.data.code === '50080') {
+                        this.signInfo = {};
                         this.signInfo = res.data.data[0];
-                        $('.visiting_card').fadeIn('slow');
-                        new Promise((resolve,reject) =>{
-                            setTimeout(()=>{
-                                $('.visiting_card').fadeOut('slow');
+                        $('.visiting_card').css('right', '10px');
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                $('.visiting_card').css('right', '-430px');
                                 resolve('clear');
-                            },4000)
-                        }).then((data) =>{
-                            this.signInfo ={};
-                        })
-                    }else {
+                            }, 4000)
+                        }).then((data) => {
+
+                        });
+                    } else {
 
                     }
 
@@ -330,20 +389,21 @@
             },
             getMeetingDetail(){
                 this.$store.dispatch('hideLoading');
-                this.$http.get('oa/conference/conferenceread/id/'+this.$route.query.meetingId).then((res) => {
-                    if(res.data.code === '50020'){
+                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId).then((res) => {
+                    if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
+                        this.start_time = res.data.data.start_time;
                         let actual = [];
                         let unActual = [];
                         this.signList = [];
-                        if(this.detailInfo.attendee){
-                            this.detailInfo.attendee.forEach((item) =>{
-                                if(item.qrcode_time){
+                        if (this.detailInfo.attendee) {
+                            this.detailInfo.attendee.forEach((item) => {
+                                if (item.qrcode_time) {
                                     actual.push(item);
-                                    if(item.is_leader == 2){
+                                    if (item.is_leader == 2) {
                                         this.signList.push(item)
                                     }
-                                }else {
+                                } else {
                                     unActual.push(item)
                                 }
                             });
@@ -355,20 +415,27 @@
             },
 
             countDown(){
-                this.$http.get('oa/conference/count_down/id/'+this.$route.query.meetingId).then((res) => {
-                    if(res.data.code === '50090'){
-                        let count = res.data.data;
-                        let interval = setInterval(()=>{
-                            if(count < 1){
-                                clearInterval(interval)
-                            }else {
-                                count --;
-                                this.hour = parseInt(count/3600);
-                                this.minute = parseInt(count%3600/60);
-                                this.second = parseInt(count%3600%60);
+                this.$http.get('oa/conference/count_down/id/' + this.$route.query.meetingId).then((res) => {
+                    if (res.data.code === '50090') {
+                        this.starCount = true;
+                        this.count = '';
+                        if (this.interval) {
+                            clearInterval(this.interval)
+                        }
+                        this.count = res.data.data;
+                        this.interval = setInterval(() => {
+                            if (this.count < 1) {
+                                clearInterval(this.interval);
+                                $('#meetingAdd').modal('hide');
+                                this.isStart = true;
+                            } else {
+                                this.count--;
+                                this.hour = parseInt(this.count / 3600);
+                                this.minute = parseInt(this.count % 3600 / 60);
+                                this.second = parseInt(this.count % 3600 % 60);
                             }
-                        },1000);
-                    }else {
+                        }, 1000);
+                    } else {
 
                     }
                 });
@@ -379,36 +446,46 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .mainContent{
+    body,html{
+        /*font-family:Fantasy;*/
+    }
+    .mainContent {
         box-shadow: 0 2px 6px 0 rgba(89, 77, 235, 0.2), 0 0 8px 0 rgba(90, 97, 235, 0.1);
     }
+
     .content_right {
         display: inline-block;
         background: #ffffff;
     }
+
     .content_left {
         display: inline-block;
     }
+
     .nav {
         width: 100%;
         height: 235px;
         background-image: url("../../assets/img/background.png");
         background-size: 100% 100%;
-        border-bottom: 1px solid #ddd ;
+        border-bottom: 1px solid #ddd;
     }
-    .leJia{
+
+    .leJia {
         margin-bottom: 15px;
     }
-    .slogan{
+
+    .slogan {
         display: flex;
         align-items: flex-start;
     }
+
     .border_1 {
         width: 30px;
         border-top: 2px solid #59ace2;
-        margin : 15px 40px 0 0;
+        margin: 15px 40px 0 0;
     }
-    .attendance{
+
+    .attendance {
         width: 99%;
         margin-bottom: 10px;
         height: 100px;
@@ -417,7 +494,8 @@
         display: flex;
         align-items: center;
     }
-    .attendance_header{
+
+    .attendance_header {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -425,13 +503,14 @@
         height: 100px;
     }
 
-    .attendance_header>div{
+    .attendance_header > div {
         width: 60px;
         height: 76px;
         margin-top: -16px;
         position: relative;
     }
-    .shadow{
+
+    .shadow {
         width: 54px;
         height: 54px;
         border-radius: 50%;
@@ -441,87 +520,107 @@
         left: 3px;
 
     }
-    .first .shadow{
+
+    .first .shadow {
         background: #ffc95f;
     }
-    .second .shadow{background: #fc647d;}
-    .third .shadow{background: #48a6b1;}
-    .first .attendance_header > div{
+
+    .second .shadow {
+        background: #fc647d;
+    }
+
+    .third .shadow {
+        background: #48a6b1;
+    }
+
+    .first .attendance_header > div {
         background: url("../../assets/img/lALPBbCc1Unzi5FMPA_60_76.png") no-repeat;
     }
-    .second .attendance_header > div{
+
+    .second .attendance_header > div {
         background: url("../../assets/img/lALPBbCc1Unzi5JMPA_60_76.png") no-repeat;
     }
-    .third .attendance_header > div{
+
+    .third .attendance_header > div {
         background: url("../../assets/img/lALPBbCc1Unzi5NMPA_60_76.png") no-repeat;
     }
-    .attendance_header img{
+
+    .attendance_header img {
         width: 54px;
         height: 54px;
         border-radius: 50%;
         margin-top: 19px;
         margin-left: 3px;
     }
-    .attendance_content{
+
+    .attendance_content {
         height: 60px;
         padding-right: 15px;
-        flex-grow:1
+        flex-grow: 1
     }
-    .attendance_content>div:first-child{
+
+    .attendance_content > div:first-child {
         height: 50%;
     }
-    .attendance_content>div:last-child{
+
+    .attendance_content > div:last-child {
         height: 50%;
     }
 
     .scroll_bar::-webkit-scrollbar {
-         width: 4px;
-     }
+        width: 4px;
+    }
 
     .scroll_bar::-webkit-scrollbar-button {
         height: 0;
         background-color: #ccc;
-     }
+    }
 
     .scroll_bar::-webkit-scrollbar-track {
-         background: #ccc;
-     }
+        background: #ccc;
+    }
 
     .scroll_bar::-webkit-scrollbar-thumb {
-         background: #999;
+        background: #999;
         border-radius: 1px;
-     }
+    }
 
-    .content_right_middle{
+    .content_right_middle {
         margin-top: 40px;
         display: flex;
-        position: relative;
     }
-    .two-dimension_code{
+
+    .two-dimension_code {
         width: 250px;
     }
-    .two-dimension_code>div{
+
+    .two-dimension_code > div {
         width: 250px;
         height: 250px;
         background: #f1f1f1;
     }
-    .content_right_middle_right{
-        flex-grow:1
+
+    .content_right_middle_right {
+        flex-grow: 1
     }
-    .meetingDetail{
+
+    .meetingDetail {
         margin-top: 40px;
         display: flex;
-        margin-left: 10px;
+        margin-left: 15px;
     }
-    .meetingDetail div{
+
+    .meetingDetail div {
         display: flex;
-        margin-right: 15px;
+        margin-right: 13px;
     }
-    .meetingDetail div>div:first-child{
+
+    .meetingDetail div > div:first-child {
         color: #999;
         line-height: 30px;
     }
-    .meetingDetail div>div:last-child{
+
+    .meetingDetail div > div:last-child {
         background: #f4f3f6;
         border-radius: 4px;
         width: 90px;
@@ -530,40 +629,48 @@
         align-items: center;
         justify-content: center;
     }
-    .lead{
+
+    .lead {
         margin-top: 20px;
         display: flex;
     }
-    .lead_item > div{
+
+    .lead_item > div {
         width: 180px;
         height: 180px;
         margin-right: 10px;
         border: 1px solid #dddddd;
         border-radius: 5px;
     }
-    .lead_item > div > div{
+
+    .lead_item > div > div {
         display: flex;
         justify-content: center;
     }
-    .lead_item_head img{
+
+    .lead_item_head img {
         width: 50px;
         height: 50px;
         border-radius: 50%;
         margin-top: 20px;
     }
-    .lead_item_name h5{
+
+    .lead_item_name h5 {
         font-weight: bold;
         margin-bottom: 0;
     }
-    .lead_item_department h5{
+
+    .lead_item_department h5 {
         margin-bottom: 0;
     }
-    .lead_item_time h5{
+
+    .lead_item_time h5 {
         font-weight: bold;
         margin-top: 20px;
         margin-bottom: 0;
     }
-    .unAttendance_item_group{
+
+    .unAttendance_item_group {
         width: 100%;
         height: 179px;
         overflow: auto;
@@ -571,7 +678,8 @@
         display: flex;
         flex-wrap: wrap;
     }
-    .unAttendance_item{
+
+    .unAttendance_item {
         width: 19%;
         height: 80px;
         margin: 0 10px 10px 0;
@@ -579,65 +687,77 @@
         display: flex;
         align-items: center;
     }
-    .unAttendance_header{
+
+    .unAttendance_header {
         padding: 0 10px;
         position: relative;
     }
-    .unAttendance_header img{
+
+    .unAttendance_header img {
         width: 50px;
         height: 50px;
         border-radius: 50%;
     }
+
     .gray {
+        -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
         filter: grayscale(100%);
     }
-    .visiting_card{
+
+    .visiting_card {
+        z-index: 9999;
         width: 430px;
         height: 350px;
         background: #fff;
         position: absolute;
         top: 0;
-        right: 300px;
-        display: none;
+        right: -430px;
         border-radius: 5px;
-        box-shadow: 0 2px 6px 0 rgba(10,219,244,.2), 0 0 8px 0 rgba(10,219,244,.1);
-        /*transition: all 2s;*/
+        box-shadow: 0 2px 6px 0 rgba(10, 219, 244, .2), 0 0 8px 0 rgba(10, 219, 244, .1);
+        transition: all 1s;
     }
-    .card_top{
+
+    .card_top {
         height: 100px;
         width: 100%;
         border-radius: 5px 5px 0 0;
         background-image: url("../../assets/img/lALPBbCc1Us-ZMNkzQGr_427_100.png");
     }
-    .card_head{
+
+    .card_head {
         position: absolute;
         top: 60px;
         left: 30px;
     }
-    .card_head img{
-       width: 130px;
-       height: 130px;
+
+    .card_head img {
+        width: 130px;
+        height: 130px;
         border-radius: 5px;
     }
-    .staff_info{
+
+    .staff_info {
         font-size: 20px;
         margin-left: 190px;
         padding-top: 40px;
         height: 100px;
     }
-    .attendance_info{
+
+    .attendance_info {
         height: 150px;
         padding: 0 35px;
         display: flex;
         align-items: center;
     }
-    .attendance_info >div{
+
+    .attendance_info > div {
         width: 120px;
         display: flex;
-        flex-wrap:wrap;
+        flex-wrap: wrap;
         justify-content: center;
     }
-    .attendance_info div >div{
+
+    .attendance_info div > div {
         width: 66px;
         height: 66px;
         font-size: 16px;
@@ -646,29 +766,36 @@
         font-weight: 900;
         background-size: 100% 100%;
     }
-    .attendance_info div >p{
+
+    .attendance_info div > p {
         width: 140px;
         text-align: center;
     }
-    .attendance_info .department >div{
+
+    .attendance_info .department > div {
         color: #ffc95f;
         background-image: url("../../assets/img/attendance_3.png");
     }
-    .attendance_info .seat >div{
+
+    .attendance_info .seat > div {
         color: #48a6b1;
         background-image: url("../../assets/img/attendance3.png");
     }
-    .attendance_info .time >div{
+
+    .attendance_info .time > div {
         color: #fc647d;
         background-image: url("../../assets/img/attendance_1.png");
     }
+
     .mainContent {
         margin-top: 0;
     }
-    .lead_item{
+
+    .lead_item {
         position: relative;
     }
-    .corner{
+
+    .corner {
         width: 30px;
         height: 30px;
         border-radius: 0 0 0 100%;
@@ -676,6 +803,31 @@
         position: absolute;
         top: 1px;
         right: 11px;
-        right: 11px;
     }
-</style>2
+
+    .modal-body {
+        width: 400px;
+        height: 400px;
+        padding: 0;
+    }
+
+    .erWeiMa {
+        padding: 20px;
+        width: 280px;
+        height: 280px;
+        margin:0 auto ;
+        /*background: #efefef;*/
+        background: url("../../assets/img/组22.png") no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .modal-dialog {
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -200px 0 0 -200px;
+    }
+
+</style>

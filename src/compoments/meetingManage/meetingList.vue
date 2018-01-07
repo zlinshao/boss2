@@ -66,13 +66,13 @@
                     <thead>
                     <tr>
                         <th class="text-center"></th>
-                        <th class="text-center"></th>
                         <th class="text-center">会议名称</th>
                         <th class="text-center">会议时间</th>
                         <th class="text-center">会议地点</th>
                         <th class="text-center">参会人数</th>
                         <th class="text-center">会议类型</th>
                         <th class="text-center">主持人</th>
+                        <th class="text-center">会议状态</th>
                         <th class="text-center">会议记录</th>
                         <th class="text-center">详情</th>
                         <th class="text-center">二维码展示页</th>
@@ -86,15 +86,21 @@
                                 <input type="checkbox" :value="item.id" :checked="selectId === item.id">
                             </label>
                         </td>
-                        <td style="width: 40px">
-                            <i :class="item.status ===1? 'roughDraft':'publish'"></i>
-                        </td>
                         <td>{{item.title}}</td>
                         <td>{{item.start_time}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.attendee_num}}</td>
                         <td>{{dictionary.type[item.type]}}</td>
                         <td>{{item.compere_name}}</td>
+                        <td>
+                            <!--<i :class="item.status ===1? 'roughDraft':'publish'"></i>-->
+                            <span class="label label-default" v-if="item.status ===1">
+                                草稿
+                            </span>
+                            <span class="label label-primary" v-if="item.status ===2">
+                                已发布
+                            </span>
+                        </td>
                         <td>
                             <a v-if="item.albums" :href="item.albums" class="fa fa-cloud-download"></a>
                             <span v-if="!item.albums">暂无</span>
@@ -111,7 +117,7 @@
                         </td>
                     </tr>
                     <tr v-if="isShow">
-                        <td colspan="10" class="text-center text-muted">
+                        <td colspan="11" class="text-center text-muted">
                             <h4>暂无数据....</h4>
                         </td>
                     </tr>
@@ -197,9 +203,11 @@
                     if (res.data.code === '50000') {
                         this.meetingInfo = res.data.data.list;
                         this.pages = res.data.data.pages;
+                        this.isShow = false;
                     } else {
                         this.meetingInfo = [];
                         this.pages = 1;
+                        this.isShow = true;
                     }
                 })
             },
