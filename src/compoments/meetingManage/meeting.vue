@@ -132,7 +132,7 @@
 
                         <div class="meetingDetail">
                             <div>
-                                <div>会议状态</div>
+                                <div>会议类型</div>
                                 <div v-if="detailInfo.type">
                                     {{dictionary.type[detailInfo.type]}}
                                 </div>
@@ -363,7 +363,7 @@
                     this.countDown();
                     setInterval(() => {
                         this.getMeetingDetail();
-//                        this.searchAttendance();
+                        this.searchAttendance();
                     }, 1000);
                     setInterval(() => {
                         this.countDown();
