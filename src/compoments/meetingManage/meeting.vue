@@ -48,16 +48,16 @@
                 </div>
             </div>
 
-            <div class="content_right col-lg-9">
+            <div class="content_right" :class="actual_num? 'col-lg-9':'col-lg-12'">
                 <!--nav-->
                 <div class="nav">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-2" style="width: 265px;">
                             <!--<router-link :to="{path:'/meetingList'}">-->
                             <!--<i style="margin: 5px" class="fa fa-angle-double-left"></i>返回-->
                             <!--</router-link>-->
                         </div>
-                        <div class="col-lg-5" style="padding-left: 50px">
+                        <div class="col-lg-5">
                             <h4 style="margin-top: 30px;font-weight: 600">企业文化</h4>
                             <div class="slogan">
                                 <div class="border_1"></div>
@@ -68,7 +68,7 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
                             <h4 style="margin-top: 30px;font-weight: 600">企业价值观</h4>
                             <div class="slogan">
                                 <div class="border_1"></div>
@@ -81,8 +81,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-5" style="padding-left: 50px">
+                        <div class="col-lg-2" style="width: 265px"></div>
+                        <div class="col-lg-5">
                             <h4 style="margin-top: 30px;font-weight: 600">企业使命</h4>
                             <div class="slogan">
                                 <div class="border_1"></div>
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>z
                 <!--主体-->
                 <div class="content_right_middle">
                     <div class="two-dimension_code" v-if="unActual_num">
@@ -124,7 +124,7 @@
                             </span>
                             <span class="pull-right" v-if="isStart">
                                 <span style="color: #fc647d;">
-                                    会议开始
+                                    会议已开始
                                 </span>
                             </span>
                         </h4>
@@ -209,7 +209,7 @@
                 </div>
             </div>
             <!--right-->
-            <div class="content_left col-lg-3">
+            <div class="content_left col-lg-3" v-if="actual_num">
                 <h4 class="leJia" style="margin-top: 20px;font-weight: 600">乐伽签到榜</h4>
                 <h5 style="text-align: center" v-if="signList.length<1">暂无数据...</h5>
                 <div class="attendance first" v-if="signList.length>0">
@@ -342,6 +342,8 @@
         },
         mounted(){
             this.getDictionary();
+            var content = document.getElementById('container');
+            this.FullScreen(content);
 //            document.documentElement.webkitRequestFullscreen();
         },
         watch: {
@@ -364,7 +366,7 @@
                     setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    }, 1000);
+                    }, 2000);
                     setInterval(() => {
                         this.countDown();
                     }, 300000);
@@ -439,11 +441,27 @@
                                 this.second = parseInt(this.count % 3600 % 60);
                             }
                         }, 1000);
-                    } else {
+                    } else if(res.data.code === '50091'){
+                        this.isStart = true;
+                    }else {
 
                     }
                 });
             },
+            FullScreen(el){
+                var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen,
+                    wscript;
+                if (typeof rfs != "undefined" && rfs) {
+                    rfs.call(el);
+                    return;
+                }
+                if (typeof window.ActiveXObject != "undefined") {
+                    wscript = new ActiveXObject("WScript.Shell");
+                    if (wscript) {
+                        wscript.SendKeys("{F11}");
+                    }
+                }
+            }
         }
     }
 </script>
@@ -452,11 +470,13 @@
 <style scoped>
     body,html{
         /*font-family:Fantasy;*/
+        overflow: hidden;
+        margin:0;
+        padding: 0;
     }
     .mainContent {
         box-shadow: 0 2px 6px 0 rgba(89, 77, 235, 0.2), 0 0 8px 0 rgba(90, 97, 235, 0.1);
     }
-
     .content_right {
         display: inline-block;
         background: #ffffff;
@@ -713,7 +733,7 @@
         width: 430px;
         height: 350px;
         background: #fff;
-        position: absolute;
+        position: fixed;
         top: 0;
         right: -430px;
         border-radius: 5px;

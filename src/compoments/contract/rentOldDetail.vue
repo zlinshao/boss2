@@ -109,7 +109,7 @@
                     </div>
                     <div class="infoList">
                         <span>结束日期：</span>
-                        <span>{{detailInfo.endingdate}}</span>
+                        <span>{{detailInfo.endtime}}</span>
                     </div>
                     <div class="infoList">
                         <span>是否中介：</span>

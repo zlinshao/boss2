@@ -73,7 +73,7 @@
                         <th class="text-center">会议类型</th>
                         <th class="text-center">主持人</th>
                         <th class="text-center">会议状态</th>
-                        <th class="text-center">会议记录</th>
+                        <th class="text-center">会议纪要</th>
                         <th class="text-center" v-show="simulate.indexOf('Conference/conferenceRead') > -1||isSuper">详情</th>
                         <th class="text-center">二维码展示页</th>
                     </tr>
@@ -185,6 +185,7 @@
         },
         mounted(){
             this.getDictionary();
+
         },
 
         watch: {},
@@ -282,7 +283,7 @@
             reUpload(){
                 $('#meetingAdd').modal('show');
                 this.isReUpload = true
-            }
+            },
         }
     }
 </script>
