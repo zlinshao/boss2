@@ -45,7 +45,7 @@
                             <label style="margin: 11px;padding-left: 25px;"
                                    :class="{'label_check':true,'c_on':params.mark_cg == 1,'c_off':params.mark_cg != 1}"
                                    @click.prevent="mismatching($event, 2)">
-                                <input type="checkbox" :value="params.mark_cg" :checked="params.mark_cg == 1">以充公
+                                <input type="checkbox" :value="params.mark_cg" :checked="params.mark_cg == 1">已充公
                             </label>
                         </div>
 
