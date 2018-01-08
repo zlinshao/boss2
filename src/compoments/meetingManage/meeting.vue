@@ -87,7 +87,6 @@
                                 <div>
                                     <h5>聚焦客户、&nbsp;立足市场、&nbsp;提供专业租赁服务。</h5>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -406,10 +405,10 @@
                 this.signInfo ={};
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
+                    $('.visiting_card').css('right', '10px');
                     setTimeout(()=>{
-                        $('.visiting_card').css('right', '10px');
                         resolve('');
-                    },1000);
+                    },500);
                 }).then((data) => {
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
@@ -423,7 +422,7 @@
                             }else {
                                 this.signInfoList =[];
                             }
-                        },1000)
+                        },500)
                     })
                 })
             },
@@ -803,7 +802,7 @@
         right: -430px;
         border-radius: 5px;
         box-shadow: 0 2px 6px 0 rgba(10, 219, 244, .2), 0 0 8px 0 rgba(10, 219, 244, .1);
-        transition: all 1s;
+        transition: all .5s;
     }
 
     .card_top {
