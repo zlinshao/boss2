@@ -394,7 +394,7 @@
                     setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    },5000);
+                    },2000);
 
                     setInterval(() => {
                         this.countDown();
