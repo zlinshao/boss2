@@ -1256,6 +1256,17 @@
 //                    this.account_book = false;
 //                }
 //            });
+            if(this.hideState === '/meeting'){
+                document.getElementById('sidebar').style.margin = '0 0 0 -210px';
+                document.getElementById('main-content').style.margin = '0';
+                $('.header').hide();
+                $('.wrapper').css('margin-top','0')
+            }else {
+                document.getElementById('sidebar').style.margin = '0';
+                document.getElementById('main-content').style.margin = '0 0 0 210px';
+                $('.header').show();
+                $('.wrapper').css('margin-top','60px')
+            }
             this.isPc = this.IsPC();
             this.new_infos();
             setInterval(function () {
@@ -1282,17 +1293,7 @@
             }
         },
         mounted(){
-            if(this.hideState === '/meeting'){
-                document.getElementById('sidebar').style.margin = '0 0 0 -210px';
-                document.getElementById('main-content').style.margin = '0'
-                $('.header').hide();
-                $('.wrapper').css('margin-top','0')
-            }else {
-                document.getElementById('sidebar').style.margin = '0';
-                document.getElementById('main-content').style.margin = '0 0 0 210px'
-                $('.header').show();
-                $('.wrapper').css('margin-top','60px')
-            }
+
         },
         watch:{
             hideState(val){
