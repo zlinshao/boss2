@@ -357,8 +357,12 @@
             $('.mainContent').css({'height':window.innerHeight-30+'px','background':'#fff'});
             window.onresize = function(){
                 $('.mainContent').css('height',window.innerHeight-30+'px');
+                if(window.innerHeight>950){
+                    $('.unAttendance_item_group').css('height','290px')
+                }else {
+                    $('.unAttendance_item_group').css('height','160px')
+                }
             };
-
 
         },
         watch: {
@@ -373,6 +377,11 @@
             signInfoList(val){
                 if(val.length>0){
                     this.carousel();
+                }
+            },
+            unActual_num(val){
+                if(val<1){
+                    $('#meetingAdd').modal('hide');
                 }
             }
         },
@@ -752,7 +761,7 @@
 
     .unAttendance_item_group {
         width: 100%;
-        min-height: 179px;
+        height: 160px;
         overflow: auto;
         margin: 15px 0;
         display: flex;

@@ -107,7 +107,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                        <button type="button" class="btn btn-primary" @click="confirmAdd(1,2)">保存为当前状态</button>
+                        <button type="button" class="btn btn-primary" @click="confirmAdd(1,2)">草稿</button>
                         <button type="button" class="btn btn-success" @click="confirmAdd(2,2)">保存</button>
                         <button type="button" class="btn btn-success" @click="confirmAdd(2,1)">发布</button>
                     </div>
