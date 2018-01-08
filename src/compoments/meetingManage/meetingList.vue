@@ -75,7 +75,7 @@
                         <th class="text-center">会议状态</th>
                         <th class="text-center">会议纪要</th>
                         <th class="text-center" v-show="simulate.indexOf('Conference/conferenceRead') > -1||isSuper">详情</th>
-                        <th class="text-center">二维码展示页</th>
+                        <th class="text-center" v-show="simulate.indexOf('Conference/conferenceRead_scan') > -1||isSuper">二维码展示页</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -110,7 +110,7 @@
                                 详情
                             </router-link>
                         </td>
-                        <td>
+                        <td v-show="simulate.indexOf('Conference/conferenceRead_scan') > -1||isSuper">
                             <router-link target="_blank" :to="{path:'/meeting',query:{meetingId : item.id}}">
                                 二维码展示页
                             </router-link>
