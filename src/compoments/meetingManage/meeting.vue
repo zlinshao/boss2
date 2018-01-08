@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="mainContent row" @click="fullScreen()" style="margin: 0">
+        <div class="mainContent row" style="margin: 0">
             <!--名片-->
             <div class='visiting_card'>
                 <div class="card_top"></div>
@@ -87,6 +87,7 @@
                                 <div>
                                     <h5>聚焦客户、&nbsp;立足市场、&nbsp;提供专业租赁服务。</h5>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -294,7 +295,7 @@
                 <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
                      v-if="actual_num">
                     <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
-                         v-for="item in detailInfo.attendee.reverse()" v-if="item.qrcode_time">
+                         v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
                         <div class="attendance_header">
                             <div>
                                 <img v-if="item.staff_avatar" :src="item.staff_avatar">
@@ -362,6 +363,8 @@
                     $('.unAttendance_item_group').css('height','160px')
                 }
             };
+            this.fullScreen();
+
         },
         watch: {
             start_time(val, oldValue){
@@ -407,22 +410,21 @@
                 new Promise((resolve, reject) => {
                     $('.visiting_card').css('right', '10px');
                     setTimeout(()=>{
-                        resolve('');
-                    },500);
+                        resolve('clear');
+                    },1000);
                 }).then((data) => {
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
                             $('.visiting_card').css('right', '-430px');
-                            resolve('');
+                            resolve('clear');
                         }, 2000)
                     }).then((data) =>{
-                        setTimeout( ()=> {
-                            if(this.signInfoList.length>0){
-                                this.signInfoList.splice(0,1);
-                            }else {
-                                this.signInfoList =[];
-                            }
-                        },500)
+                        if(this.signInfoList.length>0){
+                            this.signInfoList.splice(0,1);
+                        }else {
+                            this.signInfoList =[];
+                        }
+
                     })
                 })
             },
@@ -454,13 +456,13 @@
                     if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
                         this.start_time = res.data.data.start_time;
-//                        let actual = [];
+                        let actual = [];
                         let unActual = [];
                         this.signList = [];
                         if (this.detailInfo.attendee) {
                             this.detailInfo.attendee.forEach((item) => {
                                 if (item.qrcode_time) {
-//                                    actual.push(item);
+                                    actual.push(item);
                                     if (item.is_leader == 2) {
                                         this.signList.push(item)
                                     }
@@ -468,9 +470,9 @@
                                     unActual.push(item)
                                 }
                             });
+                            this.actual_num = actual.length;
+                            this.unActual_num = unActual.length;
                         }
-                        this.unActual_num = unActual.length;
-                        this.actual_num = this.detailInfo.attendee.length - this.unActual_num;
                     }
                 });
             },
@@ -802,7 +804,7 @@
         right: -430px;
         border-radius: 5px;
         box-shadow: 0 2px 6px 0 rgba(10, 219, 244, .2), 0 0 8px 0 rgba(10, 219, 244, .1);
-        transition: all .5s;
+        transition: all 1s;
     }
 
     .card_top {
