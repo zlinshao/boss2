@@ -1292,9 +1292,6 @@
                 return this.$route.path;
             }
         },
-        mounted(){
-
-        },
         watch:{
             hideState(val){
                 if(this.hideState === '/meeting'){
