@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="mainContent row" @click="fullScreen()" style="margin: 0">
+        <div class="mainContent row" style="margin: 0">
             <!--名片-->
             <div class='visiting_card'>
                 <div class="card_top"></div>
@@ -394,7 +394,7 @@
                     setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    }, 2000);
+                    },5000);
 
                     setInterval(() => {
                         this.countDown();
