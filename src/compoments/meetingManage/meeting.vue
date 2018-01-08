@@ -363,6 +363,7 @@
                     $('.unAttendance_item_group').css('height','160px')
                 }
             };
+            this.fullScreen();
 
         },
         watch: {
