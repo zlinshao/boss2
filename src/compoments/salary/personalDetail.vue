@@ -344,6 +344,7 @@
                                     <th class="text-center width80">价格差奖励</th>
                                     <th class="text-center width80">收房付款方式奖励</th>
                                     <th class="text-center width80">收房年限奖励</th>
+                                    <th class="text-center width80">保修期奖励</th>
                                     <th class="text-center width80">业绩提成</th>
                                     <th class="text-center width50">合同</th>
                                     <th class="text-center width50">资料</th>
@@ -375,6 +376,7 @@
                                     <td>{{item.bonus_price}}</td>
                                     <td>{{item.bonus_pay_type}}</td>
                                     <td>{{item.bonus_year}}</td>
+                                    <td>{{item.bonus_warrenty}}</td>
                                     <td>{{item.achv}}</td>
                                     <td v-for="key in item.simple_cells"
                                         :class="{'deduct_marks': key.status == 2}"

@@ -36,10 +36,35 @@
                         <div class="input-group has-js" style="height: 39px;">
                             <label style="margin: 11px;padding-left: 25px;"
                                    :class="{'label_check':true,'c_on':params.unmarked == 1,'c_off':params.unmarked != 1}"
-                                   @click.prevent="mismatching($event)">
+                                   @click.prevent="mismatching($event, 1)">
                                 <input type="checkbox" :value="params.unmarked" :checked="params.unmarked == 1">标记不匹配
                             </label>
                         </div>
+
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.mark_cg == 1,'c_off':params.mark_cg != 1}"
+                                   @click.prevent="mismatching($event, 2)">
+                                <input type="checkbox" :value="params.mark_cg" :checked="params.mark_cg == 1">以充公
+                            </label>
+                        </div>
+
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.mark_2nd == 1,'c_off':params.mark_2nd != 1}"
+                                   @click.prevent="mismatching($event, 3)">
+                                <input type="checkbox" :value="params.mark_2nd" :checked="params.mark_2nd == 1">二次出租
+                            </label>
+                        </div>
+
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.mark_jt == 1,'c_off':params.mark_jt != 1}"
+                                   @click.prevent="mismatching($event, 4)">
+                                <input type="checkbox" :value="params.mark_jt" :checked="params.mark_jt == 1">鸡腿包
+                            </label>
+                        </div>
+
                         <!--<div class="input-group pull-right">-->
                         <!--<router-link :to="{path: '/flatShare', query: {id: 1}}" class="btn btn-warning">合租房</router-link>-->
                         <!--<router-link :to="{path: '/noPerformance', query: {id: 1}}" class="btn btn-warning"-->
@@ -64,13 +89,44 @@
                         <li>
                             <h5><a @click="not_generate">不生成业绩</a></h5>
                         </li>
-                        <!--<li>-->
-                        <!--<h5><a @click="delete_info">删除</a></h5>-->
-                        <!--</li>-->
+                        <li v-if="col_pitch.length == 1 || ren_pitch.length == 1">
+                            <h5><a @click="badge(2)">充公</a></h5>
+                        </li>
+                        <li>
+                            <h5><a @click="badge(3)">二次出租</a></h5>
+                        </li>
+                        <li>
+                            <h5><a @click="badge(1)">鸡腿包</a></h5>
+                        </li>
+                        <li>
+                            <h5><a @click="unbadge()">取消</a></h5>
+                        </li>
                     </ul>
                 </div>
             </div>
         </section>
+
+        <!--取消标记-->
+        <div role="dialog" class="modal fade bs-example-modal-sm has-js" id="unbadge">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">取消标记</h4>
+                    </div>
+                    <div class="modal-body badges">
+                        <div @click="active(2)" :class="{'text-primary':isActive == 2}">充公</div>
+                        <div @click="active(3)" :class="{'text-primary':isActive == 3}">二次出租</div>
+                        <div @click="active(1)" :class="{'text-primary':isActive == 1}">鸡腿包</div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button @click="unmark" class="btn btn-primary btn-md">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="panel table table-responsive roll has-js">
             <table class="table table-advance table-hover">
                 <thead class="text-center">
@@ -125,6 +181,9 @@
                               class="btn btn-danger btn-xs" @click="look_detail(item.id, 'land')">F</span>
                         <span style="line-height: 9px;" v-if="item.identity == 2"
                               class="btn btn-danger btn-xs" @click="look_detail(item.id, 'renter')">Z</span>
+                        <span class="text-primary" v-if="item.mark_2nd == 1">二次出租</span>
+                        <span class="text-danger" v-if="item.mark_jt == 1">鸡腿包</span>
+                        <span class="text-info" v-if="item.mark_cg == 1">已充公</span>
                     </td>
                     <td>{{dict.typical[item.typical]}}</td>
                     <td>{{item.months}}</td>
@@ -232,12 +291,14 @@
         },
         data(){
             return {
+                isActive: '',
+                confiscate: '',                 //充公
                 detail_info: [],
                 detail: '',
                 detailInfo: {},
-                house_status: '',               //房屋新增不显示
+                house_status: '',                   //房屋新增不显示
                 unrelated_num: '',
-                url_address: 'candidate',         //关联/未关联筛选
+                url_address: 'candidate',           //关联/未关联筛选
                 myRentlordList: {},
                 dict: {},
                 tabs: '',
@@ -251,6 +312,9 @@
                     search: '',                     //关键字
                     salary_department_id: '',       //部门ID
                     range: '',                      //时间筛选
+                    mark_2nd: '',
+                    mark_jt: '',
+                    mark_cg: '',
                     page: 1
                 },
                 selecteds: '',                      //部门名称
@@ -280,9 +344,11 @@
                 },
             }
         },
-
         mounted(){
-            this.create_ach(1);
+            this.$http.get('salary/Commission/dict').then((res) => {
+                this.dict = res.data;
+                this.create_ach(1);
+            });
             this.$http.get('revenue/glee_collect/dict').then((res) => {
                 this.detailInfo = res.data;
             });
@@ -297,6 +363,68 @@
             },
         },
         methods: {
+//            取消标记
+            unbadge (){
+                $('#unbadge').modal({backdrop: 'static'});
+                this.isActive = '';
+            },
+            unmark (){
+                this.$http.post('finance/customer/unmark_extra', {
+                    type: this.isActive,
+                    collect: this.col_pitch,
+                    rent: this.ren_pitch,
+                }).then((res) => {
+                    if (res.data.code === '90000') {
+                        this.successMsg(res.data.msg);
+                        this.search(this.params.page);
+                        this.empty_pitch();
+                        $('#unbadge').modal('hide');
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+            active(val){
+                this.isActive = val;
+            },
+//            标记
+            badge (val){
+                if (val === 1 || val === 3) {
+                    this.$http.post('finance/customer/mark_extra', {
+                        type: val,
+                        collect: this.col_pitch,
+                        rent: this.ren_pitch,
+                    }).then((res) => {
+                        if (res.data.code === '90000') {
+                            this.successMsg(res.data.msg);
+                            this.search(this.params.page);
+                            this.empty_pitch();
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                }
+                if (val === 2) {
+                    let type;
+                    if (this.confiscate === 1) {
+                        type = this.col_pitch[0];
+                    } else {
+                        type = this.ren_pitch[0];
+                    }
+                    this.$http.post('finance/customer/confiscate', {
+                        type: this.confiscate,
+                        id: type,
+                    }).then((res) => {
+                        if (res.data.code === '90010') {
+                            this.successMsg(res.data.msg);
+                            this.search(this.params.page);
+                            this.empty_pitch();
+                        } else {
+                            this.errorMsg(res.data.msg);
+                        }
+                    })
+                }
+            },
 //            查看收租详情
             look_detail (val, del){
                 this.detail_info = [];
@@ -324,16 +452,41 @@
 
             },
 //            标记不匹配
-            mismatching (ev){
+            mismatching (ev, val){
                 let evInput = ev.target.getElementsByTagName('input')[0];
-                evInput.checked = !evInput.checked;
-                if (evInput.checked) {
-                    this.params.unmarked = 1;
-                    this.search(1);
-                } else {
-                    this.params.unmarked = '';
-                    this.search(1);
+                if (val === 1) {
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 1) {
+                        this.params.unmarked = 1;
+                    } else {
+                        this.params.unmarked = '';
+                    }
                 }
+                if (val === 2) {
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 2) {
+                        this.params.mark_cg = 1;
+                    } else {
+                        this.params.mark_cg = '';
+                    }
+                }
+                if (val === 3) {
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 3) {
+                        this.params.mark_2nd = 1;
+                    } else {
+                        this.params.mark_2nd = '';
+                    }
+                }
+                if (val === 4) {
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 4) {
+                        this.params.mark_jt = 1;
+                    } else {
+                        this.params.mark_jt = '';
+                    }
+                }
+                this.search(1);
             },
 //            搜索
             search(val){
@@ -347,31 +500,28 @@
                 this.params.page = val;
                 this.ach_create = [];
                 this.paging = '';
-                this.$http.get('salary/Commission/dict').then((res) => {
-                    this.dict = res.data;
-
-                    this.$http.get('finance/customer/' + this.url_address, {
-                        params: this.params,
-                    }).then((res) => {
-                        if (res.data.code === '90010') {
-                            this.ach_create = res.data.data.data;
-                            this.paging = res.data.data.pages;
-                            this.isShow = false;
-                            this.$http.get('finance/customer/urc', {
-                                params: this.params,
-                            }).then((res) => {
-                                if (res.data.code === '90010') {
-                                    this.unrelated_num = res.data.data;
-                                }
-                            })
-                        } else {
-                            this.isShow = true;
-                        }
-                    })
-                });
+                this.$http.get('finance/customer/' + this.url_address, {
+                    params: this.params,
+                }).then((res) => {
+                    if (res.data.code === '90010') {
+                        this.ach_create = res.data.data.data;
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                        this.$http.get('finance/customer/urc', {
+                            params: this.params,
+                        }).then((res) => {
+                            if (res.data.code === '90010') {
+                                this.unrelated_num = res.data.data;
+                            }
+                        })
+                    } else {
+                        this.isShow = true;
+                    }
+                })
             },
 //            选中
             pitchId (rul, ev, val){
+                this.confiscate = val;
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (val === 1) {
@@ -570,6 +720,21 @@
         margin-top: 1px;
         width: 17px;
         height: 17px;
+    }
+
+    .badges {
+        display: flex;
+        display: -webkit-flex;
+        justify-content: center;
+    }
+
+    .badges div {
+        cursor: pointer;
+        margin: 12px 0;
+    }
+
+    .badges div:nth-of-type(even) {
+        margin: 12px 60px;
     }
 
     .remind li {

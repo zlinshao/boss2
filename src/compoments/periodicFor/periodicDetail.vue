@@ -57,8 +57,23 @@
                         <div class="input-group has-js" style="height: 39px;">
                             <label style="margin: 11px;padding-left: 25px;"
                                    :class="{'label_check':true,'c_on':params.only_confiscation == 1,'c_off':params.only_confiscation != 1}"
-                                   @click.prevent="confiscation($event)">
-                                <input type="checkbox" :value="params.only_confiscation" :checked="params.only_confiscation == 1">已充公
+                                   @click.prevent="confiscation($event, 1)">
+                                <input type="checkbox" :value="params.only_confiscation"
+                                       :checked="params.only_confiscation == 1">已充公
+                            </label>
+                        </div>
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.mark_2nd == 1,'c_off':params.mark_2nd != 1}"
+                                   @click.prevent="confiscation($event, 2)">
+                                <input type="checkbox" :value="params.mark_2nd" :checked="params.mark_2nd == 1">二次充公
+                            </label>
+                        </div>
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.mark_jt == 1,'c_off':params.mark_jt != 1}"
+                                   @click.prevent="confiscation($event, 3)">
+                                <input type="checkbox" :value="params.mark_jt" :checked="params.mark_jt == 1">鸡腿包
                             </label>
                         </div>
                         <div role="dialog" class="modal fade bs-example-modal-sm" id="leading_out">
@@ -147,6 +162,8 @@
                                             {{item.address}}
                                             <a class="text-danger" @click="confiscate(item.simple_confiscation.id)"
                                                v-if="item.simple_confiscation != null">充公</a>
+                                            <span class="text-primary" v-if="item.mark_2nd == 1">二次出租</span>
+                                            <span class="text-danger" v-if="item.mark_jt == 1">鸡腿包</span>
                                         </td>
                                         <td>{{dict.typical[item.typical]}}</td>
                                         <td>{{item.pay_type}}个月付</td>
@@ -267,8 +284,10 @@
                     house_id: '',
                     search: '',
                     page: 1,
-                    only_zero: 2,              //只显示双方业绩0
+                    only_zero: 2,              //只显示双方业绩
                     only_confiscation: 2,      //已充公业绩
+                    mark_2nd: '',
+                    mark_jt: '',
                 },
                 paging: '',                     //总页数
                 lookRem: '',                    //备注内容
@@ -297,7 +316,10 @@
                 this.currentDate = [time.split('to')[0], time.split('to')[1]];
             }
             this.params.search = this.$route.query.sear.staff_name;
-            this.personalList(1);
+            this.$http.get('salary/Commission/dict').then((res) => {
+                this.dict = res.data;
+                this.personalList(1);
+            });
             this.remindData();
         },
 
@@ -307,22 +329,38 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.params.only_zero = 1;
-                    this.search(1);
                 } else {
                     this.params.only_zero = 2;
-                    this.search(1);
                 }
+                this.search(1);
             },
-            confiscation (ev){
+            confiscation (ev, val){
                 let evInput = ev.target.getElementsByTagName('input')[0];
-                evInput.checked = !evInput.checked;
-                if (evInput.checked) {
-                    this.params.only_confiscation = 1;
-                    this.search(1);
-                } else {
-                    this.params.only_confiscation = 2;
-                    this.search(1);
+                if(val === 1){
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked) {
+                        this.params.only_confiscation = 1;
+                    } else {
+                        this.params.only_confiscation = 2;
+                    }
                 }
+                if(val === 2){
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 2) {
+                        this.params.mark_2nd = 1;
+                    } else {
+                        this.params.mark_2nd = '';
+                    }
+                }
+                if(val === 3){
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 3) {
+                        this.params.mark_jt = 1;
+                    } else {
+                        this.params.mark_jt = '';
+                    }
+                }
+                this.search(1);
             },
 //            导出
             leading_out (){
@@ -411,25 +449,21 @@
             },
 //            列表
             personalList (val){
-                this.$http.get('salary/Commission/dict').then((res) => {
-                    this.dict = res.data;
-
-                    this.params.page = val;
-                    this.paging = '';
-                    this.pitch = [];
-                    this.detail_list = [];
-                    this.$http.get('achv/commission', {
-                        params: this.params
-                    }).then((res) => {
-                        if (res.data.code === '70010') {
-                            this.paging = res.data.data.pages;
-                            this.isShow = false;
-                            this.detail_list = res.data.data.data;
-                        } else {
-                            this.isShow = true;
-                        }
-                    })
-                });
+                this.params.page = val;
+                this.paging = '';
+                this.pitch = [];
+                this.detail_list = [];
+                this.$http.get('achv/commission', {
+                    params: this.params
+                }).then((res) => {
+                    if (res.data.code === '70010') {
+                        this.paging = res.data.data.pages;
+                        this.isShow = false;
+                        this.detail_list = res.data.data.data;
+                    } else {
+                        this.isShow = true;
+                    }
+                })
             },
 //            编辑
             periodicEdit (){

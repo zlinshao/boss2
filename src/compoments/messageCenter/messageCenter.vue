@@ -810,6 +810,7 @@
                 this.$http.post('message/secretary/index/pages/' + val).then((res) => {
                     if (res.data.code === '100030') {
                         this.Secretarys = res.data.data.list;
+                        console.log(JSON.parse(res.data.data.list[0].message.data.content));
                         this.paging = res.data.data.pages;
                         this.Secretarys_s = false;
                     } else {
