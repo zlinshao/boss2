@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{signInfoList}}
         <div class="modal fade" id="meetingAdd" role="dialog" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -103,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                </div>z
+                </div>
                 <!--主体-->
                 <div class="content_right_middle">
                     <div class="two-dimension_code" v-if="unActual_num">
@@ -115,7 +116,7 @@
                         <h4 style="padding: 0 15px;font-size: 24px">
                             <span style="margin-right: 10px">{{detailInfo.start_time}}</span>
                             <span>{{detailInfo.title}}</span>
-                            <span class="pull-right" v-if="!isStart">
+                            <span class="pull-right" v-if="!isStart && !isFinish && !noStart">
                                 <span>倒计时</span>
                                 <span style="color: #fc647d;">
                                     <span v-if="hour<10">0</span>{{hour}}:<span
@@ -125,6 +126,16 @@
                             <span class="pull-right" v-if="isStart">
                                 <span style="color: #fc647d;">
                                     会议已开始
+                                </span>
+                            </span>
+                            <span class="pull-right" v-if="isFinish">
+                                <span style="color: #fc647d;">
+                                    已结束
+                                </span>
+                            </span>
+                            <span class="pull-right" v-if="noStart">
+                                <span style="color: #fc647d;">
+                                    倒计时未开始
                                 </span>
                             </span>
                         </h4>
@@ -331,20 +342,20 @@
                 signList: [],
                 signInfoArray: [],
                 signInfo: {},
+                signInfoList:[],
                 signInfoLength : '',
                 changeCount: false,
                 start_time: '',
                 interval: null,
                 isStart:false,
+                noStart:false,
+                isFinish : false,
                 starCount:false,
 
             }
         },
         mounted(){
             this.getDictionary();
-            var content = document.getElementById('container');
-            this.FullScreen(content);
-//            document.documentElement.webkitRequestFullscreen();
         },
         watch: {
             start_time(val, oldValue){
@@ -353,6 +364,11 @@
             starCount(val){
                 if(val){
                     $('#meetingAdd').modal('show');
+                }
+            },
+            signInfoList(val){
+                if(val.length>0){
+                    this.carousel();
                 }
             }
         },
@@ -373,21 +389,50 @@
 
                 })
             },
+
+            carousel(){
+                this.signInfo ={};
+//                this.signInfoList = [{},{},{},{},{}];
+                console.log(this.signInfoList)
+                this.signInfo = this.signInfoList[0];
+                new Promise((resolve, reject) => {
+                    setTimeout(()=>{
+                        $('.visiting_card').css('right', '10px');
+                        resolve('clear');
+                    },1000);
+                }).then((data) => {
+                    new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            $('.visiting_card').css('right', '-430px');
+                            resolve('clear');
+                        }, 2000)
+                    }).then((data) =>{
+                        if(this.signInfoList.length>0){
+                            this.signInfoList.splice(0,1);
+                        }else {
+                            this.signInfoList =[];
+                        }
+
+                    })
+                })
+            },
             searchAttendance(){
                 this.$http.get('oa/conference/sign/id/' + this.$route.query.meetingId).then((res) => {
                     if (res.data.code === '50080') {
-                        this.signInfo = {};
-                        this.signInfo = res.data.data[0];
-                        console.log(1)
-                        $('.visiting_card').css('right', '10px');
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                $('.visiting_card').css('right', '-430px');
-                                resolve('clear');
-                            }, 4000)
-                        }).then((data) => {
-
+//                        this.signInfo = {};
+                        res.data.data.forEach((item) => {
+                            this.signInfoList.push(item)
                         });
+//                        this.signInfo = res.data.data[0];
+//                        $('.visiting_card').css('right', '10px');
+//                        new Promise((resolve, reject) => {
+//                            setTimeout(() => {
+//                                $('.visiting_card').css('right', '-430px');
+//                                resolve('clear');
+//                            }, 4000)
+//                        }).then((data) => {
+//
+//                        });
                     } else {
 
                     }
@@ -395,7 +440,7 @@
             },
             getMeetingDetail(){
                 this.$store.dispatch('hideLoading');
-                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId).then((res) => {
+                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId+/order/+1).then((res) => {
                     if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
                         this.start_time = res.data.data.start_time;
@@ -443,25 +488,19 @@
                         }, 1000);
                     } else if(res.data.code === '50091'){
                         this.isStart = true;
+                        this.noStart = false;
+                        this.isFinish = false;
+                    }else if (res.data.code === '50092'){
+                        this.noStart = true;
+                        this.isFinish = false;
+                        this.isStart = false;
                     }else {
-
+                        this.isFinish = true;
+                        this.isStart = false;
+                        this.noStart = false;
                     }
                 });
             },
-            FullScreen(el){
-                var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen,
-                    wscript;
-                if (typeof rfs != "undefined" && rfs) {
-                    rfs.call(el);
-                    return;
-                }
-                if (typeof window.ActiveXObject != "undefined") {
-                    wscript = new ActiveXObject("WScript.Shell");
-                    if (wscript) {
-                        wscript.SendKeys("{F11}");
-                    }
-                }
-            }
         }
     }
 </script>

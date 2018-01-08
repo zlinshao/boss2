@@ -7,6 +7,7 @@
                         <button type="button" class="close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        {{is_leader}}
                         <h4 class="modal-title" v-if="!isReUpload">新建会议</h4>
                         <h4 class="modal-title" v-if="isReUpload">重新发布</h4>
                     </div>
@@ -179,14 +180,21 @@
         watch:{
             amount(val,oldVal){
                 if(val<oldVal){
-                    this.itemArray.splice(val,val);
-                    this.seatArray.splice(val,val);
-                    this.itemIdArray.splice(val,val);
+                    this.itemArray.splice(val,oldVal);
+                    this.seatArray.splice(val,oldVal);
+                    this.itemIdArray.splice(val,oldVal);
+                    this.is_leader.splice(val,oldVal);
+                }else if(val>oldVal){
+                    let amount = val-oldVal;
+                    for(let i=0;i<amount;i++){
+                        this.is_leader.push(false)
+                    }
                 }
                 if(!val){
                     this.itemArray=[];
                     this.seatArray=[];
                     this.itemIdArray=[];
+                    this.is_leader = []
                 }
             },
             isReUpload(val){

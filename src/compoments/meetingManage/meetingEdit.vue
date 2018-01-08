@@ -107,8 +107,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" @click="closeModal">取消</button>
-                        <button type="button" class="btn btn-primary" @click="confirmAdd(1)">保存为草稿</button>
-                        <button type="button" class="btn btn-success" @click="confirmAdd(2)">保存并发布</button>
+                        <button type="button" class="btn btn-primary" @click="confirmAdd(1,2)">保存为当前状态</button>
+                        <button type="button" class="btn btn-success" @click="confirmAdd(2,2)">保存</button>
+                        <button type="button" class="btn btn-success" @click="confirmAdd(2,1)">发布</button>
                     </div>
                 </div>
             </div>
@@ -258,7 +259,7 @@
                     }
                 }
             },
-            confirmAdd(status){   //确认提交
+            confirmAdd(status,message){   //确认提交
                 if(this.itemIdArray.length<this.params.attendee_num){
                     this.info.error = '您还有参会人员尚未选择';
                     this.info.state_error = true;
@@ -274,6 +275,7 @@
                         attendeeItem = {};
                     }
                     this.params.status = status;
+                    this.params.message = message;
                     this.$http.put('oa/conference/conferenceupdate', this.params).then((res) => {
                         if (res.data.code === '50030') {
                             this.info.success = res.data.msg;
