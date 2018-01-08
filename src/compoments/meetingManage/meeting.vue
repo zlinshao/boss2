@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="mainContent row" style="margin: 0">
+        <div class="mainContent row" @click="fullScreen()" style="margin: 0">
             <!--名片-->
             <div class='visiting_card'>
                 <div class="card_top"></div>
@@ -295,7 +295,7 @@
                 <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
                      v-if="actual_num">
                     <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
-                         v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
+                         v-for="item in detailInfo.attendee.reverse()" v-if="item.qrcode_time">
                         <div class="attendance_header">
                             <div>
                                 <img v-if="item.staff_avatar" :src="item.staff_avatar">
@@ -363,8 +363,6 @@
                     $('.unAttendance_item_group').css('height','160px')
                 }
             };
-            this.fullScreen();
-
         },
         watch: {
             start_time(val, oldValue){
@@ -410,21 +408,22 @@
                 new Promise((resolve, reject) => {
                     setTimeout(()=>{
                         $('.visiting_card').css('right', '10px');
-                        resolve('clear');
+                        resolve('');
                     },1000);
                 }).then((data) => {
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
                             $('.visiting_card').css('right', '-430px');
-                            resolve('clear');
+                            resolve('');
                         }, 2000)
                     }).then((data) =>{
-                        if(this.signInfoList.length>0){
-                            this.signInfoList.splice(0,1);
-                        }else {
-                            this.signInfoList =[];
-                        }
-
+                        setTimeout( ()=> {
+                            if(this.signInfoList.length>0){
+                                this.signInfoList.splice(0,1);
+                            }else {
+                                this.signInfoList =[];
+                            }
+                        },1000)
                     })
                 })
             },
