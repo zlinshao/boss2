@@ -1,6 +1,5 @@
 <template>
-    <div>
-        {{signInfoList}}
+    <div id="content">
         <div class="modal fade" id="meetingAdd" role="dialog" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -49,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="content_right" :class="actual_num? 'col-lg-9':'col-lg-12'">
+            <div  class="content_right" :class="actual_num? 'col-lg-9':'col-lg-12'">
                 <!--nav-->
                 <div class="nav">
                     <div class="row">
@@ -170,7 +169,8 @@
                             </div>
                         </div>
                         <div class="lead">
-                            <p style="padding:0 15px;font-size: 14px;color: #999">与会领导</p>
+
+                            <p style="padding:0 15px;font-size: 14px;color: #999;">与会领导</p>
                             <div class="lead_item" v-for="item in detailInfo.attendee" v-if="item.is_leader == 1">
                                 <div>
                                     <div class="lead_item_head">
@@ -356,6 +356,12 @@
         },
         mounted(){
             this.getDictionary();
+            $('.mainContent').css({'height':window.innerHeight-30+'px','background':'#fff'});
+            window.onresize = function(){
+                $('.mainContent').css('height',window.innerHeight-30+'px');
+            };
+
+
         },
         watch: {
             start_time(val, oldValue){
@@ -392,7 +398,6 @@
 
             carousel(){
                 this.signInfo ={};
-//                this.signInfoList = [{},{},{},{},{}];
                 console.log(this.signInfoList)
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
@@ -501,6 +506,13 @@
                     }
                 });
             },
+            fullScreen(){
+                let el =document.getElementById('content');
+                let rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+                if (typeof rfs !== "undefined" && rfs) {
+                    rfs.call(el);
+                }
+            }
         }
     }
 </script>
@@ -508,10 +520,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     body,html{
-        /*font-family:Fantasy;*/
-        overflow: hidden;
         margin:0;
         padding: 0;
+        width: 1920px;
+        overflow: hidden;
     }
     .mainContent {
         box-shadow: 0 2px 6px 0 rgba(89, 77, 235, 0.2), 0 0 8px 0 rgba(90, 97, 235, 0.1);
@@ -696,12 +708,13 @@
     .lead {
         margin-top: 20px;
         display: flex;
+        flex-wrap: wrap;
     }
 
     .lead_item > div {
         width: 180px;
         height: 180px;
-        margin-right: 10px;
+        margin: 0 10px 10px;
         border: 1px solid #dddddd;
         border-radius: 5px;
     }
@@ -735,7 +748,7 @@
 
     .unAttendance_item_group {
         width: 100%;
-        height: 179px;
+        min-height: 179px;
         overflow: auto;
         margin: 15px 0;
         display: flex;
