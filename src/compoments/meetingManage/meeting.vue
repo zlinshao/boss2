@@ -454,13 +454,13 @@
                     if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
                         this.start_time = res.data.data.start_time;
-                        let actual = [];
+//                        let actual = [];
                         let unActual = [];
                         this.signList = [];
                         if (this.detailInfo.attendee) {
                             this.detailInfo.attendee.forEach((item) => {
                                 if (item.qrcode_time) {
-                                    actual.push(item);
+//                                    actual.push(item);
                                     if (item.is_leader == 2) {
                                         this.signList.push(item)
                                     }
@@ -468,9 +468,9 @@
                                     unActual.push(item)
                                 }
                             });
-                            this.actual_num = actual.length;
-                            this.unActual_num = unActual.length;
                         }
+                        this.unActual_num = unActual.length;
+                        this.actual_num = this.detailInfo.attendee.length - this.unActual_num;
                     }
                 });
             },
