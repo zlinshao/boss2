@@ -294,7 +294,7 @@
                 <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
                      v-if="actual_num">
                     <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
-                         v-for="item in detailInfo.attendee.reverse()" v-if="item.qrcode_time">
+                         v-for="item in isAttendee.reverse()" v-if="item.qrcode_time">
                         <div class="attendance_header">
                             <div>
                                 <img v-if="item.staff_avatar" :src="item.staff_avatar">
@@ -348,6 +348,8 @@
                 noStart:false,
                 isFinish : false,
                 starCount:false,
+
+                isAttendee :[],
 
             }
         },
@@ -454,13 +456,15 @@
                     if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
                         this.start_time = res.data.data.start_time;
-//                        let actual = [];
+                        let actual = [];
                         let unActual = [];
                         this.signList = [];
+                        this.isAttendee = [];
                         if (this.detailInfo.attendee) {
+                            this.isAttendee = $.extend(true,[],this.detailInfo.attendee);
                             this.detailInfo.attendee.forEach((item) => {
                                 if (item.qrcode_time) {
-//                                    actual.push(item);
+                                    actual.push(item);
                                     if (item.is_leader == 2) {
                                         this.signList.push(item)
                                     }
@@ -468,9 +472,9 @@
                                     unActual.push(item)
                                 }
                             });
+                            this.actual_num = actual.length;
+                            this.unActual_num = unActual.length;
                         }
-                        this.unActual_num = unActual.length;
-                        this.actual_num = this.detailInfo.attendee.length - this.unActual_num;
                     }
                 });
             },
