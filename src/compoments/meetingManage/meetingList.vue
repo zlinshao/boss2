@@ -244,6 +244,7 @@
                     keywords: '',
                     pages: 1,
                 };
+                this.selectId = '';
                 this.isReUpload = false;
                 this.getMeetingList();
             },

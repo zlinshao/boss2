@@ -526,6 +526,9 @@
         width: 1920px;
         overflow: hidden;
     }
+    .nav h5{
+        font-size: 16px;
+    }
     .mainContent {
         box-shadow: 0 2px 6px 0 rgba(89, 77, 235, 0.2), 0 0 8px 0 rgba(90, 97, 235, 0.1);
     }

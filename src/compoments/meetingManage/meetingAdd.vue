@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <label class="col-md-2 control-label">消息内容 ：</label>
                                     <div class="col-md-10">
-                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content"
+                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content" placeholder="钉钉推送正文内容"
                                                   class="form-control" rows="2"></textarea>
                                     </div>
                                 </div>
@@ -273,15 +273,13 @@
                         this.params.attendee.push(attendeeItem);
                         attendeeItem = {};
                     }
-
-                    console.log(this.params.attendee)
                     this.params.status = status;
                     this.$http.post('oa/conference/conferencesave',this.params).then((res) => {
                         if(res.data.code === '50010'){
                             this.info.success = res.data.msg;
                             this.info.state_success = true;
                             this.closeModal();
-                            this.$emit('successAdd')
+                            this.$emit('successAdd');
                         }else {
                             this.info.error = res.data.msg;
                             this.info.state_error = true;

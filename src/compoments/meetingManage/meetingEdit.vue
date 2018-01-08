@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <label class="col-md-2 control-label">消息内容 ：</label>
                                     <div class="col-md-10">
-                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content"
+                                        <textarea style="resize: vertical;margin-bottom: 18px" v-model="params.content" placeholder="钉钉推送正文内容"
                                                   class="form-control" rows="2"></textarea>
                                     </div>
                                 </div>
