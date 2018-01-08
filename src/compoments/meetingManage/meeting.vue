@@ -168,7 +168,7 @@
                         </div>
                         <div class="lead">
 
-                            <p style="padding:0 15px;font-size: 14px;color: #999;">与会领导</p>
+                            <p style="padding:0 15px;font-size: 13px;color: #999;">与会领导</p>
                             <div class="lead_item" v-for="item in detailInfo.attendee" v-if="item.is_leader == 1">
                                 <div>
                                     <div class="lead_item_head">
@@ -922,5 +922,7 @@
         left: 50%;
         margin: -200px 0 0 -200px;
     }
-
+    p{
+        font-size: 13px;
+    }
 </style>
