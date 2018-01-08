@@ -395,6 +395,7 @@
                         this.getMeetingDetail();
                         this.searchAttendance();
                     }, 2000);
+
                     setInterval(() => {
                         this.countDown();
                     }, 300000);
@@ -403,6 +404,7 @@
             },
 
             carousel(){
+
                 this.signInfo ={};
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
@@ -416,6 +418,7 @@
                             $('.visiting_card').css('right', '-430px');
                             resolve('');
                         }, 2000)
+
                     }).then((data) =>{
                         setTimeout( ()=> {
                             if(this.signInfoList.length>0){
