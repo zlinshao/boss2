@@ -66,7 +66,7 @@
                             <label style="margin: 11px;padding-left: 25px;"
                                    :class="{'label_check':true,'c_on':params.mark_2nd == 1,'c_off':params.mark_2nd != 1}"
                                    @click.prevent="confiscation($event, 2)">
-                                <input type="checkbox" :value="params.mark_2nd" :checked="params.mark_2nd == 1">二次充公
+                                <input type="checkbox" :value="params.mark_2nd" :checked="params.mark_2nd == 1">二次出租
                             </label>
                         </div>
                         <div class="input-group has-js" style="height: 39px;">
