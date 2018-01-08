@@ -6,9 +6,10 @@
                      class="dz-preview dz-processing dz-image-preview dz-success dz-complete"
                      v-if="p != '' && p.small !== null">
                     <div class="dz-image">
-                        <img data-dz-thumbnail="" alt="" :src="p.small">
+                        <img v-if="p.small" data-dz-thumbnail="" alt="" :src="p.small">
+                        <!--<img v-else="" data-dz-thumbnail="" alt="" src="../../assets/img/head.png">-->
                     </div>
-                    <a class="dz-remove" @click="rules(index)">删除图片</a>
+                    <a class="dz-remove" @click="rules(index)">删除文件</a>
                 </div>
 
             </div>
