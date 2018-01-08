@@ -87,6 +87,7 @@
                                 <div>
                                     <h5>聚焦客户、&nbsp;立足市场、&nbsp;提供专业租赁服务。</h5>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -294,7 +295,7 @@
                 <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
                      v-if="actual_num">
                     <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
-                         v-for="item in isAttendee.reverse()" v-if="item.qrcode_time">
+                         v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
                         <div class="attendance_header">
                             <div>
                                 <img v-if="item.staff_avatar" :src="item.staff_avatar">
@@ -348,8 +349,6 @@
                 noStart:false,
                 isFinish : false,
                 starCount:false,
-
-                isAttendee :[],
 
             }
         },
@@ -407,8 +406,8 @@
                 this.signInfo ={};
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
-                    $('.visiting_card').css('right', '10px');
                     setTimeout(()=>{
+                        $('.visiting_card').css('right', '10px');
                         resolve('');
                     },500);
                 }).then((data) => {
@@ -459,9 +458,7 @@
                         let actual = [];
                         let unActual = [];
                         this.signList = [];
-                        this.isAttendee = [];
                         if (this.detailInfo.attendee) {
-                            this.isAttendee = $.extend(true,[],this.detailInfo.attendee);
                             this.detailInfo.attendee.forEach((item) => {
                                 if (item.qrcode_time) {
                                     actual.push(item);
