@@ -408,8 +408,9 @@
                 this.signInfo ={};
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
+                    $('.visiting_card').css('right', '10px');
+
                     setTimeout(()=>{
-                        $('.visiting_card').css('right', '10px');
                         resolve('');
                     },500);
                 }).then((data) => {
