@@ -158,6 +158,12 @@ import Statistics from './compoments/statistics/statistics.vue'                 
 import Client from './compoments/client/clientList.vue'
 import ClientDetail from './compoments/client/clientDetail.vue'
 import ClientPool from './compoments/client/clientPool.vue'
+
+// 喜报
+import CollectBulletin from './compoments/bulletin/collectBulletin.vue'
+import RentBulletin from './compoments/bulletin/rentBulletin.vue'
+
+
 export default[
     {
         path: '/',                  //重定向主页
@@ -169,9 +175,19 @@ export default[
         component: Index
     },
     {
-        path: '/statistics',             //主页
-        name: 'statistics',
-        component: Statistics
+        path: '/index',             //主页
+        name: 'index',
+        component: Index
+    },
+    {
+        path: '/collectBulletin',             //收房喜报
+        name: 'collectBulletin',
+        component: CollectBulletin
+    },
+    {
+        path: '/rentBulletin',             //租房喜报
+        name: 'rentBulletin',
+        component: RentBulletin
     },
     {
         path: '/organization',             //业绩生成
