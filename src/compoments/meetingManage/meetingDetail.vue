@@ -144,6 +144,7 @@
                         this.recordInfo = res.data.data;
 
                         if(this.recordInfo.visible_range.staff.length>0){
+                            this.itemArray = [];
                             this.recordInfo.visible_range.staff.forEach((item) =>{
                                 this.itemArray.push(item.staff_name);
                             })

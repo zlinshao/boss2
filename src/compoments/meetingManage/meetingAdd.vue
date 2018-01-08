@@ -7,7 +7,6 @@
                         <button type="button" class="close" @click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        {{is_leader}}
                         <h4 class="modal-title" v-if="!isReUpload">新建会议</h4>
                         <h4 class="modal-title" v-if="isReUpload">重新发布</h4>
                     </div>

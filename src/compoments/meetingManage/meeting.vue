@@ -53,9 +53,7 @@
                 <div class="nav">
                     <div class="row">
                         <div class="col-lg-2" style="width: 265px;">
-                            <!--<router-link :to="{path:'/meetingList'}">-->
-                            <!--<i style="margin: 5px" class="fa fa-angle-double-left"></i>返回-->
-                            <!--</router-link>-->
+
                         </div>
                         <div class="col-lg-5">
                             <h4 style="margin-top: 30px;font-weight: 600">企业文化</h4>
@@ -106,7 +104,7 @@
                 </div>
                 <!--主体-->
                 <div class="content_right_middle">
-                    <div class="two-dimension_code" v-if="unActual_num">
+                    <div class="two-dimension_code" v-if="unActual_num&&!starCount">
                         <div style="padding: 10px">
                             <img style="width: 230px;height: 230px" :src="detailInfo.qrcode_pic_url" alt="">
                         </div>
@@ -398,7 +396,6 @@
 
             carousel(){
                 this.signInfo ={};
-                console.log(this.signInfoList)
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
                     setTimeout(()=>{
@@ -484,6 +481,7 @@
                                 clearInterval(this.interval);
                                 $('#meetingAdd').modal('hide');
                                 this.isStart = true;
+                                this.starCount = false;
                             } else {
                                 this.count--;
                                 this.hour = parseInt(this.count / 3600);
@@ -495,14 +493,17 @@
                         this.isStart = true;
                         this.noStart = false;
                         this.isFinish = false;
+                        this.starCount = false;
                     }else if (res.data.code === '50092'){
                         this.noStart = true;
                         this.isFinish = false;
                         this.isStart = false;
+                        this.starCount = false;
                     }else {
                         this.isFinish = true;
                         this.isStart = false;
                         this.noStart = false;
+                        this.starCount = false;
                     }
                 });
             },
