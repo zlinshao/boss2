@@ -89,6 +89,9 @@
                         <li>
                             <h5><a @click="not_generate">不生成业绩</a></h5>
                         </li>
+                        <li>
+                            <h5><a @click="closeUnmark">清除部门标记</a></h5>
+                        </li>
                         <li v-if="col_pitch.length == 1 || ren_pitch.length == 1">
                             <h5><a @click="badge(2)">充公</a></h5>
                         </li>
@@ -363,6 +366,22 @@
             },
         },
         methods: {
+//            取消部门标记
+            closeUnmark (){
+                this.$http.post('finance/customer/unmark', {
+                    collect: this.col_pitch,
+                    rent: this.ren_pitch,
+                }).then((res) => {
+                    if (res.data.code === '90000') {
+                        this.successMsg(res.data.msg);
+                        this.search(this.params.page);
+                        this.empty_pitch();
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
+
 //            取消标记
             unbadge (){
                 $('#unbadge').modal({backdrop: 'static'});
