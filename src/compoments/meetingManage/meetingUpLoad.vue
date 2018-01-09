@@ -132,6 +132,7 @@
                 $('.selectCustom').modal('show');
             },
             getDepartment(val){
+                console.log(val)
                 this.params.visible_range = {
                     department:[],
                     staff:[],

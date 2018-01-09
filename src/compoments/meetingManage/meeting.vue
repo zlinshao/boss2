@@ -1,11 +1,11 @@
 <template>
     <div id="content">
-        <div class="modal fade" id="meetingAdd" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-
+                    <!--<div class="close" aria-label="Close" data-dismiss="modal">×</div>-->
                     <div class="modal-body">
-                        <h3 style="font-weight: bold;text-align: center;margin-top: 40px;margin-bottom: 15px">
+                        <h3 style="font-weight: bold;text-align: center;margin-bottom: 15px">
                             {{detailInfo.title}}
                         </h3>
                         <h5 style="text-align: center;color: #0ea1d8;">请扫描签到</h5>
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div  class="content_right" :class="actual_num? 'col-lg-9':'col-lg-12'">
+            <div class="content_right" :class="actual_num? 'col-lg-9':'col-lg-12'">
                 <!--nav-->
                 <div class="nav">
                     <div class="row">
@@ -105,7 +105,7 @@
                 <!--主体-->
                 <div class="content_right_middle">
                     <div class="two-dimension_code" v-if="unActual_num&&!starCount">
-                        <div style="padding: 10px">
+                        <div style="padding: 10px;cursor: pointer" data-toggle="modal" data-target="#myModal">
                             <img style="width: 230px;height: 230px" :src="detailInfo.qrcode_pic_url" alt="">
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                                 </span>
                             </span>
                         </h4>
-                        <p style="padding: 0 15px;font-size: 12px">乐伽商业管理有限公司</p>
+                        <p style="padding: 0 15px;font-size: 12px;color: #999">乐伽商业管理有限公司</p>
 
                         <div class="meetingDetail">
                             <div>
@@ -172,8 +172,10 @@
                             <div class="lead_item" v-for="item in detailInfo.attendee" v-if="item.is_leader == 1">
                                 <div>
                                     <div class="lead_item_head">
-                                        <img v-if="item.staff_avatar" :src="item.staff_avatar" :class="item.qrcode_time?'':'gray'">
-                                        <img v-else="" src="../../assets/img/head.png" :class="item.qrcode_time?'':'gray'">
+                                        <img v-if="item.staff_avatar" :src="item.staff_avatar"
+                                             :class="item.qrcode_time?'':'gray'">
+                                        <img v-else="" src="../../assets/img/head.png"
+                                             :class="item.qrcode_time?'':'gray'">
                                     </div>
                                     <div class="lead_item_name">
                                         <h5 style="color: #333">{{item.staff_name}}</h5>
@@ -290,12 +292,44 @@
                         </div>
                     </div>
                 </div>
-                <h4 style="margin-top: 20px;font-weight: 600">已签到人员</h4>
-                <h5 style="text-align: center" v-if="!actual_num">暂无数据...</h5>
+                <h4 style="margin-top: 20px;font-weight: 600;display: flex;align-items: center;justify-content: space-between">
+                    已签到人员
+                    <div class="switch has-switch" style="float: right">
+                        <div class="switch-animate" :class="signStatus? 'switch-on':'switch-off'" @click="changeStatus">
+                            <input type="checkbox" checked="" data-toggle="switch">
+                            <span class="switch-left">已签到</span><label>&nbsp;</label><span class="switch-right">迟到</span>
+                        </div>
+                    </div>
+                </h4>
                 <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
-                     v-if="actual_num">
+                     v-if="actual_num&&signStatus">
                     <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
-                         v-for="item in detailInfo.attendee" v-if="item.qrcode_time">
+                         v-for="item in signListReverse" v-if="item.qrcode_time&&item.status==2">
+                        <div class="attendance_header">
+                            <div>
+                                <img v-if="item.staff_avatar" :src="item.staff_avatar">
+                                <img v-else="" src="../../assets/img/head.png">
+                            </div>
+                        </div>
+                        <div class="attendance_content">
+                            <h5 style="margin-bottom: 15px;margin-top: 5px;font-weight: bold;color: #333">
+                                <span>{{item.staff_name}}</span>
+                                <span class="pull-right">{{item.qrcode_time}}</span>
+                            </h5>
+                            <div>
+                                <span>{{item.staff_department}} - {{item.staff_position}}</span>
+                                <span class="pull-right">座位号&nbsp;
+                                    <span v-if="item.seat_number">{{item.seat_number}}</span>
+                                    <span v-else>暂无</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll_bar" style="height: 495px; background:#fff;overflow: auto;width: 100%"
+                     v-if="actual_num&&!signStatus">
+                    <div class="attendance" style="margin-bottom: 0;border-bottom: 1px solid #eee"
+                         v-for="item in signListReverse" v-if="item.qrcode_time&&item.status==1">
                         <div class="attendance_header">
                             <div>
                                 <img v-if="item.staff_avatar" :src="item.staff_avatar">
@@ -340,27 +374,30 @@
                 signList: [],
                 signInfoArray: [],
                 signInfo: {},
-                signInfoList:[],
-                signInfoLength : '',
+                signInfoList: [],
+                signInfoLength: '',
                 changeCount: false,
                 start_time: '',
                 interval: null,
-                isStart:false,
-                noStart:false,
-                isFinish : false,
-                starCount:false,
+                isStart: false,
+                noStart: false,
+                isFinish: false,
+                starCount: false,
+                signStatus : true,
+                signListReverse:[],
+                signListReverseLength:[],
 
             }
         },
         mounted(){
             this.getDictionary();
-            $('.mainContent').css({'height':window.innerHeight-30+'px','background':'#fff'});
-            window.onresize = function(){
-                $('.mainContent').css('height',window.innerHeight-30+'px');
-                if(window.innerHeight>950){
-                    $('.unAttendance_item_group').css('height','290px')
-                }else {
-                    $('.unAttendance_item_group').css('height','160px')
+            $('.mainContent').css({'height': window.innerHeight - 30 + 'px', 'background': '#fff'});
+            window.onresize = function () {
+                $('.mainContent').css('height', window.innerHeight - 30 + 'px');
+                if (window.innerHeight > 950) {
+                    $('.unAttendance_item_group').css('height', '290px')
+                } else {
+                    $('.unAttendance_item_group').css('height', '170px')
                 }
             };
         },
@@ -369,19 +406,22 @@
                 this.countDown();
             },
             starCount(val){
-                if(val){
-                    $('#meetingAdd').modal('show');
+                if (val) {
+                    $('#myModal').modal('show');
                 }
             },
             signInfoList(val){
-                if(val.length>0){
+                if (val.length > 0) {
                     this.carousel();
                 }
             },
             unActual_num(val){
-                if(val<1){
-                    $('#meetingAdd').modal('hide');
+                if (val < 1) {
+                    $('#myModal').modal('hide');
                 }
+            },
+            actual_num(val){
+                this.signListReverse = $.extend(true,[],this.detailInfo.attendee).reverse();
             }
         },
         methods: {
@@ -394,7 +434,7 @@
                     setInterval(() => {
                         this.getMeetingDetail();
                         this.searchAttendance();
-                    },2000);
+                    }, 2000);
 
                     setInterval(() => {
                         this.countDown();
@@ -404,50 +444,46 @@
             },
 
             carousel(){
-
-                this.signInfo ={};
+                this.signInfo = {};
                 this.signInfo = this.signInfoList[0];
                 new Promise((resolve, reject) => {
                     $('.visiting_card').css('right', '10px');
 
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         resolve('');
-                    },500);
+                    }, 500);
                 }).then((data) => {
                     new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            $('.visiting_card').css('right', '-430px');
-                            resolve('');
-                        }, 2000)
+                        if (this.signInfoList.length > 1) {
+                            setTimeout(() => {
+                                $('.visiting_card').css('right', '-430px');
+                                resolve('');
+                            }, 500)
+                        } else {
+                            setTimeout(() => {
+                                $('.visiting_card').css('right', '-430px');
+                                resolve('');
+                            }, 2000)
+                        }
 
-                    }).then((data) =>{
-                        setTimeout( ()=> {
-                            if(this.signInfoList.length>0){
-                                this.signInfoList.splice(0,1);
-                            }else {
-                                this.signInfoList =[];
+
+                    }).then((data) => {
+                        setTimeout(() => {
+                            if (this.signInfoList.length > 0) {
+                                this.signInfoList.splice(0, 1);
+                            } else {
+                                this.signInfoList = [];
                             }
-                        },500)
+                        }, 500)
                     })
                 })
             },
             searchAttendance(){
                 this.$http.get('oa/conference/sign/id/' + this.$route.query.meetingId).then((res) => {
                     if (res.data.code === '50080') {
-//                        this.signInfo = {};
                         res.data.data.forEach((item) => {
                             this.signInfoList.push(item)
                         });
-//                        this.signInfo = res.data.data[0];
-//                        $('.visiting_card').css('right', '10px');
-//                        new Promise((resolve, reject) => {
-//                            setTimeout(() => {
-//                                $('.visiting_card').css('right', '-430px');
-//                                resolve('clear');
-//                            }, 4000)
-//                        }).then((data) => {
-//
-//                        });
                     } else {
 
                     }
@@ -455,7 +491,7 @@
             },
             getMeetingDetail(){
                 this.$store.dispatch('hideLoading');
-                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId+/order/+1).then((res) => {
+                this.$http.get('oa/conference/conferenceread/id/' + this.$route.query.meetingId + /order/ + 1).then((res) => {
                     if (res.data.code === '50020') {
                         this.detailInfo = res.data.data;
                         this.start_time = res.data.data.start_time;
@@ -492,7 +528,7 @@
                         this.interval = setInterval(() => {
                             if (this.count < 1) {
                                 clearInterval(this.interval);
-                                $('#meetingAdd').modal('hide');
+                                $('#myModal').modal('hide');
                                 this.isStart = true;
                                 this.starCount = false;
                             } else {
@@ -502,17 +538,17 @@
                                 this.second = parseInt(this.count % 3600 % 60);
                             }
                         }, 1000);
-                    } else if(res.data.code === '50091'){
+                    } else if (res.data.code === '50091') {
                         this.isStart = true;
                         this.noStart = false;
                         this.isFinish = false;
                         this.starCount = false;
-                    }else if (res.data.code === '50092'){
+                    } else if (res.data.code === '50092') {
                         this.noStart = true;
                         this.isFinish = false;
                         this.isStart = false;
                         this.starCount = false;
-                    }else {
+                    } else {
                         this.isFinish = true;
                         this.isStart = false;
                         this.noStart = false;
@@ -521,11 +557,14 @@
                 });
             },
             fullScreen(){
-                let el =document.getElementById('content');
+                let el = document.getElementById('content');
                 let rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
                 if (typeof rfs !== "undefined" && rfs) {
                     rfs.call(el);
                 }
+            },
+            changeStatus(){
+                this.signStatus = !this.signStatus
             }
         }
     }
@@ -533,18 +572,21 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    body,html{
-        margin:0;
+    body, html {
+        margin: 0;
         padding: 0;
         width: 1920px;
         overflow: hidden;
     }
-    .nav h5{
+
+    .nav h5 {
         font-size: 16px;
     }
+
     .mainContent {
         box-shadow: 0 2px 6px 0 rgba(89, 77, 235, 0.2), 0 0 8px 0 rgba(90, 97, 235, 0.1);
     }
+
     .content_right {
         display: inline-block;
         background: #ffffff;
@@ -765,7 +807,7 @@
 
     .unAttendance_item_group {
         width: 100%;
-        height: 160px;
+        height: 170px;
         overflow: auto;
         margin: 15px 0;
         display: flex;
@@ -898,31 +940,70 @@
         right: 11px;
     }
 
+    /*模态框*/
+    .modal-content {
+        position: relative;
+        overflow: visible;
+    }
+
+    .modal-content .close {
+        width: 30px;
+        height: 30px;
+        background: #fff;
+        border: 1px solid #48969f;
+        opacity: 1;
+        color: #48969f;
+        text-align: center;
+        line-height: 25px;
+        z-index: 9999;
+        cursor: pointer;
+        border-radius: 50%;
+        position: absolute;
+        top: -12px;
+        right: -12px;
+    }
+
     .modal-body {
-        width: 400px;
-        height: 400px;
-        padding: 0;
+        width: 440px;
+        height: 440px;
+        padding-top: 20px;
     }
 
     .erWeiMa {
         padding: 20px;
         width: 280px;
         height: 280px;
-        margin:0 auto ;
+        margin: 0 auto;
         /*background: #efefef;*/
         background: url("../../assets/img/组22.png") no-repeat;
         background-size: 100% 100%;
     }
 
     .modal-dialog {
-        width: 400px;
-        height: 400px;
+        width: 440px;
+        height: 440px;
         position: absolute;
         top: 50%;
         left: 50%;
         margin: -200px 0 0 -200px;
     }
-    p{
+
+    p {
         font-size: 13px;
+    }
+
+    .has-switch span.switch-left {
+        background-color: #33c2dc;
+        color: #fff;
+    }
+    .has-switch label{
+        border: 4px solid #33c2dc;
+    }
+    .has-switch > div.switch-on label{
+        background-color: #0088cc;
+    }
+    .has-switch span{
+        font-size: 12px;
+        font-weight: 600;
     }
 </style>
