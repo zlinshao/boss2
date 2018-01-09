@@ -175,6 +175,11 @@ export default[
         component: Index
     },
     {
+        path: '/statistics',             //数据统计
+        name: 'statistics',
+        component: Statistics
+    },
+    {
         path: '/index',             //主页
         name: 'index',
         component: Index
