@@ -410,19 +410,19 @@
                                     <td>{{item.punish_year}}</td>
                                     <td>{{item.punish_vacancy}}</td>
                                     <td>
-                                        <span @click="cost_show(item.id)" v-if="isActive != item.id"
-                                              style="cursor: pointer;">
+                                        <!--<span @click="cost_show(item.id)" v-if="isActive != item.id"-->
+                                              <!--style="cursor: pointer;">-->
                                             {{item.medi_cost}}
-                                        </span>
-                                        <span v-if="isActive == item.id"
-                                              style="display: inline-block;min-width: 160px;position: relative;">
-                                            <input type="number" class="form-control" v-model="costStatus"
-                                                   @keyup="fruit"
-                                                   style="margin-bottom: 5px;">&nbsp;<span
-                                                style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>
-                                            <a class="btn btn-default btn-sm" @click.stop="cost_show('')">取消</a>
-                                            <a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>
-                                        </span>
+                                        <!--</span>-->
+                                        <!--<span v-if="isActive == item.id"-->
+                                              <!--style="display: inline-block;min-width: 160px;position: relative;">-->
+                                            <!--<input type="number" class="form-control" v-model="costStatus"-->
+                                                   <!--@keyup="fruit"-->
+                                                   <!--style="margin-bottom: 5px;">&nbsp;<span-->
+                                                <!--style="position: absolute;top: 8px;right: 5px;">×&nbsp;0.7&nbsp;=&nbsp;{{cost_fruit}}</span>-->
+                                            <!--<a class="btn btn-default btn-sm" @click.stop="cost_show('')">取消</a>-->
+                                            <!--<a class="btn btn-success btn-sm" @click="cost_save(item.id)">保存</a>-->
+                                        <!--</span>-->
                                     </td>
                                     <td>{{item.total_price}}</td>
                                     <td>
