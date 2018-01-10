@@ -761,6 +761,7 @@
                             this.search();
                             this.houseId = [];
                             this.contractSeleted = [];
+                            this.contractStatus = [];
                             this.info.success = res.data.msg;
                             //显示成功弹窗 ***
                             this.info.state_success = true;
