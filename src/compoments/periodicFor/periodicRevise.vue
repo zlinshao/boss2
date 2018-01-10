@@ -47,10 +47,10 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">充公人</label>
                                 <div class="col-lg-10">
-                                    <select v-model="confiscate" class="form-control" @change="commission">
+                                    <select v-model="commission_id" class="form-control" @change="commission">
                                         <option value="">请选择充公人</option>
-                                        <option :value="msg.collect_staff_id">{{msg.collect_staff_name}}</option>
-                                        <option :value="msg.rent_staff_id">{{msg.rent_staff_name}}</option>
+                                        <option :value="msg.collect_commission_id">{{msg.collect_staff_name}}</option>
+                                        <option :value="msg.rent_commission_id">{{msg.rent_staff_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,20 +108,14 @@
             }
         },
         methods: {
-
 //            充公单子
             commission (){
-//                if (this.confiscate !== '') {
-//                    if (this.msg.collect_staff_id !== this.confiscate) {
-//                        this.commission_id = this.msg.collect_commission_id;
-//                    } else if (this.msg.rent_staff_id !== this.confiscate) {
-//                        this.commission_id = this.msg.rent_commission_id;
-//                    }
-//                }
-                if (this.msg.collect_staff_id === this.confiscate) {
-                    this.commission_id = this.msg.collect_commission_id;
-                } else if (this.msg.rent_staff_id === this.confiscate) {
-                    this.commission_id = this.msg.rent_commission_id;
+                if (this.msg.collect_commission_id === this.commission_id) {
+                    this.confiscate = this.msg.collect_staff_id;
+                    console.log(this.msg.collect_staff_id);
+                } else if (this.msg.rent_commission_id === this.commission_id) {
+                    this.confiscate = this.msg.rent_staff_id;
+                    console.log(this.msg.rent_staff_id);
                 }
             },
 //            确定编辑
