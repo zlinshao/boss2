@@ -171,7 +171,7 @@
                             <i class="fa fa-rotate-left" style="padding-left: 3px;font-size: 16px;"></i>
                         </label>
 
-                        <div class="handle">待</div>
+                        <div class="handle" v-if="item.freeze == 1">待</div>
                     </td>
                     <td style="padding-right: 0">{{item.create_time}}</td>
                     <td style="padding-left: 0">
