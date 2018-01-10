@@ -135,7 +135,8 @@
                 <thead class="text-center">
                 <tr>
                     <th class="width80"></th>
-                    <th class="text-center width100">生成日期</th>
+                    <th class="text-center width100" style="padding-right: 0">生成日期</th>
+                    <th style="padding-left: 0"></th>
                     <th class="text-center width100">房屋地址</th>
                     <th class="text-center width80">收租状态</th>
                     <th class="text-center width80">收房月数</th>
@@ -151,14 +152,14 @@
                 <tr v-for="item in ach_create" :class="{'red': item.salary_candidate == 2}">
                     <td class="text-left">
                         <!--房东-->
-                        <label v-if="item.identity == 1 && item.salary_candidate != 2 && item.generate_time == null"
+                        <label v-if="item.identity == 1 && item.salary_candidate != 2"
                                :class="{'label_check':true,'c_on':col_pitch.indexOf(item.id) > -1,'c_off':col_pitch.indexOf(item.id)==-1}"
                                @click.prevent="pitchId(item.id, $event,item.identity)">
                             <input type="checkbox" class="pull-left"
                                    :checked="col_pitch.indexOf(item.id) > -1">
                         </label>
                         <!--租客-->
-                        <label v-if="item.identity == 2 && item.salary_candidate != 2 && item.generate_time == null"
+                        <label v-if="item.identity == 2 && item.salary_candidate != 2"
                                :class="{'label_check':true,'c_on':ren_pitch.indexOf(item.id) > -1,'c_off':ren_pitch.indexOf(item.id)==-1}"
                                @click.prevent="pitchId(item.id, $event,item.identity)">
                             <input type="checkbox" class="pull-left"
@@ -170,12 +171,14 @@
                             <i class="fa fa-rotate-left" style="padding-left: 3px;font-size: 16px;"></i>
                         </label>
 
-                        <label v-if="(item.identity != 1 || 2) && item.generate_time != null">
+                        <div class="handle">待</div>
+                    </td>
+                    <td style="padding-right: 0">{{item.create_time}}</td>
+                    <td style="padding-left: 0">
+                        <label v-if="(item.identity != 1 || 2) && item.generate_time != null" style="margin-top: 1px;float: right;">
                             <i class="fa fa-check-circle" style="font-size: 22px; color: #0EC641;"></i>
                         </label>
-                        <div class="handle" v-if="item.freeze == 1">待</div>
                     </td>
-                    <td>{{item.create_time}}</td>
                     <td>
                         {{item.address}}
                         <span v-if="item.related == 2" class="fa fa-home text-danger" style="cursor: pointer"
@@ -188,6 +191,7 @@
                         <span class="text-danger" v-if="item.mark_jt == 1">鸡腿包</span>
                         <span class="text-info" v-if="item.mark_cg == 1">已充公</span>
                     </td>
+
                     <td>{{dict.typical[item.typical]}}</td>
                     <td>{{item.months}}</td>
                     <td>{{item.pay_types}}</td>
