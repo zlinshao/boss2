@@ -142,7 +142,7 @@
                                     <label class="col-lg-2 col-sm-2 control-label">中介费</label>
                                     <div class="col-lg-10 iconic-input right">
                                         <input type="text" v-model="brokerage_fee" class="form-control" placeholder=""
-                                               @blur="allMoney">
+                                               @blur="allMoney" disabled>
                                     </div>
                                 </div>
 
