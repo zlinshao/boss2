@@ -783,7 +783,7 @@
                 if (val === 4) {
                     this.params.price = [this.starPrice, this.endPrice];
                 }
-                this.search(this.beforePage);
+                this.search(1);
                 $('#surplus').modal('hide');
             },
 
@@ -888,6 +888,7 @@
                         if (res.data.code === '18510') {
                             this.search(this.beforePage);
                             this.amount = '';
+                            this.isActive = '';
                             this.successMsg(res.data.msg);
                         } else {
                             this.errorMsg(res.data.msg);
