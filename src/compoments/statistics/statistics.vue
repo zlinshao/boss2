@@ -48,7 +48,13 @@
                 </div>
                 <div>
                     <span class="text-primary">最大收房中介费：</span>
-                    <span>{{collect_max.medi_cost}}</span>
+                    <span v-if="collect_max != '无'">{{collect_max.medi_cost}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大收房中介费：</span>
+                    <span v-if="collect_max != '无'">{{overtop.city}}&nbsp;>&nbsp;{{collect_max.detailed_address}}&nbsp;>&nbsp;{{collect_max.real_name}}</span>
+                    <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">总租房中介费：</span>
@@ -56,7 +62,13 @@
                 </div>
                 <div>
                     <span class="text-primary">最大租房中介费：</span>
-                    <span>{{rent_max.medi_cost}}</span>
+                    <span v-if="rent_max != '无'">{{rent_max.medi_cost}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大租房中介费：</span>
+                    <span v-if="rent_max != '无'">{{rent_max.city}}&nbsp;>&nbsp;{{rent_max.detailed_address}}&nbsp;>&nbsp;{{rent_max.real_name}}</span>
+                    <span v-else>无</span>
                 </div>
             </div>
             <div class="col-md-6 info">
@@ -66,7 +78,13 @@
                 </div>
                 <div>
                     <span class="text-primary">最大收房月数：</span>
-                    <span>{{months_max.months}}</span>
+                    <span v-if="months_max != '无'">{{months_max.months}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大收房月数：</span>
+                    <span v-if="months_max != '无'">{{months_max.city}}&nbsp;>&nbsp;{{months_max.detailed_address}}&nbsp;>&nbsp;{{months_max.real_name}}</span>
+                    <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">最高溢价：</span>
@@ -267,7 +285,6 @@
                         this.deal_date_avg = res.data.data;
                         this.months_max = res.data.data.months_max;
                     } else {
-                        this.months_max.months = '无';
                         this.deal_date_avg.months_avg = '无'
                     }
                 });
@@ -281,18 +298,9 @@
 //                中介费
                 this.$http.get('statistics/market/agency_fee?time=' + date).then((res) => {
                     if (res.data.code === '200130') {
-
                         this.agency_fee = res.data.data;
-                        if (res.data.data.collect_agency_fee_max !== '无') {
-                            this.collect_max = res.data.data.collect_agency_fee_max;
-                        } else {
-                            this.collect_max.medi_cost = '无'
-                        }
-                        if (res.data.data.rent_agency_fee_max !== '无') {
-                            this.rent_max = res.data.data.rent_agency_fee_max;
-                        } else {
-                            this.rent_max.medi_cost = '无'
-                        }
+                        this.collect_max = res.data.data.collect_agency_fee_max;
+                        this.rent_max = res.data.data.rent_agency_fee_max;
                     }
                 });
 //                离职人数
