@@ -289,7 +289,7 @@
                             this.collect_max.medi_cost = '无'
                         }
                         if (res.data.data.rent_agency_fee_max !== '无') {
-                            this.collect_max = res.data.data.rent_agency_fee_max;
+                            this.rent_max = res.data.data.rent_agency_fee_max;
                         } else {
                             this.rent_max.medi_cost = '无'
                         }
