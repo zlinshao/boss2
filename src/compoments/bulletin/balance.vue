@@ -82,6 +82,7 @@
                             <!--<input type="checkbox" class="pull-left" :checked="pitch.length == 12">-->
                             <!--</label>-->
                             <!--</th>-->
+                            <th></th>
                             <th class="text-center width100">喜报时间</th>
                             <th class="text-center width80">租房状态</th>
                             <th class="text-center width100">地址</th>
@@ -98,7 +99,7 @@
                             <th class="text-center width100">补齐时间</th>
                             <th class="text-center width80">开单人</th>
                             <th class="text-center width80">所属部门</th>
-                            <th class="text-center width80">备注</th>
+                            <th class="text-center width130">备注</th>
                             <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
@@ -109,6 +110,11 @@
                                        @click.prevent="changeIndex($event,item.id)">
                                     <input type="checkbox" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
+                            </td>
+                            <td>
+                                <span @click="historyTime" style="cursor: pointer;">
+                                    <i class="fa fa-clock-o" style="font-size: 20px;"></i>
+                                </span>
                             </td>
                             <td>2017-01-01</td>
                             <td>收房</td>
@@ -126,10 +132,10 @@
                             <td>2111-11-11</td>
                             <td>解兆飞</td>
                             <td>南京一区一组</td>
-                            <td>备注</td>
+                            <td></td>
                             <td>
                                 <router-link :to="{path:'/balanceDetail'}">
-                                详情
+                                    详情
                                 </router-link>
                             </td>
                         </tr>
@@ -149,18 +155,22 @@
         <Status :state='info'></Status>
 
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
+
+        <!--历史记录-->
+        <History></History>
     </div>
 </template>
 
 <script>
     import Page from '../common/page.vue'
     import Status from '../common/status.vue';
-    import STAFF from  '../common/oraganization.vue'
+    import STAFF from '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
+    import History from './detailed/history.vue'
 
     export default {
-        components: {Page, Status, STAFF, DatePicker},
-        data(){
+        components: {Page, Status, STAFF, DatePicker, History},
+        data() {
             return {
                 dict: {},                   //字典
                 pitch: [],                  //ID
@@ -200,26 +210,30 @@
                 },
             }
         },
-        mounted (){
+        mounted() {
             this.$http.get('core/customer/dict').then((res) => {
                 this.dict = res.data;
             })
         },
         methods: {
-            search(val){
+            // 历史记录
+            historyTime() {
+                $('#history').modal({dropback: 'static'});
+            },
+            search(val) {
 
             },
 //            日期筛选
-            getDate (date){
+            getDate(date) {
                 this.params.range = date;
             },
 //            部门搜索
-            select(){
+            select() {
                 $('.selectCustom:eq(0)').modal('show');
                 this.configure = {type: 'department', length: 1};
             },
 //            部门搜索
-            selectDateSend(val){
+            selectDateSend(val) {
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
@@ -231,7 +245,7 @@
                 this.search(1);
             },
 //            清空部门
-            clearSelect(){
+            clearSelect() {
                 this.params.department_id = [];
                 this.params.staff_id = [];
                 this.selected = [];
@@ -239,7 +253,7 @@
             },
 
 //            导出
-            leading_out (){
+            leading_out() {
                 this.$http.get('', {
                     params: this.params
                 }).then((res) => {
@@ -248,7 +262,7 @@
                 })
             },
 //            重置
-            close_ (){
+            close_() {
                 this.params.search = '';
                 this.params.department_id = '';
                 this.params.staff_id = '';
@@ -262,7 +276,7 @@
             },
 
 //             全选
-            chooseAll(ev){
+            chooseAll(ev) {
                 this.pitch = [];
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
@@ -273,7 +287,7 @@
                 }
             },
 //            复选框
-            changeIndex(ev, id){
+            changeIndex(ev, id) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -285,12 +299,12 @@
                     }
                 }
             },
-            successMsg(msg){    //成功提示信息
+            successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;
@@ -308,18 +322,21 @@
         -moz-border-radius: 24%;
         border-radius: 24%;
         color: #ffffff;
-        margin:0 0 3px 3px;
+        margin: 0 0 3px 3px;
     }
 
     .detail div span:first-of-type {
         background: #FF0000;
     }
+
     .detail div span:nth-of-type(2) {
         background: #0099CC;
     }
+
     .detail div span:nth-of-type(3) {
         background: #009933;
     }
+
     .detail div span:last-of-type {
         background: #FF9933;
     }

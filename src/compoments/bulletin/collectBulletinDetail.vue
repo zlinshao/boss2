@@ -130,7 +130,7 @@
                     </header>
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
-                            <span class="text-primary">喜报时间：</span>
+                            <span class="text-primary">报备时间：</span>
                             <span>2017-02-17</span>
                         </div>
                         <div class="col-sm-4">
@@ -157,7 +157,7 @@
                     </header>
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
-                            <span class="text-primary">喜报时间：</span>
+                            <span class="text-primary">报备时间：</span>
                             <span>2017-02-17</span>
                         </div>
                         <div class="col-sm-4">
@@ -200,7 +200,7 @@
                     </header>
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
-                            <span class="text-primary">喜报时间：</span>
+                            <span class="text-primary">报备时间：</span>
                             <span>2017-02-17</span>
                         </div>
                         <div class="col-sm-4">
@@ -222,6 +222,10 @@
                         <div class="col-sm-4">
                             <span class="text-primary">收款银行：</span>
                             <span>南京银行</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">收款人户名：</span>
+                            <span>赵梦涵</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">账户：</span>
@@ -317,6 +321,9 @@
 
     div.detail > div {
         margin: 12px 0;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
     }
 
     div.detail > div > span:first-child {

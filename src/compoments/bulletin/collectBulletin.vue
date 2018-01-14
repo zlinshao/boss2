@@ -82,13 +82,14 @@
                             <!--<input type="checkbox" class="pull-left" :checked="pitch.length == 12">-->
                             <!--</label>-->
                             <!--</th>-->
+                            <th></th>
                             <th class="text-center width100">喜报时间</th>
-                            <th class="text-center width80">收房状态</th>
+                            <th class="text-center width50">收房状态</th>
                             <th class="text-center width100">地址</th>
                             <th class="text-center width100">房型</th>
-                            <th class="text-center width80">收房类型</th>
-                            <th class="text-center width80">收房月数</th>
-                            <th class="text-center width80">空置期</th>
+                            <th class="text-center width50">收房类型</th>
+                            <th class="text-center width50">收房月数</th>
+                            <th class="text-center width50">空置期</th>
                             <th class="text-center width80">付款方式</th>
                             <th class="text-center width80">押金</th>
                             <th class="text-center width80">月单价</th>
@@ -98,7 +99,7 @@
                             <th class="text-center width150">账户</th>
                             <th class="text-center width80">开单人</th>
                             <th class="text-center width80">所属部门</th>
-                            <th class="text-center width80">备注</th>
+                            <th class="text-center width130">备注</th>
                             <th class="text-center width50">详情</th>
                         </tr>
                         </thead>
@@ -109,6 +110,11 @@
                                        @click.prevent="changeIndex($event,item.id)">
                                     <input type="checkbox" :checked="pitch.indexOf(item.id) > -1">
                                 </label>
+                            </td>
+                            <td>
+                                <span @click="historyTime" style="cursor: pointer;">
+                                    <i class="fa fa-clock-o" style="font-size: 20px;"></i>
+                                </span>
                             </td>
                             <td>2017-01-01</td>
                             <td>收房</td>
@@ -132,10 +138,17 @@
                             <td>999999999999999999</td>
                             <td>解兆飞</td>
                             <td>南京一区一组</td>
-                            <td>备注</td>
+                            <!--<td @click="look_tag(item.tags, item.customer.address,item.id)"-->
+                            <!--style="cursor: pointer;">-->
+                            <!--<span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">-->
+                            <!--<span style="color: #aaaaaa;font-size: 10px;">{{key.create_time}}</span><br>-->
+                            <!--{{key.content}}-->
+                            <!--</span>-->
+                            <!--</td>-->
+                            <td></td>
                             <td>
                                 <router-link :to="{path:'/collectBulletinDetail'}">
-                                详情
+                                    详情
                                 </router-link>
                             </td>
                         </tr>
@@ -158,19 +171,28 @@
 
         <!--炸单详情-->
         <FriedBill :dict="dict" :title="titles"></FriedBill>
+
+        <!--历史记录-->
+        <History></History>
+
+        <!--新增备注-->
+        <AddRemark @add="lookRemark" :remark="remark"></AddRemark>
     </div>
 </template>
 
 <script>
     import Page from '../common/page.vue'
     import Status from '../common/status.vue';
-    import STAFF from  '../common/oraganization.vue'
+    import STAFF from '../common/oraganization.vue'
     import DatePicker from '../common/datePicker.vue'
+    import History from './detailed/history.vue'
 
     import FriedBill from './detailed/friedBill.vue'            //炸单详情
+    import AddRemark from '../common/addRemark.vue'
+
     export default {
-        components: {Page, Status, STAFF, DatePicker, FriedBill},
-        data(){
+        components: {Page, Status, STAFF, DatePicker, FriedBill, History, AddRemark},
+        data() {
             return {
                 titles: '',                 //炸单/充公详情
                 dict: {},                   //字典
@@ -199,6 +221,14 @@
 
                 bulletin: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}],               //收房喜报
 
+                remark: {
+                    look_remark: [],                        //备注内容
+                    addRemark: '',                          //新增备注
+                    address_remark: '',                     //头部信息
+                    remark_id: '',                          //备注id
+                    urls: 'account/receivable/tag_v2/'      //新增接口
+                },
+
                 info: {
                     //成功状态 ***
                     state_success: false,
@@ -211,26 +241,30 @@
                 },
             }
         },
-        mounted (){
+        mounted() {
             this.$http.get('core/customer/dict').then((res) => {
                 this.dict = res.data;
             })
         },
         methods: {
-            search(val){
+            // 历史
+            historyTime() {
+                $('#history').modal({dropback: 'static'});
+            },
+            search(val) {
 
             },
 //            日期筛选
-            getDate (date){
+            getDate(date) {
                 this.params.range = date;
             },
 //            部门搜索
-            select(){
+            select() {
                 $('.selectCustom:eq(0)').modal('show');
                 this.configure = {type: 'department', length: 1};
             },
 //            部门搜索
-            selectDateSend(val){
+            selectDateSend(val) {
                 for (let i = 0; i < val.department.length; i++) {
                     this.selected.push(val.department[i].name);
                     this.params.department_id.push(val.department[i].id)
@@ -242,7 +276,7 @@
                 this.search(1);
             },
 //            清空部门
-            clearSelect(){
+            clearSelect() {
                 this.params.department_id = [];
                 this.params.staff_id = [];
                 this.selected = [];
@@ -250,7 +284,7 @@
             },
 
 //            导出
-            leading_out (){
+            leading_out() {
                 this.$http.get('', {
                     params: this.params
                 }).then((res) => {
@@ -259,7 +293,7 @@
                 })
             },
 //            重置
-            close_ (){
+            close_() {
                 this.params.search = '';
                 this.params.department_id = '';
                 this.params.staff_id = '';
@@ -272,8 +306,19 @@
                 this.search(1);
             },
 
+//            查看备注
+            look_tag(val, urls, id) {
+                this.remark.look_remark = val;
+                this.remark.address_remark = urls;
+                this.remark.remark_id = id;
+                $('#addRemarks').modal({backdrop: 'static'});    //空白处模态框不消失
+            },
+            lookRemark() {
+                this.search(this.params.page);
+            },
+
 //             全选
-            chooseAll(ev){
+            chooseAll(ev) {
                 this.pitch = [];
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
@@ -284,7 +329,7 @@
                 }
             },
 //            复选框
-            changeIndex(ev, id){
+            changeIndex(ev, id) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
@@ -297,7 +342,7 @@
                 }
             },
 //            炸单
-            friedBill (val){
+            friedBill(val) {
                 if (val === 1) {
                     this.titles = '炸单详情';
                 } else if (val === 2) {
@@ -307,12 +352,12 @@
                 }
                 $('#friedBill').modal({backdrop: 'static'});
             },
-            successMsg(msg){    //成功提示信息
+            successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){      //失败提示信息
+            errorMsg(msg) {      //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***
                 this.info.state_error = true;
@@ -330,15 +375,17 @@
         -moz-border-radius: 24%;
         border-radius: 24%;
         color: #ffffff;
-        margin:0 0 3px 3px;
+        margin: 0 0 3px 3px;
     }
 
     .detail div span:first-of-type {
         background: #FF0000;
     }
+
     .detail div span:nth-of-type(2) {
         background: #0099CC;
     }
+
     .detail div span:last-of-type {
         background: #009933;
     }
