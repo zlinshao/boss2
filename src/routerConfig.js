@@ -162,6 +162,8 @@ import ClientPool from './compoments/client/clientPool.vue'
 // 喜报
 import CollectBulletin from './compoments/bulletin/collectBulletin.vue'
 import RentBulletin from './compoments/bulletin/rentBulletin.vue'
+import Balance from './compoments/bulletin/balance.vue'
+import Special from './compoments/bulletin/special.vue'
 
 
 export default[
@@ -185,14 +187,24 @@ export default[
         component: Index
     },
     {
-        path: '/collectBulletin',             //收房喜报
+        path: '/collectBulletin',           //收房喜报
         name: 'collectBulletin',
         component: CollectBulletin
     },
     {
-        path: '/rentBulletin',             //租房喜报
+        path: '/rentBulletin',              //租房喜报
         name: 'rentBulletin',
         component: RentBulletin
+    },
+    {
+        path: '/balance',                   //尾款报备
+        name: 'balance',
+        component: Balance
+    },
+    {
+        path: '/special',                   //尾款报备
+        name: 'special',
+        component: Special
     },
     {
         path: '/organization',             //业绩生成
