@@ -44,7 +44,8 @@
                 </div>
                 <div>
                     <span class="text-primary">总收房中介费：</span>
-                    <span>{{agency_fee.collect_agency_fee}}</span>
+                    <span v-if="agency_fee != '无'">{{agency_fee.collect_agency_fee}}</span>
+                    <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">最大收房中介费：</span>
@@ -53,12 +54,13 @@
                 </div>
                 <div>
                     <span class="text-primary">最大收房中介费：</span>
-                    <span v-if="collect_max != '无'">{{overtop.city}}&nbsp;>&nbsp;{{collect_max.detailed_address}}&nbsp;>&nbsp;{{collect_max.real_name}}</span>
+                    <span v-if="collect_max != '无'">{{collect_max.city}}&nbsp;>&nbsp;{{collect_max.detailed_address}}&nbsp;>&nbsp;{{collect_max.real_name}}</span>
                     <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">总租房中介费：</span>
-                    <span>{{agency_fee.rent_agency_fee}}</span>
+                    <span v-if="agency_fee != '无'">{{agency_fee.rent_agency_fee}}</span>
+                    <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">最大租房中介费：</span>
@@ -74,25 +76,28 @@
             <div class="col-md-6 info">
                 <div>
                     <span class="text-primary">平均收房月数：</span>
-                    <span>{{deal_date_avg.months_avg}}</span>
-                </div>
-                <div>
-                    <span class="text-primary">最大收房月数：</span>
-                    <span v-if="months_max != '无'">{{months_max.months}}</span>
+                    <span v-if="deal_date_avg != '无'">{{deal_date_avg.months_avg}}</span>
                     <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">最大收房月数：</span>
-                    <span v-if="months_max != '无'">{{months_max.city}}&nbsp;>&nbsp;{{months_max.detailed_address}}&nbsp;>&nbsp;{{months_max.real_name}}</span>
+                    <span v-if="deal_date_avg != '无'">{{months_max.months}}</span>
+                    <span v-else>无</span>
+                </div>
+                <div>
+                    <span class="text-primary">最大收房月数：</span>
+                    <span v-if="deal_date_avg != '无'">{{months_max.city}}&nbsp;>&nbsp;{{months_max.detailed_address}}&nbsp;>&nbsp;{{months_max.real_name}}</span>
                     <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">最高溢价：</span>
-                    <span>{{differences.price_differences}}</span>
+                    <span v-if="differences != '无'">{{differences.price_differences}}</span>
+                    <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">平均溢价：</span>
-                    <span>{{number_premium.price_differences_avg}}</span>
+                    <span v-if="number_premium != '无'">{{number_premium.price_differences_avg}}</span>
+                    <span v-else>无</span>
                 </div>
                 <div>
                     <span class="text-primary">最高溢价收：</span>
@@ -285,7 +290,7 @@
                         this.deal_date_avg = res.data.data;
                         this.months_max = res.data.data.months_max;
                     } else {
-                        this.deal_date_avg.months_avg = '无'
+                        this.deal_date_avg = '无'
                     }
                 });
 //                平均溢价
@@ -293,6 +298,9 @@
                     if (res.data.code === '200120') {
                         this.number_premium = res.data.data;
                         this.differences = res.data.data.price_differences_max;
+                    }else{
+                        this.differences = '无';
+                        this.number_premium = '无';
                     }
                 });
 //                中介费
@@ -301,6 +309,8 @@
                         this.agency_fee = res.data.data;
                         this.collect_max = res.data.data.collect_agency_fee_max;
                         this.rent_max = res.data.data.rent_agency_fee_max;
+                    }else{
+                        this.agency_fee = '无';
                     }
                 });
 //                离职人数

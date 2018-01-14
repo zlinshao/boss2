@@ -339,10 +339,7 @@
     .detail div span:nth-of-type(2) {
         background: #0099CC;
     }
-    .detail div span:nth-of-type(3) {
-        background: #009933;
-    }
     .detail div span:last-of-type {
-        background: #FF9933;
+        background: #009933;
     }
 </style>
