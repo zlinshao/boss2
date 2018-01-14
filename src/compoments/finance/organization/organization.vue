@@ -46,7 +46,7 @@
                         <h4 class="modal-title">提示信息</h4>
                     </div>
                     <div class="modal-body">
-                        <h5>确定生成&nbsp;{{msg.time}}&nbsp;的业绩吗？</h5>
+                        <h5>确定生成&nbsp;{{msg.time}}月份&nbsp;的业绩吗？</h5>
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
