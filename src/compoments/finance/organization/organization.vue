@@ -23,9 +23,8 @@
                                 </select>
                             </div>
                             <div class="pull-right" style="margin-right: 6px;">
-                                <button class="btn btn-success" @click="create_generate">生成</button>
+                                <button class="btn btn-success" @click="create_">生成</button>
                             </div>
-
                         </h5>
                         <vue-ztree :list.sync='departmentList' :func='departmentClick'
                                    :contextmenu='rightClick' :is-open='true'>
@@ -35,6 +34,25 @@
             </div>
             <div class="col-md-9">
                 <AchievementCreate :msg="msg" :scope_time="scope_time"></AchievementCreate>
+            </div>
+        </div>
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="generate">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>确定生成&nbsp;{{msg.time}}&nbsp;的业绩吗？</h5>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button data-dismiss="modal" class="btn btn-default btn-md">取消</button>
+                        <button class="btn btn-primary btn-md" @click="create_generate">确认</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!--编辑部门-->
@@ -120,6 +138,9 @@
                     this.scope_time = res.data.data[0] + 'to' + res.data.data[1];
                 });
             },
+            create_ (){
+                $('#generate').modal({backdrop: 'static'});
+            },
 //            生成业绩
             create_generate (){
                 this.$http.post('achv/commission/generate', {
@@ -128,6 +149,7 @@
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         this.successMsg(res.data.msg);
+                        $('#generate').modal('hide');
                     } else {
                         this.errorMsg(res.data.msg);
                     }
