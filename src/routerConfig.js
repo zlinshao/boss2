@@ -90,7 +90,7 @@ import Country from './compoments/common/country.vue'                           
 import CheckIn from './compoments/checkIn/checkIn.vue'                                          //定位签到
 
 // import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'                 //收房报备
-// import ReopetedCollectDetail from './compoments/reported/collect/collectDetail.vue'             //收房报备详情
+// import ReopetedCollectDetail from './compoments/reported/collect/collectBulletinDetail.vue'             //收房报备详情
 
 // import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'                    //租房报备
 // import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'                      // 租房报备详情
@@ -170,28 +170,28 @@ import ClientPool from './compoments/client/clientPool.vue'
 
 // 喜报
 import CollectBulletin from './compoments/bulletin/collectBulletin.vue'
+import CollectBulletinDetail from './compoments/bulletin/collectBulletinDetail.vue'
 import RentBulletin from './compoments/bulletin/rentBulletin.vue'
+import RentBulletinDetail from './compoments/bulletin/rentBulletinDetail.vue'
 import Balance from './compoments/bulletin/balance.vue'
+import BalanceDetail from './compoments/bulletin/balanceDetail.vue'
 import Special from './compoments/bulletin/special.vue'
+import SpecialDetail from './compoments/bulletin/specialDetail.vue'
 
 
 export default[
     {
-        path: '/',                  //重定向主页
+        path: '/',                          //重定向主页
         redirect: '/index',
     },
+
     {
-        path: '/index',             //主页
-        name: 'index',
-        component: Index
-    },
-    {
-        path: '/statistics',             //数据统计
+        path: '/statistics',                //数据统计
         name: 'statistics',
         component: Statistics
     },
     {
-        path: '/index',             //主页
+        path: '/index',                     //主页
         name: 'index',
         component: Index
     },
@@ -201,9 +201,19 @@ export default[
         component: CollectBulletin
     },
     {
+        path: '/collectBulletinDetail',     //收房喜报详情
+        name: 'collectBulletinDetail',
+        component: CollectBulletinDetail
+    },
+    {
         path: '/rentBulletin',              //租房喜报
         name: 'rentBulletin',
         component: RentBulletin
+    },
+    {
+        path: '/rentBulletinDetail',       //租房喜报详情
+        name: 'rentBulletinDetail',
+        component: RentBulletinDetail
     },
     {
         path: '/balance',                   //尾款报备
@@ -211,17 +221,27 @@ export default[
         component: Balance
     },
     {
+        path: '/balanceDetail',                   //尾款报备
+        name: 'balanceDetail',
+        component: BalanceDetail
+    },
+    {
         path: '/special',                   //尾款报备
         name: 'special',
         component: Special
     },
     {
-        path: '/organization',             //业绩生成
+        path: '/specialDetail',                   //尾款报备
+        name: 'specialDetail',
+        component: SpecialDetail
+    },
+    {
+        path: '/organization',              //业绩生成
         name: 'organization',
         component: Organization
     },
     {
-        path: '/power',             //权限管理
+        path: '/power',                     //权限管理
         name: 'Power',
         component: Power
     },

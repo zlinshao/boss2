@@ -118,9 +118,9 @@
                             <td>南京一区一组</td>
                             <td>备注</td>
                             <td>
-                                <!--<router-link :to="{path:'/'}">-->
+                                <router-link :to="{path:'/specialDetail'}">
                                 详情
-                                <!--</router-link>-->
+                                </router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
