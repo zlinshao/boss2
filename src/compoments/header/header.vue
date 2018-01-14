@@ -457,6 +457,16 @@
                                     <!--<span>租房喜报</span>-->
                                 <!--</router-link>-->
                             <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/balance">-->
+                                    <!--<span>尾款报备</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/special">-->
+                                    <!--<span>特殊情况报备</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
                         <!--</ul>-->
                     <!--</li>-->
 

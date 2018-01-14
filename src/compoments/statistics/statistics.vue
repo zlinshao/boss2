@@ -9,7 +9,7 @@
                             <option value="day">最近八天</option>
                         </select>
                     </div>
-                    <div class="padd">
+                    <div class="padd" v-if="isSuper">
                         <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                     @sendDate="getDate"></DatePicker>
                     </div>
@@ -17,7 +17,7 @@
             </div>
         </section>
 
-        <div class="col-md-12 tongji">
+        <div class="col-md-12 tongji" v-if="isSuper">
             <div class="col-md-6 info" style="padding: 0">
                 <div>
                     <span class="text-primary">最大空置期天数：</span>
