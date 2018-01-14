@@ -69,14 +69,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">月单价</label>
+                                        <label class="col-sm-2 control-label">月单价111</label>
                                         <div class="col-sm-10" :class="{'padding0':prices.length > 1}">
                                             <div v-if="prices.length == 1" v-for="(key,index) in prices">
-                                                <input type="text" class="form-control" v-model="prices[index]" :value="key">
+                                                <input type="text" class="form-control" v-model="prices[index]">
                                             </div>
 
                                             <div v-if="prices.length > 1" v-for="(key,index) in prices" class="col-sm-6">
-                                                <input type="text" class="form-control" v-model="prices[index]" :value="key">
+                                                <input type="text" class="form-control" v-model="prices[index]">
                                             </div>
                                         </div>
                                     </div>
