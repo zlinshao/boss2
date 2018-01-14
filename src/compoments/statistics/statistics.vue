@@ -9,7 +9,7 @@
                             <option value="day">最近八天</option>
                         </select>
                     </div>
-                    <div class="padd" v-if="isSuper">
+                    <div class="padd">
                         <DatePicker :dateConfigure="dateConfigure" :currentDate="currentDate"
                                     @sendDate="getDate"></DatePicker>
                     </div>
@@ -17,7 +17,7 @@
             </div>
         </section>
 
-        <div class="col-md-12" v-if="isSuper">
+        <div class="col-md-12 tongji">
             <div class="col-md-6 info" style="padding: 0">
                 <div>
                     <span class="text-primary">最大空置期天数：</span>
@@ -256,7 +256,7 @@
 //                    最大空置期天数
                         this.deal_date_max = res.data.data.deal_date_max;
                         this.overtop = res.data.data.deal_date_overtop_max;
-                    }else{
+                    } else {
                         this.vacancy_period.deal_date_avg = '无';
                         this.vacancy_period.deal_date_overtop_avg = '无';
                     }
@@ -266,8 +266,9 @@
                     if (res.data.code === '200110') {
                         this.deal_date_avg = res.data.data;
                         this.months_max = res.data.data.months_max;
-                    }else{
-                        this.months_max.months = '无'
+                    } else {
+                        this.months_max.months = '无';
+                        this.deal_date_avg.months_avg = '无'
                     }
                 });
 //                平均溢价
@@ -296,17 +297,17 @@
                 });
 //                离职人数
                 this.$http.get('statistics/Manager/dismiss_count?time=' + date).then((res) => {
-                    if(res.data.code === '10020'){
+                    if (res.data.code === '10020') {
                         this.dis_count = res.data.data;
-                    }else{
+                    } else {
                         this.dis_count.dismiss_count = '无'
                     }
                 });
 //                入职总人数
                 this.$http.get('statistics/Manager/enroll_count?time=' + date).then((res) => {
-                    if(res.data.code === '10030'){
+                    if (res.data.code === '10030') {
                         this.enr_count = res.data.data;
-                    }else {
+                    } else {
                         this.enr_count.enroll_count = '无'
                     }
                 });
@@ -1151,5 +1152,12 @@
         padding-right: 20px;
         text-align: right;
         min-width: 130px;
+    }
+
+    .tongji {
+        background: #ffffff;
+        padding: 30px 0 10px 36px;
+        margin-bottom: 20px;
+        border-radius: 6px;
     }
 </style>
