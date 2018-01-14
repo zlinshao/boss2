@@ -147,7 +147,7 @@
                     month: this.msg.time,
                     rank: this.msg.period,
                 }).then((res) => {
-                    if (res.data.code === '70000') {
+                    if (res.data.code === '70010') {
                         this.successMsg(res.data.msg);
                         $('#generate').modal('hide');
                     } else {
