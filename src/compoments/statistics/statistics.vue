@@ -82,7 +82,7 @@
                     <span v-else>无</span>
                 </div>
                 <div>
-                    <span class="text-primary">总租房中介费：</span>
+                    <span class="text-primary">累计租房中介费：</span>
                     <span v-if="agency_fee != '无'">{{agency_fee.rent_agency_fee}}</span>
                     <span v-else>无</span>
                 </div>
