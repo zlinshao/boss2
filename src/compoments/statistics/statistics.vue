@@ -50,7 +50,7 @@
                     <span v-else>无</span>
                 </div>
                 <div>
-                    <span class="text-primary">超出空置期房间数量：</span>
+                    <span class="text-primary">超出空置期房屋数量：</span>
                     <span v-if="vacancy_period != '无'">{{vacancy_period.deal_date_overtop_count}}</span>
                     <span v-else>无</span>
                 </div>
@@ -1178,10 +1178,12 @@
         height: 100%;
     }
 
-    .info > div {
+    div.info > div {
         margin-bottom: 20px;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
     }
-
     .info > div > span:first-child {
         display: inline-block;
         padding-right: 20px;
