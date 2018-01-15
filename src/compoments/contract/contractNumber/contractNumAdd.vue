@@ -516,23 +516,23 @@
             },
 
             setNum(num){
-                switch (parseInt(num)){
-                    case 1 :
-                        // 收房
-                        this.collect_num = this.collect_num.replace(/[^\d]/g,'');
-                        if (parseInt(this.collect_num)>30){
-                            this.collect_num = '30';
-                        }
-//                        this.setMax(this.collect_num);
-                        break;
-                    case 2 :
-                        // 租房
-                        this.rent_num = this.rent_num.replace(/[^\d]/g,'');
-                        if (parseInt(this.rent_num)>30){
-                            this.rent_num = '30';
-                        }
-//                        this.setMax(this.rent_num);
-                }
+//                switch (parseInt(num)){
+//                    case 1 :
+//                        // 收房
+//                        this.collect_num = this.collect_num.replace(/[^\d]/g,'');
+//                        if (parseInt(this.collect_num)>30){
+//                            this.collect_num = '30';
+//                        }
+////                        this.setMax(this.collect_num);
+//                        break;
+//                    case 2 :
+//                        // 租房
+//                        this.rent_num = this.rent_num.replace(/[^\d]/g,'');
+//                        if (parseInt(this.rent_num)>30){
+//                            this.rent_num = '30';
+//                        }
+////                        this.setMax(this.rent_num);
+//                }
             },
 //            上缴合同数 租
             turn_in_rent (){
