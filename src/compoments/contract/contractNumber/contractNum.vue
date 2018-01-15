@@ -428,7 +428,7 @@
                         </button>
                         <h4 class="modal-title">提示</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body roll" style="overflow: auto;max-height: 500px">
                         <div class="panel-body">
                             <div class="form-group clearFix remainContract" style="font-size: 15px">
                                 <!--<div class="col-sm-6" v-for="item in remainContract.contract_num" style="padding-bottom: 6px">
