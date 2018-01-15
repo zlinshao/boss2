@@ -18,7 +18,6 @@
                 </div>
             </div>
         </div>
-
         <div class="mainContent row" style="margin: 0">
             <!--名片-->
             <div class='visiting_card'>
@@ -104,7 +103,7 @@
                 </div>
                 <!--主体-->
                 <div class="content_right_middle">
-                    <div class="two-dimension_code" v-if="unActual_num&&!starCount">
+                    <div class="two-dimension_code" v-if="unActual_num&&!starCount || isTwoShow">
                         <div style="padding: 10px;cursor: pointer" data-toggle="modal" data-target="#myModal">
                             <img style="width: 230px;height: 230px" :src="detailInfo.qrcode_pic_url" alt="">
                         </div>
@@ -147,7 +146,7 @@
                             </div>
                             <div>
                                 <div>主持人</div>
-                                <div>{{detailInfo.compere_name}}</div>
+                                <div>{{ detailInfo.compere_name}}</div>
                             </div>
                             <div>
                                 <div>会议记录</div>
@@ -386,7 +385,7 @@
                 signStatus : true,
                 signListReverse:[],
                 signListReverseLength:[],
-
+                isTwoShow : false,
             }
         },
         mounted(){
@@ -400,6 +399,11 @@
                     $('.unAttendance_item_group').css('height', '170px')
                 }
             };
+            $('#myModal').on('hidden.bs.modal', (e) => {
+               this.isTwoShow =true;
+            }).on('shown.bs.modal', (e) => {
+                this.isTwoShow =false;
+            })
         },
         watch: {
             start_time(val, oldValue){
