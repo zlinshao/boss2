@@ -168,7 +168,7 @@
                         <div class="lead">
 
                             <p style="padding:0 15px;font-size: 13px;color: #999;">与会领导</p>
-                            <div class="lead_item" v-for="item in detailInfo.attendee" v-if="item.is_leader == 1">
+                            <div class="lead_item" v-for="item in leaderList" v-if="item.is_leader == 1">
                                 <div>
                                     <div class="lead_item_head">
                                         <img v-if="item.staff_avatar" :src="item.staff_avatar"
@@ -371,6 +371,7 @@
                 actual_num: '',
                 unActual_num: '',
                 signList: [],
+                leaderList:[],        //  领导列表
                 signInfoArray: [],
                 signInfo: {},
                 signInfoList: [],
@@ -502,8 +503,12 @@
                         let actual = [];
                         let unActual = [];
                         this.signList = [];
+                        this.leaderList = [];
                         if (this.detailInfo.attendee) {
                             this.detailInfo.attendee.forEach((item) => {
+                                if(item.is_leader == 1){
+                                    this.leaderList.push(item);
+                                }
                                 if (item.qrcode_time) {
                                     actual.push(item);
                                     if (item.is_leader == 2) {
@@ -515,9 +520,28 @@
                             });
                             this.actual_num = actual.length;
                             this.unActual_num = unActual.length;
+                            this.leaderList = this.quickSort(this.leaderList);
                         }
                     }
                 });
+            },
+
+            quickSort(arr){
+                if(arr.length<=1){//如果数组只有一个数，就直接返回；
+                    return arr;
+                }
+                let num=Math.floor(arr.length/2);//找到中间数的索引值，如果是浮点数，则向下取整
+                let newValue = arr.splice(num,1);//找到中间数的值
+                let left=[],right=[];
+
+                for(let i=0;i<arr.length;i++){
+                    if(Number(arr[i].leader_sort)  < Number(newValue[0].leader_sort)){
+                        left.push(arr[i]);//基准点的左边的数传到左边数组
+                    }else{
+                        right.push(arr[i]);//基准点的右边的数传到右边数组
+                    }
+                }
+                return this.quickSort(left).concat(newValue,this.quickSort(right));//递归不断重复比较
             },
 
             countDown(){
