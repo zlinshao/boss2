@@ -11,7 +11,7 @@
 
                         <div class="input-group">
                             <select class="form-control" v-model="params.mark" @change="search(1)">
-                                <option value="0">全部1</option>
+                                <option value="0">全部</option>
                                 <option value="1">炸单</option>
                                 <option value="2">调房</option>
                                 <option value="3">充公</option>
@@ -99,7 +99,7 @@
                             <th class="text-center width80">定金</th>
                             <th class="text-center width80">月单价</th>
                             <th class="text-center width80">总金额</th>
-                            <th class="text-center width80">签合同日期</th>
+                            <th class="text-center width100">签合同日期</th>
                             <th class="text-center width100">尾款补齐时间</th>
                             <th class="text-center width80">客户来源</th>
                             <th class="text-center width80">开单人</th>
@@ -109,7 +109,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="(item,index) in bulletin">
+                        <tr class="text-center" v-for="(item,index) in bulletin" :class="{'color_red': item.lose == 1}">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1, 'c_off':pitch.indexOf(item.id) == -1}"
                                        @click.prevent="changeIndex($event,item.id)">
@@ -121,27 +121,34 @@
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
-                            <td>{{item.history_time}}</td>
-                            <td>{{item.cate_id}}</td>
+                            <td>{{item.bulletin_time}}</td>
+                            <td>
+                                <span v-if="item.cate_id == 1">出租</span>
+                                <span v-if="item.cate_id == 2">续租</span>
+                                <span v-if="item.cate_id == 3">个人转租</span>
+                                <span v-if="item.cate_id == 4">公司出租</span>
+                            </td>
                             <td class="detail">
                                 <div>{{item.detailed_address}}
-                                    <span @click="friedBill(1)">炸</span>
-                                    <span @click="friedBill(2)">充</span>
-                                    <span @click="friedBill(3)">款</span>
-                                    <span @click="friedBill(4)">调</span>
+                                    <span v-if="item.lose == 1" @click="friedBill(1)">炸</span>
+                                    <span v-if="item.refund == 1" @click="friedBill(3)">款</span>
+                                    <span v-if="item.redistribution == 1" @click="friedBill(4)">调</span>
                                 </div>
                             </td>
-                            <td>三室一厅一卫</td>
-                            <td>12</td>
-                            <td>月付</td>
-                            <td>2000</td>
+                            <td>{{item.rooms_together}}</td>
+                            <td>{{item.rent_month}}</td>
+                            <td>{{item.pay_way_together}}</td>
+                            <td>{{item.deposit_or_full}}</td>
                             <td>4000</td>
-                            <td>10000</td>
-                            <td>2018-01-01</td>
-                            <td>2017-01-01</td>
-                            <td>个人</td>
-                            <td>解兆飞</td>
-                            <td>南京一区一组</td>
+                            <td>{{item.total_amount}}</td>
+                            <td>{{item.sign_contract_time}}</td>
+                            <td>{{item.retainage_time}}</td>
+                            <td>
+                                <span v-if="item.customer_from == 1">个人</span>
+                                <span v-if="item.customer_from == 2">中介</span>
+                            </td>
+                            <td>{{item.sname}}</td>
+                            <td>{{item.dname}}</td>
                             <td></td>
                             <td>
                                 <router-link :to="{path:'/rentBulletinDetail',query:{id: 1}}">
@@ -230,10 +237,11 @@
             this.$http.get('core/customer/dict').then((res) => {
                 this.dict = res.data;
             });
-            this.rent();
+            this.rent(1);
         },
         methods: {
-            rent() {
+            rent(val) {
+                this.params.page = val;
                 this.$http.get('bulletin/rent/rentBulletinIndex', {
                     params: this.params,
                 }).then((res) => {
@@ -241,7 +249,7 @@
                         this.isShow = false;
                         this.paging = res.data.data.pages;
                         this.bulletin = res.data.data.current_page;
-                    }else{
+                    } else {
                         this.isShow = true;
                         this.paging = '';
                         this.bulletin = [];
@@ -254,11 +262,12 @@
                 $('#history').modal({dropback: 'static'});
             },
             search(val) {
-
+                this.rent(val);
             },
 //            日期筛选
             getDate(date) {
                 this.params.date_range = date;
+                this.search(1);
             },
 //            部门搜索
             select() {
@@ -370,6 +379,10 @@
         border-radius: 24%;
         color: #ffffff;
         margin: 0 0 3px 3px;
+    }
+
+    .color_red {
+        color: #E43;
     }
 
     .detail div span:first-of-type {
