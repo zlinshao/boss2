@@ -59,10 +59,10 @@
                             <h5><a>已选中&nbsp;{{pitch.length}}&nbsp;项</a></h5>
                         </li>
                         <li>
-                            <h5><a><i class="fa fa-book"></i>&nbsp;增加备注</a></h5>
+                            <h5><a><i class="fa fa-pencil"></i>&nbsp;标记</a></h5>
                         </li>
                         <li>
-                            <h5><a><i class="fa fa-pencil"></i>&nbsp;标记</a></h5>
+                            <h5><a><i class="fa fa-times"></i>&nbsp;取消标记</a></h5>
                         </li>
                     </ul>
                 </div>
@@ -147,13 +147,13 @@
                             <!--</td>-->
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/collectBulletinDetail'}">
+                                <router-link :to="{path:'/collectBulletinDetail',query:{id: 1}}">
                                     详情
                                 </router-link>
                             </td>
                         </tr>
                         <tr class="text-center" v-show="isShow">
-                            <td colspan="19" class="text-center text-muted">
+                            <td colspan="20" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
                         </tr>
@@ -295,9 +295,9 @@
 //            重置
             close_() {
                 this.params.search = '';
-                this.params.department_id = '';
-                this.params.staff_id = '';
-                this.params.page = '';
+                this.params.department_id = [];
+                this.params.staff_id = [];
+                this.params.page = 1;
                 this.params.status1 = '';
                 this.params.status2 = '';
                 this.selected = [];
