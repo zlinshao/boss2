@@ -84,7 +84,7 @@
 
 
                 <div>
-                    <span class="text-primary">最高收房中介费</span>
+                    <span class="text-primary">总收房中介费</span>
                     <span v-if="agency_fee != '无'">{{agency_fee.collect_agency_fee}}</span>
                     <span v-else>无</span>
                 </div>
@@ -104,7 +104,7 @@
                 </div>
 
                 <div>
-                    <span class="text-primary">最高租房中介费</span>
+                    <span class="text-primary">总租房中介费</span>
                     <span v-if="agency_fee != '无'">{{agency_fee.rent_agency_fee}}</span>
                     <span v-else>无</span>
                 </div>
@@ -233,7 +233,7 @@
                 </div>
 
                 <div>
-                    <span class="text-primary">正房屋数量</span>
+                    <span class="text-primary">正溢价房屋数量</span>
                     <span v-if="number_premium != '无'">
                         {{number_premium.premium_count}}
                     </span>
