@@ -441,34 +441,34 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
 
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-money"></i>
-                            <span>喜报管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li>
-                                <router-link to="/collectBulletin">
-                                    <span>收房喜报</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/rentBulletin">
-                                    <span>租房喜报</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/balance">
-                                    <span>尾款报备</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/special">
-                                    <span>特殊情况报备</span>
-                                </router-link>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="sub-menu">-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="fa fa-money"></i>-->
+                            <!--<span>喜报管理</span>-->
+                        <!--</a>-->
+                        <!--<ul class="sub">-->
+                            <!--<li>-->
+                                <!--<router-link to="/collectBulletin">-->
+                                    <!--<span>收房喜报</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/rentBulletin">-->
+                                    <!--<span>租房喜报</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/balance">-->
+                                    <!--<span>尾款报备</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<router-link to="/special">-->
+                                    <!--<span>特殊情况报备</span>-->
+                                <!--</router-link>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
 
                     <li class="sub-menu"
                         v-show="(simulate.indexOf('Revenue/Customer') > -1||simulate.indexOf('Customer/candidate') > -1||simulate.indexOf('Account/manage') > -1||simulate.indexOf('Account/subject') > -1||simulate.indexOf('Account/payable') > -1||simulate.indexOf('Account/receivable') > -1||simulate.indexOf('Revenue/account_xable') > -1||simulate.indexOf('Account/running') > -1||simulate.indexOf('Account/pending') > -1||simulate.indexOf('Account/due') > -1||isSuper) && revenues">
