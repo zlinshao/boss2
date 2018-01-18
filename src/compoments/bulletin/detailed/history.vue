@@ -11,9 +11,10 @@
                         <h4 class="modal-title">历史记录</h4>
                     </div>
                     <div class="modal-body">
-                        <div v-for="(key,index) in 10">
-                            <router-link :to="{path: '/',query: {time: 1}}">2017-01-01</router-link>
+                        <div v-for="(key,index) in 10" v-if="data.length > 0">
+                            <a @click="close_(key)">2017-01-01</a>
                         </div>
+                        <div v-if="data.length === 0">暂无历史记录</div>
                     </div>
                     <div class="modal-footer text-right">
                         <button data-dismiss="modal" class="btn btn-primary btn-md">关闭</button>
@@ -28,7 +29,22 @@
 
     export default {
         props: ['urls'],
-        methods: {}
+        data() {
+            return {
+                data: [],
+            }
+        },
+        mounted() {
+            // this.$http.get('').then((res) => {
+            //
+            // })
+        },
+        methods: {
+            close_(val) {
+                this.$router.push({path: '/', query: {time: val}});
+                $('#history').modal('hide');
+            }
+        }
     }
 </script>
 

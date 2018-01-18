@@ -134,7 +134,7 @@
                             <td>南京一区一组</td>
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/balanceDetail'}">
+                                <router-link :to="{path:'/balanceDetail',query: {id: 1}}">
                                     详情
                                 </router-link>
                             </td>

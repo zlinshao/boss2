@@ -127,7 +127,7 @@
                             <td>南京一区一组</td>
                             <td>备注</td>
                             <td>
-                                <router-link :to="{path:'/specialDetail'}">
+                                <router-link :to="{path:'/specialDetail',query: {id: 1}}">
                                     详情
                                 </router-link>
                             </td>
@@ -257,9 +257,9 @@
 //            重置
             close_() {
                 this.params.search = '';
-                this.params.department_id = '';
-                this.params.staff_id = '';
-                this.params.page = '';
+                this.params.department_id = [];
+                this.params.staff_id = [];
+                this.params.page = 1;
                 this.params.status1 = '';
                 this.params.status2 = '';
                 this.selected = [];

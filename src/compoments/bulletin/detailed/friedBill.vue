@@ -25,7 +25,8 @@
                                 <label class="col-lg-2 col-sm-2 control-label" v-if="title == '炸单详情'">备注：</label>
                                 <label class="col-lg-2 col-sm-2 control-label" v-if="title == '充公详情'">充公原因：</label>
                                 <div class="col-lg-10">
-                                    {{remarks}} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequuntur cum
+                                    {{remarks}} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur
+                                    consequuntur cum
                                 </div>
                             </div>
 
@@ -97,7 +98,6 @@
                         </div>
                     </div>
                     <div class="modal-footer text-right">
-                        <!--<button data-dismiss="modal" class="btn btn-default btn-md">取消</button>-->
                         <button data-dismiss="modal" class="btn btn-primary btn-md">确认</button>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
 //                this.oldBulletin = '';            //原报备人
 //            }
 //        },
-        data(){
+        data() {
             return {
                 data: ['1'],
                 bulletinDate: '',           //报备时间
@@ -143,6 +143,9 @@
                 oldContract: '',            //原签约人
                 oldBulletin: '',            //原报备人
             }
+        },
+        mounted() {
+
         },
         methods: {}
     }
