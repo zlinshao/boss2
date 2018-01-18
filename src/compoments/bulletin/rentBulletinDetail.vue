@@ -13,20 +13,19 @@
                 <header class="top">
                     <h4>
                         <i class="fa fa-file-text-o"></i>&nbsp;喜报详情
-                        <span>炸</span>
-                        <span>充</span>
-                        <span>款</span>
-                        <span>调</span>
+                        <!--<span v-show="dataLose != null">炸</span>-->
+                        <!--<span v-show="dataRefund != null">款</span>-->
+                        <!--<span v-show="redistribution != null">调</span>-->
                     </h4>
                 </header>
-                <div class="panel-body table-responsive">
+                <div class="panel-body table-responsive" v-for="(key,index) in myData">
                     <header class="bulletin">
                         <h4>喜报</h4>
                     </header>
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
                             <span class="text-primary">喜报时间：</span>
-                            <span>2017-02-17</span>
+                            <span>{{key.bulletin_time}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">已收：</span>
@@ -116,72 +115,6 @@
                 </div>
                 <div class="panel-body table-responsive">
                     <header class="bulletin">
-                        <h4>调房</h4>
-                    </header>
-                    <div class="col-md-12 detail">
-                        <div class="col-sm-4">
-                            <span class="text-primary">报备时间：</span>
-                            <span>2017-02-17</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">原付款方式：</span>
-                            <span>押1付12</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">签约人：</span>
-                            <span>赵梦涵</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">原地址：</span>
-                            <span>积善公寓2-304</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">原价格：</span>
-                            <span>2000</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">备注：</span>
-                            <span>无</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">报备人：</span>
-                            <span>李彬彬</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">所属部门：</span>
-                            <span>百万一组</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body table-responsive">
-                    <header class="bulletin">
-                        <h4>充公</h4>
-                    </header>
-                    <div class="col-md-12 detail">
-                        <div class="col-sm-4">
-                            <span class="text-primary">报备时间：</span>
-                            <span>2017-02-17</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">充公原因：</span>
-                            <span>超出市场价</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">备注：</span>
-                            <span>无</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">报备人：</span>
-                            <span>李彬彬</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">所属部门：</span>
-                            <span>百万一组</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body table-responsive">
-                    <header class="bulletin">
                         <h4>炸单</h4>
                     </header>
                     <div class="col-md-12 detail">
@@ -223,6 +156,33 @@
                         </div>
                     </div>
                 </div>
+                <!--<div class="panel-body table-responsive">-->
+                <!--<header class="bulletin">-->
+                <!--<h4>充公</h4>-->
+                <!--</header>-->
+                <!--<div class="col-md-12 detail">-->
+                <!--<div class="col-sm-4">-->
+                <!--<span class="text-primary">报备时间：</span>-->
+                <!--<span>2017-02-17</span>-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                <!--<span class="text-primary">充公原因：</span>-->
+                <!--<span>超出市场价</span>-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                <!--<span class="text-primary">备注：</span>-->
+                <!--<span>无</span>-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                <!--<span class="text-primary">报备人：</span>-->
+                <!--<span>李彬彬</span>-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                <!--<span class="text-primary">所属部门：</span>-->
+                <!--<span>百万一组</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
                 <div class="panel-body table-responsive">
                     <header class="bulletin">
                         <h4>款项</h4>
@@ -270,6 +230,45 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel-body table-responsive">
+                    <header class="bulletin">
+                        <h4>调房</h4>
+                    </header>
+                    <div class="col-md-12 detail">
+                        <div class="col-sm-4">
+                            <span class="text-primary">报备时间：</span>
+                            <span>2017-02-17</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">原付款方式：</span>
+                            <span>押1付12</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">签约人：</span>
+                            <span>赵梦涵</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">原地址：</span>
+                            <span>积善公寓2-304</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">原价格：</span>
+                            <span>2000</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">备注：</span>
+                            <span>无</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">报备人：</span>
+                            <span>李彬彬</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">所属部门：</span>
+                            <span>百万一组</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -286,12 +285,17 @@
         components: {PicModal},
         data() {
             return {
+                myData: [],
                 photos: {},                 //图片
                 largePic: [],               //点击放大图片
             }
         },
         mounted() {
-
+            this.$http.get('bulletin/rent/rentBulletinDetail?id=' + this.$route.query.rent + '&mark=1').then((res) => {
+                if(res.data.code === '80010'){
+                    this.myData = res.data.data.dataBulletin;
+                }
+            })
         },
         watch: {},
         methods: {
@@ -334,11 +338,8 @@
         background: #FF0000;
     }
 
-    header.top > h4 > span:nth-of-type(2) {
-        background: #0099CC;
-    }
 
-    header.top > h4 > span:nth-of-type(3) {
+    header.top > h4 > span:nth-of-type(2) {
         background: #009933;
     }
 

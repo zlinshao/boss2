@@ -129,10 +129,11 @@
                                 <span v-if="item.cate_id == 4">公司出租</span>
                             </td>
                             <td class="detail">
-                                <div>{{item.detailed_address}}
-                                    <span v-if="item.lose == 1" @click="friedBill(1)">炸</span>
-                                    <span v-if="item.refund == 1" @click="friedBill(3)">款</span>
-                                    <span v-if="item.redistribution == 1" @click="friedBill(4)">调</span>
+                                <div>
+                                    {{item.detailed_address}}
+                                    <span v-show="item.lose == 1" @click="friedBill(1)">炸</span>
+                                    <span v-show="item.refund == 1" @click="friedBill(3)">款</span>
+                                    <span v-show="item.redistribution == 1" @click="friedBill(4)">调</span>
                                 </div>
                             </td>
                             <td>{{item.rooms_together}}</td>
@@ -151,7 +152,7 @@
                             <td>{{item.dname}}</td>
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/rentBulletinDetail',query:{id: 1}}">
+                                <router-link :to="{path:'/rentBulletinDetail',query:{rent: item.id}}">
                                     详情
                                 </router-link>
                             </td>
@@ -390,10 +391,6 @@
     }
 
     .detail div span:nth-of-type(2) {
-        background: #0099CC;
-    }
-
-    .detail div span:nth-of-type(3) {
         background: #009933;
     }
 
