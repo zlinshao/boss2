@@ -95,7 +95,7 @@
                 </div>
                 <div class="border_bottom">
                     <span class="text-primary">收房最大中介费</span>
-                    <span v-if="agency_fee != '无' && rent_max != '无'">
+                    <span v-if="agency_fee != '无' && collect_max != '无'">
                         {{collect_max.city}}&nbsp;>&nbsp;
                         {{collect_max.detailed_address}}&nbsp;>&nbsp;
                         {{collect_max.real_name}}
