@@ -441,7 +441,7 @@
                     <!--</li>-->
                     <!--<li class="sub-menu">-->
 
-                    <li class="sub-menu" v-if="isSuper">
+                    <li class="sub-menu" v-show="isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-money"></i>
                             <span>喜报管理</span>
