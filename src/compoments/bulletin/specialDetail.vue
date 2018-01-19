@@ -15,85 +15,93 @@
                         <i class="fa fa-file-text-o"></i>&nbsp;报备详情
                     </h4>
                 </header>
-                <div class="panel-body table-responsive">
+                <div class="panel-body table-responsive" v-for="(key,index) in dataBulletin" v-if="!isShow">
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
                             <span class="text-primary">报备时间：</span>
-                            <span>2017-02-17</span>
+                            <span>{{key.bulletin_time}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">报备事项：</span>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis eaque eveniet ipsa magnam natus, numquam, odit officiis possimus quo sit, suscipit voluptatum! Alias at, ducimus ipsum itaque natus nesciunt optio.</span>
+                            <span>{{key.content}}</span>
                         </div>
                         <div class="col-sm-4">
-                            <span class="text-primary">组长同意截图：</span>
-                            <a class="big" v-for="(pic,index) in photos"
-                               style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
-                                <img :src="pic.small">
+                            <span class="text-primary">截图：</span>
+                            <a class="big" v-for="(pic,index) in key.contract_photo"
+                               style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index,1)">
+                                <img :src="pic">
                             </a>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">地址：</span>
-                            <span>积善公寓2-302</span>
+                            <span>{{key.detailed_address_special}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">客户来源：</span>
-                            <span>中介（800）</span>
+                            <span>
+                                <span v-if="key.customer_from == 2">
+                                    中介({{key.agent_money}})
+                                </span>
+                                <span v-else>
+                                    个人
+                                </span>
+                            </span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">开单人：</span>
-                            <span>李彬彬</span>
+                            <span>{{staff[key.staff_id]}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">房型：</span>
-                            <span>两室一厅一卫</span>
+                            <span>{{key.rooms_together}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">租房月数：</span>
-                            <span>12</span>
+                            <span>{{key.month}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">客户手机号：</span>
-                            <span>18052001111</span>
+                            <span>{{key.customer_mobile}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">定金：</span>
-                            <span>2121</span>
+                            <span>{{key.deposit}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">月单价：</span>
-                            <span>2000</span>
+                            <span>{{key.price_per_month_together}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">报备人：</span>
-                            <span>李彬彬</span>
+                            <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">付款方式：</span>
-                            <span>押1付6</span>
+                            <span>{{key.pay_way_together}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">客户姓名：</span>
-                            <span>赵启涵</span>
+                            <span>{{key.customer_name}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">所属部门：</span>
-                            <span>百万一组</span>
+                            <span>{{dict.department_all[department_id]}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">截图：</span>
-                            <a class="big" v-for="(pic,index) in photos"
-                               style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
-                                <img :src="pic.small">
+                            <a class="big" v-for="(pic,index) in key.screenshot"
+                               style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index,2)">
+                                <img :src="pic">
                             </a>
                         </div>
                     </div>
                 </div>
+                <div class="panel-body table-responsive" v-if="isShow" style="text-align: center">无相关数据</div>
             </div>
         </section>
 
         <!--查看大图-->
-        <PicModal :largePic="largePic"></PicModal>
+        <PicModal :msg="'bulletin'" :largePic="largePic"></PicModal>
 
     </div>
 </template>
@@ -105,21 +113,55 @@
         components: {PicModal},
         data() {
             return {
-                photos: {},                 //图片
+                isShow: false,
+                department_id: '',
+                myData: {},
+                dataBulletin: [],           //报备
+                screenshots: {},            //截图
+                contract_photo: {},         //组长同意截图
                 largePic: [],               //点击放大图片
+                staff: {},
+                dict: {},
             }
         },
         mounted() {
+            let router = this.$route.query;
+            this.$http.get('core/customer/dict').then((res) => {
+                this.dict = res.data;
+
+                this.$http.get('revenue/glee_collect/staff_id').then((res) => {
+                    this.staff = res.data;
+
+                    this.$http.get('bulletin/special/specialBulletinDetail?id=' + router.special + '&collect_or_rent=' + router.num).then((res) => {
+                        if (res.data.code === '80010') {
+                            this.isShow = false;
+                            this.dataBulletin = res.data.data;
+                            this.screenshots = res.data.data[0].screenshot;
+                            this.contract_photo = res.data.data[0].allow_screenshot;
+                            this.department_id = res.data.data[0].department_id;
+                        }else{
+                            this.isShow = true;
+                            this.dataBulletin = [];
+                        }
+                    })
+                });
+            });
         },
         watch: {},
         methods: {
 //            查看大图
-//             this.photos = res.data.data.album.id_pic;
-            showLargePic(num) {
-                this.largePic = [{
-                    src: this.photos,
-                    i: num
-                }];
+            showLargePic(num, val) {
+                if (val === 1) {
+                    this.largePic = [{
+                        src: this.contract_photo,
+                        i: num
+                    }];
+                } else {
+                    this.largePic = [{
+                        src: this.screenshots,
+                        i: num
+                    }];
+                }
                 $('#largePic').modal('show');
             },
         },

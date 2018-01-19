@@ -10,21 +10,18 @@
                     <form class="form-inline clearFix" role="form">
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.mark" @change="search(1)">
-                                <option value="0">全部</option>
+                            <select class="form-control" v-model="params.mark" @change="rent(1)">
+                                <option value="0">标记筛选</option>
                                 <option value="1">炸单</option>
                                 <option value="2">调房</option>
-                                <option value="3">充公</option>
+                                <option value="3">款项</option>
                             </select>
                         </div>
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.operation_id" @change="search(1)">
-                                <option value="0">全部</option>
-                                <option value="1">出租</option>
-                                <option value="2">续租</option>
-                                <option value="3">个人转租</option>
-                                <option value="4">公司转租</option>
+                            <select class="form-control" v-model="params.operation_id" @change="rent(1)">
+                                <option value="0">租房状态</option>
+                                <option :value="index + 1" v-for="(key,index) in cate">{{key}}</option>
                             </select>
                         </div>
 
@@ -44,9 +41,9 @@
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="地址/开单人"
-                                   v-model="params.keywords" @keydown.enter.prevent="search(1)">
+                                   v-model="params.keywords" @keydown.enter.prevent="rent(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button" @click="rent(1)">搜索</button>
                             </span>
                         </div>
 
@@ -54,8 +51,12 @@
                             <a class="btn btn-success" type="button" @click="close_()">重置</a>
                         </div>
 
-                        <div class="form-group">
-                            <a class="btn btn-success" type="button" @click="leading_out">导出</a>
+                        <!--<div class="form-group">-->
+                            <!--<a class="btn btn-success" type="button" @click="leading_out">导出</a>-->
+                        <!--</div>-->
+
+                        <div class="form-group pull-right text-primary" style="line-height: 34px;">
+                            业绩&nbsp;|&nbsp;{{total_performance}}
                         </div>
                     </form>
                 </div>
@@ -123,10 +124,7 @@
                             </td>
                             <td>{{item.bulletin_time}}</td>
                             <td>
-                                <span v-if="item.cate_id == 1">出租</span>
-                                <span v-if="item.cate_id == 2">续租</span>
-                                <span v-if="item.cate_id == 3">个人转租</span>
-                                <span v-if="item.cate_id == 4">公司出租</span>
+                                <span>{{cate[item.cate_id - 1]}}</span>
                             </td>
                             <td class="detail">
                                 <div>
@@ -140,7 +138,11 @@
                             <td>{{item.rent_month}}</td>
                             <td>{{item.pay_way_together}}</td>
                             <td>{{item.deposit_or_full}}</td>
-                            <td>4000</td>
+                            <td>
+                                <span v-for="(key,index) in item.price_per_month" v-if="index == 0">
+                                    {{key}}
+                                </span>
+                            </td>
                             <td>{{item.total_amount}}</td>
                             <td>{{item.sign_contract_time}}</td>
                             <td>{{item.retainage_time}}</td>
@@ -168,7 +170,7 @@
             </div>
         </div>
 
-        <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
+        <Page :pg="paging" @pag="rent" :beforePage="params.page"></Page>
 
         <Status :state='info'></Status>
 
@@ -195,7 +197,9 @@
         components: {Page, Status, STAFF, DatePicker, FriedBill, History},
         data() {
             return {
+                cate: ['出租', '续租', '个人转租', '公司出租'],
                 titles: '',                 //炸单/充公详情
+                total_performance: '',      //总业绩
                 dict: {},                   //字典
                 pitch: [],                  //ID
                 paging: 10,                 //总页数
@@ -250,6 +254,7 @@
                         this.isShow = false;
                         this.paging = res.data.data.pages;
                         this.bulletin = res.data.data.current_page;
+                        this.total_performance = res.data.data.current_page.total_performance;
                     } else {
                         this.isShow = true;
                         this.paging = '';
@@ -260,15 +265,15 @@
             },
             // 历史记录
             historyTime() {
-                $('#history').modal({dropback: 'static'});
+                $('#history').modal({back: 'static'});
             },
-            search(val) {
-                this.rent(val);
+            search() {
+                this.rent(this.params.page);
             },
 //            日期筛选
             getDate(date) {
                 this.params.date_range = date;
-                this.search(1);
+                this.rent(1);
             },
 //            部门搜索
             select() {
@@ -285,19 +290,19 @@
                     this.selected = val.staff[0].name;
                     this.params.staff_id = val.staff[0].id;
                 }
-                this.search(1);
+                this.rent(1);
             },
 //            清空部门
             clearSelect() {
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
-                this.search(1);
+                this.params.department_id = '';
+                this.params.staff_id = '';
+                this.selected = '';
+                this.rent(1);
             },
 
 //            导出
             leading_out() {
-                this.$http.get('', {
+                this.$http.get('bulletin/rent/rentBulletinIndex?export=1', {
                     params: this.params
                 }).then((res) => {
                     if (res.data.code === '18410') {
@@ -316,7 +321,7 @@
                 this.selected = '';
                 this.currentDate = [];
                 this.pitch = [];
-                this.search(1);
+                this.rent(1);
             },
 
 //             全选

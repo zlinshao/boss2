@@ -11,7 +11,9 @@
                         <button type="button" class="close" id="close" data-dismiss="modal" @click="closeModal" aria-hidden="true">×</button>
                         <div class="modal-body" id="pic">
                             <div class="imgContainer" @mousewheel.prevent="zoomPic($event,index)">
-                                <img id="img" v-if="index!=0" :src="src[index].raw" @mousemove.prevent="">
+                                <img v-if="index!=0 && msg != 'bulletin'" :src="src[index].raw" @mousemove.prevent="">
+
+                                <img v-if="index!=0 && msg == 'bulletin'" :src="src[index]" @mousemove.prevent="">
                                 <!--<img id="img" v-attr="src : index==0?'':src[index].big">-->
                             </div>
 
@@ -36,7 +38,7 @@
 
 <script>
     export default{
-        props : ['largePic'],
+        props : ['largePic','msg'],
         data(){
             return {
                 current : 0,
@@ -63,7 +65,7 @@
             $('.largePic').on('shown.bs.modal', function (e) {
 
                 let div = this.firstChild.firstChild;
-                console.log(div)
+                // console.log(div)
                 div.onmousedown = function (ev) {
 
                      let oevent = ev || event;
@@ -99,7 +101,7 @@
                     this.src = val[0].src;
                     this.index = val[0].i;
                     this.idArr = [];
-                    console.log(this.src)
+                    // console.log(this.src)
 //                console.log(this.src[this.index].big)
                     for (let key in this.src){
 //                    console.log(key);
