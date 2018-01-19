@@ -10,14 +10,19 @@
                     <form class="form-inline clearFix" role="form">
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.status1" @change="search(1)">
-                                <option value="">全部</option>
+                            <select class="form-control" v-model="params.mark" @change="collect(1)">
+                                <option value="0">标记筛选</option>
+                                <option value="1">炸单</option>
+                                <option value="2">充公</option>
+                                <option value="3">款项</option>
                             </select>
                         </div>
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.status2" @change="search(1)">
-                                <option value="">全部</option>
+                            <select class="form-control" v-model="params.operation_id" @change="collect(1)">
+                                <option value="0">收房状态</option>
+                                <option value="1">收房</option>
+                                <option value="2">续约</option>
                             </select>
                         </div>
 
@@ -37,9 +42,9 @@
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="地址/开单人"
-                                   v-model="params.search" @keydown.enter.prevent="search(1)">
+                                   v-model="params.keywords" @keydown.enter.prevent="collect(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button" @click="collect(1)">搜索</button>
                             </span>
                         </div>
 
@@ -104,7 +109,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="(item,index) in bulletin">
+                        <tr class="text-center" v-for="(item,index) in bulletin" :class="{'color_red': item.lose == 1}">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1, 'c_off':pitch.indexOf(item.id) == -1}"
                                        @click.prevent="changeIndex($event,item.id)">
@@ -116,28 +121,38 @@
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
-                            <td>2017-01-01</td>
-                            <td>收房</td>
+                            <td>{{item.bulletin_time }}</td>
+                            <td>
+                                <span v-if="item.cate_id == 1">收房</span>
+                                <span v-if="item.cate_id == 2">续约</span>
+                            </td>
                             <td class="detail">
-                                <div>积善公寓2-302
-                                    <span @click="friedBill(1)">炸</span>
-                                    <span @click="friedBill(2)">充</span>
-                                    <span @click="friedBill(3)">款</span>
+                                <div>{{item.detailed_address}}
+                                    <span v-show="item.lose == 1" @click="friedBill(1)">炸</span>
+                                    <span v-show="item.confiscation == 1" @click="friedBill(2)">充</span>
+                                    <span v-show="item.refund == 1" @click="friedBill(3)">款</span>
                                 </div>
                             </td>
-                            <td>三室一厅一卫</td>
-                            <td>整租</td>
-                            <td>12</td>
-                            <td>20</td>
-                            <td>月付</td>
-                            <td>2000</td>
-                            <td>2000</td>
-                            <td>2017-01-01</td>
-                            <td>银行卡</td>
-                            <td>盖聂</td>
-                            <td>999999999999999999</td>
-                            <td>解兆飞</td>
-                            <td>南京一区一组</td>
+                            <td>{{item.rooms}}室{{item.hall}}厅{{item.toilet}}卫</td>
+                            <td>
+                                <span v-if="item.collect_type == 1">整租</span>
+                                <span v-if="item.collect_type == 2">合租</span>
+                            </td>
+                            <td>{{item.collect_month}}</td>
+                            <td>{{item.vacant_day}}</td>
+                            <td>{{dict.pay_type[item.pay_way_together]}}</td>
+                            <td>{{item.bet_money}}</td>
+                            <td>
+                                <span v-for="(key,index) in item.price_per_month_together" v-if="index == 0">
+                                    {{key}}
+                                </span>
+                            </td>
+                            <td>{{item.pay_time_first}}</td>
+                            <td>{{dict.money_type[item.collect_purchase_way]}}</td>
+                            <td>{{item.collect_payee_name}}</td>
+                            <td>{{item.collect_account}}</td>
+                            <td>{{item.sname}}</td>
+                            <td>{{item.dname}}</td>
                             <!--<td @click="look_tag(item.tags, item.customer.address,item.id)"-->
                             <!--style="cursor: pointer;">-->
                             <!--<span v-for="(key, index) in item.tags" v-show="index < 1 && item.tags.length > 0">-->
@@ -147,7 +162,7 @@
                             <!--</td>-->
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/collectBulletinDetail',query:{id: 1}}">
+                                <router-link :to="{path:'/collectBulletinDetail',query:{collect: item.id}}">
                                     详情
                                 </router-link>
                             </td>
@@ -163,7 +178,7 @@
             </div>
         </div>
 
-        <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
+        <Page :pg="paging" @pag="collect" :beforePage="params.page"></Page>
 
         <Status :state='info'></Status>
 
@@ -200,15 +215,15 @@
                 paging: '',                 //总页数
                 isShow: false,              //暂无数据
                 params: {
-                    search: '',
-                    department_id: [],
-                    staff_id: [],
-                    range: '',
+                    keywords: '',
+                    department_id: '',
+                    staff_id: '',
+                    date_range: '',
                     page: 1,
-                    status1: '',
-                    status2: '',
+                    mark: '0',
+                    operation_id: '0',
                 },
-                selected: [],               //部门名称
+                selected: '',               //部门名称
                 configure: {},              //部门筛选条件
 
                 dateConfigure: [
@@ -219,7 +234,7 @@
                 ],
                 currentDate: [],
 
-                bulletin: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}],               //收房喜报
+                bulletin: [],               //收房喜报
 
                 remark: {
                     look_remark: [],                        //备注内容
@@ -244,43 +259,64 @@
         mounted() {
             this.$http.get('core/customer/dict').then((res) => {
                 this.dict = res.data;
+
+                this.collect(1);
             })
         },
         methods: {
             // 历史
             historyTime() {
-                $('#history').modal({dropback: 'static'});
+                $('#history').modal({backdrop: 'static'});
             },
-            search(val) {
-
+            search() {
+                this.collect(this.params.page)
             },
 //            日期筛选
             getDate(date) {
-                this.params.range = date;
+                this.params.date_range = date;
+                this.collect(1);
             },
 //            部门搜索
             select() {
                 $('.selectCustom:eq(0)').modal('show');
-                this.configure = {type: 'department', length: 1};
+                this.configure = {length: 1};
+            },
+
+            collect(val) {
+                this.params.page = val;
+                this.$http.get('bulletin/collect/collectBulletinIndex', {
+                    params: this.params,
+                }).then((res) => {
+                    if (res.data.code === '90010') {
+                        this.isShow = false;
+                        this.paging = res.data.data.pages;
+                        this.bulletin = res.data.data.current_page;
+                    } else {
+                        this.isShow = true;
+                        this.paging = '';
+                        this.bulletin = [];
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
 //            部门搜索
             selectDateSend(val) {
-                for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
+                if (val.department.length > 0) {
+                    this.selected = val.department[0].name;
+                    this.params.department_id = val.department[0].id;
                 }
-                for (let j = 0; j < val.staff.length; j++) {
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
+                if (val.staff.length > 0) {
+                    this.selected = val.staff[0].name;
+                    this.params.staff_id = val.staff[0].id;
                 }
-                this.search(1);
+                this.collect(1);
             },
 //            清空部门
             clearSelect() {
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
-                this.search(1);
+                this.params.department_id = '';
+                this.params.staff_id = '';
+                this.selected = '';
+                this.collect(1);
             },
 
 //            导出
@@ -294,16 +330,16 @@
             },
 //            重置
             close_() {
-                this.params.search = '';
-                this.params.department_id = [];
-                this.params.staff_id = [];
+                this.params.keywords = '';
+                this.params.department_id = '';
+                this.params.staff_id = '';
                 this.params.page = 1;
-                this.params.status1 = '';
-                this.params.status2 = '';
-                this.selected = [];
-                this.currentDate = [];
+                this.params.mark = '0';
+                this.params.operation_id = '0';
+                this.selected = '';
+                this.currentDate = '';
                 this.pitch = [];
-                this.search(1);
+                this.collect(1);
             },
 
 //            查看备注
@@ -314,7 +350,7 @@
                 $('#addRemarks').modal({backdrop: 'static'});    //空白处模态框不消失
             },
             lookRemark() {
-                this.search(this.params.page);
+                this.search();
             },
 
 //             全选
@@ -376,6 +412,10 @@
         border-radius: 24%;
         color: #ffffff;
         margin: 0 0 3px 3px;
+    }
+
+    .color_red {
+        color: #E43;
     }
 
     .detail div span:first-of-type {

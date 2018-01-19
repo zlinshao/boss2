@@ -13,188 +13,206 @@
                 <header class="top">
                     <h4>
                         <i class="fa fa-file-text-o"></i>&nbsp;喜报详情
-                        <span>炸</span>
-                        <span>充</span>
-                        <span>款</span>
+                        <span v-show="dataLose != null">炸</span>
+                        <span v-show="dataConfiscation != null">充</span>
+                        <span v-show="dataRefund != null">款</span>
                     </h4>
                 </header>
-                <div class="panel-body table-responsive">
+                <div class="panel-body table-responsive" v-for="(key,index) in dataBulletin" v-if="!isShow">
                     <header class="bulletin">
                         <h4>喜报</h4>
                     </header>
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
                             <span class="text-primary">喜报时间：</span>
-                            <span>2017-02-17</span>
+                            <span>{{key.bulletin_time}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">押金：</span>
-                            <span>2000</span>
+                            <span>{{key.bet_money}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">电话号码：</span>
-                            <span>18052001111</span>
+                            <span>{{key.collect_owner_mobile}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">收房类型：</span>
-                            <span>整租</span>
+                            <span v-if="key.cate_id == 1">收房</span>
+                            <span v-if="key.cate_id == 2">续约</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">月单价：</span>
-                            <span>2000</span>
+                            <span>{{key.price_per_month_together}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">收款人与业主关系：</span>
-                            <span>本人</span>
+                            <span>{{key.payee_owner_relationship}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">地址：</span>
-                            <span>积善公寓2-302</span>
+                            <span>{{key.detailed_address}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">第一次付款时间：</span>
-                            <span>2017-02-17</span>
+                            <span>{{key.pay_time_first}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">客户来源：</span>
-                            <span>中介（800）</span>
+                            <span>
+                                <span v-if="key.customer_from == 2">
+                                    中介({{key.agent_money}})
+                                </span>
+                                <span v-else>
+                                    个人
+                                </span>
+                            </span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">房型：</span>
-                            <span>两室一厅一卫</span>
+                            <span>{{key.rooms}}室{{key.hall}}厅{{key.toilet}}卫</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">付款方式：</span>
-                            <span>银行卡</span>
+                            <span>{{values[key.collect_purchase_way - 1]}}</span>
                         </div>
                         <div class="col-sm-4">
-                            <span class="text-primary">证件照片：</span>
-                            <a class="big" v-for="(pic,index) in photos"
+                            <span class="text-primary">合同照片：</span>
+                            <a class="big" v-for="(pic,index) in key.contract_photo"
                                style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
-                                <img :src="pic.small">
+                                <img :src="pic">
                             </a>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">收房月数：</span>
-                            <span>12</span>
+                            <span>{{key.collect_month}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" v-if="key.collect_purchase_way != 3">
                             <span class="text-primary">收款人户名：</span>
-                            <span>雷神</span>
+                            <span>{{key.collect_payee_name}}</span>
                         </div>
+                        <div class="col-sm-4" v-else>
+                            <span class="text-primary">账户：</span>
+                            <span>{{key.collect_account}}</span>
+                        </div>
+
                         <div class="col-sm-4">
                             <span class="text-primary">备注：</span>
-                            <span>雷神之锤</span>
+                            <span>{{key.remark}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">保修期(月)：</span>
-                            <span>12</span>
+                            <span>{{key.warranty_month}}</span>
                         </div>
-                        <div class="col-sm-4">
+
+                        <div class="col-sm-4" v-if="key.collect_purchase_way == 1 || key.collect_purchase_way == 4">
                             <span class="text-primary">收款银行(支行)：</span>
-                            <span>中国工商银行</span>
+                            <span>{{dict.bank[key.collect_bank]}}</span>
                         </div>
+                        <div class="col-sm-4" v-else></div>
+
                         <div class="col-sm-4">
                             <span class="text-primary">开单人：</span>
-                            <span>李彬彬</span>
+                            <span>{{staff[key.staff_id]}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">空置期：</span>
-                            <span>30</span>
+                            <span>{{key.vacant_day}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" v-if="key.collect_purchase_way != 3">
                             <span class="text-primary">账户：</span>
-                            <span>123 456 789 987</span>
+                            <span>{{key.collect_account}}</span>
                         </div>
+                        <div class="col-sm-4" v-else></div>
+
                         <div class="col-sm-4">
                             <span class="text-primary">报备人：</span>
-                            <span>李彬彬</span>
+                            <span>{{key.bulletin_staff_id}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">付款方式：</span>
-                            <span>月付</span>
+                            <span>{{key.pay_way_together}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">房东姓名：</span>
-                            <span>韩延柳</span>
+                            <span>{{key.collect_owner_name}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">所属部门：</span>
-                            <span>百万一组</span>
+                            <span>{{dict.department_all[department_id]}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="panel-body table-responsive">
-                    <header class="bulletin">
-                        <h4>充公</h4>
-                    </header>
-                    <div class="col-md-12 detail">
-                        <div class="col-sm-4">
-                            <span class="text-primary">报备时间：</span>
-                            <span>2017-02-17</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">充公原因：</span>
-                            <span>超出市场价</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">备注：</span>
-                            <span>无</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">报备人：</span>
-                            <span>李彬彬</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">所属部门：</span>
-                            <span>百万一组</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body table-responsive">
+                <div class="panel-body table-responsive" v-if="dataLose != null" v-for="(key,index) in dataLose">
                     <header class="bulletin">
                         <h4>炸单</h4>
                     </header>
                     <div class="col-md-12 detail">
                         <div class="col-sm-4">
                             <span class="text-primary">报备时间：</span>
-                            <span>2017-02-17</span>
+                            <span>{{key.bulletin_time}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">退款金额：</span>
-                            <span>1000</span>
+                            <span>{{key.lose_money}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">退款方式：</span>
-                            <span>银行卡</span>
+                            <span>{{values[key.lose_way - 1]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" v-if="key.collect_purchase_way == 1 || key.collect_purchase_way == 4">
                             <span class="text-primary">收款银行：</span>
-                            <span>南京银行</span>
+                            <span>{{dict.bank[key.lose_bank]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4"  v-if="key.collect_purchase_way != 3">
                             <span class="text-primary">收款人户名：</span>
-                            <span>赵梦涵</span>
+                            <span>{{key.lose_name}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">账户：</span>
-                            <span>123456789</span>
+                            <span>{{key.lose_account}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">备注：</span>
-                            <span>月单价偏高</span>
+                            <span>{{key.remark}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">报备人：</span>
-                            <span>李彬彬</span>
+                            <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-primary">所属部门：</span>
-                            <span>百万一组</span>
+                            <span>{{dict.department_all[key.department_id]}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="panel-body table-responsive">
+                <div class="panel-body table-responsive" v-for="(key,index) in dataConfiscation" v-if="dataConfiscation != null">
+                    <header class="bulletin">
+                        <h4>充公</h4>
+                    </header>
+                    <div class="col-md-12 detail">
+                        <div class="col-sm-4">
+                            <span class="text-primary">报备时间：</span>
+                            <span>{{key.bulletin_time}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">充公原因：</span>
+                            <span>{{}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">备注：</span>
+                            <span>{{key.remark}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">报备人：</span>
+                            <span>{{staff[key.bulletin_staff_id]}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="text-primary">所属部门：</span>
+                            <span>{{dict.department_all[department_id]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body table-responsive" v-if="dataRefund != null" v-for="(key,index) in dataRefund">
                     <header class="bulletin">
                         <h4>款项</h4>
                     </header>
@@ -241,11 +259,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="panel-body table-responsive" v-if="isShow" style="text-align: center">无相关数据</div>
             </div>
         </section>
 
         <!--查看大图-->
-        <PicModal :largePic="largePic"></PicModal>
+        <PicModal :msg="'bulletin'" :largePic="largePic"></PicModal>
 
     </div>
 </template>
@@ -257,19 +277,57 @@
         components: {PicModal},
         data() {
             return {
-                photos: {},                 //图片
+                isShow: false,
+                dict: {},
+                values: ['银行卡', '支付宝', '微信', '存折'],
+                myData: {},
+                dataBulletin: [],           //喜报
+                dataLose: [],               //炸单
+                dataConfiscation: [],       //充公
+                dataRefund: [],             //款项
+                contract_photo: {},         //合同照片
                 largePic: [],               //点击放大图片
+                staff: {},
+                department_id: '',
             }
         },
         mounted() {
+            this.$http.get('core/customer/dict').then((res) => {
+                this.dict = res.data;
+
+                this.$http.get('revenue/glee_collect/staff_id').then((res) => {
+                    this.staff = res.data;
+
+                    this.$http.get('bulletin/collect/collectBulletinDetail?id=' + this.$route.query.collect + '&mark=1').then((res) => {
+                        if (res.data.code === '90010') {
+                            this.isShow = false;
+                            this.myData = res.data.data;
+                            this.dataBulletin = res.data.data.dataBulletin;
+                            this.dataLose = res.data.data.dataLose;
+                            this.dataRefund = res.data.data.dataRefund;
+                            this.dataConfiscation = res.data.data.dataConfiscation;
+                            this.contract_photo = res.data.data.dataBulletin[0].contract_photo;
+                            this.department_id = res.data.data.dataBulletin[0].department_id;
+                        } else {
+                            this.isShow = true;
+                            this.myData = {};
+                            this.dataBulletin = [];           //喜报
+                            this.dataLose = null;             //炸单
+                            this.dataConfiscation = null;     //充公
+                            this.dataRefund = null;           //款项
+                            this.contract_photo = {};         //合同照片
+                            this.largePic = [];               //点击放大图片
+                        }
+                    })
+                });
+            });
         },
         watch: {},
         methods: {
 //            查看大图
-//             this.photos = res.data.data.album.id_pic;
             showLargePic(num) {
                 this.largePic = [{
-                    src: this.photos,
+                    src: this.contract_photo,
                     i: num
                 }];
                 $('#largePic').modal('show');

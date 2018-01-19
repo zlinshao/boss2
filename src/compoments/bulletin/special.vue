@@ -10,14 +10,9 @@
                     <form class="form-inline clearFix" role="form">
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.status1" @change="search(1)">
-                                <option value="">全部</option>
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-                            <select class="form-control" v-model="params.status2" @change="search(1)">
-                                <option value="">全部</option>
+                            <select class="form-control" v-model="params.collect_or_rent" @change="rent(1)">
+                                <option value="1">收房</option>
+                                <option value="2">租房</option>
                             </select>
                         </div>
 
@@ -37,9 +32,9 @@
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="地址/开单人"
-                                   v-model="params.search" @keydown.enter.prevent="search(1)">
+                                   v-model="params.keywords" @keydown.enter.prevent="special(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button" @click="special(1)">搜索</button>
                             </span>
                         </div>
 
@@ -99,6 +94,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <!--:class="{'color_red': item.lose == 1}"-->
                         <tr class="text-center" v-for="(item,index) in bulletin">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1, 'c_off':pitch.indexOf(item.id) == -1}"
@@ -111,23 +107,20 @@
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
-                            <td>2017-01-01</td>
-                            <td>收房</td>
-                            <td>积善公寓2-302</td>
-                            <td>三室一厅一卫</td>
-                            <td>20</td>
-                            <td>押一付三</td>
-                            <td>2000</td>
-                            <td>2000</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi architecto
-                                commodi cum dignissimos libero? Commodi ea maiores molestias neque nobis possimus
-                                ratione sed! Distinctio ipsum iusto magni repellendus rerum.
-                            </td>
-                            <td>解兆飞</td>
-                            <td>南京一区一组</td>
-                            <td>备注</td>
+                            <td>{{item.bulletin_time}}</td>
+                            <td>{{item.cate_id}}</td>
+                            <td>{{item.detailed_address}}</td>
+                            <td>{{item.rooms_together}}</td>
+                            <td>{{item.month}}</td>
+                            <td>{{item.pay_way_together}}</td>
+                            <td>{{item.deposit}}</td>
+                            <td>{{item.price_per_month_together}}</td>
+                            <td>{{item.content}}</td>
+                            <td>{{item.sname}}</td>
+                            <td>{{item.dname}}</td>
+                            <td>{{item.remark}}</td>
                             <td>
-                                <router-link :to="{path:'/specialDetail',query: {id: 1}}">
+                                <router-link :to="{path:'/specialDetail',query: {special: item.id, num: item.collect_or_rent}}">
                                     详情
                                 </router-link>
                             </td>
@@ -143,7 +136,7 @@
             </div>
         </div>
 
-        <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
+        <Page :pg="paging" @pag="special" :beforePage="params.page"></Page>
 
         <Status :state='info'></Status>
 
@@ -170,15 +163,14 @@
                 paging: '',                 //总页数
                 isShow: false,              //暂无数据
                 params: {
-                    search: '',
-                    department_id: [],
-                    staff_id: [],
-                    range: '',
+                    keywords: '',
+                    department_id: '',
+                    staff_id: '',
+                    date_range: '',
+                    collect_or_rent: 1,
                     page: 1,
-                    status1: '',
-                    status2: '',
                 },
-                selected: [],               //部门名称
+                selected: '',               //部门名称
                 configure: {},              //部门筛选条件
 
                 dateConfigure: [
@@ -189,7 +181,7 @@
                 ],
                 currentDate: [],
 
-                bulletin: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}],               //收房喜报
+                bulletin: [],               //收房喜报
 
                 info: {
                     //成功状态 ***
@@ -206,43 +198,64 @@
         mounted() {
             this.$http.get('core/customer/dict').then((res) => {
                 this.dict = res.data;
+
+                this.special(1)
             })
         },
         methods: {
             // 历史记录
             historyTime() {
-                $('#history').modal({dropback: 'static'});
+                $('#history').modal({backdrop: 'static'});
             },
-            search(val) {
+            search() {
+                this.special(this.params.page);
+            },
 
+            special (val){
+                this.params.page = val;
+                this.$http.get('bulletin/special/specialBulletinIndex', {
+                    params: this.params,
+                }).then((res) => {
+                    if (res.data.code === '80010') {
+                        this.isShow = false;
+                        this.paging = res.data.data.pages;
+                        this.bulletin = res.data.data.current_page;
+                    } else {
+                        this.isShow = true;
+                        this.paging = '';
+                        this.bulletin = [];
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
 //            日期筛选
             getDate(date) {
-                this.params.range = date;
+                this.params.date_range = date;
+                this.special(1);
             },
 //            部门搜索
             select() {
                 $('.selectCustom:eq(0)').modal('show');
-                this.configure = {type: 'department', length: 1};
+                this.configure = {length: 1};
             },
 //            部门搜索
             selectDateSend(val) {
-                for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
+                if (val.department.length > 0) {
+                    this.selected = val.department[0].name;
+                    this.params.department_id = val.department[0].id;
                 }
-                for (let j = 0; j < val.staff.length; j++) {
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
+                if (val.staff.length > 0) {
+                    this.selected = val.staff[0].name;
+                    this.params.staff_id = val.staff[0].id;
                 }
-                this.search(1);
+                this.special(1);
             },
 //            清空部门
             clearSelect() {
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
-                this.search(1);
+                this.params.department_id = '';
+                this.params.staff_id = '';
+                this.selected = '';
+                this.special(1);
             },
 
 //            导出
@@ -257,15 +270,14 @@
 //            重置
             close_() {
                 this.params.search = '';
-                this.params.department_id = [];
-                this.params.staff_id = [];
+                this.params.department_id = '';
+                this.params.staff_id ='';
                 this.params.page = 1;
-                this.params.status1 = '';
-                this.params.status2 = '';
-                this.selected = [];
+                this.collect_or_rent = 1;
+                this.selected ='';
                 this.currentDate = [];
                 this.pitch = [];
-                this.search(1);
+                this.special(1);
             },
 
 //             全选
@@ -318,19 +330,8 @@
         margin: 0 0 3px 3px;
     }
 
-    .detail div span:first-of-type {
-        background: #FF0000;
+    .color_red {
+        color: #E43;
     }
 
-    .detail div span:nth-of-type(2) {
-        background: #0099CC;
-    }
-
-    .detail div span:nth-of-type(3) {
-        background: #009933;
-    }
-
-    .detail div span:last-of-type {
-        background: #FF9933;
-    }
 </style>

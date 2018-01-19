@@ -10,16 +10,17 @@
                     <form class="form-inline clearFix" role="form">
 
                         <div class="input-group">
-                            <select class="form-control" v-model="params.status1" @change="search(1)">
-                                <option value="">全部</option>
+                            <select class="form-control" v-model="params.operation_id" @change="balance(1)">
+                                <option value="0">租房状态</option>
+                                <option :value="index + 1" v-for="(key,index) in cate">{{key}}</option>
                             </select>
                         </div>
 
-                        <div class="input-group">
-                            <select class="form-control" v-model="params.status2" @change="search(1)">
-                                <option value="">全部</option>
-                            </select>
-                        </div>
+                        <!--<div class="input-group">-->
+                        <!--<select class="form-control" v-model="params.operation_id" @change="balance(1)">-->
+                        <!--<option value="">全部</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
 
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="点击选择部门/员工"
@@ -37,9 +38,10 @@
                         <div class="input-group">
                             <label class="sr-only" for="search_info">搜索</label>
                             <input type="text" class="form-control" id="search_info" placeholder="地址/开单人"
-                                   v-model="params.search" @keydown.enter.prevent="search(1)">
+                                   v-model="params.keywords" @keydown.enter.prevent="balance(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="search(1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button"
+                                        @click="balance(1)">搜索</button>
                             </span>
                         </div>
 
@@ -104,7 +106,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center" v-for="(item,index) in bulletin">
+                        <tr class="text-center" v-for="(item,index) in bulletin" :class="{'color_red': item.lose == 1}">
                             <td>
                                 <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1, 'c_off':pitch.indexOf(item.id) == -1}"
                                        @click.prevent="changeIndex($event,item.id)">
@@ -116,25 +118,25 @@
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
-                            <td>2017-01-01</td>
+                            <td>{{item.bulletin_time}}</td>
                             <td>收房</td>
-                            <td>积善公寓2-302</td>
-                            <td>三室一厅一卫</td>
-                            <td>20</td>
-                            <td>押一付三</td>
-                            <td>2000</td>
-                            <td>2000</td>
-                            <td>第十七期</td>
-                            <td>8000</td>
-                            <td>1000</td>
-                            <td>600</td>
-                            <td>400</td>
-                            <td>2111-11-11</td>
-                            <td>解兆飞</td>
-                            <td>南京一区一组</td>
+                            <td>{{item.detailed_address}}</td>
+                            <td>{{item.srooms.rooms}}室{{item.srooms.hall}}厅{{item.srooms.toilet}}卫</td>
+                            <td>{{item.rent_month}}</td>
+                            <td>{{item.pay_way_together}}</td>
+                            <td>{{item.deposit_or_full}}</td>
+                            <td>{{item.price_per_month_together}}</td>
+                            <td>第{{item.rent_term}}期</td>
+                            <td>{{item.should_receive_this_term}}</td>
+                            <td>{{item.total_money_this_time}}</td>
+                            <td>{{item.total_money_this_term}}</td>
+                            <td>{{item.should_receive_this_term - item.total_money_this_term}}</td>
+                            <td>{{item.retainage_time}}</td>
+                            <td>{{item.sname}}</td>
+                            <td>{{item.dname}}</td>
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/balanceDetail',query: {id: 1}}">
+                                <router-link :to="{path:'/balanceDetail',query: {balance: item.id}}">
                                     详情
                                 </router-link>
                             </td>
@@ -150,7 +152,7 @@
             </div>
         </div>
 
-        <Page :pg="paging" @pag="search" :beforePage="params.page"></Page>
+        <Page :pg="paging" @pag="balance" :beforePage="params.page"></Page>
 
         <Status :state='info'></Status>
 
@@ -172,20 +174,21 @@
         components: {Page, Status, STAFF, DatePicker, History},
         data() {
             return {
+                cate: ['出租', '续租', '个人转租', '公司出租'],
                 dict: {},                   //字典
                 pitch: [],                  //ID
                 paging: '',                 //总页数
                 isShow: false,              //暂无数据
                 params: {
-                    search: '',
-                    department_id: [],
-                    staff_id: [],
-                    range: '',
+                    keywords: '',
+                    department_id: '',
+                    staff_id: '',
+                    date_range: '',
                     page: 1,
-                    status1: '',
-                    status2: '',
+                    // mark: '0',
+                    operation_id: '0',
                 },
-                selected: [],               //部门名称
+                selected: '',               //部门名称
                 configure: {},              //部门筛选条件
 
                 dateConfigure: [
@@ -196,7 +199,7 @@
                 ],
                 currentDate: [],
 
-                bulletin: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}],               //收房喜报
+                bulletin: [],               //收房喜报
 
                 info: {
                     //成功状态 ***
@@ -213,43 +216,64 @@
         mounted() {
             this.$http.get('core/customer/dict').then((res) => {
                 this.dict = res.data;
+
+                this.balance(1);
             })
         },
         methods: {
             // 历史记录
             historyTime() {
-                $('#history').modal({dropback: 'static'});
+                $('#history').modal({backdrop: 'static'});
             },
-            search(val) {
+            search() {
+                this.balance(this.params.page);
+            },
 
+            balance(val) {
+                this.params.page = val;
+                this.$http.get('bulletin/retainage/retainageBulletinIndex', {
+                    params: this.params,
+                }).then((res) => {
+                    if (res.data.code === '80010') {
+                        this.isShow = false;
+                        this.paging = res.data.data.pages;
+                        this.bulletin = res.data.data.current_page;
+                    } else {
+                        this.isShow = true;
+                        this.paging = '';
+                        this.bulletin = [];
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
 //            日期筛选
             getDate(date) {
-                this.params.range = date;
+                this.params.date_range = date;
+                this.balance(1);
             },
 //            部门搜索
             select() {
                 $('.selectCustom:eq(0)').modal('show');
-                this.configure = {type: 'department', length: 1};
+                this.configure = {length: 1};
             },
 //            部门搜索
             selectDateSend(val) {
-                for (let i = 0; i < val.department.length; i++) {
-                    this.selected.push(val.department[i].name);
-                    this.params.department_id.push(val.department[i].id)
+                if (val.department.length > 0) {
+                    this.selected = val.department[0].name;
+                    this.params.department_id = val.department[0].id;
                 }
-                for (let j = 0; j < val.staff.length; j++) {
-                    this.selected.push(val.staff[j].name);
-                    this.params.staff_id.push(val.staff[j].id)
+                if (val.staff.length > 0) {
+                    this.selected = val.staff[0].name;
+                    this.params.staff_id = val.staff[0].id;
                 }
-                this.search(1);
+                this.balance(1);
             },
 //            清空部门
             clearSelect() {
-                this.params.department_id = [];
-                this.params.staff_id = [];
-                this.selected = [];
-                this.search(1);
+                this.params.department_id = '';
+                this.params.staff_id = '';
+                this.selected = '';
+                this.balance(1);
             },
 
 //            导出
@@ -263,16 +287,17 @@
             },
 //            重置
             close_() {
-                this.params.search = '';
+                this.params.keywords = '';
                 this.params.department_id = '';
                 this.params.staff_id = '';
-                this.params.page = '';
-                this.params.status1 = '';
-                this.params.status2 = '';
-                this.selected = [];
+                this.params.date_range = '';
+                this.params.page = 1;
+                // this.params.mark = '0';
+                this.params.operation_id = '0';
+                this.selected = '';
                 this.currentDate = [];
                 this.pitch = [];
-                this.search(1);
+                this.balance(1);
             },
 
 //             全选
@@ -325,19 +350,8 @@
         margin: 0 0 3px 3px;
     }
 
-    .detail div span:first-of-type {
-        background: #FF0000;
+    .color_red {
+        color: #E43;
     }
 
-    .detail div span:nth-of-type(2) {
-        background: #0099CC;
-    }
-
-    .detail div span:nth-of-type(3) {
-        background: #009933;
-    }
-
-    .detail div span:last-of-type {
-        background: #FF9933;
-    }
 </style>
