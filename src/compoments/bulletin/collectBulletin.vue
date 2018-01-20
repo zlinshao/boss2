@@ -44,7 +44,8 @@
                             <input type="text" class="form-control" id="search_info" placeholder="地址/开单人"
                                    v-model="params.keywords" @keydown.enter.prevent="collect(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="collect(1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button"
+                                        @click="collect(1)">搜索</button>
                             </span>
                         </div>
 
@@ -128,9 +129,12 @@
                             </td>
                             <td class="detail">
                                 <div>{{item.detailed_address}}
-                                    <span v-show="item.lose == 1" @click="friedBill(1)">炸</span>
-                                    <span v-show="item.confiscation == 1" @click="friedBill(2)">充</span>
-                                    <span v-show="item.refund == 1" @click="friedBill(3)">款</span>
+                                    <!--<span v-show="item.lose == 1" @click="friedBill(1)">炸</span>-->
+                                    <!--<span v-show="item.confiscation == 1" @click="friedBill(2)">充</span>-->
+                                    <!--<span v-show="item.refund == 1" @click="friedBill(3)">款</span>-->
+                                    <span @click="friedBill(1,item.id)">炸</span>
+                                    <span @click="friedBill(2,item.id)">充</span>
+                                    <span @click="friedBill(3,item.id)">款</span>
                                 </div>
                             </td>
                             <td>{{item.rooms}}室{{item.hall}}厅{{item.toilet}}卫</td>
@@ -185,7 +189,7 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--炸单详情-->
-        <FriedBill :dict="dict" :title="titles"></FriedBill>
+        <FriedBill :dict="dict" :title="titles" :detail="details"></FriedBill>
 
         <!--历史记录-->
         <History></History>
@@ -209,6 +213,7 @@
         components: {Page, Status, STAFF, DatePicker, FriedBill, History, AddRemark},
         data() {
             return {
+                details: [],
                 titles: '',                 //炸单/充公详情
                 dict: {},                   //字典
                 pitch: [],                  //ID
@@ -377,16 +382,25 @@
                     }
                 }
             },
-//            炸单
-            friedBill(val) {
-                if (val === 1) {
-                    this.titles = '炸单详情';
-                } else if (val === 2) {
-                    this.titles = '充公详情';
-                } else {
-                    this.titles = '款项详情';
-                }
-                $('#friedBill').modal({backdrop: 'static'});
+//            炸单/充公/款项
+            friedBill(val, id) {
+                this.$http.get('bulletin/collect/collectBulletinDetail?id=' + id + '&mark=1').then((res) => {
+                    if (res.data.code === '90010') {
+                        if (val === 1) {
+                            this.titles = '炸单详情';
+                            this.details = res.data.data.dataLose[0];
+                        } else if (val === 2) {
+                            this.titles = '充公详情';
+                            this.details = res.data.data.dataConfiscation[0];
+                        } else {
+                            this.titles = '款项详情';
+                            this.details = res.data.data.dataRefund[0];
+                        }
+                        $('#friedBill').modal({backdrop: 'static'});
+                    } else {
+                        this.details = null;             //炸单
+                    }
+                });
             },
             successMsg(msg) {    //成功提示信息
                 this.info.success = msg;

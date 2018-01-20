@@ -23,66 +23,66 @@
                         <h4>喜报</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">喜报时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">已收：</span>
                             <span>{{key.received}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">截图：</span>
                             <a class="big" v-for="(pic,index) in key.screenshot"
                                style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index,1)">
                                 <img :src="pic">
                             </a>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">地址：</span>
                             <span>{{key.detailed_address}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">签合同时间：</span>
                             <span>{{key.sign_contract_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">合同照片：</span>
                             <a class="big" v-for="(pic,index) in key.contract_photo"
                                style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index,2)">
                                 <img :src="pic">
                             </a>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">房型：</span>
                             <span>{{key.rooms.rooms}}室{{key.rooms.hall}}厅{{key.rooms.toilet}}卫</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">尾款补齐时间：</span>
                             <span>{{key.retainage_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">租房月数：</span>
                             <span>{{key.rent_month}}</span>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">物业费：</span>
                             <span>{{key.property_status}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">开单人：</span>
                             <span>{{staff[key.staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款方式：</span>
                             <span>{{key.pay_way_together}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">客户来源：</span>
                             <span>
                                 <span v-if="key.customer_from == 2">
@@ -93,28 +93,28 @@
                                 </span>
                             </span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">定金：</span>
                             <span>{{key.deposit_or_full}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">客户姓名：</span>
                             <span>{{key.customer_name}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[department_id]}}</span>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">月单价：</span>
                             <span>{{key.price_per_month_together}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">手机号：</span>
                             <span>{{key.customer_mobile}}</span>
                         </div>
@@ -125,39 +125,39 @@
                         <h4>炸单</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">退款金额：</span>
                             <span>{{key.lose_money}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">退款方式：</span>
                             <span>{{values[key.lose_way - 1]}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.lose_way == 1 || key.lose_way == 4">
+                        <div class="" v-if="key.lose_way == 1 || key.lose_way == 4">
                             <span class="text-primary">收款银行：</span>
                             <span>{{dict.bank[key.lose_bank]}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.lose_way != 3">
+                        <div class="" v-if="key.lose_way != 3">
                             <span class="text-primary">收款人户名：</span>
                             <span>{{key.lose_name}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">账户：</span>
                             <span>{{key.lose_account}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[department_id]}}</span>
                         </div>
@@ -169,44 +169,44 @@
                         <h4>款项</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">款项类型：</span>
                             <span v-if="key.refund_cate == 1">中介费</span>
                             <span v-if="key.refund_cate == 2">房租退款</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款金额：</span>
                             <span>{{key.refund_amount}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款方式：</span>
                             <span>{{values[key.refund_way - 1]}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.refund_way == 1 || key.refund_way == 4">
+                        <div class="" v-if="key.refund_way == 1 || key.refund_way == 4">
                             <span class="text-primary">收款银行：</span>
                             <span>{{dict.bank[key.refund_bank]}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.refund_way != 3">
+                        <div class="" v-if="key.refund_way != 3">
                             <span class="text-primary">收款人户名：</span>
                             <span>{{key.refund_customer_name}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">账户：</span>
                             <span>{{key.refund_account}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[department_id]}}</span>
                         </div>
@@ -217,35 +217,35 @@
                         <h4>调房</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">原付款方式：</span>
                             <span>押1付12</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">签约人：</span>
                             <span>{{staff[key.staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">原地址：</span>
                             <span>积善公寓2-304</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">原价格：</span>
                             <span>2000</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[department_id]}}</span>
                         </div>
@@ -383,6 +383,7 @@
         display: flex;
         display: -webkit-flex;
         align-items: center;
+        width: 33.3333%;
     }
 
     div.detail > div > span:first-child {
