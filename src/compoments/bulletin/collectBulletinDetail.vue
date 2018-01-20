@@ -23,40 +23,40 @@
                         <h4>喜报</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">喜报时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">押金：</span>
                             <span>{{key.bet_money}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">电话号码：</span>
                             <span>{{key.collect_owner_mobile}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">收房类型：</span>
                             <span v-if="key.cate_id == 1">收房</span>
                             <span v-if="key.cate_id == 2">续约</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">月单价：</span>
                             <span>{{key.price_per_month_together}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">收款人与业主关系：</span>
                             <span>{{key.payee_owner_relationship}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">地址：</span>
                             <span>{{key.detailed_address}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">第一次付款时间：</span>
                             <span>{{key.pay_time_first}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">客户来源：</span>
                             <span>
                                 <span v-if="key.customer_from == 2">
@@ -67,76 +67,76 @@
                                 </span>
                             </span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">房型：</span>
                             <span>{{key.rooms}}室{{key.hall}}厅{{key.toilet}}卫</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款方式：</span>
                             <span>{{values[key.collect_purchase_way - 1]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">合同照片：</span>
                             <a class="big" v-for="(pic,index) in key.contract_photo"
                                style="margin: 10px 10px 0 0;display: inline-block;" @click="showLargePic(index)">
                                 <img :src="pic">
                             </a>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">收房月数：</span>
                             <span>{{key.collect_month}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.collect_purchase_way != 3">
+                        <div class="" v-if="key.collect_purchase_way != 3">
                             <span class="text-primary">收款人户名：</span>
                             <span>{{key.collect_payee_name}}</span>
                         </div>
-                        <div class="col-sm-4" v-else>
+                        <div class="" v-else>
                             <span class="text-primary">账户：</span>
                             <span>{{key.collect_account}}</span>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">保修期(月)：</span>
                             <span>{{key.warranty_month}}</span>
                         </div>
 
-                        <div class="col-sm-4" v-if="key.collect_purchase_way == 1 || key.collect_purchase_way == 4">
+                        <div class="" v-if="key.collect_purchase_way == 1 || key.collect_purchase_way == 4">
                             <span class="text-primary">收款银行(支行)：</span>
                             <span>{{dict.bank[key.collect_bank]}}</span>
                         </div>
-                        <div class="col-sm-4" v-else></div>
+                        <div class="" v-else></div>
 
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">开单人：</span>
                             <span>{{staff[key.staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">空置期：</span>
                             <span>{{key.vacant_day}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.collect_purchase_way != 3">
+                        <div class="" v-if="key.collect_purchase_way != 3">
                             <span class="text-primary">账户：</span>
                             <span>{{key.collect_account}}</span>
                         </div>
-                        <div class="col-sm-4" v-else></div>
+                        <div class="" v-else></div>
 
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{key.bulletin_staff_id}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款方式：</span>
                             <span>{{key.pay_way_together}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">房东姓名：</span>
                             <span>{{key.collect_owner_name}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[department_id]}}</span>
                         </div>
@@ -147,39 +147,39 @@
                         <h4>炸单</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">退款金额：</span>
                             <span>{{key.lose_money}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">退款方式：</span>
                             <span>{{values[key.lose_way - 1]}}</span>
                         </div>
-                        <div class="col-sm-4" v-if="key.collect_purchase_way == 1 || key.collect_purchase_way == 4">
+                        <div class="" v-if="key.collect_purchase_way == 1 || key.collect_purchase_way == 4">
                             <span class="text-primary">收款银行：</span>
                             <span>{{dict.bank[key.lose_bank]}}</span>
                         </div>
-                        <div class="col-sm-4"  v-if="key.collect_purchase_way != 3">
+                        <div class=""  v-if="key.collect_purchase_way != 3">
                             <span class="text-primary">收款人户名：</span>
                             <span>{{key.lose_name}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">账户：</span>
                             <span>{{key.lose_account}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[key.department_id]}}</span>
                         </div>
@@ -190,23 +190,19 @@
                         <h4>充公</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备时间：</span>
                             <span>{{key.bulletin_time}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">充公原因：</span>
-                            <span>{{}}</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="text-primary">备注：</span>
                             <span>{{key.remark}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>{{staff[key.bulletin_staff_id]}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>{{dict.department_all[department_id]}}</span>
                         </div>
@@ -217,43 +213,43 @@
                         <h4>款项</h4>
                     </header>
                     <div class="col-md-12 detail">
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备时间：</span>
                             <span>2017-02-17</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">款项类型：</span>
                             <span>中介费</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">备注：</span>
                             <span>多付一个月押金</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款金额：</span>
                             <span>800</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">付款方式：</span>
                             <span>银行卡</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">收款银行：</span>
                             <span>南京银行</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">收款人户名：</span>
                             <span>赵梦涵</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">账户：</span>
                             <span>123456789</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">报备人：</span>
                             <span>李彬彬</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="">
                             <span class="text-primary">所属部门：</span>
                             <span>百万一组</span>
                         </div>
@@ -382,6 +378,7 @@
         display: flex;
         display: -webkit-flex;
         align-items: center;
+        width: 33.3333%;
     }
 
     div.detail > div > span:first-child {

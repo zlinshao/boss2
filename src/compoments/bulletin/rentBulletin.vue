@@ -52,7 +52,7 @@
                         </div>
 
                         <!--<div class="form-group">-->
-                            <!--<a class="btn btn-success" type="button" @click="leading_out">导出</a>-->
+                        <!--<a class="btn btn-success" type="button" @click="leading_out">导出</a>-->
                         <!--</div>-->
 
                         <div class="form-group pull-right text-primary" style="line-height: 34px;">
@@ -124,14 +124,17 @@
                             </td>
                             <td>{{item.bulletin_time}}</td>
                             <td>
-                                <span>{{cate[item.cate_id - 1]}}</span>
+                                <span>{{cate[item.cate_id - 3]}}</span>
                             </td>
                             <td class="detail">
                                 <div>
                                     {{item.detailed_address}}
-                                    <span v-show="item.lose == 1" @click="friedBill(1)">炸</span>
-                                    <span v-show="item.refund == 1" @click="friedBill(3)">款</span>
-                                    <span v-show="item.redistribution == 1" @click="friedBill(4)">调</span>
+                                    <!--<span v-show="item.lose == 1" @click="friedBill(1)">炸</span>-->
+                                    <!--<span v-show="item.refund == 1" @click="friedBill(2)">款</span>-->
+                                    <!--<span v-show="item.redistribution == 1" @click="friedBill(3)">调</span>-->
+                                    <span @click="friedBill(1,item.id)">炸</span>
+                                    <span @click="friedBill(2,item.id)">款</span>
+                                    <span @click="friedBill(3,item.id)">调</span>
                                 </div>
                             </td>
                             <td>{{item.rooms_together}}</td>
@@ -177,7 +180,7 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--炸单详情-->
-        <FriedBill :dict="dict" :title="titles"></FriedBill>
+        <FriedBill :dict="dict" :title="titles" :detail="details"></FriedBill>
 
         <!--历史记录-->
         <History></History>
@@ -197,7 +200,8 @@
         components: {Page, Status, STAFF, DatePicker, FriedBill, History},
         data() {
             return {
-                cate: ['出租', '续租', '个人转租', '公司出租'],
+                details: {},
+                cate: ['出租', '续租', '个人转租', '公司转租','未收先租'],
                 titles: '',                 //炸单/充公详情
                 total_performance: '',      //总业绩
                 dict: {},                   //字典
@@ -348,18 +352,26 @@
                     }
                 }
             },
-//            炸单
-            friedBill(val) {
-                if (val === 1) {
-                    this.titles = '炸单详情';
-                } else if (val === 2) {
-                    this.titles = '充公详情';
-                } else if (val === 3) {
-                    this.titles = '款项详情';
-                } else {
-                    this.titles = '调房详情';
-                }
-                $('#friedBill').modal({backdrop: 'static'});
+
+            //            炸单/款项/调房
+            friedBill(val, id) {
+                this.$http.get('bulletin/rent/rentBulletinDetail?id=' + id + '&mark=1').then((res) => {
+                    if (res.data.code === '80010') {
+                        if (val === 1) {
+                            this.titles = '炸单详情';
+                            this.details = res.data.data.dataLose[0];
+                        } else if (val === 2) {
+                            this.titles = '款项详情';
+                            this.details = res.data.data.dataRefund[0];
+                        } else {
+                            this.titles = '调房详情';
+                            this.details = res.data.data.dataRedistribution[0];
+                        }
+                        $('#friedBill').modal({backdrop: 'static'});
+                    } else {
+                        this.details = null;             //炸单
+                    }
+                });
             },
             successMsg(msg) {    //成功提示信息
                 this.info.success = msg;
