@@ -129,12 +129,12 @@
                             <td class="detail">
                                 <div>
                                     {{item.detailed_address}}
-                                    <!--<span v-show="item.lose == 1" @click="friedBill(1)">炸</span>-->
-                                    <!--<span v-show="item.refund == 1" @click="friedBill(2)">款</span>-->
-                                    <!--<span v-show="item.redistribution == 1" @click="friedBill(3)">调</span>-->
-                                    <span @click="friedBill(1,item.id)">炸</span>
-                                    <span @click="friedBill(2,item.id)">款</span>
-                                    <span @click="friedBill(3,item.id)">调</span>
+                                    <span v-show="item.lose == 1" @click="friedBill(1,item.id)">炸</span>
+                                    <span v-show="item.refund == 1" @click="friedBill(2,item.id)">款</span>
+                                    <span v-show="item.dataOldRent == 1" @click="friedBill(3,item.id)">调</span>
+                                    <!--<span @click="friedBill(1,item.id)">炸</span>-->
+                                    <!--<span @click="friedBill(2,item.id)">款</span>-->
+                                    <!--<span @click="friedBill(3,item.id)">调</span>-->
                                 </div>
                             </td>
                             <td>{{item.rooms_together}}</td>
