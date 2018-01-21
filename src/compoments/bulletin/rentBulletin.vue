@@ -374,7 +374,7 @@
                             this.details = res.data.data.dataRefund[0];
                         } else {
                             this.titles = '调房详情';
-                            this.details = res.data.data.dataRedistribution[0];
+                            this.details = res.data.data.dataOldRent[0];
                         }
                         $('#friedBill').modal({backdrop: 'static'});
                     } else {

@@ -212,7 +212,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-body table-responsive" v-if="myData.dataRedistribution != null" v-for="(key,index) in dataRedistribution">
+                <div class="panel-body table-responsive" v-if="myData.dataOldRent != null" v-for="(key,index) in dataOldRent">
                     <header class="bulletin">
                         <h4>调房</h4>
                     </header>
@@ -223,19 +223,19 @@
                         </div>
                         <div class="">
                             <span class="text-primary">原付款方式：</span>
-                            <span>押1付12</span>
+                            <span>{{key.pay_way_together}}</span>
                         </div>
                         <div class="">
                             <span class="text-primary">签约人：</span>
-                            <span>{{staff[key.staff_id]}}</span>
+                            <span>{{key.sname}}</span>
                         </div>
                         <div class="">
                             <span class="text-primary">原地址：</span>
-                            <span>积善公寓2-304</span>
+                            <span>{{key.detailed_address}}</span>
                         </div>
                         <div class="">
                             <span class="text-primary">原价格：</span>
-                            <span>2000</span>
+                            <span>{{key.price_per_month_together}}</span>
                         </div>
                         <div class="">
                             <span class="text-primary">备注：</span>
@@ -275,7 +275,7 @@
                 myData: {},
                 dataBulletin: [],           //喜报
                 dataLose: [],               //炸单
-                dataRedistribution: [],     //调房
+                dataOldRent: [],     //调房
                 dataRefund: [],             //款项
                 screenshots: {},            //截图
                 contract_photo: {},         //合同照片
@@ -298,7 +298,7 @@
                             this.dataBulletin = res.data.data.dataBulletin;
                             this.dataLose = res.data.data.dataLose;
                             this.dataRefund = res.data.data.dataRefund;
-                            this.dataRedistribution = res.data.data.dataRedistribution;
+                            this.dataOldRent = res.data.data.dataOldRent;
                             this.screenshots = res.data.data.dataBulletin[0].screenshot;
                             this.contract_photo = res.data.data.dataBulletin[0].contract_photo;
                             this.department_id = res.data.data.dataBulletin[0].department_id;
@@ -307,7 +307,7 @@
                             this.myData = {};
                             this.dataBulletin = [];           //喜报
                             this.dataLose = null;             //炸单
-                            this.dataRedistribution = null;   //调房
+                            this.dataOldRent = null;          //调房
                             this.dataRefund = null;           //款项
                             this.contract_photo = {};         //合同照片
                             this.largePic = [];               //点击放大图片

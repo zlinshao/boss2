@@ -131,16 +131,16 @@
                                 </div>
                                 <div class="form-group col-sm-6 padd0">
                                     <label class="col-sm-4 control-label">原定金/全款</label>
-                                    <div class="col-lg-8">{{staff_name}}</div>
+                                    <div class="col-lg-8">{{deposit_or_full}}</div>
                                 </div>
                                 <div class="form-group col-xs-12 padd0">
-                                    <label class="col-sm-4 control-label">备注</label>
+                                    <label class="col-sm-4 control-label" style="width: 120px;">备注</label>
                                     <div class="col-lg-8">
                                         {{remarks}}
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6 padd0">
-                                    <label class="col-sm-4 control-label">原签约人111</label>
+                                    <label class="col-sm-4 control-label">原签约人</label>
                                     <div class="col-lg-8">{{oldContract}}</div>
                                 </div>
                                 <div class="form-group col-sm-6 padd0">
@@ -191,7 +191,8 @@
                 bank: '',                   //收款银行 / 原付款方式
                 accountName: '',            //收款人户名 / 原月单价
                 account: '',                //账户 / 尾款补齐时间
-                staff_name: '',             //报备人 / 原定金/全款
+                staff_name: '',             //报备人
+                deposit_or_full: '',        //原定金/全款
                 department_name: '',        //所属部门
 
                 oldContract: '',            //原签约人
@@ -211,6 +212,9 @@
                     }
                     if (this.title === '款项详情') {
                         this.d(val);
+                    }
+                    if (this.title === '调房详情') {
+                        this.e(val);
                     }
                 }
             },
@@ -253,6 +257,15 @@
                         }
                     });
                 }
+                if(this.title === '调房详情'){
+                    this.$http.get('bulletin/redistribution/redistributionBulletinDetail?id=' + id).then((res) => {
+                        if (res.data.code === '90010') {
+                            this.a(res.data.data.dataOldRent[0]);
+                            this.e(res.data.data.dataOldRent[0]);
+                            this.status = false;
+                        }
+                    });
+                }
             },
             // 历史记录
             histories() {
@@ -286,10 +299,10 @@
                     })
                 }
                 if (this.title === '调房详情') {
-                    this.$http.get('bulletin/confiscation/bulletinHistory', {
+                    this.$http.get('bulletin/redistribution/bulletinHistory', {
                         params: this.params,
                     }).then((res) => {
-                        if(res.data.code === '80020'){
+                        if(res.data.code === '90020'){
                             this.history_time = res.data.data;
                         }
                     })
@@ -339,6 +352,17 @@
                 this.account = val.refund_account;
                 this.remarks = val.remark;
             },
+            // 调房详情
+            e(val){
+                this.drawbackPrice = val.detailed_address;
+                this.drawback = val.rent_month;
+                this.bank = val.pay_way_together;
+                this.accountName = val.price_per_month_together;
+                this.account = val.retainage_time;
+                this.deposit_or_full = val.deposit_or_full;
+                this.oldContract = val.sname;
+                this.oldBulletin = this.staff[val.bulletin_staff_id];
+            },
             close_() {
                 this.bulletinDate = '';           //报备时间
                 this.fundType = '';               //款项类型
@@ -348,7 +372,8 @@
                 this.bank = '';                   //收款银行 / 原付款方式
                 this.accountName = '';            //收款人户名 / 原月单价
                 this.account = '';                //账户 / 尾款补齐时间
-                this.staff_name = '';             //报备人 / 原定金/全款
+                this.staff_name = '';             //报备人
+                this.deposit_or_full = '';        //原定金
                 this.department_name = '';        //所属部门
                 this.oldContract = '';            //原签约人
                 this.oldBulletin = '';            //原报备人
@@ -409,6 +434,7 @@
         text-align: center;
         margin: 10px 0;
         width: 33.3333%;
+        float: left;
     }
 
     .times > div > a {
