@@ -114,7 +114,7 @@
                                 </label>
                             </td>
                             <td>
-                                <span @click="historyTime" style="cursor: pointer;">
+                                <span @click="historyTime(item.rent_id, item.house_id)" style="cursor: pointer;">
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
@@ -136,12 +136,12 @@
                             <td>{{item.dname}}</td>
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/balanceDetail',query: {balance: item.id}}">
+                                <router-link :to="{path:'/balanceDetail',query: {ids: item.id}}">
                                     详情
                                 </router-link>
                             </td>
                         </tr>
-                        <tr class="text-center" v-show="isShow">
+                        <tr class="text-center" v-if="isShow">
                             <td colspan="19" class="text-center text-muted">
                                 <h4>暂无数据....</h4>
                             </td>
@@ -159,7 +159,7 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--历史记录-->
-        <History></History>
+        <History :msg="histories" :urls="urls" :status="''"></History>
     </div>
 </template>
 
@@ -174,6 +174,9 @@
         components: {Page, Status, STAFF, DatePicker, History},
         data() {
             return {
+                urls: '',
+                histories: [],
+                details: {},
                 cate: ['出租', '续租', '个人转租', '公司出租'],
                 dict: {},                   //字典
                 pitch: [],                  //ID
@@ -222,8 +225,15 @@
         },
         methods: {
             // 历史记录
-            historyTime() {
-                $('#history').modal({backdrop: 'static'});
+            historyTime(rent, house) {
+                this.histories = [];
+                this.$http.get('bulletin/retainage/bulletinHistory?rent_id=' + rent + '&house_id=' + house).then((res) => {
+                    if (res.data.code === '90020') {
+                        this.histories = res.data.data;
+                        this.urls = '/balanceDetail'
+                    }
+                });
+                $('#history').modal({back: 'static'});
             },
             search() {
                 this.balance(this.params.page);

@@ -294,7 +294,7 @@
                 this.$http.get('revenue/glee_collect/staff_id').then((res) => {
                     this.staff = res.data;
 
-                    this.$http.get('bulletin/collect/collectBulletinDetail?id=' + this.$route.query.collect + '&mark=1').then((res) => {
+                    this.$http.get('bulletin/collect/collectBulletinDetail?id=' + this.$route.query.ids + '&mark=1').then((res) => {
                         if (res.data.code === '90010') {
                             this.isShow = false;
                             this.myData = res.data.data;

@@ -11,13 +11,13 @@
                         <h4 class="modal-title">历史记录</h4>
                     </div>
                     <div class="modal-body">
-                        <div v-for="(key,index) in 10" v-if="data.length > 0">
-                            <a @click="close_(key)">2017-01-01</a>
+                        <div v-for="(key,index) in msg" v-if="msg.length > 0">
+                            <a @click="close_(key.id)">{{key.history_time}}</a>
                         </div>
-                        <div v-if="data.length === 0">暂无历史记录</div>
+                        <div v-if="msg.length == 0">暂无历史记录</div>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-primary btn-md">关闭</button>
+                        <button data-dismiss="modal" class="btn btn-primary btn-md">关闭{{status}}</button>
                     </div>
                 </div>
             </div>
@@ -28,20 +28,17 @@
 <script>
 
     export default {
-        props: ['urls'],
+        props: ['msg', 'urls', 'status'],
         data() {
-            return {
-                data: [],
-            }
-        },
-        mounted() {
-            // this.$http.get('').then((res) => {
-            //
-            // })
+            return {}
         },
         methods: {
             close_(val) {
-                this.$router.push({path: '/', query: {time: val}});
+                if (this.status === '') {
+                    this.$router.push({path: this.urls, query: {ids: val}});
+                } else {
+                    this.$router.push({path: this.urls, query: {ids: val, num: this.status}});
+                }
                 $('#history').modal('hide');
             }
         }

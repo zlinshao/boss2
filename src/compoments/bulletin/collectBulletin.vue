@@ -118,7 +118,7 @@
                                 </label>
                             </td>
                             <td>
-                                <span @click="historyTime" style="cursor: pointer;">
+                                <span @click="historyTime(item.rent_id, item.house_id)" style="cursor: pointer;">
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
@@ -166,7 +166,7 @@
                             <!--</td>-->
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/collectBulletinDetail',query:{collect: item.id}}">
+                                <router-link :to="{path:'/collectBulletinDetail',query:{ids: item.id}}">
                                     详情
                                 </router-link>
                             </td>
@@ -192,7 +192,7 @@
         <FriedBill :dict="dict" :title="titles" :detail="details"></FriedBill>
 
         <!--历史记录-->
-        <History></History>
+        <History :msg="histories" :urls="urls" :status="''"></History>
 
         <!--新增备注-->
         <AddRemark @add="lookRemark" :remark="remark"></AddRemark>
@@ -213,6 +213,8 @@
         components: {Page, Status, STAFF, DatePicker, FriedBill, History, AddRemark},
         data() {
             return {
+                urls: '',
+                histories: [],
                 details: [],
                 titles: '',                 //炸单/充公详情
                 dict: {},                   //字典
@@ -269,9 +271,16 @@
             })
         },
         methods: {
-            // 历史
-            historyTime() {
-                $('#history').modal({backdrop: 'static'});
+            // 历史记录
+            historyTime(rent, house) {
+                this.
+                this.$http.get('bulletin/collect/bulletinHistory?rent_id=' + rent + '&house_id=' + house).then((res) => {
+                    if(res.data.code === '90020'){
+                        this.histories = res.data.data;
+                        this.urls = '/collectBulletinDetail'
+                    }
+                });
+                $('#history').modal({back: 'static'});
             },
             search() {
                 this.collect(this.params.page)

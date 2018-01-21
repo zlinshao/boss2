@@ -132,7 +132,7 @@
                 this.$http.get('revenue/glee_collect/staff_id').then((res) => {
                     this.staff = res.data;
 
-                    this.$http.get('bulletin/special/specialBulletinDetail?id=' + router.special + '&collect_or_rent=' + router.num).then((res) => {
+                    this.$http.get('bulletin/special/specialBulletinDetail?id=' + router.ids + '&collect_or_rent=' + router.num).then((res) => {
                         if (res.data.code === '80010') {
                             this.isShow = false;
                             this.dataBulletin = res.data.data;
