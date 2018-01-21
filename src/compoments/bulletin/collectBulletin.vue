@@ -129,12 +129,12 @@
                             </td>
                             <td class="detail">
                                 <div>{{item.detailed_address}}
-                                    <!--<span v-show="item.lose == 1" @click="friedBill(1)">炸</span>-->
-                                    <!--<span v-show="item.confiscation == 1" @click="friedBill(2)">充</span>-->
-                                    <!--<span v-show="item.refund == 1" @click="friedBill(3)">款</span>-->
-                                    <span @click="friedBill(1,item.id)">炸</span>
-                                    <span @click="friedBill(2,item.id)">充</span>
-                                    <span @click="friedBill(3,item.id)">款</span>
+                                    <span v-show="item.lose == 1" @click="friedBill(1,item.id)">炸</span>
+                                    <span v-show="item.confiscation == 1" @click="friedBill(2,item.id)">充</span>
+                                    <span v-show="item.refund == 1" @click="friedBill(3,item.id)">款</span>
+                                    <!--<span @click="friedBill(1,item.id)">炸</span>-->
+                                    <!--<span @click="friedBill(2,item.id)">充</span>-->
+                                    <!--<span @click="friedBill(3,item.id)">款</span>-->
                                 </div>
                             </td>
                             <td>{{item.rooms}}室{{item.hall}}厅{{item.toilet}}卫</td>
@@ -273,7 +273,6 @@
         methods: {
             // 历史记录
             historyTime(rent, house) {
-                this.
                 this.$http.get('bulletin/collect/bulletinHistory?rent_id=' + rent + '&house_id=' + house).then((res) => {
                     if(res.data.code === '90020'){
                         this.histories = res.data.data;

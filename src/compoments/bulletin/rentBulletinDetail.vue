@@ -15,7 +15,7 @@
                         <i class="fa fa-file-text-o"></i>&nbsp;喜报详情
                         <span v-show="myData.dataLose != null">炸</span>
                         <span v-show="myData.dataRefund != null">款</span>
-                        <span v-show="myData.dataRedistribution != null">调</span>
+                        <span v-show="myData.dataOldRent != null">调</span>
                     </h4>
                 </header>
                 <div class="panel-body table-responsive" v-for="(key,index) in dataBulletin" v-if="!isShow">
