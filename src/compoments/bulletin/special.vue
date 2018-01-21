@@ -34,7 +34,8 @@
                             <input type="text" class="form-control" id="search_info" placeholder="地址/开单人"
                                    v-model="params.keywords" @keydown.enter.prevent="special(1)">
                             <span class="input-group-btn">
-                                <button class="btn btn-success" id="search" type="button" @click="special(1)">搜索</button>
+                                <button class="btn btn-success" id="search" type="button"
+                                        @click="special(1)">搜索</button>
                             </span>
                         </div>
 
@@ -103,7 +104,8 @@
                                 </label>
                             </td>
                             <td>
-                                <span @click="historyTime" style="cursor: pointer;">
+                                <span @click="historyTime(item.rent_id,item.house_id,item.collect_or_rent)"
+                                      style="cursor: pointer;">
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
@@ -120,7 +122,8 @@
                             <td>{{item.dname}}</td>
                             <td>{{item.remark}}</td>
                             <td>
-                                <router-link :to="{path:'/specialDetail',query: {special: item.id, num: item.collect_or_rent}}">
+                                <router-link
+                                        :to="{path:'/specialDetail',query: {ids: item.id, num: item.collect_or_rent}}">
                                     详情
                                 </router-link>
                             </td>
@@ -143,7 +146,7 @@
         <STAFF :configure="configure" @Staff="selectDateSend"></STAFF>
 
         <!--历史记录-->
-        <History></History>
+        <History :msg="histories" :urls="urls" :status="historyId"></History>
     </div>
 </template>
 
@@ -158,6 +161,10 @@
         components: {Page, Status, STAFF, DatePicker, History},
         data() {
             return {
+                urls: '',
+                histories: [],
+                details: [],
+                historyId: '',
                 dict: {},                   //字典
                 pitch: [],                  //ID
                 paging: '',                 //总页数
@@ -204,14 +211,22 @@
         },
         methods: {
             // 历史记录
-            historyTime() {
-                $('#history').modal({backdrop: 'static'});
+            historyTime(rent, house, status) {
+                this.histories = [];
+                this.$http.get('bulletin/special/bulletinHistory?rent_id=' + rent + '&house_id=' + house + '&collect_or_rent=' + status).then((res) => {
+                    if (res.data.code === '80020') {
+                        this.histories = res.data.data;
+                        this.urls = '/specialDetail';
+                        this.historyId = status;
+                    }
+                });
+                $('#history').modal({back: 'static'});
             },
             search() {
                 this.special(this.params.page);
             },
 
-            special (val){
+            special(val) {
                 this.params.page = val;
                 this.$http.get('bulletin/special/specialBulletinIndex', {
                     params: this.params,
@@ -271,10 +286,10 @@
             close_() {
                 this.params.search = '';
                 this.params.department_id = '';
-                this.params.staff_id ='';
+                this.params.staff_id = '';
                 this.params.page = 1;
                 this.collect_or_rent = 1;
-                this.selected ='';
+                this.selected = '';
                 this.currentDate = [];
                 this.pitch = [];
                 this.special(1);

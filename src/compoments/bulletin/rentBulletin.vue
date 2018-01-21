@@ -118,7 +118,7 @@
                                 </label>
                             </td>
                             <td>
-                                <span @click="historyTime" style="cursor: pointer;">
+                                <span @click="historyTime(item.rent_id, item.house_id)" style="cursor: pointer;">
                                     <i class="fa fa-clock-o" style="font-size: 20px;"></i>
                                 </span>
                             </td>
@@ -157,7 +157,7 @@
                             <td>{{item.dname}}</td>
                             <td></td>
                             <td>
-                                <router-link :to="{path:'/rentBulletinDetail',query:{rent: item.id}}">
+                                <router-link :to="{path:'/rentBulletinDetail',query:{ids: item.id}}">
                                     详情
                                 </router-link>
                             </td>
@@ -183,7 +183,7 @@
         <FriedBill :dict="dict" :title="titles" :detail="details"></FriedBill>
 
         <!--历史记录-->
-        <History></History>
+        <History :msg="histories" :urls="urls" :status="''"></History>
     </div>
 </template>
 
@@ -200,8 +200,10 @@
         components: {Page, Status, STAFF, DatePicker, FriedBill, History},
         data() {
             return {
+                urls: '',
+                histories: [],
                 details: {},
-                cate: ['出租', '续租', '个人转租', '公司转租','未收先租'],
+                cate: ['出租', '续租', '个人转租', '公司转租', '未收先租'],
                 titles: '',                 //炸单/充公详情
                 total_performance: '',      //总业绩
                 dict: {},                   //字典
@@ -258,7 +260,7 @@
                         this.isShow = false;
                         this.paging = res.data.data.pages;
                         this.bulletin = res.data.data.current_page;
-                        this.total_performance = res.data.data.current_page.total_performance;
+                        this.total_performance = res.data.data.total_performance;
                     } else {
                         this.isShow = true;
                         this.paging = '';
@@ -268,7 +270,14 @@
                 })
             },
             // 历史记录
-            historyTime() {
+            historyTime(rent, house) {
+                this.histories = [];
+                this.$http.get('bulletin/rent/bulletinHistory?rent_id=' + rent + '&house_id=' + house).then((res) => {
+                    if(res.data.code === '80020'){
+                        this.histories = res.data.data;
+                        this.urls = '/rentBulletinDetail'
+                    }
+                });
                 $('#history').modal({back: 'static'});
             },
             search() {

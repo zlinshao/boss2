@@ -65,11 +65,11 @@
                     <span v-else>无</span>
                 </div>
 
-                <div>
-                    <span class="text-primary">收房空置期内未出租房屋数量</span>
-                    <span v-if="vacancy_period != '无'">{{vacancy_period.collect_in_range}}</span>
-                    <span v-else>无</span>
-                </div>
+                <!--<div>-->
+                    <!--<span class="text-primary">收房空置期内未出租房屋数量</span>-->
+                    <!--<span v-if="vacancy_period != '无'">{{vacancy_period.collect_in_range}}</span>-->
+                    <!--<span v-else>无</span>-->
+                <!--</div>-->
                 <div>
                     <span class="text-primary">租房未超过空置期房屋数量</span>
                     <span v-if="vacancy_period != '无'">{{vacancy_period.rent_in_range}}</span>

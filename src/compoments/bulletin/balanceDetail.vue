@@ -155,7 +155,7 @@
                 this.$http.get('revenue/glee_collect/staff_id').then((res) => {
                     this.staff = res.data;
 
-                    this.$http.get('bulletin/retainage/retainageBulletinDetail?id=' + this.$route.query.balance + '&mark=1').then((res) => {
+                    this.$http.get('bulletin/retainage/retainageBulletinDetail?id=' + this.$route.query.ids + '&mark=1').then((res) => {
                         if (res.data.code === '80010') {
                             this.myData = res.data.data;
                             this.dataBulletin = res.data.data;
