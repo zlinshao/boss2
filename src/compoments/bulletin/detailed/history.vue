@@ -17,7 +17,7 @@
                         <div v-if="msg.length == 0">暂无历史记录</div>
                     </div>
                     <div class="modal-footer text-right">
-                        <button data-dismiss="modal" class="btn btn-primary btn-md">关闭{{status}}</button>
+                        <button data-dismiss="modal" class="btn btn-primary btn-md">关闭</button>
                     </div>
                 </div>
             </div>

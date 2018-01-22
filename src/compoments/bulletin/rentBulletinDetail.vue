@@ -389,7 +389,7 @@
     div.detail > div > span:first-child {
         display: inline-block;
         padding-right: 20px;
-        text-align: right;
+        text-align: left;
         min-width: 140px;
     }
     div.detail > div > span:last-of-type{
