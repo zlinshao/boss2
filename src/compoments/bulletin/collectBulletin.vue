@@ -245,7 +245,6 @@
 
                 remark: {
                     look_remark: [],                        //备注内容
-                    addRemark: '',                          //新增备注
                     address_remark: '',                     //头部信息
                     remark_id: '',                          //备注id
                     urls: 'account/receivable/tag_v2/'      //新增接口
@@ -282,7 +281,7 @@
                 $('#history').modal({back: 'static'});
             },
             search() {
-                this.collect(this.params.page)
+                this.collect(this.params.page);
             },
 //            日期筛选
             getDate(date) {
