@@ -233,6 +233,7 @@
                                 this.seatArray.push(item.seat_number);
                                 this.itemIdArray.push(item.staff_id);
                                 this.leader_sort.push(item.leader_sort);
+                                console.log(this.leader_sort)
                                 if(item.is_leader === 1){
                                     this.is_leader.push(true);
                                 }else {
