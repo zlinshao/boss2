@@ -289,6 +289,11 @@
                                 style="margin-top: 5px;margin-right: 20px;">查看账本
                         </button>
                     </li>
+                    <li v-if="urlId == 34">
+                        <button class="btn btn-success" @click="accountLogin"
+                                style="margin-top: 5px;margin-right: 20px;">账号登陆
+                        </button>
+                    </li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" :src="Card" style="width: 30px;height: 30px;border-radius:50% ">
@@ -442,32 +447,32 @@
                     <!--<li class="sub-menu">-->
 
                     <!--<li class="sub-menu" v-show="isSuper">-->
-                        <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-money"></i>-->
-                            <!--<span>喜报管理</span>-->
-                        <!--</a>-->
-                        <!--<ul class="sub">-->
-                            <!--<li>-->
-                                <!--<router-link to="/collectBulletin">-->
-                                    <!--<span>收房喜报</span>-->
-                                <!--</router-link>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<router-link to="/rentBulletin">-->
-                                    <!--<span>租房喜报</span>-->
-                                <!--</router-link>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<router-link to="/balance">-->
-                                    <!--<span>尾款报备</span>-->
-                                <!--</router-link>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<router-link to="/special">-->
-                                    <!--<span>特殊情况报备</span>-->
-                                <!--</router-link>-->
-                            <!--</li>-->
-                        <!--</ul>-->
+                    <!--<a href="javascript:;">-->
+                    <!--<i class="fa fa-money"></i>-->
+                    <!--<span>喜报管理</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                    <!--<li>-->
+                    <!--<router-link to="/collectBulletin">-->
+                    <!--<span>收房喜报</span>-->
+                    <!--</router-link>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<router-link to="/rentBulletin">-->
+                    <!--<span>租房喜报</span>-->
+                    <!--</router-link>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<router-link to="/balance">-->
+                    <!--<span>尾款报备</span>-->
+                    <!--</router-link>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<router-link to="/special">-->
+                    <!--<span>特殊情况报备</span>-->
+                    <!--</router-link>-->
+                    <!--</li>-->
+                    <!--</ul>-->
                     <!--</li>-->
 
                     <li class="sub-menu"
@@ -778,7 +783,7 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu"  v-show="simulate.indexOf('Conference/conferenceList') > -1||isSuper">
+                    <li class="sub-menu" v-show="simulate.indexOf('Conference/conferenceList') > -1||isSuper">
                         <a href="javascript:;">
                             <i class="fa fa-edit"></i>
                             <span>会议记要</span>
@@ -1220,12 +1225,13 @@
 
 <script>
     import LookRemind from '../common/remind/checkRemind.vue';
-    import AddRemind from  '../common/remind/addRemind.vue'
+    import AddRemind from '../common/remind/addRemind.vue'
     import Status from '../common/status.vue';
+
     export default {
         components: {AddRemind, Status, LookRemind},
-        props: ['Name', 'Card', 'simulate', 'isSuper'],
-        data(){
+        props: ['Name', 'Card', 'simulate', 'isSuper', 'urlId'],
+        data() {
             return {
                 revenues: false,
                 identifyingCode: '',        //验证码
@@ -1257,7 +1263,7 @@
                 }
             }
         },
-        mounted(){
+        mounted() {
 //            财务权限
 //            this.$http.post('revenue/customer/is_rule').then((res) => {
 //                if (res.data.code === '20015') {
@@ -1266,16 +1272,16 @@
 //                    this.account_book = false;
 //                }
 //            });
-            if(this.hideState === '/meeting'){
+            if (this.hideState === '/meeting') {
                 document.getElementById('sidebar').style.margin = '0 0 0 -210px';
                 document.getElementById('main-content').style.margin = '0';
                 $('.header').hide();
-                $('.wrapper').css('margin-top','0')
-            }else {
+                $('.wrapper').css('margin-top', '0')
+            } else {
                 document.getElementById('sidebar').style.margin = '0';
                 document.getElementById('main-content').style.margin = '0 0 0 210px';
                 $('.header').show();
-                $('.wrapper').css('margin-top','60px')
+                $('.wrapper').css('margin-top', '60px')
             }
             this.isPc = this.IsPC();
             this.new_infos();
@@ -1297,29 +1303,39 @@
                 }
             })
         },
-        computed:{
-            hideState(){
+        computed: {
+            hideState() {
                 return this.$route.path;
             }
         },
-        watch:{
-            hideState(val){
-                if(this.hideState === '/meeting'){
+        watch: {
+            hideState(val) {
+                if (this.hideState === '/meeting') {
                     document.getElementById('sidebar').style.margin = '0 0 0 -210px';
-                    document.getElementById('main-content').style.margin = '0'
+                    document.getElementById('main-content').style.margin = '0';
                     $('.header').hide();
-                    $('.wrapper').css('margin-top','0')
-                }else {
+                    $('.wrapper').css('margin-top', '0')
+                } else {
                     document.getElementById('sidebar').style.margin = '0';
-                    document.getElementById('main-content').style.margin = '0 0 0 210px'
+                    document.getElementById('main-content').style.margin = '0 0 0 210px';
                     $('.header').show();
-                    $('.wrapper').css('margin-top','60px')
+                    $('.wrapper').css('margin-top', '60px')
                 }
             }
         },
         methods: {
+            // 账号登陆
+            accountLogin() {
+                this.$http.post('auth/login/logins').then((res) => {
+                    if (res.data.code === '80000') {
+                        window.location.reload();
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
+            },
 //            财务二级密码
-            gainRevenue (){
+            gainRevenue() {
                 if (!this.revenues) {
                     this.$http.get('/account/subject').then((res) => {
                         if (res.data.code === '80000') {
@@ -1333,7 +1349,7 @@
                 }
             },
 //            输入二级密码
-            revenue (){
+            revenue() {
                 this.$http.post('/revenue/check', {
                     code: this.identifyingCode
                 }).then((res) => {
@@ -1346,10 +1362,10 @@
                 })
             },
 //            退出
-            dropOut (){
+            dropOut() {
                 $('#withdraw').modal({backdrop: 'static',});
             },
-            withdraw (){
+            withdraw() {
                 this.$http.post('/revenue/quit').then((res) => {
                     if (res.data.code === '80010') {
                         this.successMsg(res.data.msg);
@@ -1362,20 +1378,20 @@
                 })
             },
 //            新消息提醒
-            new_infos (){
+            new_infos() {
                 this.$http.post('message/message/self_mess').then((res) => {
                     this.new_info = res.data.data;
                 })
             },
 //            清空密码锁
-            lock_empty (){
+            lock_empty() {
                 this.lockScreen = '';
             },
             /*//            左侧栏点击颜色
              pitch_on (n){
              this.isActive = n;
              },*/
-            logOut (){
+            logOut() {
                 this.$http.post('staff/logout').then(() => {
                     let keys = document.cookie.match(/[^ =;]+(?=\=)/g);
                     if (keys) {
@@ -1387,7 +1403,7 @@
             },
 
 //            查看提醒
-            lookRemind(){
+            lookRemind() {
                 $('#checkRemind').modal({
                     backdrop: 'static',         //空白处不消失
                 });
@@ -1402,20 +1418,20 @@
                 });
             },
 //            增加提醒
-            addReminds(){
+            addReminds() {
                 $('#addRemind').modal({
                     backdrop: 'static',         //空白处不消失
                 });
             },
 //            修改锁屏密码
-            lock_state (){
+            lock_state() {
                 $('#lock_screen').modal({
                     backdrop: 'static',         //空白处不消失
                 });
                 this.lock_status = false;
             },
 //            锁屏
-            lock_screen (val, lock){
+            lock_screen(val, lock) {
                 this.lock_status = true;
                 this.$http.post('auth/auth/lock_screen_status', {
                     set_pwd_lock: val,
@@ -1444,11 +1460,11 @@
                 });
             },
 //            设置密码
-            set_password (){
+            set_password() {
                 this.lock_screen(this.lockScreen);
             },
 //            修改密码
-            revise_password (val){
+            revise_password(val) {
                 if (this.lockScreen === '') {
                     //失败信息 ***
                     this.info.error = '密码不能为空';
@@ -1478,7 +1494,7 @@
                     }
                 });
             },
-            saveCheckIn(){
+            saveCheckIn() {
                 let _this = this;
 
                 let map, geolocation;
@@ -1499,6 +1515,7 @@
                     AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
                     AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
                 });
+
                 //解析定位结果
                 function onComplete(data) {
                     console.log(data);
@@ -1537,7 +1554,7 @@
                     alert('定位失败');
                 }
             },
-            IsPC(){
+            IsPC() {
                 let userAgentInfo = navigator.userAgent;
                 let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
                 let flag = true;
@@ -1549,13 +1566,13 @@
                 }
                 return flag;
             },
-            successMsg(msg){
+            successMsg(msg) {
                 //成功提示信息
                 this.info.success = msg;
                 //显示成功弹窗 ***
                 this.info.state_success = true;
             },
-            errorMsg(msg){
+            errorMsg(msg) {
                 //失败提示信息
                 this.info.error = msg;
                 //显示成功弹窗 ***

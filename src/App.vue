@@ -2,7 +2,7 @@
     <div id="app" v-show="isShow">
         <section id="container">
             <!--header-->
-            <HeaderVue :Name="urlName" :Card="urlCard" :simulate="simulates" :isSuper="superManager"></HeaderVue>
+            <HeaderVue :urlId="urlId" :Name="urlName" :Card="urlCard" :simulate="simulates" :isSuper="superManager"></HeaderVue>
             <!--router-->
             <section id="main-content">
                 <section class="wrapper">
@@ -169,6 +169,7 @@
                 superManager: false,
 
                 urlName: '',
+                urlId: '',
                 urlCard: '',
 
                 // 建议反馈
@@ -223,6 +224,7 @@
                         globalConfig.urlName = res.data.name;
                         this.isShow = true;
                         this.urlName = res.data.name;
+                        this.urlId = res.data.id;
                         this.urlCard = res.data.avatar;
                         for (let i = 0; i < res.data.auth_all.length; i++) {
                             this.simulates.push(res.data.auth_all[i].name);

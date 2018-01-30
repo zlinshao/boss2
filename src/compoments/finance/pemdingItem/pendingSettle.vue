@@ -51,13 +51,13 @@
                                         <!--<input type="text" class="form-control" readonly >-->
                                     <!--</div>-->
                                 <!--</div>-->
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">合同开始和结束时间</label>
-                                    <div class="col-sm-8" style="padding-bottom: 18px;">
-                                        <DatePicker :dateConfigure="dateConfigure"
-                                                   :currentDate="currentDate" @sendDate="getDate"></DatePicker>
-                                    </div>
-                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-4 control-label">合同开始和结束时间</label>-->
+                                    <!--<div class="col-sm-8" style="padding-bottom: 18px;">-->
+                                        <!--<DatePicker :dateConfigure="dateConfigure"-->
+                                                   <!--:currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">水费</label>
@@ -138,14 +138,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">实际扣款</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" disabled v-model="refund_diff">
+                                        <input type="number" class="form-control" disabled v-model="pendingSellter.refund_diff">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">实际退款</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" disabled v-model="refund_real">
+                                        <input type="number" class="form-control" disabled v-model="pendingSellter.refund_real">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -193,6 +193,15 @@
                                         <input type="text" class="form-control" disabled v-model="settle_date">
                                     </div>
                                 </div>
+
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label">付款时间</label>-->
+                                    <!--<div class="col-sm-10" style="padding-bottom: 18px;">-->
+                                        <!--<DatePicker :dateConfigure="dateConfigure" :idName="'payDate'"-->
+                                                    <!--:currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">科目 <sup>*</sup></label>
                                     <div class="col-sm-10">
@@ -243,11 +252,12 @@
             return {
                 dateConfigure : [
                     {
-                        range : true,
-                        needHour : true,
+                        range : false,
+                        needHour : false,
                         position : 'top-right',
                     }
                 ],
+                currentDate : [],               //合同开始和结束时间
                 configure : [],
                 info: {
                     //成功状态 ***
@@ -282,23 +292,22 @@
                     status : '',                //状态
                     remark : '',
                     refund_should:'',           //应退
-//                    refund_diff: '',            //实际扣款
-//                    refund_real :"",            //实际退款
+                   refund_diff: '',             //实际扣款
+                   refund_real :"",             //实际退款
                     account_type : '',          //结算方式
                     account_num : '',           //结算账户
-                    subject_id : '',               // 科目
-                    receive_pay : '',            //收退款
+                    subject_id : '',            // 科目
+                    receive_pay : '',           //收退款
                 },
-                staff_name : '',            //员工
-                myDictionary: [],           //字典
-                mySettleId : '',            //id
-                pendingSettleList : [],     //待处理数据
-                customer_name : '',         //客户姓名
-                department_name : '',       //部门名称
-                house_name:'',              //房屋名称
-                operator_name : '',         //结算人
-                settle_date : '',           //结算时间
-                currentDate : [],           //合同开始和结束时间
+                staff_name : '',                //员工
+                myDictionary: [],               //字典
+                mySettleId : '',                //id
+                pendingSettleList : [],         //待处理数据
+                customer_name : '',             //客户姓名
+                department_name : '',           //部门名称
+                house_name:'',                  //房屋名称
+                operator_name : '',             //结算人
+                settle_date : '',               //结算时间
             }
         },
         created (){
@@ -366,24 +375,24 @@
                         this.pendingSellter.account_type =res.data.data.account_type;
                         this.pendingSellter.account_num =res.data.data.account_num;
                         this.pendingSellter.refund_should =res.data.data.refund_should;
-                        this.refund_diff =res.data.data.refund_diff;
-                        this.refund_real =res.data.data.refund_real;
+                        this.pendingSellter.refund_diff =res.data.data.refund_diff;
+                        this.pendingSellter.refund_real =res.data.data.refund_real;
                         this.staff_name =res.data.data.staff_name;
                         this.pendingSellter.staff_id=res.data.data.staff_id;
                         this.currentDate.push(res.data.data.start_date);
                         this.currentDate.push(res.data.data.end_date);
-                        this.pendingSellter.diff_fee  = res.data.data.diff_fee                  //差额
-                        this.pendingSellter.water_fee  = res.data.data.water_fee                //水费
-                        this.pendingSellter.elec_fee  = res.data.data.elec_fee                  //电费
-                        this.pendingSellter.gas_fee  = res.data.data.gas_fee                    //燃气
-                        this.pendingSellter.property_fee  = res.data.data.property_fee          //物业费
-                        this.pendingSellter.penalty_fee  = res.data.data.penalty_fee            //违约金
-                        this.pendingSellter.check_fee  = res.data.data.check_fee                //物业校验
-                        this.pendingSellter.sublet_fee  = res.data.data.sublet_fee              //转租费用
-                        this.pendingSellter.manage_fee  = res.data.data.manage_fee              //管理费
-                        this.pendingSellter.net_fee  = res.data.data.net_fee                    //网络费
+                        this.pendingSellter.diff_fee  = res.data.data.diff_fee;                  //差额
+                        this.pendingSellter.water_fee  = res.data.data.water_fee;                //水费
+                        this.pendingSellter.elec_fee  = res.data.data.elec_fee;                  //电费
+                        this.pendingSellter.gas_fee  = res.data.data.gas_fee;                    //燃气
+                        this.pendingSellter.property_fee  = res.data.data.property_fee;          //物业费
+                        this.pendingSellter.penalty_fee  = res.data.data.penalty_fee;            //违约金
+                        this.pendingSellter.check_fee  = res.data.data.check_fee;                //物业校验
+                        this.pendingSellter.sublet_fee  = res.data.data.sublet_fee;              //转租费用
+                        this.pendingSellter.manage_fee  = res.data.data.manage_fee;              //管理费
+                        this.pendingSellter.net_fee  = res.data.data.net_fee;                    //网络费
                         this.settle_date  = new Date().toLocaleString();                         //结算时间
-                        this.pendingSellter.remark  = res.data.data.remark                      //备注
+                        this.pendingSellter.remark  = res.data.data.remark;                      //备注
                         this.pendingSellter.receive_pay  = res.data.data.receive_pay            //收退款
                     }else {
 
@@ -392,15 +401,15 @@
                 })
             },
             getDate(val){
-//                console.log(val)
-                if (val==''){
-                    this.currentDate.splice(0,this.currentDate.length);
-                    this.pendingSellter.start_date = '';
-                    this.pendingSellter.end_date = '';
-                } else {
-                    this.pendingSellter.start_date = val.split('to')[0];
-                    this.pendingSellter.end_date = val.split('to')[1];
-                }
+               console.log(val);
+//                 if (val==''){
+//                     this.currentDate.splice(0,this.currentDate.length);
+//                     this.pendingSellter.start_date = '';
+//                     this.pendingSellter.end_date = '';
+//                 } else {
+//                     this.pendingSellter.start_date = val.split('to')[0];
+//                     this.pendingSellter.end_date = val.split('to')[1];
+//                 }
 //                console.log(this.currentDate)
 
             },
