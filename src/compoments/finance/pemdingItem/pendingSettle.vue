@@ -215,9 +215,6 @@
                                         <textarea class="form-control" v-model="pendingSellter.remark"></textarea>
                                     </div>
                                 </div>
-
-
-
                             </form>
                         </div>
 
