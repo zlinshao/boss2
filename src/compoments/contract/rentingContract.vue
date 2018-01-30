@@ -171,7 +171,7 @@
                             发送短信
                         </li>
 
-                        <li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms')>-1||isSuper">
+                        <li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">
                             <i class="fa fa-envelope"></i>
                             温馨提示
                         </li>
