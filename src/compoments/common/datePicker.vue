@@ -52,7 +52,7 @@
             <input @click="remindData" type="text" name="addtime"
                    :placeholder="placeholder == undefined?'选择时间':placeholder" v-model="date"
                    :id="idName"
-                   class="form-control" readonly style="margin-bottom: ">
+                   class="form-control" readonly>
             <!--</label>-->
             <!--</div>-->
         </div>
