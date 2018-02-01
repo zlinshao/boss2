@@ -65,6 +65,14 @@
                             </label>
                         </div>
 
+                        <div class="input-group has-js" style="height: 39px;">
+                            <label style="margin: 11px;padding-left: 25px;"
+                                   :class="{'label_check':true,'c_on':params.unstaged == 1,'c_off':params.unstaged != 1}"
+                                   @click.prevent="mismatching($event, 5)">
+                                <input type="checkbox" :value="params.mark_jt" :checked="params.unstaged == 1">查看不生成
+                            </label>
+                        </div>
+
                         <!--<div class="input-group pull-right">-->
                         <!--<router-link :to="{path: '/flatShare', query: {id: 1}}" class="btn btn-warning">合租房</router-link>-->
                         <!--<router-link :to="{path: '/noPerformance', query: {id: 1}}" class="btn btn-warning"-->
@@ -322,6 +330,7 @@
                     mark_2nd: '',
                     mark_jt: '',
                     mark_cg: '',
+                    unstaged: '',
                     page: 1
                 },
                 selecteds: '',                      //部门名称
@@ -507,6 +516,14 @@
                         this.params.mark_jt = 1;
                     } else {
                         this.params.mark_jt = '';
+                    }
+                }
+                if (val === 5) {
+                    evInput.checked = !evInput.checked;
+                    if (evInput.checked && val === 5) {
+                        this.params.unstaged = 1;
+                    } else {
+                        this.params.unstaged = '';
                     }
                 }
                 this.search(1);

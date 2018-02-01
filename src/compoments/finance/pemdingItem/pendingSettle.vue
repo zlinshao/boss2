@@ -194,13 +194,13 @@
                                     </div>
                                 </div>
 
-                                <!--<div class="form-group">-->
-                                    <!--<label class="col-sm-2 control-label">付款时间</label>-->
-                                    <!--<div class="col-sm-10" style="padding-bottom: 18px;">-->
-                                        <!--<DatePicker :dateConfigure="dateConfigure" :idName="'payDate'"-->
-                                                    <!--:currentDate="currentDate" @sendDate="getDate"></DatePicker>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">付款时间</label>
+                                    <div class="col-sm-10" style="padding-bottom: 18px;">
+                                        <DatePicker :dateConfigure="dateConfigure" :idName="'payDate'"
+                                                    :currentDate="currentDate" @sendDate="getDate"></DatePicker>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">科目 <sup>*</sup></label>
@@ -283,7 +283,7 @@
                     penalty_fee : '',           //违约金
                     check_fee : '',             //物业校验
                     sublet_fee : '',            //转租费用
-                    manage_fee : '',            //管理费
+                    manage_fee : '',                //管理费
                     net_fee : '',               //网络费
                     operator_id : '',           //经手人i
                     status : '',                //状态
