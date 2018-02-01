@@ -391,6 +391,28 @@
                 </div>
             </div>
         </div>
+
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="prompt">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            确定要发送信息吗？
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a class="btn btn-default btn-md" data-dismiss="modal">取消</a>
+                        <a class="btn btn-success btn-md" @click="sure">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -492,9 +514,13 @@
         },
         methods: {
             sendMessage() {
+                $('#prompt').modal({backdrop: 'static'});
+            },
+            sure()  {
                 this.$http.get('core/rent/sendSms?type=rent').then((res) => {
-                    if (res.data.code === '70018') {
+                    if (res.data.code === '80018') {
                         this.successMsg(res.data.msg);
+                        $('#prompt').modal('hide');
                     } else {
                         this.errorMsg(res.data.msg);
                     }
