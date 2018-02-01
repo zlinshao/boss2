@@ -76,6 +76,7 @@ import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'  
 import GeneralOperation from './compoments/finance/generalOperation.vue'                        // 总账操作
 import Personal from './compoments/salary/personal.vue'                                             // 个人工资
 import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
+import HistorySettle from './compoments/salary/historySettle.vue'                                 // 历史未结清
 import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                  // 周期表
 import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                            // 周期表详情
 
@@ -98,7 +99,7 @@ import CheckIn from './compoments/checkIn/checkIn.vue'                          
 // import ReportedOther from './compoments/reported/other/reportedOther.vue'                       //其余款项报备
 // import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'                   //其余款项报备
 
-// import lockScreen from './compoments/lock_screen/lock_screen.vue'                               //锁屏
+// import lockScreen from './compoments/lock_screen/lock_screen.vue'                            //锁屏
 import UserDetail from './compoments/user/userDetail.vue'                                       //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'                              //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
@@ -155,7 +156,7 @@ import Village from './compoments/villageManage/village.vue'                    
 import VillageDetail from './compoments/villageManage/villageDetail.vue'                        //小区管理列表
 import Statistics from './compoments/statistics/statistics.vue'                                 //统计
 
-import OldContractDetail from './compoments/contract/collecOldDetail.vue'                   //老系统详情
+import OldContractDetail from './compoments/contract/collecOldDetail.vue'                       //老系统详情
 import OldRentDetail from './compoments/contract/rentOldDetail.vue'
 
 import MeetingList from './compoments/meetingManage/meetingList.vue'
@@ -434,6 +435,11 @@ export default[
         path: '/personalDetail',
         name: 'personalDetail',                     //个人工资详情
         component: PersonalDetail
+    },
+    {
+        path: '/historySettle',
+        name: 'historySettle',                     //历史未结清
+        component: HistorySettle
     },
     {
         path: '/periodicFor',
