@@ -3,9 +3,9 @@
         <ol class="breadcrumb">
             <li>业绩管理</li>
             <li>
-                <router-link :to="{path:'/personal'}">个人业绩</router-link>
+                <router-link :to="{path:'/personal'}">个人工资</router-link>
             </li>
-            <li>个人业绩详情</li>
+            <li>个人工资详情</li>
         </ol>
         <section class="panel">
             <div class="panel-body">
@@ -678,7 +678,6 @@
             },
 //            选中
             pitchId(rul, ev, cell) {
-                console.log(cell);
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
@@ -716,14 +715,16 @@
             cell_ok() {
                 let urls;
                 if (this.tabs === 2) {
-                    urls = 'achv/cell/history/';
+                  urls = 'achv/cell/history/';
                 }
                 if (this.tabs === 3) {
                     urls = 'achv/cell/change/';
                 }
                 this.$http.post(urls + this.pitch, {
-                    on: this.cell_pitch,
-                    off: this.cell_pitch_off,
+                    params: {
+                        on: this.cell_pitch,
+                        off: this.cell_pitch_off,
+                    }
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');

@@ -187,12 +187,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">结算时间</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" disabled v-model="settle_date">
-                                    </div>
-                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label">结算时间</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                        <!--<input type="text" class="form-control" disabled v-model="settle_date">-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">付款时间</label>
@@ -295,6 +295,7 @@
                     account_num : '',           //结算账户
                     subject_id : '',            // 科目
                     receive_pay : '',           //收退款
+                    settle_date : '',               //付款时间
                 },
                 staff_name : '',                //员工
                 myDictionary: [],               //字典
@@ -304,7 +305,7 @@
                 department_name : '',           //部门名称
                 house_name:'',                  //房屋名称
                 operator_name : '',             //结算人
-                settle_date : '',               //结算时间
+
             }
         },
         created (){
@@ -388,7 +389,8 @@
                         this.pendingSellter.sublet_fee  = res.data.data.sublet_fee;              //转租费用
                         this.pendingSellter.manage_fee  = res.data.data.manage_fee;              //管理费
                         this.pendingSellter.net_fee  = res.data.data.net_fee;                    //网络费
-                        this.settle_date  = new Date().toLocaleString();                         //结算时间
+                        // this.settle_date  = new Date().toLocaleString();                         //结算时间
+                        this.pendingSellter.settle_date  = res.data.data.settle_date;            //结算时间
                         this.pendingSellter.remark  = res.data.data.remark;                      //备注
                         this.pendingSellter.receive_pay  = res.data.data.receive_pay            //收退款
                     }else {
@@ -398,7 +400,7 @@
                 })
             },
             getDate(val){
-               console.log(val);
+                this.pendingSellter.settle_date = val;
 //                 if (val==''){
 //                     this.currentDate.splice(0,this.currentDate.length);
 //                     this.pendingSellter.start_date = '';

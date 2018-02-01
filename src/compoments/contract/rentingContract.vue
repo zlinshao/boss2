@@ -94,6 +94,11 @@
                                 导出
                             </button>
                         </div>
+                        <div class="pull-right" style="margin: 8px" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">
+                            <button class="btn btn-primary" @click="sendMessage">
+                                温馨提醒
+                            </button>
+                        </div>
                     </div>
 
                     <div class="pull-right" v-if="!flag && flag1 === false">
@@ -171,10 +176,10 @@
                             发送短信
                         </li>
 
-                        <li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">
-                            <i class="fa fa-envelope"></i>
-                            温馨提示
-                        </li>
+                        <!--<li class="operate" @click="sendMessage" v-if="simulate.indexOf('Rent/sendSms_remind')>-1||isSuper">-->
+                        <!--<i class="fa fa-envelope"></i>-->
+                        <!--温馨提示-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -487,17 +492,13 @@
         },
         methods: {
             sendMessage() {
-                if(this.pitch.length > 0){
-                    this.$http.get('core/collect/sendSms?type=rent', {
-                        params: {id: this.pitch}
-                    }).then((res) => {
-                        if (res.data.code === '70018') {
-                            this.successMsg(res.data.msg);
-                        } else {
-                            this.errorMsg(res.data.msg);
-                        }
-                    })
-                }
+                this.$http.get('core/rent/sendSms?type=rent').then((res) => {
+                    if (res.data.code === '70018') {
+                        this.successMsg(res.data.msg);
+                    } else {
+                        this.errorMsg(res.data.msg);
+                    }
+                })
             },
             showFlag() {
                 this.flag = !this.flag;
@@ -662,7 +663,7 @@
                 evInput.checked = !evInput.checked;
                 if (evInput.checked) {
                     this.contractSeleted.push(item.id);
-                    if(item.contract_status != 1){
+                    if (item.contract_status != 1) {
                         this.pitch.push(item.id);
                     }
                     this.houseId.push(item.house_id);
