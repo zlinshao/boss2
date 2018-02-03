@@ -67,7 +67,7 @@
                                 <tr class="text-center">
                                     <td rowspan="2">
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
-                        'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event)">
+                        'c_off':pitch.indexOf(item.id)==-1}" @click.prevent="pitchId(item.id, $event,'', 0)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -231,7 +231,7 @@
                                     <td>
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                     'c_off':pitch.indexOf(item.id)==-1}"
-                                               @click.prevent="pitchId(item.id, $event, item.cells)">
+                                               @click.prevent="pitchId(item.id, $event, item.cells, 1)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -247,24 +247,28 @@
                                     <!--<td>{{item.bonus_year}}</td>-->
                                     <!--<td>{{item.achv}}</td>-->
                                     <td v-for="key in item.cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 1">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
                                     <td v-for="key in item.cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 2">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
                                     <td v-for="key in item.cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 3">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
                                     <td v-for="key in item.cells"
-                                        :class="{'deduct_marks': key.status == 1}"
+                                        :class="{'deduct_marks': key.history_settled == 2}"
                                         v-show="key.category == 4">
-                                        <span>{{key.amount_actual}}</span>
+                                        <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                                        <span v-else>/</span>
                                     </td>
                                     <td v-if="item.cells.length == 0">
                                         /
@@ -279,9 +283,13 @@
                                         /
                                     </td>
                                     <td v-if="item.cells.length == 5"
-                                        :class="{'deduct_marks':item.cells.length == 5 && item.cells[4].status == 1}">
-                                         <span v-for="key in item.cells"
-                                               v-show="key.category == 5">{{key.amount_actual}}</span>
+                                        :class="{'deduct_marks':item.cells.length == 5 && item.cells[4].history_settled == 2}">
+                                         <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].history_settled == 2">
+                                             {{key.amount_actual}}
+                                         </span>
+                                        <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].history_settled == 1">
+                                             /
+                                         </span>
                                     </td>
                                     <td v-else>
                                         <span>/</span>
@@ -377,7 +385,7 @@
                                     <td>
                                         <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                     'c_off':pitch.indexOf(item.id)==-1}"
-                                               @click.prevent="pitchId(item.id, $event, item.simple_cells)">
+                                               @click.prevent="pitchId(item.id, $event, item.simple_cells, 2)">
                                             <input type="checkbox" class="pull-left"
                                                    :checked="pitch.indexOf(item.id) > -1">
                                         </label>
@@ -467,12 +475,15 @@
                     </div>
                     <div class="modal-body has-js clearfix">
                         <div v-for="item in simple_cells" class="pull-left" v-if="simple_cells.length != 0"
-                             style="margin-right: 15px;">
+                             style="margin-right: 15px;position: relative;padding: 2px 6px;">
+                            <div class="module" v-if="item.writable === 2"></div>
                             <label :class="{'label_check':true,'c_on':cell_pitch.indexOf(item.id) > -1,
-                                    'c_off':cell_pitch.indexOf(item.id)==-1}"
+                                    'c_off':cell_pitch.indexOf(item.id)==-1}" style="margin-top: 0;height: 19px;"
                                    @click.prevent="cell_pitchId(item.id, $event)">
+
                                 <input type="checkbox" class="pull-left"
-                                       :checked="cell_pitch.indexOf(item.id) > -1">{{dict.cell_category[item.category]}}
+                                       :checked="cell_pitch.indexOf(item.id) > -1">
+                                {{dict.cell_category[item.category]}}
                             </label>
                         </div>
                         <div v-if="simple_cells.length == 0" style="font-size: 16px;">
@@ -524,6 +535,7 @@
                 cell_pitch_off: [],
                 dict: {},
                 simple_cells: [],
+                numbs: '',
                 isShow2: false,
                 isShow3: false,
                 salaryDetail: [],       //工资明细
@@ -644,11 +656,22 @@
             already_salary() {
                 this.cell_pitch = [];
                 this.cell_pitch_off = [];
-                for (let i = 0; i < this.simple_cells.length; i++) {
-                    if (this.simple_cells[i].status === 1) {
-                        this.cell_pitch.push(this.simple_cells[i].id);
-                    } else if (this.simple_cells[i].status === 2) {
-                        this.cell_pitch_off.push(this.simple_cells[i].id);
+                if (this.numbs === 1) {
+                    for (let i = 0; i < this.simple_cells.length; i++) {
+                        if (this.simple_cells[i].history_settled === 1) {
+                            this.cell_pitch.push(this.simple_cells[i].id);
+                        } else if (this.simple_cells[i].history_settled === 2) {
+                            this.cell_pitch_off.push(this.simple_cells[i].id);
+                        }
+                    }
+                }
+                if (this.numbs === 2) {
+                    for (let i = 0; i < this.simple_cells.length; i++) {
+                        if (this.simple_cells[i].status === 1) {
+                            this.cell_pitch.push(this.simple_cells[i].id);
+                        } else if (this.simple_cells[i].status === 2) {
+                            this.cell_pitch_off.push(this.simple_cells[i].id);
+                        }
                     }
                 }
                 $('#already_salary').modal({backdrop: 'static',});
@@ -677,7 +700,7 @@
                 });
             },
 //            选中
-            pitchId(rul, ev, cell) {
+            pitchId(rul, ev, cell, num) {
                 let evInput = ev.target.getElementsByTagName('input')[0];
                 evInput.checked = !evInput.checked;
                 this.pitch = [];
@@ -689,9 +712,10 @@
                         this.pitch.splice(index, 1);
                     }
                 }
-                if (cell !== undefined) {
+                if (cell !== '') {
                     this.simple_cells = cell;
                 }
+                this.numbs = num;
             },
 //            已发选中
             cell_pitchId(rul, ev) {
@@ -715,16 +739,14 @@
             cell_ok() {
                 let urls;
                 if (this.tabs === 2) {
-                  urls = 'achv/cell/history/';
+                    urls = 'achv/cell/history/';
                 }
                 if (this.tabs === 3) {
                     urls = 'achv/cell/change/';
                 }
                 this.$http.post(urls + this.pitch, {
-                    params: {
-                        on: this.cell_pitch,
-                        off: this.cell_pitch_off,
-                    }
+                    on: this.cell_pitch,
+                    off: this.cell_pitch_off,
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');
@@ -804,6 +826,16 @@
 
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         -webkit-appearance: none !important;
+    }
+
+    .module {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #EEEEEE;
+        opacity: .6;
     }
 
 </style>
