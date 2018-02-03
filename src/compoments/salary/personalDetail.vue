@@ -204,6 +204,7 @@
                                     <th></th>
                                     <th class="text-center width80">收租状态</th>
                                     <!--<th class="text-center width50">月份</th>-->
+                                    <th class="text-center width100">月份</th>
                                     <th class="text-center width150">房屋地址</th>
                                     <!--<th class="text-center width80">空置期奖励</th>-->
                                     <!--<th class="text-center width80">价格差奖励</th>-->
@@ -240,6 +241,7 @@
                                         <span v-if="item.proof_category == 1">收</span>
                                         <span v-if="item.proof_category == 2">租</span>
                                     </td>
+                                    <td>{{item.generate_date}}</td>
                                     <td>{{item.address}}</td>
                                     <!--<td>{{item.bonus_vacancy}}</td>-->
                                     <!--<td>{{item.bonus_price}}</td>-->
@@ -284,10 +286,10 @@
                                     </td>
                                     <td v-if="item.cells.length == 5"
                                         :class="{'deduct_marks':item.cells.length == 5 && item.cells[4].history_settled == 2}">
-                                         <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].history_settled == 2">
+                                         <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].status == 2">
                                              {{key.amount_actual}}
                                          </span>
-                                        <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].history_settled == 1">
+                                        <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].status == 1">
                                              /
                                          </span>
                                     </td>

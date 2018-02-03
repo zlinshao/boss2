@@ -47,6 +47,7 @@
                     <tr class="vertical">
                         <th></th>
                         <th class="text-center width80">收租状态</th>
+                        <th class="text-center width100">月份</th>
                         <th class="text-center width150">房屋地址</th>
                         <th class="text-center width50">合同</th>
                         <th class="text-center width50">资料</th>
@@ -72,27 +73,32 @@
                             <span v-if="item.proof_category == 1">收</span>
                             <span v-if="item.proof_category == 2">租</span>
                         </td>
+                        <td>{{item.generate_date}}</td>
                         <td>{{item.address}}</td>
 
                         <td v-for="key in item.cells"
                             :class="{'deduct_marks': key.history_settled == 2}"
                             v-show="key.category == 1">
-                            <span>{{key.amount_actual}}</span>
+                            <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                            <span v-else>/</span>
                         </td>
                         <td v-for="key in item.cells"
                             :class="{'deduct_marks': key.history_settled == 2}"
                             v-show="key.category == 2">
-                            <span>{{key.amount_actual}}</span>
+                            <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                            <span v-else>/</span>
                         </td>
                         <td v-for="key in item.cells"
                             :class="{'deduct_marks': key.history_settled == 2}"
                             v-show="key.category == 3">
-                            <span>{{key.amount_actual}}</span>
+                            <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                            <span v-else>/</span>
                         </td>
                         <td v-for="key in item.cells"
                             :class="{'deduct_marks': key.history_settled == 2}"
                             v-show="key.category == 4">
-                            <span>{{key.amount_actual}}</span>
+                            <span v-if="key.status == 2">{{key.amount_actual}}</span>
+                            <span v-else>/</span>
                         </td>
                         <td v-if="item.cells.length == 0">
                             /
@@ -108,8 +114,12 @@
                         </td>
                         <td v-if="item.cells.length == 5"
                             :class="{'deduct_marks':item.cells.length == 5 && item.cells[4].history_settled == 2}">
-                                         <span v-for="key in item.cells"
-                                               v-show="key.category == 5">{{key.amount_actual}}</span>
+                                         <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].status == 2">
+                                             {{key.amount_actual}}
+                                         </span>
+                            <span v-for="key in item.cells" v-if="key.category == 5 && item.cells[4].status == 1">
+                                             /
+                                         </span>
                         </td>
                         <td v-else>
                             <span>/</span>
