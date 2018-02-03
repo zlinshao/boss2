@@ -85,7 +85,7 @@
             times() {
                 let now = new Date();                   //当前日期
                 let nowYear = now.getFullYear();        //当前年
-                let nowMonth = now.getMonth() + 1;      //当前月
+                let nowMonth = now.getMonth();          //上个月
                 if (nowMonth < 10) {
                     nowMonth = '0' + nowMonth;
                 }

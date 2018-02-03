@@ -43,23 +43,27 @@
 
             <section class="panel table table-responsive roll has-js" style="padding: 16px;">
                 <table class="table table-advance table-hover">
-                    <thead>
-                    <tr>
+                    <thead class="text-center">
+                    <tr class="vertical">
                         <th></th>
-                        <th class="text-center">收/租状态</th>
-                        <th class="text-center">时间</th>
-                        <th class="text-center">地址</th>
-                        <th class="text-center">开单人</th>
-                        <th class="text-center">负责人</th>
-                        <th class="text-center">所属部门</th>
+                        <th class="text-center width80">收租状态</th>
+                        <th class="text-center width150">房屋地址</th>
+                        <th class="text-center width50">合同</th>
+                        <th class="text-center width50">资料</th>
+                        <th class="text-center width50">交接</th>
+                        <th class="text-center width50">客诉</th>
+                        <th class="text-center width50">尾款</th>
+                        <th class="text-center width80">开单人</th>
+                        <th class="text-center width80">负责人</th>
+                        <th class="text-center width80">所属部门</th>
                     </tr>
                     </thead>
-                    <tbody class="text-center">
-                    <tr class="text-center" v-for="(item,index) in historyData">
+                    <tbody>
+                    <tr class="text-center" v-for="item in historyData">
                         <td>
                             <label :class="{'label_check':true,'c_on':pitch.indexOf(item.id) > -1,
                                     'c_off':pitch.indexOf(item.id)==-1}"
-                                   @click.prevent="pitchId(item.id, $event, item.cells)">
+                                   @click.prevent="pitchId(item.id, $event, item.cells, 1)">
                                 <input type="checkbox" class="pull-left"
                                        :checked="pitch.indexOf(item.id) > -1">
                             </label>
@@ -68,14 +72,56 @@
                             <span v-if="item.proof_category == 1">收</span>
                             <span v-if="item.proof_category == 2">租</span>
                         </td>
-                        <td>{{item.generate_date}}</td>
                         <td>{{item.address}}</td>
+
+                        <td v-for="key in item.cells"
+                            :class="{'deduct_marks': key.history_settled == 2}"
+                            v-show="key.category == 1">
+                            <span>{{key.amount_actual}}</span>
+                        </td>
+                        <td v-for="key in item.cells"
+                            :class="{'deduct_marks': key.history_settled == 2}"
+                            v-show="key.category == 2">
+                            <span>{{key.amount_actual}}</span>
+                        </td>
+                        <td v-for="key in item.cells"
+                            :class="{'deduct_marks': key.history_settled == 2}"
+                            v-show="key.category == 3">
+                            <span>{{key.amount_actual}}</span>
+                        </td>
+                        <td v-for="key in item.cells"
+                            :class="{'deduct_marks': key.history_settled == 2}"
+                            v-show="key.category == 4">
+                            <span>{{key.amount_actual}}</span>
+                        </td>
+                        <td v-if="item.cells.length == 0">
+                            /
+                        </td>
+                        <td v-if="item.cells.length == 0">
+                            /
+                        </td>
+                        <td v-if="item.cells.length == 0">
+                            /
+                        </td>
+                        <td v-if="item.cells.length == 0">
+                            /
+                        </td>
+                        <td v-if="item.cells.length == 5"
+                            :class="{'deduct_marks':item.cells.length == 5 && item.cells[4].history_settled == 2}">
+                                         <span v-for="key in item.cells"
+                                               v-show="key.category == 5">{{key.amount_actual}}</span>
+                        </td>
+                        <td v-else>
+                            <span>/</span>
+                        </td>
                         <td>{{item.staff_name}}</td>
                         <td>{{item.leader_name}}</td>
                         <td>{{item.department_name}}</td>
                     </tr>
-                    <tr class="text-center" style="font-size: 18px;" v-if="isShow">
-                        <td colspan="7">暂无数据......</td>
+                    <tr v-show="isShow">
+                        <td colspan="11" class="text-center text-muted">
+                            <h4 style="border: 0;">暂无数据....</h4>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -92,12 +138,15 @@
                         </div>
                         <div class="modal-body has-js clearfix">
                             <div v-for="item in simple_cells" class="pull-left" v-if="simple_cells.length != 0"
-                                 style="margin-right: 15px;">
+                                 style="margin-right: 15px;position: relative;padding: 2px 6px;">
+                                <div class="module" v-if="item.writable === 2"></div>
                                 <label :class="{'label_check':true,'c_on':cell_pitch.indexOf(item.id) > -1,
-                                    'c_off':cell_pitch.indexOf(item.id)==-1}"
+                                    'c_off':cell_pitch.indexOf(item.id)==-1}" style="margin-top: 0;height: 19px;"
                                        @click.prevent="cell_pitchId(item.id, $event)">
+
                                     <input type="checkbox" class="pull-left"
-                                           :checked="cell_pitch.indexOf(item.id) > -1">{{dict.cell_category[item.category]}}
+                                           :checked="cell_pitch.indexOf(item.id) > -1">
+                                    {{dict.cell_category[item.category]}}
                                 </label>
                             </div>
                             <div v-if="simple_cells.length == 0" style="font-size: 16px;">
@@ -166,9 +215,9 @@
                 this.cell_pitch = [];
                 this.cell_pitch_off = [];
                 for (let i = 0; i < this.simple_cells.length; i++) {
-                    if (this.simple_cells[i].status === 1) {
+                    if (this.simple_cells[i].history_settled === 1) {
                         this.cell_pitch.push(this.simple_cells[i].id);
-                    } else if (this.simple_cells[i].status === 2) {
+                    } else if (this.simple_cells[i].history_settled === 2) {
                         this.cell_pitch_off.push(this.simple_cells[i].id);
                     }
                 }
@@ -232,9 +281,9 @@
                 }).then((res) => {
                     if (res.data.code === '70000') {
                         $('#already_salary').modal('hide');
-                        this.personal(this.personal_id, this.tabs);
                         this.pitch = [];
                         this.successMsg(res.data.msg);
+                        this.search();
                     } else {
                         this.errorMsg(res.data.msg);
                     }
@@ -250,13 +299,24 @@
                 //显示成功弹窗 ***
                 this.info.state_error = true;
             },
-            // search() {
-            //     this.historySettle(this.params.page)
-            // }
+            search() {
+                this.historySettle(this.params.page)
+            }
         },
     }
 </script>
 
 <style scoped>
-
+    .deduct_marks {
+        background-color: #c3c3c3;
+    }
+    .module {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #EEEEEE;
+        opacity: .6;
+    }
 </style>
