@@ -173,8 +173,8 @@
                             <input type="checkbox" class="pull-left"
                                    :checked="ren_pitch.indexOf(item.id) > -1">
                         </label>
-
-                        <label v-if="(item.identity == 1 || 2) && item.salary_candidate == 2 && item.generate_time == null"
+                        <!--item.generate_time == null-->
+                        <label v-if="(item.identity == 1 || 2) && item.salary_candidate == 2"
                                @click="create_generate(item.id, item.identity)">
                             <i class="fa fa-rotate-left" style="padding-left: 3px;font-size: 16px;"></i>
                         </label>
