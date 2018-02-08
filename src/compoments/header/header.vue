@@ -651,6 +651,11 @@
                                     <span>周期表</span>
                                 </router-link>
                             </li>
+                            <li>
+                                <router-link to="/achievementCounter">
+                                    <span>业绩计算器</span>
+                                </router-link>
+                            </li>
                         </ul>
                     </li>
 
