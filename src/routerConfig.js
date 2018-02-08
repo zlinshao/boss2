@@ -74,11 +74,12 @@ import CollectPaymentDetail from './compoments/finance/payment/collectDetail.vue
 import PendingItem from './compoments/finance/pemdingItem/pendingItem.vue'                      // 待处理项
 import PendingDetail from './compoments/finance/pemdingItem/pendingDetail.vue'                  // 待处理项详情
 import GeneralOperation from './compoments/finance/generalOperation.vue'                        // 总账操作
-import Personal from './compoments/salary/personal.vue'                                             // 个人工资
-import PersonalDetail from './compoments/salary/personalDetail.vue'                                 // 个人工资详情
-import HistorySettle from './compoments/salary/historySettle.vue'                                 // 历史未结清
-import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                                  // 周期表
-import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                            // 周期表详情
+import Personal from './compoments/salary/personal.vue'                                         // 个人工资
+import PersonalDetail from './compoments/salary/personalDetail.vue'                             // 个人工资详情
+import AchievementCounter from './compoments/salary/achievementCounter.vue'                     // 业绩计算器
+import HistorySettle from './compoments/salary/historySettle.vue'                                // 历史未结清
+import PeriodicFor from './compoments/periodicFor/periodicFor.vue'                               // 周期表
+import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                         // 周期表详情
 
 
 
@@ -91,7 +92,7 @@ import Country from './compoments/common/country.vue'                           
 import CheckIn from './compoments/checkIn/checkIn.vue'                                          //定位签到
 
 // import ReportedCollect from './compoments/reported/collect/reportedCollect.vue'                 //收房报备
-// import ReopetedCollectDetail from './compoments/reported/collect/collectBulletinDetail.vue'             //收房报备详情
+// import ReopetedCollectDetail from './compoments/reported/collect/collectBulletinDetail.vue'     //收房报备详情
 
 // import ReportedRenting from './compoments/reported/rent/reportedRenting.vue'                    //租房报备
 // import ReopetedRentDetail from './compoments/reported/rent/rentDetail.vue'                      // 租房报备详情
@@ -435,6 +436,11 @@ export default[
         path: '/personalDetail',
         name: 'personalDetail',                     //个人工资详情
         component: PersonalDetail
+    },
+    {
+        path: '/achievementCounter',
+        name: 'achievementCounter',               //业绩计算器
+        component: AchievementCounter
     },
     {
         path: '/historySettle',
