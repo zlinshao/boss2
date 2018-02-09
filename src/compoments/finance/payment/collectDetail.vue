@@ -167,6 +167,12 @@
                                     </span>
                                 </div>
                                 <div>
+                                    <span class="text-primary">支行：</span>
+                                    <span v-if="msg.customer !== null && msg.customer !== undefined">
+                                          {{msg.customer.account_subbank}}
+                                    </span>
+                                </div>
+                                <div>
                                     <span class="text-primary">账号：</span>
                                     <span v-if="msg.customer !== null && msg.customer !== undefined">
                                         {{msg.customer.account_num}}
