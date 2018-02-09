@@ -36,7 +36,7 @@ import CollectContract from "./compoments/contract/collectContract.vue";        
 import RentingContract from "./compoments/contract/rentingContract.vue";                        //租房合同
 import ContractDetail from './compoments/contract/collectDetail.vue'                            //收房合同详情
 import RentingDetail from './compoments/contract/rentingDetail.vue'                             //租房合同详情
-import  Memorandum from  './compoments/contract/searchMemorandum.vue'                           //查看备忘录
+import Memorandum from './compoments/contract/searchMemorandum.vue'                           //查看备忘录
 
 import CollectContractTransfer from "./compoments/contract/collectContractTransfer.vue";        //收房合同
 import RentingContractTransfer from "./compoments/contract/rentingContractTransfer.vue";        //租房合同
@@ -44,7 +44,7 @@ import ContractNum from "./compoments/contract/contractNumber/contractNum.vue"; 
 import ContractNumDetail from "./compoments/contract/contractNumber/contractNumDetail.vue";     // 编号记录详情
 
 
-import  Comparecontract from  './compoments/contract/Compare.vue'
+import Comparecontract from './compoments/contract/Compare.vue'
 
 import Organization from './compoments/finance/organization/organization.vue'                   //组织架构财务
 import FlatShare from './compoments/finance/organization/flatShare.vue'                         //合租房
@@ -82,11 +82,10 @@ import PeriodicFor from './compoments/periodicFor/periodicFor.vue'              
 import PeriodicDetail from './compoments/periodicFor/periodicDetail.vue'                         // 周期表详情
 
 
-
 // import GeneralRecord from './compoments/finance/generalRecord.vue'                           // 总账操作记录
 import Chart from './compoments/finance/chart/chart.vue'
 import LogRecord from './compoments/logRecord/logRecord.vue'                                    // 日志操作记录
-import MessageCenter from  './compoments/messageCenter/messageCenter.vue'                       //消息中心
+import MessageCenter from './compoments/messageCenter/messageCenter.vue'                       //消息中心
 import Country from './compoments/common/country.vue'                                           //国家
 
 import CheckIn from './compoments/checkIn/checkIn.vue'                                          //定位签到
@@ -100,12 +99,11 @@ import CheckIn from './compoments/checkIn/checkIn.vue'                          
 // import ReportedOther from './compoments/reported/other/reportedOther.vue'                       //其余款项报备
 // import ReportedOtherDetail from './compoments/reported/other/otherDetail.vue'                   //其余款项报备
 
-// import lockScreen from './compoments/lock_screen/lock_screen.vue'                            //锁屏
+import lockScreen from './compoments/logRecord/lock_screen/lock_screen.vue'                     //锁屏
 import UserDetail from './compoments/user/userDetail.vue'                                       //用户详情页
 import PunchRecord from './compoments/punchRecord/punchRecord.vue'                              //打卡记录
 import HeaderMemorandum from './compoments/HeaderMemorandum/memorandum.vue'                     //备忘录
 // import ClientManage from './compoments/finance/clientManage/clientManageList.vue'            //财务客户管理
-
 
 
 import OfficeSupplies from './compoments/office/officeManage/officeSupplies.vue'                // 办公用品管理
@@ -121,10 +119,10 @@ import ArticleDetail from './compoments/staffSquare/article/articleDetail.vue'  
 import PostArticle from './compoments/staffSquare/article/postArticle.vue'                      // 发布
 import ModifyArticle from './compoments/staffSquare/article/modifyAriticle.vue'                 // 编辑
 
-import Organize from  './compoments/user/organization.vue'                                      //业绩生成
+import Organize from './compoments/user/organization.vue'                                      //业绩生成
 import PositionManage from './compoments/user/positionManage.vue'
 
-import Question from  './compoments/questionnaire/questionList.vue'             //问卷调查
+import Question from './compoments/questionnaire/questionList.vue'             //问卷调查
 import Questionnaire from './compoments/questionnaire/questionDetail.vue'
 import QuestionResult from './compoments/questionnaire/questionResult.vue'
 
@@ -181,7 +179,7 @@ import Special from './compoments/bulletin/special.vue'
 import SpecialDetail from './compoments/bulletin/specialDetail.vue'
 
 
-export default[
+export default [
     {
         path: '/',                          //重定向主页
         redirect: '/index',
@@ -588,11 +586,11 @@ export default[
         component: MessageCenter
     },
 
-    // {
-    //     path: '/lockScreen',
-    //     name: 'lock_screen',
-    //     component: lockScreen
-    // },
+    {
+        path: '/lockScreen',
+        name: 'lock_screen',
+        component: lockScreen
+    },
     {
         path: '/checkIn',
         name: 'CheckIn',
@@ -890,44 +888,44 @@ export default[
         component: VillageDetail
     },
     {   //新版 客户管理
-        path:'/client',
-        name : 'Client',
-        component:Client
+        path: '/client',
+        name: 'Client',
+        component: Client
     },
     {
-        path:'/clientDetail',
-        name:'ClientDetail',
-        component:ClientDetail
+        path: '/clientDetail',
+        name: 'ClientDetail',
+        component: ClientDetail
     },
     {
-        path:'/clientPool',
-        name:'ClientPool',
-        component:ClientPool
+        path: '/clientPool',
+        name: 'ClientPool',
+        component: ClientPool
     },
     {
-        path:'/oldContractDetail',
-        name:'OldContractDetail',
-        component:OldContractDetail
+        path: '/oldContractDetail',
+        name: 'OldContractDetail',
+        component: OldContractDetail
     },
     {
-        path:'/oldRentDetail',
-        name:'OldRentDetail',
-        component:OldRentDetail
+        path: '/oldRentDetail',
+        name: 'OldRentDetail',
+        component: OldRentDetail
     },
     {
-        path:'/meetingList',
-        name:'MeetingList',
-        component:MeetingList
+        path: '/meetingList',
+        name: 'MeetingList',
+        component: MeetingList
     },
     {
-        path:'/meetingDetail',
-        name:'MeetingDetail',
-        component:MeetingDetail
+        path: '/meetingDetail',
+        name: 'MeetingDetail',
+        component: MeetingDetail
     },
     {
-        path:'/meeting',
-        name:'Meeting',
-        component:Meeting
+        path: '/meeting',
+        name: 'Meeting',
+        component: Meeting
     }
 
 ]

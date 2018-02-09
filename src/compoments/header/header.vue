@@ -1448,7 +1448,7 @@
                         });
                     }
                     if (res.data.code === '80035') {
-                        this.$router.push({path: 'lockScreen'});
+                        this.$router.push({path: '/lockScreen'});
                         //成功信息 ***
                         this.info.success = res.data.msg;
                         //显示成功弹窗 ***
