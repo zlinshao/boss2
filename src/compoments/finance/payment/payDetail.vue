@@ -106,6 +106,12 @@
                                           {{select_info.bank[list.customer.account_bank]}}
                                     </span>
                                 </div>
+                                <div>
+                                    <span class="text-primary">支行：</span>
+                                    <span v-if="list.customer !== null && list.customer !== undefined">
+                                          {{list.customer.account_subbank}}
+                                    </span>
+                                </div>
                                 <!--<div>-->
                                 <!--<span class="text-primary">账号：</span>-->
                                 <!--<span>-->
